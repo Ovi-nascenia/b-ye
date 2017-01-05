@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Biyeta</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
+
+
+    <string name="search">খুজুন </string>
+    <string name="match">মিল</string>
+    <string name="fev">প্রিয়</string>
+    <string name="inbox">ইনবক্স</string>
+    <string name="profile">প্রোফাইল</string>
+    <string name="password">পাসওয়ার্ড</string>
+    <string name="email">ইমেইল</string>
+    <string name="login">লগইন</string>
+    <string name="new_account">নতুন একাউন্ট খুলুন </string>
+    <string name="title_activity_login">Login</string>
+    <string name="willing_search">ইচ্ছা  মত খুজুঁন </string>
+
+
+</resources>
