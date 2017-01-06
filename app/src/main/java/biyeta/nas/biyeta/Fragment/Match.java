@@ -28,9 +28,7 @@ public class Match extends Fragment {
                              Bundle savedInstanceState) {
         Log.e("come","Match");
         // Inflate the layout for this fragment
-
         View v = inflater.inflate(R.layout.match, null);
-
         return v;
 
     }

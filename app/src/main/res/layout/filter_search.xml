@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_collapseParallaxMultiplier="1.0">
+
+    <com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar
+        android:id="@+id/rangeSeekbar5"
+        android:layout_marginTop="89dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:corner_radius="10"
+        app:min_value="0"
+        app:max_value="100"
+        app:steps="5"
+        app:bar_color="@color/colorPrimaryDark"
+        app:bar_highlight_color="#E07416"
+        app:left_thumb_image="@drawable/search"
+        app:right_thumb_image="@drawable/search"
+        app:left_thumb_image_pressed="@drawable/inbox"
+        app:right_thumb_image_pressed="@drawable/inbox"
+        app:data_type="_integer"/>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp"
+        android:id="@+id/textView" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView5" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2" />
+    </LinearLayout>
+
+
+</RelativeLayout>
