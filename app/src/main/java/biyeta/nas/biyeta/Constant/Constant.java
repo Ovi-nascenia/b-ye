@@ -6,6 +6,7 @@ package biyeta.nas.biyeta.Constant;
 
 public class Constant {
 
+    public static final int SPLASH_TIMEOUT=3000;
 
     public static final String BASE_URL="http://test.biyeta.com/api/v1/";
 }

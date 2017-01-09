@@ -8,10 +8,11 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import biyeta.nas.biyeta.Constant.Constant;
+
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 6000;
     ImageView imageView;
 
 
@@ -38,6 +39,6 @@ public class SplashScreen extends AppCompatActivity {
                 ///Kill the current activity
                 finish();
             }
-         }, SPLASH_TIME_OUT);
+         }, Constant.SPLASH_TIMEOUT);
     }
 }

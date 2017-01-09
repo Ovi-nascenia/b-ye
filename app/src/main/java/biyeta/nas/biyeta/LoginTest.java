@@ -25,7 +25,6 @@ import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import biyeta.nas.biyeta.Constant.Constant;
 import biyeta.nas.biyeta.Utils.Utils;
 
@@ -111,6 +110,8 @@ public class LoginTest extends AppCompatActivity implements View.OnClickListener
         {
             case R.id.fb_button:
 
+
+
                 ///call facebook api for login
                 break;
             case R.id.login_submit:
@@ -163,10 +164,6 @@ public class LoginTest extends AppCompatActivity implements View.OnClickListener
         protected String doInBackground(String... params) {
             String id = params[0];
             String password=params[1];
-
-          //  HttpUrl.Builder urlBuilder = HttpUrl.parse("http//test.biyeta.com/api/v1/sign-in").newBuilder();
-         //   String url = urlBuilder.build().toString();
-         //   String token = SharedPrefUtils.getStringFromPreferences(LoginTest.this.getAppContext(), "", "token", "cribber_prefs");
             Log.e("back",id+"---"+password);
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("user_login[email]", id)///sent the team passcode
@@ -207,21 +204,25 @@ public class LoginTest extends AppCompatActivity implements View.OnClickListener
             super.onPostExecute(s);
 
             try {
+                //convert string to json object
                 JSONObject jsonObject=new JSONObject(s);
 
 
                 String token=jsonObject.get("auth_token").toString();
                 //insert the token in Sharepreference
+
+
                 startActivity(new Intent(LoginTest.this,HomeScreen.class));
                 finish();
 
 
             } catch (JSONException e) {
+                Log.e("error","JSON error");
                 e.printStackTrace();
                 Utils.ShowAlert(LoginTest.this,"Wrong Input");
                 b_submit.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
-                //Log.e("error","JSON error");
+
             }
         }
 
