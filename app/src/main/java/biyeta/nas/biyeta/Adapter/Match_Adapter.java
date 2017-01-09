@@ -20,7 +20,7 @@ import java.util.List;
 import biyeta.nas.biyeta.Model.Profile;
 import biyeta.nas.biyeta.R;
 
-public class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapter.MyViewHolder> {
+public class Match_Adapter extends RecyclerView.Adapter<Match_Adapter.MyViewHolder> {
 
     //list of all profile
     private List<Profile> profile_list;
@@ -44,14 +44,14 @@ public class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapter.MyView
     }
 
 
-    public Profile_Adapter(List<Profile> moviesList) {
+    public Match_Adapter(List<Profile> moviesList) {
         this.profile_list = moviesList;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
+                .inflate(R.layout.matching_list_item, parent, false);
         context=parent.getContext();
 
         return new MyViewHolder(itemView);
@@ -62,10 +62,10 @@ public class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapter.MyView
         Profile prfile = profile_list.get(position);
         holder.user_name.setText(prfile.getUser_name());
 
-       Glide.with(context)
-               .load(Uri.parse("http://previews.123rf.com/images/m_woodhouse/m_woodhouse1201/m_woodhouse120100027/11889656-Funnyl-green-dragon-holding-fireworks-in-vector-Stock-Vector-dragon-cartoon-dinosaur.jpg"))
-               .into(holder.profile_image)
-               ;
+        Glide.with(context)
+                .load(Uri.parse("http://previews.123rf.com/images/m_woodhouse/m_woodhouse1201/m_woodhouse120100027/11889656-Funnyl-green-dragon-holding-fireworks-in-vector-Stock-Vector-dragon-cartoon-dinosaur.jpg"))
+                .into(holder.profile_image)
+        ;
 
     }
 

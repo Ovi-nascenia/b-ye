@@ -21,6 +21,7 @@ public class Favourite extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("oncreate","FavOnCreate");
     }
 
     @Override
@@ -33,4 +34,6 @@ public class Favourite extends Fragment {
         return v;
 
     }
+
+
 }

@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 3000;
+    private static int SPLASH_TIME_OUT = 6000;
     ImageView imageView;
 
 
@@ -24,8 +24,6 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageView=(ImageView)findViewById(R.id.imageview);
-        //
-
         Glide.with(this)
                 .load(R.drawable.splash_screen)
                 .into(imageView);

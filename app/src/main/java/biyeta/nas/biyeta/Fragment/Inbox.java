@@ -22,6 +22,7 @@ public class Inbox extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("oncreate","InboxOnCreate");
     }
 
     @Override
@@ -30,7 +31,8 @@ public class Inbox extends Fragment {
         // Inflate the layout for this fragment
 
         Log.e("come","inbox");
-        View v = inflater.inflate(R.layout.filter_search, null);
+        View v = inflater.inflate(R.layout.inbox, null);
+
 
         return v;
 
