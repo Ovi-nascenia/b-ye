@@ -96,8 +96,6 @@
                     <me.bendik.simplerangeview.SimpleRangeView
 
                         app:count="10"
-                        app:labelColor="#99000000"
-                        ap
                         android:id="@+id/height_rangeview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
