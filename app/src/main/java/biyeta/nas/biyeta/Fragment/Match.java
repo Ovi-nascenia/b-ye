@@ -1,5 +1,9 @@
 package biyeta.nas.biyeta.Fragment;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +56,10 @@ public class Match extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mMatch_adapter);
 
-        prepareMovieData();
+
+       // new Get_Data().execute();
+
+      //  prepareMovieData();
         return v;
 
     }
@@ -83,5 +91,33 @@ public class Match extends Fragment {
 
 
         mMatch_adapter.notifyDataSetChanged();
+
+    }
+
+    class Get_Data extends AsyncTask<Void,Void,Void>
+    {
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+          //  Log.e("come","match");
+            Dialog dialog = new  Dialog(getContext());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.custom_progress_bar);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            dialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            return null;
+        }
     }
 }

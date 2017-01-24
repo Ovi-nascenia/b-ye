@@ -39,6 +39,7 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+       // viewPager.setOffscreenPageLimit(0);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -82,10 +83,11 @@ public class HomeScreen extends AppCompatActivity {
         adapter.addFrag(new Inbox(), "FOUR");
         adapter.addFrag(new Profile(), "FIVE");
 
+
         viewPager.setAdapter(adapter);
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -94,8 +96,30 @@ public class HomeScreen extends AppCompatActivity {
         }
 
         @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
+       public Fragment getItem(int position) {
+
+            switch (position){
+                case 0:
+                    return new Search();
+
+                case 1:
+                    return new Match();
+
+                case 2:
+                    return new Favourite();
+
+                case 3:
+                    return new Inbox();
+
+                case 4:
+                    return new Profile();
+
+                default:
+
+                    break;
+            }
+
+            return null;
         }
 
         @Override

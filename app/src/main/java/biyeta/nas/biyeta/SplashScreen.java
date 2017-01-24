@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import biyeta.nas.biyeta.AppData.SharePref;
 import biyeta.nas.biyeta.Constant.Constant;
 
 
@@ -34,10 +35,21 @@ public class SplashScreen extends AppCompatActivity {
 
                 // This method will be executed once the timer is over
                 // Start your app main activity
+
+             SharePref sharePref=new SharePref(SplashScreen.this);
+            if (sharePref.get_data("token").equals("key")) {
                 Intent i = new Intent(SplashScreen.this, LoginTest.class);
                 startActivity(i);
                 ///Kill the current activity
                 finish();
+            }
+            else
+            {
+                Intent i = new Intent(SplashScreen.this, HomeScreen.class);
+                startActivity(i);
+                ///Kill the current activity
+                finish();
+            }
             }
          }, Constant.SPLASH_TIMEOUT);
     }

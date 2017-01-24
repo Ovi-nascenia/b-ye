@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +45,9 @@ public class Search extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.e("come","search");
 
-        View v = inflater.inflate(R.layout.search, null);
+        View v = inflater.inflate(R.layout.search, container, false);
         recyclerView=(RecyclerView)v.findViewById(R.id.profile_list);
         search_btn=(Button)v.findViewById(R.id.search_btn);
         mProfile_adapter = new Profile_Adapter(movieList);

@@ -25,6 +25,8 @@ import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import biyeta.nas.biyeta.AppData.SharePref;
 import biyeta.nas.biyeta.Constant.Constant;
 import biyeta.nas.biyeta.Utils.Utils;
 
@@ -209,6 +211,8 @@ public class LoginTest extends AppCompatActivity implements View.OnClickListener
 
 
                 String token=jsonObject.get("auth_token").toString();
+                SharePref sharePref=new SharePref(LoginTest.this);
+                sharePref.set_data("token",token);
                 //insert the token in Sharepreference
 
 

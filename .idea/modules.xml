@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Biyeta.iml" filepath="$PROJECT_DIR$/Biyeta.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/b-ye.iml" filepath="$PROJECT_DIR$/b-ye.iml" />
     </modules>
   </component>
 </project>
