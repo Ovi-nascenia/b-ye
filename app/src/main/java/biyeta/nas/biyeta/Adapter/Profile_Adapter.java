@@ -3,6 +3,7 @@ package biyeta.nas.biyeta.Adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,8 @@ import java.util.List;
 import biyeta.nas.biyeta.Model.Profile;
 import biyeta.nas.biyeta.R;
 
-public class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapter.MyViewHolder> {
+public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapter.MyViewHolder> {
+    public abstract void load();
 
     //list of all profile
     private List<Profile> profile_list;
@@ -38,6 +40,10 @@ public class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapter.MyView
             super(view);
             user_name=(TextView)view.findViewById(R.id.user_name);
             profile_image=(ImageView)view.findViewById(R.id.profile_image);
+            profession=(TextView)view.findViewById(R.id.profession);
+            age=(TextView)view.findViewById(R.id.age);
+            religion=(TextView)view.findViewById(R.id.religion);
+
 
 
         }
@@ -60,12 +66,19 @@ public class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Profile prfile = profile_list.get(position);
-        holder.user_name.setText(prfile.getUser_name());
+        holder.user_name.setText(prfile.getDisplay_name());
+        holder.profession.setText(prfile.getProfessional_group());
+        holder.religion.setText(prfile.getReligion());
+        Log.e("image_link",prfile.getImage());
+        if ((position >= getItemCount() - 1))
+            load();
 
        Glide.with(context)
-               .load(Uri.parse("http://previews.123rf.com/images/m_woodhouse/m_woodhouse1201/m_woodhouse120100027/11889656-Funnyl-green-dragon-holding-fireworks-in-vector-Stock-Vector-dragon-cartoon-dinosaur.jpg"))
-               .into(holder.profile_image)
-               ;
+               .load(Uri.parse("http://test.biyeta.com/"+prfile.getImage()))
+               .placeholder(R.drawable.man)
+               .into(holder.profile_image);
+
+
 
     }
 

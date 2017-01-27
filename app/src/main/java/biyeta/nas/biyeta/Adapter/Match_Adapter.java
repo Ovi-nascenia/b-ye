@@ -38,6 +38,7 @@ public class Match_Adapter extends RecyclerView.Adapter<Match_Adapter.MyViewHold
             super(view);
             user_name=(TextView)view.findViewById(R.id.user_name);
             profile_image=(ImageView)view.findViewById(R.id.profile_image);
+            profession=(TextView) view.findViewById(R.id.profession);
 
 
         }
@@ -60,7 +61,7 @@ public class Match_Adapter extends RecyclerView.Adapter<Match_Adapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Profile prfile = profile_list.get(position);
-        holder.user_name.setText(prfile.getUser_name());
+        holder.user_name.setText(prfile.getDisplay_name());
 
         Glide.with(context)
                 .load(Uri.parse("http://previews.123rf.com/images/m_woodhouse/m_woodhouse1201/m_woodhouse120100027/11889656-Funnyl-green-dragon-holding-fireworks-in-vector-Stock-Vector-dragon-cartoon-dinosaur.jpg"))

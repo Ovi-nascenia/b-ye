@@ -1,7 +1,9 @@
 package biyeta.nas.biyeta.Fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,9 +13,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +38,7 @@ public class Match extends Fragment {
 
     RecyclerView recyclerView;
     Match_Adapter mMatch_adapter;
+    RelativeLayout relativeLayout;
     private List<Profile> movieList = new ArrayList<>();
     public Match() {
         // Required empty public constructor
@@ -51,54 +57,57 @@ public class Match extends Fragment {
         View v = inflater.inflate(R.layout.match, null);
         recyclerView=(RecyclerView)v.findViewById(R.id.match_list);
         mMatch_adapter = new Match_Adapter(movieList);
+        relativeLayout=(RelativeLayout)v.findViewById(R.id.RelativeLayoutLeftButton) ;
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mMatch_adapter);
 
 
-       // new Get_Data().execute();
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // TODO Handle item click
+                        showDialog(getContext(),"");
+
+                    }
+                })
+        );
+
+
+        new Get_Data().execute();
 
       //  prepareMovieData();
         return v;
 
     }
-    void prepareMovieData()
-    {
-        biyeta.nas.biyeta.Model.Profile profile = new biyeta.nas.biyeta.Model.Profile("Mad Max: Fury Road");
-        movieList.add(profile);
 
-        profile = new biyeta.nas.biyeta.Model.Profile("Inside Out");
-        movieList.add(profile);
+    public void showDialog(Context activity, String msg){
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.custom_dialog);
 
-        profile = new biyeta.nas.biyeta.Model.Profile("Inside Out");
-        movieList.add(profile);
+    //    TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+      //  text.setText(msg);
 
-        profile = new biyeta.nas.biyeta.Model.Profile("Inside Out");
-        movieList.add(profile);
+        //Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
+//        dialogButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
 
-        profile = new biyeta.nas.biyeta.Model.Profile("Inside Out");
-        movieList.add(profile);
-
-        profile = new biyeta.nas.biyeta.Model.Profile("Inside Out");
-        movieList.add(profile);
-
-        profile = new biyeta.nas.biyeta.Model.Profile("Inside Out");
-        movieList.add(profile);
-
-
-
-
-
-        mMatch_adapter.notifyDataSetChanged();
+        dialog.show();
 
     }
 
-    class Get_Data extends AsyncTask<Void,Void,Void>
+    class Get_Data extends AsyncTask<String,String,String>
     {
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(String res) {
+            super.onPostExecute(res);
 
 
         }
@@ -106,18 +115,15 @@ public class Match extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            relativeLayout.setVisibility(View.GONE);
 
-          //  Log.e("come","match");
-            Dialog dialog = new  Dialog(getContext());
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.custom_progress_bar);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-            dialog.show();
+
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected String doInBackground(String... url) {
             return null;
+
         }
     }
 }

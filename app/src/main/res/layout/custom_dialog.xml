@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="fill_parent"
+
+    android:layout_height="335dp"
+
+    android:orientation="vertical" >
+
+
+
+    <RelativeLayout
+
+        android:layout_width="100dp"
+
+        android:layout_height="100dp"
+
+        android:layout_gravity="center_horizontal"
+
+        android:adjustViewBounds="false"
+
+        android:layout_alignParentTop="true"
+
+        android:layout_centerHorizontal="true"
+
+
+
+        android:id="@+id/relativeLayout2"
+
+        android:translationZ="1dp"
+
+        android:layout_marginBottom="-35dp">
+
+        <ImageView
+
+            android:layout_width="100dp"
+
+            android:layout_height="100dp"
+
+            android:src="@drawable/man"
+
+            android:id="@+id/imageView5"
+            android:scaleType="fitXY"
+
+            android:layout_gravity="center_horizontal"
+
+            android:adjustViewBounds="false"
+
+            android:layout_alignParentTop="true"
+
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+
+        android:id="@+id/listLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="180dp"
+
+
+            android:background="@color/colorPrimaryDark"
+
+            android:id="@+id/relativeLayout">
+
+
+
+
+
+            <ImageView
+
+                android:layout_width="40dp"
+                android:tint="#ffffff"
+
+                android:layout_height="40dp"
+
+                android:src="@drawable/ic_highlight_off_black_24dp"
+
+                android:id="@+id/imgClose"
+
+                android:layout_alignParentTop="true"
+
+                android:layout_alignParentRight="true"
+
+                android:layout_alignParentEnd="true"
+
+                />
+
+
+
+
+
+
+
+            <TextView
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:text="Tauhidul"
+
+                android:textColor="#ece6e6"
+
+                android:textStyle="italic|bold"
+
+                android:textSize="30sp"
+
+                android:id="@+id/textView9"
+                android:layout_marginTop="40dp"
+
+                android:layout_below="@+id/imgClose"
+
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:text="Software Engineer "
+
+                android:textColor="#ece6e6"
+
+                android:textStyle="italic|bold"
+
+                android:textSize="20sp"
+
+                android:id="@+id/details"
+
+                android:layout_below="@+id/textView9"
+
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.CardView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:background="#40163d"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:text="SHOW Profile "
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>
