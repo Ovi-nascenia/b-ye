@@ -35,22 +35,15 @@
         android:layout_marginBottom="-35dp">
 
         <ImageView
-
             android:layout_width="100dp"
-
             android:layout_height="100dp"
-
-            android:src="@drawable/man"
-
+            android:src="@drawable/ic_highlight_off_black_24dp"
             android:id="@+id/imageView5"
             android:scaleType="fitXY"
-
+            android:tint="#f00"
             android:layout_gravity="center_horizontal"
-
             android:adjustViewBounds="false"
-
             android:layout_alignParentTop="true"
-
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -88,70 +81,37 @@
 
 
             <ImageView
-
+                android:visibility="invisible"
                 android:layout_width="40dp"
-
-
                 android:layout_height="40dp"
-
                 android:src="@drawable/ic_highlight_off_black_24dp"
-
                 android:id="@+id/imgClose"
-
                 android:layout_alignParentTop="true"
-
                 android:layout_alignParentRight="true"
-
                 android:layout_alignParentEnd="true"
-
                 />
-
-
-
-
-
-
-
             <TextView
-
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
-
-                android:text="Tauhidul"
-
+                android:text="Connection Error"
                 android:textColor="#000000"
-
-
                 android:textStyle="italic|bold"
-
                 android:textSize="30sp"
-
                 android:id="@+id/textView9"
                 android:layout_marginTop="40dp"
-
                 android:layout_below="@+id/imgClose"
-
                 android:layout_centerHorizontal="true" />
 
             <TextView
 
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
-
-                android:text="Software Engineer "
-
+                android:text="Check your internet Connection"
                 android:textColor="#000000"
-
                 android:textStyle="italic"
-
                 android:textSize="20sp"
-
                 android:id="@+id/details"
-
                 android:layout_below="@+id/textView9"
-
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
@@ -165,7 +125,7 @@
             android:background="#40163d"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
-            android:text="SHOW Profile "
+            android:text="Colse "
             />
 
     </LinearLayout>

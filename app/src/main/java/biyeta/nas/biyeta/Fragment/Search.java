@@ -58,8 +58,7 @@ public class Search extends Fragment {
     public Search() {
         // Required empty public constructor
     }
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
-    LinearLayoutManager mayoutManager;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,7 +80,7 @@ public class Search extends Fragment {
             public void load() {
 
                 flag++;
-                if (flag<2) {
+                if (flag<=1) {
                     snackbar = Snackbar
                             .make(recyclerView, "Loading......", Snackbar.LENGTH_INDEFINITE);
 
@@ -89,8 +88,7 @@ public class Search extends Fragment {
                     new Get_Data().execute();
                 }
                 else {
-                    snackbar = Snackbar
-                            .make(recyclerView, "Pay Money for more profile", Snackbar.LENGTH_SHORT);
+                    snackbar = Snackbar.make(recyclerView, "Pay Money for more profile", Snackbar.LENGTH_SHORT);
                     snackbar.show();
                 }
 
@@ -166,7 +164,7 @@ public class Search extends Fragment {
             relativeLayout.setVisibility(View.GONE);
            // Toast.makeText(getContext(),res,Toast.LENGTH_SHORT).show();
 
-            if (flag==1)snackbar.dismiss();
+            if (flag==1) snackbar.dismiss();
           //  relativeLayout.setVisibility(View.GONE);
             try {
                 JSONObject jsonObject=new JSONObject(res);
@@ -230,7 +228,7 @@ public class Search extends Fragment {
                         .addHeader("Authorization", "Token token=" + token)
                         .build();
             }
-            else if(flag==0) {
+            else {
 
                  request = new Request.Builder()
                         .url("http://test.biyeta.com/api/v1/search/results")
