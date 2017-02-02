@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class Match extends Fragment {
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         // TODO Handle item click
-                        showDialog(getContext(),"");
+                        showDialog(getContext(),movieList.get(position).getDisplay_name(),movieList.get(position).getLocation());
 
                     }
                 })
@@ -82,11 +83,17 @@ public class Match extends Fragment {
 
     }
 
-    public void showDialog(Context activity, String msg){
+    public void showDialog(Context activity, String display_name,String location){
         final Dialog dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
+
         dialog.setContentView(R.layout.custom_dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        TextView display=(TextView)dialog.findViewById(R.id.display_name);
+        TextView loc=(TextView)dialog.findViewById(R.id.details);
+        display.setText(display_name);
+        loc.setText(location);
+        dialog.setCancelable(false);
 
     //    TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
       //  text.setText(msg);

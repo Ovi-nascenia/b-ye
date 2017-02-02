@@ -113,6 +113,7 @@
 
 
             <TextView
+                
 
                 android:layout_width="wrap_content"
 
@@ -127,7 +128,7 @@
 
                 android:textSize="30sp"
 
-                android:id="@+id/textView9"
+                android:id="@+id/display_name"
                 android:layout_marginTop="40dp"
 
                 android:layout_below="@+id/imgClose"
@@ -150,7 +151,7 @@
 
                 android:id="@+id/details"
 
-                android:layout_below="@+id/textView9"
+                android:layout_below="@+id/display_name"
 
                 android:layout_centerHorizontal="true" />
 
@@ -161,6 +162,7 @@
             android:layout_height="wrap_content"></android.support.v7.widget.CardView>
 
         <Button
+            android:id="@+id/btn_dialog"
             android:layout_width="match_parent"
             android:background="#40163d"
             android:layout_height="wrap_content"

@@ -243,7 +243,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/body_color"
+                    android:text="@string/education"
                     android:textStyle="bold" />
 
 
@@ -282,7 +282,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/body_color"
+                    android:text="@string/profession"
                     android:textStyle="bold" />
 
 
@@ -297,17 +297,69 @@
                     android:paddingTop="@dimen/activity_vertical_margin">
 
 
-                    <me.bendik.simplerangeview.SimpleRangeView
-                        android:id="@+id/__rangeview"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        >
+
+                        <CheckBox
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:text="Doctor"
+                            android:layout_weight="1"/>
+
+                        <CheckBox
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:text="Doctor"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        >
+
+                        <CheckBox
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:text="Doctor"
+                            android:layout_weight="1"/>
+
+                        <CheckBox
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:text="Doctor"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        >
+
+                        <CheckBox
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:text="Doctor"
+                            android:layout_weight="1"/>
+
+                        <CheckBox
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:text="Doctor"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
 
                 </LinearLayout>
 
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -321,12 +373,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/body_color"
+                    android:text="@string/education"
                     android:textStyle="bold" />
 
 
                 <LinearLayout
-                    android:id="@+id/colort"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -337,7 +389,6 @@
 
 
                     <me.bendik.simplerangeview.SimpleRangeView
-                        android:id="@+id/colort__rangeview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -346,6 +397,16 @@
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
+
+        <Button
+            android:background="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:text="Search"/>
+
+
 
 
     </LinearLayout>

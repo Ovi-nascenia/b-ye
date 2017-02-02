@@ -2,12 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:weightSum="10.7"
     android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/profile_list"
+        android:layout_weight="9.9"
+        android:visibility="gone"
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        >
+    </android.support.v7.widget.RecyclerView>
+
     <RelativeLayout
         android:id="@+id/RelativeLayoutLeftButton"
         android:layout_width="match_parent"
 
-        android:layout_height="match_parent" >
+        android:layout_weight="9.9"
+        android:layout_height="0dp" >
 
         <ProgressBar
             android:id="@+id/progressBar1"
@@ -26,26 +43,14 @@
             android:src="@drawable/b" />
     </RelativeLayout>
 
-
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/profile_list"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        >
-    </android.support.v7.widget.RecyclerView>
     <Button
         android:text="@string/willing_search"
+        android:layout_weight=".8"
         android:background="@color/colorPrimary"
         android:textColor="@color/tab_text_color"
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/search_btn" />

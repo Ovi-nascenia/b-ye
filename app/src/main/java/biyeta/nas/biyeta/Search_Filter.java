@@ -94,42 +94,17 @@ public class Search_Filter extends Activity  {
 //        rangeView.setActiveFocusThumbAlpha(0.26f);
 
 
-        age_range.setEnd(9);
-        age_range.setEndFixed(9);
-        age_range.setActiveLabelColor(Color.TRANSPARENT);
-        //age_range.setLabelColor(Color.TRANSPARENT);
-
-
-        age_range.setFixedLabelColor(Color.TRANSPARENT);
-
-        height_range.setActiveLabelColor(Color.TRANSPARENT);
 
 
         height_range.setFixedLabelColor(Color.TRANSPARENT);
-
-        age_range.setOnTrackRangeListener(new OnTrackRangeListener() {
-            @Override
-            public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
-
-
-
-
-            }
-
-            @Override
-            public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
-
-
-
-
-            }
-        });
         height_range.setOnTrackRangeListener(new OnTrackRangeListener() {
             @Override
             public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
 
+
                 height_range.setActiveLabelColor(Color.TRANSPARENT);
-              //  height_range.setLabelColor(Color.TRANSPARENT);
+                height_range.setFixedThumbLabelColor(Color.TRANSPARENT);
+                height_range.setLabelColor(Color.TRANSPARENT);
 
             }
 

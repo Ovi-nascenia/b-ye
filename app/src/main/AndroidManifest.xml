@@ -24,6 +24,8 @@
         <activity
             android:name=".LoginTest"
             android:label="@string/title_activity_login" ></activity>
+        <activity android:name=".Profile_View"></activity>
+        <activity android:name=".Search_Filter"></activity>
 
         <!--<activity android:name=".Search_Filter"-->
             <!--&gt;</activity>-->

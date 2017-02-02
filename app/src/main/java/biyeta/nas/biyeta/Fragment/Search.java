@@ -17,8 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -32,10 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import biyeta.nas.biyeta.AppData.SharePref;
-import biyeta.nas.biyeta.Constant.Constant;
-import biyeta.nas.biyeta.LastItemListener;
 import biyeta.nas.biyeta.Model.Profile;
 import biyeta.nas.biyeta.Adapter.Profile_Adapter;
+import biyeta.nas.biyeta.Profile_View;
 import biyeta.nas.biyeta.R;
 import biyeta.nas.biyeta.Search_Filter;
 
@@ -112,7 +112,7 @@ public class Search extends Fragment {
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         // TODO Handle item click
-                        showDialog(getContext(),"");
+                        showDialog(getContext(),profile_list.get(position).getDisplay_name(),profile_list.get(position).getLocation());
 
                     }
                 })
@@ -130,22 +130,39 @@ public class Search extends Fragment {
         return v;
 
     }
-    public void showDialog(Context activity, String msg){
+    public void showDialog(Context activity, String display_name,String location){
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         dialog.setContentView(R.layout.custom_dialog);
 
+
+
+
+        TextView display=(TextView)dialog.findViewById(R.id.display_name);
+        TextView loc=(TextView)dialog.findViewById(R.id.details);
+        display.setText(display_name);
+        loc.setText(location);
+
         //    TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
         //  text.setText(msg);
 
-        //Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
-//        dialogButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//            }
-//        });
+        Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // dialog.dismiss();
+                startActivity(new Intent(getContext(),Profile_View.class));
+
+            }
+        });
+        ImageView cross_image = (ImageView) dialog.findViewById(R.id.imgClose);
+        cross_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
         dialog.show();
 
@@ -162,6 +179,7 @@ public class Search extends Fragment {
             super.onPostExecute(res);
             ///hide the progress bar and show the recyclerview
             relativeLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
            // Toast.makeText(getContext(),res,Toast.LENGTH_SHORT).show();
 
             if (flag==1) snackbar.dismiss();
