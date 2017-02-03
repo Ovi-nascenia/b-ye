@@ -19,7 +19,9 @@
     <string name="body">গড়ন </string>
     <string name="body_color">গায়ের রং </string>
     <string name="education">পাত্রের শিক্ষাগত যোগ্যতা </string>
+    <string name="profession_identity">পাত্রের প্রফেশনাল গ্রুপ </string>
     <string name="profession">পাত্রের পেশা</string>
+
 
 
 </resources>
