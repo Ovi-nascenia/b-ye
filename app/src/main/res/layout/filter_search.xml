@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:rsb="http://schemas.android.com/apk/res-auto"
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="5dp">
 
@@ -26,18 +26,24 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/age_"
+                    android:paddingLeft="10dp"
+                    android:padding="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
                     android:text="@string/age"
                     android:textStyle="bold" />
 
 
                 <LinearLayout
+
                     android:id="@+id/age_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:visibility="gone"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin">
@@ -47,13 +53,12 @@
                         android:id="@+id/age_lebel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:count="32"
-                        />
+                        app:count="32" />
 
                     <TextView
+                        android:id="@+id/level"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/level"/>
+                        android:layout_height="wrap_content" />
 
 
                 </LinearLayout>
@@ -73,14 +78,19 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/height_"
+                    android:padding="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
                     android:text="@string/height"
+
                     android:textStyle="bold" />
 
 
                 <LinearLayout
                     android:id="@+id/height_container"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -92,11 +102,11 @@
 
                     <me.bendik.simplerangeview.SimpleRangeView
 
-                        app:count="52"
                         android:id="@+id/height_lebel"
-
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+
+                        android:layout_height="wrap_content"
+                        app:count="52" />
 
 
                 </LinearLayout>
@@ -117,13 +127,18 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/color_"
                     android:layout_width="match_parent"
+                    android:padding="20dp"
                     android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
                     android:text="@string/body_color"
+
                     android:textStyle="bold" />
 
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/color_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -136,9 +151,9 @@
 
                     <me.bendik.simplerangeview.SimpleRangeView
                         android:id="@+id/color_lebel"
-                        app:count="4"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        app:count="4" />
 
 
                 </LinearLayout>
@@ -159,14 +174,19 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView"
+
+                    android:id="@+id/body_"
+                    android:padding="20dp"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
                     android:text="@string/body"
                     android:textStyle="bold" />
 
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/body_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -179,6 +199,7 @@
 
                     <me.bendik.simplerangeview.SimpleRangeView
                         android:id="@+id/health_lebel"
+                        app:count="3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -189,13 +210,7 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
 
-
-        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -208,14 +223,20 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/education_"
+                    android:paddingLeft="10dp"
+                    android:padding="20dp"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
                     android:text="@string/education"
                     android:textStyle="bold" />
 
 
                 <LinearLayout
-                    android:id="@+id/color__container"
+                    android:visibility="gone"
+                    android:id="@+id/education_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -226,10 +247,10 @@
 
 
                     <me.bendik.simplerangeview.SimpleRangeView
-                        app:count="9"
                         android:id="@+id/education_lebel"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        app:count="9" />
 
                 </LinearLayout>
 
@@ -248,19 +269,28 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:paddingLeft="10dp"
+                    android:padding="20dp"
+                    android:id="@+id/profession_"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
                     android:text="@string/profession"
                     android:textStyle="bold" />
 
                 <biyeta.nas.biyeta.View.MyGridView
+                    android:visibility="gone"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
                     android:id="@+id/profession_grid"
                     android:layout_width="match_parent"
-                    android:numColumns="1"
                     android:layout_height="wrap_content"
+                    android:numColumns="1"
 
                     ></biyeta.nas.biyeta.View.MyGridView>
-
 
 
             </LinearLayout>
@@ -270,108 +300,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profession_identity"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/occupation_"
+                android:layout_width="match_parent"
+                android:padding="20dp"
+                android:paddingLeft="10dp"
 
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
+                android:text="@string/profession_identity"
+                android:textStyle="bold" />
 
-                <LinearLayout
+            <biyeta.nas.biyeta.View.MyGridView
+                android:visibility="gone"
+                android:id="@+id/occupation_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:numColumns="1"
 
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="3"
-                        >
-
-                        <CheckBox
-                            android:layout_width="0dip"
-                            android:layout_height="wrap_content"
-                            android:text="Doctor"
-                            android:layout_weight="1"/>
-
-                        <CheckBox
-                            android:layout_width="0dip"
-                            android:layout_height="wrap_content"
-                            android:text="Doctor"
-                            android:layout_weight="1"/>
-                        <CheckBox
-                            android:layout_width="0dip"
-                            android:layout_height="wrap_content"
-                            android:text="Doctor"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="3"
-                        >
-
-                        <CheckBox
-                            android:layout_width="0dip"
-                            android:layout_height="wrap_content"
-                            android:text="Doctor"
-                            android:layout_weight="1"/>
-
-                        <CheckBox
-                            android:layout_width="0dip"
-                            android:layout_height="wrap_content"
-                            android:text="Doctor"
-                            android:layout_weight="1"/>
-                        <CheckBox
-                            android:layout_width="0dip"
-                            android:layout_height="wrap_content"
-                            android:text="Doctor"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="3"
-                        >
-
-                        <CheckBox
-                            android:layout_width="0dip"
-                            android:layout_height="wrap_content"
-                            android:text="Doctor"
-                            android:layout_weight="1"/>
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
+                ></biyeta.nas.biyeta.View.MyGridView>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
 
         <Button
-            android:background="@color/colorPrimaryDark"
+            android:id="@+id/button"
             android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:text="Search"/>
-
-
+            android:background="@color/colorPrimaryDark"
+            android:text="Search"
+            android:textColor="#ffffff" />
 
 
     </LinearLayout>

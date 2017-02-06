@@ -5,27 +5,21 @@ package biyeta.nas.biyeta;
  */
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.RequiresApi;
+import android.os.Bundle ;
 import android.util.Log;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,30 +29,27 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Iterator;
 import biyeta.nas.biyeta.Adapter.Profession_Adapter;
 import biyeta.nas.biyeta.AppData.SharePref;
 import biyeta.nas.biyeta.Constant.Constant;
 import biyeta.nas.biyeta.Fragment.Search;
-import biyeta.nas.biyeta.Model.Profile;
 import biyeta.nas.biyeta.View.MyGridView;
 import me.bendik.simplerangeview.SimpleRangeView;
-
 import static me.bendik.simplerangeview.SimpleRangeView.*;
+public class Search_Filter extends Activity  implements OnClickListener{
 
-public class Search_Filter extends Activity  {
 
-
-    SimpleRangeView rangeView_age,rangeView_height,rangeView_color,rangeView_education;
-    EditText editStart;
-    EditText editEnd;
+    SimpleRangeView rangeView_age,rangeView_height,rangeView_color,rangeView_education,rangeView_health;
     TextView textView;
-    private String[] labels = new String[] {"L1","L2","L3","L4","L5","L6","L7","L8","L9","L10","L11"};
+    Button button;
 
     private ArrayList<String> skin_lebel,age_lebel,health_lebel,education_lebel,professional_lebel,occupation_lebel;
 
     public ArrayList<String> age_lebels;
     MyGridView gridView;
+    MyGridView gridView_occupation;
     private final OkHttpClient client = new OkHttpClient();
 
     String[] skin_status=new String[]{
@@ -66,6 +57,12 @@ public class Search_Filter extends Activity  {
             "উজ্জ্বল শ্যামলা",
              "ফর্সা",
              "অনেক ফর্সা"
+    };
+
+    String[] health_status=new String[]{
+            "স্লিম ",
+            "স্বাস্থ্যবান",
+            "বেশ স্বাস্থ্যব"
     };
 
     String[] education_status=new String[]{
@@ -117,35 +114,11 @@ public class Search_Filter extends Activity  {
         textView=(TextView)findViewById(R.id.level);
 
         new Get_Data().execute();
+        set_rangeView_lebel();
 
+    }
 
-
-       // fixedRangeView = (SimpleRangeView) findViewById(R.id.fixed_rangeview);
-//        rangeView.setOnRangeLabelsListener(this);
-//        rangeView.setOnTrackRangeListener(this);
-
-
-
-
-
-
-
-
-
-//        rangeView.setActiveLineColor(getResources().getColor(R.color.colorAccent));
-//        rangeView.setActiveThumbColor(getResources().getColor(R.color.colorAccent));
-//        rangeView.setActiveLabelColor(getResources().getColor(R.color.colorAccent));
-//        rangeView.setActiveThumbLabelColor(getResources().getColor(R.color.colorAccent));
-//        rangeView.setActiveFocusThumbColor(getResources().getColor(R.color.colorAccent));
-//        rangeView.setActiveFocusThumbAlpha(0.26f);
-
-
-
-        //        rangeView.setActiveThumbColor(getResources().getColor(R.color.colorAccent));
-//        rangeView.setActiveLabelColor(getResources().getColor(R.color.colorAccent));
-      //  rangeView.setActiveThumbLabelColor(getResources().getColor(R.color.colorAccent));
-     //   rangeView.setActiveFocusThumbColor(getResources().getColor(R.color.colorAccent));
-//        rangeView.setActiveFocusThumbAlpha(0.26f);
+    private void set_rangeView_lebel() {
 
         rangeView_age.setActiveLabelColor(Color.TRANSPARENT);
         rangeView_age.setFixedThumbLabelColor(Color.TRANSPARENT);
@@ -155,20 +128,15 @@ public class Search_Filter extends Activity  {
         rangeView_age.setOnTrackRangeListener(new OnTrackRangeListener() {
             @Override
             public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
-
-
                 rangeView_age.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_age.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_age.setLabelColor(Color.TRANSPARENT);
-
             }
 
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
-
                 rangeView_age.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_age.setLabelColor(Color.TRANSPARENT);
-
             }
         });
 
@@ -191,12 +159,9 @@ public class Search_Filter extends Activity  {
         rangeView_height.setOnTrackRangeListener(new OnTrackRangeListener() {
             @Override
             public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
-
-
                 rangeView_height.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_height.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_height.setLabelColor(Color.TRANSPARENT);
-
             }
 
             @Override
@@ -204,12 +169,8 @@ public class Search_Filter extends Activity  {
 
                 rangeView_height.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_height.setLabelColor(Color.TRANSPARENT);
-
             }
         });
-
-
-
         rangeView_height.setOnRangeLabelsListener(new OnRangeLabelsListener() {
             @org.jetbrains.annotations.Nullable
             @Override
@@ -217,12 +178,6 @@ public class Search_Filter extends Activity  {
                 return health_lebel.get(i);
             }
         });
-
-
-
-
-
-
         rangeView_color.setLabelFontSize(14);
         rangeView_color.setActiveLabelColor(Color.TRANSPARENT);
         rangeView_color.setFixedThumbLabelColor(Color.TRANSPARENT);
@@ -232,23 +187,17 @@ public class Search_Filter extends Activity  {
         rangeView_color.setOnTrackRangeListener(new OnTrackRangeListener() {
             @Override
             public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
-
-
                 rangeView_color.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_color.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_color.setLabelColor(Color.TRANSPARENT);
-
             }
-
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
-
                 rangeView_color.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_color.setLabelColor(Color.TRANSPARENT);
 
             }
         });
-
         rangeView_color.setOnRangeLabelsListener(new OnRangeLabelsListener() {
             @org.jetbrains.annotations.Nullable
             @Override
@@ -256,17 +205,44 @@ public class Search_Filter extends Activity  {
                 return skin_status[i];
             }
         });
-
-
-
-
         rangeView_education.setLabelFontSize(14);
         rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
         rangeView_education.setFixedThumbLabelColor(Color.TRANSPARENT);
         rangeView_education.setLabelColor(Color.TRANSPARENT);
-
         rangeView_education.setFixedLabelColor(Color.TRANSPARENT);
         rangeView_education.setOnTrackRangeListener(new OnTrackRangeListener() {
+            @Override
+            public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
+
+
+                rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
+                rangeView_education.setFixedThumbLabelColor(Color.TRANSPARENT);
+                rangeView_education.setLabelColor(Color.TRANSPARENT);
+
+            }
+            @Override
+            public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
+
+                rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
+                rangeView_education.setLabelColor(Color.TRANSPARENT);
+
+            }
+        });
+
+        rangeView_education.setOnRangeLabelsListener(new OnRangeLabelsListener() {
+            @org.jetbrains.annotations.Nullable
+            @Override
+            public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull State state) {
+                return education_status[i];
+            }
+        });
+        rangeView_health.setLabelFontSize(14);
+        rangeView_health.setActiveLabelColor(Color.TRANSPARENT);
+        rangeView_health.setFixedThumbLabelColor(Color.TRANSPARENT);
+        rangeView_health.setLabelColor(Color.TRANSPARENT);
+
+        rangeView_health.setFixedLabelColor(Color.TRANSPARENT);
+        rangeView_health.setOnTrackRangeListener(new OnTrackRangeListener() {
             @Override
             public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
 
@@ -286,24 +262,158 @@ public class Search_Filter extends Activity  {
             }
         });
 
-        rangeView_education.setOnRangeLabelsListener(new OnRangeLabelsListener() {
+        rangeView_health.setOnRangeLabelsListener(new OnRangeLabelsListener() {
             @org.jetbrains.annotations.Nullable
             @Override
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull State state) {
-                return education_status[i];
+                return health_status[i];
             }
         });
     }
 
+    String res=
+    "\n" +
+            "{\n" +
+            "  \"search\": {\n" +
+            "    \"age_range\": \"9;18\",\n" +
+            "    \"height_range\": \"10;27\",\n" +
+            "    \"skin_color\": \"0;3\",\n" +
+            "    \"health_range\": \"0;2\",\n" +
+            "    \"education_range\": \"0;8\",\n" +
+            "    \"occupation_range\": [\"5\",\"7\",\"1\" ],\n" +
+            "    \"profession_grp_range\": [\"101\", \"102\", \"104\", \"105\", \"108\", \"110\", \"112\" ],\n" +
+            "    \"current_status\": [ \"0\", \"1\" ],\n" +
+            "    \"division_status\": [\"18\", \"19\", \"20\", \"21\", \"23\", \"24\", \"25\", \"26\", \"28\", \"29\", \"31\",  \"32\",\"34\",\"27\",\"22\", \"30\", \"33\", \"7\", \"8\", \"9\", \"10\",\"11\", \"12\", \"13\", \"14\", \"15\", \"16\", \"17\", \"35\", \"36\", \"37\", \"38\", \"39\", \"40\", \"41\",  \"42\", \"43\", \"44\", \"45\", \"46\", \"49\", \"52\",  \"54\", \"55\", \"57\", \"59\",\"1\",\"2\",\"3\", \"4\",\"5\",\"6\",\"61\", \"62\",\"63\",\"64\",\"47\",\"48\",\"50\",\"51\",\"53\",\"56\",\"58\",\"60\"],\n" +
+            "    \"marital_status\": [ \"1\", \"2\", \"3\", \"4\" ],\n" +
+            "    \"religion_cast\": [ \"1\", \"2\", \"3\" ]\n" +
+            "  }\n" +
+            "}\n" +
+            "\n";
+    String ch="";
     void set_up_id()
     {
         rangeView_age=(SimpleRangeView)findViewById(R.id.age_lebel);
         rangeView_height=(SimpleRangeView)findViewById(R.id.height_lebel);
         rangeView_color=(SimpleRangeView)findViewById(R.id.color_lebel);
         rangeView_education=(SimpleRangeView)findViewById(R.id.education_lebel);
-
+        rangeView_health=(SimpleRangeView)findViewById(R.id.health_lebel);
         gridView=(MyGridView)findViewById(R.id.profession_grid);
+        gridView_occupation=(MyGridView)findViewById(R.id.occupation_grid);
+        findViewById(R.id.age_).setOnClickListener(this);
+        findViewById(R.id.height_).setOnClickListener(this);
+        findViewById(R.id.education_).setOnClickListener(this);
+        findViewById(R.id.profession_).setOnClickListener(this);
+        findViewById(R.id.occupation_).setOnClickListener(this);
+        findViewById(R.id.color_).setOnClickListener(this);
+        findViewById(R.id.body_).setOnClickListener(this);
+
+
+        findViewById(R.id.button).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                new Get_Data1().execute();
+
+
+                }
+
+
+        });
+
     }
+
+
+
+    @Override
+    public void onClick(View view) {
+        int id=view.getId();
+        switch (id)
+        {
+            case R.id.age_:
+                if (findViewById(R.id.age_container).getVisibility()==VISIBLE)
+                    findViewById(R.id.age_container).setVisibility(GONE);
+                else
+                    findViewById(R.id.age_container).setVisibility(VISIBLE);
+                break;
+            case R.id.body_:
+                if (findViewById(R.id.body_container).getVisibility()==VISIBLE)
+                    findViewById(R.id.body_container).setVisibility(GONE);
+                else
+                    findViewById(R.id.body_container).setVisibility(VISIBLE);
+                break;
+            case R.id.color_:
+                if (findViewById(R.id.color_container).getVisibility()==VISIBLE)
+                    findViewById(R.id.color_container).setVisibility(GONE);
+                else
+                    findViewById(R.id.color_container).setVisibility(VISIBLE);
+                break;
+            case R.id.height_:
+                if (findViewById(R.id.height_container).getVisibility()==VISIBLE)
+                    findViewById(R.id.height_container).setVisibility(GONE);
+                else
+                    findViewById(R.id.height_container).setVisibility(VISIBLE);
+                break;
+            case R.id.education_:
+                if (findViewById(R.id.education_container).getVisibility()==VISIBLE)
+                    findViewById(R.id.education_container).setVisibility(GONE);
+                else
+                    findViewById(R.id.education_container).setVisibility(VISIBLE);
+                break;
+
+            case R.id.profession_:
+                if (findViewById(R.id.profession_grid).getVisibility()==VISIBLE)
+                    findViewById(R.id.profession_grid).setVisibility(GONE);
+                else
+                    findViewById(R.id.profession_grid).setVisibility(VISIBLE);
+                break;
+            case R.id.occupation_:
+                if (findViewById(R.id.occupation_grid).getVisibility()==VISIBLE)
+                    findViewById(R.id.occupation_grid).setVisibility(GONE);
+                else
+                    findViewById(R.id.occupation_grid).setVisibility(VISIBLE);
+                break;
+
+        }
+    }
+
+    class Get_Data1 extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Toast.makeText(Search_Filter.this,ch,Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            SharePref sharePref=new SharePref(Search_Filter.this);
+            final  String token=sharePref.get_data("token");
+
+            MediaType JSON
+                    = MediaType.parse("application/json; charset=utf-8");
+
+            OkHttpClient client = new OkHttpClient();
+
+            RequestBody body = RequestBody.create(JSON, res);
+            Request request = new Request.Builder()
+                    .url("http://test.biyeta.com/api/v1/search/filtered-results")
+                    .addHeader("Authorization", "Token token=" + token)
+                    .post(body)
+                    .build();
+            Response response = null;
+            try {
+                response = client.newCall(request).execute();
+                ch= response.body().string();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Log.e("fuck","fjuc"+ch+res);
+            return ch;
+        }
+    }
+
 
     //fetch data from
     class Get_Data extends AsyncTask<String, String, String> {
@@ -311,7 +421,6 @@ public class Search_Filter extends Activity  {
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
             parse_data(res);
-            ///Toast.makeText(Search_Filter.this,res,Toast.LENGTH_SHORT).show();
 
 
         }
@@ -319,6 +428,7 @@ public class Search_Filter extends Activity  {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
 
 
         }
@@ -376,14 +486,51 @@ public class Search_Filter extends Activity  {
             professional_options=jsonObject.getJSONObject("preference").getJSONObject("preference_constants").getJSONObject("professional_options");
             occupation_options=jsonObject.getJSONObject("preference").getJSONObject("preference_constants").getJSONObject("occupation_options");
 
+            HashMap<String,Boolean> is_occupation=new HashMap<>();
 
 
             for (int i=0;i<skin_color.length();i++)
             {
-                Log.e("fuck",skin_color.getString(""+i));
                 skin_lebel.add(skin_color.getString(""+i));
             }
+            for (int i=0;i<new JSONArray(occupation).length();i++)
+            {
+                Log.e("TAQ",new JSONArray(occupation).get(i).toString());
+                is_occupation.put(new JSONArray(occupation).get(i).toString(),true);
+            }
+
             ArrayList<String> profession_list=new ArrayList<>(),profession_number=new ArrayList<>();
+            ArrayList<String> occupation_list=new ArrayList<>();
+            ArrayList<Boolean>is_checked_occupation=new ArrayList<>();
+            Iterator<String> iter = occupation_options.keys();
+            while (iter.hasNext()) {
+
+                String key = iter.next();
+                try {
+                    String value = (String) occupation_options.get(key);
+
+                    Log.e("TAQ", value + "      " + key);
+                    occupation_list.add(value);
+                    // is_occupation.put(key,false);
+                    try {
+                        if (is_occupation.get(key))
+                           is_checked_occupation.add(true);
+
+                        else
+                            is_checked_occupation.add(false);
+                    } catch (NullPointerException n) {
+                            is_checked_occupation.add(false);
+                    }
+
+                }catch (Exception e)
+                {
+
+                }
+            }
+
+
+
+
             ArrayList<Boolean> is_checked=new ArrayList<>();
             for (int i=0;i<professional_options.length();i++)
             {
@@ -403,6 +550,9 @@ public class Search_Filter extends Activity  {
 
             Profession_Adapter profession_adapter=new Profession_Adapter(getApplicationContext(),profession_list,is_checked);
             gridView.setAdapter(profession_adapter);
+
+            Profession_Adapter profession_adapter1=new Profession_Adapter(getApplicationContext(),occupation_list,is_checked_occupation);
+            gridView_occupation.setAdapter(profession_adapter1);
 
 
 
@@ -446,27 +596,10 @@ public class Search_Filter extends Activity  {
             rangeView_height.setEnd(end);
             rangeView_color.setStart(Integer.parseInt(new JSONArray(skin).getString(0)));
             rangeView_color.setEnd(Integer.parseInt(new JSONArray(skin).getString(1)));
-
-
+            rangeView_health.setStart(Integer.parseInt(new JSONArray(health).getString(0)));
+            rangeView_health.setEnd(Integer.parseInt(new JSONArray(health).getString(1)));
             rangeView_education.setStart(Integer.parseInt(new JSONArray(education).getString(0)));
             rangeView_education.setEnd(Integer.parseInt(new JSONArray(education).getString(1)));
-
-
-
-            Log.e("fuck",Integer.parseInt(new JSONArray(skin).getString(0))+"        "+Integer.parseInt(new JSONArray(skin).getString(1)));
-
-
-
-
-
-
-
-
-
-
-
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -1,14 +1,21 @@
 package biyeta.nas.biyeta;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +28,10 @@ import biyeta.nas.biyeta.Fragment.Search;
 
 
 public class HomeScreen extends AppCompatActivity {
+
+
+    static Context context;
+    DrawerLayout drawerLayout;
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -36,15 +47,47 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
+        setContentView(R.layout.layout_drawer);
+        context=this;
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
        // viewPager.setOffscreenPageLimit(0);
         setupViewPager(viewPager);
 
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                if (position==3)
+                tabLayout.getTabAt(position).select();
+            }
+        });
+        drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                if(tab.getPosition()==3)
+                {
+                    drawerLayout.openDrawer(Gravity.RIGHT);
+                }
+
+                //Toast.makeText(context,"Come",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private void setupTabIcons() {
@@ -75,6 +118,7 @@ public class HomeScreen extends AppCompatActivity {
         tabLayout.getTabAt(3).setCustomView(tabfive);
     }
 
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
        // adapter.addFrag(new Search(), "ONE");
@@ -86,6 +130,7 @@ public class HomeScreen extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
     }
+
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -109,7 +154,9 @@ public class HomeScreen extends AppCompatActivity {
                     return new Inbox();
 
                 case 3:
-                    return new Profile();
+                  // drawerLayout.openDrawer(Gravity.RIGHT);
+              //      Toast.makeText(context,"Local",Toast.LENGTH_SHORT).show();
+                    return  new Profile();
 
                 default:
 

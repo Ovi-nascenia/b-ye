@@ -204,7 +204,7 @@ public class Search extends Fragment {
                     String location=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
                     String image=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
 
-                    Profile profile=new Profile(id,age,height_ft,height_inc,display_name,occupation,professional_group,skin_color,marital_status,health,religion,cast,location,image);
+                    Profile profile=new Profile(id,age,height_ft,height_inc,display_name,occupation,professional_group,skin_color,"Unmarried",health,religion,cast,location,image);
 
                     profile_list.add(profile);
                     mProfile_adapter.notifyDataSetChanged();
