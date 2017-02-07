@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+
+    android:padding="2dp"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginBottom="4dp"
+        android:layout_height="100dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="1dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/profile"
+                android:tint="#4b3b3a" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3.5"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="2dp"
+               >
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="User Name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp" />
+
+
+
+                <TextView
+                    android:id="@+id/details"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    android:text="আগুন দেওয়ায় পুলিশ সম্পৃক্ত বলে গণমাধ্যমে আসা খবর যুক্ত করে রিট আবেদনকারীদের"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+
+
+
+
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="3dp"></LinearLayout>
+
+</LinearLayout>

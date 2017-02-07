@@ -8,7 +8,7 @@ public class Profile {
 
     private String id;
     private String age;
-    String height_ft, height_inc,display_name,occupation,professional_group,skin_color,marital_status,health,religion,cast,location,image;
+    String height_ft, height_inc,display_name,occupation,professional_group,skin_color,location,image,health;
 //    private String profession;
 //    private String age;
 //    private String skin_color;
@@ -18,7 +18,7 @@ public class Profile {
 //    private String city;
 
 
-    public  Profile(String id,String age,String height_ft,String height_inc,String display_name,String occupation,String professional_group,String skin_color,String marital_status,String health,String religion,String cast,String location,String image )
+    public  Profile(String id,String age,String height_ft,String height_inc,String display_name,String occupation,String professional_group,String skin_color,String location,String health,String image )
     {
         this.id=id;
         this.age=age;
@@ -28,22 +28,28 @@ public class Profile {
         this.occupation=occupation;
         this.professional_group=professional_group;
         this.skin_color=skin_color;
-        this.marital_status=marital_status;
-        this.health=health;
-        this.religion=religion;
-        this.cast=cast;
-        this.location=location;
         this.image=image;
+        this.location=location;
+        this.health=health;
 
 
+
+    }
+
+    public String getHealth() {
+        return health;
     }
 
     public String getHeight_ft() {
         return height_ft;
     }
 
-    public void setHeight_ft(String height_ft) {
-        this.height_ft = height_ft;
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 
     public String getId() {
@@ -58,17 +64,11 @@ public class Profile {
         return display_name;
     }
 
-    public void setDisplay_name(String display_name) {
-        this.display_name = display_name;
-    }
 
     public String getHeight_inc() {
         return height_inc;
     }
 
-    public void setHeight_inc(String height_inc) {
-        this.height_inc = height_inc;
-    }
 
     public String getOccupation() {
         return occupation;
@@ -94,37 +94,8 @@ public class Profile {
         this.skin_color = skin_color;
     }
 
-    public String getMarital_status() {
-        return marital_status;
-    }
 
-    public void setMarital_status(String marital_status) {
-        this.marital_status = marital_status;
-    }
 
-    public String getHealth() {
-        return health;
-    }
-
-    public void setHealth(String health) {
-        this.health = health;
-    }
-
-    public String getReligion() {
-        return religion;
-    }
-
-    public void setReligion(String religion) {
-        this.religion = religion;
-    }
-
-    public String getCast() {
-        return cast;
-    }
-
-    public void setCast(String cast) {
-        this.cast = cast;
-    }
 
     public String getLocation() {
         return location;

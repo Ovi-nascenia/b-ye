@@ -197,14 +197,14 @@ public class Search extends Fragment {
                     String occupation=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("occupation");
                     String professional_group=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("professional_group");
                     String skin_color=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("skin_color");
-                    String marital_status=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("marital_status");
+                   // String marital_status=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("marital_status");
                     String health=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("health");
-                    String religion=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("religion");
-                    String cast=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("cast");
+                    //String religion=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("religion");
+                    //String cast=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("cast");
                     String location=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
                     String image=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
 
-                    Profile profile=new Profile(id,age,height_ft,height_inc,display_name,occupation,professional_group,skin_color,"Unmarried",health,religion,cast,location,image);
+                    Profile profile=new Profile(id,age,height_ft,height_inc,display_name,occupation,professional_group,skin_color,location,health,image);
 
                     profile_list.add(profile);
                     mProfile_adapter.notifyDataSetChanged();
