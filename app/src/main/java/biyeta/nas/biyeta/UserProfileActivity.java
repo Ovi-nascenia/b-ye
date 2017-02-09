@@ -62,6 +62,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userProfileInfoArrayList.add(new UserProfileInfo("age", "23 year"));
         userProfileInfoArrayList.add(new UserProfileInfo("age", "23 year"));
 
+
         userProfileInfoRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         userProfileInfoRecyclerView.setAdapter(new UserProfileRecyclerAdapter(getBaseContext(), userProfileInfoArrayList));
 
