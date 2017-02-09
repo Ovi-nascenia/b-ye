@@ -136,7 +136,7 @@ public class LoginTest extends AppCompatActivity implements View.OnClickListener
 
                     new LoginRequest().execute(user_name, password);
                 }
-                ///connect the server for checking username and password
+                ///connect the server for chffecking username and password
                 //call a asytask for network operation
 
 

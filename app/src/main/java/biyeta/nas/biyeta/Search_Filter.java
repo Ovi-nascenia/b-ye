@@ -409,7 +409,6 @@ public class Search_Filter extends Activity  implements OnClickListener{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.e("fuck","fjuc"+ch+res);
             return ch;
         }
     }

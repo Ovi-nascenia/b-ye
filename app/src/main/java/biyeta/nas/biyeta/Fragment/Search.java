@@ -111,8 +111,12 @@ public class Search extends Fragment {
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         // TODO Handle item click
-                        showDialog(getContext(),profile_list.get(position).getDisplay_name(),profile_list.get(position).getLocation());
+                      //  showDialog(getContext(),profile_list.get(position).getDisplay_name(),profile_list.get(position).getLocation());
 
+                       // TODO: 2/9/2017   2/9/2017
+
+                        startActivity(new Intent(getContext(),Profile_View.class));
+                        //show your profile layout
                     }
                 })
         );

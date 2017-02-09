@@ -14,4 +14,9 @@ public class Profile_View extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_view);
     }
+
+    void set_custom_appbar()
+    {
+
+    }
 }
