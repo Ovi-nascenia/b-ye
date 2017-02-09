@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,16 +48,16 @@ public class Search extends Fragment {
 
     RecyclerView recyclerView;
     RelativeLayout relativeLayout;
-    int flag=0;
+    int flag=1;
     Snackbar snackbar;
-
+    static  int page_number=0;
     Button search_btn;
     Profile_Adapter mProfile_adapter;
     private List<Profile> profile_list = new ArrayList<>();
     private final OkHttpClient client = new OkHttpClient();
 
     public Search() {
-        // Required empty public constructor
+
     }
 
 
@@ -66,30 +67,28 @@ public class Search extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Log.e("come", "search");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.search, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.profile_list);
         search_btn = (Button) v.findViewById(R.id.search_btn);
-
         mProfile_adapter = new Profile_Adapter(profile_list) {
             @Override
             public void load() {
 
                 flag++;
-                if (flag<=1) {
+                if (flag<=page_number) {
                     snackbar = Snackbar
-                            .make(recyclerView, "Loading......", Snackbar.LENGTH_INDEFINITE);
+                            .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
+                   Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
+                    snack_view.addView(new ProgressBar(getContext()));
+                    snackbar.show();
 
                     snackbar.show();
                     new Get_Data().execute();
                 }
                 else {
-                    snackbar = Snackbar.make(recyclerView, "Pay Money for more profile", Snackbar.LENGTH_SHORT);
-                    snackbar.show();
+
                 }
 
             }
@@ -143,15 +142,10 @@ public class Search extends Fragment {
         TextView loc=(TextView)dialog.findViewById(R.id.details);
         display.setText(display_name);
         loc.setText(location);
-
-        //    TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
-        //  text.setText(msg);
-
         Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // dialog.dismiss();
                 startActivity(new Intent(getContext(),Profile_View.class));
 
             }
@@ -163,7 +157,6 @@ public class Search extends Fragment {
                 dialog.dismiss();
             }
         });
-
         dialog.show();
 
     }
@@ -177,15 +170,15 @@ public class Search extends Fragment {
         @Override
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
-            ///hide the progress bar and show the recyclerview
             relativeLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
            // Toast.makeText(getContext(),res,Toast.LENGTH_SHORT).show();
 
-            if (flag==1) snackbar.dismiss();
+            if (flag!=1) snackbar.dismiss();
           //  relativeLayout.setVisibility(View.GONE);
             try {
                 JSONObject jsonObject=new JSONObject(res);
+                page_number=jsonObject.getInt("total_page");
                 for (int i=0;i<jsonObject.getJSONArray("profiles").length();i++)
 
                 {
@@ -203,6 +196,7 @@ public class Search extends Fragment {
                     //String cast=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("cast");
                     String location=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
                     String image=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
+
 
                     Profile profile=new Profile(id,age,height_ft,height_inc,display_name,occupation,professional_group,skin_color,location,health,image);
 
@@ -239,10 +233,10 @@ public class Search extends Fragment {
             SharePref sharePref=new SharePref(getContext());
             String token=sharePref.get_data("token");
             Request request = null;
-            if (flag==1)
+            if (flag!=1)
             {
                  request = new Request.Builder()
-                        .url("http://test.biyeta.com/api/v1/search/results?page=2")
+                        .url("http://test.biyeta.com/api/v1/search/results?page="+flag)
                         .addHeader("Authorization", "Token token=" + token)
                         .build();
             }
