@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/medium_margin"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/smiley_icon_padding"
+        android:paddingRight="@dimen/smiley_icon_padding"
+        android:paddingTop="@dimen/smiley_icon_padding"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ব্যবসায়ী"
+            android:textSize="@dimen/medium_textsize" />
+
+        <TextView
+            android:id="@+id/titleResultTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/negative_large_margin"
+            android:layout_weight="1"
+            android:text="পেশাই জড়িত নাই"
+            android:textSize="@dimen/medium_textsize" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="@dimen/medium_margin"
+        android:layout_marginRight="@dimen/medium_margin"
+        android:background="#EEEEEE">
+
+    </LinearLayout>
+
+
+</LinearLayout>

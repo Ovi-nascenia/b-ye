@@ -39,6 +39,7 @@ import biyeta.nas.biyeta.Adapter.Profile_Adapter;
 import biyeta.nas.biyeta.Profile_View;
 import biyeta.nas.biyeta.R;
 import biyeta.nas.biyeta.Search_Filter;
+import biyeta.nas.biyeta.UserProfileActivity;
 
 /**
  * Created by user on 1/5/2017.
@@ -48,9 +49,9 @@ public class Search extends Fragment {
 
     RecyclerView recyclerView;
     RelativeLayout relativeLayout;
-    int flag=1;
+    int flag = 1;
     Snackbar snackbar;
-    static  int page_number=0;
+    static int page_number = 0;
     Button search_btn;
     Profile_Adapter mProfile_adapter;
     private List<Profile> profile_list = new ArrayList<>();
@@ -77,17 +78,16 @@ public class Search extends Fragment {
             public void load() {
 
                 flag++;
-                if (flag<=page_number) {
+                if (flag <= page_number) {
                     snackbar = Snackbar
                             .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
-                   Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
+                    Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
                     snack_view.addView(new ProgressBar(getContext()));
                     snackbar.show();
 
                     snackbar.show();
                     new Get_Data().execute();
-                }
-                else {
+                } else {
 
                 }
 
@@ -97,7 +97,7 @@ public class Search extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mProfile_adapter);
-        relativeLayout=(RelativeLayout)v.findViewById(R.id.RelativeLayoutLeftButton) ;
+        relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutLeftButton);
         //relativeLayout.setVisibility(View.GONE);
 
         search_btn.setOnClickListener(new View.OnClickListener() {
@@ -109,44 +109,40 @@ public class Search extends Fragment {
         new Get_Data().execute();
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                    @Override
+                    public void onItemClick(View view, int position) {
                         // TODO Handle item click
-                        showDialog(getContext(),profile_list.get(position).getDisplay_name(),profile_list.get(position).getLocation());
+                        // showDialog(getContext(),profile_list.get(position).getDisplay_name(),profile_list.get(position).getLocation());
 
+                        startActivity(new Intent(getActivity(), UserProfileActivity.class));
                     }
                 })
         );
 
 
-
-
-
-
-
-     //  prepareMovieData();
+        //  prepareMovieData();
 
 
         return v;
 
     }
-    public void showDialog(Context activity, String display_name,String location){
+
+    public void showDialog(Context activity, String display_name, String location) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         dialog.setContentView(R.layout.custom_dialog);
 
 
-
-
-        TextView display=(TextView)dialog.findViewById(R.id.display_name);
-        TextView loc=(TextView)dialog.findViewById(R.id.details);
+        TextView display = (TextView) dialog.findViewById(R.id.display_name);
+        TextView loc = (TextView) dialog.findViewById(R.id.details);
         display.setText(display_name);
         loc.setText(location);
         Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),Profile_View.class));
+                startActivity(new Intent(getContext(), Profile_View.class));
 
             }
         });
@@ -162,9 +158,6 @@ public class Search extends Fragment {
     }
 
 
-
-
-
     //fetch data from
     class Get_Data extends AsyncTask<String, String, String> {
         @Override
@@ -172,37 +165,36 @@ public class Search extends Fragment {
             super.onPostExecute(res);
             relativeLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-           // Toast.makeText(getContext(),res,Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getContext(),res,Toast.LENGTH_SHORT).show();
 
-            if (flag!=1) snackbar.dismiss();
-          //  relativeLayout.setVisibility(View.GONE);
+            if (flag != 1) snackbar.dismiss();
+            //  relativeLayout.setVisibility(View.GONE);
             try {
-                JSONObject jsonObject=new JSONObject(res);
-                page_number=jsonObject.getInt("total_page");
-                for (int i=0;i<jsonObject.getJSONArray("profiles").length();i++)
+                JSONObject jsonObject = new JSONObject(res);
+                page_number = jsonObject.getInt("total_page");
+                for (int i = 0; i < jsonObject.getJSONArray("profiles").length(); i++)
 
                 {
-                    String id=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name");
-                    String age=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("age");
-                    String height_ft=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_ft");
-                    String height_inc=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_inc");
-                    String display_name=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name");
-                    String occupation=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("occupation");
-                    String professional_group=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("professional_group");
-                    String skin_color=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("skin_color");
-                   // String marital_status=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("marital_status");
-                    String health=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("health");
+                    String id = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name");
+                    String age = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("age");
+                    String height_ft = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_ft");
+                    String height_inc = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_inc");
+                    String display_name = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name");
+                    String occupation = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("occupation");
+                    String professional_group = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("professional_group");
+                    String skin_color = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("skin_color");
+                    // String marital_status=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("marital_status");
+                    String health = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("health");
                     //String religion=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("religion");
                     //String cast=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("cast");
-                    String location=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
-                    String image=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
+                    String location = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
+                    String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
 
 
-                    Profile profile=new Profile(id,age,height_ft,height_inc,display_name,occupation,professional_group,skin_color,location,health,image);
+                    Profile profile = new Profile(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
 
                     profile_list.add(profile);
                     mProfile_adapter.notifyDataSetChanged();
-
 
 
                     //Log.e("fuck",jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name"));
@@ -213,7 +205,7 @@ public class Search extends Fragment {
             }
 
 
-           // Toast.makeText(getContext(),res,Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getContext(),res,Toast.LENGTH_SHORT).show();
 
 
         }
@@ -230,26 +222,24 @@ public class Search extends Fragment {
 
             //get data from url
             Response response;
-            SharePref sharePref=new SharePref(getContext());
-            String token=sharePref.get_data("token");
+            SharePref sharePref = new SharePref(getContext());
+            String token = sharePref.get_data("token");
             Request request = null;
-            if (flag!=1)
-            {
-                 request = new Request.Builder()
-                        .url("http://test.biyeta.com/api/v1/search/results?page="+flag)
+            if (flag != 1) {
+                request = new Request.Builder()
+                        .url("http://test.biyeta.com/api/v1/search/results?page=" + flag)
                         .addHeader("Authorization", "Token token=" + token)
                         .build();
-            }
-            else {
+            } else {
 
-                 request = new Request.Builder()
+                request = new Request.Builder()
                         .url("http://test.biyeta.com/api/v1/search/results")
                         .addHeader("Authorization", "Token token=" + token)
                         .build();
             }
 
             try {
-                response=client.newCall(request).execute();
+                response = client.newCall(request).execute();
                 String jsonData = response.body().string();
                 JSONObject Jobject = new JSONObject(jsonData);
                 return Jobject.toString();
