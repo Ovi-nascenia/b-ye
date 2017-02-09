@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biyeta.nas.biyeta">
+
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -23,12 +24,16 @@
             android:theme="@style/MyMaterialTheme" />
         <activity
             android:name=".LoginTest"
-            android:label="@string/title_activity_login" ></activity>
+            android:label="@string/title_activity_login"></activity>
         <activity android:name=".Profile_View"></activity>
         <activity android:name=".Search_Filter"></activity>
 
         <!--<activity android:name=".Search_Filter"-->
-            <!--&gt;</activity>-->
+        <!--&gt;</activity>-->
+        <activity
+            android:name=".UserProfileActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
+
     </application>
 
 </manifest>
