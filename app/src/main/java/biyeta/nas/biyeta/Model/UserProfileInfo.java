@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta.Model;
+package biyeta.nas.biyeta.model;
 
 /**
  * Created by saiful on 2/8/17.

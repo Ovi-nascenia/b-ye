@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta.View;
+package biyeta.nas.biyeta.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;

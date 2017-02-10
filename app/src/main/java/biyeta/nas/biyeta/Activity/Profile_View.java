@@ -1,8 +1,10 @@
-package biyeta.nas.biyeta;
+package biyeta.nas.biyeta.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import biyeta.nas.biyeta.R;
 
 /**
  * Created by god father on 1/31/2017.

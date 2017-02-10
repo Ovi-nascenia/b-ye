@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta;
+package biyeta.nas.biyeta.activity;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -8,8 +8,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import biyeta.nas.biyeta.AppData.SharePref;
-import biyeta.nas.biyeta.Constant.Constant;
+import biyeta.nas.biyeta.appData.SharePref;
+import biyeta.nas.biyeta.constant.Constant;
+import biyeta.nas.biyeta.R;
 
 
 public class SplashScreen extends AppCompatActivity {
@@ -38,7 +39,7 @@ public class SplashScreen extends AppCompatActivity {
 
              SharePref sharePref=new SharePref(SplashScreen.this);
             if (sharePref.get_data("token").equals("key")) {
-                Intent i = new Intent(SplashScreen.this, LoginTest.class);
+                Intent i = new Intent(SplashScreen.this, Login.class);
                 startActivity(i);
                 ///Kill the current activity
                 finish();

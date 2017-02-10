@@ -1,18 +1,16 @@
-package biyeta.nas.biyeta;
+package biyeta.nas.biyeta.activity;
 
 /**
  * Created by user on 1/10/2017.
  */
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle ;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,11 +29,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import biyeta.nas.biyeta.Adapter.Profession_Adapter;
-import biyeta.nas.biyeta.AppData.SharePref;
-import biyeta.nas.biyeta.Constant.Constant;
-import biyeta.nas.biyeta.Fragment.Search;
-import biyeta.nas.biyeta.View.MyGridView;
+import biyeta.nas.biyeta.adapter.Profession_Adapter;
+import biyeta.nas.biyeta.appData.SharePref;
+import biyeta.nas.biyeta.constant.Constant;
+import biyeta.nas.biyeta.R;
+import biyeta.nas.biyeta.customView.MyGridView;
 import me.bendik.simplerangeview.SimpleRangeView;
 import static me.bendik.simplerangeview.SimpleRangeView.*;
 public class Search_Filter extends Activity  implements OnClickListener{

@@ -1,12 +1,10 @@
-package biyeta.nas.biyeta.Utils;
+package biyeta.nas.biyeta.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
-
-import java.net.InetAddress;
 
 /**
  * Created by user on 1/9/2017.

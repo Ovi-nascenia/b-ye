@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta.Adapter;
+package biyeta.nas.biyeta.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import biyeta.nas.biyeta.Model.UserProfileInfo;
+import biyeta.nas.biyeta.model.UserProfileInfo;
 import biyeta.nas.biyeta.R;
 
 /**

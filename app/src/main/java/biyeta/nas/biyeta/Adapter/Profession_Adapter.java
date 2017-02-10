@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta.Adapter;
+package biyeta.nas.biyeta.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

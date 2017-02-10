@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta.Constant;
+package biyeta.nas.biyeta.constant;
 
 /**
  * Created by user on 1/9/2017.

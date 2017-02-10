@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta.Fragment;
+package biyeta.nas.biyeta.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

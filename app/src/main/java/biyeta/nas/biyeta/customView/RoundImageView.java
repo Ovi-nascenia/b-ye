@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta.View;
+package biyeta.nas.biyeta.customView;
 
 /**
  * Created by god father on 1/27/2017.

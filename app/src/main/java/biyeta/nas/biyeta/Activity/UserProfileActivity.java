@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta;
+package biyeta.nas.biyeta.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +8,9 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import biyeta.nas.biyeta.Adapter.UserProfileRecyclerAdapter;
-import biyeta.nas.biyeta.Model.UserProfileInfo;
+import biyeta.nas.biyeta.adapter.UserProfileRecyclerAdapter;
+import biyeta.nas.biyeta.model.UserProfileInfo;
+import biyeta.nas.biyeta.R;
 
 /**
  * Created by saiful on 2/7/17.

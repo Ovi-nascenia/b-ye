@@ -1,30 +1,26 @@
-package biyeta.nas.biyeta;
+package biyeta.nas.biyeta.activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import biyeta.nas.biyeta.Fragment.Favourite;
-import biyeta.nas.biyeta.Fragment.Inbox;
-import biyeta.nas.biyeta.Fragment.Match;
-import biyeta.nas.biyeta.Fragment.Profile;
-import biyeta.nas.biyeta.Fragment.Search;
+import biyeta.nas.biyeta.fragment.Favourite;
+import biyeta.nas.biyeta.fragment.Inbox;
+import biyeta.nas.biyeta.fragment.Match;
+import biyeta.nas.biyeta.fragment.Profile;
+import biyeta.nas.biyeta.fragment.Search;
+import biyeta.nas.biyeta.R;
 
 
 public class HomeScreen extends AppCompatActivity {

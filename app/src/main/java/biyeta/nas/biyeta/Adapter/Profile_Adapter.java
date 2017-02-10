@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta.Adapter;
+package biyeta.nas.biyeta.adapter;
 
 import android.content.Context;
 import android.net.Uri;
@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import biyeta.nas.biyeta.Model.Profile;
+import biyeta.nas.biyeta.model.Profile;
 import biyeta.nas.biyeta.R;
 
 public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapter.MyViewHolder> {

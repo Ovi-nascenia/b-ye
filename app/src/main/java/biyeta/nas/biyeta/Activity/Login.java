@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta;
+package biyeta.nas.biyeta.activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,13 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import com.bumptech.glide.util.Util;
 import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -28,15 +25,16 @@ import com.squareup.okhttp.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import biyeta.nas.biyeta.AppData.SharePref;
-import biyeta.nas.biyeta.Constant.Constant;
-import biyeta.nas.biyeta.Utils.Utils;
+import biyeta.nas.biyeta.appData.SharePref;
+import biyeta.nas.biyeta.constant.Constant;
+import biyeta.nas.biyeta.R;
+import biyeta.nas.biyeta.utils.Utils;
 
 /**
  * Created by user on 1/5/2017.
  */
 
-public class LoginTest extends AppCompatActivity implements View.OnClickListener {
+public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
     ImageView icon;
@@ -65,9 +63,9 @@ public class LoginTest extends AppCompatActivity implements View.OnClickListener
 
         setContentView(R.layout.login);
 
-        if (!Utils.isOnline(LoginTest.this))
+        if (!Utils.isOnline(Login.this))
         {
-            Utils.ShowAlert(LoginTest.this,"No Internet");
+            Utils.ShowAlert(Login.this,"No Internet");
         }
 
 
@@ -128,8 +126,8 @@ public class LoginTest extends AppCompatActivity implements View.OnClickListener
                 ///check the user_name and password is empty
                 if(user_name.trim().equals("")||password.trim().equals(""))
                 {
-                  //  Toast.makeText(LoginTest.this,"Fill the both field",Toast.LENGTH_SHORT).show();
-                    Utils.ShowAlert(LoginTest.this,"Fill the both field");
+                  //  Toast.makeText(Login.this,"Fill the both field",Toast.LENGTH_SHORT).show();
+                    Utils.ShowAlert(Login.this,"Fill the both field");
                 }
                 //excute  the network operation
                 //
@@ -143,8 +141,8 @@ public class LoginTest extends AppCompatActivity implements View.OnClickListener
 
 
 
-               // Toast.makeText(LoginTest.this,"Cool",Toast.LENGTH_SHORT).show();
-               // startActivity(new Intent(LoginTest.this,HomeScreen.class));
+               // Toast.makeText(Login.this,"Cool",Toast.LENGTH_SHORT).show();
+               // startActivity(new Intent(Login.this,HomeScreen.class));
 
                 break;
             case R.id.new_accunt_test:
@@ -218,19 +216,19 @@ public class LoginTest extends AppCompatActivity implements View.OnClickListener
 
 
                 String token=jsonObject.get("auth_token").toString();
-                SharePref sharePref=new SharePref(LoginTest.this);
+                SharePref sharePref=new SharePref(Login.this);
                 sharePref.set_data("token",token);
                 //insert the token in Sharepreference
 
 
-                startActivity(new Intent(LoginTest.this,HomeScreen.class));
+                startActivity(new Intent(Login.this,HomeScreen.class));
                 finish();
 
 
             } catch (JSONException e) {
                 Log.e("error","JSON error");
                 e.printStackTrace();
-                Utils.ShowAlert(LoginTest.this,"Wrong Input");
+                Utils.ShowAlert(Login.this,"Wrong Input");
                 b_submit.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
 

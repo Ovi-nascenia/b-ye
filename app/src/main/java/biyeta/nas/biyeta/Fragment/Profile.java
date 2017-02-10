@@ -1,4 +1,4 @@
-package biyeta.nas.biyeta.Fragment;
+package biyeta.nas.biyeta.fragment;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
