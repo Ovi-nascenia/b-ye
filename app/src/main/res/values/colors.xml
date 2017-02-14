@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#4b0304</color>
     <color name="colorAccent">#f9a3526d</color>
     <color name="tab_text_color">#ffffff</color>
+
+
+    <color name="without_expand_color">#E0E0E0</color>
+    <color name="with_expand_color">#EEEEEE</color>
+
 </resources>

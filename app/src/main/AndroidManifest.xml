@@ -21,7 +21,7 @@
         <activity
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen"
-            android:theme="@style/MyMaterialTheme" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".LoginTest"
             android:label="@string/title_activity_login"></activity>

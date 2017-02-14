@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import biyeta.nas.biyeta.Model.UserProfileInfo;
+import biyeta.nas.biyeta.Model.UserProfileChild;
 import biyeta.nas.biyeta.R;
 
 /**
@@ -21,10 +21,10 @@ public class UserProfileRecyclerAdapter extends RecyclerView.Adapter<UserProfile
 
 
     private LayoutInflater inflater;
-    private List<UserProfileInfo> userProfileInfoArrayList;
+    private List<UserProfileChild> userProfileInfoArrayList;
     private Context baseContext;
 
-    public UserProfileRecyclerAdapter(Context baseContext, ArrayList<UserProfileInfo> userProfileInfoArrayList) {
+    public UserProfileRecyclerAdapter(Context baseContext, ArrayList<UserProfileChild> userProfileInfoArrayList) {
         this.userProfileInfoArrayList = userProfileInfoArrayList;
         this.baseContext = baseContext;
         this.inflater = LayoutInflater.from(baseContext);
@@ -32,7 +32,7 @@ public class UserProfileRecyclerAdapter extends RecyclerView.Adapter<UserProfile
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.profile_details_item, parent, false);
+        View view = inflater.inflate(R.layout.profile_details_child_item, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
     }
