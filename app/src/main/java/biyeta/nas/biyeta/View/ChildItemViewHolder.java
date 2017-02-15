@@ -1,0 +1,46 @@
+package biyeta.nas.biyeta.View;
+
+import android.support.annotation.NonNull;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.bignerdranch.expandablerecyclerview.ChildViewHolder;
+
+import biyeta.nas.biyeta.Model.UserProfileChild;
+import biyeta.nas.biyeta.R;
+
+/**
+ * Created by saiful on 2/12/17.
+ */
+
+public class ChildItemViewHolder extends ChildViewHolder {
+    /**
+     * Default constructor.
+     *
+     * @param itemView The {@link View} being hosted in this ViewHolder
+     */
+
+    TextView titleTextView;
+    EditText titleResultTextView;
+    public LinearLayout itemDividerLayout;
+
+
+    public ChildItemViewHolder(@NonNull View itemView) {
+        super(itemView);
+
+        titleTextView = (TextView) itemView.findViewById(R.id.titleTextView);
+        titleResultTextView = (EditText) itemView.findViewById(R.id.titleResultTextView);
+        itemDividerLayout = (LinearLayout) itemView.findViewById(R.id.divider);
+    }
+
+
+    public void bind(UserProfileChild userProfileChild) {
+
+        titleTextView.setText(userProfileChild.getTitle());
+        titleResultTextView.setText(userProfileChild.getTitleResult());
+        
+
+    }
+}

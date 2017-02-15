@@ -18,7 +18,14 @@ android {
         }
     }
 
+    productFlavors{
+        development {
 
+        }
+        staging {
+
+        }
+    }
 }
 
 dependencies {
@@ -38,7 +45,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'me.bendik.simplerangeview:simplerangeview:0.1.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.android.support:customtabs:25.1.0'
+    compile 'com.bignerdranch.android:expandablerecyclerview:3.0.0-RC1'
 
 
     testCompile 'junit:junit:4.12'

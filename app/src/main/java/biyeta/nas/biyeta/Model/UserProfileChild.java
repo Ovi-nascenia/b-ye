@@ -4,12 +4,12 @@ package biyeta.nas.biyeta.model;
  * Created by saiful on 2/8/17.
  */
 
-public class UserProfileInfo {
+public class UserProfileChild {
 
     private String title;
     private String titleResult;
 
-    public UserProfileInfo(String title, String titleResult) {
+    public UserProfileChild(String title, String titleResult) {
         this.title = title;
         this.titleResult = titleResult;
     }
