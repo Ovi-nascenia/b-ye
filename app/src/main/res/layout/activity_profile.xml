@@ -1,271 +1,300 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E0E0E0"
-    android:orientation="vertical">
+    android:background="#E0E0E0">
 
 
-    <ScrollView
+    <android.support.design.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/coordnatelayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/FinalResultLayout"
-        android:layout_alignParentTop="true"
-        android:fillViewport="true">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/r1"
+        android:fitsSystemWindows="true"
+        tools:context="biyeta.nas.biyeta.Main2Activity">
 
-        <LinearLayout
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            <FrameLayout
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="280dp">
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginBottom="32dp"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <ImageView
-                    android:id="@+id/userProfileImage"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/ic_launcher" />
+                    android:layout_height="300dp"
+                    app:layout_collapseMode="parallax">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginTop="@dimen/medium_margin"
-                    android:paddingLeft="@dimen/small_padding"
-                    android:paddingRight="@dimen/small_padding">
+                    <ImageView
+                        android:id="@+id/userProfileImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/profile_pic" />
 
-                    <TextView
-                        android:id="@+id/userName"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="user  Name"
-                        android:textColor="#FFFFFF"
-                        android:textSize="@dimen/medium_textsize"
-                        android:textStyle="bold" />
+                        android:layout_gravity="start"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:paddingLeft="@dimen/small_padding"
+                        android:paddingRight="@dimen/small_padding">
 
-                    <ImageView
-                        android:id="@+id/backPreviousActivityImage"
-                        android:layout_width="@dimen/small_image_size"
-                        android:layout_height="@dimen/small_image_size"
-                        android:layout_alignParentLeft="true"
-                        android:src="@drawable/back_arrow" />
-
-                    <ImageView
-                        android:id="@+id/likeImage"
-                        android:layout_width="@dimen/small_image_size"
-                        android:layout_height="@dimen/small_image_size"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/favourite" />
-
-                </RelativeLayout>
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/detils_info_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/large_margin"
-                android:layout_marginRight="@dimen/large_margin"
-                android:layout_marginTop="@dimen/medium_margin"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <LinearLayout
-                        android:id="@+id/layoutSendSmiley"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/medium_height"
-                        android:layout_weight="1"
-                        android:background="#BDBDBD"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp">
+                        <TextView
+                            android:id="@+id/userName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="user  Name"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/medium_textsize"
+                            android:textStyle="bold" />
 
                         <ImageView
-                            android:id="@+id/emoIconImage"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:padding="@dimen/smiley_icon_padding"
-                            android:src="@drawable/smile" />
+                            android:id="@+id/backPreviousActivityImage"
+                            android:layout_width="@dimen/small_image_size"
+                            android:layout_height="@dimen/small_image_size"
+                            android:layout_alignParentLeft="true"
+                            android:src="@drawable/back_arrow" />
 
-                        <TextView
-                            android:id="@+id/sendEmoIconTextTag"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="হাসি পাঠান"
-                            android:textSize="@dimen/small_textsize"
-                            android:textStyle="bold" />
-                    </LinearLayout>
+                        <ImageView
+                            android:id="@+id/likeImage"
+                            android:layout_width="@dimen/small_image_size"
+                            android:layout_height="@dimen/small_image_size"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/favourite" />
 
+                    </RelativeLayout>
+
+                </FrameLayout>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/anim_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <!--<include layout="@layout/content_main2" />
+    -->
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E0E0E0">
+
+
+                <LinearLayout
+                    android:id="@+id/detils_info_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/large_margin"
+                    android:layout_marginRight="@dimen/large_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/medium_height"
-                        android:layout_marginLeft="@dimen/smiley_icon_padding"
-                        android:layout_toRightOf="@+id/layoutSendSmiley"
-                        android:layout_weight="1"
-                        android:background="#FFFFFF"
-                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/small_margin"
                         android:orientation="horizontal"
-                        android:weightSum="5">
+                        android:weightSum="2">
 
-
-                        <TextView
-                            android:id="@+id/verifiedTextTag"
+                        <LinearLayout
+                            android:id="@+id/layoutSendSmiley"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
+                            android:layout_height="@dimen/medium_height"
+                            android:layout_weight="1"
+                            android:background="#BDBDBD"
                             android:gravity="center"
-                            android:text="ভেরিফাইড"
-                            android:textSize="@dimen/small_textsize"
-                            android:textStyle="bold" />
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp">
 
                             <ImageView
-                                android:id="@+id/mobileImage"
-                                android:layout_width="wrap_content"
+                                android:id="@+id/emoIconImage"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_centerInParent="true"
-                                android:padding="@dimen/mobile_image_padding"
-                                android:src="@drawable/mobile" />
+                                android:layout_weight="1"
+                                android:padding="@dimen/smiley_icon_padding"
+                                android:src="@drawable/smile" />
 
-                            <ImageView
-                                android:layout_width="@dimen/check_image_size"
-                                android:layout_height="@dimen/check_image_size"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_marginRight="@dimen/check_image_right_margin"
-                                android:layout_marginTop="@dimen/check_image_top_margin"
-                                android:src="@drawable/check_icon" />
-                        </RelativeLayout>
+                            <TextView
+                                android:id="@+id/sendEmoIconTextTag"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="হাসি পাঠান"
+                                android:textSize="@dimen/small_textsize"
+                                android:textStyle="bold" />
+                        </LinearLayout>
 
-                        <RelativeLayout
+
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_height="@dimen/medium_height"
+                            android:layout_marginLeft="@dimen/smiley_icon_padding"
+                            android:layout_toRightOf="@+id/layoutSendSmiley"
+                            android:layout_weight="1"
+                            android:background="#FFFFFF"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="5">
 
-                            <ImageView
-                                android:layout_width="wrap_content"
+
+                            <TextView
+                                android:id="@+id/verifiedTextTag"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_centerInParent="true"
-                                android:paddingLeft="@dimen/small_padding"
-                                android:paddingRight="@dimen/small_padding"
-                                android:src="@drawable/facebook" />
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="ভেরিফাইড"
+                                android:textSize="@dimen/small_textsize"
+                                android:textStyle="bold" />
 
-                            <ImageView
-                                android:layout_width="@dimen/check_image_size"
-                                android:layout_height="@dimen/check_image_size"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_marginRight="@dimen/check_image_right_small_margin"
-                                android:layout_marginTop="@dimen/check_image_top_margin"
-                                android:src="@drawable/check_icon" />
-                        </RelativeLayout>
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:id="@+id/mobileImage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:padding="@dimen/mobile_image_padding"
+                                    android:src="@drawable/mobile" />
+
+                                <ImageView
+                                    android:layout_width="@dimen/check_image_size"
+                                    android:layout_height="@dimen/check_image_size"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginRight="@dimen/check_image_right_margin"
+                                    android:layout_marginTop="@dimen/check_image_top_margin"
+                                    android:src="@drawable/check_icon" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:paddingLeft="@dimen/small_padding"
+                                    android:paddingRight="@dimen/small_padding"
+                                    android:src="@drawable/facebook" />
+
+                                <ImageView
+                                    android:layout_width="@dimen/check_image_size"
+                                    android:layout_height="@dimen/check_image_size"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginRight="@dimen/check_image_right_small_margin"
+                                    android:layout_marginTop="@dimen/check_image_top_margin"
+                                    android:src="@drawable/check_icon" />
+                            </RelativeLayout>
 
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_centerInParent="true"
-                                android:padding="@dimen/mail_image_padding"
-                                android:src="@drawable/mail" />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:padding="@dimen/mail_image_padding"
+                                    android:src="@drawable/mail" />
 
-                            <ImageView
-                                android:layout_width="@dimen/check_image_size"
-                                android:layout_height="@dimen/check_image_size"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_marginRight="@dimen/check_image_right_margin"
-                                android:layout_marginTop="@dimen/check_image_top_margin"
-                                android:src="@drawable/check_icon"
-                                android:visibility="gone" />
-                        </RelativeLayout>
+                                <ImageView
+                                    android:layout_width="@dimen/check_image_size"
+                                    android:layout_height="@dimen/check_image_size"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginRight="@dimen/check_image_right_margin"
+                                    android:layout_marginTop="@dimen/check_image_top_margin"
+                                    android:src="@drawable/check_icon"
+                                    android:visibility="gone" />
+                            </RelativeLayout>
 
+
+                        </LinearLayout>
 
                     </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:background="#FFFFFF">
+
+                        <TextView
+                            android:id="@+id/userProfileDescriptionText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="@dimen/medium_textsize" />
+
+                    </RelativeLayout>
+
 
                 </LinearLayout>
 
-
-                <RelativeLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/user_details_recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detils_info_layout"
+                    android:layout_marginLeft="@dimen/large_margin"
+                    android:layout_marginRight="@dimen/large_margin"
                     android:layout_marginTop="@dimen/medium_margin"
-                    android:background="#FFFFFF">
-
-                    <TextView
-                        android:id="@+id/userProfileDescriptionText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="@dimen/medium_textsize" />
-
-                </RelativeLayout>
+                    android:scrollbars="vertical" />
 
 
-            </LinearLayout>
+            </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/user_details_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/large_margin"
-                android:layout_marginRight="@dimen/large_margin"
-                android:layout_marginTop="@dimen/medium_margin"
-                android:scrollbars="vertical" />
 
-        </LinearLayout>
-
-    </ScrollView>
-    <!--//write here-->
+    </android.support.design.widget.CoordinatorLayout>
 
     <RelativeLayout
-        android:id="@+id/FinalResultLayout"
+        android:id="@+id/r1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/medium_margin">
-
-
-        <!-- <android.support.v7.widget.RecyclerView
-             android:id="@+id/user_details_recycler_view"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_above="@+id/finalResultBtn"
-             android:layout_marginLeft="@dimen/large_margin"
-             android:layout_marginRight="@dimen/large_margin"
-             android:scrollbars="vertical" />-->
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/finalResultBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:background="#B71C1C"
             android:text="পুরো বায়োডাটা দেখার অনুরোধ করুন"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
-
     </RelativeLayout>
 </RelativeLayout>

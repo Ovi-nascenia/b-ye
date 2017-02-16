@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private RecyclerView userProfileInfoRecyclerView;
     private ArrayList<UserProfileChild> userProfileChildArrayList;
 
+    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,11 +36,24 @@ public class UserProfileActivity extends AppCompatActivity {
 
         // setSampleDataonlist();
 
+        toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
+        setSupportActionBar(toolbar);
 
-        UserProfile ageProfile = new UserProfile("Age", Arrays.asList(new UserProfileChild("age", "23 year"), new UserProfileChild("Height", "4.9")));
+        UserProfile ageProfile = new UserProfile("Age", Arrays.asList(new UserProfileChild("age", "23 year"), new UserProfileChild("Height", "4.9"),
+                new UserProfileChild("Height", "4.9"),
+                new UserProfileChild("Height", "4.9"),
+                new UserProfileChild("Height", "4.9"),
+                new UserProfileChild("Height", "4.9"),
+                new UserProfileChild("Height", "4.9"),
+                new UserProfileChild("Height", "4.9")));
+
+
         UserProfile educationProfile = new UserProfile("Education", Arrays.asList(new UserProfileChild("education", "Hsc")));
-        UserProfile professionProfile = new UserProfile("Profession", Arrays.asList(new UserProfileChild("profession", "Employee")));
-
+        UserProfile professionProfile = new UserProfile("Profession", Arrays.asList(new UserProfileChild("profession", "Employee"),
+                new UserProfileChild("profession", "Employee"),
+                new UserProfileChild("profession", "Employee"),
+                new UserProfileChild("profession", "Employee"),
+                new UserProfileChild("profession", "Employee")));
         List<UserProfile> userProfilesList = Arrays.asList(ageProfile, educationProfile, professionProfile);
         // List<UserProfile> userProfilesList = Arrays.asList(ageProfile);
 
