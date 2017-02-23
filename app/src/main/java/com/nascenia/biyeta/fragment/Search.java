@@ -36,7 +36,6 @@ import java.util.List;
 import com.nascenia.biyeta.appdata.SharePref;
 
 import com.nascenia.biyeta.adapter.Profile_Adapter;
-import com.nascenia.biyeta.activity.Profile_View;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.Search_Filter;
 
@@ -67,7 +66,7 @@ public class Search extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.search, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.profile_list);
@@ -113,7 +112,9 @@ public class Search extends Fragment {
                         // TODO Handle item click
                         // showDialog(getContext(),profile_list.get(position).getDisplay_name(),profile_list.get(position).getLocation());
 
-                        startActivity(new Intent(getActivity(), UserProfileActivity.class));
+                        Intent intent=new Intent(getActivity(), UserProfileActivity.class);
+                        intent.putExtra("id",profile_list.get(position).getId());
+                        startActivity(intent);
                     }
                 })
         );
@@ -126,35 +127,6 @@ public class Search extends Fragment {
 
     }
 
-    public void showDialog(Context activity, String display_name, String location) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        dialog.setContentView(R.layout.custom_dialog);
-
-
-        TextView display = (TextView) dialog.findViewById(R.id.display_name);
-        TextView loc = (TextView) dialog.findViewById(R.id.details);
-        display.setText(display_name);
-        loc.setText(location);
-        Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), Profile_View.class));
-
-            }
-        });
-        ImageView cross_image = (ImageView) dialog.findViewById(R.id.imgClose);
-        cross_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-
-    }
 
 
     //fetch data from
@@ -174,7 +146,7 @@ public class Search extends Fragment {
                 for (int i = 0; i < jsonObject.getJSONArray("profiles").length(); i++)
 
                 {
-                    String id = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name");
+                    String id = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("id");
                     String age = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("age");
                     String height_ft = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_ft");
                     String height_inc = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_inc");

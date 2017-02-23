@@ -25,7 +25,6 @@
         <activity
             android:name="com.nascenia.biyeta.activity.Login"
             android:label="@string/title_activity_login"></activity>
-        <activity android:name="com.nascenia.biyeta.activity.Profile_View"></activity>
         <activity android:name="com.nascenia.biyeta.activity.Search_Filter"></activity>
 
         <!--<activity android:name=".Search_Filter"-->

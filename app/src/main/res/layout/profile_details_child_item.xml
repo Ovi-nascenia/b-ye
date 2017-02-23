@@ -27,10 +27,11 @@
             android:id="@+id/titleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/large_margin"
             android:layout_weight="1"
-            android:text=""
-            android:textSize="@dimen/medium_textsize"
-            android:textStyle="bold" />
+            android:text="hello world"
+            android:textSize="@dimen/small_textsize"
+            android:textStyle="normal" />
 
         <EditText
             android:id="@+id/titleResultTextView"
@@ -39,9 +40,10 @@
             android:layout_marginLeft="@dimen/negative_large_margin"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:text="hello world"
             android:textColor="#757575"
-            android:textSize="@dimen/medium_textsize"
-            android:textStyle="bold" />
+            android:textSize="@dimen/small_textsize"
+            android:textStyle="normal" />
     </LinearLayout>
 
 
