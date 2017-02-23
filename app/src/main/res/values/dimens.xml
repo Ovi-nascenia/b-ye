@@ -39,5 +39,8 @@
     <dimen name="medium_textsize">18sp</dimen>
 
     <dimen name="small_image_size">25dp</dimen>
+    <dimen name="user_profile_edit_image_width">45dp</dimen>
+    <dimen name="user_profile_edit_image_height">30dp</dimen>
+
 
 </resources>

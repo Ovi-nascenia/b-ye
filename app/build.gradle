@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "biyeta.nas.biyeta"
+        applicationId 'com.nascenia.biyeta'
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
@@ -18,18 +18,16 @@ android {
         }
     }
 
-    productFlavors{
+    productFlavors {
         development {
-
         }
         staging {
-
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -45,8 +43,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'me.bendik.simplerangeview:simplerangeview:0.1.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.android.support:customtabs:25.0.1'
     compile 'com.bignerdranch.android:expandablerecyclerview:3.0.0-RC1'
-
-
     testCompile 'junit:junit:4.12'
 }

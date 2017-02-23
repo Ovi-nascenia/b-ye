@@ -279,7 +279,7 @@
                     android:text="@string/profession"
                     android:textStyle="bold" />
 
-                <biyeta.nas.biyeta.customView.MyGridView
+                <com.nascenia.biyeta.view.MyGridView
                     android:visibility="gone"
                     android:paddingBottom="@dimen/activity_vertical_margin"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -290,7 +290,7 @@
                     android:layout_height="wrap_content"
                     android:numColumns="1"
 
-                    ></biyeta.nas.biyeta.customView.MyGridView>
+                    ></com.nascenia.biyeta.view.MyGridView>
 
 
             </LinearLayout>
@@ -316,7 +316,7 @@
                 android:text="@string/profession_identity"
                 android:textStyle="bold" />
 
-            <biyeta.nas.biyeta.customView.MyGridView
+            <com.nascenia.biyeta.view.MyGridView
                 android:visibility="gone"
                 android:id="@+id/occupation_grid"
                 android:layout_width="match_parent"
@@ -327,7 +327,7 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:numColumns="1"
 
-                ></biyeta.nas.biyeta.customView.MyGridView>
+                ></com.nascenia.biyeta.view.MyGridView>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

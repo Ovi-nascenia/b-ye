@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="biyeta.nas.biyeta">
+    package="com.nascenia.biyeta">
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SplashScreen">
+        <activity android:name="com.nascenia.biyeta.activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,10 +23,10 @@
             android:label="@string/title_activity_home_screen"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.Login"
+            android:name="com.nascenia.biyeta.activity.Login"
             android:label="@string/title_activity_login"></activity>
-        <activity android:name=".activity.Profile_View"></activity>
-        <activity android:name=".activity.Search_Filter"></activity>
+        <activity android:name="com.nascenia.biyeta.activity.Profile_View"></activity>
+        <activity android:name="com.nascenia.biyeta.activity.Search_Filter"></activity>
 
         <!--<activity android:name=".Search_Filter"-->
         <!--&gt;</activity>-->
