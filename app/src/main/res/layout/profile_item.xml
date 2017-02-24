@@ -50,11 +50,12 @@
 
                 <TextView
                     android:id="@+id/details"
-                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+
                     android:textStyle="bold"
                     android:text="আগুন দেওয়ায় পুলিশ সম্পৃক্ত বলে গণমাধ্যমে আসা খবর যুক্ত করে রিট আবেদনকারীদের"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
 
 
 

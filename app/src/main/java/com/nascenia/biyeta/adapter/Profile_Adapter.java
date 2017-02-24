@@ -93,7 +93,7 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
 //
        Glide.with(context)
                .load(Uri.parse("http://test.biyeta.com/"+prfile.getImage()))
-               .placeholder(R.drawable.man)
+               .placeholder(R.drawable.default_profile_female_icon)
                .into(holder.profile_image);
 
 

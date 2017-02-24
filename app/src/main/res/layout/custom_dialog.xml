@@ -40,7 +40,7 @@
 
             android:layout_height="100dp"
 
-            android:src="@drawable/man"
+            android:src="@drawable/default_profile_female_icon"
 
             android:id="@+id/imageView5"
             android:scaleType="fitXY"
