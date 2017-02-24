@@ -47,7 +47,7 @@ public class Search_Filter extends Activity  implements OnClickListener{
 
     public ArrayList<String> age_lebels;
     MyGridView gridView;
-    MyGridView gridView_occupation;
+    MyGridView gridView_occupation,gridView_location;
     private final OkHttpClient client = new OkHttpClient();
 
     String[] skin_status=new String[]{
@@ -297,6 +297,7 @@ public class Search_Filter extends Activity  implements OnClickListener{
         rangeView_health=(SimpleRangeView)findViewById(R.id.health_lebel);
         gridView=(MyGridView)findViewById(R.id.profession_grid);
         gridView_occupation=(MyGridView)findViewById(R.id.occupation_grid);
+        gridView_location=(MyGridView)findViewById(R.id.location_grid);
         findViewById(R.id.age_).setOnClickListener(this);
         findViewById(R.id.height_).setOnClickListener(this);
         findViewById(R.id.education_).setOnClickListener(this);
@@ -304,6 +305,7 @@ public class Search_Filter extends Activity  implements OnClickListener{
         findViewById(R.id.occupation_).setOnClickListener(this);
         findViewById(R.id.color_).setOnClickListener(this);
         findViewById(R.id.body_).setOnClickListener(this);
+        findViewById(R.id.location_).setOnClickListener(this);
 
 
         findViewById(R.id.button).setOnClickListener(new OnClickListener() {
@@ -370,6 +372,13 @@ public class Search_Filter extends Activity  implements OnClickListener{
                     findViewById(R.id.occupation_grid).setVisibility(GONE);
                 else
                     findViewById(R.id.occupation_grid).setVisibility(VISIBLE);
+                break;
+
+            case  R.id.location_:
+                if (findViewById(R.id.location_grid).getVisibility()==VISIBLE)
+                    findViewById(R.id.location_grid).setVisibility(GONE);
+                else
+                    findViewById(R.id.location_grid).setVisibility(VISIBLE);
                 break;
 
         }
@@ -458,6 +467,8 @@ public class Search_Filter extends Activity  implements OnClickListener{
 
 
     JSONObject skin_color,health_options,education_options,professional_options,occupation_options;
+    JSONArray location;
+    JSONObject location_option;
 
     ArrayList<String> age_list=new ArrayList<>();
     void parse_data(String result)
@@ -482,6 +493,9 @@ public class Search_Filter extends Activity  implements OnClickListener{
             education_options=jsonObject.getJSONObject("preference").getJSONObject("preference_constants").getJSONObject("education_options");
             professional_options=jsonObject.getJSONObject("preference").getJSONObject("preference_constants").getJSONObject("professional_options");
             occupation_options=jsonObject.getJSONObject("preference").getJSONObject("preference_constants").getJSONObject("occupation_options");
+
+            location_option=jsonObject.getJSONObject("preference").getJSONObject("preference_constants").getJSONObject("location_options");
+            location=jsonObject.getJSONObject("preference").getJSONArray("location");
 
             HashMap<String,Boolean> is_occupation=new HashMap<>();
 
@@ -526,6 +540,32 @@ public class Search_Filter extends Activity  implements OnClickListener{
             }
 
 
+            ArrayList<String> location_choose=new ArrayList<>();
+            ArrayList<Boolean>is_checked_location=new ArrayList<>();
+            ArrayList<String>all_location=new ArrayList<>();
+
+
+            for (int i=0;i<location.length();i++) {
+                Log.e("fuck",location.getString(i));
+                location_choose.add(location.getString(i));
+            }
+
+            for (int i=1;i<65;i++)
+            {
+                //Log.e("fuck",location_option.getString(i+""));
+                all_location.add(location_option.getString(i+"").toString());
+                if (location_choose.contains(i+""))
+                {
+                    Log.e("fucktrue",i+"");
+                    is_checked_location.add(true);
+                }
+                else
+                    is_checked_location.add(false);
+            }
+
+            Profession_Adapter profession_adapter1=new Profession_Adapter(getApplicationContext(),all_location,is_checked_location);
+            gridView_location.setAdapter(profession_adapter1);
+
 
 
             ArrayList<Boolean> is_checked=new ArrayList<>();
@@ -548,8 +588,8 @@ public class Search_Filter extends Activity  implements OnClickListener{
             Profession_Adapter profession_adapter=new Profession_Adapter(getApplicationContext(),profession_list,is_checked);
             gridView.setAdapter(profession_adapter);
 
-            Profession_Adapter profession_adapter1=new Profession_Adapter(getApplicationContext(),occupation_list,is_checked_occupation);
-            gridView_occupation.setAdapter(profession_adapter1);
+            Profession_Adapter profession_adapter2=new Profession_Adapter(getApplicationContext(),occupation_list,is_checked_occupation);
+            gridView_occupation.setAdapter(profession_adapter2);
 
 
 
