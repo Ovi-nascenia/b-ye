@@ -8,30 +8,29 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import com.nascenia.biyeta.R;
-import com.nascenia.biyeta.adapter.PartialProfileViewAdapter;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.constant.Constant;
-import com.nascenia.biyeta.model.PartialProfileItemModel;
 import com.nascenia.biyeta.model.UserProfile;
 import com.nascenia.biyeta.model.UserProfileChild;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  * Created by saiful on 2/7/17.
@@ -39,48 +38,34 @@ import org.json.JSONObject;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    private static final String SUB_URL="profiles/";
+    private static final String SUB_URL = "profiles/";
 
 
     private RecyclerView userProfileInfoRecyclerView;
     private ArrayList<UserProfileChild> userProfileChildArrayList;
     private final OkHttpClient client = new OkHttpClient();
-    HashMap<String,String> hashMap;
     String id;
-    TextView aboutMeTextView;
 
     private Toolbar toolbar;
+
+    private ArrayList<UserProfileChild> childItemList;
+    private ArrayList<UserProfile> userProfilesList;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        id=getIntent().getExtras().getString("id");
-        hashMap=new HashMap<>();
-        aboutMeTextView=(TextView)findViewById(R.id.userProfileDescriptionText);
-        setTitle(getIntent().getExtras().getString("user_name"));
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        toolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                finish();
-                //onBackPressed();
-            }
-        });
-
-
-
+        id = getIntent().getExtras().getString("id");
 
         loadUserData();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        UserProfile ageProfile = new UserProfile("Age", Arrays.asList(new UserProfileChild("age", "23 year"), new UserProfileChild("Height", "4.9"),
+        userProfilesList = new ArrayList<UserProfile>();
+
+      /*  UserProfile ageProfile = new UserProfile("Age", Arrays.asList(new UserProfileChild("age", "23 year"), new UserProfileChild("Height", "4.9"),
                 new UserProfileChild("Height", "4.9"),
                 new UserProfileChild("Height", "4.9"),
                 new UserProfileChild("Height", "4.9"),
@@ -88,19 +73,22 @@ public class UserProfileActivity extends AppCompatActivity {
                 new UserProfileChild("Height", "4.9"),
                 new UserProfileChild("Height", "4.9")));
 
+        ArrayList<UserProfileChild> list = new ArrayList<UserProfileChild>();
+        list.add(new UserProfileChild("education", "Hsc"));
+        //  UserProfile educationProfile = new UserProfile("Education", Arrays.asList(new UserProfileChild("education", "Hsc")));
+        UserProfile educationProfile = new UserProfile("Education", list);
 
-        UserProfile educationProfile = new UserProfile("Education", Arrays.asList(new UserProfileChild("education", "Hsc")));
         UserProfile professionProfile = new UserProfile("Profession", Arrays.asList(new UserProfileChild("profession", "Employee"),
                 new UserProfileChild("profession", "Employee"),
                 new UserProfileChild("profession", "Employee"),
                 new UserProfileChild("profession", "Employee"),
                 new UserProfileChild("profession", "Employee")));
-        List<UserProfile> userProfilesList = Arrays.asList(ageProfile, educationProfile, professionProfile);
-        // List<UserProfile> userProfilesList = Arrays.asList(ageProfile);
+        List<UserProfile> userProfilesList = Arrays.asList(ageProfile, educationProfile, professionProfile);*/
 
-       userProfileInfoRecyclerView = (RecyclerView) findViewById(R.id.user_details_recycler_view);
-         userProfileInfoRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-//        userProfileInfoRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(), userProfilesList));
+
+        userProfileInfoRecyclerView = (RecyclerView) findViewById(R.id.user_details_recycler_view);
+        userProfileInfoRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        //  userProfileInfoRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(), userProfilesList));
 
 
     }
@@ -121,65 +109,57 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
 
-    public  void  loadUserData()
-    {
-       new GetData().execute();
+    public void loadUserData() {
+        new GetData().execute();
     }
-
-    ArrayList<PartialProfileItemModel> listPartialProfile;
 
 
     class GetData extends AsyncTask<String, String, String> {
         @Override
-        protected void onPostExecute(String res) {
-            super.onPostExecute(res);
-          //  findViewById(R.id.pbProcessing).setVisibility(View.GONE);
-
+        protected void onPostExecute(String responseJson) {
+            super.onPostExecute(responseJson);
+            //  Toast.makeText(UserProfileActivity.this, responseJson, Toast.LENGTH_SHORT).show();
 
             try {
-                JSONObject jsonObject=new JSONObject(res).getJSONObject("profile");
-                Log.e("ob",jsonObject.toString());
-                boolean value=jsonObject.getJSONObject("request_status").getBoolean("accepted");
-                if (value)
-                {
-                    Toast.makeText(UserProfileActivity.this,"load full profile",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    listPartialProfile=new ArrayList<>();
-                    Toast.makeText(UserProfileActivity.this,"load partial profile",Toast.LENGTH_SHORT).show();
+                //JSONObject jsonObject = new JSONObject(responseJson);
+                JSONObject parentJsonObj = new JSONObject(responseJson).getJSONObject("profile");
+
+                // JSONObject personalInformationObj = parentJsonObj.getJSONObject("personal_information");
+                //JSONObject professionObj = parentJsonObj.getJSONObject("profession");
 
 
-                    aboutMeTextView.setText(jsonObject.getJSONObject("personal_information").getString("about_yourself"));
-                    hashMap.put(getString(R.string.profession_text),jsonObject.getJSONObject("profession").getString("occupation"));
-                    hashMap.put(getString(R.string.present_loaction_text),jsonObject.getJSONObject("profile_living_in").getString("country"));
-                    hashMap.put(getString(R.string.home_town),jsonObject.getJSONObject("profile_living_in").getString("location"));
-                    hashMap.put(getString(R.string.height_text),jsonObject.getJSONObject("personal_information").getString("height_ft")+"' "+jsonObject.getJSONObject("personal_information").getString("height_inc")+"''");
-                    hashMap.put(getString(R.string.religion_text),jsonObject.getJSONObject("profile_religion").getString("religion"));
-                    hashMap.put(getString(R.string.degree_name_text),jsonObject.getJSONObject("education_information").getString("highest_degree"));
+                Iterator iterator = parentJsonObj.keys();
+                while (iterator.hasNext()) {
+                    String key = (String) iterator.next();
+                    String value = parentJsonObj.getString(key);
 
-                    for ( String key : hashMap.keySet() ) {
+                    //  get id from  issue
+                    //String _pubKey = issue.optString("id");
+                    //Log.i("jsonvalue", " key-> " + key + " " + value);
 
-                        PartialProfileItemModel partialProfileItemModel=new PartialProfileItemModel(key,hashMap.get(key));
-                        listPartialProfile.add(partialProfileItemModel);
+
+                    Object json = new JSONTokener(value).nextValue();
+                    if (json instanceof JSONObject) {
+                        //  Log.i("jsonvalue", "obj  " + key + "  " + value);
+                        prepareRecylerViewItemData(parentJsonObj.getJSONObject(key), key);
+                    } else if (json instanceof JSONArray) {
+                        // Log.i("jsonvalue", "array " + key + "  " + value);
+                        prepareRecylerViewItemData(parentJsonObj.getJSONArray(key), key);
+
+                    } else {
+                        // Log.i("jsonvalue", key + "  " + value);
                     }
 
-                    PartialProfileViewAdapter partialProfileViewAdapter=new PartialProfileViewAdapter(listPartialProfile);
-                    userProfileInfoRecyclerView.setAdapter(partialProfileViewAdapter);
-
-
-
-
 
                 }
 
-            } catch (JSONException e) {
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            //    Toast.makeText(UserProfileActivity.this,res,Toast.LENGTH_SHORT).show();
 
-
+            userProfileInfoRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(), userProfilesList));
 
 
         }
@@ -200,25 +180,76 @@ public class UserProfileActivity extends AppCompatActivity {
             String token = sharePref.get_data("token");
             Request request = null;
 
-                request = new Request.Builder()
-                        .url(Constant.BASE_URL+SUB_URL+id)
-                        .addHeader("Authorization", "Token token=" + token)
-                        .build();
-
-
+            request = new Request.Builder()
+                    .url(Constant.BASE_URL + SUB_URL + 316)
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
             try {
                 response = client.newCall(request).execute();
                 String jsonData = response.body().string();
-                JSONObject Jobject = new JSONObject(jsonData);
-                return Jobject.toString();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
+                /*JSONObject Jobject = new JSONObject(jsonData);
+                return Jobject.toString();*/
+                return jsonData;
+
+            } catch (Exception e) {
             }
 
             return null;
         }
+    }
+
+    private void prepareRecylerViewItemData(JSONObject childJsonObject, String key) throws Exception {
+        childItemList = new ArrayList<UserProfileChild>();
+
+        Iterator iterator = childJsonObject.keys();
+        while (iterator.hasNext()) {
+            String childKey = (String) iterator.next();
+            String childValue = childJsonObject.getString(childKey);
+
+            //childItemList.add(new UserProfileChild(Constant.profileItemBanglaName(childKey), childValue));
+            childItemList.add(new UserProfileChild(childKey, childValue));
+
+
+        }
+
+
+        //userProfilesList.add(new UserProfile(Constant.profileItemBanglaName(key), childItemList));
+        userProfilesList.add(new UserProfile(key, childItemList));
+
+    }
+
+    private void prepareRecylerViewItemData(JSONArray childJsonArray, String key) throws Exception {
+        childItemList = new ArrayList<UserProfileChild>();
+        String childItemName = "";
+        String childNodeValue = "";
+
+        switch (key) {
+            case "family_members":
+                childItemName = "relation";
+                break;
+            case "education_information":
+                childItemName = "education";
+                break;
+        }
+
+
+        for (int n = 0; n < childJsonArray.length(); n++) {
+            JSONObject object = childJsonArray.getJSONObject(n);
+
+            // do some stuff....
+            for (Iterator<String> iter = object.keys(); iter.hasNext(); ) {
+                String childKey = iter.next();
+
+                childNodeValue += object.getString(childKey);
+                Log.i("jsonarraykey", childKey);
+            }
+            childItemList.add(new UserProfileChild(childItemName, childNodeValue));
+            childNodeValue = "";
+
+            Log.i("jsonarraykey", "-------------------------");
+        }
+
+        userProfilesList.add(new UserProfile(key, childItemList));
     }
 
 }

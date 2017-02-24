@@ -8,7 +8,7 @@ public class Profile {
 
     private String id;
     private String age;
-    String height_ft, height_inc,display_name,occupation,professional_group,skin_color,location,image,health;
+    String height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, image, health;
 //    private String profession;
 //    private String age;
 //    private String skin_color;
@@ -18,20 +18,18 @@ public class Profile {
 //    private String city;
 
 
-    public  Profile(String id,String age,String height_ft,String height_inc,String display_name,String occupation,String professional_group,String skin_color,String location,String health,String image )
-    {
-        this.id=id;
-        this.age=age;
-        this.height_ft=height_ft;
-        this.height_inc=height_inc;
-        this.display_name=display_name;
-        this.occupation=occupation;
-        this.professional_group=professional_group;
-        this.skin_color=skin_color;
-        this.image=image;
-        this.location=location;
-        this.health=health;
-
+    public Profile(String id, String age, String height_ft, String height_inc, String display_name, String occupation, String professional_group, String skin_color, String location, String health, String image) {
+        this.id = id;
+        this.age = age;
+        this.height_ft = height_ft;
+        this.height_inc = height_inc;
+        this.display_name = display_name;
+        this.occupation = occupation;
+        this.professional_group = professional_group;
+        this.skin_color = skin_color;
+        this.image = image;
+        this.location = location;
+        this.health = health;
 
 
     }
@@ -93,8 +91,6 @@ public class Profile {
     public void setSkin_color(String skin_color) {
         this.skin_color = skin_color;
     }
-
-
 
 
     public String getLocation() {
