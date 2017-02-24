@@ -114,6 +114,7 @@ public class Search extends Fragment {
 
                         Intent intent=new Intent(getActivity(), UserProfileActivity.class);
                         intent.putExtra("id",profile_list.get(position).getId());
+                        intent.putExtra("user_name",profile_list.get(position).getDisplay_name());
                         startActivity(intent);
                     }
                 })

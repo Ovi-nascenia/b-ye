@@ -23,5 +23,17 @@
     <string name="profession">পাত্রের পেশা</string>
 
 
+    <string name="profession_text">পেশা</string>
+    <string name="location_text">বর্তমান অবস্থান </string>
+    <string name="height_text">উচ্চতা</string>
+    <string name="religion_text">ধর্ম</string>
+    <string name="home_town">দেশের বাড়ি</string>
+    <string name="present_loaction_text">বর্তমান অবস্থান</string>
+    <string name="age_text">বয়স</string>
+    <string name="degree_name_text">ডিগ্রীর নাম</string>
+    <string name="about_me">about</string>
+
+
+
 
 </resources>
