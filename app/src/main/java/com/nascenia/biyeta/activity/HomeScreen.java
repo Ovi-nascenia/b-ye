@@ -18,12 +18,15 @@ import com.nascenia.biyeta.fragment.Inbox;
 import com.nascenia.biyeta.fragment.Match;
 import com.nascenia.biyeta.fragment.Search;
 
+import java.util.ArrayList;
+
 
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener{
 
 
     static Context context;
     DrawerLayout drawerLayout;
+
 
     private View actionBarView;
 
@@ -36,12 +39,18 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.layout_drawer);
         context = this;
 
+
         initIdAndActionBar();
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentParentViewGroup, new Search())
                 .commit();
-        searchImageView.setColorFilter(Color.GRAY);
+        searchImageView.setColorFilter(Color.WHITE);
+        matchImageView.setColorFilter(Color.GRAY);
+        inboxImageView.setColorFilter(Color.GRAY);
+        fevImageView.setColorFilter(Color.GRAY);
+        profileImageView.setColorFilter(Color.GRAY);
+
 
 
 
@@ -75,11 +84,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
 
-        searchImageView.setColorFilter(Color.WHITE);
-        matchImageView.setColorFilter(Color.WHITE);
-        inboxImageView.setColorFilter(Color.WHITE);
-        fevImageView.setColorFilter(Color.WHITE);
-        profileImageView.setColorFilter(Color.WHITE);
+        searchImageView.setColorFilter(Color.GRAY);
+        matchImageView.setColorFilter(Color.GRAY);
+        inboxImageView.setColorFilter(Color.GRAY);
+        fevImageView.setColorFilter(Color.GRAY);
+        profileImageView.setColorFilter(Color.GRAY);
         if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
             drawerLayout.closeDrawer(Gravity.RIGHT);
 
@@ -88,7 +97,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         switch (id)
         {
             case R.id.search:
-                searchImageView.setColorFilter(Color.GRAY);
+                searchImageView.setColorFilter(Color.WHITE);
 
 
                 getSupportFragmentManager().beginTransaction()
@@ -96,7 +105,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         .commit();
                 break;
             case R.id.match:
-                matchImageView.setColorFilter(Color.GRAY);
+                matchImageView.setColorFilter(Color.WHITE);
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentParentViewGroup, new Match())
@@ -104,19 +113,19 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.favorite:
 
-                fevImageView.setColorFilter(Color.GRAY);
+                fevImageView.setColorFilter(Color.WHITE);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentParentViewGroup, new Favourite())
                         .commit();
                 break;
             case R.id.inbox:
-                inboxImageView.setColorFilter(Color.GRAY);
+                inboxImageView.setColorFilter(Color.WHITE);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentParentViewGroup, new Inbox())
                         .commit();
                 break;
             case R.id.profile:
-                profileImageView.setColorFilter(Color.GRAY);
+                profileImageView.setColorFilter(Color.WHITE);
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                     drawerLayout.closeDrawer(Gravity.RIGHT);
                 } else {

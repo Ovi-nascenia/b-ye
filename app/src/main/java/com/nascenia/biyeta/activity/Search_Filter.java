@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle ;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +38,7 @@ import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.view.MyGridView;
 import me.bendik.simplerangeview.SimpleRangeView;
 import static me.bendik.simplerangeview.SimpleRangeView.*;
-public class Search_Filter extends Activity  implements OnClickListener{
+public class Search_Filter extends AppCompatActivity implements OnClickListener{
 
 
     SimpleRangeView rangeView_age,rangeView_height,rangeView_color,rangeView_education,rangeView_health;
@@ -290,6 +292,18 @@ public class Search_Filter extends Activity  implements OnClickListener{
     String ch="";
     void set_up_id()
     {
+        Toolbar  mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        mToolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        getSupportActionBar().setTitle(R.string.search);
         rangeView_age=(SimpleRangeView)findViewById(R.id.age_lebel);
         rangeView_height=(SimpleRangeView)findViewById(R.id.height_lebel);
         rangeView_color=(SimpleRangeView)findViewById(R.id.color_lebel);

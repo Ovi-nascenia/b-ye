@@ -63,12 +63,12 @@ public class UserProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                onBackPressed();
+                finish();
+                //onBackPressed();
             }
         });
 

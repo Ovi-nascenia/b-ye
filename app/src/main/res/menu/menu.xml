@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/default_profile_female_icon"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/search"
+            android:title="Search" />
+        <item
+            android:id="@+id/nav_photos"
+            android:icon="@drawable/mail"
+            android:title="Mail" />
+        <item
+            android:id="@+id/nav_movies"
+            android:icon="@drawable/love"
+            android:title="Favourite" />
+
+
+
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_highlight_off_black_24dp"
+            android:title="Settings" />
+    </group>
+
+    <item android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/nav_about_us"
+                android:title="@string/nav_about_us" />
+            <item
+                android:id="@+id/nav_privacy_policy"
+                android:title=" privacy_policy" />
+        </menu>
+    </item>
+
+</menu>
