@@ -133,7 +133,7 @@ public class UserProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
-            findViewById(R.id.pbProcessing).setVisibility(View.GONE);
+          //  findViewById(R.id.pbProcessing).setVisibility(View.GONE);
 
 
             try {
