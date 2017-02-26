@@ -48,17 +48,31 @@
                         android:layout_gravity="start"
                         android:layout_marginTop="@dimen/medium_margin">
 
+                        <!-- <TextView
+                             android:id="@+id/userName"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_centerInParent="true"
+                             android:text="user  Name"
+                             android:textColor="#FFFFFF"
+                             android:textSize="@dimen/medium_textsize"
+                             android:textStyle="bold" />
 
+                         <ImageView
+                             android:id="@+id/backPreviousActivityImage"
+                             android:layout_width="@dimen/small_image_size"
+                             android:layout_height="@dimen/small_image_size"
+                             android:layout_alignParentLeft="true"
+                             android:paddingLeft="@dimen/small_padding"
+                             android:src="@drawable/back_arrow" />
 
-
-
-                        <ImageView
-                            android:id="@+id/likeImage"
-                            android:layout_width="@dimen/small_image_size"
-                            android:layout_height="@dimen/small_image_size"
-                            android:layout_alignParentRight="true"
-                            android:paddingRight="@dimen/small_padding"
-                            android:src="@drawable/favourite" />
+                         <ImageView
+                             android:id="@+id/likeImage"
+                             android:layout_width="@dimen/small_image_size"
+                             android:layout_height="@dimen/small_image_size"
+                             android:layout_alignParentRight="true"
+                             android:paddingRight="@dimen/small_padding"
+                             android:src="@drawable/favourite" />-->
 
                         <ImageView
                             android:id="@+id/fadfa"
@@ -79,8 +93,48 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:clipToPadding="false"
+                    app:contentInsetEnd="0dp"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetRight="0dp"
+                    app:contentInsetStart="0dp"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="@dimen/small_padding">
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="user  Name"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/medium_textsize"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/backPreviousActivityImage"
+                            android:layout_width="@dimen/small_image_size"
+                            android:layout_height="@dimen/small_image_size"
+                            android:src="@drawable/back_arrow" />
+
+                        <ImageView
+                            android:id="@+id/likeImage"
+                            android:layout_width="@dimen/small_image_size"
+                            android:layout_height="@dimen/small_image_size"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/favourite" />
+                    </RelativeLayout>
+
+                </android.support.v7.widget.Toolbar>
+
+
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
@@ -250,15 +304,11 @@
                         android:background="#FFFFFF">
 
                         <TextView
-                            android:textColor="@color/colorPrimaryDark"
-
-                            android:padding="10dp"
                             android:id="@+id/userProfileDescriptionText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:textStyle="bold|italic"
-                            android:textSize="@dimen/small_textsize" />
+                            android:textSize="@dimen/medium_textsize" />
 
                     </RelativeLayout>
 

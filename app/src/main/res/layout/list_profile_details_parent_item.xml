@@ -1,88 +1,79 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_marginTop="@dimen/small_margin"
-
-
-    >
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_background">
 
 
     <!--<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp">-->
-    <android.support.v7.widget.CardView
+
+    <RelativeLayout
+        android:id="@+id/relativeParent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/card_background">
 
-        <RelativeLayout
-            android:id="@+id/relativeParent"
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/parentListItemTitleTextView"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal">
+            android:layout_above="@+id/indicator1"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/medium_margin"
+            android:gravity="center"
+            android:text=""
+            android:textSize="@dimen/medium_textsize"
+            android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/editItemBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/parentListItemExpandImage"
+            android:padding="@dimen/small_padding"
+            android:src="@drawable/editicon" />
 
-            <TextView
+        <ImageView
+            android:id="@+id/parentListItemExpandImage"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/medium_margin"
+            android:layout_centerHorizontal="true"
+            android:padding="@dimen/small_padding"
+            android:src="@drawable/down_arrow" />
 
-                android:id="@+id/parentListItemTitleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/indicator1"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/medium_margin"
-                android:gravity="center"
-                android:text="ttt"
-                android:textSize="@dimen/medium_textsize"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/editItemBtn"
-                android:layout_width="25dp"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:layout_toLeftOf="@+id/parentListItemExpandImage"
-                android:padding="@dimen/small_padding"
-                android:src="@drawable/editicon" />
-
-            <ImageView
-
-                android:id="@+id/parentListItemExpandImage"
-                android:layout_width="25dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_centerHorizontal="true"
-                android:padding="@dimen/small_padding"
-                android:src="@drawable/down_arrow" />
-
-
-            <LinearLayout
-                android:id="@+id/indicator1"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@+id/editItemBtn"
-                android:layout_marginLeft="@dimen/medium_margin"
-                android:layout_marginRight="@dimen/medium_margin"
-                android:background="@color/without_expand_color"
-                android:orientation="horizontal"
-                android:visibility="visible"></LinearLayout>
-
-
-        </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/indicator2"
+            android:id="@+id/indicator1"
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_below="@+id/relativeParent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/editItemBtn"
+            android:layout_marginLeft="@dimen/medium_margin"
+            android:layout_marginRight="@dimen/medium_margin"
             android:background="@color/without_expand_color"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="visible"></LinearLayout>
 
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
 
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/indicator2"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/relativeParent"
+        android:background="@color/without_expand_color"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+    </LinearLayout>
     <!--</android.support.v7.widget.CardView>-->
 
 </RelativeLayout>
