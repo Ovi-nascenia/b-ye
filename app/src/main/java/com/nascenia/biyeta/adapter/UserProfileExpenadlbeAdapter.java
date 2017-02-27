@@ -63,7 +63,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
             parentViewHolder.lnIndicator2.setVisibility(View.GONE);
         }
 
-        parentViewHolder.lnIndicator1.setVisibility(View.INVISIBLE);
+   parentViewHolder.lnIndicator1.setVisibility(View.INVISIBLE);
     }
 
 

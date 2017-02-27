@@ -15,6 +15,7 @@
     <dimen name="mobile_image_padding">4.1dp</dimen>
     <dimen name="check_image_size">12dp</dimen>
     <dimen name="mail_image_padding">4.1dp</dimen>
+    <dimen name="medium_padding">10dp</dimen>
     <dimen name="large_padding">16dp</dimen>
 
 
