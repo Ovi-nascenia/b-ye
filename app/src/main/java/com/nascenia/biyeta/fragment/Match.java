@@ -50,71 +50,14 @@ public class Match extends Fragment {
         Log.e("come", "Match");
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.match, null);
-        recyclerView = (RecyclerView) v.findViewById(R.id.match_list);
-        mMatch_adapter = new Match_Adapter(movieList);
-        relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutLeftButton);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mMatch_adapter);
 
 
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        // TODO Handle item click
-                        showDialog(getContext(), movieList.get(position).getDisplay_name(), movieList.get(position).getLocation());
-
-                    }
-                })
-        );
-
-
-        new Get_Data().execute();
 
         //  prepareMovieData();
         return v;
 
     }
 
-    public void showDialog(Context activity, String display_name, String location) {
-        final Dialog dialog = new Dialog(activity);
-
-        dialog.setContentView(R.layout.custom_dialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        TextView display = (TextView) dialog.findViewById(R.id.display_name);
-        TextView loc = (TextView) dialog.findViewById(R.id.details);
-        display.setText(display_name);
-        loc.setText(location);
-        dialog.setCancelable(false);
 
 
-        dialog.show();
-
-    }
-
-    class Get_Data extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPostExecute(String res) {
-            super.onPostExecute(res);
-
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            relativeLayout.setVisibility(View.GONE);
-
-
-        }
-
-        @Override
-        protected String doInBackground(String... url) {
-            return null;
-
-        }
-    }
 }

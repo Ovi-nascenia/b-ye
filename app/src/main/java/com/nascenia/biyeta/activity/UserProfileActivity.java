@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +65,14 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         id = getIntent().getExtras().getString("id");
+        ImageView back_screen=(ImageView)findViewById(R.id.backPreviousActivityImage);
+        back_screen.setImageResource(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
+        back_screen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         loadUserData();
         hashMap=new HashMap<>();
