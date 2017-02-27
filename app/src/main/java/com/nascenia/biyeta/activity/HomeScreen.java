@@ -3,16 +3,23 @@ package com.nascenia.biyeta.activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ActionMenuView;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 
+import com.nascenia.biyeta.fragment.Blog;
 import com.nascenia.biyeta.fragment.Favourite;
 import com.nascenia.biyeta.fragment.Inbox;
 import com.nascenia.biyeta.fragment.Match;
@@ -71,14 +78,41 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         fevImageView = (ImageView) actionBarView.findViewById(R.id.favorite);
         inboxImageView = (ImageView) actionBarView.findViewById(R.id.inbox);
         profileImageView = (ImageView) actionBarView.findViewById(R.id.profile);
+        NavigationView navigationView=(NavigationView)findViewById(R.id.nav_view);
 
         searchImageView.setOnClickListener(this);
         matchImageView.setOnClickListener(this);
         fevImageView.setOnClickListener(this);
         inboxImageView.setOnClickListener(this);
         profileImageView.setOnClickListener(this);
+        navigationView.setNavigationItemSelectedListener(new  NavigationView.OnNavigationItemSelectedListener(){
+            @Override
+            public boolean onNavigationItemSelected(final MenuItem menuItem) {
+                // update highlighted item in the navigation menu
+                menuItem.setChecked(true);
+                if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
+                    drawerLayout.closeDrawer(Gravity.RIGHT);
+
+
+                if (menuItem.getItemId()==R.id.nac_blog)
+                {
+                    Toast.makeText(HomeScreen.this,"item 2",Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentParentViewGroup, new Blog())
+                            .commit();
+                }
+            //   Toast.makeText(HomeScreen.this,"Checked",Toast.LENGTH_SHORT).show();
+
+
+                return true;
+            }
+        });
+
 
     }
+
+
+
 
 
     @Override
@@ -91,6 +125,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         profileImageView.setColorFilter(Color.GRAY);
         if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
             drawerLayout.closeDrawer(Gravity.RIGHT);
+
 
 
         int id=view.getId();
@@ -132,7 +167,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     drawerLayout.openDrawer(Gravity.RIGHT);
                 }
                 break;
+
+
+
         }
 
     }
+
+
 }

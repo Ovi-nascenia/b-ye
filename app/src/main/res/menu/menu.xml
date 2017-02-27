@@ -7,6 +7,10 @@
             android:icon="@drawable/default_profile_female_icon"
             android:title="Profile" />
         <item
+            android:id="@+id/nac_blog"
+            android:icon="@drawable/blog"
+            android:title="Blog" />
+        <item
             android:id="@+id/nav_home"
             android:icon="@drawable/search"
             android:title="Search" />

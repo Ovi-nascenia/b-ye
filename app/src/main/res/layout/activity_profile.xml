@@ -150,15 +150,15 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#E0E0E0">
+                android:background="#ede9e9">
 
 
                 <LinearLayout
                     android:id="@+id/detils_info_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/large_margin"
-                    android:layout_marginRight="@dimen/large_margin"
+                    android:layout_marginLeft="@dimen/small_margin"
+                    android:layout_marginRight="@dimen/small_margin"
                     android:layout_marginTop="@dimen/medium_margin"
                     android:orientation="vertical">
 
@@ -304,11 +304,15 @@
                         android:background="#FFFFFF">
 
                         <TextView
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:id="@+id/userProfileDescriptionText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:textSize="@dimen/medium_textsize" />
+                            android:textStyle="bold|italic"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="14dp" />
 
                     </RelativeLayout>
 
@@ -320,8 +324,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/detils_info_layout"
-                    android:layout_marginLeft="@dimen/large_margin"
-                    android:layout_marginRight="@dimen/large_margin"
+                    android:layout_marginLeft="@dimen/small_margin"
+                    android:layout_marginRight="@dimen/small_margin"
                     android:layout_marginTop="@dimen/medium_margin"
                     android:scrollbars="vertical" />
 
