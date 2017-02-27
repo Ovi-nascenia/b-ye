@@ -55,6 +55,7 @@ public class Search extends Fragment {
     private List<com.nascenia.biyeta.model.Profile> profile_list = new ArrayList<>();
     private final OkHttpClient client = new OkHttpClient();
 
+
     public Search() {
 
     }
@@ -112,9 +113,9 @@ public class Search extends Fragment {
                         // TODO Handle item click
                         // showDialog(getContext(),profile_list.get(position).getDisplay_name(),profile_list.get(position).getLocation());
 
-                        Intent intent=new Intent(getActivity(), UserProfileActivity.class);
-                        intent.putExtra("id",profile_list.get(position).getId());
-                        intent.putExtra("user_name",profile_list.get(position).getDisplay_name());
+                        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+                        intent.putExtra("id", profile_list.get(position).getId());
+                        intent.putExtra("user_name", profile_list.get(position).getDisplay_name());
                         startActivity(intent);
                     }
                 })
@@ -127,7 +128,6 @@ public class Search extends Fragment {
         return v;
 
     }
-
 
 
     //fetch data from

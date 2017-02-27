@@ -38,6 +38,8 @@
 
     <dimen name="small_textsize">12sp</dimen>
     <dimen name="medium_textsize">18sp</dimen>
+    <dimen name="item_textsize">16sp</dimen>
+
 
     <dimen name="small_image_size">25dp</dimen>
     <dimen name="user_profile_edit_image_width">45dp</dimen>

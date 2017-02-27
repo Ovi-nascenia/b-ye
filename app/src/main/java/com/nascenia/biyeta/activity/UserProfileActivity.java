@@ -1,5 +1,6 @@
 package com.nascenia.biyeta.activity;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,15 +59,18 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private ArrayList<UserProfileChild> childItemList;
     private ArrayList<UserProfile> userProfilesList;
-    HashMap<String,String> hashMap;
+    HashMap<String, String> hashMap;
+    private TextView userNameTextView;
 
+    private Button finalResultBtn;
+    private ProgressDialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         id = getIntent().getExtras().getString("id");
-        ImageView back_screen=(ImageView)findViewById(R.id.backPreviousActivityImage);
+        ImageView back_screen = (ImageView) findViewById(R.id.backPreviousActivityImage);
         back_screen.setImageResource(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
         back_screen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,16 +79,24 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
+        dialog = new ProgressDialog(UserProfileActivity.this);
+
+
         loadUserData();
-        hashMap=new HashMap<>();
-        aboutMeTextView=(TextView)findViewById(R.id.userProfileDescriptionText);
-        setTitle(getIntent().getExtras().getString("user_name"));
+        hashMap = new HashMap<>();
+        aboutMeTextView = (TextView) findViewById(R.id.userProfileDescriptionText);
+        // setTitle(getIntent().getExtras().getString("user_name"));
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        userProfilesList = new ArrayList<UserProfile>();
+        userNameTextView = (TextView) findViewById(R.id.user_name_text);
+        finalResultBtn = (Button) findViewById(R.id.finalResultBtn);
 
+
+        userNameTextView.setText(getIntent().getExtras().getString("user_name"));
+
+        userProfilesList = new ArrayList<UserProfile>();
 
 
         userProfileInfoRecyclerView = (RecyclerView) findViewById(R.id.user_details_recycler_view);
@@ -92,55 +105,64 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
 
-
-
     public void loadUserData() {
         new GetData().execute();
     }
 
     ArrayList<PartialProfileItemModel> listPartialProfile;
+
     class GetData extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Please wait...");
+            dialog.show();
+        }
+
         @Override
         protected void onPostExecute(String responseJson) {
             super.onPostExecute(responseJson);
             //  Toast.makeText(UserProfileActivity.this, responseJson, Toast.LENGTH_SHORT).show();
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
 
             try {
                 JSONObject parentJsonObj = new JSONObject(responseJson).getJSONObject("profile");
-                boolean valuee=parentJsonObj.getJSONObject("request_status").getBoolean("accepted");
-                if (!valuee)
-                {
-                    listPartialProfile=new ArrayList<>();
-                    Toast.makeText(UserProfileActivity.this,"load partial profile"+valuee,Toast.LENGTH_SHORT).show();
+                boolean valuee = parentJsonObj.getJSONObject("request_status").getBoolean("accepted");
+                if (!valuee) {
+                    listPartialProfile = new ArrayList<>();
+                    // Toast.makeText(UserProfileActivity.this, "load partial profile" + valuee, Toast.LENGTH_SHORT).show();
 
 
                     aboutMeTextView.setText(parentJsonObj.getJSONObject("personal_information").getString("about_yourself"));
-                    hashMap.put(getString(R.string.profession_text),parentJsonObj.getJSONObject("profession").getString("occupation"));
-                    hashMap.put(getString(R.string.present_loaction_text),parentJsonObj.getJSONObject("profile_living_in").getString("country"));
-                    hashMap.put(getString(R.string.home_town),parentJsonObj.getJSONObject("profile_living_in").getString("location"));
-                    hashMap.put(getString(R.string.height_text),parentJsonObj.getJSONObject("personal_information").getString("height_ft")+"' "+parentJsonObj.getJSONObject("personal_information").getString("height_inc")+"''");
-                    hashMap.put(getString(R.string.religion_text),parentJsonObj.getJSONObject("profile_religion").getString("religion"));
-                    hashMap.put(getString(R.string.degree_name_text),parentJsonObj.getJSONObject("education_information").getString("highest_degree"));
+                    hashMap.put(getString(R.string.profession_text), parentJsonObj.getJSONObject("profession").getString("occupation"));
+                    hashMap.put(getString(R.string.present_loaction_text), parentJsonObj.getJSONObject("profile_living_in").getString("country"));
+                    hashMap.put(getString(R.string.home_town), parentJsonObj.getJSONObject("profile_living_in").getString("location"));
+                    hashMap.put(getString(R.string.height_text), parentJsonObj.getJSONObject("personal_information").getString("height_ft") + "' " + parentJsonObj.getJSONObject("personal_information").getString("height_inc") + "''");
+                    hashMap.put(getString(R.string.religion_text), parentJsonObj.getJSONObject("profile_religion").getString("religion"));
+                    hashMap.put(getString(R.string.degree_name_text), parentJsonObj.getJSONObject("education_information").getString("highest_degree"));
 
-                    for ( String key : hashMap.keySet() ) {
+                    for (String key : hashMap.keySet()) {
 
-                        PartialProfileItemModel partialProfileItemModel=new PartialProfileItemModel(key,hashMap.get(key));
+                        PartialProfileItemModel partialProfileItemModel = new PartialProfileItemModel(key, hashMap.get(key));
                         listPartialProfile.add(partialProfileItemModel);
                     }
 
-                    PartialProfileViewAdapter partialProfileViewAdapter=new PartialProfileViewAdapter(listPartialProfile);
+                    PartialProfileViewAdapter partialProfileViewAdapter = new PartialProfileViewAdapter(listPartialProfile);
                     userProfileInfoRecyclerView.setAdapter(partialProfileViewAdapter);
 
-                }
-                else {
+                } else {
 
-                    Toast.makeText(UserProfileActivity.this,"load full profile"+valuee,Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(UserProfileActivity.this, "load full profile" + valuee, Toast.LENGTH_SHORT).show();
+                    finalResultBtn.setVisibility(View.GONE);
+                    aboutMeTextView.setText(parentJsonObj.getJSONObject("personal_information").getString("about_yourself"));
+
 
                     Iterator iterator = parentJsonObj.keys();
                     while (iterator.hasNext()) {
                         String key = (String) iterator.next();
                         String value = parentJsonObj.getString(key);
-
 
                         Object json = new JSONTokener(value).nextValue();
                         if (json instanceof JSONObject) {
@@ -162,21 +184,14 @@ public class UserProfileActivity extends AppCompatActivity {
             }
 
 
-
-
-
         }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-
-        }
 
         @Override
         protected String doInBackground(String... url) {
-        Response response;
+
+
+            Response response;
             SharePref sharePref = new SharePref(UserProfileActivity.this);
             String token = sharePref.get_data("token");
             Request request = null;
@@ -205,13 +220,13 @@ public class UserProfileActivity extends AppCompatActivity {
             String childKey = (String) iterator.next();
             String childValue = childJsonObject.getString(childKey);
 
-              childItemList.add(new UserProfileChild(childKey, childValue));
+            childItemList.add(new UserProfileChild(childKey, childValue));
 
 
         }
 
 
-         userProfilesList.add(new UserProfile(key, childItemList));
+        userProfilesList.add(new UserProfile(key, childItemList));
 
     }
 
@@ -233,7 +248,7 @@ public class UserProfileActivity extends AppCompatActivity {
         for (int n = 0; n < childJsonArray.length(); n++) {
             JSONObject object = childJsonArray.getJSONObject(n);
 
-           for (Iterator<String> iter = object.keys(); iter.hasNext(); ) {
+            for (Iterator<String> iter = object.keys(); iter.hasNext(); ) {
                 String childKey = iter.next();
 
                 childNodeValue += object.getString(childKey);

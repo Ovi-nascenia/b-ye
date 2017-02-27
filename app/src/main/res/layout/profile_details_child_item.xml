@@ -30,7 +30,8 @@
             android:layout_marginLeft="@dimen/large_margin"
             android:layout_weight="1"
             android:text="hello world"
-            android:textSize="@dimen/small_textsize"
+
+            android:textSize="@dimen/item_textsize"
             android:textStyle="normal"  />
 
         <EditText
@@ -42,7 +43,7 @@
             android:background="@android:color/transparent"
             android:text="hello world"
             android:textColor="#757575"
-            android:textSize="@dimen/small_textsize"
+            android:textSize="@dimen/item_textsize"
             android:textStyle="normal" />
     </LinearLayout>
 

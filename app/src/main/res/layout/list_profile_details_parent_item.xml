@@ -1,93 +1,93 @@
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_marginTop="0.5dp"
 
 
-   >
-<RelativeLayout
-    android:id="@+id/card_view"
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-   >
-
-
-    <!--<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp">-->
-
-    <LinearLayout
-        android:id="@+id/indicator2"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_below="@+id/relativeParent"
-        android:background="@color/without_expand_color"
-        android:orientation="horizontal"
-        android:visibility="visible">
-
-    </LinearLayout>
+    >
 
     <RelativeLayout
-        android:id="@+id/relativeParent"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="60dp">
 
 
-        <TextView
-            android:id="@+id/parentListItemTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/medium_margin"
-            android:padding="@dimen/medium_padding"
-            android:gravity="center"
-            android:text="xxxxxxxxxxx"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:visibility="invisible"
-            android:id="@+id/editItemBtn"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_toLeftOf="@+id/parentListItemExpandImage"
-            android:padding="@dimen/medium_padding"
-            android:src="@drawable/editicon" />
-
-        <ImageView
-            android:id="@+id/parentListItemExpandImage"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/medium_margin"
-            android:layout_centerHorizontal="true"
-            android:padding="@dimen/medium_padding"
-            android:src="@drawable/down_arrow" />
-
+        <!--<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp">-->
 
         <LinearLayout
-            android:id="@+id/indicator1"
+            android:id="@+id/indicator2"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_below="@+id/editItemBtn"
-            android:layout_marginLeft="@dimen/medium_margin"
-            android:layout_marginRight="@dimen/medium_margin"
-            android:background="#000000"
+            android:layout_height="5dp"
+            android:layout_below="@+id/relativeParent"
+            android:background="@color/without_expand_color"
             android:orientation="horizontal"
-            android:visibility="visible"></LinearLayout>
+            android:visibility="visible">
 
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeParent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/parentListItemTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/medium_margin"
+                android:gravity="center"
+                android:padding="@dimen/medium_padding"
+                android:text="xxxxxxxxxxx"
+                android:textColor="#4e4c4c"
+                android:textSize="@dimen/item_textsize"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/editItemBtn"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_toLeftOf="@+id/parentListItemExpandImage"
+                android:padding="@dimen/medium_padding"
+                android:src="@drawable/editicon"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/parentListItemExpandImage"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="@dimen/medium_margin"
+                android:padding="@dimen/medium_padding"
+                android:src="@drawable/down_arrow" />
+
+
+            <LinearLayout
+                android:id="@+id/indicator1"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_below="@+id/editItemBtn"
+                android:layout_marginLeft="@dimen/medium_margin"
+                android:layout_marginRight="@dimen/medium_margin"
+                android:background="#000000"
+                android:orientation="horizontal"
+                android:visibility="visible"></LinearLayout>
+
+
+        </RelativeLayout>
+        <!--</android.support.v7.widget.CardView>-->
 
     </RelativeLayout>
-    <!--</android.support.v7.widget.CardView>-->
-
-</RelativeLayout>
 </android.support.v7.widget.CardView>

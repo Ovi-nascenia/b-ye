@@ -1,6 +1,7 @@
 package com.nascenia.biyeta.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,7 +29,7 @@ import com.nascenia.biyeta.fragment.Search;
 import java.util.ArrayList;
 
 
-public class HomeScreen extends AppCompatActivity implements View.OnClickListener{
+public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
 
 
     static Context context;
@@ -59,13 +60,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         profileImageView.setColorFilter(Color.GRAY);
 
 
-
-
-
     }
 
-    void initIdAndActionBar()
-    {
+    void initIdAndActionBar() {
         actionBarView = getLayoutInflater().inflate(R.layout.activity_main_actionbar_item, null);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(actionBarView);
@@ -78,14 +75,14 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         fevImageView = (ImageView) actionBarView.findViewById(R.id.favorite);
         inboxImageView = (ImageView) actionBarView.findViewById(R.id.inbox);
         profileImageView = (ImageView) actionBarView.findViewById(R.id.profile);
-        NavigationView navigationView=(NavigationView)findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         searchImageView.setOnClickListener(this);
         matchImageView.setOnClickListener(this);
         fevImageView.setOnClickListener(this);
         inboxImageView.setOnClickListener(this);
         profileImageView.setOnClickListener(this);
-        navigationView.setNavigationItemSelectedListener(new  NavigationView.OnNavigationItemSelectedListener(){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
                 // update highlighted item in the navigation menu
@@ -94,14 +91,24 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     drawerLayout.closeDrawer(Gravity.RIGHT);
 
 
-                if (menuItem.getItemId()==R.id.nac_blog)
-                {
-                    Toast.makeText(HomeScreen.this,"item 2",Toast.LENGTH_SHORT).show();
+                if (menuItem.getItemId() == R.id.nac_blog) {
+                    Toast.makeText(HomeScreen.this, "item 2", Toast.LENGTH_SHORT).show();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragmentParentViewGroup, new Blog())
                             .commit();
+
+
                 }
-            //   Toast.makeText(HomeScreen.this,"Checked",Toast.LENGTH_SHORT).show();
+
+                if (menuItem.getItemId() == R.id.nav_profile) {
+
+                    Intent intent = new Intent(getBaseContext(), UserProfileActivity.class);
+                    intent.putExtra("id", "316");
+                    intent.putExtra("user_name", "Saiful");
+                    startActivity(intent);
+                }
+
+                //   Toast.makeText(HomeScreen.this,"Checked",Toast.LENGTH_SHORT).show();
 
 
                 return true;
@@ -110,9 +117,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
     }
-
-
-
 
 
     @Override
@@ -127,10 +131,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             drawerLayout.closeDrawer(Gravity.RIGHT);
 
 
-
-        int id=view.getId();
-        switch (id)
-        {
+        int id = view.getId();
+        switch (id) {
             case R.id.search:
                 searchImageView.setColorFilter(Color.WHITE);
 
@@ -167,7 +169,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     drawerLayout.openDrawer(Gravity.RIGHT);
                 }
                 break;
-
 
 
         }

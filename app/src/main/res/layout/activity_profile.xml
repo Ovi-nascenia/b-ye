@@ -83,7 +83,8 @@
                             android:background="#E6E6FA"
                             android:gravity="center"
                             android:padding="@dimen/small_padding"
-                            android:src="@drawable/editicon" />
+                            android:src="@drawable/editicon"
+                            android:visibility="invisible" />
 
                     </RelativeLayout>
 
@@ -109,7 +110,7 @@
                         android:padding="@dimen/small_padding">
 
                         <TextView
-
+                            android:id="@+id/user_name_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -121,8 +122,7 @@
                         <ImageView
                             android:id="@+id/backPreviousActivityImage"
                             android:layout_width="@dimen/small_image_size"
-                            android:layout_height="@dimen/small_image_size"
-                         />
+                            android:layout_height="@dimen/small_image_size" />
 
                         <ImageView
                             android:id="@+id/likeImage"
@@ -304,15 +304,14 @@
                         android:background="#FFFFFF">
 
                         <TextView
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
                             android:id="@+id/userProfileDescriptionText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:padding="@dimen/medium_padding"
                             android:text=""
-                            android:textStyle="bold|italic"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="14dp" />
+                            android:textColor="#4e4c4c"
+                            android:textSize="@dimen/item_textsize"
+                            android:textStyle="bold" />
 
                     </RelativeLayout>
 
@@ -347,7 +346,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:background="#B71C1C"
+            android:background="@color/colorPrimaryDark"
             android:text="পুরো বায়োডাটা দেখার অনুরোধ করুন"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
