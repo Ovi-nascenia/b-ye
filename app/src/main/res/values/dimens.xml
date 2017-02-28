@@ -10,6 +10,7 @@
     <dimen name="custom_tab_layout_height">72dp</dimen>
 
 
+    <dimen name="most_small_padding">2dp</dimen>
     <dimen name="small_padding">5dp</dimen>
     <dimen name="smiley_icon_padding">8dp</dimen>
     <dimen name="mobile_image_padding">4.1dp</dimen>
@@ -27,6 +28,8 @@
     <dimen name="medium_margin">10dp</dimen>
     <dimen name="large_margin">15dp</dimen>
     <dimen name="negative_large_margin">-15dp</dimen>
+    <dimen name="most_small_margin">10dp</dimen>
+
 
     <dimen name="check_image_top_margin">7dp</dimen>
     <dimen name="check_image_right_margin">3dp</dimen>
@@ -54,6 +57,8 @@
     <dimen name="profile_width">75dp</dimen>
     <dimen name="profile_height">75dp</dimen>
     <dimen name="navigation_drawer_width">250dp</dimen>
+
+    <dimen name="profile_item_cardview_height">100dp</dimen>
 
 
 </resources>
