@@ -68,7 +68,13 @@
                             android:id="@+id/age_lebel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:count="32" />
+                            app:activeLineColor="#FFAB00"
+                            app:activeThumbColor="#D50000"
+                            app:count="32"
+                            app:labelFontSize="8sp"
+                            app:lineColor="#212121"
+                            app:showLabels="true"
+                            app:showTicks="false" />
 
                         <TextView
                             android:id="@+id/level"
@@ -120,7 +126,13 @@
                             android:id="@+id/height_lebel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:count="52" />
+                            app:activeLineColor="#FFAB00"
+                            app:activeThumbColor="#D50000"
+                            app:count="52"
+                            app:labelFontSize="12sp"
+                            app:lineColor="#212121"
+                            app:showLabels="true"
+                            app:showTicks="false" />
 
 
                     </LinearLayout>
@@ -167,7 +179,13 @@
                             android:id="@+id/color_lebel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:count="4" />
+                            app:activeLineColor="#FFAB00"
+                            app:activeThumbColor="#D50000"
+                            app:count="4"
+                            app:labelFontSize="12sp"
+                            app:lineColor="#212121"
+                            app:showLabels="true"
+                            app:showTicks="false" />
 
 
                     </LinearLayout>
@@ -191,7 +209,6 @@
 
                         android:id="@+id/body_"
                         android:layout_width="match_parent"
-
                         android:layout_height="wrap_content"
                         android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
                         android:padding="20dp"
@@ -215,7 +232,13 @@
                             android:id="@+id/health_lebel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:count="3" />
+                            app:activeLineColor="#FFAB00"
+                            app:activeThumbColor="#D50000"
+                            app:count="3"
+                            app:labelFontSize="12sp"
+                            app:lineColor="#212121"
+                            app:showLabels="true"
+                            app:showTicks="false" />
 
 
                     </LinearLayout>
@@ -263,7 +286,13 @@
                             android:id="@+id/education_lebel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:count="9" />
+                            app:activeLineColor="#FFAB00"
+                            app:activeThumbColor="#D50000"
+                            app:count="9"
+                            app:labelFontSize="12sp"
+                            app:lineColor="#212121"
+                            app:showLabels="true"
+                            app:showTicks="false" />
 
                     </LinearLayout>
 

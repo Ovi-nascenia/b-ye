@@ -23,7 +23,7 @@ public class Profession_Adapter extends BaseAdapter {
     ArrayList<Boolean>is_checked;
 
     // 1
-    public Profession_Adapter(Context context, ArrayList profession_name,ArrayList is_checked) {
+    public Profession_Adapter(Context context, ArrayList profession_name,ArrayList is_checked,String s1) {
         this.mContext = context;
         this.profession_name = profession_name;
         this.is_checked=is_checked;
