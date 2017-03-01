@@ -31,12 +31,15 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
 
     private List<UserProfile> userProfilesList;
     private Context baseContext;
+    private boolean isProfileEditOptionEnable;
 
-    public UserProfileExpenadlbeAdapter(Context baseContext, List<UserProfile> userProfilesList) {
+
+    public UserProfileExpenadlbeAdapter(Context baseContext, List<UserProfile> userProfilesList, boolean isProfileEditOptionEnable) {
         super(userProfilesList);
         mInflater = LayoutInflater.from(baseContext);
         this.userProfilesList = userProfilesList;
         this.baseContext = baseContext;
+        this.isProfileEditOptionEnable = isProfileEditOptionEnable;
 
     }
 
@@ -63,7 +66,19 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
             parentViewHolder.lnIndicator2.setVisibility(View.GONE);
         }
 
-   parentViewHolder.lnIndicator1.setVisibility(View.INVISIBLE);
+        parentViewHolder.lnIndicator1.setVisibility(View.INVISIBLE);
+
+        /*if (this.profileEditOption.equals("OWN_PROFILE")) {
+            parentViewHolder.editItemBtn.setVisibility(View.VISIBLE);
+        }else {
+            parentViewHolder.editItemBtn.setVisibility(View.VISIBLE);
+        }*/
+
+
+        if (this.isProfileEditOptionEnable) {
+            parentViewHolder.editItemBtn.setVisibility(View.VISIBLE);
+        }
+
     }
 
 

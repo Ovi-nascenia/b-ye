@@ -75,7 +75,7 @@
                              android:src="@drawable/favourite" />-->
 
                         <ImageView
-                            android:id="@+id/fadfa"
+                            android:id="@+id/edit_profile_image"
                             android:layout_width="@dimen/user_profile_edit_image_width"
                             android:layout_height="@dimen/user_profile_edit_image_height"
                             android:layout_alignParentBottom="true"

@@ -52,20 +52,56 @@ public class ParentItemViewHolder extends ParentViewHolder {
             @Override
             public void onClick(View v) {
                 if (isExpanded()) {
-                    collapseView();
+                    /*collapseView();
                     lnIndicator1.setVisibility(View.GONE);
                     lnIndicator2.setVisibility(View.VISIBLE);
                     lnIndicator2.setBackgroundColor(ContextCompat.getColor(holderContext, R.color.without_expand_color));
-                    parentListItemExpandImageView.setImageResource(R.drawable.down_arrow);
+                    parentListItemExpandImageView.setImageResource(R.drawable.down_arrow);*/
+
+                    setExpandAction();
                 } else {
-                    expandView();
+                    /*expandView();
                     lnIndicator1.setVisibility(View.VISIBLE);
                     lnIndicator1.setBackgroundColor(ContextCompat.getColor(holderContext, R.color.with_expand_color));
                     lnIndicator2.setVisibility(View.GONE);
-                    parentListItemExpandImageView.setImageResource(R.drawable.up_arrow);
+                    parentListItemExpandImageView.setImageResource(R.drawable.up_arrow);*/
+
+                    setCollapseAction();
                 }
             }
         });
+
+
+        editItemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isExpanded()) {
+                    setExpandAction();
+                } else {
+                    setCollapseAction();
+                }
+
+
+            }
+        });
+
+    }
+
+    private void setCollapseAction() {
+        expandView();
+        lnIndicator1.setVisibility(View.VISIBLE);
+        lnIndicator1.setBackgroundColor(ContextCompat.getColor(holderContext, R.color.with_expand_color));
+        lnIndicator2.setVisibility(View.GONE);
+        parentListItemExpandImageView.setImageResource(R.drawable.up_arrow);
+    }
+
+    private void setExpandAction() {
+        collapseView();
+        lnIndicator1.setVisibility(View.GONE);
+        lnIndicator2.setVisibility(View.VISIBLE);
+        lnIndicator2.setBackgroundColor(ContextCompat.getColor(holderContext, R.color.without_expand_color));
+        parentListItemExpandImageView.setImageResource(R.drawable.down_arrow);
 
 
     }

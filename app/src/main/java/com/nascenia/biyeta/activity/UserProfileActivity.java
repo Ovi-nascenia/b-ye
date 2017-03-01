@@ -65,11 +65,14 @@ public class UserProfileActivity extends AppCompatActivity {
     private Button finalResultBtn;
     private ProgressDialog dialog;
 
+    private ImageView editProfileImageView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         id = getIntent().getExtras().getString("id");
+        //   profileEditOption = getIntent().getExtras().getString("PROFILE_EDIT_OPTION");
         ImageView back_screen = (ImageView) findViewById(R.id.backPreviousActivityImage);
         back_screen.setImageResource(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
         back_screen.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +95,13 @@ public class UserProfileActivity extends AppCompatActivity {
 
         userNameTextView = (TextView) findViewById(R.id.user_name_text);
         finalResultBtn = (Button) findViewById(R.id.finalResultBtn);
+        editProfileImageView = (ImageView) findViewById(R.id.edit_profile_image);
+
+
+        if (getIntent().getExtras().getBoolean("PROFILE_EDIT_OPTION")) {
+            editProfileImageView.setVisibility(View.VISIBLE);
+
+        }
 
 
         userNameTextView.setText(getIntent().getExtras().getString("user_name"));
@@ -175,7 +185,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
                     }
-                    userProfileInfoRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(), userProfilesList));
+                    userProfileInfoRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                            userProfilesList, getIntent().getExtras().getBoolean("PROFILE_EDIT_OPTION")));
                 }
 
 
