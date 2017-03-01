@@ -55,7 +55,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private ArrayList<UserProfileChild> childItemList;
     private ArrayList<UserProfile> userProfilesList;
-    HashMap<String,String> hashMap;
+    HashMap<String, String> hashMap;
 
 
     @Override
@@ -65,8 +65,8 @@ public class UserProfileActivity extends AppCompatActivity {
         id = getIntent().getExtras().getString("id");
 
         loadUserData();
-        hashMap=new HashMap<>();
-        aboutMeTextView=(TextView)findViewById(R.id.userProfileDescriptionText);
+        hashMap = new HashMap<>();
+        aboutMeTextView = (TextView) findViewById(R.id.userProfileDescriptionText);
         setTitle(getIntent().getExtras().getString("user_name"));
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -75,13 +75,10 @@ public class UserProfileActivity extends AppCompatActivity {
         userProfilesList = new ArrayList<UserProfile>();
 
 
-
         userProfileInfoRecyclerView = (RecyclerView) findViewById(R.id.user_details_recycler_view);
         userProfileInfoRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
 
     }
-
-
 
 
     public void loadUserData() {
@@ -89,6 +86,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     ArrayList<PartialProfileItemModel> listPartialProfile;
+
     class GetData extends AsyncTask<String, String, String> {
         @Override
         protected void onPostExecute(String responseJson) {
@@ -97,34 +95,32 @@ public class UserProfileActivity extends AppCompatActivity {
 
             try {
                 JSONObject parentJsonObj = new JSONObject(responseJson).getJSONObject("profile");
-                boolean valuee=parentJsonObj.getJSONObject("request_status").getBoolean("accepted");
-                if (!valuee)
-                {
-                    listPartialProfile=new ArrayList<>();
-                    Toast.makeText(UserProfileActivity.this,"load partial profile"+valuee,Toast.LENGTH_SHORT).show();
+                boolean valuee = parentJsonObj.getJSONObject("request_status").getBoolean("accepted");
+                if (!valuee) {
+                    listPartialProfile = new ArrayList<>();
+                    Toast.makeText(UserProfileActivity.this, "load partial profile" + valuee, Toast.LENGTH_SHORT).show();
 
 
                     aboutMeTextView.setText(parentJsonObj.getJSONObject("personal_information").getString("about_yourself"));
-                    hashMap.put(getString(R.string.profession_text),parentJsonObj.getJSONObject("profession").getString("occupation"));
-                    hashMap.put(getString(R.string.present_loaction_text),parentJsonObj.getJSONObject("profile_living_in").getString("country"));
-                    hashMap.put(getString(R.string.home_town),parentJsonObj.getJSONObject("profile_living_in").getString("location"));
-                    hashMap.put(getString(R.string.height_text),parentJsonObj.getJSONObject("personal_information").getString("height_ft")+"' "+parentJsonObj.getJSONObject("personal_information").getString("height_inc")+"''");
-                    hashMap.put(getString(R.string.religion_text),parentJsonObj.getJSONObject("profile_religion").getString("religion"));
-                    hashMap.put(getString(R.string.degree_name_text),parentJsonObj.getJSONObject("education_information").getString("highest_degree"));
+                    hashMap.put(getString(R.string.profession_text), parentJsonObj.getJSONObject("profession").getString("occupation"));
+                    hashMap.put(getString(R.string.present_loaction_text), parentJsonObj.getJSONObject("profile_living_in").getString("country"));
+                    hashMap.put(getString(R.string.home_town), parentJsonObj.getJSONObject("profile_living_in").getString("location"));
+                    hashMap.put(getString(R.string.height_text), parentJsonObj.getJSONObject("personal_information").getString("height_ft") + "' " + parentJsonObj.getJSONObject("personal_information").getString("height_inc") + "''");
+                    hashMap.put(getString(R.string.religion_text), parentJsonObj.getJSONObject("profile_religion").getString("religion"));
+                    hashMap.put(getString(R.string.degree_name_text), parentJsonObj.getJSONObject("education_information").getString("highest_degree"));
 
-                    for ( String key : hashMap.keySet() ) {
+                    for (String key : hashMap.keySet()) {
 
-                        PartialProfileItemModel partialProfileItemModel=new PartialProfileItemModel(key,hashMap.get(key));
+                        PartialProfileItemModel partialProfileItemModel = new PartialProfileItemModel(key, hashMap.get(key));
                         listPartialProfile.add(partialProfileItemModel);
                     }
 
-                    PartialProfileViewAdapter partialProfileViewAdapter=new PartialProfileViewAdapter(listPartialProfile);
+                    PartialProfileViewAdapter partialProfileViewAdapter = new PartialProfileViewAdapter(listPartialProfile);
                     userProfileInfoRecyclerView.setAdapter(partialProfileViewAdapter);
 
-                }
-                else {
+                } else {
 
-                    Toast.makeText(UserProfileActivity.this,"load full profile"+valuee,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserProfileActivity.this, "load full profile" + valuee, Toast.LENGTH_SHORT).show();
 
                     Iterator iterator = parentJsonObj.keys();
                     while (iterator.hasNext()) {
@@ -152,9 +148,6 @@ public class UserProfileActivity extends AppCompatActivity {
             }
 
 
-
-
-
         }
 
         @Override
@@ -166,7 +159,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... url) {
-        Response response;
+            Response response;
             SharePref sharePref = new SharePref(UserProfileActivity.this);
             String token = sharePref.get_data("token");
             Request request = null;
@@ -195,13 +188,14 @@ public class UserProfileActivity extends AppCompatActivity {
             String childKey = (String) iterator.next();
             String childValue = childJsonObject.getString(childKey);
 
-              childItemList.add(new UserProfileChild(childKey, childValue));
+            childItemList.add(new UserProfileChild(Constant.profileItemBanglaName(childKey), childValue));
+            //childItemList.add(new UserProfileChild(childKey, childValue));
 
 
         }
 
-
-         userProfilesList.add(new UserProfile(key, childItemList));
+        userProfilesList.add(new UserProfile(Constant.profileItemBanglaName(key), childItemList));
+        // userProfilesList.add(new UserProfile(key, childItemList));
 
     }
 
@@ -223,19 +217,22 @@ public class UserProfileActivity extends AppCompatActivity {
         for (int n = 0; n < childJsonArray.length(); n++) {
             JSONObject object = childJsonArray.getJSONObject(n);
 
-           for (Iterator<String> iter = object.keys(); iter.hasNext(); ) {
+            for (Iterator<String> iter = object.keys(); iter.hasNext(); ) {
                 String childKey = iter.next();
 
                 childNodeValue += object.getString(childKey);
                 Log.i("jsonarraykey", childKey);
             }
-            childItemList.add(new UserProfileChild(childItemName, childNodeValue));
+
+            childItemList.add(new UserProfileChild(Constant.profileItemBanglaName(childItemName), childNodeValue));
+            //  childItemList.add(new UserProfileChild(childItemName, childNodeValue));
             childNodeValue = "";
 
             Log.i("jsonarraykey", "-------------------------");
         }
 
-        userProfilesList.add(new UserProfile(key, childItemList));
+        userProfilesList.add(new UserProfile(Constant.profileItemBanglaName(key), childItemList));
+        //userProfilesList.add(new UserProfile(key, childItemList));
     }
 
 }
