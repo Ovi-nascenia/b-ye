@@ -32,7 +32,6 @@ public class Profession_Adapter extends BaseAdapter {
     private String gridItemType;
 
 
-    // 1
     public Profession_Adapter(Context context, ArrayList profession_name, ArrayList is_checked, String gridItemType) {
         this.mContext = context;
         this.profession_name = profession_name;
@@ -40,25 +39,25 @@ public class Profession_Adapter extends BaseAdapter {
         this.gridItemType = gridItemType;
     }
 
-    // 2
+
     @Override
     public int getCount() {
         return profession_name.size() - 1;
     }
 
-    // 3
+
     @Override
     public long getItemId(int position) {
         return position;
     }
 
-    // 4
+
     @Override
     public Object getItem(int position) {
         return null;
     }
 
-    // 5
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View grid;
@@ -87,17 +86,11 @@ public class Profession_Adapter extends BaseAdapter {
                 //Toast.makeText(mContext, "checked", Toast.LENGTH_LONG).show();
 
 
-               /* switch (gridItemType){
-
-
-                }*/
-
-
                 if (isChecked) {
-                    Log.i("checkbox", "checked");
+
                     addCheckBoxStatustoList(isChecked, position);
+
                 } else {
-                    Log.i("checkbox", "unchecked");
 
                     addCheckBoxStatustoList(isChecked, position);
                 }
@@ -136,60 +129,52 @@ public class Profession_Adapter extends BaseAdapter {
 
 
         if (this.gridItemType.equals("LOCATION") && aBoolean) {
-            /*if (aBoolean) {
-                Search_Filter.locationGridItemCheckedCheckBoxPositionList.add(position);
-            }else{
 
-                for(int i=0;Search_Filter.locationGridItemCheckedCheckBoxPositionList.size();i++){
+            Search_Filter.locationGridItemCheckedCheckBoxPositionList.add(position);
+            Log.i("listdata", "LOCATION  " + Search_Filter.locationGridItemCheckedCheckBoxPositionList.size());
 
-                }
 
-            }*/
+        } else if (this.gridItemType.equals("OCCUPATION") && aBoolean) {
 
-        } else if (this.gridItemType.equals("OCCUPATION")) {
+            Search_Filter.occupationGridItemCheckedCheckBoxPositionList.add(position);
+            Log.i("listdata", "OCCUPATION  " + Search_Filter.occupationGridItemCheckedCheckBoxPositionList.size());
 
-            if (aBoolean) {
+        } else if (this.gridItemType.equals("PROFESSION") && aBoolean) {
 
-                Search_Filter.occupationGridItemCheckedCheckBoxPositionList.add(position);
-            }
+            Search_Filter.professionGridItemCheckedCheckBoxPositionList.add(position);
+            Log.i("listdata", "PROFESSION  " + Search_Filter.professionGridItemCheckedCheckBoxPositionList.size());
+
+        } else if (this.gridItemType.equals("LOCATION") && !aBoolean) {
+
+            removeItemfromGridViewList(Search_Filter.locationGridItemCheckedCheckBoxPositionList, position);
+
+        } else if (this.gridItemType.equals("OCCUPATION") && !aBoolean) {
+
+            removeItemfromGridViewList(Search_Filter.occupationGridItemCheckedCheckBoxPositionList, position);
+
+        } else if (this.gridItemType.equals("PROFESSION") && !aBoolean) {
+
+            removeItemfromGridViewList(Search_Filter.professionGridItemCheckedCheckBoxPositionList, position);
 
         } else {
-            //PROFESSION
-            if (aBoolean) {
+            Toast.makeText(mContext, "no data found", Toast.LENGTH_LONG).show();
+        }
 
-                Search_Filter.professionGridItemCheckedCheckBoxPositionList.add(position);
+
+    }
+
+    private void removeItemfromGridViewList(ArrayList<Integer> checkBoxPositionList, int value) {
+
+
+        for (int i = 0; i < checkBoxPositionList.size(); i++) {
+
+            if (value == checkBoxPositionList.get(i)) {
+                checkBoxPositionList.remove(i);
+                Log.i("listdata", value + " " + this.gridItemType);
             }
-        }
-
-
-        switch (this.gridItemType) {
-
-            case "LOCATION":
-
-                if (aBoolean) {
-
-                    Search_Filter.locationGridItemCheckedCheckBoxPositionList.add(position);
-
-                }
-                break;
-
-            case "OCCUPATION":
-
-                if (aBoolean) {
-
-                    Search_Filter.occupationGridItemCheckedCheckBoxPositionList.add(position);
-                }
-                break;
-            case "PROFESSION":
-
-                if (aBoolean) {
-
-                    Search_Filter.professionGridItemCheckedCheckBoxPositionList.add(position);
-                }
-                break;
-
 
         }
+
 
     }
 

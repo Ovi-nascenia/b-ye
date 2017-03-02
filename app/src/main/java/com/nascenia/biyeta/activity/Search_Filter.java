@@ -5,6 +5,9 @@ package com.nascenia.biyeta.activity;
  */
 
 import android.app.Activity;
+
+import org.apache.commons.lang3.StringUtils;
+
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,8 +34,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+
 
 import com.nascenia.biyeta.adapter.Profession_Adapter;
 import com.nascenia.biyeta.appdata.SharePref;
@@ -52,15 +57,30 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
     private ArrayList<String> skin_lebel, age_lebel, health_lebel, education_lebel, professional_lebel, occupation_lebel;
 
-    public ArrayList<String> age_lebels;
+
     MyGridView gridView;
     MyGridView gridView_occupation, gridView_location;
     private final OkHttpClient client = new OkHttpClient();
 
 
-    public static ArrayList<Integer> locationGridItemCheckedCheckBoxPositionList;
-    public static ArrayList<Integer> professionGridItemCheckedCheckBoxPositionList;
-    public static ArrayList<Integer> occupationGridItemCheckedCheckBoxPositionList;
+    public static ArrayList<Integer> locationGridItemCheckedCheckBoxPositionList = new ArrayList<Integer>();
+    public static ArrayList<Integer> professionGridItemCheckedCheckBoxPositionList = new ArrayList<Integer>();
+    public static ArrayList<Integer> occupationGridItemCheckedCheckBoxPositionList = new ArrayList<Integer>();
+    public static ArrayList<Integer> currentStatusList = new ArrayList<Integer>();
+    public static ArrayList<Integer> maritalStatusList = new ArrayList<Integer>();
+    public static ArrayList<Integer> religionCastList = new ArrayList<Integer>();
+
+
+    private int minAgeRangePos;
+    private int maxAgeRangePos;
+    private int minHeightRangePos;
+    private int maxHeightRangePos;
+    private int minSkinRangePos;
+    private int maxSkingRangePos;
+    private int minHealthRangePos;
+    private int maxHealthRangePos;
+    private int minEducationRangePos;
+    private int maxEducationRangePos;
 
 
     String[] skin_status = new String[]{
@@ -115,6 +135,20 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
         textView = (TextView) findViewById(R.id.level);
 
+        currentStatusList.add(0);
+        currentStatusList.add(1);
+
+        maritalStatusList.add(1);
+        maritalStatusList.add(2);
+        maritalStatusList.add(3);
+        maritalStatusList.add(4);
+
+
+        religionCastList.add(1);
+        religionCastList.add(2);
+        religionCastList.add(3);
+
+
         new Get_Data().execute();
         set_rangeView_lebel();
 
@@ -133,12 +167,14 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 rangeView_age.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_age.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_age.setLabelColor(Color.TRANSPARENT);
+                minAgeRangePos = i;
             }
 
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
                 rangeView_age.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_age.setLabelColor(Color.TRANSPARENT);
+                maxAgeRangePos = i;
             }
         });
 
@@ -162,6 +198,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 rangeView_height.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_height.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_height.setLabelColor(Color.TRANSPARENT);
+                minHeightRangePos = i;
             }
 
             @Override
@@ -169,6 +206,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
                 rangeView_height.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_height.setLabelColor(Color.TRANSPARENT);
+                maxHeightRangePos = i;
             }
         });
         rangeView_height.setOnRangeLabelsListener(new OnRangeLabelsListener() {
@@ -190,12 +228,14 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 rangeView_color.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_color.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_color.setLabelColor(Color.TRANSPARENT);
+                minSkinRangePos = i;
             }
 
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
                 rangeView_color.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_color.setLabelColor(Color.TRANSPARENT);
+                maxSkingRangePos = i;
 
             }
         });
@@ -219,7 +259,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_education.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_education.setLabelColor(Color.TRANSPARENT);
-
+                minEducationRangePos = i;
             }
 
             @Override
@@ -227,7 +267,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
                 rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_education.setLabelColor(Color.TRANSPARENT);
-
+                maxEducationRangePos = i;
             }
         });
 
@@ -252,7 +292,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_education.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_education.setLabelColor(Color.TRANSPARENT);
-
+                minHealthRangePos = i;
             }
 
             @Override
@@ -260,7 +300,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
                 rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_education.setLabelColor(Color.TRANSPARENT);
-
+                maxHealthRangePos = i;
             }
         });
 
@@ -292,6 +332,107 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                     "}\n" +
                     "\n";
     String ch = "";
+
+
+    public void porcessJSon() {
+
+
+        Log.i("data", new StringBuilder().append("{")
+                .append("\"search\": {")
+                .append("\"age_range\": ")
+                .append("\"")
+                .append(age_lebel.get(minAgeRangePos))
+                .append(";")
+                .append(age_lebel.get(maxAgeRangePos))
+                .append("\",")
+
+                .append("\"height_range\": ")
+                .append("\"")
+                .append(health_lebel.get(minHeightRangePos))
+                .append(";")
+                .append(health_lebel.get(maxHeightRangePos))
+                .append("\",")
+
+                .append("\"skin_color\": ")
+                .append("\"")
+                .append(skin_status[minSkinRangePos])
+                .append(";")
+                .append(skin_status[maxSkingRangePos])
+                .append("\",")
+
+                .append("\"health_range\": ")
+                .append("\"")
+                .append(health_status[minHealthRangePos])
+                .append(";")
+                .append(health_status[maxHealthRangePos])
+                .append("\",")
+
+                .append("\"education_range\": ")
+                .append("\"")
+                .append(education_status[minEducationRangePos])
+                .append(";")
+                .append(education_status[maxEducationRangePos])
+                .append("\",")
+
+                .append("\"occupation_range\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        occupationGridItemCheckedCheckBoxPositionList
+                ))
+                .append("\"],")
+
+                .append("\"profession_grp_range\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        professionGridItemCheckedCheckBoxPositionList
+                ))
+                .append("\"],")
+
+
+                .append("\"current_status\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        currentStatusList
+                ))
+                .append("\"],")
+
+
+                .append("\"division_status\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        locationGridItemCheckedCheckBoxPositionList
+                ))
+                .append("\"],")
+
+
+                .append("\"marital_status\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        maritalStatusList
+                ))
+                .append("\"],")
+
+
+                .append("\"religion_cast\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        religionCastList
+                ))
+                .append("\"]")
+                .append("}}")
+
+                .toString()
+        );
+
+
+    }
+
 
     void set_up_id() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -328,9 +469,8 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             @Override
             public void onClick(View view) {
 
-
                 new Get_Data1().execute();
-
+                //porcessJSon();
 
             }
 
