@@ -43,7 +43,7 @@ import java.util.List;
 
 import com.nascenia.biyeta.R;
 
-public  class PartialProfileViewAdapter extends RecyclerView.Adapter<PartialProfileViewAdapter.MyViewHolder> {
+public class PartialProfileViewAdapter extends RecyclerView.Adapter<PartialProfileViewAdapter.MyViewHolder> {
 
 
     //list of all profile
@@ -60,8 +60,8 @@ public  class PartialProfileViewAdapter extends RecyclerView.Adapter<PartialProf
         //initialize all the view here
         public MyViewHolder(View view) {
             super(view);
-            item_name=(TextView)view.findViewById(R.id.item_name);
-            item_value=(TextView)view.findViewById(R.id.item_value);
+            item_name = (TextView) view.findViewById(R.id.item_name);
+            item_value = (TextView) view.findViewById(R.id.item_value);
 
 
         }
@@ -76,16 +76,18 @@ public  class PartialProfileViewAdapter extends RecyclerView.Adapter<PartialProf
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.partial_profile_item, parent, false);
-        context=parent.getContext();
+        context = parent.getContext();
 
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+
         PartialProfileItemModel profile = profile_list.get(position);
         holder.item_name.setText(profile.getKey());
         holder.item_value.setText(profile.getValue());
+        
 
     }
 

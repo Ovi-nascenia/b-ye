@@ -25,14 +25,18 @@
         <activity
             android:name="com.nascenia.biyeta.activity.Login"
             android:label="@string/title_activity_login"></activity>
-        <activity android:name="com.nascenia.biyeta.activity.Search_Filter"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
+        <activity
+            android:name="com.nascenia.biyeta.activity.Search_Filter"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <!--<activity android:name=".Search_Filter"-->
         <!--&gt;</activity>-->
         <activity
             android:name=".activity.UserProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.NewUserProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
     </application>
