@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
+                android:visibility="gone"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginBottom="32dp"
                 app:expandedTitleMarginEnd="64dp"
@@ -313,8 +314,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/medium_margin"
                         android:layout_marginTop="@dimen/medium_margin"
-                        android:text="his/her info"
-                        android:textColor="#4e4c4c"
+                        android:text="তার সম্পর্কে"
+                        android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
                         android:textStyle="bold" />
 
@@ -340,8 +341,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/medium_margin"
                         android:layout_marginTop="@dimen/medium_margin"
-                        android:text="General information"
-                        android:textColor="#4e4c4c"
+                        android:text="সাধারণ জ্ঞাতব্য"
+                        android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
                         android:textStyle="bold" />
 
@@ -351,7 +352,7 @@
                         android:background="#FFFFFF">
 
                         <android.support.v7.widget.RecyclerView
-                            android:id="@+id/user_details_recycler_view"
+                            android:id="@+id/user_general_info_recycler_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/small_margin"
@@ -367,8 +368,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/medium_margin"
                         android:layout_marginTop="@dimen/medium_margin"
-                        android:text="apnar choice r shathe tar mill"
-                        android:textColor="#4e4c4c"
+                        android:text=" আপনার পছন্দের সাথে তার মিল"
+                        android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
                         android:textStyle="bold" />
 
@@ -378,14 +379,70 @@
                         android:background="#FFFFFF">
 
 
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/jkljk"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/small_margin"
-                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_height="match_parent"
                             android:layout_marginTop="@dimen/medium_margin"
-                            android:scrollbars="vertical" />
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/viewer_image"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:layout_alignParentLeft="true"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/ic_launcher" />
+
+
+                                <TextView
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_below="@+id/viewer_image"
+                                    android:gravity="center"
+                                    android:text="তার বৈশিষ্ট্য" />
+
+
+                                <Button
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="25dp"
+                                    android:layout_centerInParent="true"
+                                    android:background="#3F51B5"
+                                    android:text="hi hello" />
+
+                                <ImageView
+                                    android:id="@+id/self_image"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:layout_alignParentRight="true"
+                                    android:src="@mipmap/ic_launcher" />
+
+                                <TextView
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_below="@+id/self_image"
+                                    android:gravity="center"
+                                    android:text="আপনার পছন্দের মিল"
+                                    android:textSize="@dimen/small_textsize" />
+
+                            </RelativeLayout>
+
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/match_user_choice_recyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/small_margin"
+                                android:layout_marginRight="@dimen/small_margin"
+                                android:layout_marginTop="@dimen/medium_margin"
+                                android:scrollbars="vertical" />
+
+                        </LinearLayout>
 
 
                     </android.support.v7.widget.CardView>
