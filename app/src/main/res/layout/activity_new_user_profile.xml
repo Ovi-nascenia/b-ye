@@ -341,7 +341,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/medium_margin"
                         android:layout_marginTop="@dimen/medium_margin"
-                        android:text="সাধারণ জ্ঞাতব্য"
+                        android:text="সাধারণ তথ্যাবলি"
                         android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
                         android:textStyle="bold" />
@@ -354,11 +354,12 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/user_general_info_recycler_view"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/small_margin"
                             android:layout_marginRight="@dimen/small_margin"
                             android:layout_marginTop="@dimen/medium_margin"
-                            android:scrollbars="vertical" />
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
 
 
                     </android.support.v7.widget.CardView>
@@ -411,22 +412,26 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="25dp"
                                     android:layout_centerInParent="true"
-                                    android:background="#3F51B5"
-                                    android:text="hi hello" />
+                                    android:background="#FF3B426C"
+                                    android:text="মিল"
+                                    android:textColor="#FFFFFF" />
 
                                 <ImageView
                                     android:id="@+id/self_image"
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:layout_alignParentRight="true"
+                                    android:layout_marginRight="@dimen/small_margin"
                                     android:src="@mipmap/ic_launcher" />
 
                                 <TextView
-                                    android:layout_width="100dp"
+                                    android:layout_width="150dp"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"
                                     android:layout_below="@+id/self_image"
-                                    android:gravity="center"
+                                    android:layout_marginRight="@dimen/small_margin"
+                                    android:gravity="right"
+                                    android:lines="1"
                                     android:text="আপনার পছন্দের মিল"
                                     android:textSize="@dimen/small_textsize" />
 
@@ -466,7 +471,7 @@
             android:id="@+id/finalResultBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="#D50000"
             android:text="পুরো বায়োডাটা দেখার অনুরোধ করুন"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />

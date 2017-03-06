@@ -4,7 +4,7 @@ package com.nascenia.biyeta.model;
  * Created by user on 1/6/2017.
  */
 
-public class Profile {
+public class OldProfile {
 
     private String id;
     private String age;
@@ -18,7 +18,7 @@ public class Profile {
 //    private String city;
 
 
-    public Profile(String id, String age, String height_ft, String height_inc, String display_name, String occupation, String professional_group, String skin_color, String location, String health, String image) {
+    public OldProfile(String id, String age, String height_ft, String height_inc, String display_name, String occupation, String professional_group, String skin_color, String location, String health, String image) {
         this.id = id;
         this.age = age;
         this.height_ft = height_ft;

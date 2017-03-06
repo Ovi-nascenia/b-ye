@@ -6,18 +6,27 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
 import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.fragment.ProfileImageFirstFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
+import com.nascenia.biyeta.model.newuserprofile.UserProfile;
+import com.nascenia.biyeta.service.ResourceProvider;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +56,9 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         generalInfoRecyclerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
+        generalInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         matchUserChoiceRecyclerView = (RecyclerView) findViewById(R.id.match_user_choice_recyclerView);
+        matchUserChoiceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -67,6 +78,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
         matchUserChoiceArrayList.add(new MatchUserChoice("Division name", "Barishal"));
         matchUserChoiceArrayList.add(new MatchUserChoice("District name", "Patuakhali"));
 
+        // Toast.makeText(getBaseContext(), generalInformationArrayList.size() + " " + matchUserChoiceArrayList.size(), Toast.LENGTH_SHORT).show();
         generalInfoRecyclerView.setAdapter(new GeneralInformationAdapter(getBaseContext(), generalInformationArrayList));
         matchUserChoiceRecyclerView.setAdapter(new MatchUserChoiceAdapter(getBaseContext(), matchUserChoiceArrayList));
 
@@ -107,6 +119,40 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
             }
         });
+
+        fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/296");
+
+    }
+
+    private void fetchUserProfileDetails(final String url) {
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Response response = new ResourceProvider(NewUserProfileActivity.this).fetchGetResponse(url);
+                    ResponseBody responseBody = response.body();
+                    final String responseValue = responseBody.string();
+                    Log.i("responsedata", "response value: " + responseValue + " ");
+                    responseBody.close();
+                    final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
+                    NewUserProfileActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //setupRecyclerView(moviePage);
+
+                            Toast.makeText(getApplicationContext(), userProfile.toString() + "", Toast.LENGTH_LONG).show();
+                            Log.i("responsedata", "totaldata: " + userProfile.toString());
+                        }
+                    });
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
     }
 

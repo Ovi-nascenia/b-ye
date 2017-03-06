@@ -29,6 +29,7 @@
     <dimen name="large_margin">15dp</dimen>
     <dimen name="negative_large_margin">-15dp</dimen>
     <dimen name="most_small_margin">10dp</dimen>
+    <dimen name="very_large_margin">20dp</dimen>
 
 
     <dimen name="check_image_top_margin">7dp</dimen>

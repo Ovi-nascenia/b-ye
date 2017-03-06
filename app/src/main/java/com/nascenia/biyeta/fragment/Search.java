@@ -1,9 +1,6 @@
 package com.nascenia.biyeta.fragment;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -14,14 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.nascenia.biyeta.activity.UserProfileActivity;
+import com.nascenia.biyeta.model.OldProfile;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -52,7 +47,7 @@ public class Search extends Fragment {
     static int page_number = 0;
     Button search_btn;
     Profile_Adapter mProfile_adapter;
-    private List<com.nascenia.biyeta.model.Profile> profile_list = new ArrayList<>();
+    private List<OldProfile> profile_list = new ArrayList<>();
     private final OkHttpClient client = new OkHttpClient();
 
 
@@ -164,7 +159,7 @@ public class Search extends Fragment {
                     String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
 
 
-                    com.nascenia.biyeta.model.Profile profile = new com.nascenia.biyeta.model.Profile(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
+                    OldProfile profile = new OldProfile(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
 
                     profile_list.add(profile);
                     mProfile_adapter.notifyDataSetChanged();

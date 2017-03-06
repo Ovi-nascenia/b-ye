@@ -14,7 +14,7 @@ import android.widget.TextView;
  */
 
 import com.bumptech.glide.Glide;
-import com.nascenia.biyeta.model.Profile;
+import com.nascenia.biyeta.model.OldProfile;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import com.nascenia.biyeta.R;
 public class Match_Adapter extends RecyclerView.Adapter<Match_Adapter.MyViewHolder> {
 
     //list of all profile
-    private List<Profile> profile_list;
+    private List<OldProfile> profile_list;
     //parent context
     Context context;
 
@@ -45,7 +45,7 @@ public class Match_Adapter extends RecyclerView.Adapter<Match_Adapter.MyViewHold
     }
 
 
-    public Match_Adapter(List<Profile> moviesList) {
+    public Match_Adapter(List<OldProfile> moviesList) {
         this.profile_list = moviesList;
     }
 
@@ -60,7 +60,7 @@ public class Match_Adapter extends RecyclerView.Adapter<Match_Adapter.MyViewHold
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Profile prfile = profile_list.get(position);
+        OldProfile prfile = profile_list.get(position);
         holder.user_name.setText(prfile.getDisplay_name());
 
         Glide.with(context)
