@@ -117,10 +117,6 @@ public class Search extends Fragment {
                 })
         );
 
-
-        //  prepareMovieData();
-
-
         return v;
 
     }
@@ -171,11 +167,6 @@ public class Search extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
-            // Toast.makeText(getContext(),res,Toast.LENGTH_SHORT).show();
-
-
         }
 
         @Override
