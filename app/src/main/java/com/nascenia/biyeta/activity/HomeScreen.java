@@ -91,7 +91,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     drawerLayout.closeDrawer(Gravity.RIGHT);
 
 
-                if (menuItem.getItemId() == R.id.nac_blog) {
+                if (menuItem.getItemId() == R.id.nav_blog) {
                     Toast.makeText(HomeScreen.this, "item 2", Toast.LENGTH_SHORT).show();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragmentParentViewGroup, new Blog())
@@ -102,14 +102,18 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
                 if (menuItem.getItemId() == R.id.nav_profile) {
 
-
-
                     Intent intent = new Intent(getBaseContext(), UserProfileActivity.class);
                     intent.putExtra("id", "316");
                     intent.putExtra("user_name", "Saiful");
                     intent.putExtra("PROFILE_EDIT_OPTION", true);
                     startActivity(intent);
                 }
+
+                if (menuItem.getItemId() == R.id.nav_search)
+                {
+                    startActivity(new Intent(HomeScreen.this,Search_Filter.class));
+                }
+
 
                 //   Toast.makeText(HomeScreen.this,"Checked",Toast.LENGTH_SHORT).show();
 
@@ -138,8 +142,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         switch (id) {
             case R.id.search:
                 searchImageView.setColorFilter(Color.WHITE);
-
-
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentParentViewGroup, new Search())
                         .commit();

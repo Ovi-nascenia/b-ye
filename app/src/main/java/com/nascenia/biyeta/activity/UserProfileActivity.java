@@ -31,6 +31,7 @@ import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.model.PartialProfileItemModel;
 import com.nascenia.biyeta.model.UserProfile;
 import com.nascenia.biyeta.model.UserProfileChild;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -61,6 +62,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private ArrayList<UserProfile> userProfilesList;
     HashMap<String, String> hashMap;
     private TextView userNameTextView;
+    String userName;
 
     private Button finalResultBtn;
     private ProgressDialog dialog;
@@ -78,6 +80,10 @@ public class UserProfileActivity extends AppCompatActivity {
         back_screen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                
+
+
                 finish();
             }
         });
@@ -85,7 +91,10 @@ public class UserProfileActivity extends AppCompatActivity {
         dialog = new ProgressDialog(UserProfileActivity.this);
 
 
-        loadUserData();
+        if (Utils.isOnline(UserProfileActivity.this))
+             loadUserData();
+        else
+             Utils.ShowAlert(UserProfileActivity.this,"Check Internet");
         hashMap = new HashMap<>();
         aboutMeTextView = (TextView) findViewById(R.id.userProfileDescriptionText);
         // setTitle(getIntent().getExtras().getString("user_name"));
@@ -104,7 +113,9 @@ public class UserProfileActivity extends AppCompatActivity {
         }
 
 
+        userName=getIntent().getExtras().getString("user_name");
         userNameTextView.setText(getIntent().getExtras().getString("user_name"));
+
 
         userProfilesList = new ArrayList<UserProfile>();
 
@@ -125,8 +136,8 @@ public class UserProfileActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog.setMessage("Please wait...");
-            dialog.show();
+//            dialog.setMessage("Please wait...");
+//            dialog.show();
         }
 
         @Override
@@ -142,9 +153,6 @@ public class UserProfileActivity extends AppCompatActivity {
                 boolean valuee = parentJsonObj.getJSONObject("request_status").getBoolean("accepted");
                 if (!valuee) {
                     listPartialProfile = new ArrayList<>();
-                    // Toast.makeText(UserProfileActivity.this, "load partial profile" + valuee, Toast.LENGTH_SHORT).show();
-
-
                     aboutMeTextView.setText(parentJsonObj.getJSONObject("personal_information").getString("about_yourself"));
                     hashMap.put(getString(R.string.profession_text), parentJsonObj.getJSONObject("profession").getString("occupation"));
                     hashMap.put(getString(R.string.present_loaction_text), parentJsonObj.getJSONObject("profile_living_in").getString("country"));
@@ -152,7 +160,6 @@ public class UserProfileActivity extends AppCompatActivity {
                     hashMap.put(getString(R.string.height_text), parentJsonObj.getJSONObject("personal_information").getString("height_ft") + "' " + parentJsonObj.getJSONObject("personal_information").getString("height_inc") + "''");
                     hashMap.put(getString(R.string.religion_text), parentJsonObj.getJSONObject("profile_religion").getString("religion"));
                     hashMap.put(getString(R.string.degree_name_text), parentJsonObj.getJSONObject("education_information").getString("highest_degree"));
-
                     for (String key : hashMap.keySet()) {
 
                         PartialProfileItemModel partialProfileItemModel = new PartialProfileItemModel(key, hashMap.get(key));
@@ -207,7 +214,14 @@ public class UserProfileActivity extends AppCompatActivity {
             String token = sharePref.get_data("token");
             Request request = null;
 
-            request = new Request.Builder()
+
+            if (userName.equals("own"))
+                request=new Request.Builder().url("http://test.biyeta.com/api/v1/profiles/view")
+                        .addHeader("Authorization", "Token token=" + token)
+                        .build();
+            else
+
+                request = new Request.Builder()
                     .url(Constant.BASE_URL + SUB_URL + id)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();

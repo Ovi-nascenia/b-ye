@@ -7,19 +7,19 @@
             android:icon="@drawable/default_profile_female_icon"
             android:title="Profile" />
         <item
-            android:id="@+id/nac_blog"
+            android:id="@+id/nav_blog"
             android:icon="@drawable/blog"
             android:title="Blog" />
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_search"
             android:icon="@drawable/search"
             android:title="Search" />
         <item
-            android:id="@+id/nav_photos"
+            android:id="@+id/nav_message"
             android:icon="@drawable/mail"
             android:title="Mail" />
         <item
-            android:id="@+id/nav_movies"
+            android:id="@+id/nav_fav"
             android:icon="@drawable/love"
             android:title="Favourite" />
 

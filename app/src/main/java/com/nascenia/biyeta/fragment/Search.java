@@ -20,8 +20,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nascenia.biyeta.activity.UserProfileActivity;
+import com.nascenia.biyeta.model.*;
+import com.nascenia.biyeta.model.Profile;
+import com.nascenia.biyeta.resonse.ProfileResponse;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -49,9 +55,9 @@ public class Search extends Fragment {
     RelativeLayout relativeLayout;
     int flag = 1;
     Snackbar snackbar;
-    static int page_number = 0;
-    Button search_btn;
-    Profile_Adapter mProfile_adapter;
+    static int pageNumber = 0;
+    Button searchButton;
+    Profile_Adapter profileAdapter;
     private List<com.nascenia.biyeta.model.Profile> profile_list = new ArrayList<>();
     private final OkHttpClient client = new OkHttpClient();
 
@@ -71,66 +77,41 @@ public class Search extends Fragment {
 
         View v = inflater.inflate(R.layout.search, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.profile_list);
-        search_btn = (Button) v.findViewById(R.id.search_btn);
-        mProfile_adapter = new Profile_Adapter(profile_list) {
-            @Override
-            public void load() {
+        searchButton = (Button) v.findViewById(R.id.searchButton);
+        try {
+            new Get_Data().execute();
+        }catch (Exception e){
+            Utils.ShowAlert(getContext(),"Check Internet Connection");
 
-                flag++;
-                if (flag <= page_number) {
-                    snackbar = Snackbar
-                            .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
-                    Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
-                    snack_view.addView(new ProgressBar(getContext()));
-                    snackbar.show();
+        }
 
-                    snackbar.show();
-                    new Get_Data().execute();
-                } else {
-
-                }
-
-            }
-        };
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mProfile_adapter);
+        recyclerView.setAdapter(profileAdapter);
         relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutLeftButton);
-        //relativeLayout.setVisibility(View.GONE);
 
-        search_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), Search_Filter.class));
-            }
-        });
-        new Get_Data().execute();
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        // TODO Handle item click
-                        // showDialog(getContext(),profile_list.get(position).getDisplay_name(),profile_list.get(position).getLocation());
 
-                        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-                        intent.putExtra("id", profile_list.get(position).getId());
-                        intent.putExtra("user_name", profile_list.get(position).getDisplay_name());
-                        intent.putExtra("PROFILE_EDIT_OPTION", false);
-                        startActivity(intent);
-                    }
-                })
-        );
+        //onItem click listener in Recycler view
+
+
 
 
         //  prepareMovieData();
 
 
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), Search_Filter.class));
+            }
+        });
         return v;
 
     }
 
 
+    List<Profile> listProfile;
     //fetch data from
     class Get_Data extends AsyncTask<String, String, String> {
         @Override
@@ -138,49 +119,69 @@ public class Search extends Fragment {
             super.onPostExecute(res);
             relativeLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-            // Toast.makeText(getContext(),res,Toast.LENGTH_SHORT).show();
-
             if (flag != 1) snackbar.dismiss();
-            //  relativeLayout.setVisibility(View.GONE);
             try {
-                JSONObject jsonObject = new JSONObject(res);
-                page_number = jsonObject.getInt("total_page");
-                for (int i = 0; i < jsonObject.getJSONArray("profiles").length(); i++)
 
-                {
-                    String id = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("id");
-                    String age = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("age");
-                    String height_ft = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_ft");
-                    String height_inc = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_inc");
-                    String display_name = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name");
-                    String occupation = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("occupation");
-                    String professional_group = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("professional_group");
-                    String skin_color = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("skin_color");
-                    // String marital_status=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("marital_status");
-                    String health = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("health");
-                    //String religion=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("religion");
-                    //String cast=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("cast");
-                    String location = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
-                    String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
+                try {
+                    JSONObject jsonObject = new JSONObject(res);
+                    Gson gson=new Gson();
+                    ProfileResponse profileResponse=gson.fromJson(res,ProfileResponse.class);
+                    listProfile=profileResponse.profiles;
+                    pageNumber=profileResponse.totalPage;
+                    profileAdapter = new Profile_Adapter(listProfile) {
+                        @Override
+                        public void load() {
+                            Toast.makeText(getContext(),pageNumber+" "+flag,Toast.LENGTH_SHORT).show();
+
+                            flag++;
+                            if (flag <= pageNumber) {
+                                snackbar = Snackbar
+                                        .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
+                                Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
+                                snack_view.addView(new ProgressBar(getContext()));
+                                snackbar.show();
+                                try {
+                                    new Get_Data().execute();
+                                }catch (Exception e){
+                                    Utils.ShowAlert(getContext(),"Check Internet Connection");
+
+                                }
+                            } else {
+
+                            }
+
+                        }
+                    };
+                    recyclerView.setAdapter(profileAdapter);
 
 
-                    com.nascenia.biyeta.model.Profile profile = new com.nascenia.biyeta.model.Profile(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
 
-                    profile_list.add(profile);
-                    mProfile_adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
 
-
-                    //Log.e("fuck",jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name"));
-
+                    Utils.ShowAlert(getContext(), "Check Internet Connection");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
+            catch (Exception e) {
 
+                //other Exception Like Internet Exception
+                Utils.ShowAlert(getContext(),"Check Internet Connection");
+            }
+            recyclerView.addOnItemTouchListener(
+                    new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            // TODO Handle item click
+                            // showDialog(getContext(),profile_list.get(position).getDisplay_name(),profile_list.get(position).getLocation());
+                            Toast.makeText(getContext(),listProfile.get(position).displayName+" "+flag,Toast.LENGTH_SHORT).show();
 
-            // Toast.makeText(getContext(),res,Toast.LENGTH_SHORT).show();
-
-
+                            Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+                            intent.putExtra("id", listProfile.get(position).id);
+                            intent.putExtra("user_name", listProfile.get(position).displayName);
+                            intent.putExtra("PROFILE_EDIT_OPTION", false);
+                            startActivity(intent);
+                        }
+                    })
+            );
         }
 
         @Override
