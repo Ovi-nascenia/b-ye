@@ -1,7 +1,6 @@
 package com.nascenia.biyeta.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -12,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -28,7 +28,6 @@ import com.squareup.okhttp.ResponseBody;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by saiful on 3/3/17.
@@ -48,6 +47,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
     private ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
     private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
 
+    private TextView userProfileDescriptionText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
         matchUserChoiceRecyclerView = (RecyclerView) findViewById(R.id.match_user_choice_recyclerView);
         matchUserChoiceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        userProfileDescriptionText = (TextView) findViewById(R.id.userProfileDescriptionText);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,7 +70,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
         indicatorImage3 = (ImageView) findViewById(R.id.page3);
 
 
-        generalInformationArrayList.add(new GeneralInformation("country,dhaka"));
+    /*    generalInformationArrayList.add(new GeneralInformation("country,dhaka"));
         generalInformationArrayList.add(new GeneralInformation("country,dhaka"));
         generalInformationArrayList.add(new GeneralInformation("country,dhaka"));
 
@@ -80,7 +81,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
         // Toast.makeText(getBaseContext(), generalInformationArrayList.size() + " " + matchUserChoiceArrayList.size(), Toast.LENGTH_SHORT).show();
         generalInfoRecyclerView.setAdapter(new GeneralInformationAdapter(getBaseContext(), generalInformationArrayList));
-        matchUserChoiceRecyclerView.setAdapter(new MatchUserChoiceAdapter(getBaseContext(), matchUserChoiceArrayList));
+        matchUserChoiceRecyclerView.setAdapter(new MatchUserChoiceAdapter(getBaseContext(), matchUserChoiceArrayList));*/
 
 
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
@@ -122,6 +123,8 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
         fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/296");
 
+        // Log.i("bangla", "value " + Utils.convertEnglishDigittoBangla(11));
+
     }
 
     private void fetchUserProfileDetails(final String url) {
@@ -142,8 +145,17 @@ public class NewUserProfileActivity extends AppCompatActivity {
                         public void run() {
                             //setupRecyclerView(moviePage);
 
-                            Toast.makeText(getApplicationContext(), userProfile.toString() + "", Toast.LENGTH_LONG).show();
-                            Log.i("responsedata", "totaldata: " + userProfile.toString());
+                            //Toast.makeText(getApplicationContext(), userProfile.toString() + "", Toast.LENGTH_LONG).show();
+                            // Log.i("responsedata", "totaldata: " + userProfile.getProfile().getEducationInformation().getInstitution());
+
+                            if (userProfile.getProfile().getPersonalInformation().getAboutYourself() != null) {
+                                userProfileDescriptionText.setText(userProfile.getProfile().getPersonalInformation().getAboutYourself());
+                            }
+
+                            addDataonGeneralInfoRecylerViewItem(userProfile);
+                            addDataonMatchUserChoiceRecyclerView(userProfile);
+
+
                         }
                     });
 
@@ -153,6 +165,147 @@ public class NewUserProfileActivity extends AppCompatActivity {
                 }
             }
         }).start();
+
+    }
+
+    private void addDataonMatchUserChoiceRecyclerView(UserProfile userProfile) {
+
+        matchUserChoiceArrayList.add(new MatchUserChoice("home town"
+                , userProfile.getProfile().getMatchingAttributes().getHomeTown()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("age"
+                , userProfile.getProfile().getMatchingAttributes().getAge()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("height"
+                , userProfile.getProfile().getMatchingAttributes().getHeight()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("skin color"
+                , userProfile.getProfile().getMatchingAttributes().getSkinColor()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("health"
+                , userProfile.getProfile().getMatchingAttributes().getHealth()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("marital status"
+                , userProfile.getProfile().getMatchingAttributes().getMaritalStatus()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("educational qualification"
+                , userProfile.getProfile().getMatchingAttributes().getTitleEducationalQualification()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("own house"
+                , userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("occupation"
+                , userProfile.getProfile().getMatchingAttributes().getTitleOccupation()));
+        matchUserChoiceRecyclerView.setAdapter(new MatchUserChoiceAdapter(getBaseContext(), matchUserChoiceArrayList));
+
+    }
+
+
+    private String checkNullField(String value) {
+
+
+        if (value == null) {
+            return "";
+        } else {
+            return value;
+        }
+
+    }
+
+    private void addDataonGeneralInfoRecylerViewItem(UserProfile userProfile) {
+
+
+        generalInformationArrayList.add(new GeneralInformation(
+                userProfile.getProfile().getPersonalInformation().getAge()
+                        + "" +
+                        userProfile.getProfile().getPersonalInformation().getHeightFt()
+                        + "" +
+                        userProfile.getProfile().getPersonalInformation().getHeightInc()));
+
+
+        if (!(checkNullField(userProfile.getProfile().getProfileReligion().getReligion())
+                + checkNullField(userProfile.getProfile().getProfileReligion().getCast())).equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+                    checkNullField(userProfile.getProfile().getProfileReligion().getReligion()) + "" +
+                            checkNullField(userProfile.getProfile().getProfileReligion().getCast())
+            ));
+
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())
+                + checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())).equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())
+                            + checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())
+
+            ));
+
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())).equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())
+            ));
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree()) +
+                checkNullField(userProfile.getProfile().getEducationInformation().getInstitution())).equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree()) + "" +
+                            checkNullField(userProfile.getProfile().getEducationInformation().getInstitution())
+            ));
+
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor()) +
+                checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())).equals("")) {
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
+                            + "" +
+                            checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
+            ));
+
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getMaritalStatus()))
+                .equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getPersonalInformation().getMaritalStatus()
+                    )
+
+            ));
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()) +
+                checkNullField(userProfile.getProfile().getOtherInformation().getFasting())).equals("")) {
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()) + "" +
+                            checkNullField(userProfile.getProfile().getOtherInformation().getFasting())
+
+            ));
+
+        }
+
+
+        generalInfoRecyclerView.setAdapter(new GeneralInformationAdapter(
+                getBaseContext(), generalInformationArrayList));
+
 
     }
 

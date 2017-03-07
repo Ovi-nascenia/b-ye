@@ -1,8 +1,6 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
-import android.support.annotation.Nullable;
-
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,9 +11,8 @@ public class UserProfile implements Serializable
 
     @SerializedName("profile")
     @Expose
-    @Nullable
     private Profile profile;
-    private final static long serialVersionUID = -6333469655727818643L;
+    private final static long serialVersionUID = -2984923337192200829L;
 
     public Profile getProfile() {
         return profile;
@@ -23,6 +20,11 @@ public class UserProfile implements Serializable
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public UserProfile withProfile(Profile profile) {
+        this.profile = profile;
+        return this;
     }
 
     @Override

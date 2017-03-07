@@ -1,30 +1,24 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
-import android.support.annotation.Nullable;
-
 import java.io.Serializable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class RequestStatus implements Serializable {
+public class RequestStatus implements Serializable
+{
 
     @SerializedName("name")
     @Expose
-    @Nullable
     private String name;
     @SerializedName("sent")
     @Expose
-    @Nullable
     private boolean sent;
     @SerializedName("accepted")
     @Expose
-    @Nullable
     private boolean accepted;
-    private final static long serialVersionUID = -3907972791505742892L;
+    private final static long serialVersionUID = 6237132305173899215L;
 
     public String getName() {
         return name;
@@ -32,6 +26,11 @@ public class RequestStatus implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public RequestStatus withName(String name) {
+        this.name = name;
+        return this;
     }
 
     public boolean isSent() {
@@ -42,12 +41,22 @@ public class RequestStatus implements Serializable {
         this.sent = sent;
     }
 
+    public RequestStatus withSent(boolean sent) {
+        this.sent = sent;
+        return this;
+    }
+
     public boolean isAccepted() {
         return accepted;
     }
 
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public RequestStatus withAccepted(boolean accepted) {
+        this.accepted = accepted;
+        return this;
     }
 
     @Override

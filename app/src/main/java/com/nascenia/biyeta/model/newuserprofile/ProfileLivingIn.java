@@ -1,8 +1,6 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
-import android.support.annotation.Nullable;
-
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,13 +11,11 @@ public class ProfileLivingIn implements Serializable
 
     @SerializedName("country")
     @Expose
-    @Nullable
     private String country;
     @SerializedName("location")
     @Expose
-    @Nullable
     private String location;
-    private final static long serialVersionUID = -1413048079668010097L;
+    private final static long serialVersionUID = 7205212140060749127L;
 
     public String getCountry() {
         return country;
@@ -29,12 +25,22 @@ public class ProfileLivingIn implements Serializable
         this.country = country;
     }
 
+    public ProfileLivingIn withCountry(String country) {
+        this.country = country;
+        return this;
+    }
+
     public String getLocation() {
         return location;
     }
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public ProfileLivingIn withLocation(String location) {
+        this.location = location;
+        return this;
     }
 
     @Override

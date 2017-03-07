@@ -1,8 +1,6 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
-import android.support.annotation.Nullable;
-
 import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
@@ -14,9 +12,8 @@ public class Verifications implements Serializable {
 
     @SerializedName("mobile")
     @Expose
-    @Nullable
     private boolean mobile;
-    private final static long serialVersionUID = 2219073339329234033L;
+    private final static long serialVersionUID = 4042972474749225979L;
 
     public boolean isMobile() {
         return mobile;
@@ -24,6 +21,11 @@ public class Verifications implements Serializable {
 
     public void setMobile(boolean mobile) {
         this.mobile = mobile;
+    }
+
+    public Verifications withMobile(boolean mobile) {
+        this.mobile = mobile;
+        return this;
     }
 
     @Override

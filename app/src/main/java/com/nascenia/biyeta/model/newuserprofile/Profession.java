@@ -1,34 +1,27 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
-import android.support.annotation.Nullable;
-
 import java.io.Serializable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Profession implements Serializable {
+public class Profession implements Serializable
+{
 
     @SerializedName("occupation")
     @Expose
-    @Nullable
     private String occupation;
     @SerializedName("professional_group")
     @Expose
-    @Nullable
     private String professionalGroup;
     @SerializedName("designation")
     @Expose
-    @Nullable
     private Object designation;
     @SerializedName("institute")
     @Expose
-    @Nullable
     private Object institute;
-    private final static long serialVersionUID = -5382033363545158755L;
+    private final static long serialVersionUID = -8465011399775391739L;
 
     public String getOccupation() {
         return occupation;
@@ -36,6 +29,11 @@ public class Profession implements Serializable {
 
     public void setOccupation(String occupation) {
         this.occupation = occupation;
+    }
+
+    public Profession withOccupation(String occupation) {
+        this.occupation = occupation;
+        return this;
     }
 
     public String getProfessionalGroup() {
@@ -46,6 +44,11 @@ public class Profession implements Serializable {
         this.professionalGroup = professionalGroup;
     }
 
+    public Profession withProfessionalGroup(String professionalGroup) {
+        this.professionalGroup = professionalGroup;
+        return this;
+    }
+
     public Object getDesignation() {
         return designation;
     }
@@ -54,12 +57,22 @@ public class Profession implements Serializable {
         this.designation = designation;
     }
 
+    public Profession withDesignation(Object designation) {
+        this.designation = designation;
+        return this;
+    }
+
     public Object getInstitute() {
         return institute;
     }
 
     public void setInstitute(Object institute) {
         this.institute = institute;
+    }
+
+    public Profession withInstitute(Object institute) {
+        this.institute = institute;
+        return this;
     }
 
     @Override

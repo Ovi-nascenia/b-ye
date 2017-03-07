@@ -1,54 +1,42 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
-import android.support.annotation.Nullable;
-
 import java.io.Serializable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class MatchingAttributes implements Serializable {
+public class MatchingAttributes implements Serializable
+{
 
     @SerializedName("home_town")
     @Expose
-    @Nullable
     private String homeTown;
     @SerializedName("age")
     @Expose
-    @Nullable
     private String age;
     @SerializedName("height")
     @Expose
-    @Nullable
     private String height;
     @SerializedName("skin_color")
     @Expose
-    @Nullable
     private String skinColor;
     @SerializedName("health")
     @Expose
-    @Nullable
     private String health;
     @SerializedName("marital_status")
     @Expose
-    @Nullable
     private String maritalStatus;
     @SerializedName("title_educational_qualification")
     @Expose
-    @Nullable
     private String titleEducationalQualification;
     @SerializedName("title_own_house")
     @Expose
-    @Nullable
     private String titleOwnHouse;
     @SerializedName("title_occupation")
     @Expose
-    @Nullable
     private String titleOccupation;
-    private final static long serialVersionUID = 3228585704972534132L;
+    private final static long serialVersionUID = 7533326798525734417L;
 
     public String getHomeTown() {
         return homeTown;
@@ -56,6 +44,11 @@ public class MatchingAttributes implements Serializable {
 
     public void setHomeTown(String homeTown) {
         this.homeTown = homeTown;
+    }
+
+    public MatchingAttributes withHomeTown(String homeTown) {
+        this.homeTown = homeTown;
+        return this;
     }
 
     public String getAge() {
@@ -66,12 +59,22 @@ public class MatchingAttributes implements Serializable {
         this.age = age;
     }
 
+    public MatchingAttributes withAge(String age) {
+        this.age = age;
+        return this;
+    }
+
     public String getHeight() {
         return height;
     }
 
     public void setHeight(String height) {
         this.height = height;
+    }
+
+    public MatchingAttributes withHeight(String height) {
+        this.height = height;
+        return this;
     }
 
     public String getSkinColor() {
@@ -82,12 +85,22 @@ public class MatchingAttributes implements Serializable {
         this.skinColor = skinColor;
     }
 
+    public MatchingAttributes withSkinColor(String skinColor) {
+        this.skinColor = skinColor;
+        return this;
+    }
+
     public String getHealth() {
         return health;
     }
 
     public void setHealth(String health) {
         this.health = health;
+    }
+
+    public MatchingAttributes withHealth(String health) {
+        this.health = health;
+        return this;
     }
 
     public String getMaritalStatus() {
@@ -98,12 +111,22 @@ public class MatchingAttributes implements Serializable {
         this.maritalStatus = maritalStatus;
     }
 
+    public MatchingAttributes withMaritalStatus(String maritalStatus) {
+        this.maritalStatus = maritalStatus;
+        return this;
+    }
+
     public String getTitleEducationalQualification() {
         return titleEducationalQualification;
     }
 
     public void setTitleEducationalQualification(String titleEducationalQualification) {
         this.titleEducationalQualification = titleEducationalQualification;
+    }
+
+    public MatchingAttributes withTitleEducationalQualification(String titleEducationalQualification) {
+        this.titleEducationalQualification = titleEducationalQualification;
+        return this;
     }
 
     public String getTitleOwnHouse() {
@@ -114,12 +137,22 @@ public class MatchingAttributes implements Serializable {
         this.titleOwnHouse = titleOwnHouse;
     }
 
+    public MatchingAttributes withTitleOwnHouse(String titleOwnHouse) {
+        this.titleOwnHouse = titleOwnHouse;
+        return this;
+    }
+
     public String getTitleOccupation() {
         return titleOccupation;
     }
 
     public void setTitleOccupation(String titleOccupation) {
         this.titleOccupation = titleOccupation;
+    }
+
+    public MatchingAttributes withTitleOccupation(String titleOccupation) {
+        this.titleOccupation = titleOccupation;
+        return this;
     }
 
     @Override
