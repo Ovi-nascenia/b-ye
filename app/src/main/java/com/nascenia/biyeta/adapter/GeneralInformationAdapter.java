@@ -2,10 +2,12 @@ package com.nascenia.biyeta.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.model.GeneralInformation;
@@ -22,28 +24,44 @@ public class GeneralInformationAdapter extends RecyclerView.Adapter<GeneralInfor
     private ArrayList<GeneralInformation> generalInformationArrayList;
 
     public GeneralInformationAdapter(Context context, ArrayList<GeneralInformation> generalInformationArrayList) {
+
         this.context = context;
         this.inflater = LayoutInflater.from(this.context);
         this.generalInformationArrayList = generalInformationArrayList;
+
     }
 
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View view = inflater.inflate(R.layout.general_information_recylerview_item, parent, false);
-        MyViewHolder myViewHolder = new GeneralInformationAdapter.MyViewHolder(view);
+        MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
+
         holder.titleValueTextview.setText(this.generalInformationArrayList.get(position).getGeneralInfo());
 
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
+
+
         return this.generalInformationArrayList.size();
     }
 

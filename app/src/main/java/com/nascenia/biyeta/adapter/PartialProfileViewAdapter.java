@@ -5,43 +5,21 @@ package com.nascenia.biyeta.adapter;
  */
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.model.PartialProfileItemModel;
-import com.nascenia.biyeta.model.Profile;
 
 import java.util.List;
 
-
-import android.content.Context;
-import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 /**
  * Created by user on 1/6/2017.
  */
-
-import com.bumptech.glide.Glide;
-import com.nascenia.biyeta.model.Profile;
-
-import java.util.List;
-
-import com.nascenia.biyeta.R;
 
 public class PartialProfileViewAdapter extends RecyclerView.Adapter<PartialProfileViewAdapter.MyViewHolder> {
 

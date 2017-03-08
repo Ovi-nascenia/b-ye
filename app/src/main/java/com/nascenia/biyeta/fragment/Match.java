@@ -1,27 +1,20 @@
 package com.nascenia.biyeta.fragment;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.nascenia.biyeta.adapter.Match_Adapter;
-import com.nascenia.biyeta.adapter.Profile_Adapter;
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.model.OldProfile;
 
 /**
  * Created by user on 1/5/2017.
@@ -33,7 +26,7 @@ public class Match extends Fragment {
     RecyclerView recyclerView;
     Match_Adapter mMatch_adapter;
     RelativeLayout relativeLayout;
-    private List<com.nascenia.biyeta.model.Profile> movieList = new ArrayList<>();
+    private List<OldProfile> movieList = new ArrayList<>();
 
     public Match() {
         // Required empty public constructor

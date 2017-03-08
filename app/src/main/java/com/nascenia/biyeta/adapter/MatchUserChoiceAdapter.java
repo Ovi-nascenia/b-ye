@@ -42,15 +42,15 @@ public class MatchUserChoiceAdapter extends RecyclerView.Adapter<MatchUserChoice
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
 
-        holder.titleTextview.setText(this.matchUserChoiceArrayList.get(position).getTitleName());
-        holder.titleValueTextview.setText(this.matchUserChoiceArrayList.get(position).getTitleNameValue());
+        holder.titleTextview.setText(matchUserChoiceArrayList.get(position).getTitleName());
+        holder.titleValueTextview.setText(matchUserChoiceArrayList.get(position).getTitleNameValue());
 
 
     }
 
     @Override
     public int getItemCount() {
-        return this.matchUserChoiceArrayList.size();
+        return matchUserChoiceArrayList.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

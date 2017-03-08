@@ -1,25 +1,33 @@
 package com.nascenia.biyeta.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
 import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.fragment.ProfileImageFirstFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
+import com.nascenia.biyeta.model.newuserprofile.UserProfile;
+import com.nascenia.biyeta.service.ResourceProvider;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by saiful on 3/3/17.
@@ -39,6 +47,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
     private ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
     private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
 
+    private TextView userProfileDescriptionText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,8 +56,11 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         generalInfoRecyclerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
+        generalInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         matchUserChoiceRecyclerView = (RecyclerView) findViewById(R.id.match_user_choice_recyclerView);
+        matchUserChoiceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        userProfileDescriptionText = (TextView) findViewById(R.id.userProfileDescriptionText);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,7 +70,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
         indicatorImage3 = (ImageView) findViewById(R.id.page3);
 
 
-        generalInformationArrayList.add(new GeneralInformation("country,dhaka"));
+    /*    generalInformationArrayList.add(new GeneralInformation("country,dhaka"));
         generalInformationArrayList.add(new GeneralInformation("country,dhaka"));
         generalInformationArrayList.add(new GeneralInformation("country,dhaka"));
 
@@ -67,8 +79,9 @@ public class NewUserProfileActivity extends AppCompatActivity {
         matchUserChoiceArrayList.add(new MatchUserChoice("Division name", "Barishal"));
         matchUserChoiceArrayList.add(new MatchUserChoice("District name", "Patuakhali"));
 
+        // Toast.makeText(getBaseContext(), generalInformationArrayList.size() + " " + matchUserChoiceArrayList.size(), Toast.LENGTH_SHORT).show();
         generalInfoRecyclerView.setAdapter(new GeneralInformationAdapter(getBaseContext(), generalInformationArrayList));
-        matchUserChoiceRecyclerView.setAdapter(new MatchUserChoiceAdapter(getBaseContext(), matchUserChoiceArrayList));
+        matchUserChoiceRecyclerView.setAdapter(new MatchUserChoiceAdapter(getBaseContext(), matchUserChoiceArrayList));*/
 
 
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
@@ -107,6 +120,192 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
             }
         });
+
+        fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/296");
+
+        // Log.i("bangla", "value " + Utils.convertEnglishDigittoBangla(11));
+
+    }
+
+    private void fetchUserProfileDetails(final String url) {
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Response response = new ResourceProvider(NewUserProfileActivity.this).fetchGetResponse(url);
+                    ResponseBody responseBody = response.body();
+                    final String responseValue = responseBody.string();
+                    Log.i("responsedata", "response value: " + responseValue + " ");
+                    responseBody.close();
+                    final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
+                    NewUserProfileActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //setupRecyclerView(moviePage);
+
+                            //Toast.makeText(getApplicationContext(), userProfile.toString() + "", Toast.LENGTH_LONG).show();
+                            // Log.i("responsedata", "totaldata: " + userProfile.getProfile().getEducationInformation().getInstitution());
+
+                            if (userProfile.getProfile().getPersonalInformation().getAboutYourself() != null) {
+                                userProfileDescriptionText.setText(userProfile.getProfile().getPersonalInformation().getAboutYourself());
+                            }
+
+                            addDataonGeneralInfoRecylerViewItem(userProfile);
+                            addDataonMatchUserChoiceRecyclerView(userProfile);
+
+
+                        }
+                    });
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+    private void addDataonMatchUserChoiceRecyclerView(UserProfile userProfile) {
+
+        matchUserChoiceArrayList.add(new MatchUserChoice("home town"
+                , userProfile.getProfile().getMatchingAttributes().getHomeTown()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("age"
+                , userProfile.getProfile().getMatchingAttributes().getAge()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("height"
+                , userProfile.getProfile().getMatchingAttributes().getHeight()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("skin color"
+                , userProfile.getProfile().getMatchingAttributes().getSkinColor()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("health"
+                , userProfile.getProfile().getMatchingAttributes().getHealth()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("marital status"
+                , userProfile.getProfile().getMatchingAttributes().getMaritalStatus()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("educational qualification"
+                , userProfile.getProfile().getMatchingAttributes().getTitleEducationalQualification()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("own house"
+                , userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("occupation"
+                , userProfile.getProfile().getMatchingAttributes().getTitleOccupation()));
+        matchUserChoiceRecyclerView.setAdapter(new MatchUserChoiceAdapter(getBaseContext(), matchUserChoiceArrayList));
+
+    }
+
+
+    private String checkNullField(String value) {
+
+
+        if (value == null) {
+            return "";
+        } else {
+            return value;
+        }
+
+    }
+
+    private void addDataonGeneralInfoRecylerViewItem(UserProfile userProfile) {
+
+
+        generalInformationArrayList.add(new GeneralInformation(
+                userProfile.getProfile().getPersonalInformation().getAge()
+                        + "" +
+                        userProfile.getProfile().getPersonalInformation().getHeightFt()
+                        + "" +
+                        userProfile.getProfile().getPersonalInformation().getHeightInc()));
+
+
+        if (!(checkNullField(userProfile.getProfile().getProfileReligion().getReligion())
+                + checkNullField(userProfile.getProfile().getProfileReligion().getCast())).equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+                    checkNullField(userProfile.getProfile().getProfileReligion().getReligion()) + "" +
+                            checkNullField(userProfile.getProfile().getProfileReligion().getCast())
+            ));
+
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())
+                + checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())).equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())
+                            + checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())
+
+            ));
+
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())).equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())
+            ));
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree()) +
+                checkNullField(userProfile.getProfile().getEducationInformation().getInstitution())).equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree()) + "" +
+                            checkNullField(userProfile.getProfile().getEducationInformation().getInstitution())
+            ));
+
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor()) +
+                checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())).equals("")) {
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
+                            + "" +
+                            checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
+            ));
+
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getMaritalStatus()))
+                .equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getPersonalInformation().getMaritalStatus()
+                    )
+
+            ));
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()) +
+                checkNullField(userProfile.getProfile().getOtherInformation().getFasting())).equals("")) {
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()) + "" +
+                            checkNullField(userProfile.getProfile().getOtherInformation().getFasting())
+
+            ));
+
+        }
+
+
+        generalInfoRecyclerView.setAdapter(new GeneralInformationAdapter(
+                getBaseContext(), generalInformationArrayList));
+
 
     }
 

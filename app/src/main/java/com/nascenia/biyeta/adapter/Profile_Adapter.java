@@ -15,7 +15,7 @@ import android.widget.TextView;
  */
 
 import com.bumptech.glide.Glide;
-import com.nascenia.biyeta.model.Profile;
+import com.nascenia.biyeta.model.OldProfile;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
     public abstract void load();
 
     //list of all profile
-    private List<Profile> profile_list;
+    private List<OldProfile> profile_list;
     //parent context
     Context context;
 
@@ -55,7 +55,7 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
     }
 
 
-    public Profile_Adapter(List<Profile> moviesList) {
+    public Profile_Adapter(List<OldProfile> moviesList) {
         this.profile_list = moviesList;
     }
 
@@ -70,7 +70,7 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Profile prfile = profile_list.get(position);
+        OldProfile prfile = profile_list.get(position);
         holder.user_name.setText(prfile.getDisplay_name());
         holder.details.setText(prfile.getAge() + " বছর, " + prfile.getHeight_ft() + "'" + prfile.getHeight_inc() + "\", " + prfile.getProfessional_group() + ", "
                 + prfile.getSkin_color() + ", " + prfile.getHealth() + ", " + prfile.getLocation());
