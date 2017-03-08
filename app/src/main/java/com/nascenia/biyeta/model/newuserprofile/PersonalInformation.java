@@ -15,16 +15,16 @@ public class PersonalInformation implements Serializable {
     private long id;
     @SerializedName("age")
     @Expose
-    private long age;
+    private int age;
     @SerializedName("display_name")
     @Expose
     private String displayName;
     @SerializedName("height_ft")
     @Expose
-    private long heightFt;
+    private int heightFt;
     @SerializedName("height_inc")
     @Expose
-    private long heightInc;
+    private int heightInc;
     @SerializedName("about_yourself")
     @Expose
     private String aboutYourself;
@@ -40,6 +40,11 @@ public class PersonalInformation implements Serializable {
     @SerializedName("image")
     @Expose
     private String image;
+    @SerializedName("gender")
+    @Expose
+    private String gender;
+
+
     private final static long serialVersionUID = -6389523718871776889L;
 
     public long getId() {
@@ -55,15 +60,15 @@ public class PersonalInformation implements Serializable {
         return this;
     }
 
-    public long getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(long age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public PersonalInformation withAge(long age) {
+    public PersonalInformation withAge(int age) {
         this.age = age;
         return this;
     }
@@ -81,28 +86,28 @@ public class PersonalInformation implements Serializable {
         return this;
     }
 
-    public long getHeightFt() {
+    public int getHeightFt() {
         return heightFt;
     }
 
-    public void setHeightFt(long heightFt) {
+    public void setHeightFt(int heightFt) {
         this.heightFt = heightFt;
     }
 
-    public PersonalInformation withHeightFt(long heightFt) {
+    public PersonalInformation withHeightFt(int heightFt) {
         this.heightFt = heightFt;
         return this;
     }
 
-    public long getHeightInc() {
+    public int getHeightInc() {
         return heightInc;
     }
 
-    public void setHeightInc(long heightInc) {
+    public void setHeightInc(int heightInc) {
         this.heightInc = heightInc;
     }
 
-    public PersonalInformation withHeightInc(long heightInc) {
+    public PersonalInformation withHeightInc(int heightInc) {
         this.heightInc = heightInc;
         return this;
     }
@@ -171,6 +176,21 @@ public class PersonalInformation implements Serializable {
         this.image = image;
         return this;
     }
+
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public PersonalInformation withGender(String gender) {
+        this.gender = gender;
+        return this;
+    }
+
 
     @Override
     public String toString() {

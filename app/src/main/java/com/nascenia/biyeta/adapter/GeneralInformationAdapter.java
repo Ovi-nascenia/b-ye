@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +23,11 @@ public class GeneralInformationAdapter extends RecyclerView.Adapter<GeneralInfor
     private LayoutInflater inflater;
     private Context context;
     private ArrayList<GeneralInformation> generalInformationArrayList;
+    private String generalInfoValue;
+
 
     public GeneralInformationAdapter(Context context, ArrayList<GeneralInformation> generalInformationArrayList) {
+
 
         this.context = context;
         this.inflater = LayoutInflater.from(this.context);
@@ -43,8 +47,20 @@ public class GeneralInformationAdapter extends RecyclerView.Adapter<GeneralInfor
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
+        generalInfoValue = this.generalInformationArrayList.get(position).getGeneralInfo();
+        if (generalInfoValue.startsWith(",")) {
 
-        holder.titleValueTextview.setText(this.generalInformationArrayList.get(position).getGeneralInfo());
+            generalInfoValue = removeChar(generalInfoValue, 0);
+        }
+
+        if (generalInfoValue.charAt(generalInfoValue.length() - 1) == ',') {
+
+            generalInfoValue = removeChar(generalInfoValue, generalInfoValue.length() - 1);
+        }
+
+
+        holder.titlegeneralInfoValueTextview.setText(generalInfoValue);
+        holder.titleImageView.setImageResource(this.generalInformationArrayList.get(position).getItemImageDrwableId());
 
     }
 
@@ -61,21 +77,27 @@ public class GeneralInformationAdapter extends RecyclerView.Adapter<GeneralInfor
     @Override
     public int getItemCount() {
 
-
         return this.generalInformationArrayList.size();
+    }
+
+
+    public String removeChar(String str, Integer n) {
+
+        return str.substring(0, n) + str.substring(n + 1, str.length());
     }
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView titleValueTextview;
+        TextView titlegeneralInfoValueTextview;
+        ImageView titleImageView;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            titleValueTextview = (TextView) itemView.findViewById(R.id.title_value_textview);
-
+            titlegeneralInfoValueTextview = (TextView) itemView.findViewById(R.id.title_value_textview);
+            titleImageView = (ImageView) itemView.findViewById(R.id.title_imageView);
 
         }
     }
