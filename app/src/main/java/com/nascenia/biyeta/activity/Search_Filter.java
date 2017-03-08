@@ -688,6 +688,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             }
 
             JSONObject issueObj =occupation_options;
+
             Iterator iterator = issueObj.keys();
             while(iterator.hasNext()){
                 String key = (String)iterator.next();
