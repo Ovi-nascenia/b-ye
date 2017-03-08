@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ActionMenuView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,8 @@ import com.nascenia.biyeta.fragment.Favourite;
 import com.nascenia.biyeta.fragment.Inbox;
 import com.nascenia.biyeta.fragment.Match;
 import com.nascenia.biyeta.fragment.Search;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -125,6 +128,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("onResume","OnResume");
+       // JSONObject jsonObject=new JSONObject(Search_Filter.response));
+    }
 
     @Override
     public void onClick(View view) {

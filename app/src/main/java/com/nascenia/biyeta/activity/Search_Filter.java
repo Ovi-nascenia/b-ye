@@ -1,10 +1,6 @@
 package com.nascenia.biyeta.activity;
 
-/**
- * Created by user on 1/10/2017.
- */
-
-import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,8 +27,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+
 
 import com.nascenia.biyeta.adapter.Profession_Adapter;
 import com.nascenia.biyeta.appdata.SharePref;
@@ -50,33 +48,48 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
     TextView textView;
     Button button;
 
-    private ArrayList<String> skin_lebel, age_lebel, health_lebel, education_lebel, professional_lebel, occupation_lebel;
+    private ArrayList<String> skin_lebel, age_lebel, heightLebel, education_lebel, professional_lebel, occupation_lebel;
 
-    public ArrayList<String> age_lebels;
+
     MyGridView gridView;
-    MyGridView gridView_occupation, gridView_location;
+    MyGridView gridViewOccupation, gridViewLocation;
     private final OkHttpClient client = new OkHttpClient();
 
 
-    public static ArrayList<Integer> locationGridItemCheckedCheckBoxPositionList;
-    public static ArrayList<Integer> professionGridItemCheckedCheckBoxPositionList;
-    public static ArrayList<Integer> occupationGridItemCheckedCheckBoxPositionList;
+    public static ArrayList<Integer> locationGridItemCheckedCheckBoxPositionList = new ArrayList<Integer>();
+    public static ArrayList<Integer> professionGridItemCheckedCheckBoxPositionList = new ArrayList<Integer>();
+    public static ArrayList<Integer> occupationGridItemCheckedCheckBoxPositionList = new ArrayList<Integer>();
+    public static ArrayList<Integer> currentStatusList = new ArrayList<Integer>();
+    public static ArrayList<Integer> maritalStatusList = new ArrayList<Integer>();
+    public static ArrayList<Integer> religionCastList = new ArrayList<Integer>();
 
 
-    String[] skin_status = new String[]{
+    private static int minAgeRangePos;
+    private static int maxAgeRangePos;
+    private static int minHeightRangePos;
+    private static int maxHeightRangePos;
+    private static int minSkinRangePos;
+    private static int maxSkingRangePos;
+    private int minHealthRangePos;
+    private int maxHealthRangePos;
+    private int minEducationRangePos;
+    private int maxEducationRangePos;
+
+
+    String[] skinStatus = new String[]{
             "শ্যামলা",
             "উজ্জ্বল শ্যামলা",
             "ফর্সা",
             "অনেক ফর্সা"
     };
 
-    String[] health_status = new String[]{
+    String[] healthStatus = new String[]{
             "স্লিম ",
             "স্বাস্থ্যবান",
             "বেশ স্বাস্থ্যব"
     };
 
-    String[] education_status = new String[]{
+    String[] educationStatus = new String[]{
 
             "মাধ্যমিক",
             "উচ্চ-মাধ্যমিক পড়ছি ",
@@ -94,10 +107,18 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.filter_search);
-        set_up_id();
+        setUpId();
+        initializeVariable();
+        new Get_Data().execute();
+        set_rangeView_lebel();
 
+    }
+
+
+    void initializeVariable()
+    {
         age_lebel = new ArrayList<>();
-        health_lebel = new ArrayList<>();
+        heightLebel = new ArrayList<>();
         education_lebel = new ArrayList<>();
         professional_lebel = new ArrayList<>();
         occupation_lebel = new ArrayList<>();
@@ -108,48 +129,46 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
         for (int i = 4; i < 8; i++) {
             for (int j = 0; j < 13; j++)
-                health_lebel.add(i + "'" + j + "\"");
+                heightLebel.add(i + "'" + j + "\"");
 
 
         }
 
-        textView = (TextView) findViewById(R.id.level);
+        currentStatusList.add(0);
+        currentStatusList.add(1);
 
-        new Get_Data().execute();
-        set_rangeView_lebel();
+        maritalStatusList.add(1);
+        maritalStatusList.add(2);
+        maritalStatusList.add(3);
+        maritalStatusList.add(4);
 
+
+        religionCastList.add(1);
+        religionCastList.add(2);
+        religionCastList.add(3);
     }
 
     private void set_rangeView_lebel() {
 
-        rangeView_age.setLabelFontSize(25);
         rangeView_age.setActiveLabelColor(Color.TRANSPARENT);
         rangeView_age.setFixedThumbLabelColor(Color.TRANSPARENT);
         rangeView_age.setLabelColor(Color.TRANSPARENT);
-        rangeView_age.setFixedLabelColor(Color.TRANSPARENT);
-        rangeView_age.setActiveThumbLabelColor(Color.BLACK);
-        rangeView_age.setTickRadius(0.0f);
 
+        rangeView_age.setFixedLabelColor(Color.TRANSPARENT);
         rangeView_age.setOnTrackRangeListener(new OnTrackRangeListener() {
             @Override
             public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
-
                 rangeView_age.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_age.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_age.setLabelColor(Color.TRANSPARENT);
-                rangeView_age.setFixedLabelColor(Color.TRANSPARENT);
-                rangeView_age.setActiveThumbLabelColor(Color.BLACK);
-
+                minAgeRangePos = i;
             }
 
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
-
                 rangeView_age.setActiveLabelColor(Color.TRANSPARENT);
-                rangeView_age.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_age.setLabelColor(Color.TRANSPARENT);
-                rangeView_age.setFixedLabelColor(Color.TRANSPARENT);
-                rangeView_age.setActiveThumbLabelColor(Color.BLACK);
+                maxAgeRangePos = i;
             }
         });
 
@@ -161,68 +180,56 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             }
         });
 
-        rangeView_height.setLabelFontSize(25);
+
         rangeView_height.setActiveLabelColor(Color.TRANSPARENT);
         rangeView_height.setFixedThumbLabelColor(Color.TRANSPARENT);
         rangeView_height.setLabelColor(Color.TRANSPARENT);
+
         rangeView_height.setFixedLabelColor(Color.TRANSPARENT);
-        rangeView_height.setActiveThumbLabelColor(Color.BLACK);
-        rangeView_height.setTickRadius(0.0f);
-
-
         rangeView_height.setOnTrackRangeListener(new OnTrackRangeListener() {
             @Override
             public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
                 rangeView_height.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_height.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_height.setLabelColor(Color.TRANSPARENT);
-                rangeView_height.setFixedLabelColor(Color.TRANSPARENT);
-                rangeView_height.setActiveThumbLabelColor(Color.BLACK);
+                minHeightRangePos = i;
             }
 
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
 
                 rangeView_height.setActiveLabelColor(Color.TRANSPARENT);
-                rangeView_height.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_height.setLabelColor(Color.TRANSPARENT);
-                rangeView_height.setFixedLabelColor(Color.TRANSPARENT);
-                rangeView_height.setActiveThumbLabelColor(Color.BLACK);
+                maxHeightRangePos = i;
             }
         });
         rangeView_height.setOnRangeLabelsListener(new OnRangeLabelsListener() {
             @org.jetbrains.annotations.Nullable
             @Override
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull State state) {
-                return health_lebel.get(i);
+                return heightLebel.get(i);
             }
         });
-
         rangeView_color.setLabelFontSize(14);
         rangeView_color.setActiveLabelColor(Color.TRANSPARENT);
         rangeView_color.setFixedThumbLabelColor(Color.TRANSPARENT);
         rangeView_color.setLabelColor(Color.TRANSPARENT);
-        rangeView_color.setFixedLabelColor(Color.TRANSPARENT);
-        rangeView_color.setActiveThumbLabelColor(Color.BLACK);
-        rangeView_color.setTickRadius(0.0f);
 
+        rangeView_color.setFixedLabelColor(Color.TRANSPARENT);
         rangeView_color.setOnTrackRangeListener(new OnTrackRangeListener() {
             @Override
             public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
                 rangeView_color.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_color.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_color.setLabelColor(Color.TRANSPARENT);
-                rangeView_color.setFixedLabelColor(Color.TRANSPARENT);
-                rangeView_color.setActiveThumbLabelColor(Color.BLACK);
+                minSkinRangePos = i;
             }
 
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
                 rangeView_color.setActiveLabelColor(Color.TRANSPARENT);
-                rangeView_color.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_color.setLabelColor(Color.TRANSPARENT);
-                rangeView_color.setFixedLabelColor(Color.TRANSPARENT);
-                rangeView_color.setActiveThumbLabelColor(Color.BLACK);
+                maxSkingRangePos = i;
 
             }
         });
@@ -230,82 +237,31 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             @org.jetbrains.annotations.Nullable
             @Override
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull State state) {
-                return skin_status[i];
+                return skinStatus[i];
             }
         });
-
-        rangeView_health.setLabelFontSize(17);
-        rangeView_health.setActiveLabelColor(Color.TRANSPARENT);
-        rangeView_health.setFixedThumbLabelColor(Color.TRANSPARENT);
-        rangeView_health.setLabelColor(Color.TRANSPARENT);
-        rangeView_health.setFixedLabelColor(Color.TRANSPARENT);
-        rangeView_health.setActiveThumbLabelColor(Color.BLACK);
-        rangeView_health.setTickRadius(0.0f);
-
-
-        rangeView_health.setOnTrackRangeListener(new OnTrackRangeListener() {
-            @Override
-            public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
-
-
-                rangeView_health.setActiveLabelColor(Color.TRANSPARENT);
-                rangeView_health.setFixedThumbLabelColor(Color.TRANSPARENT);
-                rangeView_health.setLabelColor(Color.TRANSPARENT);
-                rangeView_health.setFixedLabelColor(Color.TRANSPARENT);
-                rangeView_health.setActiveThumbLabelColor(Color.BLACK);
-
-            }
-
-            @Override
-            public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
-
-                rangeView_health.setActiveLabelColor(Color.TRANSPARENT);
-                rangeView_health.setFixedThumbLabelColor(Color.TRANSPARENT);
-                rangeView_health.setLabelColor(Color.TRANSPARENT);
-                rangeView_health.setFixedLabelColor(Color.TRANSPARENT);
-                rangeView_health.setActiveThumbLabelColor(Color.BLACK);
-
-            }
-        });
-
-        rangeView_health.setOnRangeLabelsListener(new OnRangeLabelsListener() {
-            @org.jetbrains.annotations.Nullable
-            @Override
-            public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull State state) {
-                return health_status[i];
-            }
-        });
-
-        rangeView_education.setLabelFontSize(18);
+        rangeView_education.setLabelFontSize(14);
         rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
         rangeView_education.setFixedThumbLabelColor(Color.TRANSPARENT);
         rangeView_education.setLabelColor(Color.TRANSPARENT);
         rangeView_education.setFixedLabelColor(Color.TRANSPARENT);
-        rangeView_education.setActiveThumbLabelColor(Color.BLACK);
-        rangeView_education.setTickRadius(0.0f);
-
-
         rangeView_education.setOnTrackRangeListener(new OnTrackRangeListener() {
             @Override
             public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
 
+
                 rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_education.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_education.setLabelColor(Color.TRANSPARENT);
-                rangeView_education.setFixedLabelColor(Color.TRANSPARENT);
-                rangeView_education.setActiveThumbLabelColor(Color.BLACK);
-
+                minEducationRangePos = i;
             }
 
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
 
                 rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
-                rangeView_education.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_education.setLabelColor(Color.TRANSPARENT);
-                rangeView_education.setFixedLabelColor(Color.TRANSPARENT);
-                rangeView_education.setActiveThumbLabelColor(Color.BLACK);
-
+                maxEducationRangePos = i;
             }
         });
 
@@ -313,10 +269,42 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             @org.jetbrains.annotations.Nullable
             @Override
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull State state) {
-                return education_status[i];
+                return educationStatus[i];
+            }
+        });
+        rangeView_health.setLabelFontSize(14);
+        rangeView_health.setActiveLabelColor(Color.TRANSPARENT);
+        rangeView_health.setFixedThumbLabelColor(Color.TRANSPARENT);
+        rangeView_health.setLabelColor(Color.TRANSPARENT);
+
+        rangeView_health.setFixedLabelColor(Color.TRANSPARENT);
+        rangeView_health.setOnTrackRangeListener(new OnTrackRangeListener() {
+            @Override
+            public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
+
+
+                rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
+                rangeView_education.setFixedThumbLabelColor(Color.TRANSPARENT);
+                rangeView_education.setLabelColor(Color.TRANSPARENT);
+                minHealthRangePos = i;
+            }
+
+            @Override
+            public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
+
+                rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
+                rangeView_education.setLabelColor(Color.TRANSPARENT);
+                maxHealthRangePos = i;
             }
         });
 
+        rangeView_health.setOnRangeLabelsListener(new OnRangeLabelsListener() {
+            @org.jetbrains.annotations.Nullable
+            @Override
+            public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull State state) {
+                return healthStatus[i];
+            }
+        });
     }
 
     String res =
@@ -339,7 +327,123 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                     "\n";
     String ch = "";
 
-    void set_up_id() {
+
+
+    int covertIntoInc(String height)
+    {
+        String ch[]=height.split("\'");
+        int inc=(Integer.parseInt(ch[0])*12+Integer.parseInt(ch[1].replace("\"","")))-48;
+        return inc;
+    }
+    public String porcessJSon() {
+
+
+
+        int startHeightInc=covertIntoInc(heightLebel.get(minHeightRangePos));
+        int endHeightInc=covertIntoInc(heightLebel.get(maxHeightRangePos));
+        Log.e("Ovi Age",+minHeightRangePos+"* "+startHeightInc +" "+endHeightInc+"**"+maxHeightRangePos);
+
+
+        String response=new StringBuilder().append("{")
+                .append("\"search\": {")
+                .append("\"age_range\": ")
+                .append("\"")
+                .append(Integer.parseInt(age_lebel.get(minAgeRangePos))-18)
+                .append(";")
+                .append(Integer.parseInt(age_lebel.get(maxAgeRangePos))-18)
+                .append("\",")
+
+                .append("\"height_range\": ")
+                .append("\"")
+                .append(startHeightInc)
+                .append(";")
+                .append(endHeightInc)
+                .append("\",")
+
+                .append("\"skin_color\": ")
+                .append("\"")
+                .append(minSkinRangePos)
+                .append(";")
+                .append(maxSkingRangePos)
+                .append("\",")
+
+                .append("\"health_range\": ")
+                .append("\"")
+                .append(minHealthRangePos)
+                .append(";")
+                .append(maxHealthRangePos)
+                .append("\",")
+
+                .append("\"education_range\": ")
+                .append("\"")
+                .append(minEducationRangePos)
+                .append(";")
+                .append(maxEducationRangePos)
+                .append("\",")
+
+                .append("\"occupation_range\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        occupationGridItemCheckedCheckBoxPositionList
+                ))
+                .append("\"],")
+
+                .append("\"profession_grp_range\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        professionGridItemCheckedCheckBoxPositionList
+                ))
+                .append("\"],")
+
+
+                .append("\"current_status\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        currentStatusList
+                ))
+                .append("\"],")
+
+
+                .append("\"division_status\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        locationGridItemCheckedCheckBoxPositionList
+                ))
+                .append("\"],")
+
+
+                .append("\"marital_status\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        maritalStatusList
+                ))
+                .append("\"],")
+
+
+                .append("\"religion_cast\": ")
+                .append("[\"")
+                .append(android.text.TextUtils.join(
+                        "\",\"",
+                        religionCastList
+                ))
+                .append("\"]")
+                .append("}}")
+
+                .toString()
+                ;
+
+        return response;
+
+
+    }
+
+
+    void setUpId() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -358,8 +462,8 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
         rangeView_education = (SimpleRangeView) findViewById(R.id.education_lebel);
         rangeView_health = (SimpleRangeView) findViewById(R.id.health_lebel);
         gridView = (MyGridView) findViewById(R.id.profession_grid);
-        gridView_occupation = (MyGridView) findViewById(R.id.occupation_grid);
-        gridView_location = (MyGridView) findViewById(R.id.location_grid);
+        gridViewOccupation = (MyGridView) findViewById(R.id.occupation_grid);
+        gridViewLocation = (MyGridView) findViewById(R.id.location_grid);
         findViewById(R.id.age_).setOnClickListener(this);
         findViewById(R.id.height_).setOnClickListener(this);
         findViewById(R.id.education_).setOnClickListener(this);
@@ -374,9 +478,8 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             @Override
             public void onClick(View view) {
 
-
-                new Get_Data1().execute();
-
+                new GetResult().execute();
+                //porcessJSon();
 
             }
 
@@ -444,7 +547,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
         }
     }
 
-    class Get_Data1 extends AsyncTask<String, String, String> {
+    class GetResult extends AsyncTask<String, String, String> {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -456,12 +559,14 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             SharePref sharePref = new SharePref(Search_Filter.this);
             final String token = sharePref.get_data("token");
 
+            Log.e("Ovi Test",porcessJSon());
+
             MediaType JSON
                     = MediaType.parse("application/json; charset=utf-8");
 
             OkHttpClient client = new OkHttpClient();
 
-            RequestBody body = RequestBody.create(JSON, res);
+            RequestBody body = RequestBody.create(JSON,porcessJSon());
             Request request = new Request.Builder()
                     .url("http://test.biyeta.com/api/v1/search/filtered-results")
                     .addHeader("Authorization", "Token token=" + token)
@@ -562,47 +667,51 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             for (int i = 0; i < skin_color.length(); i++) {
                 skin_lebel.add(skin_color.getString("" + i));
             }
-            for (int i = 0; i < new JSONArray(occupation).length(); i++) {
-                Log.e("TAQ", new JSONArray(occupation).get(i).toString());
-                is_occupation.put(new JSONArray(occupation).get(i).toString(), true);
-            }
+
 
             ArrayList<String> profession_list = new ArrayList<>(), profession_number = new ArrayList<>();
+           //   ArrayList<Boolean> is_checked_occupation = new ArrayList<>();
+
+
             ArrayList<String> occupation_list = new ArrayList<>();
             ArrayList<Boolean> is_checked_occupation = new ArrayList<>();
-            Iterator<String> iter = occupation_options.keys();
-            while (iter.hasNext()) {
 
-                String key = iter.next();
-                try {
-                    String value = (String) occupation_options.get(key);
 
-                    Log.e("TAQ", value + "      " + key);
-                    occupation_list.add(value);
-                    // is_occupation.put(key,false);
-                    try {
-                        if (is_occupation.get(key))
-                            is_checked_occupation.add(true);
 
-                        else
-                            is_checked_occupation.add(false);
-                    } catch (NullPointerException n) {
-                        is_checked_occupation.add(false);
-                    }
+          //Load occupation data
+            ArrayList<Integer> occuptationSelected=new ArrayList<>();
+            for (int i = 0; i < new JSONArray(occupation).length(); i++) {
 
-                } catch (Exception e) {
-
-                }
+                int num = Integer.parseInt(String.valueOf(new JSONArray(occupation).get(i)));
+                Log.e("fuck",num+"");
+                occuptationSelected.add(num);
             }
 
+            JSONObject issueObj =occupation_options;
+            Iterator iterator = issueObj.keys();
+            while(iterator.hasNext()){
+                String key = (String)iterator.next();
+                String issue = issueObj.getString(key);
+                occupation_list.add(issue);
+                if (occuptationSelected.contains(Integer.parseInt(key)))
+                    is_checked_occupation.add(true);
+                else
+                    is_checked_occupation.add(false);
+            }
 
+            ///set Occupation Adapter
+            Profession_Adapter occupation_adapter = new Profession_Adapter(getApplicationContext(), occupation_list, is_checked_occupation, "OCCUPATION");
+            gridViewOccupation.setAdapter(occupation_adapter);
+
+
+
+            ///Load Location data
             ArrayList<String> location_choose = new ArrayList<>();
             ArrayList<Boolean> is_checked_location = new ArrayList<>();
             ArrayList<String> all_location = new ArrayList<>();
 
 
             for (int i = 0; i < location.length(); i++) {
-                Log.e("fuck", location.getString(i));
                 location_choose.add(location.getString(i));
             }
 
@@ -616,10 +725,12 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                     is_checked_location.add(false);
             }
 
-            Profession_Adapter profession_adapter1 = new Profession_Adapter(getApplicationContext(), all_location, is_checked_location, "LOCATION");
-            gridView_location.setAdapter(profession_adapter1);
+            Profession_Adapter locationAdapter = new Profession_Adapter(getApplicationContext(), all_location, is_checked_location, "LOCATION");
+            gridViewLocation.setAdapter(locationAdapter);
 
 
+
+            ///load the professional group data
             ArrayList<Boolean> is_checked = new ArrayList<>();
             for (int i = 0; i < professional_options.length(); i++) {
 
@@ -635,60 +746,73 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 is_checked.add(num, true);
             }
 
-            Profession_Adapter profession_adapter2 = new Profession_Adapter(getApplicationContext(), occupation_list, is_checked_occupation, "OCCUPATION");
-            gridView_occupation.setAdapter(profession_adapter2);
 
 
             Profession_Adapter profession_adapter = new Profession_Adapter(getApplicationContext(), profession_list, is_checked, "PROFESSION");
             gridView.setAdapter(profession_adapter);
 
 
-           /* gridView_occupation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                }
-            });*/
+
 
 
             for (int i = 0; i < health_options.length(); i++) {
-                health_lebel.add(health_options.getString("" + i));
+                heightLebel.add(health_options.getString("" + i));
             }
             for (int i = 0; i < education_options.length(); i++) {
                 education_lebel.add(education_options.getString("" + i));
             }
-//            for (int i=0;i<professional_options.length();i++)
-//            {
-//                professional_lebel.add(professional_options.getString(""+i));
-//            }
+
 
             for (int i = 0; i < education_options.length(); i++) {
                 education_lebel.add(education_options.getString("" + i));
             }
 
 
-            ///setup range view
+            ///initialize age range view
+            int startAgePosition = age_lebel.indexOf(new JSONArray(age).getString(0));
+            int endAgePosition = age_lebel.indexOf(new JSONArray(age).getString(1));
+            minAgeRangePos =  startAgePosition;
+            maxAgeRangePos = endAgePosition;
+            rangeView_age.setStart(startAgePosition);
+            rangeView_age.setEnd(endAgePosition);
 
 
-            int start1 = age_lebel.indexOf(new JSONArray(age).getString(0));
-            int end1 = age_lebel.indexOf(new JSONArray(age).getString(1));
-            rangeView_age.setStart(start1);
-            rangeView_age.setEnd(end1);
+            ///initialize height range view
             int i = Integer.parseInt(new JSONArray(height).getString(0));
             int res = i / 12;
             String ch = res + "'" + i % 12 + "\"";
-            int start = health_lebel.indexOf(ch);
-            rangeView_height.setStart(start);
+            int startHeightPosition = heightLebel.indexOf(ch);
+            rangeView_height.setStart(startHeightPosition);
             int j = Integer.parseInt(new JSONArray(height).getString(1));
             int res1 = j / 12;
             String ch1 = res1 + "'" + j % 12 + "\"";
-            int end = health_lebel.indexOf(ch1);
-            rangeView_height.setEnd(end);
+            int endHeightPosition = heightLebel.indexOf(ch1);
+            rangeView_height.setEnd(endHeightPosition);
+            minHeightRangePos=startHeightPosition;
+            maxHeightRangePos=endHeightPosition;
+
+            //initialize color range bar view
             rangeView_color.setStart(Integer.parseInt(new JSONArray(skin).getString(0)));
             rangeView_color.setEnd(Integer.parseInt(new JSONArray(skin).getString(1)));
+            minSkinRangePos=Integer.parseInt(new JSONArray(skin).getString(0));
+            maxSkingRangePos=Integer.parseInt(new JSONArray(skin).getString(1));
+
+
+
+            //initialize health range bar
             rangeView_health.setStart(Integer.parseInt(new JSONArray(health).getString(0)));
             rangeView_health.setEnd(Integer.parseInt(new JSONArray(health).getString(1)));
+            minHealthRangePos=Integer.parseInt(new JSONArray(health).getString(0));
+            maxHealthRangePos=Integer.parseInt(new JSONArray(health).getString(1));
+
+
+            //initialize education range bar
             rangeView_education.setStart(Integer.parseInt(new JSONArray(education).getString(0)));
             rangeView_education.setEnd(Integer.parseInt(new JSONArray(education).getString(1)));
+            minEducationRangePos=Integer.parseInt(new JSONArray(education).getString(0));
+            maxEducationRangePos=Integer.parseInt(new JSONArray(education).getString(1));
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
