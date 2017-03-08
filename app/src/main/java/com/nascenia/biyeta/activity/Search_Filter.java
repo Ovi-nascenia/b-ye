@@ -168,6 +168,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 rangeView_age.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_age.setLabelColor(Color.TRANSPARENT);
                 minAgeRangePos = i;
+                Log.i("data", "start " + i + " " + minAgeRangePos);
             }
 
             @Override
@@ -175,6 +176,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 rangeView_age.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_age.setLabelColor(Color.TRANSPARENT);
                 maxAgeRangePos = i;
+                Log.i("data", "end " + i + " " + maxAgeRangePos);
             }
         });
 
@@ -469,8 +471,8 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             @Override
             public void onClick(View view) {
 
-                new Get_Data1().execute();
-                //porcessJSon();
+                //new Get_Data1().execute();
+                porcessJSon();
 
             }
 
@@ -696,7 +698,6 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
 
             for (int i = 0; i < location.length(); i++) {
-                Log.e("fuck", location.getString(i));
                 location_choose.add(location.getString(i));
             }
 
@@ -737,13 +738,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             gridView.setAdapter(profession_adapter);
 
 
-           /* gridView_occupation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-                }
-            });*/
 
 
             for (int i = 0; i < health_options.length(); i++) {
@@ -752,10 +747,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             for (int i = 0; i < education_options.length(); i++) {
                 education_lebel.add(education_options.getString("" + i));
             }
-//            for (int i=0;i<professional_options.length();i++)
-//            {
-//                professional_lebel.add(professional_options.getString(""+i));
-//            }
+
 
             for (int i = 0; i < education_options.length(); i++) {
                 education_lebel.add(education_options.getString("" + i));
@@ -767,6 +759,10 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
             int start1 = age_lebel.indexOf(new JSONArray(age).getString(0));
             int end1 = age_lebel.indexOf(new JSONArray(age).getString(1));
+
+            minAgeRangePos =  start1;
+            maxAgeRangePos = end1;
+
             rangeView_age.setStart(start1);
             rangeView_age.setEnd(end1);
             int i = Integer.parseInt(new JSONArray(height).getString(0));
