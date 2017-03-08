@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
@@ -23,10 +22,10 @@ import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.service.ResourceProvider;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -121,7 +120,14 @@ public class NewUserProfileActivity extends AppCompatActivity {
             }
         });
 
-        fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/296");
+
+        if (Utils.isOnline(getBaseContext())) {
+
+            fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/296");
+        } else {
+            Utils.ShowAlert(getBaseContext(), "please check your internet connection");
+        }
+
 
         // Log.i("bangla", "value " + Utils.convertEnglishDigittoBangla(11));
 
@@ -146,7 +152,8 @@ public class NewUserProfileActivity extends AppCompatActivity {
                             //setupRecyclerView(moviePage);
 
                             //Toast.makeText(getApplicationContext(), userProfile.toString() + "", Toast.LENGTH_LONG).show();
-                            // Log.i("responsedata", "totaldata: " + userProfile.getProfile().getEducationInformation().getInstitution());
+                            //Log.i("responsedata", "totaldata: " + userProfile.getProfile().getPersonalInformation().getGender());
+
 
                             if (userProfile.getProfile().getPersonalInformation().getAboutYourself() != null) {
                                 userProfileDescriptionText.setText(userProfile.getProfile().getPersonalInformation().getAboutYourself());
@@ -160,7 +167,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
                     });
 
 
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -188,6 +195,8 @@ public class NewUserProfileActivity extends AppCompatActivity {
                 , userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse()));
         matchUserChoiceArrayList.add(new MatchUserChoice("occupation"
                 , userProfile.getProfile().getMatchingAttributes().getTitleOccupation()));
+
+
         matchUserChoiceRecyclerView.setAdapter(new MatchUserChoiceAdapter(getBaseContext(), matchUserChoiceArrayList));
 
     }
@@ -208,35 +217,42 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
 
         generalInformationArrayList.add(new GeneralInformation(
-                userProfile.getProfile().getPersonalInformation().getAge()
-                        + "" +
-                        userProfile.getProfile().getPersonalInformation().getHeightFt()
-                        + "" +
-                        userProfile.getProfile().getPersonalInformation().getHeightInc()));
+                Utils.convertEnglishDigittoBangla(
+                        userProfile.getProfile().getPersonalInformation().getAge()) + " বছর"
+                        + "," +
+                        Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightFt())
+                        + "'" +
+                        Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightInc())
+                        + "\""
+                        + "," +
+                        checkNullField(userProfile.getProfile().getProfileReligion().getReligion())
+                        + "(" +
+                        checkNullField(userProfile.getProfile().getProfileReligion().getCast())
+                        + ")"
+
+                , R.drawable.per));
 
 
-        if (!(checkNullField(userProfile.getProfile().getProfileReligion().getReligion())
-                + checkNullField(userProfile.getProfile().getProfileReligion().getCast())).equals("")) {
-
+        if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())).equals("")) {
 
             generalInformationArrayList.add(new GeneralInformation(
-                    checkNullField(userProfile.getProfile().getProfileReligion().getReligion()) + "" +
-                            checkNullField(userProfile.getProfile().getProfileReligion().getCast())
-            ));
+
+                    "বর্তমান অবস্থান-" + checkNullField(
+                            userProfile.getProfile().getProfileLivingIn().getCountry())
+                    , R.drawable.pla));
 
         }
 
 
-        if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())
-                + checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())).equals("")) {
-
+        if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())).equals("")) {
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())
-                            + checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())
+                    "দেশের বাড়ি-" + checkNullField(
+                            checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())
+                    )
 
-            ));
+                    , R.drawable.hom));
 
         }
 
@@ -247,7 +263,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
             generalInformationArrayList.add(new GeneralInformation(
 
                     checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())
-            ));
+                    , R.drawable.pro));
         }
 
 
@@ -257,9 +273,10 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree()) + "" +
+                    checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree())
+                            + "," +
                             checkNullField(userProfile.getProfile().getEducationInformation().getInstitution())
-            ));
+                    , R.drawable.edu));
 
         }
 
@@ -270,9 +287,9 @@ public class NewUserProfileActivity extends AppCompatActivity {
             generalInformationArrayList.add(new GeneralInformation(
 
                     checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
-                            + "" +
+                            + "," +
                             checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
-            ));
+                    , R.drawable.hel));
 
         }
 
@@ -283,22 +300,35 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    checkNullField(userProfile.getProfile().getPersonalInformation().getMaritalStatus()
-                    )
-
-            ));
+                    checkNullField(userProfile.getProfile().getPersonalInformation().getMaritalStatus())
+                    , R.drawable.mar));
         }
 
 
         if (!(checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()) +
                 checkNullField(userProfile.getProfile().getOtherInformation().getFasting())).equals("")) {
 
+            String prayer = "";
+            String fast = "";
+
+
+            if (!(checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()))
+                    .equals("")) {
+
+                prayer = userProfile.getProfile().getOtherInformation().getPrayer() + " নামায পরেন";
+            }
+
+            if (!(checkNullField(userProfile.getProfile().getOtherInformation().getFasting()))
+                    .equals("")) {
+
+                fast = userProfile.getProfile().getOtherInformation().getFasting() + " রোজা রাখেন";
+            }
+
+
             generalInformationArrayList.add(new GeneralInformation(
 
-                    checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()) + "" +
-                            checkNullField(userProfile.getProfile().getOtherInformation().getFasting())
-
-            ));
+                    prayer + "," + fast
+                    , R.drawable.pra));
 
         }
 
