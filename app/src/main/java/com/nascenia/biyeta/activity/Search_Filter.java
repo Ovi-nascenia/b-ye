@@ -692,6 +692,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             Iterator iterator = issueObj.keys();
             while(iterator.hasNext()){
                 String key = (String)iterator.next();
+
                 String issue = issueObj.getString(key);
                 occupation_list.add(issue);
                 if (occuptationSelected.contains(Integer.parseInt(key)))
