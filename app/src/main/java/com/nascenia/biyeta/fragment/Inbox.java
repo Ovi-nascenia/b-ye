@@ -1,5 +1,6 @@
 package com.nascenia.biyeta.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -50,6 +51,8 @@ public class Inbox extends Fragment implements View.OnClickListener{
         switch (id)
         {
             case R.id.tv_sent_request:
+
+                startActivity(new Intent());
                 break;
 
             case R.id.tv_inbox:
@@ -59,6 +62,7 @@ public class Inbox extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.tv_verfication:
+
                 break;
 
             case R.id.tv_expire:

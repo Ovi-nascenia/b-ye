@@ -1,8 +1,10 @@
 package com.nascenia.biyeta.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,9 +14,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ActionMenuView;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -158,10 +163,22 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         .commit();
                 break;
             case R.id.inbox:
-                inboxImageView.setColorFilter(Color.WHITE);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentParentViewGroup, new Inbox())
-                        .commit();
+//                inboxImageView.setColorFilter(Color.WHITE);
+//                getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.fragmentParentViewGroup, new Inbox())
+//                        .commit();
+
+                Dialog dialog=new Dialog(HomeScreen.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.inbox);
+                DisplayMetrics displaymetrics = new DisplayMetrics();
+                this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                int width = (int) ((int)displaymetrics.widthPixels * 0.8);
+                int height = (int) ((int)displaymetrics.heightPixels * 0.6);
+                dialog.getWindow().setLayout(width,height);
+
+                dialog.show();
                 break;
             case R.id.profile:
                 profileImageView.setColorFilter(Color.WHITE);
