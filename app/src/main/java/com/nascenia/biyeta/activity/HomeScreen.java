@@ -177,6 +177,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 int width = (int) ((int)displaymetrics.widthPixels * 0.8);
                 int height = (int) ((int)displaymetrics.heightPixels * 0.6);
                 dialog.getWindow().setLayout(width,height);
+                //ge
 
                 dialog.show();
                 break;
