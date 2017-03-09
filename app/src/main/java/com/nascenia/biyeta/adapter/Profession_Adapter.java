@@ -32,7 +32,7 @@ public class Profession_Adapter extends BaseAdapter {
     // 2
     @Override
     public int getCount() {
-        return profession_name.size()-1;
+        return profession_name.size();
     }
 
     // 3
