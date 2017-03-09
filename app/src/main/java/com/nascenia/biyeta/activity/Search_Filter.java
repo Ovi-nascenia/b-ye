@@ -115,8 +115,20 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
     }
 
 
-    void initializeVariable()
-    {
+    void initializeVariable() {
+        locationGridItemCheckedCheckBoxPositionList.clear();
+        occupationGridItemCheckedCheckBoxPositionList.clear();
+        professionGridItemCheckedCheckBoxPositionList.clear();
+        locationId.clear();
+        professionId.clear();
+        occupationId.clear();
+
+
+
+        currentStatusList.clear();
+        religionCastList.clear();
+        maritalStatusList.clear();
+
         age_lebel = new ArrayList<>();
         heightLebel = new ArrayList<>();
         education_lebel = new ArrayList<>();
@@ -147,6 +159,11 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
         religionCastList.add(2);
         religionCastList.add(3);
     }
+
+
+    public static  ArrayList<Integer> occupationId=new ArrayList<>();
+    public static  ArrayList<Integer> professionId=new ArrayList<>();
+    public static ArrayList<Integer> locationId=new ArrayList<>();
 
     private void set_rangeView_lebel() {
 
@@ -179,6 +196,9 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 return age_lebel.get(i);
             }
         });
+
+
+
 
 
         rangeView_height.setActiveLabelColor(Color.TRANSPARENT);
@@ -328,29 +348,27 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
     String ch = "";
 
 
-
-    int covertIntoInc(String height)
-    {
-        String ch[]=height.split("\'");
-        int inc=(Integer.parseInt(ch[0])*12+Integer.parseInt(ch[1].replace("\"","")))-48;
+    int covertIntoInc(String height) {
+        String ch[] = height.split("\'");
+        int inc = (Integer.parseInt(ch[0]) * 12 + Integer.parseInt(ch[1].replace("\"", ""))) - 48;
         return inc;
     }
+
     public String porcessJSon() {
 
 
+        int startHeightInc = covertIntoInc(heightLebel.get(minHeightRangePos));
+        int endHeightInc = covertIntoInc(heightLebel.get(maxHeightRangePos));
+        Log.e("Ovi Age", +minHeightRangePos + "* " + startHeightInc + " " + endHeightInc + "**" + maxHeightRangePos);
 
-        int startHeightInc=covertIntoInc(heightLebel.get(minHeightRangePos));
-        int endHeightInc=covertIntoInc(heightLebel.get(maxHeightRangePos));
-        Log.e("Ovi Age",+minHeightRangePos+"* "+startHeightInc +" "+endHeightInc+"**"+maxHeightRangePos);
 
-
-        String response=new StringBuilder().append("{")
+        String response = new StringBuilder().append("{")
                 .append("\"search\": {")
                 .append("\"age_range\": ")
                 .append("\"")
-                .append(Integer.parseInt(age_lebel.get(minAgeRangePos))-18)
+                .append(Integer.parseInt(age_lebel.get(minAgeRangePos)) - 18)
                 .append(";")
-                .append(Integer.parseInt(age_lebel.get(maxAgeRangePos))-18)
+                .append(Integer.parseInt(age_lebel.get(maxAgeRangePos)) - 18)
                 .append("\",")
 
                 .append("\"height_range\": ")
@@ -434,8 +452,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 .append("\"]")
                 .append("}}")
 
-                .toString()
-                ;
+                .toString();
 
         return response;
 
@@ -449,7 +466,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mToolbar.setNavigationOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
@@ -559,14 +576,14 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             SharePref sharePref = new SharePref(Search_Filter.this);
             final String token = sharePref.get_data("token");
 
-            Log.e("Ovi Test",porcessJSon());
+            Log.e("Ovi Test", porcessJSon());
 
             MediaType JSON
                     = MediaType.parse("application/json; charset=utf-8");
 
             OkHttpClient client = new OkHttpClient();
 
-            RequestBody body = RequestBody.create(JSON,porcessJSon());
+            RequestBody body = RequestBody.create(JSON, porcessJSon());
             Request request = new Request.Builder()
                     .url("http://test.biyeta.com/api/v1/search/filtered-results")
                     .addHeader("Authorization", "Token token=" + token)
@@ -670,29 +687,28 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
 
             ArrayList<String> profession_list = new ArrayList<>(), profession_number = new ArrayList<>();
-           //   ArrayList<Boolean> is_checked_occupation = new ArrayList<>();
+            //   ArrayList<Boolean> is_checked_occupation = new ArrayList<>();
 
 
             ArrayList<String> occupation_list = new ArrayList<>();
             ArrayList<Boolean> is_checked_occupation = new ArrayList<>();
 
 
-
-          //Load occupation data
-            ArrayList<Integer> occuptationSelected=new ArrayList<>();
+            //Load occupation data
+            ArrayList<Integer> occuptationSelected = new ArrayList<>();
             for (int i = 0; i < new JSONArray(occupation).length(); i++) {
 
                 int num = Integer.parseInt(String.valueOf(new JSONArray(occupation).get(i)));
-                Log.e("fuck",num+"");
                 occuptationSelected.add(num);
+                occupationGridItemCheckedCheckBoxPositionList.add(num);
             }
 
-            JSONObject issueObj =occupation_options;
+            JSONObject issueObj = occupation_options;
 
             Iterator iterator = issueObj.keys();
-            while(iterator.hasNext()){
-                String key = (String)iterator.next();
-
+            while (iterator.hasNext()) {
+                String key = (String) iterator.next();
+                occupationId.add(Integer.parseInt(key));
                 String issue = issueObj.getString(key);
                 occupation_list.add(issue);
                 if (occuptationSelected.contains(Integer.parseInt(key)))
@@ -706,7 +722,6 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             gridViewOccupation.setAdapter(occupation_adapter);
 
 
-
             ///Load Location data
             ArrayList<String> location_choose = new ArrayList<>();
             ArrayList<Boolean> is_checked_location = new ArrayList<>();
@@ -714,11 +729,14 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
 
             for (int i = 0; i < location.length(); i++) {
+                locationGridItemCheckedCheckBoxPositionList.add(Integer.parseInt(location.getString(i)));
                 location_choose.add(location.getString(i));
+
             }
 
             for (int i = 1; i < 65; i++) {
                 //Log.e("fuck",location_option.getString(i+""));
+                locationId.add(i);
                 all_location.add(location_option.getString(i + "").toString());
                 if (location_choose.contains(i + "")) {
                     Log.e("true", i + "");
@@ -731,30 +749,60 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             gridViewLocation.setAdapter(locationAdapter);
 
 
-
             ///load the professional group data
-            ArrayList<Boolean> is_checked = new ArrayList<>();
-            for (int i = 0; i < professional_options.length(); i++) {
+            ArrayList<String> professionSelected=new ArrayList<>();
 
-                profession_list.add(professional_options.getString((100 + i) + ""));
-                profession_number.add(100 + i + "");
-                is_checked.add(false);
+            ArrayList<Boolean> isCheckedProfession = new ArrayList<>();
 
-            }
             for (int i = 0; i < new JSONArray(professional_group).length(); i++) {
-                Log.e("come", new JSONArray(professional_group).get(i) + "");
+
                 int num = Integer.parseInt(String.valueOf(new JSONArray(professional_group).get(i)));
-                num = num - 100;
-                is_checked.add(num, true);
+                professionId.add(num);
+                professionSelected.add(num+"");
+                professionGridItemCheckedCheckBoxPositionList.add(num);
+            }
+
+            JSONObject profObj = professional_options;
+
+            Iterator iter = profObj.keys();
+            while (iter.hasNext()) {
+                String key = (String) iter.next();
+                professionId.add(Integer.parseInt(key));
+                String issue = profObj.getString(key);
+                profession_list.add(issue);
+                if (professionSelected.contains(Integer.parseInt(key)+""))
+                    isCheckedProfession.add(true);
+                else
+                    isCheckedProfession.add(false);
             }
 
 
 
-            Profession_Adapter profession_adapter = new Profession_Adapter(getApplicationContext(), profession_list, is_checked, "PROFESSION");
+
+
+//            for (int i = 0; i < professional_options.length(); i++) {
+//
+//
+//                profession_list.add(professional_options.getString((100 + i) + ""));
+//                profession_number.add(100 + i + "");
+//
+//                professionId.add(100+i);
+//
+//                is_checked.add(false);
+//
+//            }
+//            for (int i = 0; i < new JSONArray(professional_group).length(); i++) {
+//                Log.e("come", new JSONArray(professional_group).get(i) + "");
+//                int num = Integer.parseInt(String.valueOf(new JSONArray(professional_group).get(i)));
+//                professionGridItemCheckedCheckBoxPositionList.add(100 + i);
+//                num = num - 100;
+//                is_checked.add(num, true);
+//
+//            }
+
+
+            Profession_Adapter profession_adapter = new Profession_Adapter(getApplicationContext(), profession_list, isCheckedProfession, "PROFESSION");
             gridView.setAdapter(profession_adapter);
-
-
-
 
 
             for (int i = 0; i < health_options.length(); i++) {
@@ -773,7 +821,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             ///initialize age range view
             int startAgePosition = age_lebel.indexOf(new JSONArray(age).getString(0));
             int endAgePosition = age_lebel.indexOf(new JSONArray(age).getString(1));
-            minAgeRangePos =  startAgePosition;
+            minAgeRangePos = startAgePosition;
             maxAgeRangePos = endAgePosition;
             rangeView_age.setStart(startAgePosition);
             rangeView_age.setEnd(endAgePosition);
@@ -790,29 +838,28 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             String ch1 = res1 + "'" + j % 12 + "\"";
             int endHeightPosition = heightLebel.indexOf(ch1);
             rangeView_height.setEnd(endHeightPosition);
-            minHeightRangePos=startHeightPosition;
-            maxHeightRangePos=endHeightPosition;
+            minHeightRangePos = startHeightPosition;
+            maxHeightRangePos = endHeightPosition;
 
             //initialize color range bar view
             rangeView_color.setStart(Integer.parseInt(new JSONArray(skin).getString(0)));
             rangeView_color.setEnd(Integer.parseInt(new JSONArray(skin).getString(1)));
-            minSkinRangePos=Integer.parseInt(new JSONArray(skin).getString(0));
-            maxSkingRangePos=Integer.parseInt(new JSONArray(skin).getString(1));
-
+            minSkinRangePos = Integer.parseInt(new JSONArray(skin).getString(0));
+            maxSkingRangePos = Integer.parseInt(new JSONArray(skin).getString(1));
 
 
             //initialize health range bar
             rangeView_health.setStart(Integer.parseInt(new JSONArray(health).getString(0)));
             rangeView_health.setEnd(Integer.parseInt(new JSONArray(health).getString(1)));
-            minHealthRangePos=Integer.parseInt(new JSONArray(health).getString(0));
-            maxHealthRangePos=Integer.parseInt(new JSONArray(health).getString(1));
+            minHealthRangePos = Integer.parseInt(new JSONArray(health).getString(0));
+            maxHealthRangePos = Integer.parseInt(new JSONArray(health).getString(1));
 
 
             //initialize education range bar
             rangeView_education.setStart(Integer.parseInt(new JSONArray(education).getString(0)));
             rangeView_education.setEnd(Integer.parseInt(new JSONArray(education).getString(1)));
-            minEducationRangePos=Integer.parseInt(new JSONArray(education).getString(0));
-            maxEducationRangePos=Integer.parseInt(new JSONArray(education).getString(1));
+            minEducationRangePos = Integer.parseInt(new JSONArray(education).getString(0));
+            maxEducationRangePos = Integer.parseInt(new JSONArray(education).getString(1));
 
 
         } catch (JSONException e) {
