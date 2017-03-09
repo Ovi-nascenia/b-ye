@@ -138,7 +138,7 @@ public class Profession_Adapter extends BaseAdapter {
         } else if (this.gridItemType.equals("OCCUPATION") && aBoolean) {
 
             Search_Filter.occupationGridItemCheckedCheckBoxPositionList.add(position);
-          //  Log.i("listdata", "OCCUPATION  " + Search_Filter.occupationGridItemCheckedCheckBoxPositionList.size());
+            //  Log.i("listdata", "OCCUPATION  " + Search_Filter.occupationGridItemCheckedCheckBoxPositionList.size());
 
         } else if (this.gridItemType.equals("PROFESSION") && aBoolean) {
 
