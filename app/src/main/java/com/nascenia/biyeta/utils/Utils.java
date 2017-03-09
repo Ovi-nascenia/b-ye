@@ -14,6 +14,10 @@ import android.widget.TextView;
 
 public class Utils {
 
+    public static final String MALE_GENDER = "male";
+    public static final String FEMALE_GENDER = "female";
+
+
     public static void ShowAlert(Context context, String bodyMessage) {
 
         new AlertDialog.Builder(context)

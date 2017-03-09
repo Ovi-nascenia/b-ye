@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
@@ -38,7 +39,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ViewPager viewPager;
 
-    private ImageView indicatorImage1, indicatorImage2, indicatorImage3;
+    private ImageView indicatorImage1, indicatorImage2, indicatorImage3, userProfileImage;
 
     private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView;
 
@@ -47,6 +48,9 @@ public class NewUserProfileActivity extends AppCompatActivity {
     private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
 
     private TextView userProfileDescriptionText;
+
+    private ImageView profileViewerPersonImageView;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,10 @@ public class NewUserProfileActivity extends AppCompatActivity {
         matchUserChoiceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         userProfileDescriptionText = (TextView) findViewById(R.id.userProfileDescriptionText);
+        profileViewerPersonImageView = (ImageView) findViewById(R.id.viewer_image);
+
+        userProfileImage = (ImageView) findViewById(R.id.user_profile_image);
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,20 +75,6 @@ public class NewUserProfileActivity extends AppCompatActivity {
         indicatorImage1 = (ImageView) findViewById(R.id.page1);
         indicatorImage2 = (ImageView) findViewById(R.id.page2);
         indicatorImage3 = (ImageView) findViewById(R.id.page3);
-
-
-    /*    generalInformationArrayList.add(new GeneralInformation("country,dhaka"));
-        generalInformationArrayList.add(new GeneralInformation("country,dhaka"));
-        generalInformationArrayList.add(new GeneralInformation("country,dhaka"));
-
-
-        matchUserChoiceArrayList.add(new MatchUserChoice("country name", "Bangladesh"));
-        matchUserChoiceArrayList.add(new MatchUserChoice("Division name", "Barishal"));
-        matchUserChoiceArrayList.add(new MatchUserChoice("District name", "Patuakhali"));
-
-        // Toast.makeText(getBaseContext(), generalInformationArrayList.size() + " " + matchUserChoiceArrayList.size(), Toast.LENGTH_SHORT).show();
-        generalInfoRecyclerView.setAdapter(new GeneralInformationAdapter(getBaseContext(), generalInformationArrayList));
-        matchUserChoiceRecyclerView.setAdapter(new MatchUserChoiceAdapter(getBaseContext(), matchUserChoiceArrayList));*/
 
 
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
@@ -159,6 +153,31 @@ public class NewUserProfileActivity extends AppCompatActivity {
                                 userProfileDescriptionText.setText(userProfile.getProfile().getPersonalInformation().getAboutYourself());
                             }
 
+
+                            if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
+
+                                //Loading image from below url into imageView
+                                Glide.with(getBaseContext())
+                                        .load(userProfile.getProfile().getPersonalInformation().getImage())
+                                        .into(userProfileImage);
+
+                                Glide.with(getBaseContext())
+                                        .load(userProfile.getProfile().getPersonalInformation().getImage())
+                                        .into(profileViewerPersonImageView);
+
+
+                            } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
+                                    (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))) {
+                                userProfileImage.setImageResource(R.drawable.hel2);
+                                profileViewerPersonImageView.setImageResource(R.drawable.hel2);
+                            } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
+                                    (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.FEMALE_GENDER))) {
+                                userProfileImage.setImageResource(R.drawable.hel);
+                                profileViewerPersonImageView.setImageResource(R.drawable.hel);
+                            } else {
+                            }
+
+
                             addDataonGeneralInfoRecylerViewItem(userProfile);
                             addDataonMatchUserChoiceRecyclerView(userProfile);
 
@@ -174,6 +193,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
         }).start();
 
     }
+
 
     private void addDataonMatchUserChoiceRecyclerView(UserProfile userProfile) {
 
@@ -281,8 +301,27 @@ public class NewUserProfileActivity extends AppCompatActivity {
         }
 
 
-        if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor()) +
-                checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())).equals("")) {
+        if ((!(checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor()) +
+                checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())).equals(""))
+                & (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))
+                ) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
+                            + "," +
+                            checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
+                    , R.drawable.hel2));
+
+        }
+
+
+        if ((!(checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor()) +
+                checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())).equals(""))
+                & (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.FEMALE_GENDER))
+                ) {
+
 
             generalInformationArrayList.add(new GeneralInformation(
 
