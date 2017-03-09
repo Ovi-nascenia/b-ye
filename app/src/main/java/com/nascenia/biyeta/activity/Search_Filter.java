@@ -459,6 +459,8 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
     }
 
+    public  static String reponse="";
+
 
     void setUpId() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -568,6 +570,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            reponse=ch;
             Toast.makeText(Search_Filter.this, ch, Toast.LENGTH_SHORT).show();
         }
 

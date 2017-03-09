@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.nascenia.biyeta.activity.UserProfileActivity;
 import com.nascenia.biyeta.model.OldProfile;
@@ -121,6 +122,18 @@ public class Search extends Fragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Toast.makeText(getContext(),"pause",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Toast.makeText(getContext(),"resume",Toast.LENGTH_SHORT).show();
+
+    }
 
     //fetch data from
     class Get_Data extends AsyncTask<String, String, String> {
