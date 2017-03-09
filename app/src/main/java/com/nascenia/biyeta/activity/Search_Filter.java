@@ -1,13 +1,6 @@
 package com.nascenia.biyeta.activity;
 
-/**
- * Created by user on 1/10/2017.
- */
-
-import android.app.Activity;
-
-import org.apache.commons.lang3.StringUtils;
-
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -55,11 +48,11 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
     TextView textView;
     Button button;
 
-    private ArrayList<String> skin_lebel, age_lebel, health_lebel, education_lebel, professional_lebel, occupation_lebel;
+    private ArrayList<String> skin_lebel, age_lebel, heightLebel, education_lebel, professional_lebel, occupation_lebel;
 
 
     MyGridView gridView;
-    MyGridView gridView_occupation, gridView_location;
+    MyGridView gridViewOccupation, gridViewLocation;
     private final OkHttpClient client = new OkHttpClient();
 
 
@@ -71,32 +64,32 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
     public static ArrayList<Integer> religionCastList = new ArrayList<Integer>();
 
 
-    private int minAgeRangePos;
-    private int maxAgeRangePos;
-    private int minHeightRangePos;
-    private int maxHeightRangePos;
-    private int minSkinRangePos;
-    private int maxSkingRangePos;
+    private static int minAgeRangePos;
+    private static int maxAgeRangePos;
+    private static int minHeightRangePos;
+    private static int maxHeightRangePos;
+    private static int minSkinRangePos;
+    private static int maxSkingRangePos;
     private int minHealthRangePos;
     private int maxHealthRangePos;
     private int minEducationRangePos;
     private int maxEducationRangePos;
 
 
-    String[] skin_status = new String[]{
+    String[] skinStatus = new String[]{
             "শ্যামলা",
             "উজ্জ্বল শ্যামলা",
             "ফর্সা",
             "অনেক ফর্সা"
     };
 
-    String[] health_status = new String[]{
+    String[] healthStatus = new String[]{
             "স্লিম ",
             "স্বাস্থ্যবান",
             "বেশ স্বাস্থ্যব"
     };
 
-    String[] education_status = new String[]{
+    String[] educationStatus = new String[]{
 
             "মাধ্যমিক",
             "উচ্চ-মাধ্যমিক পড়ছি ",
@@ -114,10 +107,17 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.filter_search);
-        set_up_id();
+        setUpId();
+        initializeVariable();
+        new Get_Data().execute();
+        set_rangeView_lebel();
 
+    }
+
+
+    void initializeVariable() {
         age_lebel = new ArrayList<>();
-        health_lebel = new ArrayList<>();
+        heightLebel = new ArrayList<>();
         education_lebel = new ArrayList<>();
         professional_lebel = new ArrayList<>();
         occupation_lebel = new ArrayList<>();
@@ -128,12 +128,10 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
         for (int i = 4; i < 8; i++) {
             for (int j = 0; j < 13; j++)
-                health_lebel.add(i + "'" + j + "\"");
+                heightLebel.add(i + "'" + j + "\"");
 
 
         }
-
-        textView = (TextView) findViewById(R.id.level);
 
         currentStatusList.add(0);
         currentStatusList.add(1);
@@ -147,11 +145,6 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
         religionCastList.add(1);
         religionCastList.add(2);
         religionCastList.add(3);
-
-
-        new Get_Data().execute();
-        set_rangeView_lebel();
-
     }
 
     private void set_rangeView_lebel() {
@@ -168,7 +161,6 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 rangeView_age.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_age.setLabelColor(Color.TRANSPARENT);
                 minAgeRangePos = i;
-                Log.i("data", "start " + i + " " + minAgeRangePos);
             }
 
             @Override
@@ -176,7 +168,6 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 rangeView_age.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_age.setLabelColor(Color.TRANSPARENT);
                 maxAgeRangePos = i;
-                Log.i("data", "end " + i + " " + maxAgeRangePos);
             }
         });
 
@@ -215,7 +206,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             @org.jetbrains.annotations.Nullable
             @Override
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull State state) {
-                return health_lebel.get(i);
+                return heightLebel.get(i);
             }
         });
         rangeView_color.setLabelFontSize(14);
@@ -245,7 +236,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             @org.jetbrains.annotations.Nullable
             @Override
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull State state) {
-                return skin_status[i];
+                return skinStatus[i];
             }
         });
         rangeView_education.setLabelFontSize(14);
@@ -277,7 +268,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             @org.jetbrains.annotations.Nullable
             @Override
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull State state) {
-                return education_status[i];
+                return educationStatus[i];
             }
         });
         rangeView_health.setLabelFontSize(14);
@@ -310,7 +301,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             @org.jetbrains.annotations.Nullable
             @Override
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull State state) {
-                return health_status[i];
+                return healthStatus[i];
             }
         });
     }
@@ -336,44 +327,55 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
     String ch = "";
 
 
-    public void porcessJSon() {
+    int covertIntoInc(String height) {
+        String ch[] = height.split("\'");
+        int inc = (Integer.parseInt(ch[0]) * 12 + Integer.parseInt(ch[1].replace("\"", ""))) - 48;
+        return inc;
+    }
+
+    public String porcessJSon() {
 
 
-        Log.i("data", new StringBuilder().append("{")
+        int startHeightInc = covertIntoInc(heightLebel.get(minHeightRangePos));
+        int endHeightInc = covertIntoInc(heightLebel.get(maxHeightRangePos));
+        Log.e("Ovi Age", +minHeightRangePos + "* " + startHeightInc + " " + endHeightInc + "**" + maxHeightRangePos);
+
+
+        String response = new StringBuilder().append("{")
                 .append("\"search\": {")
                 .append("\"age_range\": ")
                 .append("\"")
-                .append(age_lebel.get(minAgeRangePos))
+                .append(Integer.parseInt(age_lebel.get(minAgeRangePos)) - 18)
                 .append(";")
-                .append(age_lebel.get(maxAgeRangePos))
+                .append(Integer.parseInt(age_lebel.get(maxAgeRangePos)) - 18)
                 .append("\",")
 
                 .append("\"height_range\": ")
                 .append("\"")
-                .append(health_lebel.get(minHeightRangePos))
+                .append(startHeightInc)
                 .append(";")
-                .append(health_lebel.get(maxHeightRangePos))
+                .append(endHeightInc)
                 .append("\",")
 
                 .append("\"skin_color\": ")
                 .append("\"")
-                .append(skin_status[minSkinRangePos])
+                .append(minSkinRangePos)
                 .append(";")
-                .append(skin_status[maxSkingRangePos])
+                .append(maxSkingRangePos)
                 .append("\",")
 
                 .append("\"health_range\": ")
                 .append("\"")
-                .append(health_status[minHealthRangePos])
+                .append(minHealthRangePos)
                 .append(";")
-                .append(health_status[maxHealthRangePos])
+                .append(maxHealthRangePos)
                 .append("\",")
 
                 .append("\"education_range\": ")
                 .append("\"")
-                .append(education_status[minEducationRangePos])
+                .append(minEducationRangePos)
                 .append(";")
-                .append(education_status[maxEducationRangePos])
+                .append(maxEducationRangePos)
                 .append("\",")
 
                 .append("\"occupation_range\": ")
@@ -429,14 +431,15 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                 .append("\"]")
                 .append("}}")
 
-                .toString()
-        );
+                .toString();
+
+        return response;
 
 
     }
 
 
-    void set_up_id() {
+    void setUpId() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -455,8 +458,8 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
         rangeView_education = (SimpleRangeView) findViewById(R.id.education_lebel);
         rangeView_health = (SimpleRangeView) findViewById(R.id.health_lebel);
         gridView = (MyGridView) findViewById(R.id.profession_grid);
-        gridView_occupation = (MyGridView) findViewById(R.id.occupation_grid);
-        gridView_location = (MyGridView) findViewById(R.id.location_grid);
+        gridViewOccupation = (MyGridView) findViewById(R.id.occupation_grid);
+        gridViewLocation = (MyGridView) findViewById(R.id.location_grid);
         findViewById(R.id.age_).setOnClickListener(this);
         findViewById(R.id.height_).setOnClickListener(this);
         findViewById(R.id.education_).setOnClickListener(this);
@@ -471,8 +474,8 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             @Override
             public void onClick(View view) {
 
-                //new Get_Data1().execute();
-                porcessJSon();
+                new GetResult().execute();
+                //porcessJSon();
 
             }
 
@@ -540,7 +543,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
         }
     }
 
-    class Get_Data1 extends AsyncTask<String, String, String> {
+    class GetResult extends AsyncTask<String, String, String> {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -552,12 +555,14 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             SharePref sharePref = new SharePref(Search_Filter.this);
             final String token = sharePref.get_data("token");
 
+            Log.e("Ovi Test", porcessJSon());
+
             MediaType JSON
                     = MediaType.parse("application/json; charset=utf-8");
 
             OkHttpClient client = new OkHttpClient();
 
-            RequestBody body = RequestBody.create(JSON, res);
+            RequestBody body = RequestBody.create(JSON, porcessJSon());
             Request request = new Request.Builder()
                     .url("http://test.biyeta.com/api/v1/search/filtered-results")
                     .addHeader("Authorization", "Token token=" + token)
@@ -658,47 +663,54 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             for (int i = 0; i < skin_color.length(); i++) {
                 skin_lebel.add(skin_color.getString("" + i));
             }
-            for (int i = 0; i < new JSONArray(occupation).length(); i++) {
-                Log.e("TAQ", new JSONArray(occupation).get(i).toString());
-                is_occupation.put(new JSONArray(occupation).get(i).toString(), true);
-            }
+
 
             ArrayList<String> profession_list = new ArrayList<>(), profession_number = new ArrayList<>();
+            //   ArrayList<Boolean> is_checked_occupation = new ArrayList<>();
+
+
             ArrayList<String> occupation_list = new ArrayList<>();
             ArrayList<Boolean> is_checked_occupation = new ArrayList<>();
-            Iterator<String> iter = occupation_options.keys();
-            while (iter.hasNext()) {
 
-                String key = iter.next();
-                try {
-                    String value = (String) occupation_options.get(key);
 
-                    Log.e("TAQ", value + "      " + key);
-                    occupation_list.add(value);
-                    // is_occupation.put(key,false);
-                    try {
-                        if (is_occupation.get(key))
-                            is_checked_occupation.add(true);
+            //Load occupation data
+            ArrayList<Integer> occuptationSelected = new ArrayList<>();
+            for (int i = 0; i < new JSONArray(occupation).length(); i++) {
 
-                        else
-                            is_checked_occupation.add(false);
-                    } catch (NullPointerException n) {
-                        is_checked_occupation.add(false);
-                    }
-
-                } catch (Exception e) {
-
-                }
+                int num = Integer.parseInt(String.valueOf(new JSONArray(occupation).get(i)));
+                occuptationSelected.add(num);
+                occupationGridItemCheckedCheckBoxPositionList.add(num);
             }
 
+            JSONObject issueObj = occupation_options;
 
+            Iterator iterator = issueObj.keys();
+            while (iterator.hasNext()) {
+                String key = (String) iterator.next();
+
+                String issue = issueObj.getString(key);
+                occupation_list.add(issue);
+                if (occuptationSelected.contains(Integer.parseInt(key)))
+                    is_checked_occupation.add(true);
+                else
+                    is_checked_occupation.add(false);
+            }
+
+            ///set Occupation Adapter
+            Profession_Adapter occupation_adapter = new Profession_Adapter(getApplicationContext(), occupation_list, is_checked_occupation, "OCCUPATION");
+            gridViewOccupation.setAdapter(occupation_adapter);
+
+
+            ///Load Location data
             ArrayList<String> location_choose = new ArrayList<>();
             ArrayList<Boolean> is_checked_location = new ArrayList<>();
             ArrayList<String> all_location = new ArrayList<>();
 
 
             for (int i = 0; i < location.length(); i++) {
+                locationGridItemCheckedCheckBoxPositionList.add(Integer.parseInt(location.getString(i)));
                 location_choose.add(location.getString(i));
+
             }
 
             for (int i = 1; i < 65; i++) {
@@ -711,12 +723,14 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
                     is_checked_location.add(false);
             }
 
-            Profession_Adapter profession_adapter1 = new Profession_Adapter(getApplicationContext(), all_location, is_checked_location, "LOCATION");
-            gridView_location.setAdapter(profession_adapter1);
+            Profession_Adapter locationAdapter = new Profession_Adapter(getApplicationContext(), all_location, is_checked_location, "LOCATION");
+            gridViewLocation.setAdapter(locationAdapter);
 
 
+            ///load the professional group data
             ArrayList<Boolean> is_checked = new ArrayList<>();
             for (int i = 0; i < professional_options.length(); i++) {
+
 
                 profession_list.add(professional_options.getString((100 + i) + ""));
                 profession_number.add(100 + i + "");
@@ -726,23 +740,19 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             for (int i = 0; i < new JSONArray(professional_group).length(); i++) {
                 Log.e("come", new JSONArray(professional_group).get(i) + "");
                 int num = Integer.parseInt(String.valueOf(new JSONArray(professional_group).get(i)));
+                professionGridItemCheckedCheckBoxPositionList.add(100 + i);
                 num = num - 100;
                 is_checked.add(num, true);
-            }
 
-            Profession_Adapter profession_adapter2 = new Profession_Adapter(getApplicationContext(), occupation_list, is_checked_occupation, "OCCUPATION");
-            gridView_occupation.setAdapter(profession_adapter2);
+            }
 
 
             Profession_Adapter profession_adapter = new Profession_Adapter(getApplicationContext(), profession_list, is_checked, "PROFESSION");
             gridView.setAdapter(profession_adapter);
 
 
-
-
-
             for (int i = 0; i < health_options.length(); i++) {
-                health_lebel.add(health_options.getString("" + i));
+                heightLebel.add(health_options.getString("" + i));
             }
             for (int i = 0; i < education_options.length(); i++) {
                 education_lebel.add(education_options.getString("" + i));
@@ -754,33 +764,50 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             }
 
 
-            ///setup range view
+            ///initialize age range view
+            int startAgePosition = age_lebel.indexOf(new JSONArray(age).getString(0));
+            int endAgePosition = age_lebel.indexOf(new JSONArray(age).getString(1));
+            minAgeRangePos = startAgePosition;
+            maxAgeRangePos = endAgePosition;
+            rangeView_age.setStart(startAgePosition);
+            rangeView_age.setEnd(endAgePosition);
 
 
-            int start1 = age_lebel.indexOf(new JSONArray(age).getString(0));
-            int end1 = age_lebel.indexOf(new JSONArray(age).getString(1));
-
-            minAgeRangePos =  start1;
-            maxAgeRangePos = end1;
-
-            rangeView_age.setStart(start1);
-            rangeView_age.setEnd(end1);
+            ///initialize height range view
             int i = Integer.parseInt(new JSONArray(height).getString(0));
             int res = i / 12;
             String ch = res + "'" + i % 12 + "\"";
-            int start = health_lebel.indexOf(ch);
-            rangeView_height.setStart(start);
+            int startHeightPosition = heightLebel.indexOf(ch);
+            rangeView_height.setStart(startHeightPosition);
             int j = Integer.parseInt(new JSONArray(height).getString(1));
             int res1 = j / 12;
             String ch1 = res1 + "'" + j % 12 + "\"";
-            int end = health_lebel.indexOf(ch1);
-            rangeView_height.setEnd(end);
+            int endHeightPosition = heightLebel.indexOf(ch1);
+            rangeView_height.setEnd(endHeightPosition);
+            minHeightRangePos = startHeightPosition;
+            maxHeightRangePos = endHeightPosition;
+
+            //initialize color range bar view
             rangeView_color.setStart(Integer.parseInt(new JSONArray(skin).getString(0)));
             rangeView_color.setEnd(Integer.parseInt(new JSONArray(skin).getString(1)));
+            minSkinRangePos = Integer.parseInt(new JSONArray(skin).getString(0));
+            maxSkingRangePos = Integer.parseInt(new JSONArray(skin).getString(1));
+
+
+            //initialize health range bar
             rangeView_health.setStart(Integer.parseInt(new JSONArray(health).getString(0)));
             rangeView_health.setEnd(Integer.parseInt(new JSONArray(health).getString(1)));
+            minHealthRangePos = Integer.parseInt(new JSONArray(health).getString(0));
+            maxHealthRangePos = Integer.parseInt(new JSONArray(health).getString(1));
+
+
+            //initialize education range bar
             rangeView_education.setStart(Integer.parseInt(new JSONArray(education).getString(0)));
             rangeView_education.setEnd(Integer.parseInt(new JSONArray(education).getString(1)));
+            minEducationRangePos = Integer.parseInt(new JSONArray(education).getString(0));
+            maxEducationRangePos = Integer.parseInt(new JSONArray(education).getString(1));
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

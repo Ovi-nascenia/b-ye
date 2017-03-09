@@ -42,7 +42,7 @@ public class Profession_Adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return profession_name.size() - 1;
+        return profession_name.size();
     }
 
 
@@ -64,6 +64,7 @@ public class Profession_Adapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        Log.i("view", "called");
         if (convertView == null) {
 
             grid = new View(mContext);
@@ -73,7 +74,7 @@ public class Profession_Adapter extends BaseAdapter {
             checkBox.setChecked(is_checked.get(position));
             textView.setText(profession_name.get(position));
 
-            addCheckBoxStatustoList(is_checked.get(position), position);
+            //  addCheckBoxStatustoList(is_checked.get(position), position);
 
         } else {
             grid = (View) convertView;
@@ -137,7 +138,7 @@ public class Profession_Adapter extends BaseAdapter {
         } else if (this.gridItemType.equals("OCCUPATION") && aBoolean) {
 
             Search_Filter.occupationGridItemCheckedCheckBoxPositionList.add(position);
-            Log.i("listdata", "OCCUPATION  " + Search_Filter.occupationGridItemCheckedCheckBoxPositionList.size());
+          //  Log.i("listdata", "OCCUPATION  " + Search_Filter.occupationGridItemCheckedCheckBoxPositionList.size());
 
         } else if (this.gridItemType.equals("PROFESSION") && aBoolean) {
 
