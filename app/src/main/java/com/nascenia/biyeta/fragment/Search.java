@@ -74,7 +74,7 @@ public class Search extends Fragment {
         mProfile_adapter = new Profile_Adapter(profileList) {
             @Override
             public void load() {
-                if (Search_Filter.reponse.equals(""))
+                if (!Search_Filter.reponse.equals(""))
                     flag = totalPageNumber;
 
                 flag++;
@@ -149,7 +149,7 @@ public class Search extends Fragment {
                 mProfile_adapter.notifyDataSetChanged();
                 JSONObject jsonObject = new JSONObject(Search_Filter.reponse);
                 loadDataFromResponse(jsonObject);
-                Search_Filter.reponse = "";
+
             } catch (JSONException e) {
                 Utils.ShowAlert(getContext(), "Error");
             }
