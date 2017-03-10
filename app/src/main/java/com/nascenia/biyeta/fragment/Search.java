@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.nascenia.biyeta.activity.UserProfileActivity;
 import com.nascenia.biyeta.model.OldProfile;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -125,13 +126,22 @@ public class Search extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        Toast.makeText(getContext(),"pause",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getContext(),"pause",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Toast.makeText(getContext(),"resume",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getContext(),"resume",Toast.LENGTH_SHORT).show();
+        if (!Search_Filter.reponse.equals("")) {
+            try {
+                JSONObject jsonObject = new JSONObject(Search_Filter.reponse);
+                loadDataFromResponse(jsonObject);
+                Search_Filter.reponse="";
+            } catch (JSONException e) {
+                Utils.ShowAlert(getContext(), "Eoor");
+            }
+        }
 
     }
 
@@ -149,34 +159,12 @@ public class Search extends Fragment {
             try {
                 JSONObject jsonObject = new JSONObject(res);
                 page_number = jsonObject.getInt("total_page");
-                for (int i = 0; i < jsonObject.getJSONArray("profiles").length(); i++)
-
-                {
-                    String id = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("id");
-                    String age = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("age");
-                    String height_ft = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_ft");
-                    String height_inc = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_inc");
-                    String display_name = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name");
-                    String occupation = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("occupation");
-                    String professional_group = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("professional_group");
-                    String skin_color = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("skin_color");
-                    // String marital_status=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("marital_status");
-                    String health = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("health");
-                    //String religion=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("religion");
-                    //String cast=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("cast");
-                    String location = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
-                    String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
-
-
-                    OldProfile profile = new OldProfile(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
-
-                    profile_list.add(profile);
-                    mProfile_adapter.notifyDataSetChanged();
+                loadDataFromResponse(jsonObject);
 
 
                     //Log.e("fuck",jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name"));
 
-                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -224,4 +212,43 @@ public class Search extends Fragment {
             return null;
         }
     }
+
+    void  loadDataFromResponse(JSONObject jsonObject)
+    {
+        try {
+            profile_list.clear();
+            mProfile_adapter.notifyDataSetChanged();
+
+            for (int i = 0; i < jsonObject.getJSONArray("profiles").length(); i++)
+
+            {
+                String id = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("id");
+                String age = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("age");
+                String height_ft = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_ft");
+                String height_inc = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_inc");
+                String display_name = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name");
+                String occupation = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("occupation");
+                String professional_group = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("professional_group");
+                String skin_color = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("skin_color");
+                // String marital_status=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("marital_status");
+                String health = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("health");
+                //String religion=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("religion");
+                //String cast=jsonObject.getJSONArray("profiles").getJSONObject(i).getString("cast");
+                String location = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
+                String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
+
+
+                OldProfile profile = new OldProfile(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
+
+                profile_list.add(profile);
+                mProfile_adapter.notifyDataSetChanged();
+            }
+        }
+        catch (JSONException e)
+        {
+            Utils.ShowAlert(getContext(),"No Result");
+        }
+    }
+
+
 }

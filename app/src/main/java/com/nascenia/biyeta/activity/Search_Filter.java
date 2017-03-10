@@ -571,7 +571,8 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             reponse=ch;
-            Toast.makeText(Search_Filter.this, ch, Toast.LENGTH_SHORT).show();
+            finish();
+         ///   Toast.makeText(Search_Filter.this, ch, Toast.LENGTH_SHORT).show();
         }
 
         @Override
