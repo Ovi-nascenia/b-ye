@@ -72,6 +72,8 @@ public class Search extends Fragment {
         mProfile_adapter = new Profile_Adapter(profile_list) {
             @Override
             public void load() {
+                if (Search_Filter.reponse.equals(""))
+                    flag=page_number;
 
                 flag++;
                 if (flag <= page_number) {
@@ -82,6 +84,7 @@ public class Search extends Fragment {
                     snackbar.show();
 
                     snackbar.show();
+
                     new Get_Data().execute();
                 } else {
 
@@ -135,6 +138,8 @@ public class Search extends Fragment {
        // Toast.makeText(getContext(),"resume",Toast.LENGTH_SHORT).show();
         if (!Search_Filter.reponse.equals("")) {
             try {
+                profile_list.clear();
+                mProfile_adapter.notifyDataSetChanged();
                 JSONObject jsonObject = new JSONObject(Search_Filter.reponse);
                 loadDataFromResponse(jsonObject);
                 Search_Filter.reponse="";
@@ -216,8 +221,7 @@ public class Search extends Fragment {
     void  loadDataFromResponse(JSONObject jsonObject)
     {
         try {
-            profile_list.clear();
-            mProfile_adapter.notifyDataSetChanged();
+
 
             for (int i = 0; i < jsonObject.getJSONArray("profiles").length(); i++)
 
