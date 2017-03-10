@@ -343,7 +343,6 @@
             android:id="@+id/finalResultBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:background="@color/colorPrimaryDark"
             android:text="পুরো বায়োডাটা দেখার অনুরোধ করুন"
             android:textColor="#FFFFFF"

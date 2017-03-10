@@ -118,7 +118,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     startActivity(intent);*/
 
 
-                    startActivity(new Intent(getBaseContext(), NewUserProfileActivity.class));
+                    //startActivity(new Intent(getBaseContext(), NewUserProfileActivity.class));
+                    startActivity(new Intent(getBaseContext(), SendRequestActivity.class));
+
                 }
 
                 return true;
@@ -131,8 +133,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("onResume","OnResume");
-       // JSONObject jsonObject=new JSONObject(Search_Filter.response));
+        Log.e("onResume", "OnResume");
+        // JSONObject jsonObject=new JSONObject(Search_Filter.response));
     }
 
     @Override
@@ -177,15 +179,15 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 //                        .replace(R.id.fragmentParentViewGroup, new Inbox())
 //                        .commit();
 
-                Dialog dialog=new Dialog(HomeScreen.this);
+                Dialog dialog = new Dialog(HomeScreen.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setContentView(R.layout.inbox);
                 DisplayMetrics displaymetrics = new DisplayMetrics();
                 this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                int width = (int) ((int)displaymetrics.widthPixels * 0.8);
-                int height = (int) ((int)displaymetrics.heightPixels * 0.6);
-                dialog.getWindow().setLayout(width,height);
+                int width = (int) ((int) displaymetrics.widthPixels * 0.8);
+                int height = (int) ((int) displaymetrics.heightPixels * 0.6);
+                dialog.getWindow().setLayout(width, height);
                 //ge
 
                 dialog.show();

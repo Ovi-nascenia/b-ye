@@ -61,8 +61,7 @@
         <item>Notifications</item>
         <item>Settings</item>
     </string-array>
-
-
+    <string name="title_activity_send_request">SendRequestActivity</string>
 
 
 </resources>

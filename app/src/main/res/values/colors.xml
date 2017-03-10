@@ -9,4 +9,9 @@
     <color name="without_expand_color">#E0E0E0</color>
     <color name="with_expand_color">#EEEEEE</color>
 
+
+    <color name="tab_background_selected">#FFBF2124</color>
+    <color name="tab_background_unselected">#FFAEACAC</color>
+
+
 </resources>
