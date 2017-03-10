@@ -15,19 +15,53 @@ import android.widget.TextView;
  */
 
 import com.bumptech.glide.Glide;
-import com.nascenia.biyeta.model.OldProfile;
+import com.nascenia.biyeta.model.SearchProfileModel;
 
 import java.util.List;
 
 import com.nascenia.biyeta.R;
 
 public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapter.MyViewHolder> {
-    public abstract void load();
-
-    //list of all profile
-    private List<OldProfile> profile_list;
     //parent context
     Context context;
+    //list of all profile
+    private List<SearchProfileModel> profile_list;
+    public Profile_Adapter(List<SearchProfileModel> moviesList) {
+        this.profile_list = moviesList;
+    }
+
+    public abstract void load();
+
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.profile_item, parent, false);
+        context = parent.getContext();
+
+        return new MyViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        SearchProfileModel prfile = profile_list.get(position);
+        holder.user_name.setText(prfile.getDisplay_name());
+        holder.details.setText(prfile.getAge() + " বছর, " + prfile.getHeight_ft() + "'" + prfile.getHeight_inc() + "\", " + prfile.getProfessional_group() + ", "
+                + prfile.getSkin_color() + ", " + prfile.getHealth() + ", " + prfile.getLocation());
+        Log.e("image_link", prfile.getImage());
+        if ((position >= getItemCount() - 1))
+            load();
+        Glide.with(context)
+                .load(Uri.parse("http://test.biyeta.com/" + prfile.getImage()))
+                .placeholder(R.drawable.default_profile_female_icon)
+                .into(holder.profile_image);
+
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return profile_list.size();
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView user_name;   //profession, age,skin_color,marital_status,weight_status,religion,city;
@@ -42,61 +76,6 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
             details = (TextView) view.findViewById(R.id.details);
             user_name = (TextView) view.findViewById(R.id.user_name);
             profile_image = (ImageView) view.findViewById(R.id.profile_image);
-//            profession=(TextView)view.findViewById(R.id.profession);
-//            age=(TextView)view.findViewById(R.id.age);
-//            religion=(TextView)view.findViewById(R.id.religion);
-//            skin_color=(TextView)view.findViewById(R.id.body_color);
-//            marital_status=(TextView)view.findViewById(R.id.marital_status);
-//            weight_status=(TextView)view.findViewById(R.id.weight_status);
-//            city=(TextView)view.findViewById(R.id.loacation);
-
-
         }
-    }
-
-
-    public Profile_Adapter(List<OldProfile> moviesList) {
-        this.profile_list = moviesList;
-    }
-
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.profile_item, parent, false);
-        context = parent.getContext();
-
-        return new MyViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        OldProfile prfile = profile_list.get(position);
-        holder.user_name.setText(prfile.getDisplay_name());
-        holder.details.setText(prfile.getAge() + " বছর, " + prfile.getHeight_ft() + "'" + prfile.getHeight_inc() + "\", " + prfile.getProfessional_group() + ", "
-                + prfile.getSkin_color() + ", " + prfile.getHealth() + ", " + prfile.getLocation());
-//        holder.age.setText(prfile.getHeight_ft()+"'"+prfile.getHeight_inc()+"''");
-//        holder.profession.setText(prfile.getProfessional_group());
-//       // holder.religion.setText(prfile.getReligion());
-//        holder.skin_color.setText(prfile.getSkin_color());
-//     //   holder.marital_status.setText(prfile.getMarital_status());
-//        holder.weight_status.setText(prfile.getHealth());
-//        holder.city.setText(prfile.getLocation());
-
-
-        Log.e("image_link", prfile.getImage());
-        if ((position >= getItemCount() - 1))
-            load();
-//
-        Glide.with(context)
-                .load(Uri.parse("http://test.biyeta.com/" + prfile.getImage()))
-                .placeholder(R.drawable.default_profile_female_icon)
-                .into(holder.profile_image);
-
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return profile_list.size();
     }
 }

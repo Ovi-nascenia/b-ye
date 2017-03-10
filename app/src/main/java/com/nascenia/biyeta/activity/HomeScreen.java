@@ -132,7 +132,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         Log.e("onResume","OnResume");
-       // JSONObject jsonObject=new JSONObject(Search_Filter.response));
     }
 
     @Override
@@ -172,10 +171,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         .commit();
                 break;
             case R.id.inbox:
-//                inboxImageView.setColorFilter(Color.WHITE);
-//                getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragmentParentViewGroup, new Inbox())
-//                        .commit();
 
                 Dialog dialog=new Dialog(HomeScreen.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -186,8 +181,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 int width = (int) ((int)displaymetrics.widthPixels * 0.8);
                 int height = (int) ((int)displaymetrics.heightPixels * 0.6);
                 dialog.getWindow().setLayout(width,height);
-                //ge
-
                 dialog.show();
                 break;
             case R.id.profile:

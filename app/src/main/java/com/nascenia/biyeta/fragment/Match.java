@@ -14,7 +14,7 @@ import java.util.List;
 
 import com.nascenia.biyeta.adapter.Match_Adapter;
 import com.nascenia.biyeta.R;
-import com.nascenia.biyeta.model.OldProfile;
+import com.nascenia.biyeta.model.SearchProfileModel;
 
 /**
  * Created by user on 1/5/2017.
@@ -26,7 +26,7 @@ public class Match extends Fragment {
     RecyclerView recyclerView;
     Match_Adapter mMatch_adapter;
     RelativeLayout relativeLayout;
-    private List<OldProfile> movieList = new ArrayList<>();
+    private List<SearchProfileModel> movieList = new ArrayList<>();
 
     public Match() {
         // Required empty public constructor
