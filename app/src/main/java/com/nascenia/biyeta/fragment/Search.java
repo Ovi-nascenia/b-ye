@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.nascenia.biyeta.activity.UserProfileActivity;
 import com.nascenia.biyeta.model.SearchProfileModel;
@@ -67,6 +68,7 @@ public class Search extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
         //inflate a view
         View v = inflater.inflate(R.layout.search, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.profile_list);
@@ -74,11 +76,10 @@ public class Search extends Fragment {
         mProfile_adapter = new Profile_Adapter(profileList) {
             @Override
             public void load() {
-                if (!Search_Filter.reponse.equals(""))
-                    flag = totalPageNumber;
+
 
                 flag++;
-                if (flag <= totalPageNumber) {
+                if (flag <= totalPageNumber && Search_Filter.reponse.equals("")) {
                     snackbar = Snackbar
                             .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
                     Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
@@ -130,6 +131,17 @@ public class Search extends Fragment {
         );
 
         return v;
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(getContext(),"Distroy",Toast.LENGTH_SHORT).show();
+        Search_Filter.reponse="";
+        profileList.clear();
+        mProfile_adapter.notifyDataSetChanged();
+
 
     }
 
