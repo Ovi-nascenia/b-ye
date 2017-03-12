@@ -51,7 +51,7 @@ public class SendRequestActivity extends AppCompatActivity {
                 } else {
                     replaceFragment(new CommunicationRequestFragment());
                 }
-            }
+            }//#FF4C7894
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {

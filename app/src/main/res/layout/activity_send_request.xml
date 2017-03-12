@@ -12,7 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#FFFFFF"
-        android:minHeight="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
+        android:minHeight="?attr/actionBarSize">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="আপনাকে পাঠানো অনুরোধ"
+            android:textAlignment="center"
+            android:textColor="#F44336"
+            android:textSize="@dimen/medium_textsize"
+            android:textStyle="bold" />
+
+
+    </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
@@ -30,21 +42,5 @@
         android:layout_height="match_parent"
         android:orientation="vertical" />
 
-    <RelativeLayout
-        android:id="@+id/r1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="bottom">
-
-        <Button
-            android:id="@+id/finalResultBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:text="পুরো বায়োডাটা দেখার অনুরোধ করুন"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
-    </RelativeLayout>
 
 </LinearLayout>

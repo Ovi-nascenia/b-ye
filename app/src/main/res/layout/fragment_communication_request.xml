@@ -1,13 +1,630 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#e9ebed">
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordnatelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/r1"
+        android:layout_marginBottom="@dimen/adverisement_item_layout_head_margin"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:visibility="visible"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginBottom="32dp"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    app:layout_collapseMode="parallax">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+                    <ImageView
+                        android:id="@+id/user_profile_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:visibility="visible">
+
+
+                        <ImageView
+                            android:id="@+id/likeImage"
+                            android:layout_width="@dimen/small_image_size"
+                            android:layout_height="@dimen/small_image_size"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/favourite" />
+
+
+                        <ImageView
+                            android:id="@+id/edit_profile_image"
+                            android:layout_width="@dimen/user_profile_edit_image_width"
+                            android:layout_height="@dimen/user_profile_edit_image_height"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:background="#E6E6FA"
+                            android:gravity="center"
+                            android:padding="@dimen/small_padding"
+                            android:src="@drawable/editicon"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                </FrameLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/medium_margin"
+                        android:text="hellow world"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/medium_textsize"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/page1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:src="@android:drawable/arrow_up_float"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/page2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/page1"
+                        android:src="@android:drawable/arrow_up_float"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/page3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/page2"
+                        android:src="@android:drawable/arrow_up_float"
+                        android:visibility="gone" />
+
+
+                </RelativeLayout>
+
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#e9ebed">
+
+
+                <LinearLayout
+                    android:id="@+id/detils_info_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/small_margin"
+                    android:layout_marginRight="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:id="@+id/layoutSendSmiley"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/medium_height"
+                            android:layout_weight="1"
+                            android:background="#cecece"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp">
+
+                            <ImageView
+                                android:id="@+id/emoIconImage"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:padding="@dimen/smiley_icon_padding"
+                                android:src="@drawable/smile" />
+
+                            <TextView
+                                android:id="@+id/sendEmoIconTextTag"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="হাসি পাঠান"
+                                android:textSize="@dimen/small_textsize"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/medium_height"
+                            android:layout_marginLeft="@dimen/smiley_icon_padding"
+                            android:layout_toRightOf="@+id/layoutSendSmiley"
+                            android:layout_weight="1"
+                            android:background="#FFFFFF"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="5">
+
+
+                            <TextView
+                                android:id="@+id/verifiedTextTag"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="ভেরিফাইড"
+                                android:textSize="@dimen/small_textsize"
+                                android:textStyle="bold" />
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:id="@+id/mobileImage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:padding="@dimen/mobile_image_padding"
+                                    android:src="@drawable/mobile" />
+
+                                <ImageView
+                                    android:layout_width="@dimen/check_image_size"
+                                    android:layout_height="@dimen/check_image_size"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginRight="@dimen/check_image_right_margin"
+                                    android:layout_marginTop="@dimen/check_image_top_margin"
+                                    android:src="@drawable/check_icon" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:paddingLeft="@dimen/small_padding"
+                                    android:paddingRight="@dimen/small_padding"
+                                    android:src="@drawable/facebook" />
+
+                                <ImageView
+                                    android:layout_width="@dimen/check_image_size"
+                                    android:layout_height="@dimen/check_image_size"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginRight="@dimen/check_image_right_small_margin"
+                                    android:layout_marginTop="@dimen/check_image_top_margin"
+                                    android:src="@drawable/check_icon" />
+                            </RelativeLayout>
+
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:padding="@dimen/mail_image_padding"
+                                    android:src="@drawable/mail" />
+
+                                <ImageView
+                                    android:layout_width="@dimen/check_image_size"
+                                    android:layout_height="@dimen/check_image_size"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginRight="@dimen/check_image_right_margin"
+                                    android:layout_marginTop="@dimen/check_image_top_margin"
+                                    android:src="@drawable/check_icon"
+                                    android:visibility="gone" />
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/medium_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="তার সম্পর্কে"
+                        android:textColor="#F44336"
+                        android:textSize="@dimen/item_textsize"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#FFFFFF">
+
+                        <TextView
+                            android:id="@+id/userProfileDescriptionText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/medium_padding"
+                            android:text="hello world"
+                            android:textColor="#4e4c4c"
+                            android:textSize="@dimen/item_textsize"
+                            android:textStyle="bold" />
+
+                    </android.support.v7.widget.CardView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/medium_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="সাধারণ তথ্যাবলি"
+                        android:textColor="#F44336"
+                        android:textSize="@dimen/item_textsize"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/user_general_info_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/medium_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="পরিবার"
+                        android:textColor="#F44336"
+                        android:textSize="@dimen/item_textsize"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/family_info_recylerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/medium_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="বিবিধ প্রশ্নের উত্তর"
+                        android:textColor="#F44336"
+                        android:textSize="@dimen/item_textsize"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/other_info_recylerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/medium_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="যোগাযোগ"
+                        android:textColor="#F44336"
+                        android:textSize="@dimen/item_textsize"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF">
+
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/communication_info_recylerview"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/small_margin"
+                                android:layout_marginRight="@dimen/small_margin"
+                                android:layout_marginTop="@dimen/medium_margin"
+                                android:scrollbars="vertical"
+                                android:visibility="visible" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#99000000"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="যোগাযোগের তথ্য জানার জন্য"
+                                    android:textColor="#FFFFFF" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="অনুরোধটি গ্রহণ করুন"
+                                    android:textColor="#D50000" />
+
+                            </LinearLayout>
+
+
+                        </FrameLayout>
+
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/medium_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text=" আপনার পছন্দের সাথে তার মিল"
+                        android:textColor="#F44336"
+                        android:textSize="@dimen/item_textsize"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#FFFFFF">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/viewer_image"
+                                    android:layout_width="@dimen/viewer_image_size"
+                                    android:layout_height="@dimen/viewer_image_size"
+                                    android:layout_alignParentLeft="true"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/ic_launcher" />
+
+
+                                <TextView
+                                    android:layout_width="@dimen/viewer_image_size"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_below="@+id/viewer_image"
+                                    android:gravity="center"
+                                    android:text="তার বৈশিষ্ট্য" />
+
+
+                                <Button
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/match_button_height"
+                                    android:layout_centerInParent="true"
+                                    android:background="#FF3B426C"
+                                    android:text="মিল"
+                                    android:textColor="#FFFFFF" />
+
+                                <ImageView
+                                    android:id="@+id/self_image"
+                                    android:layout_width="@dimen/viewer_image_size"
+                                    android:layout_height="@dimen/viewer_image_size"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="@dimen/small_margin"
+                                    android:src="@mipmap/ic_launcher" />
+
+                                <TextView
+                                    android:layout_width="@dimen/match_text_size"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_below="@+id/self_image"
+                                    android:layout_marginRight="@dimen/small_margin"
+                                    android:gravity="right"
+                                    android:lines="1"
+                                    android:text="আপনার পছন্দের মিল"
+                                    android:textSize="@dimen/small_textsize" />
+
+                            </RelativeLayout>
+
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/match_user_choice_recyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/small_margin"
+                                android:layout_marginRight="@dimen/small_margin"
+                                android:layout_marginTop="@dimen/medium_margin"
+                                android:scrollbars="vertical" />
+
+                        </LinearLayout>
+
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/r1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="comm" />
+        android:layout_alignParentBottom="true"
+        android:background="#BDBDBD">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/cancel_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/large_margin"
+            android:padding="@dimen/small_padding"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/cancel_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cancel_imageview"
+            android:layout_marginLeft="@dimen/large_margin"
+            android:text="বাতিল করুন"
+            android:textColor="#000000" />
+
+        <ImageView
+            android:id="@+id/wait_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:padding="@dimen/small_padding"
+            android:visibility="visible"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/wait_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/wait_imageview"
+            android:layout_centerHorizontal="true"
+            android:text="অপেক্ষমাণ রাখুন"
+            android:visibility="visible"
+            android:textColor="#000000" />
+
+        <ImageView
+            android:id="@+id/accept_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="@dimen/large_margin"
+            android:padding="@dimen/small_padding"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/accept_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/accept_imageview"
+            android:layout_marginRight="@dimen/large_margin"
+            android:text="গ্রহণ করুন"
+            android:textColor="#000000" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -18,6 +18,7 @@ public class CommunicationRequestFragment extends Fragment {
 
     private View _baseView;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
