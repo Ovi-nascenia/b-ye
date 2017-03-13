@@ -51,7 +51,7 @@ public class SendRequestActivity extends AppCompatActivity {
                 } else {
                     replaceFragment(new CommunicationRequestFragment());
                 }
-            }//#FF4C7894
+            }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -71,12 +71,11 @@ public class SendRequestActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) getBaseContext().
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        tabItemView1  =inflater.inflate(R.layout.custom_tab_item1, null);
+        tabItemView1 = inflater.inflate(R.layout.custom_tab_item1, null);
         tabLayout.getTabAt(0).setCustomView(tabItemView1);
 
-        tabItemView2 =inflater.inflate(R.layout.custom_tab_item2, null);
+        tabItemView2 = inflater.inflate(R.layout.custom_tab_item2, null);
         tabLayout.getTabAt(1).setCustomView(tabItemView2);
-
 
 
     }

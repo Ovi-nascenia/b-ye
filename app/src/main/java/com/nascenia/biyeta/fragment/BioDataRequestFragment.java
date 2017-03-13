@@ -1,29 +1,64 @@
 package com.nascenia.biyeta.fragment;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.activity.SendRequestActivity;
+import com.nascenia.biyeta.model.GeneralInformation;
+import com.nascenia.biyeta.model.MatchUserChoice;
+import com.nascenia.biyeta.model.newuserprofile.UserProfile;
+import com.nascenia.biyeta.service.ResourceProvider;
+import com.nascenia.biyeta.utils.MyCallback;
+import com.nascenia.biyeta.view.SendRequestFragmentView;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
+
+import java.util.ArrayList;
+
+import static com.nascenia.biyeta.view.SendRequestFragmentView.responseValue;
 
 /**
  * Created by saiful on 3/10/17.
  */
 
-public class BioDataRequestFragment extends Fragment {
+public class BioDataRequestFragment extends Fragment implements MyCallback<Boolean> {
 
 
     private View _baseView;
 
     private ImageView cancelImageView, waitImageView, acceptImageView;
-    private TextView cancelTextView, waitTextView, acceptTextView;
+    private TextView cancelTextView, waitTextView, acceptTextView, communicationTagTextView;
+    private CardView communicationCardLayout;
+
+    private ImageView userProfileImage;
+    private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView, otherInfoRecylerView;
+    private ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
+    private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
+    private TextView userProfileDescriptionText;
+    private ImageView profileViewerPersonImageView;
+
+    private String url = "http://test.biyeta.com/api/v1/profiles/316";
+
+    private MyCallback<Boolean> mCallback;
+    private Boolean status;
+
+    public String responseValue = "";
 
     @Nullable
     @Override
@@ -34,10 +69,82 @@ public class BioDataRequestFragment extends Fragment {
         initView();
 
 
+        /*UserProfile userProfile = new Gson().fromJson(
+                SendRequestFragmentView.fetchUserProfileDetailsResponse(
+                        url, getActivity()), UserProfile.class);
+*/
+        String response = SendRequestFragmentView.fetchUserProfileDetailsResponse(
+                url, getActivity());
+
+        Log.i("bio", "head " + response);
+        MyAsyncTask myAsyncTask = new MyAsyncTask(this); // the callback
+        myAsyncTask.execute();
+
+
         return _baseView;
     }
 
+
+    public class MyAsyncTask extends AsyncTask<Void, Void, Boolean> {
+
+        private MyCallback<Boolean> mCallback;
+
+        public MyAsyncTask(MyCallback<Boolean> callback) {
+            mCallback = callback;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... progress) {
+            super.onProgressUpdate(progress);
+            // ...
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                Response response = new ResourceProvider(getActivity()).fetchGetResponse(url);
+                ResponseBody responseBody = response.body();
+                responseValue = responseBody.string();
+                Log.i("bio", "onmethod" + responseValue + " ");
+                responseBody.close();
+                //  final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
+
+                status = true;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return status;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (mCallback != null) {
+                mCallback.onComplete(result); // will call onComplete() on MyActivity once the job is done
+            }
+        }
+
+    }
+
     private void initView() {
+
+        communicationTagTextView = (TextView) _baseView.findViewById(R.id.communication_tag_textview);
+        communicationTagTextView.setVisibility(View.GONE);
+        communicationCardLayout = (CardView) _baseView.findViewById(R.id.communication_card_layout);
+        communicationCardLayout.setVisibility(View.GONE);
+
+
+        generalInfoRecyclerView = (RecyclerView) _baseView.findViewById(R.id.user_general_info_recycler_view);
+        generalInfoRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        matchUserChoiceRecyclerView = (RecyclerView) _baseView.findViewById(R.id.match_user_choice_recyclerView);
+        matchUserChoiceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        otherInfoRecylerView = (RecyclerView) _baseView.findViewById(R.id.other_info_recylerview);
+
+        userProfileDescriptionText = (TextView) _baseView.findViewById(R.id.userProfileDescriptionText);
+
+        profileViewerPersonImageView = (ImageView) _baseView.findViewById(R.id.viewer_image);
+        userProfileImage = (ImageView) _baseView.findViewById(R.id.user_profile_image);
 
         cancelImageView = (ImageView) _baseView.findViewById(R.id.cancel_imageview);
         waitImageView = (ImageView) _baseView.findViewById(R.id.wait_imageview);
@@ -129,4 +236,14 @@ public class BioDataRequestFragment extends Fragment {
         view.setLayoutParams(params);
     }
 
+    @Override
+    public void onComplete(Boolean result) {
+
+
+        if (result) {
+            Log.i("threaddata", "yes" + responseValue);
+            Toast.makeText(getActivity(), responseValue, Toast.LENGTH_LONG).show();
+        }
+
+    }
 }

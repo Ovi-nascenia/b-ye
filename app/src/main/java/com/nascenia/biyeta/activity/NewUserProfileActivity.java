@@ -144,7 +144,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             //setupRecyclerView(moviePage);
-                                //
+                            //
                             //Toast.makeText(getApplicationContext(), userProfile.toString() + "", Toast.LENGTH_LONG).show();
                             //Log.i("responsedata", "totaldata: " + userProfile.getProfile().getPersonalInformation().getGender());
 
