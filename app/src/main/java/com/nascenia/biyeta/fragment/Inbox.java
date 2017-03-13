@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 
@@ -56,6 +57,7 @@ public class Inbox extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.tv_inbox:
+                Toast.makeText(getContext(),"Inbox",Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.tv_smile:

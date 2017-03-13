@@ -130,10 +130,7 @@
             android:background="#2E3F51"
             android:text="@string/trash"/>
     </android.support.v7.widget.CardView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#fff"></TextView>
+
 
 
 
