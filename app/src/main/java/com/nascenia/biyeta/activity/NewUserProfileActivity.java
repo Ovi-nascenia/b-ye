@@ -178,8 +178,8 @@ public class NewUserProfileActivity extends AppCompatActivity {
                             }
 
 
-                            addDataonGeneralInfoRecylerViewItem(userProfile);
-                            addDataonMatchUserChoiceRecyclerView(userProfile);
+                           /* addDataonGeneralInfoRecylerViewItem(userProfile);
+                            addDataonMatchUserChoiceRecyclerView(userProfile);*/
 
 
                         }
@@ -195,7 +195,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
     }
 
 
-    private void addDataonMatchUserChoiceRecyclerView(UserProfile userProfile) {
+   /* private void addDataonMatchUserChoiceRecyclerView(UserProfile userProfile) {
 
         matchUserChoiceArrayList.add(new MatchUserChoice("home town"
                 , userProfile.getProfile().getMatchingAttributes().getHomeTown()));
@@ -219,7 +219,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
         matchUserChoiceRecyclerView.setAdapter(new MatchUserChoiceAdapter(getBaseContext(), matchUserChoiceArrayList));
 
-    }
+    }*/
 
 
     private String checkNullField(String value) {
@@ -233,7 +233,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
     }
 
-    private void addDataonGeneralInfoRecylerViewItem(UserProfile userProfile) {
+    /*private void addDataonGeneralInfoRecylerViewItem(UserProfile userProfile) {
 
 
         generalInformationArrayList.add(new GeneralInformation(
@@ -287,7 +287,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
         }
 
 
-        if (!(checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree()) +
+       *//* if (!(checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree()) +
                 checkNullField(userProfile.getProfile().getEducationInformation().getInstitution())).equals("")) {
 
 
@@ -299,7 +299,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
                     , R.drawable.edu));
 
         }
-
+*//*
 
         if ((!(checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor()) +
                 checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())).equals(""))
@@ -376,7 +376,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
                 getBaseContext(), generalInformationArrayList));
 
 
-    }
+    }*/
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 

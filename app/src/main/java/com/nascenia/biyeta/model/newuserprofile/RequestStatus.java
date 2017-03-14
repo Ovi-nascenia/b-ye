@@ -4,7 +4,6 @@ package com.nascenia.biyeta.model.newuserprofile;
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class RequestStatus implements Serializable
 {
@@ -18,7 +17,13 @@ public class RequestStatus implements Serializable
     @SerializedName("accepted")
     @Expose
     private boolean accepted;
-    private final static long serialVersionUID = 6237132305173899215L;
+    @SerializedName("rejected")
+    @Expose
+    private Object rejected;
+    @SerializedName("message")
+    @Expose
+    private Object message;
+    private final static long serialVersionUID = -1309112087272299807L;
 
     public String getName() {
         return name;
@@ -59,9 +64,30 @@ public class RequestStatus implements Serializable
         return this;
     }
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+    public Object getRejected() {
+        return rejected;
+    }
+
+    public void setRejected(Object rejected) {
+        this.rejected = rejected;
+    }
+
+    public RequestStatus withRejected(Object rejected) {
+        this.rejected = rejected;
+        return this;
+    }
+
+    public Object getMessage() {
+        return message;
+    }
+
+    public void setMessage(Object message) {
+        this.message = message;
+    }
+
+    public RequestStatus withMessage(Object message) {
+        this.message = message;
+        return this;
     }
 
 }

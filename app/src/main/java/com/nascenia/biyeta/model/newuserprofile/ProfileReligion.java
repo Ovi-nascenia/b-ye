@@ -4,7 +4,6 @@ package com.nascenia.biyeta.model.newuserprofile;
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class ProfileReligion implements Serializable
 {
@@ -15,7 +14,7 @@ public class ProfileReligion implements Serializable
     @SerializedName("cast")
     @Expose
     private String cast;
-    private final static long serialVersionUID = -3305052300264536750L;
+    private final static long serialVersionUID = 9113879827946037412L;
 
     public String getReligion() {
         return religion;
@@ -41,11 +40,6 @@ public class ProfileReligion implements Serializable
     public ProfileReligion withCast(String cast) {
         this.cast = cast;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
     }
 
 }

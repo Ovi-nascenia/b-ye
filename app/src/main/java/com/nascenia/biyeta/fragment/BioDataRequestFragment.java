@@ -1,7 +1,6 @@
 package com.nascenia.biyeta.fragment;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,15 +18,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
-import com.nascenia.biyeta.activity.SendRequestActivity;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
-import com.nascenia.biyeta.service.ResourceProvider;
 import com.nascenia.biyeta.utils.MyCallback;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
 
 import java.util.ArrayList;
 
@@ -52,13 +47,10 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
     private TextView userProfileDescriptionText;
     private ImageView profileViewerPersonImageView;
+    private UserProfile userProfile;
 
     private String url = "http://test.biyeta.com/api/v1/profiles/316";
 
-    private MyCallback<Boolean> mCallback;
-    private Boolean status;
-
-    public String responseValue = "";
 
     @Nullable
     @Override
@@ -68,24 +60,15 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         _baseView = inflater.inflate(R.layout.fragment_communication_request, container, false);
         initView();
 
-
-        /*UserProfile userProfile = new Gson().fromJson(
-                SendRequestFragmentView.fetchUserProfileDetailsResponse(
-                        url, getActivity()), UserProfile.class);
-*/
-        String response = SendRequestFragmentView.fetchUserProfileDetailsResponse(
-                url, getActivity());
-
-        Log.i("bio", "head " + response);
-        MyAsyncTask myAsyncTask = new MyAsyncTask(this); // the callback
-        myAsyncTask.execute();
+       /* SendRequestFragmentView.fetchUserProfileDetailsResponse(
+                url, getActivity(), this);*/
 
 
         return _baseView;
     }
 
 
-    public class MyAsyncTask extends AsyncTask<Void, Void, Boolean> {
+   /* public class MyAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
         private MyCallback<Boolean> mCallback;
 
@@ -125,7 +108,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             }
         }
 
-    }
+    }*/
 
     private void initView() {
 
@@ -217,7 +200,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 0,
                 acceptTextView);
 
-
+        SendRequestFragmentView.fetchUserProfileDetailsResponse(
+                url, getActivity(), this);
     }
 
     public void setViewMargins(Context con, ViewGroup.LayoutParams params,
@@ -240,9 +224,25 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     public void onComplete(Boolean result) {
 
 
-        if (result) {
-            Log.i("threaddata", "yes" + responseValue);
-            Toast.makeText(getActivity(), responseValue, Toast.LENGTH_LONG).show();
+        if (result && SendRequestFragmentView.responseValue != null) {
+            /*Log.i("threaddata", "biodataclass-> " + SendRequestFragmentView.responseValue);
+            Toast.makeText(getActivity(), SendRequestFragmentView.responseValue, Toast.LENGTH_LONG).show();*/
+
+            Log.i("userdetails", "method reach");
+            try {
+                userProfile = new Gson().fromJson(responseValue, UserProfile.class);
+                Log.i("userdetails", "user profile" + userProfile.toString());
+
+                SendRequestFragmentView.setUserDetailsInfo(userProfile, userProfileDescriptionText);
+                SendRequestFragmentView.setDataonGeneralInfoRecylerView(getActivity(), userProfile, generalInfoRecyclerView);
+            } catch (Exception e) {
+                Log.i("userdata", "methoderror" + e.getMessage());
+                Toast.makeText(getActivity(), "Can't load data", Toast.LENGTH_LONG).show();
+            }
+
+
+        } else {
+            Toast.makeText(getActivity(), "Can't load data", Toast.LENGTH_LONG).show();
         }
 
     }

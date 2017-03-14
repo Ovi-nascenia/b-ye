@@ -19,5 +19,6 @@
         android:layout_marginLeft="35dp"
         android:layout_toRightOf="@+id/title_imageView"
         android:text="title textview vlaue :"
+        android:textColor="#00011F"
         android:textSize="@dimen/medium_textsize" />
 </RelativeLayout>
