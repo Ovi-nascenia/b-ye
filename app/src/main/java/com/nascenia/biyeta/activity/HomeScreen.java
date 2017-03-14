@@ -3,6 +3,7 @@ package com.nascenia.biyeta.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -184,8 +185,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 });
                 DisplayMetrics displaymetrics = new DisplayMetrics();
                 this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                int width = (int) ((int)displaymetrics.widthPixels * 0.8);
-                int height = (int) ((int)displaymetrics.heightPixels * 0.6);
+                int width = (int) ((int)displaymetrics.widthPixels * 0.7);
+                int height = (int) ((int)displaymetrics.heightPixels * 0.48);
                 dialog.getWindow().setLayout(width,height);
                 dialog.show();
                 break;

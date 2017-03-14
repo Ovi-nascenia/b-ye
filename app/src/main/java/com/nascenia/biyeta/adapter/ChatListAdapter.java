@@ -2,6 +2,9 @@ package com.nascenia.biyeta.adapter;
 
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -18,24 +21,30 @@ import com.nascenia.biyeta.activity.InboxSingleChat;
 import com.nascenia.biyeta.model.conversation.ChatHead;
 import com.nascenia.biyeta.model.conversation.Message;
 
-public class ChatListAdapter extends BaseAdapter {
+public abstract class ChatListAdapter extends BaseAdapter {
 
     private Context context;
-    private ChatHead  messagesItems;
+  //  private ChatHead  messagesItems;
 
-    public ChatListAdapter(Context context, ChatHead navDrawerItems) {
+    private List<Message> arrayListMessage;
+
+    public ChatListAdapter(Context context, List<Message> arrayListMessage) {
         this.context = context;
-        this.messagesItems = navDrawerItems;
+      //  this.messagesItems = chatHead;
+        this.arrayListMessage= arrayListMessage;
+        Collections.reverse(this.arrayListMessage);
     }
+
+    public abstract void load();
 
     @Override
     public int getCount() {
-        return messagesItems.getMessages().size();
+        return arrayListMessage.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return messagesItems.getMessages().get(position);
+        return arrayListMessage.get(position);
     }
 
     @Override
@@ -52,13 +61,16 @@ public class ChatListAdapter extends BaseAdapter {
          * are showing incorrect data Add the solution if you have one
          * */
 
-        Message m = messagesItems.getMessages().get(position);
+        if (position>=arrayListMessage.size()-1)
+            load();
+
+        Message m = arrayListMessage.get(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         // Identifying the message owner
-        if (m.getReceiver()== InboxSingleChat.recevier_id) {
+        if (m.getReceiver()!= InboxSingleChat.current_user_id) {
             // message belongs to you, so load the right aligned layout
             convertView = mInflater.inflate(R.layout.inbox_conversation_item_right,
                     null);
@@ -70,8 +82,10 @@ public class ChatListAdapter extends BaseAdapter {
 
        // TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
         TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
+        TextView txtTime= (TextView) convertView.findViewById(R.id.time) ;
 
-        txtMsg.setText(m.getText());
+        txtMsg.setText(m.getText().trim());
+        txtTime.setText(m.getCreatedAt().split("T")[0]);
        // lblFrom.setText(m.getText());
 
         return convertView;

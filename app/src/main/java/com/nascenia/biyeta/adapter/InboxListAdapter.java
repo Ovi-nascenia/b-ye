@@ -55,6 +55,7 @@ public class InboxListAdapter extends RecyclerView.Adapter<InboxListAdapter.View
                 Bundle bundle=new Bundle();
                 bundle.putInt("sender_id",item.getMessage().getUserId());
                 bundle.putInt("receiver_id",item.getMessage().getReceiver());
+                bundle.putInt("current_user",example.getCurrent_user_signed_in());
                 Log.e("come",item.getMessage().getUserId() +"  "+item.getMessage().getReceiver());
                 in.putExtras(bundle);
                 holder.image.getContext().startActivity(in);

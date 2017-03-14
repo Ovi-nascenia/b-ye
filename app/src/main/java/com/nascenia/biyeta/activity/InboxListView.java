@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,7 +71,7 @@ public class InboxListView extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            s="{\n" +
+         /*   s="{\n" +
                     "  \"inbox\": [\n" +
                     "    {\n" +
                     "      \"sender_name\": \"Test53\",\n" +
@@ -103,11 +104,16 @@ public class InboxListView extends AppCompatActivity {
                     "  ]\n" +
                     "}\n";
 
+                    */
 
+
+            Log.e("fuck","cc"+s);
             Gson gson = new Gson();
             InputStream is = new ByteArrayInputStream(s.getBytes());
             InputStreamReader isr = new InputStreamReader(is);
             Example response = gson.fromJson(isr, Example.class);
+
+
             InboxListAdapter inboxListAdapter=new InboxListAdapter(response,R.layout.inbox_item);
             recyclerView.setAdapter(inboxListAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(InboxListView.this));
