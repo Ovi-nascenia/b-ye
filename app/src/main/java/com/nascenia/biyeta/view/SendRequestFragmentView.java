@@ -8,10 +8,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
+import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
 import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
@@ -42,59 +45,31 @@ public class SendRequestFragmentView {
     private static ProgressDialog dialog;
 
     private static ArrayList<GeneralInformation> generalInformationArrayList;
-    private ArrayList<MatchUserChoice> matchUserChoiceArrayList;
-
+    private static ArrayList<MatchUserChoice> matchUserChoiceArrayList;
 
     public static void fetchUserProfileDetailsResponse(final String url,
                                                        final Context context,
-                                                       final MyCallback<Boolean> mCallback) {
+                                                       final MyCallback<Boolean> mCallback,
+                                                       TextView userProfileDescriptionText,
+                                                       RecyclerView generalInfoRecyclerView,
+                                                       RecyclerView matchUserChoiceRecyclerView,
+                                                       RecyclerView otherInfoRecylerView,
+                                                       ImageView profileViewerPersonImageView,
+                                                       ImageView userProfileImage) {
 
 
-        ResponseThread responseThread = new ResponseThread(url, context, mCallback);
+        ResponseThread responseThread = new ResponseThread(url,
+                context,
+                mCallback,
+                userProfileDescriptionText,
+                generalInfoRecyclerView,
+                matchUserChoiceRecyclerView,
+                otherInfoRecylerView,
+                profileViewerPersonImageView,
+                userProfileImage);
         Thread response = new Thread(responseThread);
         response.start();
 
-
-        /*  dialog = new ProgressDialog(context);
-        dialog.setMessage("Please wait...");
-        dialog.setCancelable(true);
-        dialog.show();
-
-
-
-      new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Response response = new ResourceProvider((Activity) context).fetchGetResponse(url);
-                    ResponseBody responseBody = response.body();
-                    final String responseValue = responseBody.string();
-                    Log.i("responsedata", "response value: " + responseValue + " ");
-                    responseBody.close();
-                    //   final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
-
-                    //   stopProgressDialog(dialog,context);
-
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.i("taskon", "run");
-
-                            if (dialog.isShowing()) {
-                                dialog.dismiss();
-                            }
-
-                        }
-                    });
-
-                } catch (Exception e) {
-                    Toast.makeText(context, "Data reteriving problem", Toast.LENGTH_LONG).show();
-                    //stopProgressDialog(dialog,context);
-                }
-
-            }
-        }).start();*/
-
-        // return responseValue;
 
     }
 
@@ -104,12 +79,35 @@ public class SendRequestFragmentView {
         private MyCallback<Boolean> callback;
         private String url;
         private Context context;
+        private TextView userProfileDescriptionText;
+        private RecyclerView otherInfoRecylerView;
+        private RecyclerView matchUserChoiceRecyclerView;
+        private RecyclerView generalInfoRecyclerView;
+        private ImageView profileViewerPersonImageView;
+        private ImageView userProfileImage;
 
 
-        public ResponseThread(String url, Context context, MyCallback<Boolean> mCallback) {
+        public ResponseThread(String url,
+                              Context context,
+                              MyCallback<Boolean> callback,
+                              TextView userProfileDescriptionText,
+                              RecyclerView generalInfoRecyclerView,
+                              RecyclerView matchUserChoiceRecyclerView,
+                              RecyclerView otherInfoRecylerView,
+                              ImageView profileViewerPersonImageView,
+                              ImageView userProfileImage) {
+
+
+            this.callback = callback;
             this.url = url;
-            this.callback = mCallback;
             this.context = context;
+            this.userProfileDescriptionText = userProfileDescriptionText;
+            this.generalInfoRecyclerView = generalInfoRecyclerView;
+            this.matchUserChoiceRecyclerView = matchUserChoiceRecyclerView;
+            this.otherInfoRecylerView = otherInfoRecylerView;
+            this.profileViewerPersonImageView = profileViewerPersonImageView;
+            this.userProfileImage = userProfileImage;
+
             dialog = new ProgressDialog(context);
             dialog.setMessage("Please wait...");
             dialog.setCancelable(true);
@@ -126,13 +124,20 @@ public class SendRequestFragmentView {
                 responseValue = responseBody.string();
                 Log.i("threaddata", "onmethod" + responseValue + " ");
                 responseBody.close();
-                //  final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
-
+                final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
 
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Log.i("taskon", "run");
+
+                        setUserDetailsInfo(userProfile, userProfileDescriptionText);
+                        setDataonGeneralInfoRecylerView(context,
+                                userProfile,
+                                generalInfoRecyclerView);
+                        setDataonMatchUserChoiceRecylerView(context,
+                                userProfile,
+                                matchUserChoiceRecyclerView);
 
                         if (dialog.isShowing()) {
                             dialog.dismiss();
@@ -169,6 +174,8 @@ public class SendRequestFragmentView {
 
 
     public static void setDataonGeneralInfoRecylerView(Context activity, UserProfile userProfile, RecyclerView view) {
+        Log.i("userdetails", "recyler method");
+
 
         generalInformationArrayList = new ArrayList<GeneralInformation>();
 
@@ -329,11 +336,39 @@ public class SendRequestFragmentView {
 
         view.setAdapter(new GeneralInformationAdapter(
                 activity, generalInformationArrayList));
-
+        Log.i("userdetails", view.toString() + " " + generalInformationArrayList.size());
 
     }
 
-    public static void setDataonMatchUserChoiceRecylerView(UserProfile userProfile, View view) {
+    public static void setDataonMatchUserChoiceRecylerView(Context context,
+                                                           UserProfile userProfile,
+                                                           RecyclerView view) {
+
+
+      /*  matchUserChoiceArrayList = new ArrayList<>();
+
+
+        matchUserChoiceArrayList.add(new MatchUserChoice("home town"
+                , userProfile.getProfile().getMatchingAttributes().getHomeTown()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("age"
+                , userProfile.getProfile().getMatchingAttributes().getAge()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("height"
+                , userProfile.getProfile().getMatchingAttributes().getHeight()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("skin color"
+                , userProfile.getProfile().getMatchingAttributes().getSkinColor()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("health"
+                , userProfile.getProfile().getMatchingAttributes().getHealth()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("marital status"
+                , userProfile.getProfile().getMatchingAttributes().getMaritalStatus()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("educational qualification"
+                , userProfile.getProfile().getMatchingAttributes().getTitleEducationalQualification()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("own house"
+                , userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse()));
+        matchUserChoiceArrayList.add(new MatchUserChoice("occupation"
+                , userProfile.getProfile().getMatchingAttributes().getTitleOccupation()));
+
+
+        view.setAdapter(new MatchUserChoiceAdapter(context, matchUserChoiceArrayList));*/
 
     }
 

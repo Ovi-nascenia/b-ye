@@ -1,16 +1,20 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
+import android.support.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
-public class Profile implements Serializable
-{
+public class Profile implements Serializable {
 
     @SerializedName("personal_information")
     @Expose
+    @Nullable
     private PersonalInformation personalInformation;
     @SerializedName("profession")
     @Expose
@@ -18,6 +22,7 @@ public class Profile implements Serializable
     @SerializedName("is_smile_sent")
     @Expose
     private boolean isSmileSent;
+
     @SerializedName("is_favorite")
     @Expose
     private boolean isFavorite;

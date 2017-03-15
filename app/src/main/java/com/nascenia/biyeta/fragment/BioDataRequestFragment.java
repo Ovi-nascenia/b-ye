@@ -58,7 +58,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                              @Nullable Bundle savedInstanceState) {
 
         _baseView = inflater.inflate(R.layout.fragment_communication_request, container, false);
-        initView();
+        //initView();
 
        /* SendRequestFragmentView.fetchUserProfileDetailsResponse(
                 url, getActivity(), this);*/
@@ -200,8 +200,27 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 0,
                 acceptTextView);
 
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initView();
+        Log.i("userdetails", generalInfoRecyclerView.toString());
         SendRequestFragmentView.fetchUserProfileDetailsResponse(
-                url, getActivity(), this);
+                url,
+                getActivity(),
+                this,
+                userProfileDescriptionText,
+                generalInfoRecyclerView,
+                matchUserChoiceRecyclerView,
+                otherInfoRecylerView,
+                profileViewerPersonImageView,
+                userProfileImage
+        );
+
+
     }
 
     public void setViewMargins(Context con, ViewGroup.LayoutParams params,
@@ -224,26 +243,31 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     public void onComplete(Boolean result) {
 
 
-        if (result && SendRequestFragmentView.responseValue != null) {
-            /*Log.i("threaddata", "biodataclass-> " + SendRequestFragmentView.responseValue);
-            Toast.makeText(getActivity(), SendRequestFragmentView.responseValue, Toast.LENGTH_LONG).show();*/
+       /* if (result && SendRequestFragmentView.responseValue != null) {
+
 
             Log.i("userdetails", "method reach");
             try {
                 userProfile = new Gson().fromJson(responseValue, UserProfile.class);
-                Log.i("userdetails", "user profile" + userProfile.toString());
 
-                SendRequestFragmentView.setUserDetailsInfo(userProfile, userProfileDescriptionText);
-                SendRequestFragmentView.setDataonGeneralInfoRecylerView(getActivity(), userProfile, generalInfoRecyclerView);
+                if (userProfile == null) {
+                    Log.i("userdetails", "userprofile null");
+
+                }
+
+               // SendRequestFragmentView.setUserDetailsInfo(userProfile, userProfileDescriptionText);
+              //  SendRequestFragmentView.setDataonGeneralInfoRecylerView(getActivity(), userProfile, generalInfoRecyclerView);
+
+
             } catch (Exception e) {
-                Log.i("userdata", "methoderror" + e.getMessage());
+                Log.i("userdetails", "methoderror" + e.getMessage());
                 Toast.makeText(getActivity(), "Can't load data", Toast.LENGTH_LONG).show();
             }
 
 
         } else {
             Toast.makeText(getActivity(), "Can't load data", Toast.LENGTH_LONG).show();
-        }
+        }*/
 
     }
 }
