@@ -16,8 +16,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
-import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
-import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.fragment.ProfileImageFirstFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
@@ -232,7 +230,6 @@ public class NewUserProfileActivity extends AppCompatActivity {
         }
 
     }
-
     /*private void addDataonGeneralInfoRecylerViewItem(UserProfile userProfile) {
 
 

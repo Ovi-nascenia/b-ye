@@ -1,20 +1,17 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
-import android.support.annotation.Nullable;
-
 import java.io.Serializable;
 import java.util.List;
-
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Profile implements Serializable {
+public class Profile implements Serializable
+{
 
     @SerializedName("personal_information")
     @Expose
-    @Nullable
     private PersonalInformation personalInformation;
     @SerializedName("profession")
     @Expose
@@ -22,7 +19,6 @@ public class Profile implements Serializable {
     @SerializedName("is_smile_sent")
     @Expose
     private boolean isSmileSent;
-
     @SerializedName("is_favorite")
     @Expose
     private boolean isFavorite;
@@ -38,16 +34,22 @@ public class Profile implements Serializable {
     @SerializedName("family_members")
     @Expose
     private List<FamilyMember> familyMembers = null;
-    @SerializedName("education_information")
-    @Expose
-    private List<EducationInformation> educationInformation = null;
     @SerializedName("address")
     @Expose
     private Address address;
+    @SerializedName("other_information")
+    @Expose
+    private OtherInformation otherInformation;
+    @SerializedName("matching_attributes")
+    @Expose
+    private MatchingAttributes matchingAttributes;
+    @SerializedName("education_information")
+    @Expose
+    private List<EducationInformation> educationInformation = null;
     @SerializedName("request_status")
     @Expose
     private RequestStatus requestStatus;
-    private final static long serialVersionUID = -3332318560259908088L;
+    private final static long serialVersionUID = -6999151452998727246L;
 
     public PersonalInformation getPersonalInformation() {
         return personalInformation;
@@ -153,19 +155,6 @@ public class Profile implements Serializable {
         return this;
     }
 
-    public List<EducationInformation> getEducationInformation() {
-        return educationInformation;
-    }
-
-    public void setEducationInformation(List<EducationInformation> educationInformation) {
-        this.educationInformation = educationInformation;
-    }
-
-    public Profile withEducationInformation(List<EducationInformation> educationInformation) {
-        this.educationInformation = educationInformation;
-        return this;
-    }
-
     public Address getAddress() {
         return address;
     }
@@ -176,6 +165,45 @@ public class Profile implements Serializable {
 
     public Profile withAddress(Address address) {
         this.address = address;
+        return this;
+    }
+
+    public OtherInformation getOtherInformation() {
+        return otherInformation;
+    }
+
+    public void setOtherInformation(OtherInformation otherInformation) {
+        this.otherInformation = otherInformation;
+    }
+
+    public Profile withOtherInformation(OtherInformation otherInformation) {
+        this.otherInformation = otherInformation;
+        return this;
+    }
+
+    public MatchingAttributes getMatchingAttributes() {
+        return matchingAttributes;
+    }
+
+    public void setMatchingAttributes(MatchingAttributes matchingAttributes) {
+        this.matchingAttributes = matchingAttributes;
+    }
+
+    public Profile withMatchingAttributes(MatchingAttributes matchingAttributes) {
+        this.matchingAttributes = matchingAttributes;
+        return this;
+    }
+
+    public List<EducationInformation> getEducationInformation() {
+        return educationInformation;
+    }
+
+    public void setEducationInformation(List<EducationInformation> educationInformation) {
+        this.educationInformation = educationInformation;
+    }
+
+    public Profile withEducationInformation(List<EducationInformation> educationInformation) {
+        this.educationInformation = educationInformation;
         return this;
     }
 
@@ -190,6 +218,11 @@ public class Profile implements Serializable {
     public Profile withRequestStatus(RequestStatus requestStatus) {
         this.requestStatus = requestStatus;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

@@ -4,6 +4,7 @@ package com.nascenia.biyeta.model.newuserprofile;
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class PermanentAddress implements Serializable
 {
@@ -17,7 +18,7 @@ public class PermanentAddress implements Serializable
     @SerializedName("district")
     @Expose
     private String district;
-    private final static long serialVersionUID = -361234483106029795L;
+    private final static long serialVersionUID = -7689039370012588558L;
 
     public String getAddress() {
         return address;
@@ -56,6 +57,11 @@ public class PermanentAddress implements Serializable
     public PermanentAddress withDistrict(String district) {
         this.district = district;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

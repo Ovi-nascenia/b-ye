@@ -4,6 +4,7 @@ package com.nascenia.biyeta.model.newuserprofile;
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class FamilyMember implements Serializable
 {
@@ -23,7 +24,7 @@ public class FamilyMember implements Serializable
     @SerializedName("institute")
     @Expose
     private String institute;
-    private final static long serialVersionUID = -3013553689476022244L;
+    private final static long serialVersionUID = 3825113452900337880L;
 
     public String getName() {
         return name;
@@ -88,6 +89,11 @@ public class FamilyMember implements Serializable
     public FamilyMember withInstitute(String institute) {
         this.institute = institute;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

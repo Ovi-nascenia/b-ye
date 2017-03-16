@@ -6,6 +6,8 @@ import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class EducationInformation implements Serializable {
 
     @SerializedName("name")
@@ -16,11 +18,11 @@ public class EducationInformation implements Serializable {
     private String institution;
     @SerializedName("passing_year")
     @Expose
-    private String passingYear;
+    private Integer passingYear;
     @SerializedName("subject")
     @Expose
     private String subject;
-    private final static long serialVersionUID = -8609689958968348325L;
+    private final static long serialVersionUID = 4585354323670632578L;
 
     public String getName() {
         return name;
@@ -48,15 +50,15 @@ public class EducationInformation implements Serializable {
         return this;
     }
 
-    public String getPassingYear() {
+    public Integer getPassingYear() {
         return passingYear;
     }
 
-    public void setPassingYear(String passingYear) {
+    public void setPassingYear(Integer passingYear) {
         this.passingYear = passingYear;
     }
 
-    public EducationInformation withPassingYear(String passingYear) {
+    public EducationInformation withPassingYear(Integer passingYear) {
         this.passingYear = passingYear;
         return this;
     }
@@ -72,6 +74,11 @@ public class EducationInformation implements Serializable {
     public EducationInformation withSubject(String subject) {
         this.subject = subject;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

@@ -4,6 +4,7 @@ package com.nascenia.biyeta.model.newuserprofile;
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class Address implements Serializable
 {
@@ -14,7 +15,7 @@ public class Address implements Serializable
     @SerializedName("permanent_address")
     @Expose
     private PermanentAddress permanentAddress;
-    private final static long serialVersionUID = -7981763224228299317L;
+    private final static long serialVersionUID = -7774737620627329511L;
 
     public PresentAddress getPresentAddress() {
         return presentAddress;
@@ -40,6 +41,11 @@ public class Address implements Serializable
     public Address withPermanentAddress(PermanentAddress permanentAddress) {
         this.permanentAddress = permanentAddress;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

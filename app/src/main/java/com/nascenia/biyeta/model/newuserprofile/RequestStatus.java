@@ -4,6 +4,7 @@ package com.nascenia.biyeta.model.newuserprofile;
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class RequestStatus implements Serializable
 {
@@ -11,6 +12,9 @@ public class RequestStatus implements Serializable
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("profile_request_id")
+    @Expose
+    private Object profileRequestId;
     @SerializedName("sent")
     @Expose
     private boolean sent;
@@ -19,11 +23,8 @@ public class RequestStatus implements Serializable
     private boolean accepted;
     @SerializedName("rejected")
     @Expose
-    private Object rejected;
-    @SerializedName("message")
-    @Expose
-    private Object message;
-    private final static long serialVersionUID = -1309112087272299807L;
+    private boolean rejected;
+    private final static long serialVersionUID = 8917245572179753385L;
 
     public String getName() {
         return name;
@@ -35,6 +36,19 @@ public class RequestStatus implements Serializable
 
     public RequestStatus withName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public Object getProfileRequestId() {
+        return profileRequestId;
+    }
+
+    public void setProfileRequestId(Object profileRequestId) {
+        this.profileRequestId = profileRequestId;
+    }
+
+    public RequestStatus withProfileRequestId(Object profileRequestId) {
+        this.profileRequestId = profileRequestId;
         return this;
     }
 
@@ -64,30 +78,22 @@ public class RequestStatus implements Serializable
         return this;
     }
 
-    public Object getRejected() {
+    public boolean isRejected() {
         return rejected;
     }
 
-    public void setRejected(Object rejected) {
+    public void setRejected(boolean rejected) {
         this.rejected = rejected;
     }
 
-    public RequestStatus withRejected(Object rejected) {
+    public RequestStatus withRejected(boolean rejected) {
         this.rejected = rejected;
         return this;
     }
 
-    public Object getMessage() {
-        return message;
-    }
-
-    public void setMessage(Object message) {
-        this.message = message;
-    }
-
-    public RequestStatus withMessage(Object message) {
-        this.message = message;
-        return this;
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

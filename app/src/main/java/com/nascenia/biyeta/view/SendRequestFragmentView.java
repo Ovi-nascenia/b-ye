@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +25,7 @@ import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 
 import java.util.ArrayList;
+
 
 /**
  * Created by saiful on 3/13/17.
@@ -139,6 +139,7 @@ public class SendRequestFragmentView {
                                 userProfile,
                                 matchUserChoiceRecyclerView);
 
+
                         if (dialog.isShowing()) {
                             dialog.dismiss();
                         }
@@ -229,8 +230,8 @@ public class SendRequestFragmentView {
                     , R.drawable.pro));
         }
 
-
         String education = "";
+
         if (userProfile.getProfile().getEducationInformation().size() > 0) {
 
             for (int i = 0; i < userProfile.getProfile().getEducationInformation().size(); i++) {
@@ -239,28 +240,30 @@ public class SendRequestFragmentView {
                         getEducationInformation().get(i);
 
 
-                education = education + checkNullField(educationInformation.getName()) +
-                        checkNullField(educationInformation.getInstitution()) +
-                        checkNullField(educationInformation.getPassingYear()) +
-                        checkNullField(educationInformation.getSubject()) + ",";
+                if (educationInformation.getPassingYear() != null) {
 
+                    education = education + checkNullField(educationInformation.getName()) + "," +
+                            checkNullField(educationInformation.getInstitution()) + "," +
+                            checkNullField(Utils.convertEnglishYearDigittoBangla(
+                                    educationInformation.getPassingYear())) + "," +
+                            checkNullField(educationInformation.getSubject()) + ":";
+                    Log.i("edu", education);
+
+                } else {
+                    education = education + checkNullField(educationInformation.getName()) + "," +
+                            checkNullField(educationInformation.getInstitution()) + "," +
+                            checkNullField(educationInformation.getSubject()) + ":";
+
+                    Log.i("edu", education);
+
+                }
 
             }
-        }
-
-         /*if (!(checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree()) +
-        checkNullField(userProfile.getProfile().getEducationInformation().getInstitution())).
-        equals("")){
-
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree())
-                            + "," +
-                            checkNullField(userProfile.getProfile().getEducationInformation().getInstitution())
-                    , R.drawable.edu));
-
-        }*/
+                    education, R.drawable.edu));
+        }
 
 
         if ((!(checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor()) +
@@ -345,36 +348,71 @@ public class SendRequestFragmentView {
                                                            RecyclerView view) {
 
 
-      /*  matchUserChoiceArrayList = new ArrayList<>();
+        matchUserChoiceArrayList = new ArrayList<>();
 
 
-        matchUserChoiceArrayList.add(new MatchUserChoice("home town"
-                , userProfile.getProfile().getMatchingAttributes().getHomeTown()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("age"
-                , userProfile.getProfile().getMatchingAttributes().getAge()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("height"
-                , userProfile.getProfile().getMatchingAttributes().getHeight()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("skin color"
-                , userProfile.getProfile().getMatchingAttributes().getSkinColor()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("health"
-                , userProfile.getProfile().getMatchingAttributes().getHealth()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("marital status"
-                , userProfile.getProfile().getMatchingAttributes().getMaritalStatus()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("educational qualification"
-                , userProfile.getProfile().getMatchingAttributes().getTitleEducationalQualification()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("own house"
-                , userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("occupation"
-                , userProfile.getProfile().getMatchingAttributes().getTitleOccupation()));
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHomeTown())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("home town"
+                    , userProfile.getProfile().getMatchingAttributes().getHomeTown()));
+
+        }
 
 
-        view.setAdapter(new MatchUserChoiceAdapter(context, matchUserChoiceArrayList));*/
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getAge())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("age"
+                    , userProfile.getProfile().getMatchingAttributes().getAge()));
+
+        }
+
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHeight())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("height"
+                    , userProfile.getProfile().getMatchingAttributes().getHeight()));
+
+        }
+
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getSkinColor())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("skin color"
+                    , userProfile.getProfile().getMatchingAttributes().getSkinColor()));
+
+        }
+
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHealth())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("health"
+                    , userProfile.getProfile().getMatchingAttributes().getHealth()));
+
+        }
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHealth())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("marital status"
+                    , userProfile.getProfile().getMatchingAttributes().getMaritalStatus()));
+
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getTitleEducationalQualification())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("educational qualification"
+                    , userProfile.getProfile().getMatchingAttributes().getTitleEducationalQualification()));
+
+        }
+
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("own house"
+                    , userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse()));
+
+        }
+
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getTitleOccupation())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("occupation"
+                    , userProfile.getProfile().getMatchingAttributes().getTitleOccupation()));
+
+        }
+
+
+        view.setAdapter(new MatchUserChoiceAdapter(context, matchUserChoiceArrayList));
 
     }
 
 
     private static String checkNullField(String value) {
-
 
         if (value == null) {
             return "";
@@ -382,6 +420,8 @@ public class SendRequestFragmentView {
             return value;
         }
 
+
     }
+
 
 }

@@ -4,13 +4,14 @@ package com.nascenia.biyeta.model.newuserprofile;
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class PersonalInformation implements Serializable
 {
 
     @SerializedName("id")
     @Expose
-    private long id;
+    private int id;
     @SerializedName("gender")
     @Expose
     private String gender;
@@ -59,17 +60,17 @@ public class PersonalInformation implements Serializable
     @SerializedName("mobile_no")
     @Expose
     private String mobileNo;
-    private final static long serialVersionUID = 4324570127188144141L;
+    private final static long serialVersionUID = -702282443100461262L;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public PersonalInformation withId(long id) {
+    public PersonalInformation withId(int id) {
         this.id = id;
         return this;
     }
@@ -280,6 +281,11 @@ public class PersonalInformation implements Serializable
     public PersonalInformation withMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

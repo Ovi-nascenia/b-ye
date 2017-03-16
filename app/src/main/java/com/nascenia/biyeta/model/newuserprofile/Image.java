@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class Image implements Serializable
 {
@@ -15,7 +16,7 @@ public class Image implements Serializable
     @SerializedName("profile_picture")
     @Expose
     private String profilePicture;
-    private final static long serialVersionUID = 4929199835408264296L;
+    private final static long serialVersionUID = -3621541389429611113L;
 
     public List<String> getOther() {
         return other;
@@ -41,6 +42,11 @@ public class Image implements Serializable
     public Image withProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

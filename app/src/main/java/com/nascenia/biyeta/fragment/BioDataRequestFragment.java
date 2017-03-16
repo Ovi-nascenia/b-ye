@@ -14,9 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
@@ -25,8 +23,6 @@ import com.nascenia.biyeta.utils.MyCallback;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
 
 import java.util.ArrayList;
-
-import static com.nascenia.biyeta.view.SendRequestFragmentView.responseValue;
 
 /**
  * Created by saiful on 3/10/17.
@@ -49,7 +45,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private ImageView profileViewerPersonImageView;
     private UserProfile userProfile;
 
-    private String url = "http://test.biyeta.com/api/v1/profiles/316";
+    private String url = "http://test.biyeta.com/api/v1/profiles/420";
 
 
     @Nullable
