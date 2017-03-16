@@ -87,7 +87,7 @@ public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdap
                 Intent in=new Intent(holder.image.getContext(), InboxSingleChat.class);
                 Bundle bundle=new Bundle();
                 bundle.putInt("sender_id",communicationProfile.getCurrentUserSignedIn());
-                bundle.putInt("receiver_id",profile.getId());
+                bundle.putInt("receiver_id",profile.getUserId());
                 bundle.putInt("current_user",communicationProfile.getCurrentUserSignedIn());
                 bundle.putString("userName",profile.getDisplayName());
                 in.putExtras(bundle);
