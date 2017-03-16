@@ -132,7 +132,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("onResume","OnResume");
+        Log.e("onResume", "OnResume");
     }
 
     @Override
@@ -173,21 +173,21 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.inbox:
 
-                Dialog dialog=new Dialog(HomeScreen.this);
+                Dialog dialog = new Dialog(HomeScreen.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setContentView(R.layout.inbox);
                 dialog.findViewById(R.id.tv_inbox).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(HomeScreen.this,InboxListView.class));
+                        startActivity(new Intent(HomeScreen.this, InboxListView.class));
                     }
                 });
                 DisplayMetrics displaymetrics = new DisplayMetrics();
                 this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                int width = (int) ((int)displaymetrics.widthPixels * 0.7);
-                int height = (int) ((int)displaymetrics.heightPixels * 0.48);
-                dialog.getWindow().setLayout(width,height);
+                int width = (int) ((int) displaymetrics.widthPixels * 0.7);
+                int height = (int) ((int) displaymetrics.heightPixels * 0.32);
+                dialog.getWindow().setLayout(width, height);
                 dialog.show();
                 break;
             case R.id.profile:

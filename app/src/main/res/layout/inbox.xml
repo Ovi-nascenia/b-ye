@@ -48,26 +48,7 @@
         android:layout_height="1dp"
         android:background="#fff"></TextView>
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_smile"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:gravity="center"
-            android:textColor="#ffffff"
-            android:background="#2E3F51"
-            android:text="@string/smile"/>
-    </android.support.v7.widget.CardView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#fff"></TextView>
 
 
     <android.support.v7.widget.CardView
@@ -108,24 +89,7 @@
             android:background="#2E3F51"
             android:text="@string/expire_request"/>
     </android.support.v7.widget.CardView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#fff"></TextView>
 
-
-
-
-        <TextView
-            android:id="@+id/tv_trash"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:gravity="center"
-            android:textColor="#ffffff"
-
-            android:text="@string/trash"/>
 
 
 

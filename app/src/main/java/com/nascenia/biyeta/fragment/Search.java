@@ -211,8 +211,12 @@ public class Search extends Fragment {
                 loadDataFromResponse(jsonObject);
 
 
-            } catch (JSONException e) {
+            } catch (JSONException e  ) {
                 e.printStackTrace();
+            }
+            catch (NullPointerException ei)
+            {
+               Utils.ShowAlert(getContext(),"Network Error");
             }
         }
 

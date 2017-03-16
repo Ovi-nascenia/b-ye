@@ -61,6 +61,9 @@ public class InboxListView extends AppCompatActivity {
 
     void setUpId() {
         recyclerView = (RecyclerView) findViewById(R.id.all_message_thread);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Message");
+
 
     }
 

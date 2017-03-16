@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.activity.InboxListView;
 import com.nascenia.biyeta.activity.InboxSingleChat;
 import com.nascenia.biyeta.model.InboxAllThreads.Example;
 import com.nascenia.biyeta.model.InboxAllThreads.Inbox;
@@ -41,7 +42,7 @@ public class InboxListAdapter extends RecyclerView.Adapter<InboxListAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Inbox item = example.getInbox().get(position);
         holder.userName.setText(item.getSenderName());
         holder.time_date.setText(item.getMessage().getCreatedAt());
@@ -56,6 +57,7 @@ public class InboxListAdapter extends RecyclerView.Adapter<InboxListAdapter.View
                 bundle.putInt("sender_id",item.getMessage().getUserId());
                 bundle.putInt("receiver_id",item.getMessage().getReceiver());
                 bundle.putInt("current_user",example.getCurrent_user_signed_in());
+                bundle.putString("userName",item.getSenderName());
                 Log.e("come",item.getMessage().getUserId() +"  "+item.getMessage().getReceiver());
                 in.putExtras(bundle);
                 holder.image.getContext().startActivity(in);
@@ -63,7 +65,7 @@ public class InboxListAdapter extends RecyclerView.Adapter<InboxListAdapter.View
             }
         });
 
-        if (!item.getMessage().getIsSeen())
+        if (!item.getMessage().getIsSeen() && item.getMessage().getReceiver()== example.getCurrent_user_signed_in())
             holder.message.setTypeface(null, Typeface.BOLD);
         else
             holder.message.setTypeface(null, Typeface.NORMAL);

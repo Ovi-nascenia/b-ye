@@ -41,7 +41,7 @@ public class Blog extends Fragment {
             }
         });
 
-        webView .loadUrl("http://www.biyeta.com/blog/");
+        webView .loadUrl("http://biyeta.com/about");
 
         return v;
 

@@ -37,8 +37,6 @@ public class Inbox extends Fragment implements View.OnClickListener{
         v.findViewById(R.id.tv_expire).setOnClickListener(this);
         v.findViewById(R.id.tv_inbox).setOnClickListener(this);
         v.findViewById(R.id.tv_sent_request).setOnClickListener(this);
-        v.findViewById(R.id.tv_trash).setOnClickListener(this);
-        v.findViewById(R.id.tv_smile).setOnClickListener(this);
         v.findViewById(R.id.tv_verfication).setOnClickListener(this);
 
         return v;
@@ -60,8 +58,7 @@ public class Inbox extends Fragment implements View.OnClickListener{
                 Toast.makeText(getContext(),"Inbox",Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.tv_smile:
-                break;
+
 
             case R.id.tv_verfication:
 
@@ -70,8 +67,7 @@ public class Inbox extends Fragment implements View.OnClickListener{
             case R.id.tv_expire:
                 break;
 
-            case R.id.tv_trash:
-                break;
+
         }
     }
 }

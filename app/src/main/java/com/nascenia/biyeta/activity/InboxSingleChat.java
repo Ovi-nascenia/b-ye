@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,6 +59,7 @@ public class InboxSingleChat extends AppCompatActivity {
     public static  int sender_id,recevier_id,current_user_id;
     ListView recyclerView;
     EditText editTextMesaageField;
+    String userName;
 
 
     public ArrayList<Integer> messageId;
@@ -73,10 +75,23 @@ public class InboxSingleChat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.activity_inbox_conversation_list);
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.custom_toolbar);
+      //  getSupportActionBar().set(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
+
+
+
+
         sender_id = intent.getIntExtra("sender_id", 4);
         recevier_id = intent.getIntExtra("receiver_id", 4);
         current_user_id=intent.getIntExtra("current_user",4);
+        userName=intent.getStringExtra("userName");
         messageId=new ArrayList<>();
+        setTitle(userName);
 
 
         Log.e("come", recevier_id + " "+current_user_id);
@@ -122,23 +137,6 @@ public class InboxSingleChat extends AppCompatActivity {
 
                 Log.e("fuck",editTextMesaageField.getText().toString());
                 TempMessage message=new TempMessage(editTextMesaageField.getText().toString(),"3-2-2017");
-//                String ch="{\n"+
-//                        "      \"id\": 188,\n"+
-//                        "      \"user_id\":"+sender_id+",\n"+
-//                        "      \"receiver\":"+recevier_id+",\n"+
-//                        "      \"text\":\""+editTextMesaageField.getText().toString()+"\",\n"+
-//                        "      \"created_at\": \"2017-03-14T06:11:18.000Z\",\n"+
-//                        "      \"is_seen\": false\n"+
-//                        "    }";
-//
-//
-//
-//                Gson gson = new Gson();
-//                InputStream is = new ByteArrayInputStream(ch.getBytes());
-//                InputStreamReader isr = new InputStreamReader(is);
-//                Message message1 = gson.fromJson(isr, Message.class);
-//                listMessage.add(message1);
-              //  inboxListAdapter.notifyDataSetChanged();
                 editTextMesaageField.setText("");
                 new SendMessage().execute();
 
@@ -148,14 +146,25 @@ public class InboxSingleChat extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+      //  countDownTimer.cancel();
+    }
 
 
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+       /// countDownTimer.start();
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         flag=0;
+        countDownTimer.cancel();
     }
 
     void setUpId()
@@ -197,6 +206,7 @@ public class InboxSingleChat extends AppCompatActivity {
                for (int i=response.getMessages().size()-1,j=0;i>=0 && j<response.getMessages().size();i--,j++) {
                    listMessage.add(j,response.getMessages().get(i));
                    inboxListAdapter.notifyDataSetChanged();
+                   recyclerView.smoothScrollToPosition(0);
 
                }
 
@@ -326,18 +336,24 @@ public class InboxSingleChat extends AppCompatActivity {
             Log.e("fii",s+"sss");
 
             Gson gson = new Gson();
-            InputStream is = new ByteArrayInputStream(s.getBytes());
-            InputStreamReader isr = new InputStreamReader(is);
-            response = gson.fromJson(isr, ChatHead.class);
-            for (int i=response.getMessages().size()-1;i>=0;i--)
-            {
-                if (!messageId.contains(response.getMessages().get(i).getId()))
-                {
-                    messageId.add(response.getMessages().get(i).getId());
-                    Message message=response.getMessages().get(i);
-                    listMessage.add(message);
-                    inboxListAdapter.notifyDataSetChanged();
+            try {
+
+
+                InputStream is = new ByteArrayInputStream(s.getBytes());
+                InputStreamReader isr = new InputStreamReader(is);
+                response = gson.fromJson(isr, ChatHead.class);
+                for (int i = response.getMessages().size() - 1; i >= 0; i--) {
+                    if (!messageId.contains(response.getMessages().get(i).getId())) {
+                        messageId.add(response.getMessages().get(i).getId());
+                        Message message = response.getMessages().get(i);
+                        listMessage.add(message);
+                        inboxListAdapter.notifyDataSetChanged();
+                    }
                 }
+            }catch (Exception e)
+            {
+                Toast.makeText(InboxSingleChat.this,"Server Disconnected",Toast.LENGTH_SHORT).show();
+                countDownTimer.cancel();
             }
 
 

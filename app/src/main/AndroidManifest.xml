@@ -39,9 +39,15 @@
             android:name=".activity.NewUserProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity android:name=".activity.InboxSingleChat"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".activity.InboxListView"
+        <activity
+            android:name=".activity.InboxSingleChat"
+            android:theme="@style/AppTheme">
+
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".activity.InboxListView"></meta-data>
+
+        </activity>
+        <activity
+            android:name=".activity.InboxListView"
             android:theme="@style/AppTheme"></activity>
 
     </application>
