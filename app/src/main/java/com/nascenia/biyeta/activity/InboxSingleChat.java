@@ -182,38 +182,43 @@ public class InboxSingleChat extends AppCompatActivity {
             super.onPostExecute(s);
             mSwipeRefreshLayout.setRefreshing(false);
 
-            Log.e("fii",s+"sss");
+            Log.e("fii", s + "sss");
 
             Gson gson = new Gson();
             InputStream is = new ByteArrayInputStream(s.getBytes());
             InputStreamReader isr = new InputStreamReader(is);
             response = gson.fromJson(isr, ChatHead.class);
-            for (int i=0;i<response.getMessages().size();i++)
-                  messageId.add(response.getMessages().get(i).getId());
-            if (flag==1) {
-                 listMessage = response.getMessages();
-                 inboxListAdapter= new ChatListAdapter(InboxSingleChat.this, listMessage) {
-                    @Override
-                    public void load() {
-                        // Toast.makeText(InboxSingleChat.this,"load more data",Toast.LENGTH_SHORT).show();
+
+            try {
+
+
+                for (int i = 0; i < response.getMessages().size(); i++)
+                    messageId.add(response.getMessages().get(i).getId());
+                if (flag == 1) {
+                    listMessage = response.getMessages();
+                    inboxListAdapter = new ChatListAdapter(InboxSingleChat.this, listMessage) {
+                        @Override
+                        public void load() {
+                            // Toast.makeText(InboxSingleChat.this,"load more data",Toast.LENGTH_SHORT).show();
+                        }
+                    };
+                    recyclerView.setAdapter(inboxListAdapter);
+
+                } else
+                    for (int i = response.getMessages().size() - 1, j = 0; i >= 0 && j < response.getMessages().size(); i--, j++) {
+                        listMessage.add(j, response.getMessages().get(i));
+                        inboxListAdapter.notifyDataSetChanged();
+                        recyclerView.smoothScrollToPosition(0);
+
                     }
-                };
-                recyclerView.setAdapter(inboxListAdapter);
-
-            }
-
-            else
-               for (int i=response.getMessages().size()-1,j=0;i>=0 && j<response.getMessages().size();i--,j++) {
-                   listMessage.add(j,response.getMessages().get(i));
-                   inboxListAdapter.notifyDataSetChanged();
-                   recyclerView.smoothScrollToPosition(0);
-
-               }
 
 //            recyclerView.setLayoutManager(new LinearLayoutManager(InboxSingleChat.this));
 //            recyclerView.setItemAnimator(new DefaultItemAnimator());new
 
 
+            } catch (Exception e) {
+                Toast.makeText(InboxSingleChat.this, "No Message", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
