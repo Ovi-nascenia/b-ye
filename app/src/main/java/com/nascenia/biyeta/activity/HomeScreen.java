@@ -111,7 +111,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 if (menuItem.getItemId() == R.id.nav_profile) {
 
 
-                   /* Intent intent = new Intent(getBaseContext(), UserProfileActivity.class);
+                 /*   Intent intent = new Intent(getBaseContext(), UserProfileActivity.class);
                     intent.putExtra("id", "316");
                     intent.putExtra("user_name", "Saiful");
                     intent.putExtra("PROFILE_EDIT_OPTION", true);

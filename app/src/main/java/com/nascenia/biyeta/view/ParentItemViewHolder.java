@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.ParentViewHolder;
-import com.nascenia.biyeta.model.UserProfile;
+import com.nascenia.biyeta.model.UserProfileParent;
 
 
 import com.nascenia.biyeta.R;
@@ -106,8 +106,8 @@ public class ParentItemViewHolder extends ParentViewHolder {
 
     }
 
-    public void bind(UserProfile userProfile) {
-        parentItemTitleTextView.setText(userProfile.getTitleParentname());
+    public void bind(UserProfileParent userProfileParent) {
+        parentItemTitleTextView.setText(userProfileParent.getTitleParentname());
     }
 
     @Override

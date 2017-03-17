@@ -193,7 +193,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
     }
 
 
-   /* private void addDataonMatchUserChoiceRecyclerView(UserProfile userProfile) {
+   /* private void addDataonMatchUserChoiceRecyclerView(UserProfileParent userProfile) {
 
         matchUserChoiceArrayList.add(new MatchUserChoice("home town"
                 , userProfile.getProfile().getMatchingAttributes().getHomeTown()));
@@ -230,7 +230,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
         }
 
     }
-    /*private void addDataonGeneralInfoRecylerViewItem(UserProfile userProfile) {
+    /*private void addDataonGeneralInfoRecylerViewItem(UserProfileParent userProfile) {
 
 
         generalInformationArrayList.add(new GeneralInformation(

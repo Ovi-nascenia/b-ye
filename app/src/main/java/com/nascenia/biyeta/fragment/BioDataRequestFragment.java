@@ -38,9 +38,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private CardView communicationCardLayout;
 
     private ImageView userProfileImage;
-    private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView, otherInfoRecylerView;
-    private ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
-    private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
+    private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView, otherInfoRecylerView,
+            familyMemberInfoRecylerView;
     private TextView userProfileDescriptionText;
     private ImageView profileViewerPersonImageView;
     private UserProfile userProfile;
@@ -86,7 +85,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 responseValue = responseBody.string();
                 Log.i("bio", "onmethod" + responseValue + " ");
                 responseBody.close();
-                //  final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
+                //  final UserProfileParent userProfile = new Gson().fromJson(responseValue, UserProfileParent.class);
 
                 status = true;
 
@@ -119,6 +118,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         matchUserChoiceRecyclerView = (RecyclerView) _baseView.findViewById(R.id.match_user_choice_recyclerView);
         matchUserChoiceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         otherInfoRecylerView = (RecyclerView) _baseView.findViewById(R.id.other_info_recylerview);
+        otherInfoRecylerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        familyMemberInfoRecylerView = (RecyclerView) _baseView.findViewById(R.id.family_info_recylerview);
+        familyMemberInfoRecylerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         userProfileDescriptionText = (TextView) _baseView.findViewById(R.id.userProfileDescriptionText);
 
@@ -213,7 +215,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 matchUserChoiceRecyclerView,
                 otherInfoRecylerView,
                 profileViewerPersonImageView,
-                userProfileImage
+                userProfileImage,
+                familyMemberInfoRecylerView
         );
 
 
@@ -244,7 +247,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
             Log.i("userdetails", "method reach");
             try {
-                userProfile = new Gson().fromJson(responseValue, UserProfile.class);
+                userProfile = new Gson().fromJson(responseValue, UserProfileParent.class);
 
                 if (userProfile == null) {
                     Log.i("userdetails", "userprofile null");
