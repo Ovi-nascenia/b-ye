@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.fragment.Blog;
 import com.nascenia.biyeta.fragment.Favourite;
 import com.nascenia.biyeta.fragment.Inbox;
@@ -96,31 +97,74 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
                 // update highlighted item in the navigation menu
                 menuItem.setChecked(true);
+                //set false other item
+
+
+
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
                     drawerLayout.closeDrawer(Gravity.RIGHT);
 
+                int id=menuItem.getItemId();
+                switch (id)
+                {
+                    case R.id.nav_profile:
+                        break;
 
-                if (menuItem.getItemId() == R.id.nac_blog) {
-                    Toast.makeText(HomeScreen.this, "item 2", Toast.LENGTH_SHORT).show();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentParentViewGroup, new Blog())
-                            .commit();
+                    case R.id.nav_inbox:
+                        break;
 
+                    case R.id.nav_fav:
+                        break;
+                    case R.id.nav_setting:
+                        break;
 
+                    case R.id.nav_balance:
+                        break;
+
+                    case R.id.nav_about_us:
+                        break;
+                    case R.id.nav_connection:
+                        break;
+
+                    case R.id.nav_faq:
+                        break;
+                    case R.id.nav_policy:
+                        startActivity(new Intent(HomeScreen.this,LowsAndTerms.class));
+                        break;
+                    case R.id.nav_logout:
+                        SharePref sharePref=new SharePref(HomeScreen.this);
+                        sharePref.set_data("token","key");
+                        startActivity(new Intent(HomeScreen.this,Login.class));
+                        finish();
+
+                        break;
+
+                    default:
+                        break;
                 }
 
-                if (menuItem.getItemId() == R.id.nav_profile) {
 
-
-                   /* Intent intent = new Intent(getBaseContext(), UserProfileActivity.class);
-                    intent.putExtra("id", "316");
-                    intent.putExtra("user_name", "Saiful");
-                    intent.putExtra("PROFILE_EDIT_OPTION", true);
-                    startActivity(intent);*/
-
-
-                    startActivity(new Intent(getBaseContext(), NewUserProfileActivity.class));
-                }
+//                if (menuItem.getItemId() == R.id.nac_blog) {
+//                    Toast.makeText(HomeScreen.this, "item 2", Toast.LENGTH_SHORT).show();
+//                    getSupportFragmentManager().beginTransaction()
+//                            .replace(R.id.fragmentParentViewGroup, new Blog())
+//                            .commit();
+//
+//
+//                }
+//
+//                if (menuItem.getItemId() == R.id.nav_profile) {
+//
+//
+//                   /* Intent intent = new Intent(getBaseContext(), UserProfileActivity.class);
+//                    intent.putExtra("id", "316");
+//                    intent.putExtra("user_name", "Saiful");
+//                    intent.putExtra("PROFILE_EDIT_OPTION", true);
+//                    startActivity(intent);*/
+//
+//
+//                    startActivity(new Intent(getBaseContext(), NewUserProfileActivity.class));
+//                }
 
                 return true;
             }

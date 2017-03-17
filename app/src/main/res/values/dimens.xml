@@ -57,7 +57,7 @@
 
     <dimen name="profile_width">75dp</dimen>
     <dimen name="profile_height">75dp</dimen>
-    <dimen name="navigation_drawer_width">250dp</dimen>
+    <dimen name="navigation_drawer_width">200dp</dimen>
 
     <dimen name="profile_item_cardview_height">100dp</dimen>
 

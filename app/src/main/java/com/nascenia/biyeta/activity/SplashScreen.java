@@ -36,8 +36,8 @@ public class SplashScreen extends AppCompatActivity {
 
                 // This method will be executed once the timer is over
                 // Start your app main activity
-
-             SharePref sharePref=new SharePref(SplashScreen.this);
+             //
+            SharePref sharePref=new SharePref(SplashScreen.this);
             if (sharePref.get_data("token").equals("key")) {
                 Intent i = new Intent(SplashScreen.this, Login.class);
                 startActivity(i);
@@ -48,7 +48,6 @@ public class SplashScreen extends AppCompatActivity {
             {
                 Intent i = new Intent(SplashScreen.this, HomeScreen.class);
                 startActivity(i);
-                ///Kill the current activity
                 finish();
             }
             }

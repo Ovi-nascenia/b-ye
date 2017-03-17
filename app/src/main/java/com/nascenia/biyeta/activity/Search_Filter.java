@@ -1,11 +1,10 @@
 package com.nascenia.biyeta.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,7 +40,7 @@ import me.bendik.simplerangeview.SimpleRangeView;
 
 import static me.bendik.simplerangeview.SimpleRangeView.*;
 
-public class Search_Filter extends AppCompatActivity implements OnClickListener {
+public class Search_Filter extends CustomActionBarActivity implements OnClickListener {
 
 
     SimpleRangeView rangeView_age, rangeView_height, rangeView_color, rangeView_education, rangeView_health;
@@ -122,6 +121,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
         locationId.clear();
         professionId.clear();
         occupationId.clear();
+        setUpToolBar(getString(R.string.search),this);
 
 
 
@@ -160,6 +160,11 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
         religionCastList.add(3);
     }
 
+
+    @Override
+    void setUpToolBar(String title, Context context) {
+        super.setUpToolBar(title, context);
+    }
 
     public static  ArrayList<Integer> occupationId=new ArrayList<>();
     public static  ArrayList<Integer> professionId=new ArrayList<>();
@@ -463,18 +468,7 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
 
 
     void setUpId() {
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mToolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
-        mToolbar.setNavigationOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        getSupportActionBar().setTitle(R.string.search);
+
         rangeView_age = (SimpleRangeView) findViewById(R.id.age_lebel);
         rangeView_height = (SimpleRangeView) findViewById(R.id.height_lebel);
         rangeView_color = (SimpleRangeView) findViewById(R.id.color_lebel);
@@ -498,7 +492,6 @@ public class Search_Filter extends AppCompatActivity implements OnClickListener 
             public void onClick(View view) {
 
                 new GetResult().execute();
-                //porcessJSon();
 
             }
 

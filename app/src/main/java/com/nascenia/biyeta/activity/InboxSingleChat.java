@@ -1,5 +1,6 @@
 package com.nascenia.biyeta.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,7 +54,7 @@ import java.util.TimerTask;
  * Created by god father on 3/13/2017.
  */
 
-public class InboxSingleChat extends AppCompatActivity {
+public class InboxSingleChat extends CustomActionBarActivity {
 
 
     public static  int sender_id,recevier_id,current_user_id;
@@ -77,11 +78,7 @@ public class InboxSingleChat extends AppCompatActivity {
         setContentView(R.layout.activity_inbox_conversation_list);
 
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_toolbar);
-      //  getSupportActionBar().set(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
 
 
 
@@ -91,7 +88,8 @@ public class InboxSingleChat extends AppCompatActivity {
         current_user_id=intent.getIntExtra("current_user",4);
         userName=intent.getStringExtra("userName");
         messageId=new ArrayList<>();
-        setTitle(userName);
+        setUpToolBar(userName,this);
+
 
 
         Log.e("come", recevier_id + " "+current_user_id);
@@ -152,7 +150,10 @@ public class InboxSingleChat extends AppCompatActivity {
       //  countDownTimer.cancel();
     }
 
-
+    @Override
+    void setUpToolBar(String title, Context context) {
+        super.setUpToolBar(title, context);
+    }
 
     @Override
     protected void onRestart() {

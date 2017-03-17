@@ -2,45 +2,43 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/default_profile_female_icon"
-            android:title="Profile" />
+            android:title="@string/nav_profile" />
         <item
-            android:id="@+id/nac_blog"
-            android:icon="@drawable/blog"
-            android:title="Blog" />
+            android:id="@+id/nav_inbox"
+            android:title="@string/nav_inbox" />
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/search"
-            android:title="Search" />
+            android:id="@+id/nav_fav"
+            android:title="@string/nav_fav" />
         <item
-            android:id="@+id/nav_photos"
-            android:icon="@drawable/mail"
-            android:title="Mail" />
+            android:id="@+id/nav_setting"
+
+            android:title="@string/accunt_setting" />
         <item
-            android:id="@+id/nav_movies"
-            android:icon="@drawable/love"
-            android:title="Favourite" />
+            android:id="@+id/nav_balance"
+            android:title="@string/balance_recharge" />
 
 
-
-
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_highlight_off_black_24dp"
-            android:title="Settings" />
-    </group>
-
-    <item android:title="Other">
-        <menu>
             <item
                 android:id="@+id/nav_about_us"
-                android:title="@string/nav_about_us" />
+                android:title="@string/nav_about_biyeta" />
             <item
-                android:id="@+id/nav_privacy_policy"
-                android:title=" privacy_policy" />
-        </menu>
-    </item>
+                android:id="@+id/nav_connection"
+                android:title="@string/connection" />
+            <item
+                android:id="@+id/nav_faq"
+                android:title="@string/nav_faq" />
+            <item
+                android:id="@+id/nav_policy"
+                android:title="@string/nav_termsofuse" />
+
+            <item
+                android:id="@+id/nav_logout"
+                android:title="@string/logout" />
+
+
+    </group>
 
 </menu>

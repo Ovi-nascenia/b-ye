@@ -4,41 +4,53 @@
     android:layout_height="match_parent">
 
 
-        <LinearLayout
-            android:id="@+id/linearlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2">
-            <TextView
-                android:id="@+id/biodata"
-                android:layout_width="0dp"
-                android:text="@string/biodata"
-                android:textColor="#ffffff"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:gravity="center"
-                android:background="@color/colorPrimary"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/connection"
-                android:layout_width="0dp"
-                android:text="@string/connection"
-                android:background="@android:color/darker_gray"
-                android:textColor="@android:color/black"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-        </LinearLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/communication_profile_list"
-            android:layout_below="@+id/linearlayout"
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            ></android.support.v7.widget.RecyclerView>
+        <TextView
+            android:id="@+id/biodata"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="@string/biodata"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/connection"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/connection"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/simpleProgressBar"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearlayout"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="visible" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/communication_profile_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/simpleProgressBar"></android.support.v7.widget.RecyclerView>
 
 
 </RelativeLayout>

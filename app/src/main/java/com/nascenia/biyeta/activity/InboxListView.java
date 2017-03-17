@@ -1,5 +1,6 @@
 package com.nascenia.biyeta.activity;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +42,7 @@ import java.util.List;
  * Created by god father on 3/13/2017.
  */
 
-public class InboxListView extends AppCompatActivity {
+public class InboxListView extends CustomActionBarActivity {
     public final String INBOX_SUB_URL = "messages";
     private RecyclerView recyclerView;
     private final OkHttpClient client = new OkHttpClient();
@@ -50,6 +52,7 @@ public class InboxListView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inbox_view);
         setUpId();
+        setUpToolBar("Inbox",this);
         if (Utils.isOnline(InboxListView.this))
             new LoadMessageThread().execute();
         else
@@ -59,6 +62,11 @@ public class InboxListView extends AppCompatActivity {
 
     }
 
+    @Override
+    void setUpToolBar(String title, Context context) {
+        super.setUpToolBar(title, context);
+    }
+
     void setUpId() {
         recyclerView = (RecyclerView) findViewById(R.id.all_message_thread);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,6 +74,7 @@ public class InboxListView extends AppCompatActivity {
 
 
     }
+
 
 
     class LoadMessageThread extends AsyncTask<String, String, String> {

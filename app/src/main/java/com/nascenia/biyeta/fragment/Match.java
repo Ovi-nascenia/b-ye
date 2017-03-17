@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -48,6 +50,7 @@ public class Match extends Fragment implements View.OnClickListener{
     TextView biodata;
     TextView connection;
     RecyclerView recyclerView;
+    ProgressBar progressBar;
 
     public Match() {
         // Required empty public constructor
@@ -70,7 +73,12 @@ public class Match extends Fragment implements View.OnClickListener{
         connection=(TextView)v.findViewById(R.id.connection);
         connection.setOnClickListener(this);
 
+        progressBar=(ProgressBar)v.findViewById(R.id.simpleProgressBar);
+
         recyclerView=(RecyclerView)v.findViewById(R.id.communication_profile_list);
+
+        new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/api/v1/profile_requests");
+
         return v;
 
     }
@@ -84,6 +92,7 @@ public class Match extends Fragment implements View.OnClickListener{
         switch (id)
         {
             case  R.id.biodata:
+                progressBar.setVisibility(View.VISIBLE);
                 biodata.setTextColor(Color.WHITE);
                 biodata.setBackgroundResource(R.color.colorAccent);
 
@@ -92,12 +101,13 @@ public class Match extends Fragment implements View.OnClickListener{
                 recyclerView.setAdapter(null);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
+                new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/api/v1/profile_requests");
 
                 break;
 
             case R.id.connection:
 
-
+                progressBar.setVisibility(View.VISIBLE);
                 connection.setTextColor(Color.WHITE);
                 connection.setBackgroundResource(R.color.colorAccent);
 
@@ -117,6 +127,8 @@ public class Match extends Fragment implements View.OnClickListener{
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progressBar.setVisibility(View.GONE);
+
             Gson gson = new Gson();
             InputStream is = new ByteArrayInputStream(s.getBytes());
             InputStreamReader isr = new InputStreamReader(is);
@@ -126,6 +138,50 @@ public class Match extends Fragment implements View.OnClickListener{
             recyclerView.setAdapter(inboxListAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            Response response;
+            SharePref sharePref = new SharePref(getContext());
+            String token = sharePref.get_data("token");
+            Request request = null;
+
+            request = new Request.Builder()
+                    .url(strings[0])
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
+            try {
+                response = client.newCall(request).execute();
+                String jsonData = response.body().string();
+                return jsonData;
+
+            } catch (Exception e) {
+            }
+
+            return null;
+        }
+    }
+
+
+    class LoadBiodataConnection extends AsyncTask<String,String,String>
+    {
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            progressBar.setVisibility(View.GONE);
+            Toast.makeText(getContext(),s,Toast.LENGTH_SHORT).show();
+
+//            Gson gson = new Gson();
+//            InputStream is = new ByteArrayInputStream(s.getBytes());
+//            InputStreamReader isr = new InputStreamReader(is);
+//            CommunicationProfile response = gson.fromJson(isr, CommunicationProfile.class);
+//
+//            CommunicationAdapter inboxListAdapter=new CommunicationAdapter(response,R.layout.common_user_profile_item);
+//            recyclerView.setAdapter(inboxListAdapter);
+//            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//            recyclerView.setItemAnimator(new DefaultItemAnimator());
         }
 
         @Override

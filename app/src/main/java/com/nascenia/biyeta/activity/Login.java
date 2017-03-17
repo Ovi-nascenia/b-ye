@@ -1,5 +1,7 @@
 package com.nascenia.biyeta.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -7,12 +9,17 @@ import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -38,9 +45,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
     ImageView icon;
+    LinearLayout linearLayout;
     LinearLayout new_account;
-    EditText et_password,et_user_name;
-    Button b_submit,b_facebook_login;
+    EditText etPassword,etUserName;
+    Button buttonSubmit,buttonFacebookLogin;
     ProgressBar progressBar;
 
     ///sub url
@@ -57,10 +65,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         //initialize the Okhttp
         client=new OkHttpClient();
-
-
-
-
         setContentView(R.layout.login);
 
         if (!Utils.isOnline(Login.this))
@@ -71,6 +75,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         //hide action bar
         getSupportActionBar().hide();
+
 
         //set all id//
         set_id();
@@ -89,19 +94,32 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         new_account=(LinearLayout)findViewById(R.id.new_accunt_test);
         new_account.setOnClickListener(this);
 
-        et_user_name=(EditText)findViewById(R.id.login_email);
-        et_password=(EditText)findViewById(R.id.login_password);
+        etUserName=(EditText)findViewById(R.id.login_email);
+        etPassword=(EditText)findViewById(R.id.login_password);
 
-        b_submit=(Button)findViewById(R.id.login_submit);
-        b_submit.setOnClickListener(this);
+        buttonSubmit=(Button)findViewById(R.id.login_submit);
+        buttonSubmit.setOnClickListener(this);
 
-        b_facebook_login=(Button)findViewById(R.id.fb_button);
-        b_facebook_login.setOnClickListener(this);
+        buttonFacebookLogin=(Button)findViewById(R.id.fb_button);
+        buttonFacebookLogin.setOnClickListener(this);
 
         progressBar=(ProgressBar)findViewById(R.id.progressbar);
-
-
         icon=(ImageView)findViewById(R.id.icon_view) ;
+
+        etPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId != 0 || event.getAction() == KeyEvent.ACTION_DOWN) {
+
+                    Toast.makeText(Login.this,"handle now",Toast.LENGTH_SHORT).show();
+                    InputMethodManager imm = (InputMethodManager) Login.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(Login.this.getCurrentFocus().getWindowToken(), 0);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
     }
 
     @Override
@@ -119,9 +137,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             case R.id.login_submit:
 
                 //get the user name from Edit text
-                String user_name=et_user_name.getText().toString();
+                String user_name=etUserName.getText().toString();
                 //get the password from Edit Text
-                String password=et_password.getText().toString();
+                String password=etPassword.getText().toString();
 
                 ///check the user_name and password is empty
                 if(user_name.trim().equals("")||password.trim().equals(""))
@@ -229,7 +247,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Log.e("error","JSON error");
                 e.printStackTrace();
                 Utils.ShowAlert(Login.this,"Wrong Input");
-                b_submit.setVisibility(View.VISIBLE);
+                buttonSubmit.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
 
             }
@@ -238,7 +256,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
-            b_submit.setVisibility(View.GONE);
+            buttonSubmit.setVisibility(View.GONE);
 
         }
     }

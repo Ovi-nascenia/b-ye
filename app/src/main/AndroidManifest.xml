@@ -26,31 +26,36 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name="com.nascenia.biyeta.activity.Login"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <activity
             android:name="com.nascenia.biyeta.activity.Search_Filter"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme" />
 
         <!--<activity android:name=".Search_Filter"-->
         <!--&gt;</activity>-->
         <activity
             android:name=".activity.UserProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".activity.NewUserProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".activity.InboxSingleChat"
             android:theme="@style/AppTheme">
-
-            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".activity.InboxListView"></meta-data>
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.InboxListView" />
         </activity>
         <activity
             android:name=".activity.InboxListView"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+
+
+        <activity
+            android:name=".activity.LowsAndTerms"
+            android:theme="@style/AppTheme" />
 
     </application>
 

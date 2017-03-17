@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:weightSum="2"
-    android:orientation="horizontal"
-    android:background="#EAEBED"
+
     android:layout_height="match_parent"
-    
+    android:background="#EAEBED"
+    android:orientation="horizontal"
+    android:weightSum="2"
+
     >
-    
+
     <LinearLayout
         android:layout_width="0dip"
         android:layout_height="match_parent"
@@ -19,31 +20,29 @@
     <LinearLayout
         android:layout_width="0dip"
         android:layout_height="match_parent"
-        android:weightSum="10"
+        android:layout_weight="1.6"
         android:orientation="vertical"
-        android:layout_weight="1.6">
+        android:weightSum="10">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
-            android:orientation="horizontal"
-            android:layout_weight="3.6">
-            <ImageView
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:padding="5dp"
+            android:layout_weight="3.8"
+            android:orientation="horizontal">
 
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
+            <ImageView
                 android:id="@+id/icon_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="2dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:scaleType="fitXY" />
-
-
-
 
 
         </LinearLayout>
@@ -54,150 +53,146 @@
             android:layout_weight=".6"></LinearLayout>
 
         <LinearLayout
-            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:weightSum="2"
+            android:layout_margin="5dp"
+            android:layout_weight="1.2"
             android:orientation="horizontal"
-            android:layout_weight="1.2">
+            android:weightSum="2">
+
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2">
-            <EditText
-                android:id="@+id/login_email"
-                android:hint="@string/email"
-                android:gravity="center"
-                android:background="#ffffff"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+
+                <EditText
+                    android:id="@+id/login_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:gravity="center"
+                    android:hint="@string/email"
 
 
-                />
+                    />
             </android.support.v7.widget.CardView>
 
 
-
-
-
         </LinearLayout>
+
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:weightSum="2"
+            android:layout_weight="1.2"
             android:orientation="horizontal"
-            android:layout_weight="1.2">
+            android:weightSum="2">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+                <EditText
+                    android:id="@+id/login_password"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2">
-                    <EditText
-                        android:id="@+id/login_password"
-                        android:inputType="textPassword"
-                        android:hint="@string/password"
-                        android:gravity="center"
-                        android:background="#ffffff"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:gravity="center"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
 
 
-                        />
-                </android.support.v7.widget.CardView>
-
-
+                    />
+            </android.support.v7.widget.CardView>
 
 
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:weightSum="2"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1.1"
             android:orientation="horizontal"
-            android:layout_weight="1.1">
+            android:weightSum="2">
 
             <Button
 
-                android:background="@color/colorPrimary"
+                android:id="@+id/login_submit"
                 android:layout_width="0dp"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:text="@string/login"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-
                 android:layout_weight="2"
-                android:id="@+id/login_submit" />
+                android:background="@color/colorPrimary"
+                android:scaleType="fitXY"
+                android:text="@string/login"
+
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
             <ProgressBar
                 android:id="@+id/progressbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"/>
-
-
+                android:visibility="gone" />
 
 
         </LinearLayout>
 
 
         <LinearLayout
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:weightSum="2"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_weight="1">
+            android:weightSum="2">
+
             <ImageView
-                android:src="@drawable/fb_icon"
-                android:padding="0dp"
-                android:scaleType="fitXY"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight=".4"/>
+                android:layout_weight=".4"
+                android:padding="0dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/fb_icon" />
 
             <Button
-                android:layout_marginLeft="3dp"
-                android:background="#3C5A99"
+                android:id="@+id/fb_button"
                 android:layout_width="0dp"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:text="@string/login"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-
+                android:layout_marginLeft="3dp"
                 android:layout_weight="1.6"
-                android:id="@+id/fb_button" />
+                android:background="#3C5A99"
+                android:scaleType="fitXY"
+                android:text="@string/login"
 
-
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
 
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/new_accunt_test"
-            android:layout_marginTop="35dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:weightSum="2"
+            android:layout_marginTop="35dp"
+            android:layout_weight="1.2"
             android:orientation="horizontal"
-            android:layout_weight="1.2">
+            android:weightSum="2">
+
             <TextView
                 android:layout_width="0dp"
-                android:textSize="17dp"
-
-                android:gravity="center"
-                android:textColor="@color/colorPrimary"
                 android:layout_height="match_parent"
+
                 android:layout_weight="2"
-                android:text="@string/new_account"/>
-
-
+                android:gravity="center"
+                android:text="@string/new_account"
+                android:textColor="@color/colorPrimary"
+                android:textSize="17dp" />
 
 
         </LinearLayout>
-
 
 
     </LinearLayout>
@@ -210,6 +205,7 @@
 
     </LinearLayout>
 </LinearLayout>
+
 
 
    
