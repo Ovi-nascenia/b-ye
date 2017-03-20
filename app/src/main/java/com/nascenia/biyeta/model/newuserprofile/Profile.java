@@ -2,6 +2,7 @@
 package com.nascenia.biyeta.model.newuserprofile;
 
 import java.io.Serializable;
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -30,6 +31,12 @@ public class Profile implements Serializable
     @SerializedName("profile_religion")
     @Expose
     private ProfileReligion profileReligion;
+    @SerializedName("family_members")
+    @Expose
+    private List<FamilyMember> familyMembers = null;
+    @SerializedName("address")
+    @Expose
+    private Address address;
     @SerializedName("other_information")
     @Expose
     private OtherInformation otherInformation;
@@ -38,11 +45,11 @@ public class Profile implements Serializable
     private MatchingAttributes matchingAttributes;
     @SerializedName("education_information")
     @Expose
-    private EducationInformation educationInformation;
+    private List<EducationInformation> educationInformation = null;
     @SerializedName("request_status")
     @Expose
     private RequestStatus requestStatus;
-    private final static long serialVersionUID = -1021522188555560575L;
+    private final static long serialVersionUID = -6999151452998727246L;
 
     public PersonalInformation getPersonalInformation() {
         return personalInformation;
@@ -135,6 +142,32 @@ public class Profile implements Serializable
         return this;
     }
 
+    public List<FamilyMember> getFamilyMembers() {
+        return familyMembers;
+    }
+
+    public void setFamilyMembers(List<FamilyMember> familyMembers) {
+        this.familyMembers = familyMembers;
+    }
+
+    public Profile withFamilyMembers(List<FamilyMember> familyMembers) {
+        this.familyMembers = familyMembers;
+        return this;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Profile withAddress(Address address) {
+        this.address = address;
+        return this;
+    }
+
     public OtherInformation getOtherInformation() {
         return otherInformation;
     }
@@ -161,15 +194,15 @@ public class Profile implements Serializable
         return this;
     }
 
-    public EducationInformation getEducationInformation() {
+    public List<EducationInformation> getEducationInformation() {
         return educationInformation;
     }
 
-    public void setEducationInformation(EducationInformation educationInformation) {
+    public void setEducationInformation(List<EducationInformation> educationInformation) {
         this.educationInformation = educationInformation;
     }
 
-    public Profile withEducationInformation(EducationInformation educationInformation) {
+    public Profile withEducationInformation(List<EducationInformation> educationInformation) {
         this.educationInformation = educationInformation;
         return this;
     }

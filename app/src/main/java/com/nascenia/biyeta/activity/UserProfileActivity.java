@@ -10,18 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.PartialProfileViewAdapter;
@@ -29,14 +24,13 @@ import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.model.PartialProfileItemModel;
-import com.nascenia.biyeta.model.UserProfile;
+import com.nascenia.biyeta.model.UserProfileParent;
 import com.nascenia.biyeta.model.UserProfileChild;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -58,7 +52,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private ArrayList<UserProfileChild> childItemList;
-    private ArrayList<UserProfile> userProfilesList;
+    private ArrayList<UserProfileParent> userProfilesListParent;
     HashMap<String, String> hashMap;
     private TextView userNameTextView;
 
@@ -106,7 +100,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         userNameTextView.setText(getIntent().getExtras().getString("user_name"));
 
-        userProfilesList = new ArrayList<UserProfile>();
+        userProfilesListParent = new ArrayList<UserProfileParent>();
 
 
         userProfileInfoRecyclerView = (RecyclerView) findViewById(R.id.user_details_recycler_view);
@@ -186,7 +180,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
                     }
                     userProfileInfoRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
-                            userProfilesList, getIntent().getExtras().getBoolean("PROFILE_EDIT_OPTION")));
+                            userProfilesListParent, getIntent().getExtras().getBoolean("PROFILE_EDIT_OPTION")));
                 }
 
 
@@ -237,7 +231,7 @@ public class UserProfileActivity extends AppCompatActivity {
         }
 
 
-        userProfilesList.add(new UserProfile(key, childItemList));
+        userProfilesListParent.add(new UserProfileParent(key, childItemList));
 
     }
 
@@ -271,7 +265,7 @@ public class UserProfileActivity extends AppCompatActivity {
             Log.i("jsonarraykey", "-------------------------");
         }
 
-        userProfilesList.add(new UserProfile(key, childItemList));
+        userProfilesListParent.add(new UserProfileParent(key, childItemList));
     }
 
 }

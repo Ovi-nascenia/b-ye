@@ -24,4 +24,9 @@
     <color name="text_msg_input">#626262</color>
     <color name="lblFromName">#777777</color>
 
+
+    <color name="tab_background_selected">#FFBF2124</color>
+    <color name="tab_background_unselected">#FFAEACAC</color>
+
+
 </resources>

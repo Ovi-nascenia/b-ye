@@ -24,12 +24,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 
-import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.fragment.Blog;
 import com.nascenia.biyeta.fragment.Favourite;
 import com.nascenia.biyeta.fragment.Inbox;
@@ -225,7 +223,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.inbox:
 
-                Dialog dialog = new Dialog(HomeScreen.this);
+                Dialog dialog=new Dialog(HomeScreen.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setContentView(R.layout.inbox);
@@ -237,9 +235,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 });
                 DisplayMetrics displaymetrics = new DisplayMetrics();
                 this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                int width = (int) ((int) displaymetrics.widthPixels * 0.7);
-                int height = (int) ((int) displaymetrics.heightPixels * 0.32);
-                dialog.getWindow().setLayout(width, height);
+                int width = (int) ((int)displaymetrics.widthPixels * 0.8);
+                int height = (int) ((int)displaymetrics.heightPixels * 0.6);
+                dialog.getWindow().setLayout(width,height);
+                //ge
+
                 dialog.show();
                 break;
             case R.id.profile:

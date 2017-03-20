@@ -2,12 +2,13 @@
 package com.nascenia.biyeta.model.newuserprofile;
 
 import java.io.Serializable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class MatchingAttributes implements Serializable
-{
+public class MatchingAttributes implements Serializable {
 
     @SerializedName("home_town")
     @Expose
@@ -36,7 +37,7 @@ public class MatchingAttributes implements Serializable
     @SerializedName("title_occupation")
     @Expose
     private String titleOccupation;
-    private final static long serialVersionUID = 7533326798525734417L;
+    private final static long serialVersionUID = -3552574910404038056L;
 
     public String getHomeTown() {
         return homeTown;

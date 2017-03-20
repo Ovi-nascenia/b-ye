@@ -2,12 +2,13 @@
 package com.nascenia.biyeta.model.newuserprofile;
 
 import java.io.Serializable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class OtherInformation implements Serializable
-{
+public class OtherInformation implements Serializable {
 
     @SerializedName("prayer")
     @Expose
@@ -17,10 +18,16 @@ public class OtherInformation implements Serializable
     private String fasting;
     @SerializedName("job_after_marriage")
     @Expose
-    private Object jobAfterMarriage;
+    private String jobAfterMarriage;
     @SerializedName("hijab")
     @Expose
-    private Object hijab;
+    private String hijab;
+
+
+    @SerializedName("own_house")
+    @Expose
+    private String ownHouse;
+
     private final static long serialVersionUID = -270776123101135295L;
 
     public String getPrayer() {
@@ -49,31 +56,46 @@ public class OtherInformation implements Serializable
         return this;
     }
 
-    public Object getJobAfterMarriage() {
+    public String getJobAfterMarriage() {
         return jobAfterMarriage;
     }
 
-    public void setJobAfterMarriage(Object jobAfterMarriage) {
+    public void setJobAfterMarriage(String jobAfterMarriage) {
         this.jobAfterMarriage = jobAfterMarriage;
     }
 
-    public OtherInformation withJobAfterMarriage(Object jobAfterMarriage) {
+    public OtherInformation withJobAfterMarriage(String jobAfterMarriage) {
         this.jobAfterMarriage = jobAfterMarriage;
         return this;
     }
 
-    public Object getHijab() {
+    public String getHijab() {
         return hijab;
     }
 
-    public void setHijab(Object hijab) {
+    public void setHijab(String hijab) {
         this.hijab = hijab;
     }
 
-    public OtherInformation withHijab(Object hijab) {
+    public OtherInformation withHijab(String hijab) {
         this.hijab = hijab;
         return this;
     }
+
+
+    public String getOwnHouse() {
+        return ownHouse;
+    }
+
+    public void setOwnHouse(String ownHouse) {
+        this.ownHouse = ownHouse;
+    }
+
+    public OtherInformation withOwnHouse(String ownHouse) {
+        this.ownHouse = ownHouse;
+        return this;
+    }
+
 
     @Override
     public String toString() {

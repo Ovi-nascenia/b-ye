@@ -2,17 +2,19 @@
 package com.nascenia.biyeta.model.newuserprofile;
 
 import java.io.Serializable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class PersonalInformation implements Serializable {
+public class PersonalInformation implements Serializable
+{
 
     @SerializedName("id")
     @Expose
-    private long id;
+    private int id;
+    @SerializedName("gender")
+    @Expose
+    private String gender;
     @SerializedName("age")
     @Expose
     private int age;
@@ -39,24 +41,50 @@ public class PersonalInformation implements Serializable {
     private String maritalStatus;
     @SerializedName("image")
     @Expose
-    private String image;
-    @SerializedName("gender")
+    private Image image;
+    @SerializedName("real_name")
     @Expose
-    private String gender;
+    private String realName;
+    @SerializedName("blood_group")
+    @Expose
+    private String bloodGroup;
+    @SerializedName("disabilities")
+    @Expose
+    private String disabilities;
+    @SerializedName("disabilities_description")
+    @Expose
+    private String disabilitiesDescription;
+    @SerializedName("smoking")
+    @Expose
+    private String smoking;
+    @SerializedName("mobile_no")
+    @Expose
+    private String mobileNo;
+    private final static long serialVersionUID = -702282443100461262L;
 
-
-    private final static long serialVersionUID = -6389523718871776889L;
-
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public PersonalInformation withId(long id) {
+    public PersonalInformation withId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public PersonalInformation withGender(String gender) {
+        this.gender = gender;
         return this;
     }
 
@@ -164,33 +192,96 @@ public class PersonalInformation implements Serializable {
         return this;
     }
 
-    public String getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 
-    public PersonalInformation withImage(String image) {
+    public PersonalInformation withImage(Image image) {
         this.image = image;
         return this;
     }
 
-
-    public String getGender() {
-        return gender;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
-    public PersonalInformation withGender(String gender) {
-        this.gender = gender;
+    public PersonalInformation withRealName(String realName) {
+        this.realName = realName;
         return this;
     }
 
+    public String getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
+    public PersonalInformation withBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+        return this;
+    }
+
+    public String getDisabilities() {
+        return disabilities;
+    }
+
+    public void setDisabilities(String disabilities) {
+        this.disabilities = disabilities;
+    }
+
+    public PersonalInformation withDisabilities(String disabilities) {
+        this.disabilities = disabilities;
+        return this;
+    }
+
+    public String getDisabilitiesDescription() {
+        return disabilitiesDescription;
+    }
+
+    public void setDisabilitiesDescription(String disabilitiesDescription) {
+        this.disabilitiesDescription = disabilitiesDescription;
+    }
+
+    public PersonalInformation withDisabilitiesDescription(String disabilitiesDescription) {
+        this.disabilitiesDescription = disabilitiesDescription;
+        return this;
+    }
+
+    public String getSmoking() {
+        return smoking;
+    }
+
+    public void setSmoking(String smoking) {
+        this.smoking = smoking;
+    }
+
+    public PersonalInformation withSmoking(String smoking) {
+        this.smoking = smoking;
+        return this;
+    }
+
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+    }
+
+    public PersonalInformation withMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+        return this;
+    }
 
     @Override
     public String toString() {

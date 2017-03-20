@@ -8,12 +8,12 @@ import java.util.List;
  * Created by saiful on 2/12/17.
  */
 
-public class UserProfile implements Parent<UserProfileChild> {
+public class UserProfileParent implements Parent<UserProfileChild> {
 
     private List<UserProfileChild> mUserProfileChild;
     private String titleParentname;
 
-    public UserProfile(String titleParentname,List<UserProfileChild> mUserProfileChild) {
+    public UserProfileParent(String titleParentname, List<UserProfileChild> mUserProfileChild) {
         this.titleParentname = titleParentname;
         this.mUserProfileChild = mUserProfileChild;
     }

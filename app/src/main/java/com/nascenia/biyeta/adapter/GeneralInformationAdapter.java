@@ -48,15 +48,18 @@ public class GeneralInformationAdapter extends RecyclerView.Adapter<GeneralInfor
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         generalInfoValue = this.generalInformationArrayList.get(position).getGeneralInfo();
-        if (generalInfoValue.startsWith(",")) {
+        if (generalInfoValue.startsWith(",") | generalInfoValue.startsWith(":")) {
 
             generalInfoValue = removeChar(generalInfoValue, 0);
         }
 
-        if (generalInfoValue.charAt(generalInfoValue.length() - 1) == ',') {
+        if (generalInfoValue.charAt(generalInfoValue.length() - 1) == ',' |
+                generalInfoValue.charAt(generalInfoValue.length() - 1) == ':') {
 
             generalInfoValue = removeChar(generalInfoValue, generalInfoValue.length() - 1);
         }
+
+        generalInfoValue = generalInfoValue.replaceAll(",,", ",");
 
 
         holder.titlegeneralInfoValueTextview.setText(generalInfoValue);

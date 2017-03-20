@@ -60,6 +60,20 @@ public class Utils {
     }
 
 
+    public static String convertEnglishYearDigittoBangla(int itemvalue) {
+
+
+        String number = String.valueOf(itemvalue);
+        String result = "";
+        for (int i = 0; i < number.length(); i++) {
+            result = result + getBanglaDigit(Character.digit(number.charAt(i), 10));
+
+        }
+
+        return result;
+    }
+
+
     public static String getBanglaDigit(int digit) {
         //  String convertedDateValue;
 
@@ -95,6 +109,8 @@ public class Utils {
     {
         return null;
     }
+
+
 
 
 }

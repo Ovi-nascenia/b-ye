@@ -14,7 +14,7 @@ import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
 
 import java.util.List;
 
-import com.nascenia.biyeta.model.UserProfile;
+import com.nascenia.biyeta.model.UserProfileParent;
 import com.nascenia.biyeta.model.UserProfileChild;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.view.ChildItemViewHolder;
@@ -24,20 +24,20 @@ import com.nascenia.biyeta.view.ParentItemViewHolder;
  * Created by saiful on 2/12/17.
  */
 
-public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<UserProfile, UserProfileChild, ParentItemViewHolder, ChildItemViewHolder> {
+public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<UserProfileParent, UserProfileChild, ParentItemViewHolder, ChildItemViewHolder> {
 
 
     private LayoutInflater mInflater;
 
-    private List<UserProfile> userProfilesList;
+    private List<UserProfileParent> userProfilesListParent;
     private Context baseContext;
     private boolean isProfileEditOptionEnable;
 
 
-    public UserProfileExpenadlbeAdapter(Context baseContext, List<UserProfile> userProfilesList, boolean isProfileEditOptionEnable) {
-        super(userProfilesList);
+    public UserProfileExpenadlbeAdapter(Context baseContext, List<UserProfileParent> userProfilesListParent, boolean isProfileEditOptionEnable) {
+        super(userProfilesListParent);
         mInflater = LayoutInflater.from(baseContext);
-        this.userProfilesList = userProfilesList;
+        this.userProfilesListParent = userProfilesListParent;
         this.baseContext = baseContext;
         this.isProfileEditOptionEnable = isProfileEditOptionEnable;
 
@@ -59,10 +59,10 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     }
 
     @Override
-    public void onBindParentViewHolder(@NonNull ParentItemViewHolder parentViewHolder, int parentPosition, @NonNull UserProfile parent) {
+    public void onBindParentViewHolder(@NonNull ParentItemViewHolder parentViewHolder, int parentPosition, @NonNull UserProfileParent parent) {
 
         parentViewHolder.bind(parent);
-        if (parentPosition == (userProfilesList.size() - 1)) {
+        if (parentPosition == (userProfilesListParent.size() - 1)) {
             parentViewHolder.lnIndicator2.setVisibility(View.GONE);
         }
 
@@ -87,7 +87,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
 
 
         childViewHolder.bind(child);
-        if (childPosition == (userProfilesList.get(parentPosition).getChildList().size() - 1)) {
+        if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1)) {
 
             childViewHolder.itemDividerLayout.setVisibility(View.VISIBLE);
         } else

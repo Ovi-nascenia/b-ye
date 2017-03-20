@@ -12,13 +12,19 @@ public class RequestStatus implements Serializable
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("profile_request_id")
+    @Expose
+    private Object profileRequestId;
     @SerializedName("sent")
     @Expose
     private boolean sent;
     @SerializedName("accepted")
     @Expose
     private boolean accepted;
-    private final static long serialVersionUID = 6237132305173899215L;
+    @SerializedName("rejected")
+    @Expose
+    private boolean rejected;
+    private final static long serialVersionUID = 8917245572179753385L;
 
     public String getName() {
         return name;
@@ -30,6 +36,19 @@ public class RequestStatus implements Serializable
 
     public RequestStatus withName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public Object getProfileRequestId() {
+        return profileRequestId;
+    }
+
+    public void setProfileRequestId(Object profileRequestId) {
+        this.profileRequestId = profileRequestId;
+    }
+
+    public RequestStatus withProfileRequestId(Object profileRequestId) {
+        this.profileRequestId = profileRequestId;
         return this;
     }
 
@@ -56,6 +75,19 @@ public class RequestStatus implements Serializable
 
     public RequestStatus withAccepted(boolean accepted) {
         this.accepted = accepted;
+        return this;
+    }
+
+    public boolean isRejected() {
+        return rejected;
+    }
+
+    public void setRejected(boolean rejected) {
+        this.rejected = rejected;
+    }
+
+    public RequestStatus withRejected(boolean rejected) {
+        this.rejected = rejected;
         return this;
     }
 

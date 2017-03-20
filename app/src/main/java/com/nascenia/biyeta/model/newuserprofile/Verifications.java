@@ -2,13 +2,12 @@
 package com.nascenia.biyeta.model.newuserprofile;
 
 import java.io.Serializable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Verifications implements Serializable {
+public class Verifications implements Serializable
+{
 
     @SerializedName("mobile")
     @Expose
