@@ -52,8 +52,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
     ImageView icon;
+
     LinearLayout linearLayout;
     LinearLayout new_account;
+
     EditText etPassword,etUserName;
     Button buttonSubmit,buttonFacebookLogin;
     ProgressBar progressBar;
