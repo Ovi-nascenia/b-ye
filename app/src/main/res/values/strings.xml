@@ -34,6 +34,8 @@
     <string name="about_me">about</string>
     <string name="area">দেশের বাড়ি</string>
 
+    <string name="title_activity_send_request">Request send</string>
+
     <string name="sent_request"> আপনাকে পাঠানো  অনুরোধ</string>
     <string name="message">মেসেজ</string>
     <string name="smile">হাসি </string>

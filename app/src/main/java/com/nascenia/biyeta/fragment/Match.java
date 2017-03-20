@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.nascenia.biyeta.activity.InboxListView;
 import com.nascenia.biyeta.activity.Search_Filter;
 import com.nascenia.biyeta.activity.UserProfileActivity;
+import com.nascenia.biyeta.adapter.BiodataProfileAdapter;
 import com.nascenia.biyeta.adapter.CommunicationAdapter;
 import com.nascenia.biyeta.adapter.InboxListAdapter;
 import com.nascenia.biyeta.adapter.Match_Adapter;
@@ -34,6 +35,7 @@ import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.model.InboxAllThreads.Example;
 import com.nascenia.biyeta.model.SearchProfileModel;
+import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
 import com.nascenia.biyeta.model.communication.profile.CommunicationProfile;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -77,7 +79,7 @@ public class Match extends Fragment implements View.OnClickListener{
 
         recyclerView=(RecyclerView)v.findViewById(R.id.communication_profile_list);
 
-        new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/api/v1/profile_requests");
+        new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests");
 
         return v;
 
@@ -101,7 +103,7 @@ public class Match extends Fragment implements View.OnClickListener{
                 recyclerView.setAdapter(null);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/api/v1/profile_requests");
+                new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests");
 
                 break;
 
@@ -171,17 +173,15 @@ public class Match extends Fragment implements View.OnClickListener{
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(getContext(),s,Toast.LENGTH_SHORT).show();
+            Gson gson = new Gson();
+            InputStream is = new ByteArrayInputStream(s.getBytes());
+            InputStreamReader isr = new InputStreamReader(is);
+            BiodataProfile response = gson.fromJson(isr, BiodataProfile.class);
 
-//            Gson gson = new Gson();
-//            InputStream is = new ByteArrayInputStream(s.getBytes());
-//            InputStreamReader isr = new InputStreamReader(is);
-//            CommunicationProfile response = gson.fromJson(isr, CommunicationProfile.class);
-//
-//            CommunicationAdapter inboxListAdapter=new CommunicationAdapter(response,R.layout.common_user_profile_item);
-//            recyclerView.setAdapter(inboxListAdapter);
-//            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            BiodataProfileAdapter inboxListAdapter=new BiodataProfileAdapter(response,R.layout.biodata_layout_item);
+            recyclerView.setAdapter(inboxListAdapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
         }
 
         @Override
