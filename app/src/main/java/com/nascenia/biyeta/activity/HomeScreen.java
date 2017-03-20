@@ -94,7 +94,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         fevImageView.setOnClickListener(this);
         inboxImageView.setOnClickListener(this);
         profileImageView.setOnClickListener(this);
-        Log.e("name",new SharePref(HomeScreen.this).get_data("display_name"));
+        Log.e("name", new SharePref(HomeScreen.this).get_data("display_name"));
 
         View header = navigationView.getHeaderView(0);
         TextView display_name = (TextView) header.findViewById(R.id.displayname);
@@ -108,14 +108,13 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 //set false other item
 
 
-
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
                     drawerLayout.closeDrawer(Gravity.RIGHT);
 
-                int id=menuItem.getItemId();
-                switch (id)
-                {
+                int id = menuItem.getItemId();
+                switch (id) {
                     case R.id.nav_profile:
+                        startActivity(new Intent(HomeScreen.this, NewUserProfileActivity.class));
                         break;
 
                     case R.id.nav_inbox:
@@ -137,12 +136,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     case R.id.nav_faq:
                         break;
                     case R.id.nav_policy:
-                        startActivity(new Intent(HomeScreen.this,LowsAndTerms.class));
+                        startActivity(new Intent(HomeScreen.this, LowsAndTerms.class));
                         break;
                     case R.id.nav_logout:
-                        SharePref sharePref=new SharePref(HomeScreen.this);
-                        sharePref.set_data("token","key");
-                        startActivity(new Intent(HomeScreen.this,Login.class));
+                        SharePref sharePref = new SharePref(HomeScreen.this);
+                        sharePref.set_data("token", "key");
+                        startActivity(new Intent(HomeScreen.this, Login.class));
                         finish();
 
                         break;
@@ -225,7 +224,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.inbox:
 
-                Dialog dialog=new Dialog(HomeScreen.this);
+                Dialog dialog = new Dialog(HomeScreen.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setContentView(R.layout.inbox);
@@ -237,9 +236,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 });
                 DisplayMetrics displaymetrics = new DisplayMetrics();
                 this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                int width = (int) ((int)displaymetrics.widthPixels * 0.8);
-                int height = (int) ((int)displaymetrics.heightPixels * 0.6);
-                dialog.getWindow().setLayout(width,height);
+                int width = (int) ((int) displaymetrics.widthPixels * 0.8);
+                int height = (int) ((int) displaymetrics.heightPixels * 0.6);
+                dialog.getWindow().setLayout(width, height);
                 //ge
 
                 dialog.show();

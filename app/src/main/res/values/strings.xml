@@ -62,7 +62,6 @@
     <string name="nav_faq">FAQ</string>
     <string name="nav_termsofuse">টার্মস অব ইউস</string>
     <string name="other">অন্যান্য</string>
-    <string name="title_activity_send_request">SendRequestActivity</string>
 
 
     <string name="make_call">ফোন করুন</string>
