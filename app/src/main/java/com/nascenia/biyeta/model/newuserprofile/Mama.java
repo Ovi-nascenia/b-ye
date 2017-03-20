@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class FamilyMember implements Serializable
+public class Mama implements Serializable
 {
 
     @SerializedName("name")
@@ -24,7 +24,7 @@ public class FamilyMember implements Serializable
     @SerializedName("institute")
     @Expose
     private String institute;
-    private final static long serialVersionUID = 3825113452900337880L;
+    private final static long serialVersionUID = -3418352082386964878L;
 
     public String getName() {
         return name;
@@ -34,7 +34,7 @@ public class FamilyMember implements Serializable
         this.name = name;
     }
 
-    public FamilyMember withName(String name) {
+    public Mama withName(String name) {
         this.name = name;
         return this;
     }
@@ -47,7 +47,7 @@ public class FamilyMember implements Serializable
         this.relation = relation;
     }
 
-    public FamilyMember withRelation(String relation) {
+    public Mama withRelation(String relation) {
         this.relation = relation;
         return this;
     }
@@ -60,7 +60,7 @@ public class FamilyMember implements Serializable
         this.occupation = occupation;
     }
 
-    public FamilyMember withOccupation(String occupation) {
+    public Mama withOccupation(String occupation) {
         this.occupation = occupation;
         return this;
     }
@@ -73,7 +73,7 @@ public class FamilyMember implements Serializable
         this.designation = designation;
     }
 
-    public FamilyMember withDesignation(String designation) {
+    public Mama withDesignation(String designation) {
         this.designation = designation;
         return this;
     }
@@ -86,7 +86,7 @@ public class FamilyMember implements Serializable
         this.institute = institute;
     }
 
-    public FamilyMember withInstitute(String institute) {
+    public Mama withInstitute(String institute) {
         this.institute = institute;
         return this;
     }

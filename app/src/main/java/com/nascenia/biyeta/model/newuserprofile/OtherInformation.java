@@ -23,11 +23,9 @@ public class OtherInformation implements Serializable {
     @Expose
     private String hijab;
 
-
     @SerializedName("own_house")
     @Expose
     private String ownHouse;
-
     private final static long serialVersionUID = -270776123101135295L;
 
     public String getPrayer() {
@@ -82,7 +80,6 @@ public class OtherInformation implements Serializable {
         return this;
     }
 
-
     public String getOwnHouse() {
         return ownHouse;
     }
@@ -95,7 +92,6 @@ public class OtherInformation implements Serializable {
         this.ownHouse = ownHouse;
         return this;
     }
-
 
     @Override
     public String toString() {

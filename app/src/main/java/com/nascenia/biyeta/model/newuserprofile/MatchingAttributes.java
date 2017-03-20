@@ -1,6 +1,8 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
+import android.support.annotation.Nullable;
+
 import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
@@ -12,13 +14,14 @@ public class MatchingAttributes implements Serializable {
 
     @SerializedName("home_town")
     @Expose
-    private String homeTown;
-    @SerializedName("age")
-    @Expose
-    private String age;
+    private String homeTown=null;
     @SerializedName("height")
     @Expose
     private String height;
+    @SerializedName("age")
+    @Expose
+    @Nullable
+    private String age;
     @SerializedName("skin_color")
     @Expose
     private String skinColor;
@@ -28,12 +31,13 @@ public class MatchingAttributes implements Serializable {
     @SerializedName("marital_status")
     @Expose
     private String maritalStatus;
-    @SerializedName("title_educational_qualification")
-    @Expose
-    private String titleEducationalQualification;
     @SerializedName("title_own_house")
     @Expose
     private String titleOwnHouse;
+    @SerializedName("title_educational_qualification")
+    @Expose
+    @Nullable
+    private String titleEducationalQualification;
     @SerializedName("title_occupation")
     @Expose
     private String titleOccupation;
@@ -52,19 +56,6 @@ public class MatchingAttributes implements Serializable {
         return this;
     }
 
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public MatchingAttributes withAge(String age) {
-        this.age = age;
-        return this;
-    }
-
     public String getHeight() {
         return height;
     }
@@ -75,6 +66,19 @@ public class MatchingAttributes implements Serializable {
 
     public MatchingAttributes withHeight(String height) {
         this.height = height;
+        return this;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public MatchingAttributes withAge(String age) {
+        this.age = age;
         return this;
     }
 
@@ -117,19 +121,6 @@ public class MatchingAttributes implements Serializable {
         return this;
     }
 
-    public String getTitleEducationalQualification() {
-        return titleEducationalQualification;
-    }
-
-    public void setTitleEducationalQualification(String titleEducationalQualification) {
-        this.titleEducationalQualification = titleEducationalQualification;
-    }
-
-    public MatchingAttributes withTitleEducationalQualification(String titleEducationalQualification) {
-        this.titleEducationalQualification = titleEducationalQualification;
-        return this;
-    }
-
     public String getTitleOwnHouse() {
         return titleOwnHouse;
     }
@@ -153,6 +144,19 @@ public class MatchingAttributes implements Serializable {
 
     public MatchingAttributes withTitleOccupation(String titleOccupation) {
         this.titleOccupation = titleOccupation;
+        return this;
+    }
+
+    public String getTitleEducationalQualification() {
+        return titleEducationalQualification;
+    }
+
+    public void setTitleEducationalQualification(String titleEducationalQualification) {
+        this.titleEducationalQualification = titleEducationalQualification;
+    }
+
+    public MatchingAttributes withTitleEducationalQualification(String titleEducationalQualification) {
+        this.titleEducationalQualification = titleEducationalQualification;
         return this;
     }
 
