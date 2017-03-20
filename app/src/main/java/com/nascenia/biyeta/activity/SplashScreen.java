@@ -39,14 +39,14 @@ public class SplashScreen extends AppCompatActivity {
 
              SharePref sharePref=new SharePref(SplashScreen.this);
             if (sharePref.get_data("token").equals("key")) {
-                Intent i = new Intent(SplashScreen.this, Login.class);
+                Intent i = new Intent(SplashScreen.this, SendRequestActivity.class);
                 startActivity(i);
                 ///Kill the current activity
                 finish();
             }
             else
             {
-                Intent i = new Intent(SplashScreen.this, HomeScreen.class);
+                Intent i = new Intent(SplashScreen.this, SendRequestActivity.class);
                 startActivity(i);
                 ///Kill the current activity
                 finish();

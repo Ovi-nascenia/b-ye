@@ -14,17 +14,29 @@ public class RequestStatus implements Serializable
     private String name;
     @SerializedName("profile_request_id")
     @Expose
-    private Object profileRequestId;
-    @SerializedName("sent")
+    private int profileRequestId;
+    @SerializedName("communication_request_id")
     @Expose
-    private boolean sent;
+    private int communicationRequestId;
+    @SerializedName("sender")
+    @Expose
+    private int sender;
+    @SerializedName("receiver")
+    @Expose
+    private int receiver;
     @SerializedName("accepted")
     @Expose
     private boolean accepted;
     @SerializedName("rejected")
     @Expose
     private boolean rejected;
-    private final static long serialVersionUID = 8917245572179753385L;
+    @SerializedName("expired")
+    @Expose
+    private boolean expired;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    private final static long serialVersionUID = 4465158792950174515L;
 
     public String getName() {
         return name;
@@ -39,29 +51,55 @@ public class RequestStatus implements Serializable
         return this;
     }
 
-    public Object getProfileRequestId() {
+    public int getProfileRequestId() {
         return profileRequestId;
     }
 
-    public void setProfileRequestId(Object profileRequestId) {
+    public void setProfileRequestId(int profileRequestId) {
         this.profileRequestId = profileRequestId;
     }
 
-    public RequestStatus withProfileRequestId(Object profileRequestId) {
+    public RequestStatus withProfileRequestId(int profileRequestId) {
         this.profileRequestId = profileRequestId;
         return this;
     }
 
-    public boolean isSent() {
-        return sent;
+    public int getCommunicationRequestId() {
+        return communicationRequestId;
     }
 
-    public void setSent(boolean sent) {
-        this.sent = sent;
+    public void setCommunicationRequestId(int communicationRequestId) {
+        this.communicationRequestId = communicationRequestId;
     }
 
-    public RequestStatus withSent(boolean sent) {
-        this.sent = sent;
+    public RequestStatus withCommunicationRequestId(int communicationRequestId) {
+        this.communicationRequestId = communicationRequestId;
+        return this;
+    }
+
+    public int getSender() {
+        return sender;
+    }
+
+    public void setSender(int sender) {
+        this.sender = sender;
+    }
+
+    public RequestStatus withSender(int sender) {
+        this.sender = sender;
+        return this;
+    }
+
+    public int getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(int receiver) {
+        this.receiver = receiver;
+    }
+
+    public RequestStatus withReceiver(int receiver) {
+        this.receiver = receiver;
         return this;
     }
 
@@ -88,6 +126,32 @@ public class RequestStatus implements Serializable
 
     public RequestStatus withRejected(boolean rejected) {
         this.rejected = rejected;
+        return this;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
+    }
+
+    public RequestStatus withExpired(boolean expired) {
+        this.expired = expired;
+        return this;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public RequestStatus withMessage(String message) {
+        this.message = message;
         return this;
     }
 

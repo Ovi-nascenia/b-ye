@@ -33,7 +33,7 @@ public class Profile implements Serializable
     private ProfileReligion profileReligion;
     @SerializedName("family_members")
     @Expose
-    private List<FamilyMember> familyMembers = null;
+    private FamilyMembers familyMembers;
     @SerializedName("address")
     @Expose
     private Address address;
@@ -49,7 +49,7 @@ public class Profile implements Serializable
     @SerializedName("request_status")
     @Expose
     private RequestStatus requestStatus;
-    private final static long serialVersionUID = -6999151452998727246L;
+    private final static long serialVersionUID = -7039934547402433150L;
 
     public PersonalInformation getPersonalInformation() {
         return personalInformation;
@@ -142,15 +142,15 @@ public class Profile implements Serializable
         return this;
     }
 
-    public List<FamilyMember> getFamilyMembers() {
+    public FamilyMembers getFamilyMembers() {
         return familyMembers;
     }
 
-    public void setFamilyMembers(List<FamilyMember> familyMembers) {
+    public void setFamilyMembers(FamilyMembers familyMembers) {
         this.familyMembers = familyMembers;
     }
 
-    public Profile withFamilyMembers(List<FamilyMember> familyMembers) {
+    public Profile withFamilyMembers(FamilyMembers familyMembers) {
         this.familyMembers = familyMembers;
         return this;
     }

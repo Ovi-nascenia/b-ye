@@ -21,7 +21,6 @@ import com.nascenia.biyeta.model.MatchUserChoice;
 import com.nascenia.biyeta.model.UserProfileChild;
 import com.nascenia.biyeta.model.UserProfileParent;
 import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
-import com.nascenia.biyeta.model.newuserprofile.OtherInformation;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.service.ResourceProvider;
 import com.nascenia.biyeta.utils.MyCallback;
@@ -49,16 +48,22 @@ public class SendRequestFragmentView {
 
     private static ProgressDialog dialog;
 
-    private static ArrayList<GeneralInformation> generalInformationArrayList;
-    private static ArrayList<MatchUserChoice> matchUserChoiceArrayList;
-    private static ArrayList<MatchUserChoice> otherInformationArrayList;
+    private static ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
+    private static ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
+    private static ArrayList<MatchUserChoice> otherInformationArrayList = new ArrayList<MatchUserChoice>();
 
 
-    private static ArrayList<UserProfileChild> parentChildItemList, brotherChildItemList,
-            sisterChildItemList, childItemList, otherCHildItemList;
+    private static ArrayList<UserProfileChild> parentChildItemList = new ArrayList<UserProfileChild>();
+    private static ArrayList<UserProfileChild> brotherChildItemList = new ArrayList<UserProfileChild>();
+    private static ArrayList<UserProfileChild> sisterChildItemList = new ArrayList<UserProfileChild>();
+    private static ArrayList<UserProfileChild> childItemList = new ArrayList<UserProfileChild>();
+    private static ArrayList<UserProfileChild> otherCHildItemList = new ArrayList<UserProfileChild>();
 
 
-    private static ArrayList<UserProfileParent> mainparentItemList;
+    private static ArrayList<UserProfileParent> mainparentItemList = new ArrayList<UserProfileParent>();
+
+    private static int familyMemberCounter;
+    ;
 
 
     public static void fetchUserProfileDetailsResponse(final String url,
@@ -73,13 +78,19 @@ public class SendRequestFragmentView {
                                                        RecyclerView familyMemberInfoRecylerView) {
 
 
-        parentChildItemList = new ArrayList<UserProfileChild>();
-        brotherChildItemList = new ArrayList<UserProfileChild>();
-        sisterChildItemList = new ArrayList<UserProfileChild>();
-        childItemList = new ArrayList<UserProfileChild>();
-        otherCHildItemList = new ArrayList<UserProfileChild>();
+        generalInformationArrayList.clear();
+        matchUserChoiceArrayList.clear();
+        otherInformationArrayList.clear();
 
-        mainparentItemList = new ArrayList<UserProfileParent>();
+        parentChildItemList.clear();
+        brotherChildItemList.clear();
+        sisterChildItemList.clear();
+        childItemList.clear();
+        otherCHildItemList.clear();
+
+
+        mainparentItemList.clear();
+
 
         ResponseThread responseThread = new ResponseThread(url,
                 context,
@@ -165,11 +176,9 @@ public class SendRequestFragmentView {
                         setDataonMatchUserChoiceRecylerView(context,
                                 userProfile,
                                 matchUserChoiceRecyclerView);
-
                         setDataonFamilyMemberInfoRecylerView(context,
                                 userProfile,
                                 familyMemberInfoRecylerView);
-
                         setDataonOtherInfoRecylerView(context,
                                 userProfile, otherInfoRecylerView);
 
@@ -185,6 +194,7 @@ public class SendRequestFragmentView {
                 }
 
             } catch (Exception e) {
+                Log.i("threaddata", "problem " + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -196,6 +206,7 @@ public class SendRequestFragmentView {
     private static void setDataonOtherInfoRecylerView(Context context,
                                                       UserProfile userProfile,
                                                       RecyclerView otherInfoRecylerView) {
+
         otherInformationArrayList = new ArrayList<MatchUserChoice>();
 
         if (!(checkNullField(userProfile.getProfile().getOtherInformation().getFasting()).equals(""))) {
@@ -267,154 +278,400 @@ public class SendRequestFragmentView {
                                                              RecyclerView familyMemberInfoRecylerView) {
 
 
-        if (userProfile.getProfile().getFamilyMembers().size() > 0) {
+        if (userProfile.getProfile().getFamilyMembers() != null) {
+
+            //add father information
+            if (userProfile.getProfile().getFamilyMembers().getFather() != null) {
+
+                parentChildItemList.add(new UserProfileChild("বাবা",
+                        checkNullField(userProfile.getProfile().getFamilyMembers().getFather()
+                                .getName())
+                                + ","
+                                + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                .getFather().getOccupation())
+                                + ","
+                                + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                .getFather().getDesignation())
+                                + ","
+                                + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                .getFather().getInstitute())
+                ));
+
+            }
 
 
-            for (int i = 0; i < userProfile.getProfile().getFamilyMembers().size(); i++) {
+            //add mother information
+            if (userProfile.getProfile().getFamilyMembers().getFather() != null) {
 
+                parentChildItemList.add(new UserProfileChild("মা",
+                        checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
+                                .getName())
+                                + ","
+                                + checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
+                                .getOccupation())
+                                + ","
+                                + checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
+                                .getDesignation())
+                                + ","
+                                + checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
+                                .getInstitute())
+                ));
 
-                //set parent item
-                if (userProfile.getProfile().getFamilyMembers().get(i).getRelation()
-                        .equals("বাবা")) {
+            }
 
-                    parentChildItemList.add(new UserProfileChild("বাবা",
-                            checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getName())
+            //add sister information
+            if (userProfile.getProfile().getFamilyMembers().getNumberOfSisters() > 0) {
+
+                familyMemberCounter = 0;
+
+                for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getSisters().size(); i++) {
+
+                    familyMemberCounter = i + 1;
+                    sisterChildItemList.add(new UserProfileChild(
+                            "বোন " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+
+                            checkNullField(userProfile.getProfile().getFamilyMembers().getSisters().
+                                    get(i).getName())
                                     + ","
-                                    + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getOccupation())
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getSisters().get(i).getOccupation())
                                     + ","
-                                   /* + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getDesignation())
-                                    + ","*/
-                                    + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getInstitute())
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getSisters().get(i).getDesignation())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getSisters().get(i).getInstitute())
+
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getSisters().get(i).getMaritalStatus())
+
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getSisters().get(i).getSpouseName())
+
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getSisters().get(i).getSpouseInstitue())
+
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getSisters().get(i).getSpouseDesignation())
+
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getSisters().get(i).getSpouseOccupation())
+
                     ));
                 }
 
-                if (userProfile.getProfile().getFamilyMembers().get(i).getRelation()
-                        .equals("মা")) {
+            }
 
-                    parentChildItemList.add(new UserProfileChild("মা",
-                            checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getName())
+            //add brother information
+            if (userProfile.getProfile().getFamilyMembers().getNumberOfSisters() > 0) {
+
+                familyMemberCounter = 0;
+
+                for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getBrothers().size(); i++) {
+
+                    familyMemberCounter = i + 1;
+                    brotherChildItemList.add(new UserProfileChild(
+                            "ভাই " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+
+                            checkNullField(userProfile.getProfile().getFamilyMembers().getBrothers().
+                                    get(i).getName())
                                     + ","
-                                    + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getOccupation())
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getBrothers().get(i).getOccupation())
                                     + ","
-                                    /*+ checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getDesignation())
-                                    + ","*/
-                                    + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getInstitute())
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getBrothers().get(i).getDesignation())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getBrothers().get(i).getInstitute())
+
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getBrothers().get(i).getMaritalStatus())
+
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getBrothers().get(i).getSpouseName())
+
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getBrothers().get(i).getSpouseInstitue())
+
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getBrothers().get(i).getSpouseDesignation())
+
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getBrothers().get(i).getSpouseOccupation())
+
                     ));
-
-
-                }
-
-                if (userProfile.getProfile().getFamilyMembers().get(i).getRelation()
-                        .equals("ভাই")) {
-
-                    brotherChildItemList.add(new UserProfileChild("ভাই",
-                            checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getName())
-                                    + ","
-                                    + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getOccupation())
-                                    + ","
-                                   /* + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getDesignation())
-                                    + ","*/
-                                    + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getInstitute())
-                    ));
-
-
-                }
-
-
-                if (userProfile.getProfile().getFamilyMembers().get(i).getRelation()
-                        .equals("বোন")) {
-
-                    brotherChildItemList.add(new UserProfileChild("বোন",
-                            checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getName())
-                                    + ","
-                                    + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getOccupation())
-                                    + ","
-                                   /* + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getDesignation())
-                                    + ","*/
-                                    + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getInstitute())
-                    ));
-
-
-                }
-
-                if (userProfile.getProfile().getFamilyMembers().get(i).getRelation()
-                        .equals("সন্তান")) {
-
-                    brotherChildItemList.add(new UserProfileChild("সন্তান",
-                            checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getName())
-                                    + ","
-                                    + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getOccupation())
-                                    + ","
-                                    /*+ checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getDesignation())
-                                    + ","*/
-                                    + checkNullField(userProfile.getProfile().getFamilyMembers().get(i).
-                                    getInstitute())
-                    ));
-
                 }
 
 
             }
 
+
+            //add child information
+            if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
+                    userProfile.getProfile().getFamilyMembers().isChildLivesWithYou()) {
+
+                childItemList.add(new UserProfileChild("সন্তান",
+                        Utils.convertEnglishDigittoBangla(
+                                userProfile.getProfile().getFamilyMembers().getNumberOfChild())
+                                + " জন সন্তান, তার সাথে থাকে"));
+
+            } else if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
+                    !(userProfile.getProfile().getFamilyMembers().isChildLivesWithYou())) {
+
+                childItemList.add(new UserProfileChild("সন্তান",
+                        Utils.convertEnglishDigittoBangla(
+                                userProfile.getProfile().getFamilyMembers().getNumberOfChild())
+                                + " জন সন্তান, তার সাথে থাকে না"));
+            }
+
+
+            //add dada information
+
+            if (userProfile.getProfile().getFamilyMembers().getNumberOfDada() > 0) {
+
+
+                for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getDadas().size(); i++) {
+
+                    otherCHildItemList.add(new UserProfileChild(
+                            "দাদা", checkNullField(userProfile.getProfile().getFamilyMembers().getDadas().
+                            get(i).getName())
+                            + ","
+                            + checkNullField(userProfile.getProfile().getFamilyMembers().
+                            getDadas().get(i).getOccupation())
+                            + ","
+                            + checkNullField(userProfile.getProfile().getFamilyMembers()
+                            .getDadas().get(i).getDesignation())
+                            + ","
+                            + checkNullField(userProfile.getProfile().getFamilyMembers()
+                            .getDadas().get(i).getInstitute())
+
+                    ));
+                }
+
+
+            }
+
+
+            //add kaka information
+
+            if (userProfile.getProfile().getFamilyMembers().getNumberOfKaka() > 0) {
+
+                familyMemberCounter = 0;
+
+                for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getKakas().size(); i++) {
+
+                    familyMemberCounter = i + 1;
+                    otherCHildItemList.add(new UserProfileChild(
+                            "চাচা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+
+                            checkNullField(userProfile.getProfile().getFamilyMembers().getKakas().
+                                    get(i).getName())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getKakas().get(i).getOccupation())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getKakas().get(i).getDesignation())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getKakas().get(i).getInstitute())
+
+                    ));
+                }
+
+
+            }
+
+
+            //add mama information
+
+            if (userProfile.getProfile().getFamilyMembers().getNumberOfMama() > 0) {
+
+                familyMemberCounter = 0;
+
+                for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getMamas().size(); i++) {
+
+                    familyMemberCounter = i + 1;
+                    otherCHildItemList.add(new UserProfileChild(
+                            "মামা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+
+                            checkNullField(userProfile.getProfile().getFamilyMembers().getMamas().
+                                    get(i).getName())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getMamas().get(i).getOccupation())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getMamas().get(i).getDesignation())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getMamas().get(i).getInstitute())
+
+                    ));
+                }
+
+
+            }
+
+
+            //add fufa information
+
+
+            if (userProfile.getProfile().getFamilyMembers().getNumberOfFufa() > 0) {
+
+                familyMemberCounter = 0;
+
+                for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getFufas().size(); i++) {
+
+                    familyMemberCounter = i + 1;
+                    otherCHildItemList.add(new UserProfileChild(
+                            "ফুপা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+
+                            checkNullField(userProfile.getProfile().getFamilyMembers().getFufas().
+                                    get(i).getName())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getFufas().get(i).getOccupation())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getFufas().get(i).getDesignation())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getFufas().get(i).getInstitute())
+
+                    ));
+                }
+
+
+            }
+
+
+            //add nana information
+
+            if (userProfile.getProfile().getFamilyMembers().getNumberOfNana() > 0) {
+
+                for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getNanas().size(); i++) {
+
+                    otherCHildItemList.add(new UserProfileChild(
+                            "নানা", checkNullField(userProfile.getProfile().getFamilyMembers().getNanas().
+                            get(i).getName())
+                            + ","
+                            + checkNullField(userProfile.getProfile().getFamilyMembers().
+                            getNanas().get(i).getOccupation())
+                            + ","
+                            + checkNullField(userProfile.getProfile().getFamilyMembers()
+                            .getNanas().get(i).getDesignation())
+                            + ","
+                            + checkNullField(userProfile.getProfile().getFamilyMembers()
+                            .getNanas().get(i).getInstitute())
+
+                    ));
+                }
+
+
+            }
+
+
+            //add khalu information
+
+            if (userProfile.getProfile().getFamilyMembers().getNumberOfKhalu() > 0) {
+
+                familyMemberCounter = 0;
+
+                for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getKhalus().size(); i++) {
+
+                    familyMemberCounter = i + 1;
+                    otherCHildItemList.add(new UserProfileChild(
+                            "খালু " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+
+                            checkNullField(userProfile.getProfile().getFamilyMembers().getKhalus().
+                                    get(i).getName())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getKhalus().get(i).getOccupation())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getKhalus().get(i).getDesignation())
+                                    + ","
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
+                                    .getKhalus().get(i).getInstitute())
+
+                    ));
+                }
+
+
+            }
+
+
         }
 
+        // add child list data to parent list
 
+
+        //add parentchildlist data to mainparentlist
         if (parentChildItemList.size() > 0) {
             mainparentItemList.add(new UserProfileParent("বাবা-মা", parentChildItemList));
 
         }
 
-        if (brotherChildItemList.size() > 0) {
-            mainparentItemList.add(new UserProfileParent("ভাই(" + brotherChildItemList.size() + ")"
-                    , brotherChildItemList));
 
-        } else {
-
-            brotherChildItemList.add(new UserProfileChild("ভাই", "nai"));
-            mainparentItemList.add(new UserProfileParent("ভাই", brotherChildItemList));
-
-
-        }
-
+        //add sisterchildlist data to mainparentlist
         if (sisterChildItemList.size() > 0) {
-            mainparentItemList.add(new UserProfileParent("বোন(" + sisterChildItemList.size() + ")"
+            mainparentItemList.add(new UserProfileParent(
+                    "বোন(" + Utils.convertEnglishDigittoBangla(sisterChildItemList.size()) + ")"
                     , sisterChildItemList));
 
         } else {
 
-            sisterChildItemList.add(new UserProfileChild("bon", "nai"));
+            sisterChildItemList.add(new UserProfileChild("বোন", "কোন বোন নেই"));
             mainparentItemList.add(new UserProfileParent("বোন", sisterChildItemList));
 
         }
 
+
+        //add brotherchildlist data to mainparentlist
+        if (brotherChildItemList.size() > 0) {
+            mainparentItemList.add(new UserProfileParent(
+                    "ভাই(" + Utils.convertEnglishDigittoBangla(brotherChildItemList.size()) + ")"
+                    , brotherChildItemList));
+
+        } else {
+
+            brotherChildItemList.add(new UserProfileChild("ভাই", "কোন ভাই নেই"));
+            mainparentItemList.add(new UserProfileParent("ভাই", brotherChildItemList));
+
+        }
+
+
+        //add childlist data to mainparentlist
         if (childItemList.size() > 0) {
 
-            mainparentItemList.add(new UserProfileParent("সন্তান(" + childItemList.size() + ")"
+            mainparentItemList.add(new UserProfileParent("সন্তান"
                     , childItemList));
 
         } else {
-            childItemList.add(new UserProfileChild("সন্তান", "nai"));
+            childItemList.add(new UserProfileChild("সন্তান", "কোন সন্তান নেই"));
             mainparentItemList.add(new UserProfileParent("সন্তান", childItemList));
 
+        }
+
+
+        if (otherCHildItemList.size() > 0) {
+
+            mainparentItemList.add(new UserProfileParent(
+                    "অন্যান্য(" + Utils.convertEnglishDigittoBangla(otherCHildItemList.size()) + ")"
+                    , otherCHildItemList));
         }
 
         familyMemberInfoRecylerView.setAdapter(new UserProfileExpenadlbeAdapter(context,
@@ -428,7 +685,7 @@ public class SendRequestFragmentView {
         Log.i("userdetails", "recyler method");
 
 
-        generalInformationArrayList = new ArrayList<GeneralInformation>();
+     /*   generalInformationArrayList = new ArrayList<GeneralInformation>();*/
 
         generalInformationArrayList.add(new GeneralInformation(
                 Utils.convertEnglishDigittoBangla(
@@ -559,37 +816,8 @@ public class SendRequestFragmentView {
         }
 
 
-       /* if (!(checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()) +
-                checkNullField(userProfile.getProfile().getOtherInformation().getFasting())).equals("")) {
-
-            String prayer = "";
-            String fast = "";
-
-
-            if (!(checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()))
-                    .equals("")) {
-
-                prayer = userProfile.getProfile().getOtherInformation().getPrayer() + " নামায পরেন";
-            }
-
-            if (!(checkNullField(userProfile.getProfile().getOtherInformation().getFasting()))
-                    .equals("")) {
-
-                fast = userProfile.getProfile().getOtherInformation().getFasting() + " রোজা রাখেন";
-            }
-
-
-            generalInformationArrayList.add(new GeneralInformation(
-
-                    prayer + "," + fast
-                    , R.drawable.pra));
-
-        }*/
-
-
         view.setAdapter(new GeneralInformationAdapter(
                 activity, generalInformationArrayList));
-        Log.i("userdetails", view.toString() + " " + generalInformationArrayList.size());
 
     }
 
@@ -631,7 +859,7 @@ public class SendRequestFragmentView {
                     , userProfile.getProfile().getMatchingAttributes().getHealth()));
 
         }
-        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHealth())).equals("")) {
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getMaritalStatus())).equals("")) {
             matchUserChoiceArrayList.add(new MatchUserChoice("marital status"
                     , userProfile.getProfile().getMatchingAttributes().getMaritalStatus()));
 
@@ -664,7 +892,8 @@ public class SendRequestFragmentView {
 
     private static String checkNullField(String value) {
 
-        if (value == null) {
+
+        if (value == null || value.isEmpty()) {
             return "";
         } else {
             return value;
