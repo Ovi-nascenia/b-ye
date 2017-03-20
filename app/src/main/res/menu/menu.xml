@@ -19,27 +19,35 @@
             android:title="@string/accunt_setting" />
         <item
             android:id="@+id/nav_balance"
-            android:title="@string/balance_recharge" />
+            android:title="@string/balance_recharge"/>
+        </group>
 
 
-            <item
-                android:id="@+id/nav_about_us"
-                android:title="@string/nav_about_biyeta" />
-            <item
-                android:id="@+id/nav_connection"
-                android:title="@string/connection" />
-            <item
-                android:id="@+id/nav_faq"
-                android:title="@string/nav_faq" />
-            <item
-                android:id="@+id/nav_policy"
-                android:title="@string/nav_termsofuse" />
-
-            <item
-                android:id="@+id/nav_logout"
-                android:title="@string/logout" />
+    <item android:title="@string/other">
+            <menu android:checkableBehavior="single">
 
 
-    </group>
+                <item
+                    android:id="@+id/nav_about_us"
+                    android:title="@string/nav_about_biyeta" />
+                <item
+                    android:id="@+id/nav_connection"
+                    android:title="@string/connection" />
+                <item
+                    android:id="@+id/nav_faq"
+                    android:title="@string/nav_faq" />
+                <item
+                    android:id="@+id/nav_policy"
+                    android:title="@string/nav_termsofuse" />
+
+                <item
+                    android:id="@+id/nav_logout"
+                    android:title="@string/logout" />
+            </menu>
+    </item>
+
+
+
+
 
 </menu>

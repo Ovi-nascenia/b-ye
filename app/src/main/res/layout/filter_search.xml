@@ -258,7 +258,7 @@
 
                         android:padding="20dp"
                         android:paddingLeft="10dp"
-                        android:text="@string/education"
+                        android:text="@string/education_male"
                         android:textStyle="bold" />
 
 
@@ -310,7 +310,7 @@
 
                         android:padding="20dp"
                         android:paddingLeft="10dp"
-                        android:text="@string/profession"
+                        android:text="@string/profession_male"
                         android:textStyle="bold" />
 
                     <com.nascenia.biyeta.view.MyGridView
@@ -348,7 +348,7 @@
 
                         android:padding="20dp"
                         android:paddingLeft="10dp"
-                        android:text="@string/profession_identity"
+                        android:text="@string/profession_identity_male"
                         android:textStyle="bold" />
 
                     <com.nascenia.biyeta.view.MyGridView

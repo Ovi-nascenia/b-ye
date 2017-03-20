@@ -23,6 +23,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import com.google.gson.Gson;
+import com.nascenia.biyeta.model.InboxAllThreads.Example;
+import com.nascenia.biyeta.model.loginInfromation.LoginInformation;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -36,6 +39,10 @@ import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.utils.Utils;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Created by user on 1/5/2017.
@@ -146,6 +153,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 {
                   //  Toast.makeText(Login.this,"Fill the both field",Toast.LENGTH_SHORT).show();
                     Utils.ShowAlert(Login.this,"Fill the both field");
+
+
                 }
                 //excute  the network operation
                 //
@@ -233,14 +242,41 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 JSONObject jsonObject=new JSONObject(s);
 
 
-                String token=jsonObject.get("auth_token").toString();
-                SharePref sharePref=new SharePref(Login.this);
-                sharePref.set_data("token",token);
+                Gson gson = new Gson();
+                InputStream is = new ByteArrayInputStream(s.getBytes());
+                InputStreamReader isr = new InputStreamReader(is);
+                LoginInformation response = gson.fromJson(isr, LoginInformation.class);
+
+
+
                 //insert the token in Sharepreference
 
+                try {
 
-                startActivity(new Intent(Login.this,HomeScreen.class));
-                finish();
+
+                    SharePref sharePref = new SharePref(Login.this);
+                    sharePref.set_data("token", response.getLoginInformation().getAuthToken());
+                    sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
+                    sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
+                    sharePref.set_data("gender", response.getLoginInformation().getGender());
+                    sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
+                    sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
+                    if (response.getLoginInformation().getMobileVerified().equals(true)) {
+                        startActivity(new Intent(Login.this, HomeScreen.class));
+                        finish();
+                    }
+                    else
+                    {
+                        // check the mobile verify screen
+                    }
+                }catch (Exception e)
+                {
+                    Utils.ShowAlert(Login.this,"Wrong email/password");
+                }
+
+
+
+
 
 
             } catch (JSONException e) {

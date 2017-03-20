@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
@@ -92,6 +94,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         fevImageView.setOnClickListener(this);
         inboxImageView.setOnClickListener(this);
         profileImageView.setOnClickListener(this);
+        Log.e("name",new SharePref(HomeScreen.this).get_data("display_name"));
+
+        View header = navigationView.getHeaderView(0);
+        TextView display_name = (TextView) header.findViewById(R.id.displayname);
+
+        display_name.setText(new SharePref(HomeScreen.this).get_data("display_name"));
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
