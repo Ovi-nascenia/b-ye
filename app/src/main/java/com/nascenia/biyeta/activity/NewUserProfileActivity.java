@@ -275,6 +275,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
         }
 
 
+
         if (!(checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())).equals("")) {
 
 
