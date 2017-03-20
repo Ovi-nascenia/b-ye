@@ -285,6 +285,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
         }
 
 
+
         if (!(checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree()) +
                 checkNullField(userProfile.getProfile().getEducationInformation().getInstitution())).equals("")) {
 
