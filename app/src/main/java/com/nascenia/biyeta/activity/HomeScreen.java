@@ -24,10 +24,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.fragment.Blog;
 import com.nascenia.biyeta.fragment.Favourite;
 import com.nascenia.biyeta.fragment.Inbox;
