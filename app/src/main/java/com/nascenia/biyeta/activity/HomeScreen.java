@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -35,6 +36,9 @@ import com.nascenia.biyeta.fragment.Favourite;
 import com.nascenia.biyeta.fragment.Inbox;
 import com.nascenia.biyeta.fragment.Match;
 import com.nascenia.biyeta.fragment.Search;
+import com.nascenia.biyeta.service.ResourceProvider;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
 
 import org.json.JSONObject;
 
@@ -49,7 +53,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
     private View actionBarView;
-
+    private String responseValue = null;
 
     private ImageView searchImageView, matchImageView, fevImageView, inboxImageView, profileImageView;
 
@@ -94,7 +98,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         fevImageView.setOnClickListener(this);
         inboxImageView.setOnClickListener(this);
         profileImageView.setOnClickListener(this);
-        Log.e("name",new SharePref(HomeScreen.this).get_data("display_name"));
+        Log.e("name", new SharePref(HomeScreen.this).get_data("display_name"));
 
         View header = navigationView.getHeaderView(0);
         TextView display_name = (TextView) header.findViewById(R.id.displayname);
@@ -108,13 +112,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 //set false other item
 
 
-
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
                     drawerLayout.closeDrawer(Gravity.RIGHT);
 
-                int id=menuItem.getItemId();
-                switch (id)
-                {
+                int id = menuItem.getItemId();
+                switch (id) {
                     case R.id.nav_profile:
                         startActivity(new Intent(HomeScreen.this, NewUserProfileActivity.class));
                         break;
@@ -138,7 +140,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     case R.id.nav_faq:
                         break;
                     case R.id.nav_policy:
-                        startActivity(new Intent(HomeScreen.this,LowsAndTerms.class));
+                        startActivity(new Intent(HomeScreen.this, LowsAndTerms.class));
                         break;
                     case R.id.nav_logout:
                         SharePref sharePref = new SharePref(HomeScreen.this);
@@ -151,7 +153,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     default:
                         break;
                 }
-
 
 
                 return true;
@@ -214,17 +215,17 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 dialog.findViewById(R.id.tv_sent_request).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(HomeScreen.this, SendRequestActivity.class));
+                        new LoadReqeustSenderIdsTask().execute();
                     }
                 });
 
 
-                dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
+             /*   dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         startActivity(new Intent(HomeScreen.this, InboxListView.class));
                     }
-                });
+                });*/
 
                 dialog.findViewById(R.id.tv_inbox).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -235,7 +236,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 DisplayMetrics displaymetrics = new DisplayMetrics();
                 this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
                 int width = (int) ((int) displaymetrics.widthPixels * 0.8);
-               // int height = (int) ((int) displaymetrics.heightPixels * 0.4);
+                // int height = (int) ((int) displaymetrics.heightPixels * 0.4);
                 dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
 
 
@@ -253,6 +254,51 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         }
 
+    }
+
+
+    class LoadReqeustSenderIdsTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            try {
+
+                Response response = new ResourceProvider(HomeScreen.this).fetchGetResponse(
+                        "http://test.biyeta.com/api/v1/requests/request_sender_ids");
+                ResponseBody responseBody = response.body();
+                responseValue = responseBody.string();
+                responseBody.close();
+
+            } catch (Exception e) {
+
+            }
+
+
+            return responseValue;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (responseValue != null) {
+                //Toast.makeText(getBaseContext(), responseValue, Toast.LENGTH_LONG).show();
+                startActivity(new Intent(HomeScreen.this, SendRequestActivity.class).
+                        putExtra("REQUEST_RESPONSE_DATA",
+                                responseValue));
+            } else {
+                Toast.makeText(getBaseContext(), "Can't load data", Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
 
 

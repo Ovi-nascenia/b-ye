@@ -14,11 +14,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.model.RequestSenderIds;
+import com.nascenia.biyeta.model.newuserprofile.RequestStatus;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.utils.MyCallback;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by saiful on 3/10/17.
@@ -38,9 +44,13 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             familyMemberInfoRecylerView;
     private TextView userProfileDescriptionText;
     private ImageView profileViewerPersonImageView;
-    private UserProfile userProfile;
+
 
     private String url = "http://test.biyeta.com/api/v1/profiles/420";
+
+    public static List<Integer> profileRequestSenderIds = new ArrayList<Integer>();
+
+    Bundle bundle;
 
 
     @Nullable
@@ -49,57 +59,17 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                              @Nullable Bundle savedInstanceState) {
 
         _baseView = inflater.inflate(R.layout.fragment_communication_request, container, false);
-        //initView();
 
-       /* SendRequestFragmentView.fetchUserProfileDetailsResponse(
-                url, getActivity(), this);*/
+        bundle = getArguments();
 
+        if (bundle.getSerializable("REQUEST_RESPONSE_OBJ") != null) {
+
+
+        }
 
         return _baseView;
     }
 
-
-   /* public class MyAsyncTask extends AsyncTask<Void, Void, Boolean> {
-
-        private MyCallback<Boolean> mCallback;
-
-        public MyAsyncTask(MyCallback<Boolean> callback) {
-            mCallback = callback;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... progress) {
-            super.onProgressUpdate(progress);
-            // ...
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            try {
-                Response response = new ResourceProvider(getActivity()).fetchGetResponse(url);
-                ResponseBody responseBody = response.body();
-                responseValue = responseBody.string();
-                Log.i("bio", "onmethod" + responseValue + " ");
-                responseBody.close();
-                //  final UserProfileParent userProfile = new Gson().fromJson(responseValue, UserProfileParent.class);
-
-                status = true;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return status;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if (mCallback != null) {
-                mCallback.onComplete(result); // will call onComplete() on MyActivity once the job is done
-            }
-        }
-
-    }*/
 
     private void initView() {
 
@@ -236,33 +206,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
     @Override
     public void onComplete(Boolean result) {
-
-
-       /* if (result && SendRequestFragmentView.responseValue != null) {
-
-
-            Log.i("userdetails", "method reach");
-            try {
-                userProfile = new Gson().fromJson(responseValue, UserProfileParent.class);
-
-                if (userProfile == null) {
-                    Log.i("userdetails", "userprofile null");
-
-                }
-
-               // SendRequestFragmentView.setUserDetailsInfo(userProfile, userProfileDescriptionText);
-              //  SendRequestFragmentView.setDataonGeneralInfoRecylerView(getActivity(), userProfile, generalInfoRecyclerView);
-
-
-            } catch (Exception e) {
-                Log.i("userdetails", "methoderror" + e.getMessage());
-                Toast.makeText(getActivity(), "Can't load data", Toast.LENGTH_LONG).show();
-            }
-
-
-        } else {
-            Toast.makeText(getActivity(), "Can't load data", Toast.LENGTH_LONG).show();
-        }*/
 
     }
 }
