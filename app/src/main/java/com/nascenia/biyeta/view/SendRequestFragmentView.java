@@ -286,13 +286,10 @@ public class SendRequestFragmentView {
                 parentChildItemList.add(new UserProfileChild("বাবা",
                         checkNullField(userProfile.getProfile().getFamilyMembers().getFather()
                                 .getName())
-                                + ","
                                 + checkNullField(userProfile.getProfile().getFamilyMembers()
                                 .getFather().getOccupation())
-                                + ","
                                 + checkNullField(userProfile.getProfile().getFamilyMembers()
                                 .getFather().getDesignation())
-                                + ","
                                 + checkNullField(userProfile.getProfile().getFamilyMembers()
                                 .getFather().getInstitute())
                 ));
@@ -306,13 +303,10 @@ public class SendRequestFragmentView {
                 parentChildItemList.add(new UserProfileChild("মা",
                         checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
                                 .getName())
-                                + ","
                                 + checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
                                 .getOccupation())
-                                + ","
                                 + checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
                                 .getDesignation())
-                                + ","
                                 + checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
                                 .getInstitute())
                 ));
@@ -332,33 +326,25 @@ public class SendRequestFragmentView {
 
                             checkNullField(userProfile.getProfile().getFamilyMembers().getSisters().
                                     get(i).getName())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getSisters().get(i).getOccupation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getSisters().get(i).getDesignation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getSisters().get(i).getInstitute())
 
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getSisters().get(i).getMaritalStatus())
 
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getSisters().get(i).getSpouseName())
 
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getSisters().get(i).getSpouseInstitue())
 
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getSisters().get(i).getSpouseDesignation())
 
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getSisters().get(i).getSpouseOccupation())
 
@@ -380,33 +366,25 @@ public class SendRequestFragmentView {
 
                             checkNullField(userProfile.getProfile().getFamilyMembers().getBrothers().
                                     get(i).getName())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getBrothers().get(i).getOccupation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getBrothers().get(i).getDesignation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getBrothers().get(i).getInstitute())
 
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getBrothers().get(i).getMaritalStatus())
 
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getBrothers().get(i).getSpouseName())
 
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getBrothers().get(i).getSpouseInstitue())
 
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getBrothers().get(i).getSpouseDesignation())
 
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getBrothers().get(i).getSpouseOccupation())
 
@@ -446,13 +424,10 @@ public class SendRequestFragmentView {
                     otherCHildItemList.add(new UserProfileChild(
                             "দাদা", checkNullField(userProfile.getProfile().getFamilyMembers().getDadas().
                             get(i).getName())
-                            + ","
                             + checkNullField(userProfile.getProfile().getFamilyMembers().
                             getDadas().get(i).getOccupation())
-                            + ","
                             + checkNullField(userProfile.getProfile().getFamilyMembers()
                             .getDadas().get(i).getDesignation())
-                            + ","
                             + checkNullField(userProfile.getProfile().getFamilyMembers()
                             .getDadas().get(i).getInstitute())
 
@@ -474,16 +449,12 @@ public class SendRequestFragmentView {
                     familyMemberCounter = i + 1;
                     otherCHildItemList.add(new UserProfileChild(
                             "চাচা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
                             checkNullField(userProfile.getProfile().getFamilyMembers().getKakas().
                                     get(i).getName())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getKakas().get(i).getOccupation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getKakas().get(i).getDesignation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getKakas().get(i).getInstitute())
 
@@ -508,13 +479,10 @@ public class SendRequestFragmentView {
 
                             checkNullField(userProfile.getProfile().getFamilyMembers().getMamas().
                                     get(i).getName())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getMamas().get(i).getOccupation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getMamas().get(i).getDesignation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getMamas().get(i).getInstitute())
 
@@ -540,13 +508,10 @@ public class SendRequestFragmentView {
 
                             checkNullField(userProfile.getProfile().getFamilyMembers().getFufas().
                                     get(i).getName())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getFufas().get(i).getOccupation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getFufas().get(i).getDesignation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getFufas().get(i).getInstitute())
 
@@ -566,13 +531,10 @@ public class SendRequestFragmentView {
                     otherCHildItemList.add(new UserProfileChild(
                             "নানা", checkNullField(userProfile.getProfile().getFamilyMembers().getNanas().
                             get(i).getName())
-                            + ","
                             + checkNullField(userProfile.getProfile().getFamilyMembers().
                             getNanas().get(i).getOccupation())
-                            + ","
                             + checkNullField(userProfile.getProfile().getFamilyMembers()
                             .getNanas().get(i).getDesignation())
-                            + ","
                             + checkNullField(userProfile.getProfile().getFamilyMembers()
                             .getNanas().get(i).getInstitute())
 
@@ -597,13 +559,10 @@ public class SendRequestFragmentView {
 
                             checkNullField(userProfile.getProfile().getFamilyMembers().getKhalus().
                                     get(i).getName())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getKhalus().get(i).getOccupation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getKhalus().get(i).getDesignation())
-                                    + ","
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getKhalus().get(i).getInstitute())
 
@@ -689,16 +648,14 @@ public class SendRequestFragmentView {
 
         generalInformationArrayList.add(new GeneralInformation(
                 Utils.convertEnglishDigittoBangla(
-                        userProfile.getProfile().getPersonalInformation().getAge()) + " বছর"
-                        + "," +
+                        userProfile.getProfile().getPersonalInformation().getAge()) + " বছর," +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightFt())
                         + "'" +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightInc())
-                        + "\""
-                        + "," +
-                        checkNullField(userProfile.getProfile().getProfileReligion().getReligion())
+                        + "\"," +
+                        userProfile.getProfile().getProfileReligion().getReligion()
                         + "(" +
-                        checkNullField(userProfile.getProfile().getProfileReligion().getCast())
+                        userProfile.getProfile().getProfileReligion().getCast()
                         + ")"
 
                 , R.drawable.per));
@@ -720,10 +677,7 @@ public class SendRequestFragmentView {
             generalInformationArrayList.add(new GeneralInformation(
 
                     "দেশের বাড়ি-" + checkNullField(
-                            checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())
-                    )
-
-                    , R.drawable.hom));
+                            userProfile.getProfile().getProfileLivingIn().getLocation()), R.drawable.hom));
 
         }
 
@@ -749,19 +703,19 @@ public class SendRequestFragmentView {
 
                 if (educationInformation.getPassingYear() != null) {
 
-                    education = education + checkNullField(educationInformation.getName()) + "," +
-                            checkNullField(educationInformation.getInstitution()) + "," +
-                            checkNullField(Utils.convertEnglishYearDigittoBangla(
-                                    educationInformation.getPassingYear())) + "," +
-                            checkNullField(educationInformation.getSubject()) + ":";
-                    Log.i("edu", education);
+
+                    education = education + checkNullField(educationInformation.getName()) +
+                            checkNullField(educationInformation.getInstitution()) +
+                            checkNullField(educationInformation.getSubject()) +
+                            Utils.convertEnglishYearDigittoBangla(
+                                    educationInformation.getPassingYear()) + " : ";
+
 
                 } else {
-                    education = education + checkNullField(educationInformation.getName()) + "," +
-                            checkNullField(educationInformation.getInstitution()) + "," +
-                            checkNullField(educationInformation.getSubject()) + ":";
+                    education = education + checkNullField(educationInformation.getName()) +
+                            checkNullField(educationInformation.getInstitution()) +
+                            checkNullField(educationInformation.getSubject()) + " : ";
 
-                    Log.i("edu", education);
 
                 }
 
@@ -782,7 +736,7 @@ public class SendRequestFragmentView {
             generalInformationArrayList.add(new GeneralInformation(
 
                     checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
-                            + "," +
+                            +
                             checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
                     , R.drawable.hel2));
 
@@ -798,7 +752,7 @@ public class SendRequestFragmentView {
             generalInformationArrayList.add(new GeneralInformation(
 
                     checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
-                            + "," +
+                            +
                             checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
                     , R.drawable.hel));
 
@@ -896,7 +850,7 @@ public class SendRequestFragmentView {
         if (value == null || value.isEmpty()) {
             return "";
         } else {
-            return value;
+            return value + ",";
         }
 
     }

@@ -10,6 +10,7 @@ import com.bignerdranch.expandablerecyclerview.ChildViewHolder;
 import com.nascenia.biyeta.model.UserProfileChild;
 
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.utils.Utils;
 
 /**
  * Created by saiful on 2/12/17.
@@ -39,8 +40,8 @@ public class ChildItemViewHolder extends ChildViewHolder {
     public void bind(UserProfileChild userProfileChild) {
 
         titleTextView.setText(userProfileChild.getTitle());
-        titleResultTextView.setText(userProfileChild.getTitleResult());
-        
+        titleResultTextView.setText(Utils.formatString(userProfileChild.getTitleResult()));
+
 
     }
 }

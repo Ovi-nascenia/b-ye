@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.model.MatchUserChoice;
 import com.nascenia.biyeta.model.UserProfileChild;
+import com.nascenia.biyeta.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,8 @@ public class OtherInfoRecylerViewAdapter extends RecyclerView.Adapter<OtherInfoR
     @Override
     public void onBindViewHolder(OtherInfoRecylerViewAdapter.MyViewHolder holder, int position) {
         holder.titleTextView.setText(infoArrayList.get(position).getTitleName());
-        holder.titleResultTextView.setText(infoArrayList.get(position).getTitleNameValue());
+        holder.titleResultTextView.setText(
+                Utils.formatString(infoArrayList.get(position).getTitleNameValue()));
     }
 
     @Override
