@@ -253,7 +253,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
         if (value == null || value.isEmpty()) {
             return "";
         } else {
-            return value;
+            return value + ",";
         }
 
     }
@@ -263,20 +263,17 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
         generalInformationArrayList.add(new GeneralInformation(
                 Utils.convertEnglishDigittoBangla(
-                        userProfile.getProfile().getPersonalInformation().getAge()) + " বছর"
-                        + "," +
+                        userProfile.getProfile().getPersonalInformation().getAge()) + " বছর," +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightFt())
                         + "'" +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightInc())
-                        + "\""
-                        + "," +
-                        checkNullField(userProfile.getProfile().getProfileReligion().getReligion())
+                        + "\"," +
+                        userProfile.getProfile().getProfileReligion().getReligion()
                         + "(" +
-                        checkNullField(userProfile.getProfile().getProfileReligion().getCast())
+                        userProfile.getProfile().getProfileReligion().getCast()
                         + ")"
 
                 , R.drawable.per));
-
 
         if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())).equals("")) {
 
@@ -294,10 +291,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
             generalInformationArrayList.add(new GeneralInformation(
 
                     "দেশের বাড়ি-" + checkNullField(
-                            checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())
-                    )
-
-                    , R.drawable.hom));
+                            userProfile.getProfile().getProfileLivingIn().getLocation()), R.drawable.hom));
 
         }
 
@@ -322,28 +316,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
                         getEducationInformation().get(i);
 
 
-/*
-                if (educationInformation.getPassingYear() != null) {
-
-                    education = education + checkNullField(educationInformation.getName()) + "," +
-                            checkNullField(educationInformation.getInstitution()) + "," +
-                            checkNullField(Utils.convertEnglishYearDigittoBangla(
-                                    educationInformation.getPassingYear())) + "," +
-                            checkNullField(educationInformation.getSubject()) + ":";
-                    Log.i("edu", education);
-
-                } else {
-                    education = education + checkNullField(educationInformation.getName()) + "," +
-                            checkNullField(educationInformation.getInstitution()) + "," +
-                            checkNullField(educationInformation.getSubject()) + ":";
-
-                    Log.i("edu", education);
-
-                }
-*/
-
-
-                education = education + checkNullField(educationInformation.getHighestDegree()) + "," +
+                education = education + checkNullField(educationInformation.getHighestDegree()) +
                         checkNullField(educationInformation.getInstitution());
 
 
@@ -364,7 +337,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
             generalInformationArrayList.add(new GeneralInformation(
 
                     checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
-                            + "," +
+                            +
                             checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
                     , R.drawable.hel2));
 
@@ -380,7 +353,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
             generalInformationArrayList.add(new GeneralInformation(
 
                     checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
-                            + "," +
+                            +
                             checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
                     , R.drawable.hel));
 
