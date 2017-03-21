@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_sent_request"
+            android:id="@+id/tv_sent_request_from_me"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="10dp"
@@ -33,7 +33,8 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_sent_request_from_me"
+
+            android:id="@+id/tv_sent_request"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="10dp"

@@ -153,27 +153,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 }
 
 
-//                if (menuItem.getItemId() == R.id.nac_blog) {
-//                    Toast.makeText(HomeScreen.this, "item 2", Toast.LENGTH_SHORT).show();
-//                    getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.fragmentParentViewGroup, new Blog())
-//                            .commit();
-//
-//
-//                }
-//
-//                if (menuItem.getItemId() == R.id.nav_profile) {
-//
-//
-//                   /* Intent intent = new Intent(getBaseContext(), UserProfileActivity.class);
-//                    intent.putExtra("id", "316");
-//                    intent.putExtra("user_name", "Saiful");
-//                    intent.putExtra("PROFILE_EDIT_OPTION", true);
-//                    startActivity(intent);*/
-//
-//
-//                    startActivity(new Intent(getBaseContext(), NewUserProfileActivity.class));
-//                }
 
                 return true;
             }
@@ -232,6 +211,21 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setContentView(R.layout.inbox);
+                dialog.findViewById(R.id.tv_sent_request).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(HomeScreen.this, SendRequestActivity.class));
+                    }
+                });
+
+
+                dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(HomeScreen.this, InboxListView.class));
+                    }
+                });
+
                 dialog.findViewById(R.id.tv_inbox).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
