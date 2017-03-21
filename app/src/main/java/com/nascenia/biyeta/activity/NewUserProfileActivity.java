@@ -178,9 +178,8 @@ public class NewUserProfileActivity extends AppCompatActivity {
                             } else {
                             }
 
-
                             addDataonGeneralInfoRecylerViewItem(userProfile);
-                           addDataonMatchUserChoiceRecyclerView(userProfile);
+                            addDataonMatchUserChoiceRecyclerView(userProfile);
 
 
                         }
