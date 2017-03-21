@@ -106,6 +106,34 @@ public class Utils {
     }
 
 
+    public static String formatString(String result) {
 
+        if (result.startsWith(",") | result.startsWith(" : ")) {
+
+            result = removeChar(result, 0);
+        }
+
+        if (result.charAt(result.length() - 1) == ',' |
+                result.charAt(result.length() - 1) == ' ') {
+
+            result = removeChar(result, result.length() - 1);
+        }
+
+        if (result.charAt(result.length() - 1) == ':') {
+
+            result = removeChar(result, result.length() - 1);
+        }
+
+        result = result.replaceAll(",,", ",");
+        result = result.replaceAll(", : ", " : ");
+
+
+        return result;
+    }
+
+    public static String removeChar(String str, Integer n) {
+
+        return str.substring(0, n) + str.substring(n + 1, str.length());
+    }
 
 }

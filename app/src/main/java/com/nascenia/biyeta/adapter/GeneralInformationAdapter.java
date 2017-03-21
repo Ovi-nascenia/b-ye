@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.model.GeneralInformation;
+import com.nascenia.biyeta.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -47,23 +48,10 @@ public class GeneralInformationAdapter extends RecyclerView.Adapter<GeneralInfor
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        generalInfoValue = this.generalInformationArrayList.get(position).getGeneralInfo();
-        if (generalInfoValue.startsWith(",") | generalInfoValue.startsWith(":")) {
-
-            generalInfoValue = removeChar(generalInfoValue, 0);
-        }
-
-        if (generalInfoValue.charAt(generalInfoValue.length() - 1) == ',' |
-                generalInfoValue.charAt(generalInfoValue.length() - 1) == ':') {
-
-            generalInfoValue = removeChar(generalInfoValue, generalInfoValue.length() - 1);
-        }
-
-        generalInfoValue = generalInfoValue.replaceAll(",,", ",");
-
-
-        holder.titlegeneralInfoValueTextview.setText(generalInfoValue);
-        holder.titleImageView.setImageResource(this.generalInformationArrayList.get(position).getItemImageDrwableId());
+        holder.titlegeneralInfoValueTextview.setText(
+                Utils.formatString(this.generalInformationArrayList.get(position).getGeneralInfo()));
+        holder.titleImageView.setImageResource(
+                this.generalInformationArrayList.get(position).getItemImageDrwableId());
 
     }
 
