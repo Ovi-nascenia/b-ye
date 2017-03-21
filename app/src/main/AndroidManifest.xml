@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nascenia.biyeta">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
 
     <application
@@ -29,7 +29,7 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".activity.Search_Filter"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
 
         <!-- <activity android:name=".Search_Filter" -->
         <!-- &gt;</activity> -->
@@ -55,12 +55,11 @@
         <activity
             android:name=".activity.LowsAndTerms"
             android:theme="@style/AppTheme" />
-
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.SendRequestActivity"
             android:label="@string/title_activity_send_request"
-            android:theme="@style/TabAppTheme"></activity>
+            android:theme="@style/TabAppTheme" />
     </application>
 
 </manifest>
