@@ -37,6 +37,8 @@
         app:tabGravity="fill"
         app:tabMode="fixed" />
 
+
+
     <LinearLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

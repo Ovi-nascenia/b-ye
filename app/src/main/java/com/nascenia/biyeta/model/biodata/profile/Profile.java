@@ -6,6 +6,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class Profile {
 
+
+    @SerializedName("is_smile_sent")
+    @Expose
+    boolean isSmileSent;
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -150,4 +155,12 @@ public class Profile {
         this.requestStatus = requestStatus;
     }
 
+
+    public boolean isSmileSent() {
+        return isSmileSent;
+    }
+
+    public void setSmileSent(boolean smileSent) {
+        isSmileSent = smileSent;
+    }
 }

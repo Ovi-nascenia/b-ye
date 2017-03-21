@@ -54,7 +54,7 @@ public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdap
         Glide.
                 with(holder.image.getContext()).
                 load(profile.getImage()).
-                placeholder(R.drawable.default_profile_female_icon).
+                placeholder(R.drawable.fake_image).
                 into(holder.image);
 //        holder.itemView.setTag(item);
 

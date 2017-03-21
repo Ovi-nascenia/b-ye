@@ -222,7 +222,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(HomeScreen.this, InboxListView.class));
+                        startActivity(new Intent(HomeScreen.this, RequestSentFromMe.class));
                     }
                 });
 
