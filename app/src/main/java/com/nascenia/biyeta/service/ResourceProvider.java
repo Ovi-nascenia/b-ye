@@ -35,7 +35,7 @@ public class ResourceProvider {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader("Authorization", "Token token=" + token)
+                .addHeader("Authorization", "Token token=" + "264bb7cc85a36044378561b2338a3990")
                 .build();
 /*
         request = new Request.Builder()

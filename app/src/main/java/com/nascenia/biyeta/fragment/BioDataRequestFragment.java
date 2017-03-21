@@ -16,13 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nascenia.biyeta.R;
-import com.nascenia.biyeta.model.GeneralInformation;
-import com.nascenia.biyeta.model.MatchUserChoice;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.utils.MyCallback;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
-
-import java.util.ArrayList;
 
 /**
  * Created by saiful on 3/10/17.

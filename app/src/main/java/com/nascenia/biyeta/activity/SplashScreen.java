@@ -26,31 +26,29 @@ public class SplashScreen extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
-        imageView=(ImageView)findViewById(R.id.imageview);
+        imageView = (ImageView) findViewById(R.id.imageview);
         Glide.with(this)
                 .load(R.drawable.splash_screen)
                 .into(imageView);
         new Handler().postDelayed(new Runnable() {
-         @Override
-         public void run() {
+            @Override
+            public void run() {
 
                 // This method will be executed once the timer is over
                 // Start your app main activity
-             //
-            SharePref sharePref=new SharePref(SplashScreen.this);
-            if (sharePref.get_data("token").equals("key")) {
-                Intent i = new Intent(SplashScreen.this, Login.class);
-                startActivity(i);
-                ///Kill the current activity
-                finish();
+                //
+                SharePref sharePref = new SharePref(SplashScreen.this);
+                if (sharePref.get_data("token").equals("key")) {
+                    Intent i = new Intent(SplashScreen.this, Login.class);
+                    startActivity(i);
+                    ///Kill the current activity
+                    finish();
+                } else {
+                    Intent i = new Intent(SplashScreen.this, HomeScreen.class);
+                    startActivity(i);
+                    finish();
+                }
             }
-            else
-            {
-                Intent i = new Intent(SplashScreen.this, HomeScreen.class);
-                startActivity(i);
-                finish();
-            }
-            }
-         }, Constant.SPLASH_TIMEOUT);
+        }, Constant.SPLASH_TIMEOUT);
     }
 }

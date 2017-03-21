@@ -16,9 +16,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
+import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.fragment.ProfileImageFirstFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
+import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.service.ResourceProvider;
 import com.nascenia.biyeta.utils.Utils;
@@ -175,9 +178,8 @@ public class NewUserProfileActivity extends AppCompatActivity {
                             } else {
                             }
 
-
-                           /* addDataonGeneralInfoRecylerViewItem(userProfile);
-                            addDataonMatchUserChoiceRecyclerView(userProfile);*/
+                            addDataonGeneralInfoRecylerViewItem(userProfile);
+                            addDataonMatchUserChoiceRecyclerView(userProfile);
 
 
                         }
@@ -193,62 +195,85 @@ public class NewUserProfileActivity extends AppCompatActivity {
     }
 
 
-   /* private void addDataonMatchUserChoiceRecyclerView(UserProfileParent userProfile) {
+    private void addDataonMatchUserChoiceRecyclerView(UserProfile userProfile) {
 
-        matchUserChoiceArrayList.add(new MatchUserChoice("home town"
-                , userProfile.getProfile().getMatchingAttributes().getHomeTown()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("age"
-                , userProfile.getProfile().getMatchingAttributes().getAge()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("height"
-                , userProfile.getProfile().getMatchingAttributes().getHeight()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("skin color"
-                , userProfile.getProfile().getMatchingAttributes().getSkinColor()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("health"
-                , userProfile.getProfile().getMatchingAttributes().getHealth()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("marital status"
-                , userProfile.getProfile().getMatchingAttributes().getMaritalStatus()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("educational qualification"
-                , userProfile.getProfile().getMatchingAttributes().getTitleEducationalQualification()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("own house"
-                , userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse()));
-        matchUserChoiceArrayList.add(new MatchUserChoice("occupation"
-                , userProfile.getProfile().getMatchingAttributes().getTitleOccupation()));
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHomeTown())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("home town"
+                    , userProfile.getProfile().getMatchingAttributes().getHomeTown()));
+
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getAge())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("age"
+                    , userProfile.getProfile().getMatchingAttributes().getAge()));
+
+        }
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHeight())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("height"
+                    , userProfile.getProfile().getMatchingAttributes().getHeight()));
+
+        }
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getSkinColor())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("skin color"
+                    , userProfile.getProfile().getMatchingAttributes().getSkinColor()));
+
+        }
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHealth())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("health"
+                    , userProfile.getProfile().getMatchingAttributes().getHealth()));
+
+        }
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getTitleEducationalQualification())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("educational qualification"
+                    , userProfile.getProfile().getMatchingAttributes().getTitleEducationalQualification()));
+
+        }
+
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("own house"
+                    , userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse()));
+
+        }
+        if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getTitleOccupation())).equals("")) {
+            matchUserChoiceArrayList.add(new MatchUserChoice("occupation"
+                    , userProfile.getProfile().getMatchingAttributes().getTitleOccupation()));
+
+        }
 
 
         matchUserChoiceRecyclerView.setAdapter(new MatchUserChoiceAdapter(getBaseContext(), matchUserChoiceArrayList));
 
-    }*/
+    }
 
 
     private String checkNullField(String value) {
 
 
-        if (value == null) {
+        if (value == null || value.isEmpty()) {
             return "";
         } else {
-            return value;
+            return value + ",";
         }
 
     }
-    /*private void addDataonGeneralInfoRecylerViewItem(UserProfileParent userProfile) {
+
+    private void addDataonGeneralInfoRecylerViewItem(UserProfile userProfile) {
 
 
         generalInformationArrayList.add(new GeneralInformation(
                 Utils.convertEnglishDigittoBangla(
-                        userProfile.getProfile().getPersonalInformation().getAge()) + " বছর"
-                        + "," +
+                        userProfile.getProfile().getPersonalInformation().getAge()) + " বছর," +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightFt())
                         + "'" +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightInc())
-                        + "\""
-                        + "," +
-                        checkNullField(userProfile.getProfile().getProfileReligion().getReligion())
+                        + "\"," +
+                        userProfile.getProfile().getProfileReligion().getReligion()
                         + "(" +
-                        checkNullField(userProfile.getProfile().getProfileReligion().getCast())
+                        userProfile.getProfile().getProfileReligion().getCast()
                         + ")"
 
                 , R.drawable.per));
-
 
         if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())).equals("")) {
 
@@ -266,10 +291,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
             generalInformationArrayList.add(new GeneralInformation(
 
                     "দেশের বাড়ি-" + checkNullField(
-                            checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())
-                    )
-
-                    , R.drawable.hom));
+                            userProfile.getProfile().getProfileLivingIn().getLocation()), R.drawable.hom));
 
         }
 
@@ -284,19 +306,27 @@ public class NewUserProfileActivity extends AppCompatActivity {
         }
 
 
-       *//* if (!(checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree()) +
-                checkNullField(userProfile.getProfile().getEducationInformation().getInstitution())).equals("")) {
+        String education = "";
 
+        if (userProfile.getProfile().getEducationInformation().size() > 0) {
+
+            for (int i = 0; i < userProfile.getProfile().getEducationInformation().size(); i++) {
+
+                EducationInformation educationInformation = userProfile.getProfile().
+                        getEducationInformation().get(i);
+
+
+                education = education + checkNullField(educationInformation.getHighestDegree()) +
+                        checkNullField(educationInformation.getInstitution());
+
+
+            }
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    checkNullField(userProfile.getProfile().getEducationInformation().getHighestDegree())
-                            + "," +
-                            checkNullField(userProfile.getProfile().getEducationInformation().getInstitution())
-                    , R.drawable.edu));
-
+                    education, R.drawable.edu));
         }
-*//*
+
 
         if ((!(checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor()) +
                 checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())).equals(""))
@@ -307,7 +337,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
             generalInformationArrayList.add(new GeneralInformation(
 
                     checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
-                            + "," +
+                            +
                             checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
                     , R.drawable.hel2));
 
@@ -323,7 +353,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
             generalInformationArrayList.add(new GeneralInformation(
 
                     checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
-                            + "," +
+                            +
                             checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
                     , R.drawable.hel));
 
@@ -373,7 +403,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
                 getBaseContext(), generalInformationArrayList));
 
 
-    }*/
+    }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 

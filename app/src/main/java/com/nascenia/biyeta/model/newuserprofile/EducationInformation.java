@@ -22,6 +22,19 @@ public class EducationInformation implements Serializable {
     @SerializedName("subject")
     @Expose
     private String subject;
+
+    @SerializedName("highest_degree")
+    @Expose
+    private String highestDegree;
+
+    public String getHighestDegree() {
+        return highestDegree;
+    }
+
+    public void setHighestDegree(String highestDegree) {
+        this.highestDegree = highestDegree;
+    }
+
     private final static long serialVersionUID = 4585354323670632578L;
 
     public String getName() {
