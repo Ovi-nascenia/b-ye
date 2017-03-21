@@ -20,30 +20,30 @@ import com.nascenia.biyeta.activity.InboxSingleChat;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
 import com.nascenia.biyeta.model.communication.profile.CommunicationProfile;
 import com.nascenia.biyeta.model.communication.profile.Profile;
+import com.nascenia.biyeta.model.newuserprofile.Image;
 
 /**
  * Created by god father on 3/16/2017.
  */
 
-public class BiodataProfileAdapter extends RecyclerView.Adapter<BiodataProfileAdapter.ViewHolder> {
+public class BiodatarequestFromMe extends RecyclerView.Adapter<BiodatarequestFromMe.ViewHolder> {
 
     private BiodataProfile biodataProfile;
     private int itemLayout;
 
-
-    public BiodataProfileAdapter(BiodataProfile biodataProfile, int itemLayout) {
+    public BiodatarequestFromMe(BiodataProfile biodataProfile, int itemLayout) {
         this.biodataProfile = biodataProfile;
         this.itemLayout = itemLayout;
     }
 
     @Override
-    public BiodataProfileAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BiodatarequestFromMe.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(itemLayout, parent, false);
-        return new BiodataProfileAdapter.ViewHolder(v);
+        return new BiodatarequestFromMe.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final BiodataProfileAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final BiodatarequestFromMe.ViewHolder holder, final int position) {
 
         final com.nascenia.biyeta.model.biodata.profile.Profile profile = biodataProfile.getProfiles().get(position);
 
@@ -59,7 +59,15 @@ public class BiodataProfileAdapter extends RecyclerView.Adapter<BiodataProfileAd
 
 
 
-        holder.call.setText(profile.getRequestStatus().getMessage());
+        if (profile.isSmileSent()==false)
+        {
+            holder.imageViewSmile.setVisibility(View.VISIBLE);
+            holder.status.setText("হাসি পাঠান");
+        }
+        else {
+            holder.imageViewSmile.setVisibility(View.GONE);
+            holder.status.setText(profile.getRequestStatus().getMessage());
+        }
 
 
 
@@ -76,7 +84,8 @@ public class BiodataProfileAdapter extends RecyclerView.Adapter<BiodataProfileAd
         public TextView userName;
         public TextView details;
         public TextView time_date;
-        Button call;
+        public ImageView imageViewSmile;
+        TextView status;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -84,7 +93,8 @@ public class BiodataProfileAdapter extends RecyclerView.Adapter<BiodataProfileAd
             details = (TextView) itemView.findViewById(R.id.details);
             userName = (TextView) itemView.findViewById(R.id.user_name);
             time_date = (TextView) itemView.findViewById(R.id.date_time);
-            call=(Button)itemView.findViewById(R.id.phone);
+            status=(TextView) itemView.findViewById(R.id.status);
+            imageViewSmile=(ImageView) itemView.findViewById(R.id.smile_ico);
 
 
         }

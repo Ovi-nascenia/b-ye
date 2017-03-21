@@ -71,6 +71,7 @@ public class Match extends Fragment implements View.OnClickListener{
 
         biodata=(TextView)v.findViewById(R.id.biodata);
         biodata.setOnClickListener(this);
+        biodata.setBackgroundResource(R.color.colorAccent);
 
         connection=(TextView)v.findViewById(R.id.connection);
         connection.setOnClickListener(this);
