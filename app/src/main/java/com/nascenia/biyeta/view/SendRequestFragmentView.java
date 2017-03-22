@@ -28,6 +28,9 @@ import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -190,6 +193,7 @@ public class SendRequestFragmentView {
                 });
 
                 if (callback != null) {
+                    Log.i("calll", "callback block");
                     callback.onComplete(true); // will call onComplete() on MyActivity once the job is done
                 }
 

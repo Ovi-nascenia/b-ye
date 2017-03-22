@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,12 @@ import android.widget.TextView;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
+import com.nascenia.biyeta.model.RequestSenderIds;
 import com.nascenia.biyeta.utils.MyCallback;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by saiful on 3/10/17.
@@ -39,12 +42,21 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
 
     private String url = "http://test.biyeta.com/api/v1/profiles/420";
+    private RequestSenderIds requestSenderIds;
+    public static List<Integer> communicationRequestSenderIdsList = null;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         _baseView = inflater.inflate(R.layout.fragment_communication_request, container, false);
+
+
+        if (getArguments().getSerializable("REQUEST_RESPONSE_OBJ") != null) {
+            requestSenderIds = (RequestSenderIds) getArguments().getSerializable("REQUEST_RESPONSE_OBJ");
+            communicationRequestSenderIdsList = requestSenderIds.getRequests().getCommunicationRequestSenderIds();
+
+        }
 
 
         initView();

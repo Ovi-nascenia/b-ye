@@ -30,7 +30,10 @@ public class SendRequestActivity extends AppCompatActivity {
     private View tabItemView1, tabItemView2;
     private Bundle bundle;
     private RequestSenderIds requestSenderIds;
+    private TextView communicationNotificationCounterTextview, biodataNotificationCounterTextview;
 
+    public static int biodataRequestCounter = 0;
+    public static int communicationRequestCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +100,16 @@ public class SendRequestActivity extends AppCompatActivity {
 
         //biodata tab view
         tabItemView1 = inflater.inflate(R.layout.custom_tab_item1, null);
-        TextView biodataNotificationCounterTextview = (TextView) tabItemView1.
+        biodataNotificationCounterTextview = (TextView) tabItemView1.
                 findViewById(R.id.biodata_notification_textview);
 
         if (requestSenderIds.getRequests().getProfileRequestCount() > 0) {
+            SendRequestActivity.biodataRequestCounter = requestSenderIds.
+                    getRequests().getProfileRequestCount();
+
             biodataNotificationCounterTextview.setVisibility(View.VISIBLE);
             biodataNotificationCounterTextview.setText(
-                    requestSenderIds.getRequests().getProfileRequestCount() + "");
+                    SendRequestActivity.biodataRequestCounter + "");
 
         }
 
@@ -112,13 +118,17 @@ public class SendRequestActivity extends AppCompatActivity {
 
         //communication tab view
         tabItemView2 = inflater.inflate(R.layout.custom_tab_item2, null);
-        TextView communicationNotificationCounterTextview = (TextView) tabItemView2.
+        communicationNotificationCounterTextview = (TextView) tabItemView2.
                 findViewById(R.id.communication_notification_textview);
 
         if (requestSenderIds.getRequests().getCommunicationRequestCount() > 0) {
+            SendRequestActivity.communicationRequestCounter = requestSenderIds.
+                    getRequests().getCommunicationRequestCount();
+
+
             communicationNotificationCounterTextview.setVisibility(View.VISIBLE);
             communicationNotificationCounterTextview.setText(
-                    requestSenderIds.getRequests().getCommunicationRequestCount() + "");
+                    SendRequestActivity.communicationRequestCounter + "");
         }
         tabLayout.getTabAt(1).setCustomView(tabItemView2);
 
