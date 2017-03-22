@@ -50,7 +50,8 @@ public class GeneralInformationAdapter extends RecyclerView.Adapter<GeneralInfor
 
         holder.titlegeneralInfoValueTextview.setText(
                 Utils.formatString(this.generalInformationArrayList.get(position).getGeneralInfo()));
-        holder.titleImageView.setImageResource(this.generalInformationArrayList.get(position).getItemImageDrwableId());
+        holder.titleImageView.setImageResource(
+                this.generalInformationArrayList.get(position).getItemImageDrwableId());
 
     }
 

@@ -16,6 +16,7 @@ import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
 import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.adapter.OtherInfoRecylerViewAdapter;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
+import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
 import com.nascenia.biyeta.model.UserProfileChild;
@@ -166,6 +167,8 @@ public class SendRequestFragmentView {
                 Log.i("threaddata", "onmethod" + responseValue + " ");
                 responseBody.close();
                 final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
+
+                BioDataRequestFragment.profileId = userProfile.getProfile().getRequestStatus().getProfileRequestId();
 
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override

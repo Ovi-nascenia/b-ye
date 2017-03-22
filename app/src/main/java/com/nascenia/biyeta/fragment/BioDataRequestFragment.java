@@ -20,12 +20,17 @@ import android.widget.Toast;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.HomeScreen;
 import com.nascenia.biyeta.activity.SendRequestActivity;
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.RequestSenderIds;
 import com.nascenia.biyeta.model.newuserprofile.RequestStatus;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.utils.MyCallback;
 import com.nascenia.biyeta.utils.Utils;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +73,11 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     *
     * */
     private int clickableButtonIdentifier = 555;
+    private String token;
+    private SharePref sharePref;
+    private Response responseStatus;
 
+    public static int profileId = 9999;
 
     @Nullable
     @Override
@@ -76,6 +85,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                              @Nullable Bundle savedInstanceState) {
 
         _baseView = inflater.inflate(R.layout.fragment_communication_request, container, false);
+
+        sharePref = new SharePref(getActivity());
+        token = sharePref.get_data("token");
 
         if (getArguments().getSerializable("REQUEST_RESPONSE_OBJ") != null) {
             requestSenderIds = (RequestSenderIds) getArguments().getSerializable("REQUEST_RESPONSE_OBJ");
@@ -242,11 +254,12 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     public void onComplete(Boolean result) {
 
         if (result && clickableButtonIdentifier == 1) {
-            new SendResponseTask().execute("http://localhost:3000/api/v1/profile_requests/" +
-                    urlResponseId + "/accept");
+            Log.i("profileid", BioDataRequestFragment.profileId + "");
+            new SendResponseTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
+                    BioDataRequestFragment.profileId + "/accept");
 
         } else if (result && clickableButtonIdentifier == 0) {
-            new SendResponseTask().execute("http://localhost:3000/api/v1/profile_requests/" +
+            new SendResponseTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
                     urlResponseId + "/reject");
 
 
@@ -267,8 +280,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                     biodataNotificationCounterTextview.setText(
                             SendRequestActivity.biodataRequestCounter + "");
 
-                    if (BioDataRequestFragment.profileRequestSenderIdsList.size()==1)
-                        urlResponseId=BioDataRequestFragment.profileRequestSenderIdsList.get(0);
+                    if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1)
+                        urlResponseId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
 
 
                     BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
@@ -293,7 +306,10 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                     biodataNotificationCounterTextview.setText(
                             SendRequestActivity.biodataRequestCounter + "");
 
-                //    currentId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
+                    if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1)
+                        urlResponseId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
+
+
                     BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
 
                     if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
@@ -301,12 +317,11 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                         clickableButtonIdentifier = 0;
                         setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
                     } else {
-
                         setRequestView(currentId);
                         Utils.ShowAlert(getActivity(), "No more reqeust left");
                     }
                 } else {
-                    Utils.ShowAlert(getActivity(), "No more reqeust left");
+                    Utils.ShowAlert(getActivity(), "No more reqeust ");
                 }
 
                 break;
@@ -326,12 +341,31 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
             Log.i("asynctaskdata", urls[0]);
 
-            return null;
+            try {
+
+
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(urls[0])
+                        .addHeader("Authorization", "Token token=" + token)
+                        .get()
+                        .build();
+                responseStatus = client.newCall(request).execute();
+
+                return responseStatus.body().string();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("asynctaskdata", e.getMessage());
+            }
+
+            return "";
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
         }
     }
 
