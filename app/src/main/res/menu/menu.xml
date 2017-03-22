@@ -37,7 +37,7 @@
                     android:id="@+id/nav_faq"
                     android:title="@string/nav_faq" />
                 <item
-                    android:id="@+id/nav_policy"
+                    android:id="@+id/nav_termsofuse"
                     android:title="@string/nav_termsofuse" />
 
                 <item

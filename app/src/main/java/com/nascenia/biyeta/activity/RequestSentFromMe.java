@@ -18,10 +18,12 @@ import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.BiodataProfileAdapter;
 import com.nascenia.biyeta.adapter.BiodatarequestFromMe;
+import com.nascenia.biyeta.adapter.CommunicationRequestFromMeAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.fragment.CommunicationRequestFragment;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
+import com.nascenia.biyeta.model.communication_request_from_me.CommuncationRequestFromMeModel;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -37,7 +39,7 @@ import java.io.InputStreamReader;
 public class RequestSentFromMe extends CustomActionBarActivity {
 
 
-    static int biodataNotificationCount = 0;
+    static int biodataNotificationCount = 0,connectionNotification=0;
     static int communicationNotificationCount = 0;
     public final OkHttpClient client = new OkHttpClient();
     int position = 0;
@@ -144,7 +146,12 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                 InputStreamReader isr = new InputStreamReader(is);
                 BiodataProfile response = gson.fromJson(isr, BiodataProfile.class);
 
-                BiodatarequestFromMe inboxListAdapter = new BiodatarequestFromMe(response, R.layout.biodata_request_from_me);
+                BiodatarequestFromMe inboxListAdapter = new BiodatarequestFromMe(response, R.layout.biodata_request_from_me) {
+                    @Override
+                    public void onClickSmile(int id) {
+                        Toast.makeText(RequestSentFromMe.this,id+" ",Toast.LENGTH_SHORT).show();
+                    }
+                };
                 recyclerView.setAdapter(inboxListAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -158,10 +165,25 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                 notificationNumberLeft.setText(biodataNotificationCount + "");
             } else {
 
-                notificationNumberRight.setText(communicationNotificationCount+"");
-                recyclerView.setAdapter(null);
+
+                Gson gson = new Gson();
+                InputStream is = new ByteArrayInputStream(s.getBytes());
+                InputStreamReader isr = new InputStreamReader(is);
+                CommuncationRequestFromMeModel response = gson.fromJson(isr, CommuncationRequestFromMeModel.class);
+
+                CommunicationRequestFromMeAdapter communicationRequestFromMeAdapter = new CommunicationRequestFromMeAdapter(response, R.layout.communication_request_sent_from_me_item);
+                recyclerView.setAdapter(communicationRequestFromMeAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+//                for (int i = 0; i < response.getProfiles().size(); i++) {
+//                    if (response.getProfiles().get(i).getRequestStatus().getAccepted() == false && response.getProfiles().get(i).getRequestStatus().getRejected() == false) {
+//                    } else
+//                        connectionNotification++;
+//                }
+
+                notificationNumberRight.setText(connectionNotification+"");
+
 
             }
 

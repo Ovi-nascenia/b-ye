@@ -2,13 +2,9 @@ package com.nascenia.biyeta.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 
@@ -16,9 +12,9 @@ import com.nascenia.biyeta.R;
  * Created by god father on 2/27/2017.
  */
 
-public class Blog extends Fragment {
+public class PrivacyPolicy extends Fragment {
 
-    public Blog() {
+    public PrivacyPolicy() {
         // Required empty public constructor
     }
 
@@ -33,7 +29,7 @@ public class Blog extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        View v = inflater.inflate(R.layout.blog, null);
+        View v = inflater.inflate(R.layout.privacy_policy, null);
         return v;
 
     }

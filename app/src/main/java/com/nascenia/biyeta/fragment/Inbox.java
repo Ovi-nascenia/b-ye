@@ -37,7 +37,7 @@ public class Inbox extends Fragment implements View.OnClickListener{
         v.findViewById(R.id.tv_expire).setOnClickListener(this);
         v.findViewById(R.id.tv_inbox).setOnClickListener(this);
         v.findViewById(R.id.tv_sent_request).setOnClickListener(this);
-        v.findViewById(R.id.tv_verfication).setOnClickListener(this);
+
 
         return v;
 
@@ -60,9 +60,7 @@ public class Inbox extends Fragment implements View.OnClickListener{
 
 
 
-            case R.id.tv_verfication:
 
-                break;
 
             case R.id.tv_expire:
                 break;

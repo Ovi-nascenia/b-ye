@@ -1,5 +1,20 @@
 package com.nascenia.biyeta.adapter;
 
+/**
+ * Created by god father on 3/22/2017.
+ */
+
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,36 +34,30 @@ import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.InboxSingleChat;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
 import com.nascenia.biyeta.model.communication.profile.CommunicationProfile;
-import com.nascenia.biyeta.model.communication.profile.Profile;
+import com.nascenia.biyeta.model.communication_request_from_me.Profile;
+import com.nascenia.biyeta.model.communication_request_from_me.CommuncationRequestFromMeModel;
 import com.nascenia.biyeta.model.newuserprofile.Image;
 
-/**
- * Created by god father on 3/16/2017.
- */
+public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<CommunicationRequestFromMeAdapter.ViewHolder> {
 
-public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<BiodatarequestFromMe.ViewHolder> {
-
-
-    public abstract void onClickSmile(int id);
-
-    private BiodataProfile biodataProfile;
+    private CommuncationRequestFromMeModel communcationRequestFromMeModel;
     private int itemLayout;
 
-    public BiodatarequestFromMe(BiodataProfile biodataProfile, int itemLayout) {
-        this.biodataProfile = biodataProfile;
+    public CommunicationRequestFromMeAdapter(CommuncationRequestFromMeModel biodataProfile, int itemLayout) {
+        this.communcationRequestFromMeModel = biodataProfile;
         this.itemLayout = itemLayout;
     }
 
     @Override
-    public BiodatarequestFromMe.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CommunicationRequestFromMeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(itemLayout, parent, false);
-        return new BiodatarequestFromMe.ViewHolder(v);
+        return new CommunicationRequestFromMeAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final BiodatarequestFromMe.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final CommunicationRequestFromMeAdapter.ViewHolder holder, final int position) {
 
-        final com.nascenia.biyeta.model.biodata.profile.Profile profile = biodataProfile.getProfiles().get(position);
+        Profile profile= communcationRequestFromMeModel.getProfiles().get(position);
 
         holder.userName.setText(profile.getDisplayName());
         holder.details.setText(profile.getAge() + "বয়স" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
@@ -62,23 +71,16 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
 
 
 
-        if (profile.isSmileSent()==false)
+        if (profile.getRequestStatus().getExpired()==true)
         {
-            holder.imageViewSmile.setVisibility(View.VISIBLE);
-            holder.status.setText("হাসি পাঠান");
-        }
-
-        else {
-            holder.imageViewSmile.setVisibility(View.GONE);
+            holder.connectoion.setVisibility(View.VISIBLE);
+            holder.connectoion.setText("আবারো যোগাযোগ করুন");
             holder.status.setText(profile.getRequestStatus().getMessage());
         }
-
-        holder.imageViewSmile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickSmile(profile.getId());
-            }
-        });
+        else {
+            holder.connectoion.setVisibility(View.GONE);
+            holder.status.setText(profile.getRequestStatus().getMessage());
+        }
 
 
 
@@ -86,7 +88,7 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
 
     @Override
     public int getItemCount() {
-        return biodataProfile.getProfiles().size();
+        return communcationRequestFromMeModel.getProfiles().size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -95,7 +97,7 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
         public TextView userName;
         public TextView details;
         public TextView time_date;
-        public ImageView imageViewSmile;
+        Button connectoion;
         TextView status;
 
         public ViewHolder(View itemView) {
@@ -105,7 +107,7 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
             userName = (TextView) itemView.findViewById(R.id.user_name);
             time_date = (TextView) itemView.findViewById(R.id.date_time);
             status=(TextView) itemView.findViewById(R.id.status);
-            imageViewSmile=(ImageView) itemView.findViewById(R.id.smile_ico);
+            connectoion=(Button) itemView.findViewById(R.id.connection_button);
 
 
         }

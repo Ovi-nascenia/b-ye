@@ -28,5 +28,60 @@
     <color name="tab_background_selected">#FFBF2124</color>
     <color name="tab_background_unselected">#FFAEACAC</color>
 
+    <color name="privacy_policy_title">#BC0025</color>
+    <color name="privacy_policy_parag">#000000</color>
+
+    <color name="about_title">#BC0025</color>
+    <color name="about_parag">#000000</color>
+    <color name="about_bullet">#000000</color>
+
+
+    <color name="terms_title">#BC0025</color>
+    <color name="terms_parag">#000000</color>
+    <color name="terms_bullet">#000000</color>
+
+
+    <color name="faq_title">#000000</color>
+    <color name="color_stroke">#D7D9DC</color>
+    <color name="faq_text_selector">#BC0025</color>
+
+    <color name="contact_backGround_color">#EAEBED</color>
+    <color name="contact_editText_back">#FFFFFF</color>
+    <color name="contact_buttonText">#FFFFFF</color>
+    <color name="contact_ll_separator_color">#EAEBED</color>
+    <color name="contact_footer">#8F0F0c</color>
+    <color name="contact_footer_text">#000000</color>
+
+
+    <color name="accountrecharge_backGround_color">#EAEBED</color>
+    <color name="balance_title">#8F0F0c</color>
+    <color name="recharge_descrip1">#000000</color>
+    <color name="recharge_descrip2">#000000</color>
+    <color name="load_money">#8F0F0c</color>
+    <color name="online_payment_option">#000000</color>
+    <color name="recharge_amount">#000000</color>
+    <color name="taka">#000000</color>
+    <color name="recharge_buttonText">#FFFFFF</color>
+    <color name="recharge_or_text">#000000</color>
+    <color name="money_sent_confirmation">#000000</color>
+    <color name="recharge_bullet">#000000</color>
+    <color name="recharge_step">#000000</color>
+
+
+    <color name="contact_title">#8F0F0c</color>
+
+    <color name="balance_reply_backGround_color">#E8ECED</color>
+    <color name="message_balance">#000000</color>
+    <color name="balance_message_border">#AD0202</color>
+    <color name="communication_rule">#000000</color>
+    <color name="total_send_request">#FFFFFF</color>
+    <color name="total_pending_request">#FFFFFF</color>
+    <color name="money_load_button">#FFFFFF</color>
+    <color name="successfull_request">#FFFFFF</color>
+
+    <color name="request_text">#000000</color>
+    <color name="pending_request_text">#000000</color>
+    <color name="successfull_request_text">#000000</color>
+    <color name="money_load_button_text">#FFFFFF</color>
 
 </resources>

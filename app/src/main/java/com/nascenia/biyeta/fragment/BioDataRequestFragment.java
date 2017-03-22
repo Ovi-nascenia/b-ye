@@ -267,6 +267,10 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                     biodataNotificationCounterTextview.setText(
                             SendRequestActivity.biodataRequestCounter + "");
 
+                    if (BioDataRequestFragment.profileRequestSenderIdsList.size()==1)
+                        urlResponseId=BioDataRequestFragment.profileRequestSenderIdsList.get(0);
+
+
                     BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
 
                     if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {

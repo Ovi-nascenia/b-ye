@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -31,10 +32,12 @@ import android.widget.Toast;
 import com.nascenia.biyeta.R;
 
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.fragment.AboutBiyeta;
 import com.nascenia.biyeta.fragment.Blog;
 import com.nascenia.biyeta.fragment.Favourite;
 import com.nascenia.biyeta.fragment.Inbox;
 import com.nascenia.biyeta.fragment.Match;
+import com.nascenia.biyeta.fragment.PrivacyPolicy;
 import com.nascenia.biyeta.fragment.Search;
 import com.nascenia.biyeta.service.ResourceProvider;
 import com.squareup.okhttp.Response;
@@ -98,7 +101,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         fevImageView.setOnClickListener(this);
         inboxImageView.setOnClickListener(this);
         profileImageView.setOnClickListener(this);
-        Log.e("name", new SharePref(HomeScreen.this).get_data("display_name"));
+        Log.e("name",new SharePref(HomeScreen.this).get_data("display_name"));
 
         View header = navigationView.getHeaderView(0);
         TextView display_name = (TextView) header.findViewById(R.id.displayname);
@@ -112,11 +115,13 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 //set false other item
 
 
+
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
                     drawerLayout.closeDrawer(Gravity.RIGHT);
 
-                int id = menuItem.getItemId();
-                switch (id) {
+                int id=menuItem.getItemId();
+                switch (id)
+                {
                     case R.id.nav_profile:
                         startActivity(new Intent(HomeScreen.this, NewUserProfileActivity.class));
                         break;
@@ -130,17 +135,27 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         break;
 
                     case R.id.nav_balance:
+                        startActivity(new Intent(HomeScreen.this,PaymentActivity.class));
+
                         break;
 
                     case R.id.nav_about_us:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragmentParentViewGroup, new AboutBiyeta())
+                                .commit();
                         break;
                     case R.id.nav_connection:
+                        startActivity(new Intent(HomeScreen.this,ContactUs.class));
+
+
                         break;
 
                     case R.id.nav_faq:
                         break;
-                    case R.id.nav_policy:
-                        startActivity(new Intent(HomeScreen.this, LowsAndTerms.class));
+                    case R.id.nav_termsofuse:
+
+                        startActivity(new Intent(HomeScreen.this,TermOfUse.class));
+
                         break;
                     case R.id.nav_logout:
                         SharePref sharePref = new SharePref(HomeScreen.this);
@@ -153,6 +168,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     default:
                         break;
                 }
+
 
 
                 return true;
@@ -220,12 +236,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 });
 
 
-             /*   dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
+                dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         startActivity(new Intent(HomeScreen.this, RequestSentFromMe.class));
                     }
-                });*/
+                });
 
                 dialog.findViewById(R.id.tv_inbox).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -236,7 +252,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 DisplayMetrics displaymetrics = new DisplayMetrics();
                 this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
                 int width = (int) ((int) displaymetrics.widthPixels * 0.8);
-                // int height = (int) ((int) displaymetrics.heightPixels * 0.4);
+               // int height = (int) ((int) displaymetrics.heightPixels * 0.4);
                 dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
 
 

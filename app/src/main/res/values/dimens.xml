@@ -67,4 +67,18 @@
     <dimen name="match_text_size">150dp</dimen>
 
 
+    <dimen name="textSize_privacy_policy_parag">18sp</dimen>
+
+    <dimen name="textSize_about_parag">18sp</dimen>
+    <dimen name="margin_about_bullet">20dp</dimen>
+    <dimen name="testSize_about_bullet">25sp</dimen>
+
+    <dimen name="textSize_terms_parag">18sp</dimen>
+    <dimen name="textSize_terms_topic">22sp</dimen>
+    <dimen name="margin_terms_subTopic">20dp</dimen>
+    <dimen name="margin_terms_subSubTopic">35dp</dimen>
+    <dimen name="margin_terms_bullet">20dp</dimen>
+    <dimen name="testSize_terms_bullet">25sp</dimen>
+
+
 </resources>
