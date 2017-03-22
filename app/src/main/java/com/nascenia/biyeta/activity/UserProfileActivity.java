@@ -26,6 +26,7 @@ import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.model.PartialProfileItemModel;
 import com.nascenia.biyeta.model.UserProfileParent;
 import com.nascenia.biyeta.model.UserProfileChild;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -59,7 +60,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private Button finalResultBtn;
     private ProgressDialog dialog;
 
-    private ImageView editProfileImageView;
+    private ImageView editProfileImageView, profileImageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,15 @@ public class UserProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+        profileImageView = (ImageView) findViewById(R.id.userProfileImage);
+        profileImageView.post(new Runnable() {
+            @Override
+            public void run() {
+                Utils.scaleImage(UserProfileActivity.this, 1.2f, profileImageView);
+            }
+        });
+
+
 
         dialog = new ProgressDialog(UserProfileActivity.this);
 

@@ -2,10 +2,16 @@ package com.nascenia.biyeta.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -140,5 +146,68 @@ public class Utils {
         return str.substring(0, n) + str.substring(n + 1, str.length());
     }
 
+    public static void scaleImage(Context context, float max_zoom, ImageView view) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int device_width = displayMetrics.widthPixels;
+        int device_height = displayMetrics.heightPixels;
+        Drawable drawing = view.getDrawable();
+        if (drawing == null) {
+            return;
+        }
+        Bitmap bitmap = ((BitmapDrawable) drawing).getBitmap();
 
+        int img_width = bitmap.getWidth();
+        int img_height = bitmap.getHeight();
+        int img_height_max = device_height*2/5;
+        float xScale = 1, yScale = 1;
+        if(img_height_max > img_height)
+        {
+            if(img_height_max > img_height)
+            {
+                if(img_height*max_zoom>img_height_max) {
+                    img_height_max = img_height;
+                }
+                else
+                {
+                    img_height_max = (int)( img_height*max_zoom);
+                    xScale = yScale = max_zoom;
+                    if(img_width * yScale > device_width){
+                        xScale = yScale = (float)(device_width/img_width);
+                        img_width = device_width;
+                    }
+                }
+                img_height = img_height_max;
+            }
+
+        }
+        else
+        {
+            xScale = yScale = (float)img_height_max/img_height;
+            img_height = img_height_max;
+            img_width = (int)(img_width*xScale);
+            if(img_width*yScale > device_width)
+            {
+                yScale = xScale = (float)device_width/img_width;
+                img_width = device_width;
+                img_height = (int)(img_height*xScale);
+            }
+            else if(img_width > device_width)
+            {
+                img_width = device_width;
+                xScale = yScale = (float)device_width/bitmap.getWidth();
+                img_height = (int)(bitmap.getHeight()*yScale);
+            }
+        }
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(xScale, yScale);
+
+        Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        BitmapDrawable result = new BitmapDrawable(context.getResources(), scaledBitmap);
+
+        view.setImageDrawable(result);
+
+        view.setMaxWidth(img_width);
+        view.setMaxHeight(img_height);
+    }
 }
