@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
 import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
+import com.nascenia.biyeta.adapter.OtherInfoRecylerViewAdapter;
 import com.nascenia.biyeta.fragment.ProfileImageFirstFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
@@ -25,6 +26,7 @@ import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.service.ResourceProvider;
 import com.nascenia.biyeta.utils.Utils;
+import com.nascenia.biyeta.view.SendRequestFragmentView;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 
@@ -42,15 +44,18 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
     private ImageView indicatorImage1, indicatorImage2, indicatorImage3, userProfileImage;
 
-    private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView;
+    private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView,
+            familyMemberInfoRecylerView, communicationInfoRecylerview;
 
 
     private ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
     private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
 
-    private TextView userProfileDescriptionText;
+    private TextView userProfileDescriptionText, userNameTextView;
 
     private ImageView profileViewerPersonImageView;
+
+    private ArrayList<MatchUserChoice> communicationArrayList = new ArrayList<MatchUserChoice>();
 
 
     @Override
@@ -58,24 +63,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user_profile);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        generalInfoRecyclerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
-        generalInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        matchUserChoiceRecyclerView = (RecyclerView) findViewById(R.id.match_user_choice_recyclerView);
-        matchUserChoiceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        userProfileDescriptionText = (TextView) findViewById(R.id.userProfileDescriptionText);
-        profileViewerPersonImageView = (ImageView) findViewById(R.id.viewer_image);
-
-        userProfileImage = (ImageView) findViewById(R.id.user_profile_image);
-
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        indicatorImage1 = (ImageView) findViewById(R.id.page1);
-        indicatorImage2 = (ImageView) findViewById(R.id.page2);
-        indicatorImage3 = (ImageView) findViewById(R.id.page3);
+        initView();
 
 
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
@@ -118,13 +106,42 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
         if (Utils.isOnline(getBaseContext())) {
 
-            fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/296");
+            fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/" +
+                    getIntent().getExtras().getString("id"));
         } else {
             Utils.ShowAlert(getBaseContext(), "please check your internet connection");
         }
 
 
-        // Log.i("bangla", "value " + Utils.convertEnglishDigittoBangla(11));
+    }
+
+    private void initView() {
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        generalInfoRecyclerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
+        generalInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        matchUserChoiceRecyclerView = (RecyclerView) findViewById(R.id.match_user_choice_recyclerView);
+        matchUserChoiceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        familyMemberInfoRecylerView = (RecyclerView) findViewById(R.id.family_info_recylerview);
+        familyMemberInfoRecylerView.setLayoutManager(new LinearLayoutManager(this));
+        communicationInfoRecylerview = (RecyclerView) findViewById(R.id.communication_info_recylerview);
+        communicationInfoRecylerview.setLayoutManager(new LinearLayoutManager(this));
+
+        userProfileDescriptionText = (TextView) findViewById(R.id.userProfileDescriptionText);
+        profileViewerPersonImageView = (ImageView) findViewById(R.id.viewer_image);
+
+        userProfileImage = (ImageView) findViewById(R.id.user_profile_image);
+        userNameTextView = (TextView) findViewById(R.id.user_name);
+
+        userNameTextView.setText(getIntent().getExtras().getString("user_name"));
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        indicatorImage1 = (ImageView) findViewById(R.id.page1);
+        indicatorImage2 = (ImageView) findViewById(R.id.page2);
+        indicatorImage3 = (ImageView) findViewById(R.id.page3);
 
     }
 
@@ -158,12 +175,20 @@ public class NewUserProfileActivity extends AppCompatActivity {
                             if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
 
                                 //Loading image from below url into imageView
+                                Log.i("imageurluser", Utils.Base_URL +
+                                        userProfile.getProfile().getPersonalInformation().getImage()
+                                                .getProfilePicture());
+
                                 Glide.with(getBaseContext())
-                                        .load(userProfile.getProfile().getPersonalInformation().getImage())
+                                        .load(Utils.Base_URL +
+                                                userProfile.getProfile().getPersonalInformation().getImage()
+                                                        .getProfilePicture())
                                         .into(userProfileImage);
 
                                 Glide.with(getBaseContext())
-                                        .load(userProfile.getProfile().getPersonalInformation().getImage())
+                                        .load(Utils.Base_URL +
+                                                userProfile.getProfile().getPersonalInformation().
+                                                        getImage().getProfilePicture())
                                         .into(profileViewerPersonImageView);
 
 
@@ -182,6 +207,33 @@ public class NewUserProfileActivity extends AppCompatActivity {
                             addDataonMatchUserChoiceRecyclerView(userProfile);
 
 
+                            if (userProfile.getProfile().getRequestStatus().getName().
+                                    equals("communication request") &&
+                                    (!userProfile.getProfile().getRequestStatus().isAccepted())) {
+
+
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                        userProfile,
+                                        familyMemberInfoRecylerView);
+
+                            }
+
+                            if (userProfile.getProfile().getRequestStatus().getName().
+                                    equals("communication request") &&
+                                    (userProfile.getProfile().getRequestStatus().isAccepted())) {
+
+
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                        userProfile,
+                                        familyMemberInfoRecylerView);
+
+
+                                addDataOnCommunincationRecylerView(userProfile);
+
+
+                            }
+
+
                         }
                     });
 
@@ -191,6 +243,56 @@ public class NewUserProfileActivity extends AppCompatActivity {
                 }
             }
         }).start();
+
+    }
+
+    private void addDataOnCommunincationRecylerView(UserProfile userProfile) {
+
+
+        String presentAddress = "";
+
+        if (!(checkNullField(userProfile.getProfile().getAddress().getPresentAddress().getAddress())
+                .equals(""))) {
+            presentAddress = presentAddress + userProfile.getProfile().getAddress().getPresentAddress().getAddress();
+
+        }
+
+        if (!(checkNullField(userProfile.getProfile().getAddress().getPresentAddress().getAddress())
+                .equals(""))) {
+            presentAddress = presentAddress + userProfile.getProfile().getAddress().getPresentAddress().getCountry();
+
+        }
+
+
+        communicationArrayList.add(new MatchUserChoice("present address",
+                checkNullField(presentAddress)));
+
+
+        if (!(checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getAddress()).equals(""))) {
+
+            communicationArrayList.add(new MatchUserChoice("permanet address",
+                    userProfile.getProfile().getAddress().getPermanentAddress().getAddress()));
+
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getDistrict()).equals(""))) {
+
+            communicationArrayList.add(new MatchUserChoice("district",
+                    userProfile.getProfile().getAddress().getPermanentAddress().getAddress()));
+
+        }
+
+        if (!(checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getCountry()).equals(""))) {
+
+            communicationArrayList.add(new MatchUserChoice("country",
+                    userProfile.getProfile().getAddress().getPermanentAddress().getCountry()));
+
+        }
+
+
+        communicationInfoRecylerview.setAdapter(new OtherInfoRecylerViewAdapter(
+                getBaseContext(), communicationArrayList));
 
     }
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.model.GeneralInformation;
@@ -93,6 +94,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     public void onStart() {
         super.onStart();
 
+
         initView();
 
         SendRequestFragmentView.fetchUserProfileDetailsResponse(
@@ -112,7 +114,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     }
 
     @Override
-    public void onComplete(Boolean result) {
+    public void onComplete(Boolean result, Integer id) {
 
     }
 }

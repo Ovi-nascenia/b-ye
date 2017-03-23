@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E0E0E0">
 
 
-    <android.support.design.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
+        android:id="@+id/r1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/finalResultBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="পুরো বায়োডাটা দেখার অনুরোধ করুন"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordnatelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/r1"
         android:fitsSystemWindows="true"
-        tools:context="biyeta.nas.biyeta.Main2Activity">
+        tools:context="biyeta.nas.biyeta.Main2Activity"
+        android:layout_above="@+id/r1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="14dp">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -331,20 +351,4 @@
 
 
     </android.support.design.widget.CoordinatorLayout>
-
-    <RelativeLayout
-        android:id="@+id/r1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/finalResultBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:text="পুরো বায়োডাটা দেখার অনুরোধ করুন"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
-    </RelativeLayout>
 </RelativeLayout>

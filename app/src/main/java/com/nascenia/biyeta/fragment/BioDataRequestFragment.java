@@ -75,7 +75,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private int clickableButtonIdentifier = 555;
     private String token;
     private SharePref sharePref;
-    private Response responseStatus;
+
 
     public static int profileId = 9999;
 
@@ -99,6 +99,12 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         return _baseView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Toast.makeText(getActivity(), "resume", Toast.LENGTH_LONG).show();
+
+    }
 
     private void initView() {
 
@@ -135,7 +141,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         cancelTextView = (TextView) _baseView.findViewById(R.id.cancel_textview);
         waitTextView = (TextView) _baseView.findViewById(R.id.wait_textview);
-        acceptTextView = (TextView) _baseView .findViewById(R.id.accept_textview);
+        acceptTextView = (TextView) _baseView.findViewById(R.id.accept_textview);
 
         waitImageView.setVisibility(View.GONE);
         waitTextView.setVisibility(View.GONE);
@@ -206,6 +212,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     @Override
     public void onStart() {
         super.onStart();
+        //Toast.makeText(getActivity(), "start", Toast.LENGTH_LONG).show();
         initView();
 
         setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
@@ -217,7 +224,10 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         currentId = id;
 
-        Log.i("asynctaskdata FFFF", "currentId " + currentId + " urlResponseId " + urlResponseId);
+        //Log.i("asynctaskdata FFFF", "currentId " + currentId + " urlResponseId " + urlResponseId);
+        Log.i("asynctaskdataFFFFFF", "viewurl: " + url + id);
+        Log.i("asynctaskdataFFFFFF", "viewurl: " + BioDataRequestFragment.profileRequestSenderIdsList.toString());
+
         SendRequestFragmentView.fetchUserProfileDetailsResponse(
                 url + id,
                 getActivity(),
@@ -251,16 +261,16 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     }
 
     @Override
-    public void onComplete(Boolean result) {
+    public void onComplete(Boolean result, Integer id) {
 
-        if (result && clickableButtonIdentifier == 1) {
+        if (result && clickableButtonIdentifier == 1 && id != null) {
             Log.i("profileid", BioDataRequestFragment.profileId + "");
             new SendResponseTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
-                    BioDataRequestFragment.profileId + "/accept");
+                    id + "/accept");
 
-        } else if (result && clickableButtonIdentifier == 0) {
+        } else if (result && clickableButtonIdentifier == 0 && id != null) {
             new SendResponseTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
-                    urlResponseId + "/reject");
+                    id + "/reject");
 
 
         } else {
@@ -268,6 +278,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         }
 
     }
+
+    int id;
 
     @Override
     public void onClick(View v) {
@@ -284,13 +296,19 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                         urlResponseId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
 
 
-
-
                     if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
                         urlResponseId = currentId;
                         clickableButtonIdentifier = 1;
-                        setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
-                        BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
+                        if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 1) {
+                            BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
+                            setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
+
+                        } else if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1) {
+                            id = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
+
+                            BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
+                            setRequestView(id);
+                        }
                     } else {
                         setRequestView(currentId);
                         Utils.ShowAlert(getActivity(), "No more reqeust left");
@@ -301,6 +319,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
                 break;
             case R.id.cancel_imageview:
+
                 SendRequestActivity.biodataRequestCounter--;
 
                 if (!BioDataRequestFragment.profileRequestSenderIdsList.isEmpty()) {
@@ -329,6 +348,11 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         }
     }
 
+    private void processResponse() {
+
+
+    }
+
     private class SendResponseTask extends AsyncTask<String, Void, String> {
 
 
@@ -340,12 +364,11 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         @Override
         protected String doInBackground(String... urls) {
 
-            Log.i("asynctaskdataFFFFFF", urls[0]);
-
-            try {
-
+           /* Log.i("asynctaskdataFFFFFF", urls[0]);
+            Log.i("asynctaskdataFFFFFF", profileRequestSenderIdsList.toString());*/
 
 
+           /* try {
 
 
                 OkHttpClient client = new OkHttpClient();
@@ -361,7 +384,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.i("asynctaskdata", e.getMessage());
-            }
+            }*/
 
             return "";
         }
@@ -369,8 +392,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("FFFFFF",s);
-            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+            Log.e("FFFFFF", s);
+
         }
     }
 

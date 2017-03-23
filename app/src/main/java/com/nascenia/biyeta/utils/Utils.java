@@ -22,6 +22,7 @@ public class Utils {
 
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
+    public static final String Base_URL = "http://test.biyeta.com";
 
 
     public static void ShowAlert(Context context, String bodyMessage) {
@@ -158,44 +159,35 @@ public class Utils {
 
         int img_width = bitmap.getWidth();
         int img_height = bitmap.getHeight();
-        int img_height_max = device_height*2/5;
+        int img_height_max = device_height * 2 / 5;
         float xScale = 1, yScale = 1;
-        if(img_height_max > img_height)
-        {
-            if(img_height_max > img_height)
-            {
-                if(img_height*max_zoom>img_height_max) {
+        if (img_height_max > img_height) {
+            if (img_height_max > img_height) {
+                if (img_height * max_zoom > img_height_max) {
                     img_height_max = img_height;
-                }
-                else
-                {
-                    img_height_max = (int)( img_height*max_zoom);
+                } else {
+                    img_height_max = (int) (img_height * max_zoom);
                     xScale = yScale = max_zoom;
-                    if(img_width * yScale > device_width){
-                        xScale = yScale = (float)(device_width/img_width);
+                    if (img_width * yScale > device_width) {
+                        xScale = yScale = (float) (device_width / img_width);
                         img_width = device_width;
                     }
                 }
                 img_height = img_height_max;
             }
 
-        }
-        else
-        {
-            xScale = yScale = (float)img_height_max/img_height;
+        } else {
+            xScale = yScale = (float) img_height_max / img_height;
             img_height = img_height_max;
-            img_width = (int)(img_width*xScale);
-            if(img_width*yScale > device_width)
-            {
-                yScale = xScale = (float)device_width/img_width;
+            img_width = (int) (img_width * xScale);
+            if (img_width * yScale > device_width) {
+                yScale = xScale = (float) device_width / img_width;
                 img_width = device_width;
-                img_height = (int)(img_height*xScale);
-            }
-            else if(img_width > device_width)
-            {
+                img_height = (int) (img_height * xScale);
+            } else if (img_width > device_width) {
                 img_width = device_width;
-                xScale = yScale = (float)device_width/bitmap.getWidth();
-                img_height = (int)(bitmap.getHeight()*yScale);
+                xScale = yScale = (float) device_width / bitmap.getWidth();
+                img_height = (int) (bitmap.getHeight() * yScale);
             }
         }
 

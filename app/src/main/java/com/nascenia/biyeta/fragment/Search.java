@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.activity.UserProfileActivity;
 import com.nascenia.biyeta.model.SearchProfileModel;
 import com.nascenia.biyeta.utils.Utils;
@@ -121,7 +123,9 @@ public class Search extends Fragment {
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+                        Log.i("username", profileList.get(position).getDisplay_name() + " " +
+                                profileList.get(position).getId());
+                        Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
                         intent.putExtra("id", profileList.get(position).getId());
                         intent.putExtra("user_name", profileList.get(position).getDisplay_name());
                         intent.putExtra("PROFILE_EDIT_OPTION", false);
@@ -137,8 +141,8 @@ public class Search extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(getContext(),"Distroy",Toast.LENGTH_SHORT).show();
-        Search_Filter.reponse="";
+        Toast.makeText(getContext(), "Distroy", Toast.LENGTH_SHORT).show();
+        Search_Filter.reponse = "";
         profileList.clear();
         mProfile_adapter.notifyDataSetChanged();
 
@@ -211,12 +215,10 @@ public class Search extends Fragment {
                 loadDataFromResponse(jsonObject);
 
 
-            } catch (JSONException e  ) {
+            } catch (JSONException e) {
                 e.printStackTrace();
-            }
-            catch (NullPointerException ei)
-            {
-               Utils.ShowAlert(getContext(),"Network Error");
+            } catch (NullPointerException ei) {
+                Utils.ShowAlert(getContext(), "Network Error");
             }
         }
 

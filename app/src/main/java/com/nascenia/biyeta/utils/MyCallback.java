@@ -5,5 +5,5 @@ package com.nascenia.biyeta.utils;
  */
 
 public interface MyCallback<T> {
-    public void onComplete(T result);
+    public void onComplete(T result, Integer id);
 }

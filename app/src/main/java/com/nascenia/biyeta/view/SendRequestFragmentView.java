@@ -198,7 +198,7 @@ public class SendRequestFragmentView {
 
                 if (callback != null) {
                     Log.i("calll", "callback block");
-                    callback.onComplete(true); // will call onComplete() on MyActivity once the job is done
+                    callback.onComplete(true,userProfile.getProfile().getRequestStatus().getProfileRequestId()); // will call onComplete() on MyActivity once the job is done
                 }
 
             } catch (Exception e) {
@@ -211,7 +211,7 @@ public class SendRequestFragmentView {
 
     }
 
-    private static void setDataonOtherInfoRecylerView(Context context,
+    public static void setDataonOtherInfoRecylerView(Context context,
                                                       UserProfile userProfile,
                                                       RecyclerView otherInfoRecylerView) {
 
@@ -281,7 +281,7 @@ public class SendRequestFragmentView {
 
     }
 
-    private static void setDataonFamilyMemberInfoRecylerView(Context context,
+    public static void setDataonFamilyMemberInfoRecylerView(Context context,
                                                              UserProfile userProfile,
                                                              RecyclerView familyMemberInfoRecylerView) {
 

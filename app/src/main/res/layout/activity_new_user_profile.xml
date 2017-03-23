@@ -79,6 +79,7 @@
 
 
                     <TextView
+                        android:id="@+id/user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
@@ -367,6 +368,104 @@
                             android:layout_marginTop="@dimen/medium_margin"
                             android:scrollbars="vertical"
                             android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/medium_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="পরিবার"
+                        android:textColor="#F44336"
+                        android:textSize="@dimen/item_textsize"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/family_info_recylerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/medium_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="বিবিধ প্রশ্নের উত্তর"
+                        android:textColor="#F44336"
+                        android:textSize="@dimen/item_textsize"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/other_info_recylerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <TextView
+                        android:id="@+id/communication_tag_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/medium_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="যোগাযোগ"
+                        android:textColor="#F44336"
+                        android:textSize="@dimen/item_textsize"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/communication_card_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF">
+
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/communication_info_recylerview"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/small_margin"
+                                android:layout_marginRight="@dimen/small_margin"
+                                android:layout_marginTop="@dimen/medium_margin"
+                                android:scrollbars="vertical"
+                                android:visibility="visible" />
+
+
+                        </FrameLayout>
 
 
                     </android.support.v7.widget.CardView>
