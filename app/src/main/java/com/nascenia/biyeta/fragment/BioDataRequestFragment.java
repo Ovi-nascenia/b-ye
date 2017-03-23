@@ -135,7 +135,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         cancelTextView = (TextView) _baseView.findViewById(R.id.cancel_textview);
         waitTextView = (TextView) _baseView.findViewById(R.id.wait_textview);
-        acceptTextView = (TextView) _baseView.findViewById(R.id.accept_textview);
+        acceptTextView = (TextView) _baseView .findViewById(R.id.accept_textview);
 
         waitImageView.setVisibility(View.GONE);
         waitTextView.setVisibility(View.GONE);

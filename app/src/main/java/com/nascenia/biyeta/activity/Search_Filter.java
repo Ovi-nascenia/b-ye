@@ -625,7 +625,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             SharePref sharePref = new SharePref(Search_Filter.this);
             String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .url(Constant.BASE_URL + "search/user-preference")
+                    .url(Constant.BASE_URL + " /user-preference")
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
@@ -634,6 +634,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                 JSONObject Jobject = new JSONObject(jsonData);
                 return Jobject.toString();
             } catch (IOException e) {
+
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
