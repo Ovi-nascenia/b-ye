@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.BiodataProfileAdapter;
 import com.nascenia.biyeta.adapter.BiodatarequestFromMe;
@@ -28,6 +30,9 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -39,13 +44,13 @@ import java.io.InputStreamReader;
 public class RequestSentFromMe extends CustomActionBarActivity {
 
 
-    static int biodataNotificationCount = 0,connectionNotification=0;
+    static int biodataNotificationCount = 0, connectionNotification = 0;
     static int communicationNotificationCount = 0;
     public final OkHttpClient client = new OkHttpClient();
     int position = 0;
     ProgressBar progressBar;
     RecyclerView recyclerView;
-    TextView notificationNumberLeft,notificationNumberRight;
+    TextView notificationNumberLeft, notificationNumberRight;
     private TabLayout tabLayout;
     private View tabItemView1, tabItemView2;
 
@@ -133,48 +138,78 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 
     class LoadBioDataConnection extends AsyncTask<String, String, String> {
 
+        Gson gson = new Gson();
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(RequestSentFromMe.this, s, Toast.LENGTH_LONG).show();
 
             if (position == 0) {
-                progressBar.setVisibility(View.GONE);
-                Gson gson = new Gson();
-                InputStream is = new ByteArrayInputStream(s.getBytes());
-                InputStreamReader isr = new InputStreamReader(is);
-                BiodataProfile response = gson.fromJson(isr, BiodataProfile.class);
 
-                BiodatarequestFromMe inboxListAdapter = new BiodatarequestFromMe(response, R.layout.biodata_request_from_me) {
-                    @Override
-                    public void onClickSmile(int id) {
-                        Toast.makeText(RequestSentFromMe.this,id+" ",Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (null == jsonObject.get("message")) {
+
                     }
-                };
-                recyclerView.setAdapter(inboxListAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    else
+                    {
+                        findViewById(R.id.no_message).setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    }
+                } catch (JSONException e) {
+                    Log.e("FUCK",e.toString());
 
-                for (int i = 0; i < response.getProfiles().size(); i++) {
-                    if (response.getProfiles().get(i).getRequestStatus().getAccepted() == false && response.getProfiles().get(i).getRequestStatus().getRejected() == false) {
-                    } else
-                        biodataNotificationCount++;
+                    progressBar.setVisibility(View.GONE);
+                    Gson gson = new Gson();
+                    InputStream is = new ByteArrayInputStream(s.getBytes());
+                    InputStreamReader isr = new InputStreamReader(is);
+                    BiodataProfile response = gson.fromJson(isr, BiodataProfile.class);
+
+                    BiodatarequestFromMe inboxListAdapter = new BiodatarequestFromMe(response, R.layout.biodata_request_from_me) {
+                        @Override
+                        public void onClickSmile(int id) {
+                            Toast.makeText(RequestSentFromMe.this, id + " ", Toast.LENGTH_SHORT).show();
+                        }
+                    };
+                    recyclerView.setAdapter(inboxListAdapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                    for (int i = 0; i < response.getProfiles().size(); i++) {
+                        if (response.getProfiles().get(i).getRequestStatus().getAccepted() == false && response.getProfiles().get(i).getRequestStatus().getRejected() == false) {
+                        } else
+                            biodataNotificationCount++;
+                    }
+
+                    notificationNumberLeft.setText(biodataNotificationCount + "");
+                    findViewById(R.id.no_message).setVisibility(View.GONE);
+
                 }
 
-                notificationNumberLeft.setText(biodataNotificationCount + "");
             } else {
 
 
-                Gson gson = new Gson();
-                InputStream is = new ByteArrayInputStream(s.getBytes());
-                InputStreamReader isr = new InputStreamReader(is);
-                CommuncationRequestFromMeModel response = gson.fromJson(isr, CommuncationRequestFromMeModel.class);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (null == jsonObject.getJSONArray("message")) {
+                        InputStream is = new ByteArrayInputStream(s.getBytes());
+                        InputStreamReader isr = new InputStreamReader(is);
+                        CommuncationRequestFromMeModel response = gson.fromJson(isr, CommuncationRequestFromMeModel.class);
 
-                CommunicationRequestFromMeAdapter communicationRequestFromMeAdapter = new CommunicationRequestFromMeAdapter(response, R.layout.communication_request_sent_from_me_item);
-                recyclerView.setAdapter(communicationRequestFromMeAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        CommunicationRequestFromMeAdapter communicationRequestFromMeAdapter = new CommunicationRequestFromMeAdapter(response, R.layout.communication_request_sent_from_me_item);
+                        recyclerView.setAdapter(communicationRequestFromMeAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        findViewById(R.id.no_message).setVisibility(View.GONE);
+                    } else {
+
+                        findViewById(R.id.no_message).setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
 //                for (int i = 0; i < response.getProfiles().size(); i++) {
 //                    if (response.getProfiles().get(i).getRequestStatus().getAccepted() == false && response.getProfiles().get(i).getRequestStatus().getRejected() == false) {
@@ -182,7 +217,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 //                        connectionNotification++;
 //                }
 
-                notificationNumberRight.setText(connectionNotification+"");
+                notificationNumberRight.setText(connectionNotification + "");
 
 
             }

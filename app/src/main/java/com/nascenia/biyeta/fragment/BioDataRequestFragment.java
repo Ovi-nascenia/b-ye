@@ -217,7 +217,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         currentId = id;
 
-        Log.i("asynctaskdata", "currentId " + currentId + " urlResponseId " + urlResponseId);
+        Log.i("asynctaskdata FFFF", "currentId " + currentId + " urlResponseId " + urlResponseId);
         SendRequestFragmentView.fetchUserProfileDetailsResponse(
                 url + id,
                 getActivity(),
@@ -284,12 +284,13 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                         urlResponseId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
 
 
-                    BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
+
 
                     if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
                         urlResponseId = currentId;
                         clickableButtonIdentifier = 1;
                         setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
+                        BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
                     } else {
                         setRequestView(currentId);
                         Utils.ShowAlert(getActivity(), "No more reqeust left");
@@ -339,9 +340,12 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         @Override
         protected String doInBackground(String... urls) {
 
-            Log.i("asynctaskdata", urls[0]);
+            Log.i("asynctaskdataFFFFFF", urls[0]);
 
             try {
+
+
+
 
 
                 OkHttpClient client = new OkHttpClient();
@@ -365,6 +369,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Log.e("FFFFFF",s);
             Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
         }
     }
