@@ -257,6 +257,17 @@
     <string name="money_load_button">অ্যাকাউণ্টে টাকা লোড করুন </string>
 
 
+    <string name="message_verification">আপনার মোবাইলে একটি মেসেজ পাঠানো হয়েছে। মেসেজে থাকা কোডটি নিচের বাক্সে বসান।</string>
+
+    <string name="varification_code">ভ্যারিফিকেশন কোড</string>
+    <string name="code_submit_button">কোড সাবমিট করুন</string>
+    <string name="again_verification">পুনরায় ভ্যারিফিকেশন কোড পাঠান</string>
+    <string name="code_sent_button">ভ্যারিফিকেশন কোড পাঠান</string>
+    <string name="verify_mobile">আপনার মোবাইলে নাম্বার ভেরিফাই করুন </string>
+
+
+
+
 
 
 

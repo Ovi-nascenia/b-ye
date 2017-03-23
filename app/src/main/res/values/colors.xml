@@ -84,4 +84,14 @@
     <color name="successfull_request_text">#000000</color>
     <color name="money_load_button_text">#FFFFFF</color>
 
+    <color name="layoutBacground">#CFCCC8</color>
+
+    <color name="back_varify_text_view_1">#2C3E50</color>
+
+    <color name="back_verifycode_edittext1">#FFFFFF</color>
+
+    <color name="button_back">#AD0202</color>
+
+    <color name="text3_font">#AD0202</color>
+
 </resources>
