@@ -263,16 +263,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     sharePref.set_data("gender", response.getLoginInformation().getGender());
                     sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
                     sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
-                    if (response.getLoginInformation().getMobileVerified().equals(true)) {
+                    if (response.getLoginInformation().getMobileVerified()) {
                         startActivity(new Intent(Login.this, HomeScreen.class));
                         finish();
                     }
                     else
                     {
                         // check the mobile verify screen
+                        startActivity(new Intent(Login.this, MobileVerification.class));
+                        finish();
                     }
                 }catch (Exception e)
                 {
+                    e.printStackTrace();
                     Utils.ShowAlert(Login.this,"Wrong email/password");
                 }
 

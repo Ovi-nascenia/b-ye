@@ -42,6 +42,8 @@ import com.nascenia.biyeta.fragment.Search;
 import com.nascenia.biyeta.service.ResourceProvider;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -58,7 +60,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private View actionBarView;
     private String responseValue = null;
 
-    private ImageView searchImageView, matchImageView, fevImageView, inboxImageView, profileImageView;
+    private ImageView searchImageView, matchImageView, fevImageView, inboxImageView, profileImageView, menuProfileImgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +107,26 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         View header = navigationView.getHeaderView(0);
         TextView display_name = (TextView) header.findViewById(R.id.displayname);
-
         display_name.setText(new SharePref(HomeScreen.this).get_data("display_name"));
+        menuProfileImgView = (ImageView) header.findViewById(R.id.img_profile);
+        //set profile image on drawer
+        Picasso.with(this)
+            .load("http://test.biyeta.com" + new SharePref(HomeScreen.this).get_data("profile_picture"))
+            .into(menuProfileImgView, new Callback() {
+                @Override
+                public void onSuccess() {
+//                  menuProfileImgView.post(new Runnable() {
+//                  @Override
+//                  public void run() {
+//                      Utils.scaleImage(HomeScreen.this, 1.2f, menuProfileImgView);
+//                  }
+//                  });
+                }
+
+                @Override
+                public void onError() {
+                }
+            });
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
