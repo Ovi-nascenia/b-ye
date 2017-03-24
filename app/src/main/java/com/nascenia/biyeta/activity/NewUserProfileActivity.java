@@ -22,6 +22,7 @@ import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
 import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.adapter.OtherInfoRecylerViewAdapter;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.fragment.ProfileImageFirstFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
@@ -34,6 +35,8 @@ import com.nascenia.biyeta.utils.Utils;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -202,11 +205,28 @@ public class NewUserProfileActivity extends AppCompatActivity {
                                         userProfile.getProfile().getPersonalInformation().getImage()
                                                 .getProfilePicture());
 
-                                Glide.with(getBaseContext())
-                                        .load(Utils.Base_URL +
-                                                userProfile.getProfile().getPersonalInformation().getImage()
-                                                        .getProfilePicture())
-                                        .into(userProfileImage);
+//                                Glide.with(getBaseContext())
+//                                        .load(Utils.Base_URL +
+//                                                userProfile.getProfile().getPersonalInformation().getImage()
+//                                                        .getProfilePicture())
+//                                        .into(userProfileImage);
+                                Picasso.with(NewUserProfileActivity.this)
+                                        .load(Utils.Base_URL +  userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture())
+                                        .into(userProfileImage, new Callback() {
+                                            @Override
+                                            public void onSuccess() {
+                                                userProfileImage.post(new Runnable() {
+                                              @Override
+                                              public void run() {
+                                                  Utils.scaleImage(NewUserProfileActivity.this, 1.2f, userProfileImage);
+                                              }
+                                              });
+                                            }
+
+                                            @Override
+                                            public void onError() {
+                                            }
+                                        });
 
                                 Glide.with(getBaseContext())
                                         .load(Utils.Base_URL +
@@ -226,6 +246,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
                             } else {
                             }
 
+//                            Utils.scaleImage(NewUserProfileActivity.this, (float)1.2, userProfileImage);
 /*
                             addDataonGeneralInfoRecylerViewItem(userProfile);
                             addDataonMatchUserChoiceRecyclerView(userProfile);

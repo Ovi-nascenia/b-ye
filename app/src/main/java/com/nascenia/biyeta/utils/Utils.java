@@ -172,6 +172,10 @@ public class Utils {
                         xScale = yScale = (float) (device_width / img_width);
                         img_width = device_width;
                     }
+//                    else
+//                    {
+//                        img_width = (int)(img_width*max_zoom);
+//                    }
                 }
                 img_height = img_height_max;
             }
@@ -199,7 +203,7 @@ public class Utils {
 
         view.setImageDrawable(result);
 
-        view.setMaxWidth(img_width);
-        view.setMaxHeight(img_height);
+        view.setMaxWidth(scaledBitmap.getWidth());
+        view.setMaxHeight(scaledBitmap.getHeight());
     }
 }
