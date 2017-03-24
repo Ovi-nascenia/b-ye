@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
-    <net.rimoto.intlphoneinput.IntlPhoneInput
+   <!-- <net.rimoto.intlphoneinput.IntlPhoneInput
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/numbervarifytextView2"
@@ -33,7 +33,7 @@
         android:id="@+id/my_phone_input2"
         android:padding="5dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/numbervarifytextView2"/>
+        android:layout_below="@id/numbervarifytextView2"/>-->
     <Button
         android:id="@+id/code_submit_button2"
         android:layout_width="170dp"

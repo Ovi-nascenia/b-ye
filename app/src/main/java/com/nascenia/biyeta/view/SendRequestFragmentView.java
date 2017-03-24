@@ -62,10 +62,7 @@ public class SendRequestFragmentView {
     private static ArrayList<UserProfileChild> sisterChildItemList = new ArrayList<UserProfileChild>();
     private static ArrayList<UserProfileChild> childItemList = new ArrayList<UserProfileChild>();
     private static ArrayList<UserProfileChild> otherCHildItemList = new ArrayList<UserProfileChild>();
-
-
     private static ArrayList<UserProfileParent> mainparentItemList = new ArrayList<UserProfileParent>();
-
     private static int familyMemberCounter;
     ;
 
