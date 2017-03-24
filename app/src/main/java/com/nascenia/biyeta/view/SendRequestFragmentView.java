@@ -55,6 +55,7 @@ public class SendRequestFragmentView {
     private static ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
     private static ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
     private static ArrayList<MatchUserChoice> otherInformationArrayList = new ArrayList<MatchUserChoice>();
+    private static ArrayList<MatchUserChoice> communicationArrayList = new ArrayList<MatchUserChoice>();
 
 
     private static ArrayList<UserProfileChild> parentChildItemList = new ArrayList<UserProfileChild>();
@@ -79,18 +80,18 @@ public class SendRequestFragmentView {
                                                        RecyclerView familyMemberInfoRecylerView) {
 
 
-        generalInformationArrayList.clear();
-        matchUserChoiceArrayList.clear();
-        otherInformationArrayList.clear();
+        //generalInformationArrayList.clear();
+        //  matchUserChoiceArrayList.clear();
+        //  otherInformationArrayList.clear();
 
-        parentChildItemList.clear();
+      /*  parentChildItemList.clear();
         brotherChildItemList.clear();
         sisterChildItemList.clear();
         childItemList.clear();
         otherCHildItemList.clear();
 
 
-        mainparentItemList.clear();
+        mainparentItemList.clear();*/
 
 
         ResponseThread responseThread = new ResponseThread(url,
@@ -166,7 +167,7 @@ public class SendRequestFragmentView {
                 final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
 
                 BioDataRequestFragment.profileId = userProfile.getProfile().getRequestStatus().getProfileRequestId();
-                Log.e("profileIdFFFF",BioDataRequestFragment.profileId+"");
+                Log.e("profileIdFFFF", BioDataRequestFragment.profileId + "");
 
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
@@ -195,7 +196,7 @@ public class SendRequestFragmentView {
 
                 if (callback != null) {
                     Log.i("calll", "callback block");
-                    callback.onComplete(true,userProfile.getProfile().getRequestStatus().getProfileRequestId()); // will call onComplete() on MyActivity once the job is done
+                    callback.onComplete(true, userProfile.getProfile().getRequestStatus().getProfileRequestId()); // will call onComplete() on MyActivity once the job is done
                 }
 
             } catch (Exception e) {
@@ -209,14 +210,14 @@ public class SendRequestFragmentView {
     }
 
     public static void setDataonOtherInfoRecylerView(Context context,
-                                                      UserProfile userProfile,
-                                                      RecyclerView otherInfoRecylerView) {
+                                                     UserProfile userProfile,
+                                                     RecyclerView otherInfoRecylerView) {
 
-        otherInformationArrayList = new ArrayList<MatchUserChoice>();
+        otherInformationArrayList.clear();
 
         if (!(checkNullField(userProfile.getProfile().getOtherInformation().getFasting()).equals(""))) {
 
-            otherInformationArrayList.add(new MatchUserChoice("Fasting",
+            otherInformationArrayList.add(new MatchUserChoice("রোজা রাখেন?",
                     checkNullField(userProfile.getProfile().getOtherInformation().getFasting())));
 
         }
@@ -224,7 +225,7 @@ public class SendRequestFragmentView {
 
         if (!(checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()).equals(""))) {
 
-            otherInformationArrayList.add(new MatchUserChoice("Prayer",
+            otherInformationArrayList.add(new MatchUserChoice("নামাজ পড়েন?",
                     checkNullField(userProfile.getProfile().getOtherInformation().getPrayer())));
 
         }
@@ -235,7 +236,7 @@ public class SendRequestFragmentView {
                 & (!(checkNullField(userProfile.getProfile().getOtherInformation().getJobAfterMarriage()).equals("")))) {
 
 
-            otherInformationArrayList.add(new MatchUserChoice("Job After Marrige",
+            otherInformationArrayList.add(new MatchUserChoice("বিয়ের পরে চাকরি?",
                     checkNullField(userProfile.getProfile().getOtherInformation().getJobAfterMarriage())));
         }
 
@@ -245,7 +246,7 @@ public class SendRequestFragmentView {
                 & (!(checkNullField(userProfile.getProfile().getOtherInformation().getHijab()).equals("")))) {
 
 
-            otherInformationArrayList.add(new MatchUserChoice("Hijab",
+            otherInformationArrayList.add(new MatchUserChoice("হিজাব পড়েন?",
                     checkNullField(userProfile.getProfile().getOtherInformation().getHijab())));
         }
 
@@ -254,7 +255,7 @@ public class SendRequestFragmentView {
                 & (!(checkNullField(userProfile.getProfile().getOtherInformation().getHijab()).equals("")))) {
 
 
-            otherInformationArrayList.add(new MatchUserChoice("Own House",
+            otherInformationArrayList.add(new MatchUserChoice("নিজের বাসা আছে?",
                     checkNullField(userProfile.getProfile().getOtherInformation().getOwnHouse())));
         }
 
@@ -279,9 +280,19 @@ public class SendRequestFragmentView {
     }
 
     public static void setDataonFamilyMemberInfoRecylerView(Context context,
-                                                             UserProfile userProfile,
-                                                             RecyclerView familyMemberInfoRecylerView) {
+                                                            UserProfile userProfile,
+                                                            RecyclerView familyMemberInfoRecylerView) {
 
+
+        parentChildItemList.clear();
+        brotherChildItemList.clear();
+        sisterChildItemList.clear();
+        childItemList.clear();
+        otherCHildItemList.clear();
+
+
+        mainparentItemList.clear();
+        familyMemberCounter = 0;
 
         if (userProfile.getProfile().getFamilyMembers() != null) {
 
@@ -650,6 +661,7 @@ public class SendRequestFragmentView {
 
 
      /*   generalInformationArrayList = new ArrayList<GeneralInformation>();*/
+        generalInformationArrayList.clear();
 
         generalInformationArrayList.add(new GeneralInformation(
                 Utils.convertEnglishDigittoBangla(
@@ -785,7 +797,7 @@ public class SendRequestFragmentView {
                                                            RecyclerView view) {
 
 
-        matchUserChoiceArrayList = new ArrayList<>();
+        matchUserChoiceArrayList.clear();
 
 
         if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHomeTown())).equals("")) {
@@ -848,6 +860,96 @@ public class SendRequestFragmentView {
 
     }
 
+
+    public static void setDataOnCommunincationRecylerView(Context context,
+                                                          UserProfile userProfile,
+                                                          RecyclerView communicationInfoRecylerview) {
+
+
+        communicationArrayList.clear();
+
+        String presentAddress = "";
+        String permanentAddress = "";
+
+
+        if (userProfile.getProfile().getAddress() != null) {
+
+            if (!(checkNullField(userProfile.getProfile().getAddress().getPresentAddress().getAddress())
+                    .equals(""))) {
+                presentAddress = presentAddress + checkNullField(
+                        userProfile.getProfile().getAddress().getPresentAddress().getAddress());
+
+            }
+
+            if (!(checkNullField(userProfile.getProfile().getAddress().getPresentAddress().getCountry())
+                    .equals(""))) {
+                presentAddress = presentAddress + checkNullField(
+                        userProfile.getProfile().getAddress().getPresentAddress().getCountry());
+
+            }
+
+            //add present address
+            if (!presentAddress.equals("")) {
+                communicationArrayList.add(new MatchUserChoice("বর্তমান ঠিকানা",
+                        presentAddress));
+
+            }
+
+
+            if (!(checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getAddress())
+                    .equals(""))) {
+
+
+                permanentAddress = permanentAddress + checkNullField(userProfile.getProfile().getAddress().
+                        getPermanentAddress().getAddress());
+
+            }
+
+
+            if (!(checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getCountry()).equals(""))) {
+
+
+                permanentAddress = permanentAddress +
+                        checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getCountry());
+
+
+            }
+
+            //add permanent address
+            if (permanentAddress != null) {
+
+                communicationArrayList.add(new MatchUserChoice("স্থায়ী ঠিকানা", permanentAddress));
+            }
+
+
+            if (!(checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getDistrict()).equals(""))) {
+
+                communicationArrayList.add(new MatchUserChoice("জেলা",
+                        userProfile.getProfile().getAddress().getPermanentAddress().getDistrict()));
+
+            }
+
+
+            if (!(checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getCountry()).equals(""))) {
+
+                communicationArrayList.add(new MatchUserChoice("দেশ",
+                        userProfile.getProfile().getAddress().getPermanentAddress().getCountry()));
+
+            }
+
+
+            if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getMobileNo()).equals(""))) {
+
+                communicationArrayList.add(new MatchUserChoice("ফোন নম্বর",
+                        userProfile.getProfile().getPersonalInformation().getMobileNo()));
+
+            }
+
+
+            communicationInfoRecylerview.setAdapter(new OtherInfoRecylerViewAdapter(
+                    context, communicationArrayList));
+        }
+    }
 
     private static String checkNullField(String value) {
 

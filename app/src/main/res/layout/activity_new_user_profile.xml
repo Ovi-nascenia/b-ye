@@ -374,6 +374,7 @@
 
 
                     <TextView
+                        android:id="@+id/family_info_tag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/medium_margin"
@@ -381,11 +382,14 @@
                         android:text="পরিবার"
                         android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/family_info_recylerview_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         app:cardBackgroundColor="#FFFFFF">
 
                         <android.support.v7.widget.RecyclerView
@@ -403,6 +407,7 @@
 
 
                     <TextView
+                        android:id="@+id/other_info_tag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/medium_margin"
@@ -410,11 +415,14 @@
                         android:text="বিবিধ প্রশ্নের উত্তর"
                         android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/other_info_cardview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         app:cardBackgroundColor="#FFFFFF">
 
                         <android.support.v7.widget.RecyclerView
@@ -440,13 +448,15 @@
                         android:text="যোগাযোগ"
                         android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/communication_card_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#FFFFFF">
+                        android:background="#FFFFFF"
+                        android:visibility="gone">
 
 
                         <FrameLayout
