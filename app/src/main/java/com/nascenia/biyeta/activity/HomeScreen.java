@@ -204,7 +204,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         }
         else {
             super.onBackPressed();
-            finish();
         }
     }
 
