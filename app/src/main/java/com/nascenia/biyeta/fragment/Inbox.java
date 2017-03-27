@@ -50,6 +50,7 @@ public class Inbox extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
+
         int id=view.getId();
         switch (id)
         {
