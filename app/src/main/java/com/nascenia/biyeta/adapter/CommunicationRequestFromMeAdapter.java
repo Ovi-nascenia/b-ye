@@ -97,7 +97,7 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
         public TextView userName;
         public TextView details;
         public TextView time_date;
-        Button connectoion;
+        TextView connectoion;
         TextView status;
 
         public ViewHolder(View itemView) {
@@ -107,7 +107,7 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
             userName = (TextView) itemView.findViewById(R.id.user_name);
             time_date = (TextView) itemView.findViewById(R.id.date_time);
             status=(TextView) itemView.findViewById(R.id.status);
-            connectoion=(Button) itemView.findViewById(R.id.connection_button);
+            connectoion=(TextView) itemView.findViewById(R.id.connection_button);
 
 
         }

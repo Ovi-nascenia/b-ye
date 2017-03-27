@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -149,8 +149,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("fuck", s + "fuck");
-            //Toast.makeText(RequestSentFromMe.this,s,Toast.LENGTH_SHORT).show();
+              ////Toast.makeText(RequestSentFromMe.this,s,//Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
 
             if (position == 0) {
@@ -160,12 +159,14 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 
                     if(jsonObject.has("message"))
                     {
-                        Toast.makeText(RequestSentFromMe.this,"null",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(RequestSentFromMe.this,"null",//Toast.LENGTH_SHORT).show();
                         findViewById(R.id.no_message).setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     }
                     else
                     {
+                        findViewById(R.id.no_message).setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
@@ -175,7 +176,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                         BiodatarequestFromMe inboxListAdapter = new BiodatarequestFromMe(response, R.layout.biodata_request_from_me) {
                             @Override
                             public void onClickSmile(int id) {
-                                Toast.makeText(RequestSentFromMe.this, id + " ", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(RequestSentFromMe.this, id + " ", //Toast.LENGTH_SHORT).show();
                             }
                         };
                         recyclerView.setAdapter(inboxListAdapter);
@@ -206,14 +207,16 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 
                     if (jsonObject.has("message"))
                     {
-                        Toast.makeText(RequestSentFromMe.this,"null",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(RequestSentFromMe.this,"null",//Toast.LENGTH_SHORT).show();
                         findViewById(R.id.no_message).setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     }
                     else
                     {
-                        Toast.makeText(RequestSentFromMe.this,"Not null",Toast.LENGTH_SHORT).show();
-                        Toast.makeText(RequestSentFromMe.this, s, Toast.LENGTH_SHORT).show();
+                        findViewById(R.id.no_message).setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        //Toast.makeText(RequestSentFromMe.this,"Not null",//Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(RequestSentFromMe.this, s, //Toast.LENGTH_SHORT).show();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
                         CommuncationRequestFromMeModel response = gson.fromJson(isr, CommuncationRequestFromMeModel.class);
