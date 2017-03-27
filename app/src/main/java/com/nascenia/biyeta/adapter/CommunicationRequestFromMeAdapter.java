@@ -63,7 +63,7 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
         holder.details.setText(profile.getAge() + "বয়স" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
         Glide.
                 with(holder.image.getContext()).
-                load(profile.getImage()).
+                load("http://test.biyeta.com"+profile.getImage()).
                 placeholder(R.drawable.fake_image).
                 into(holder.image);
 //        holder.itemView.setTag(item);
@@ -98,7 +98,7 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
         public TextView userName;
         public TextView details;
         public TextView time_date;
-        TextView connectoion;
+        Button connectoion;
         TextView status;
 
         public ViewHolder(View itemView) {
@@ -108,7 +108,7 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
             userName = (TextView) itemView.findViewById(R.id.user_name);
             time_date = (TextView) itemView.findViewById(R.id.date_time);
             status = (TextView) itemView.findViewById(R.id.status);
-            connectoion = (TextView) itemView.findViewById(R.id.connection_button);
+            connectoion = (Button) itemView.findViewById(R.id.connection_button);
 
 
         }

@@ -92,12 +92,13 @@
                     android:gravity="left"
 
                     android:layout_height="0dp"
-                    android:text="@string/make_call">
+                   >
 
-                    <TextView
+                    <Button
                         android:id="@+id/connection_button"
                         android:layout_width="wrap_content"
                         android:gravity="center"
+                        android:textSize="10dp"
                         android:layout_height="match_parent"
                         android:text="@string/connection_again"/>
 
@@ -105,7 +106,8 @@
                         android:layout_marginLeft="1dp"
                         android:background="#eeeddd"
                         android:id="@+id/status"
-                        android:padding="5dp"
+
+                        android:textSize="8dp"
                         android:layout_width="wrap_content"
                         android:gravity="center"
                         android:layout_height="match_parent"

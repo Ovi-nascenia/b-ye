@@ -53,7 +53,7 @@ public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdap
         holder.details.setText(profile.getAge() + "বয়স" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
         Glide.
                 with(holder.image.getContext()).
-                load(profile.getImage()).
+                load("http://test.biyeta.com"+profile.getImage()).
                 placeholder(R.drawable.fake_image).
                 into(holder.image);
 //        holder.itemView.setTag(item);

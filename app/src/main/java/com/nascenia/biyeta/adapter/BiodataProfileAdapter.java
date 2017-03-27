@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
 
     private BiodataProfile biodataProfile;
     private int itemLayout;
+    int position;
 
     public abstract void setConnectionRequest(int id,int position);
 
@@ -46,7 +48,9 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
     }
 
     @Override
-    public void onBindViewHolder(final BiodataProfileAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final BiodataProfileAdapter.ViewHolder holder, int position) {
+
+        position=position;
 
         final com.nascenia.biyeta.model.biodata.profile.Profile profile = biodataProfile.getProfiles().get(position);
 
@@ -54,20 +58,24 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
         holder.details.setText(profile.getAge() + "বয়স" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
         Glide.
                 with(holder.image.getContext()).
-                load(profile.getImage()).
+                load("http://test.biyeta.com"+profile.getImage()).
                 placeholder(R.drawable.fake_image).
                 into(holder.image);
 //        holder.itemView.setTag(item);
 
 
-
-
+        Log.e("fuck",profile.getRequestStatus().getMessage()+"hello ");
         holder.call.setText(profile.getRequestStatus().getMessage());
+        if (null != profile.getRequestStatus().getProfileRequestId())
+        {
+            holder.call.setEnabled(false);
+        }
+
+        final int finalPosition = position;
         holder.call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(holder.image.getContext(),"hello",Toast.LENGTH_SHORT).show();
-                setConnectionRequest(profile.getId(),position);
+                setConnectionRequest(profile.getId(), finalPosition);
 
             }
         });
