@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
@@ -146,4 +147,23 @@ public class SendRequestActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+
+        if (BioDataRequestFragment.profileRequestSenderIdsList != null) {
+            BioDataRequestFragment.profileRequestSenderIdsList.clear();
+        }
+
+
+        if (CommunicationRequestFragment.communicationRequestSenderIdsList != null) {
+            CommunicationRequestFragment.communicationRequestSenderIdsList.clear();
+        }
+
+
+        SendRequestActivity.biodataRequestCounter = 0;
+        SendRequestActivity.communicationRequestCounter = 0;
+    }
 }

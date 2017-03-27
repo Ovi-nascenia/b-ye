@@ -75,9 +75,10 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private int clickableButtonIdentifier = 555;
     private String token;
     private SharePref sharePref;
+    private int id;
 
+    private Response responseStatus;
 
-    public static int profileId = 9999;
 
     @Nullable
     @Override
@@ -215,7 +216,12 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         //Toast.makeText(getActivity(), "start", Toast.LENGTH_LONG).show();
         initView();
 
-        setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
+        if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
+
+            setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
+        } else {
+            Utils.ShowAlert(getActivity(), "No more reqeust left");
+        }
 
 
     }
@@ -226,7 +232,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         //Log.i("asynctaskdata FFFF", "currentId " + currentId + " urlResponseId " + urlResponseId);
         Log.i("asynctaskdataFFFFFF", "viewurl: " + url + id);
-        Log.i("asynctaskdataFFFFFF", "viewurl: " + BioDataRequestFragment.profileRequestSenderIdsList.toString());
+        Log.i("asynctaskdataFFFFFF", "viewurl: " +
+                BioDataRequestFragment.profileRequestSenderIdsList.toString());
 
         SendRequestFragmentView.fetchUserProfileDetailsResponse(
                 url + id,
@@ -264,7 +271,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     public void onComplete(Boolean result, Integer id) {
 
         if (result && clickableButtonIdentifier == 1 && id != null) {
-            Log.i("profileid", BioDataRequestFragment.profileId + "");
+
             new SendResponseTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
                     id + "/accept");
 
@@ -279,77 +286,54 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
     }
 
-    int id;
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
             case R.id.accept_imageview:
-                SendRequestActivity.biodataRequestCounter--;
+                processResponse(1);
 
-                if (!BioDataRequestFragment.profileRequestSenderIdsList.isEmpty()) {
-                    biodataNotificationCounterTextview.setText(
-                            SendRequestActivity.biodataRequestCounter + "");
-
-                    if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1)
-                        urlResponseId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
-
-
-                    if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
-                        urlResponseId = currentId;
-                        clickableButtonIdentifier = 1;
-                        if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 1) {
-                            BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
-                            setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
-
-                        } else if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1) {
-                            id = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
-
-                            BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
-                            setRequestView(id);
-                        }
-                    } else {
-                        setRequestView(currentId);
-                        Utils.ShowAlert(getActivity(), "No more reqeust left");
-                    }
-                } else {
-                    Utils.ShowAlert(getActivity(), "No more reqeust ");
-                }
 
                 break;
             case R.id.cancel_imageview:
-
-                SendRequestActivity.biodataRequestCounter--;
-
-                if (!BioDataRequestFragment.profileRequestSenderIdsList.isEmpty()) {
-                    biodataNotificationCounterTextview.setText(
-                            SendRequestActivity.biodataRequestCounter + "");
-
-                    if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1)
-                        urlResponseId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
-
-
-                    BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
-
-                    if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
-                        urlResponseId = currentId;
-                        clickableButtonIdentifier = 0;
-                        setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
-                    } else {
-                        setRequestView(currentId);
-                        Utils.ShowAlert(getActivity(), "No more reqeust left");
-                    }
-                } else {
-                    Utils.ShowAlert(getActivity(), "No more reqeust ");
-                }
+                processResponse(0);
 
                 break;
         }
     }
 
-    private void processResponse() {
+    private void processResponse(int btnClickIdentifier) {
+        SendRequestActivity.biodataRequestCounter--;
 
+        if (!BioDataRequestFragment.profileRequestSenderIdsList.isEmpty()) {
+            biodataNotificationCounterTextview.setText(
+                    SendRequestActivity.biodataRequestCounter + "");
+
+            if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1)
+                urlResponseId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
+
+
+            if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
+                urlResponseId = currentId;
+                clickableButtonIdentifier = btnClickIdentifier;
+                if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 1) {
+                    BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
+                    setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
+
+                } else if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1) {
+                    id = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
+
+                    BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
+                    setRequestView(id);
+                }
+            } else {
+                setRequestView(currentId);
+                Utils.ShowAlert(getActivity(), "No more reqeust left");
+            }
+        } else {
+            Utils.ShowAlert(getActivity(), "No more reqeust ");
+        }
 
     }
 
@@ -368,7 +352,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             Log.i("asynctaskdataFFFFFF", profileRequestSenderIdsList.toString());*/
 
 
-           /* try {
+            try {
 
 
                 OkHttpClient client = new OkHttpClient();
@@ -384,7 +368,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.i("asynctaskdata", e.getMessage());
-            }*/
+            }
 
             return "";
         }

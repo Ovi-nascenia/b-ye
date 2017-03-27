@@ -165,10 +165,7 @@ public class SendRequestFragmentView {
                 Log.i("threaddata", "onmethod" + responseValue + " ");
                 responseBody.close();
                 final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
-
-                BioDataRequestFragment.profileId = userProfile.getProfile().getRequestStatus().getProfileRequestId();
-                Log.e("profileIdFFFF", BioDataRequestFragment.profileId + "");
-
+                
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

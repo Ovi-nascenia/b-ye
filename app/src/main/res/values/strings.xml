@@ -37,7 +37,7 @@
     <string name="title_activity_send_request">Request send</string>
 
     <string name="sent_request"> আপনাকে পাঠানো  অনুরোধ</string>
-    <string name="your_sent_request">আপানার  পাঠানো  অনুরোধ</string>
+    <string name="your_sent_request">আপনার  পাঠানো  অনুরোধ</string>
     <string name="message">মেসেজ</string>
     <string name="smile">হাসি </string>
     <string name="send_smile">হাসি পাঠান </string>
@@ -266,13 +266,4 @@
     <string name="verify_mobile">আপনার মোবাইলে নাম্বার ভেরিফাই করুন </string>
 
 
-
-
-
-
-
-
-
-
-
-    </resources>
+</resources>

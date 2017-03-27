@@ -121,8 +121,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         locationId.clear();
         professionId.clear();
         occupationId.clear();
-        setUpToolBar(getString(R.string.search),this);
-
+        setUpToolBar(getString(R.string.search), this);
 
 
         currentStatusList.clear();
@@ -166,9 +165,9 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         super.setUpToolBar(title, context);
     }
 
-    public static  ArrayList<Integer> occupationId=new ArrayList<>();
-    public static  ArrayList<Integer> professionId=new ArrayList<>();
-    public static ArrayList<Integer> locationId=new ArrayList<>();
+    public static ArrayList<Integer> occupationId = new ArrayList<>();
+    public static ArrayList<Integer> professionId = new ArrayList<>();
+    public static ArrayList<Integer> locationId = new ArrayList<>();
 
     private void set_rangeView_lebel() {
 
@@ -201,9 +200,6 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                 return age_lebel.get(i);
             }
         });
-
-
-
 
 
         rangeView_height.setActiveLabelColor(Color.TRANSPARENT);
@@ -464,7 +460,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
     }
 
-    public  static String reponse="";
+    public static String reponse = "";
 
 
     void setUpId() {
@@ -563,9 +559,9 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            reponse=ch;
+            reponse = ch;
             finish();
-         ///   Toast.makeText(Search_Filter.this, ch, Toast.LENGTH_SHORT).show();
+            ///   Toast.makeText(Search_Filter.this, ch, Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -605,6 +601,8 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         @Override
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
+            Log.i("post", res + "  data");
+            Toast.makeText(getBaseContext(), res + "  data", Toast.LENGTH_LONG).show();
             parse_data(res);
 
 
@@ -625,7 +623,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             SharePref sharePref = new SharePref(Search_Filter.this);
             String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .url(Constant.BASE_URL + " /user-preference")
+                    .url(Constant.BASE_URL + "search/user-preference")
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
@@ -653,6 +651,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
     void parse_data(String result) {
         String id, age, height, skin, health, marital_status, education, occupation, professional_group, user_id, gender;
+        Log.i("json", result + " :data");
         try {
             JSONObject jsonObject = new JSONObject(result);
             id = jsonObject.getJSONObject("preference").getString("id");
@@ -748,7 +747,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
 
             ///load the professional group data
-            ArrayList<String> professionSelected=new ArrayList<>();
+            ArrayList<String> professionSelected = new ArrayList<>();
 
             ArrayList<Boolean> isCheckedProfession = new ArrayList<>();
 
@@ -756,7 +755,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
                 int num = Integer.parseInt(String.valueOf(new JSONArray(professional_group).get(i)));
                 professionId.add(num);
-                professionSelected.add(num+"");
+                professionSelected.add(num + "");
                 professionGridItemCheckedCheckBoxPositionList.add(num);
             }
 
@@ -768,14 +767,11 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                 professionId.add(Integer.parseInt(key));
                 String issue = profObj.getString(key);
                 profession_list.add(issue);
-                if (professionSelected.contains(Integer.parseInt(key)+""))
+                if (professionSelected.contains(Integer.parseInt(key) + ""))
                     isCheckedProfession.add(true);
                 else
                     isCheckedProfession.add(false);
             }
-
-
-
 
 
 //            for (int i = 0; i < professional_options.length(); i++) {
