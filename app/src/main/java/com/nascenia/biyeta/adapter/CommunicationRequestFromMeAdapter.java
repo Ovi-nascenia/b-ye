@@ -69,11 +69,17 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
 //        holder.itemView.setTag(item);
 
 
-        if (profile.getRequestStatus().getExpired() == true) {
-            holder.connectoion.setVisibility(View.VISIBLE);
-            holder.connectoion.setText("আবারো যোগাযোগ করুন");
-            holder.status.setText(profile.getRequestStatus().getMessage());
-        } else {
+        if (null != profile.getRequestStatus().getExpired()) {
+            if (profile.getRequestStatus().getExpired() == true) {
+                holder.connectoion.setVisibility(View.VISIBLE);
+                holder.connectoion.setText("আবারো যোগাযোগ করুন");
+                holder.status.setText(profile.getRequestStatus().getMessage());
+            } else {
+                holder.connectoion.setVisibility(View.GONE);
+                holder.status.setText(profile.getRequestStatus().getMessage());
+            }
+        }
+        else {
             holder.connectoion.setVisibility(View.GONE);
             holder.status.setText(profile.getRequestStatus().getMessage());
         }
