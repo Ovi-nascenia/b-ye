@@ -1,6 +1,7 @@
 package com.nascenia.biyeta.activity;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,17 +13,21 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
 import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.adapter.OtherInfoRecylerViewAdapter;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.fragment.ProfileImageFirstFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
@@ -33,6 +38,8 @@ import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.service.ResourceProvider;
 import com.nascenia.biyeta.utils.Utils;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 import com.squareup.picasso.Callback;
@@ -45,12 +52,13 @@ import java.util.ArrayList;
  */
 
 
-public class NewUserProfileActivity extends AppCompatActivity {
+public class NewUserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
     private ViewPager viewPager;
 
-    private ImageView indicatorImage1, indicatorImage2, indicatorImage3, userProfileImage;
+    private ImageView indicatorImage1, indicatorImage2, indicatorImage3, userProfileImage,
+            cancelImageView, acceptImageView;
 
     private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView,
             familyMemberInfoRecylerView, communicationInfoRecylerview,
@@ -61,11 +69,24 @@ public class NewUserProfileActivity extends AppCompatActivity {
     private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
 
     private TextView userProfileDescriptionText, userNameTextView, familyInfoTagTextView,
-            communicationTagTextview, otherInfoTagTextview;
+            communicationTagTextview, otherInfoTagTextview, cancelTextView, acceptTextView;
 
-    private ImageView profileViewerPersonImageView;
+    private ImageView profileViewerPersonImageView, editUserProfileImageView;
 
     private CardView familyCardView, communicationCarview, otherInfoCardView;
+
+    private Button finalResultButton;
+
+    private RelativeLayout requestSendButtonsLayout;
+    private UserProfile userProfile;
+
+    /*
+    *
+    * 0 for profile request(bio-data request)
+    * 1 for communication request
+    *
+    * */
+    private int clickbleButtonIdentifier;
 
 
     @Override
@@ -75,6 +96,11 @@ public class NewUserProfileActivity extends AppCompatActivity {
 
         initView();
 
+
+        /*if (getIntent().getExtras().getBoolean("PROFILE_EDIT_OPTION")) {
+
+            editUserProfileImageView.setVisibility(View.VISIBLE);
+        }*/
 
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -161,6 +187,22 @@ public class NewUserProfileActivity extends AppCompatActivity {
         otherInfoTagTextview = (TextView) findViewById(R.id.other_info_tag);
         otherInfoCardView = (CardView) findViewById(R.id.other_info_cardview);
 
+        editUserProfileImageView = (ImageView) findViewById(R.id.edit_profile_image);
+
+
+        cancelImageView = (ImageView) findViewById(R.id.cancel_imageview);
+        acceptImageView = (ImageView) findViewById(R.id.accept_imageview);
+
+        cancelImageView.setOnClickListener(this);
+        acceptImageView.setOnClickListener(this);
+
+        cancelTextView = (TextView) findViewById(R.id.cancel_textview);
+        acceptTextView = (TextView) findViewById(R.id.accept_textview);
+
+        requestSendButtonsLayout = (RelativeLayout) findViewById(R.id.request_send_buttons_layout);
+        finalResultButton = (Button) findViewById(R.id.finalResultBtn);
+        finalResultButton.setOnClickListener(this);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -183,7 +225,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
                     final String responseValue = responseBody.string();
                     Log.i("responsedata", "response value: " + responseValue + " ");
                     responseBody.close();
-                    final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
+                    userProfile = new Gson().fromJson(responseValue, UserProfile.class);
                     NewUserProfileActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -211,16 +253,16 @@ public class NewUserProfileActivity extends AppCompatActivity {
 //                                                        .getProfilePicture())
 //                                        .into(userProfileImage);
                                 Picasso.with(NewUserProfileActivity.this)
-                                        .load(Utils.Base_URL +  userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture())
+                                        .load(Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture())
                                         .into(userProfileImage, new Callback() {
                                             @Override
                                             public void onSuccess() {
                                                 userProfileImage.post(new Runnable() {
-                                              @Override
-                                              public void run() {
-                                                  Utils.scaleImage(NewUserProfileActivity.this, 1.2f, userProfileImage);
-                                              }
-                                              });
+                                                    @Override
+                                                    public void run() {
+                                                        Utils.scaleImage(NewUserProfileActivity.this, 1.2f, userProfileImage);
+                                                    }
+                                                });
                                             }
 
                                             @Override
@@ -246,12 +288,6 @@ public class NewUserProfileActivity extends AppCompatActivity {
                             } else {
                             }
 
-//                            Utils.scaleImage(NewUserProfileActivity.this, (float)1.2, userProfileImage);
-/*
-                            addDataonGeneralInfoRecylerViewItem(userProfile);
-                            addDataonMatchUserChoiceRecyclerView(userProfile);
-                            setDataonOtherInfoRecylerView(userProfile);
-*/
 
                             SendRequestFragmentView.setDataonGeneralInfoRecylerView(
                                     getBaseContext(), userProfile, generalInfoRecyclerView);
@@ -270,7 +306,146 @@ public class NewUserProfileActivity extends AppCompatActivity {
                             }
 
 
+                            //biodata request
+
                             if (userProfile.getProfile().getRequestStatus().getName().
+                                    equals("profile request") &&
+                                    (userProfile.getProfile().getRequestStatus().getSender() ==
+                                            Integer.parseInt(getIntent().getExtras().getString("id"))) &&
+                                    (userProfile.getProfile().getRequestStatus().isSent()) &&
+                                    (!userProfile.getProfile().getRequestStatus().isAccepted()) &&
+                                    (!userProfile.getProfile().getRequestStatus().isRejected())
+                                    ) {
+
+
+                                familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                familyCardView.setVisibility(View.VISIBLE);
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                        userProfile, familyMemberInfoRecylerView);
+
+                                finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                finalResultButton.setEnabled(false);
+
+                            }
+
+
+                            if (userProfile.getProfile().getRequestStatus().getName().
+                                    equals("profile request") &&
+                                    (userProfile.getProfile().getRequestStatus().getSender() ==
+                                            Integer.parseInt(getIntent().getExtras().getString("id"))) &&
+                                    (!userProfile.getProfile().getRequestStatus().isAccepted()) &&
+                                    (userProfile.getProfile().getRequestStatus().isRejected())
+                                    ) {
+
+
+                                familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                familyCardView.setVisibility(View.VISIBLE);
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                        userProfile, familyMemberInfoRecylerView);
+
+                                finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                finalResultButton.setEnabled(false);
+
+                            }
+
+
+                            if (userProfile.getProfile().getRequestStatus().getName().
+                                    equals("profile request") &&
+                                    (userProfile.getProfile().getRequestStatus().getReceiver() ==
+                                            Integer.parseInt(getIntent().getExtras().getString("id"))) &&
+                                    (!userProfile.getProfile().getRequestStatus().isAccepted()) &&
+                                    (!userProfile.getProfile().getRequestStatus().isRejected())
+                                    ) {
+
+
+                                familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                familyCardView.setVisibility(View.VISIBLE);
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                        userProfile, familyMemberInfoRecylerView);
+
+                                clickbleButtonIdentifier = 0;
+
+                                finalResultButton.setVisibility(View.GONE);
+                                requestSendButtonsLayout.setVisibility(View.VISIBLE);
+
+                            }
+
+                            //communication request
+
+                            if (userProfile.getProfile().getRequestStatus().getName().
+                                    equals("communication request") &&
+                                    (userProfile.getProfile().getRequestStatus().getSender() ==
+                                            Integer.parseInt(getIntent().getExtras().getString("id"))) &&
+                                    (userProfile.getProfile().getRequestStatus().getCommunicationRequestId() == null)
+                                    ) {
+
+                                finalResultButton.setEnabled(true);
+                                finalResultButton.setVisibility(View.VISIBLE);
+                                finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
+
+                            }
+
+
+                            if (userProfile.getProfile().getRequestStatus().getName().
+                                    equals("communication request") &&
+                                    (userProfile.getProfile().getRequestStatus().getSender() ==
+                                            Integer.parseInt(getIntent().getExtras().getString("id"))) &&
+                                    (userProfile.getProfile().getRequestStatus().getCommunicationRequestId() != null)
+                                    ) {
+
+                                finalResultButton.setEnabled(false);
+                                finalResultButton.setVisibility(View.VISIBLE);
+                                finalResultButton.setText("যোগাযোগের জন্য অনুরোধ send korse");
+
+                            }
+
+
+                            if (userProfile.getProfile().getRequestStatus().getName().
+                                    equals("communication request") &&
+                                    (userProfile.getProfile().getRequestStatus().getReceiver() ==
+                                            Integer.parseInt(getIntent().getExtras().getString("id"))) &&
+                                    (userProfile.getProfile().getRequestStatus().getCommunicationRequestId() != null)
+                                    ) {
+
+                                finalResultButton.setVisibility(View.GONE);
+                                requestSendButtonsLayout.setVisibility(View.VISIBLE);
+                            }
+
+                            if (userProfile.getProfile().getRequestStatus().getName().
+                                    equals("communication request") &&
+                                    (userProfile.getProfile().getRequestStatus().isAccepted())) {
+
+
+                                //send message btn and phone call btn
+                            }
+
+                            if (userProfile.getProfile().getRequestStatus().getName().
+                                    equals("communication request") &&
+                                    (userProfile.getProfile().getRequestStatus().isRejected()) &&
+                                    (userProfile.getProfile().getRequestStatus().getSender() ==
+                                            Integer.parseInt(getIntent().getExtras().getString("id")))) {
+
+                                finalResultButton.setEnabled(false);
+                                finalResultButton.setVisibility(View.VISIBLE);
+                                finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন already send");
+
+                            }
+
+
+                            if (userProfile.getProfile().getRequestStatus().getName().
+                                    equals("communication request") &&
+                                    (userProfile.getProfile().getRequestStatus().isRejected()) &&
+                                    (userProfile.getProfile().getRequestStatus().getReceiver() ==
+                                            Integer.parseInt(getIntent().getExtras().getString("id")))) {
+
+                                finalResultButton.setEnabled(true);
+                                finalResultButton.setVisibility(View.VISIBLE);
+                                finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
+
+                            }
+
+
+                            /*if (userProfile.getProfile().getRequestStatus().getName().
                                     equals("communication request") &&
                                     (!userProfile.getProfile().getRequestStatus().isAccepted())) {
 
@@ -303,7 +478,7 @@ public class NewUserProfileActivity extends AppCompatActivity {
                                         userProfile, familyMemberInfoRecylerView);
 
 
-                            }
+                            }*/
 
 
                         }
@@ -327,6 +502,52 @@ public class NewUserProfileActivity extends AppCompatActivity {
         } else {
             return value + ",";
         }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+
+        //00 means profile request->যোগাযোগের জন্য অনুরোধ করুন
+        //01 means profile request->ুরো বায়োডাটা দেখার অনুরোধ করুন
+
+        if ((v.getId() == R.id.accept_imageview) &&
+                (clickbleButtonIdentifier == 0)) {
+            finalResultButton.setVisibility(View.VISIBLE);
+            finalResultButton.setEnabled(true);
+            finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
+            finalResultButton.setTag(00);
+            requestSendButtonsLayout.setVisibility(View.GONE);
+
+            new SendRequestTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
+                    userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/accept");
+
+        } else if ((v.getId() == R.id.cancel_imageview) &&
+                (clickbleButtonIdentifier == 0)) {
+            finalResultButton.setVisibility(View.VISIBLE);
+            finalResultButton.setEnabled(true);
+            finalResultButton.setText("পুরো বায়োডাটা দেখার অনুরোধ করুন");
+            finalResultButton.setTag(01);
+            requestSendButtonsLayout.setVisibility(View.GONE);
+
+            new SendRequestTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
+                    userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/reject");
+        } else if (v.getTag() == 00) {
+
+            NetWorkOperation.postData(getBaseContext(),
+                    "http://test.biyeta.com/api/v1/communication_requests",
+                    userProfile.getProfile().getPersonalInformation().getId() + "");
+
+        } else if (v.getTag() == 01) {
+
+            NetWorkOperation.CreateProfileReqeust(getBaseContext(),
+                    "http://test.biyeta.com/api/v1/profiles/" +
+                            userProfile.getProfile().getPersonalInformation().getId()
+                            + "/profile_request");
+
+        }
+
 
     }
 
@@ -357,5 +578,46 @@ public class NewUserProfileActivity extends AppCompatActivity {
         }
     }
 
+
+    private class SendRequestTask extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+
+            try {
+
+/*
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(urls[0])
+                        .addHeader("Authorization", "Token token=" + token)
+                        .get()
+                        .build();
+                responseStatus = client.newCall(request).execute();
+
+                return responseStatus.body().string();*/
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("asynctaskdata", e.getMessage());
+            }
+
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("FFFFFF", s);
+
+        }
+    }
 
 }

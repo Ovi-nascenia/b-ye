@@ -58,6 +58,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     private View actionBarView;
     private String responseValue = null;
+    private SharePref sharePref;
 
     private ImageView searchImageView, matchImageView, fevImageView, inboxImageView, profileImageView, menuProfileImgView;
 
@@ -67,6 +68,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.layout_drawer);
         context = this;
 
+        sharePref = new SharePref(HomeScreen.this);
 
         initIdAndActionBar();
 
@@ -102,25 +104,25 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         fevImageView.setOnClickListener(this);
         inboxImageView.setOnClickListener(this);
         profileImageView.setOnClickListener(this);
-        Log.e("name",new SharePref(HomeScreen.this).get_data("display_name"));
+        Log.e("name", sharePref.get_data("display_name"));
 
         View header = navigationView.getHeaderView(0);
         TextView display_name = (TextView) header.findViewById(R.id.displayname);
-        display_name.setText(new SharePref(HomeScreen.this).get_data("display_name"));
+        display_name.setText(sharePref.get_data("display_name"));
         menuProfileImgView = (ImageView) header.findViewById(R.id.img_profile);
         //set profile image on drawer
         Picasso.with(this)
-            .load("http://test.biyeta.com" + new SharePref(HomeScreen.this).get_data("profile_picture"))
-            .into(menuProfileImgView, new Callback() {
-                @Override
-                public void onSuccess() {
+                .load("http://test.biyeta.com" + sharePref.get_data("profile_picture"))
+                .into(menuProfileImgView, new Callback() {
+                    @Override
+                    public void onSuccess() {
 //                  menuProfileImgView.post(new Runnable() {
 //                  @Override
 //                  public void run() {
 //                      Utils.scaleImage(HomeScreen.this, 1.2f, menuProfileImgView);
 //                  }
 //                  });
-                }
+                    }
 
                 @Override
                 public void onError() {
@@ -142,9 +144,17 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 switch (id)
                 {
                     case R.id.nav_profile:
-                        startActivity(new Intent(HomeScreen.this, NewUserProfileActivity.class));
+                        startActivity(new Intent(HomeScreen.this, NewUserProfileActivity.class).
+                                putExtra("id", sharePref.get_data("user_id")).
+                                putExtra("user_name", sharePref.get_data("display_name"))
+                                .putExtra("PROFILE_EDIT_OPTION", true));
                         break;
 
+                    case R.id.nav_inbox:
+                        break;
+
+                    case R.id.nav_fav:
+                        break;
                     case R.id.nav_setting:
                         break;
 
@@ -166,7 +176,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         break;
 
                     case R.id.nav_faq:
-                        startActivity(new Intent(HomeScreen.this,FAQActivity.class));
                         break;
                     case R.id.nav_termsofuse:
 
@@ -174,7 +183,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
                         break;
                     case R.id.nav_logout:
-                        SharePref sharePref = new SharePref(HomeScreen.this);
+                        //SharePref sharePref = new SharePref(HomeScreen.this);
                         sharePref.set_data("token", "key");
                         startActivity(new Intent(HomeScreen.this, Login.class));
                         finish();
@@ -192,19 +201,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         });
 
 
-    }
-
-
-    @Override
-    public void onBackPressed() {
-
-
-        if(drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
-            drawerLayout.closeDrawer(Gravity.RIGHT);
-        }
-        else {
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -250,57 +246,43 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         .commit();
                 break;
             case R.id.inbox:
+
                 inboxImageView.setColorFilter(Color.WHITE);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentParentViewGroup, new Inbox())
-                        .commit();
+
+                Dialog dialog = new Dialog(HomeScreen.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.inbox);
+                dialog.findViewById(R.id.tv_sent_request).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new LoadReqeustSenderIdsTask().execute();
+                    }
+                });
+
+
+                dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(HomeScreen.this, RequestSentFromMe.class));
+                    }
+                });
+
+                dialog.findViewById(R.id.tv_inbox).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(HomeScreen.this, InboxListView.class));
+                    }
+                });
+                DisplayMetrics displaymetrics = new DisplayMetrics();
+                this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                int width = (int) ((int) displaymetrics.widthPixels * 0.8);
+               // int height = (int) ((int) displaymetrics.heightPixels * 0.4);
+                dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+
+                dialog.show();
                 break;
-
-//                inboxImageView.setColorFilter(Color.WHITE);
-//
-//                Dialog dialog = new Dialog(HomeScreen.this);
-//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                dialog.setCancelable(true);
-//                dialog.setContentView(R.layout.inbox);
-//                dialog.findViewById(R.id.tv_sent_request).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        new LoadReqeustSenderIdsTask().execute();
-//                    }
-//                });
-//
-//
-//                dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        startActivity(new Intent(HomeScreen.this, RequestSentFromMe.class));
-//                    }
-//                });
-//
-//                dialog.findViewById(R.id.tv_inbox).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        startActivity(new Intent(HomeScreen.this, InboxListView.class));
-//                    }
-//                });
-//                dialog.findViewById(R.id.tv_expire).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        startActivity(new Intent(HomeScreen.this, ExpiredConnection.class));
-//                    }
-//                });
-//                DisplayMetrics displaymetrics = new DisplayMetrics();
-//                this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-//                int width = (int) ((int) displaymetrics.widthPixels * 1);
-//               // int height = (int) ((int) displaymetrics.heightPixels * 0.4);
-//                dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-//
-//
-//                dialog.show();
-//
-
-
-            //    break;
             case R.id.profile:
                 profileImageView.setColorFilter(Color.WHITE);
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
