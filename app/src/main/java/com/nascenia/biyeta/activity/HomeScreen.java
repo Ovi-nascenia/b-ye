@@ -250,49 +250,57 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         .commit();
                 break;
             case R.id.inbox:
-
                 inboxImageView.setColorFilter(Color.WHITE);
-
-                Dialog dialog = new Dialog(HomeScreen.this);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setCancelable(true);
-                dialog.setContentView(R.layout.inbox);
-                dialog.findViewById(R.id.tv_sent_request).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        new LoadReqeustSenderIdsTask().execute();
-                    }
-                });
-
-
-                dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(HomeScreen.this, RequestSentFromMe.class));
-                    }
-                });
-
-                dialog.findViewById(R.id.tv_inbox).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(HomeScreen.this, InboxListView.class));
-                    }
-                });
-                dialog.findViewById(R.id.tv_expire).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(HomeScreen.this, ExpiredConnection.class));
-                    }
-                });
-                DisplayMetrics displaymetrics = new DisplayMetrics();
-                this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                int width = (int) ((int) displaymetrics.widthPixels * 0.8);
-               // int height = (int) ((int) displaymetrics.heightPixels * 0.4);
-                dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-
-                dialog.show();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentParentViewGroup, new Inbox())
+                        .commit();
                 break;
+
+//                inboxImageView.setColorFilter(Color.WHITE);
+//
+//                Dialog dialog = new Dialog(HomeScreen.this);
+//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                dialog.setCancelable(true);
+//                dialog.setContentView(R.layout.inbox);
+//                dialog.findViewById(R.id.tv_sent_request).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        new LoadReqeustSenderIdsTask().execute();
+//                    }
+//                });
+//
+//
+//                dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        startActivity(new Intent(HomeScreen.this, RequestSentFromMe.class));
+//                    }
+//                });
+//
+//                dialog.findViewById(R.id.tv_inbox).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        startActivity(new Intent(HomeScreen.this, InboxListView.class));
+//                    }
+//                });
+//                dialog.findViewById(R.id.tv_expire).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        startActivity(new Intent(HomeScreen.this, ExpiredConnection.class));
+//                    }
+//                });
+//                DisplayMetrics displaymetrics = new DisplayMetrics();
+//                this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//                int width = (int) ((int) displaymetrics.widthPixels * 1);
+//               // int height = (int) ((int) displaymetrics.heightPixels * 0.4);
+//                dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//
+//
+//                dialog.show();
+//
+
+
+            //    break;
             case R.id.profile:
                 profileImageView.setColorFilter(Color.WHITE);
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {

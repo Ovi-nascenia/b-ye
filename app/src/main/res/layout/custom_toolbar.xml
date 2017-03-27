@@ -18,9 +18,9 @@
         android:textSize="18sp" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="?android:attr/actionModeCloseDrawable"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/back"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:id="@+id/back"

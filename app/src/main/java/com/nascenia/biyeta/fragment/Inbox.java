@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.activity.ExpiredConnection;
+import com.nascenia.biyeta.activity.InboxListView;
+import com.nascenia.biyeta.activity.RequestSentFromMe;
 
 /**
  * Created by user on 1/5/2017.
@@ -37,6 +40,7 @@ public class Inbox extends Fragment implements View.OnClickListener{
         v.findViewById(R.id.tv_expire).setOnClickListener(this);
         v.findViewById(R.id.tv_inbox).setOnClickListener(this);
         v.findViewById(R.id.tv_sent_request).setOnClickListener(this);
+        v.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(this);
 
 
         return v;
@@ -50,19 +54,18 @@ public class Inbox extends Fragment implements View.OnClickListener{
         switch (id)
         {
             case R.id.tv_sent_request:
-
-                startActivity(new Intent());
                 break;
 
             case R.id.tv_inbox:
-                Toast.makeText(getContext(),"Inbox",Toast.LENGTH_SHORT).show();
-                break;
-
-
-
-
+                startActivity(new Intent(getContext(), InboxListView.class));
+             break;
 
             case R.id.tv_expire:
+                startActivity(new Intent(getContext(), ExpiredConnection.class));
+                break;
+
+            case  R.id.tv_sent_request_from_me:
+                startActivity(new Intent(getContext(), RequestSentFromMe.class));
                 break;
 
 

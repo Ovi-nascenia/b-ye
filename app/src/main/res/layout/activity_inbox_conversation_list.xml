@@ -5,12 +5,25 @@
     android:layout_height="match_parent"
     android:background="#f2ebeb"
     android:orientation="vertical">
+    <ProgressBar
+        android:id="@+id/progressbar_message"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/empty_message"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="No Message found" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
 
         <ListView
             android:id="@+id/person_inbox_list"
@@ -19,7 +32,7 @@
             android:background="@null"
             android:divider="@null"
             android:stackFromBottom="true"
-            android:transcriptMode="alwaysScroll"></ListView>
+            android:transcriptMode="alwaysScroll" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout

@@ -57,7 +57,7 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
     @Override
     public void onBindViewHolder(final CommunicationRequestFromMeAdapter.ViewHolder holder, final int position) {
 
-        Profile profile= communcationRequestFromMeModel.getProfiles().get(position);
+        Profile profile = communcationRequestFromMeModel.getProfiles().get(position);
 
         holder.userName.setText(profile.getDisplayName());
         holder.details.setText(profile.getAge() + "বয়স" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
@@ -69,19 +69,14 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
 //        holder.itemView.setTag(item);
 
 
-
-
-        if (profile.getRequestStatus().getExpired()==true)
-        {
+        if (profile.getRequestStatus().getExpired() == true) {
             holder.connectoion.setVisibility(View.VISIBLE);
             holder.connectoion.setText("আবারো যোগাযোগ করুন");
             holder.status.setText(profile.getRequestStatus().getMessage());
-        }
-        else {
+        } else {
             holder.connectoion.setVisibility(View.GONE);
             holder.status.setText(profile.getRequestStatus().getMessage());
         }
-
 
 
     }
@@ -106,8 +101,8 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
             details = (TextView) itemView.findViewById(R.id.details);
             userName = (TextView) itemView.findViewById(R.id.user_name);
             time_date = (TextView) itemView.findViewById(R.id.date_time);
-            status=(TextView) itemView.findViewById(R.id.status);
-            connectoion=(TextView) itemView.findViewById(R.id.connection_button);
+            status = (TextView) itemView.findViewById(R.id.status);
+            connectoion = (TextView) itemView.findViewById(R.id.connection_button);
 
 
         }

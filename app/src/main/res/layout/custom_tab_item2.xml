@@ -17,7 +17,7 @@
             android:layout_alignParentTop="true"
             android:background="@drawable/badge_item_count"
             android:gravity="center"
-            android:text="99+"
+            android:text="0"
             android:textColor="#000"
             android:textSize="8sp"
             android:textStyle="bold"

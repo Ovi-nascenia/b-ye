@@ -57,20 +57,20 @@ import java.util.TimerTask;
 public class InboxSingleChat extends CustomActionBarActivity {
 
 
-    public static  int sender_id,recevier_id,current_user_id;
+    public static int sender_id, recevier_id, current_user_id;
+    public static List<Message> listMessage = new ArrayList<>();
+    private final OkHttpClient client = new OkHttpClient();
+    public ArrayList<Integer> messageId;
+    public int flag = 1;
     ListView recyclerView;
     EditText editTextMesaageField;
     String userName;
-
-
-    public ArrayList<Integer> messageId;
-
-    public    int flag=1;
     ChatHead response;
     String messageText;
     CountDownTimer countDownTimer;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private final OkHttpClient client = new OkHttpClient();
+    ChatListAdapter inboxListAdapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,21 +78,15 @@ public class InboxSingleChat extends CustomActionBarActivity {
         setContentView(R.layout.activity_inbox_conversation_list);
 
 
-
-
-
-
-
         sender_id = intent.getIntExtra("sender_id", 4);
         recevier_id = intent.getIntExtra("receiver_id", 4);
-        current_user_id=intent.getIntExtra("current_user",4);
-        userName=intent.getStringExtra("userName");
-        messageId=new ArrayList<>();
-        setUpToolBar(userName,this);
+        current_user_id = intent.getIntExtra("current_user", 4);
+        userName = intent.getStringExtra("userName");
+        messageId = new ArrayList<>();
+        setUpToolBar(userName, this);
 
 
-
-        Log.e("come", recevier_id + " "+current_user_id);
+        Log.e("come", recevier_id + " " + current_user_id);
 
         setUpId();
         new LoadMessageThread().execute();
@@ -102,13 +96,11 @@ public class InboxSingleChat extends CustomActionBarActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (flag < response.getTotalMessage())
-                {
+                if (flag < response.getTotalMessage()) {
                     flag++;
                     new LoadMessageThread().execute();
-                    Toast.makeText(InboxSingleChat.this,"load more data",Toast.LENGTH_SHORT).show();
-                }
-                else
+                    Toast.makeText(InboxSingleChat.this, "load more data", Toast.LENGTH_SHORT).show();
+                } else
                     mSwipeRefreshLayout.setRefreshing(false);
 
             }
@@ -123,21 +115,19 @@ public class InboxSingleChat extends CustomActionBarActivity {
             }
         };
         countDownTimer.start();
-        editTextMesaageField=(EditText)findViewById(R.id.inputMsg);
-
+        editTextMesaageField = (EditText) findViewById(R.id.inputMsg);
 
 
         findViewById(R.id.btnSend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                messageText=editTextMesaageField.getText().toString();
+                messageText = editTextMesaageField.getText().toString();
 
 
-                Log.e("fuck",editTextMesaageField.getText().toString());
-                TempMessage message=new TempMessage(editTextMesaageField.getText().toString(),"3-2-2017");
+                Log.e("fuck", editTextMesaageField.getText().toString());
+                TempMessage message = new TempMessage(editTextMesaageField.getText().toString(), "3-2-2017");
                 editTextMesaageField.setText("");
                 new SendMessage().execute();
-
 
 
             }
@@ -147,7 +137,7 @@ public class InboxSingleChat extends CustomActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-      //  countDownTimer.cancel();
+        //  countDownTimer.cancel();
     }
 
     @Override
@@ -158,68 +148,80 @@ public class InboxSingleChat extends CustomActionBarActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-       /// countDownTimer.start();
+        /// countDownTimer.start();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        flag=0;
+        flag = 0;
         countDownTimer.cancel();
     }
 
-    void setUpId()
-    {
-        recyclerView=(ListView) findViewById(R.id.person_inbox_list);
+    void setUpId() {
+        recyclerView = (ListView) findViewById(R.id.person_inbox_list);
     }
-
-    public static List<Message> listMessage=new ArrayList<>();
-    ChatListAdapter inboxListAdapter;
 
     class LoadMessageThread extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            findViewById(R.id.progressbar_message).setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(false);
-
-            Log.e("fii", s + "sss");
-
-            Gson gson = new Gson();
-            InputStream is = new ByteArrayInputStream(s.getBytes());
-            InputStreamReader isr = new InputStreamReader(is);
-            response = gson.fromJson(isr, ChatHead.class);
+            Log.e("MessageHistory",s);
 
             try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.has("no_results")) {
+                    recyclerView.setVisibility(View.GONE);
+                    findViewById(R.id.empty_message).setVisibility(View.VISIBLE);
+
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    findViewById(R.id.empty_message).setVisibility(View.GONE);
+                    Gson gson = new Gson();
+                    InputStream is = new ByteArrayInputStream(s.getBytes());
+                    InputStreamReader isr = new InputStreamReader(is);
+                    response = gson.fromJson(isr, ChatHead.class);
+
+                    try {
 
 
-                for (int i = 0; i < response.getMessages().size(); i++)
-                    messageId.add(response.getMessages().get(i).getId());
-                if (flag == 1) {
-                    listMessage = response.getMessages();
-                    inboxListAdapter = new ChatListAdapter(InboxSingleChat.this, listMessage) {
-                        @Override
-                        public void load() {
-                            // Toast.makeText(InboxSingleChat.this,"load more data",Toast.LENGTH_SHORT).show();
-                        }
-                    };
-                    recyclerView.setAdapter(inboxListAdapter);
+                        for (int i = 0; i < response.getMessages().size(); i++)
+                            messageId.add(response.getMessages().get(i).getId());
+                        if (flag == 1) {
 
-                } else
-                    for (int i = response.getMessages().size() - 1, j = 0; i >= 0 && j < response.getMessages().size(); i--, j++) {
-                        listMessage.add(j, response.getMessages().get(i));
-                        inboxListAdapter.notifyDataSetChanged();
-                        recyclerView.smoothScrollToPosition(0);
+                            listMessage = response.getMessages();
+                            inboxListAdapter = new ChatListAdapter(InboxSingleChat.this, listMessage) {
+                                @Override
+                                public void load() {
+                                    // Toast.makeText(InboxSingleChat.this,"load more data",Toast.LENGTH_SHORT).show();
+                                }
+                            };
+                            recyclerView.setAdapter(inboxListAdapter);
 
-                    }
+                        } else
+                            for (int i = response.getMessages().size() - 1, j = 0; i >= 0 && j < response.getMessages().size(); i--, j++) {
+                                listMessage.add(j, response.getMessages().get(i));
+                                inboxListAdapter.notifyDataSetChanged();
+                                recyclerView.smoothScrollToPosition(0);
+
+                            }
 
 //            recyclerView.setLayoutManager(new LinearLayoutManager(InboxSingleChat.this));
 //            recyclerView.setItemAnimator(new DefaultItemAnimator());new
 
 
-            } catch (Exception e) {
-                Toast.makeText(InboxSingleChat.this, "No Message", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(InboxSingleChat.this, "No Message", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
+
         }
 
         @Override
@@ -236,23 +238,17 @@ public class InboxSingleChat extends CustomActionBarActivity {
             Request request = null;
 
 
-            if (flag >1)
-            {
+            if (flag > 1) {
                 request = new Request.Builder()
-                        .url("http://test.biyeta.com/api/v1/messages/get_conversation?sender_id="+sender_id+"&receiver_id="+recevier_id+"&page="+flag)
+                        .url("http://test.biyeta.com/api/v1/messages/get_conversation?sender_id=" + sender_id + "&receiver_id=" + recevier_id + "&page=" + flag)
                         .addHeader("Authorization", "Token token=" + token)
                         .build();
-            }
+            } else
 
-
-            else
-
-                 request = new Request.Builder()
-                    .url("http://test.biyeta.com/api/v1/messages/get_conversation?sender_id="+sender_id+"&receiver_id="+recevier_id)
-                    .addHeader("Authorization", "Token token=" + token)
-                    .build();
-
-
+                request = new Request.Builder()
+                        .url("http://test.biyeta.com/api/v1/messages/get_conversation?sender_id=" + sender_id + "&receiver_id=" + recevier_id)
+                        .addHeader("Authorization", "Token token=" + token)
+                        .build();
 
 
             try {
@@ -275,7 +271,7 @@ public class InboxSingleChat extends CustomActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-           Toast.makeText(InboxSingleChat.this,s,Toast.LENGTH_SHORT).show();
+            Toast.makeText(InboxSingleChat.this, s, Toast.LENGTH_SHORT).show();
 
 
         }
@@ -294,24 +290,21 @@ public class InboxSingleChat extends CustomActionBarActivity {
             Request request = null;
 
             MultipartBuilder mBuilder = new MultipartBuilder().type(MultipartBuilder.FORM);
-            int se=sender_id;
-            mBuilder.addFormDataPart("message[sender_id]" , current_user_id+"");
-            if (recevier_id!=current_user_id)
-            mBuilder.addFormDataPart("message[receiver_id]" ,recevier_id+"");
+            int se = sender_id;
+            mBuilder.addFormDataPart("message[sender_id]", current_user_id + "");
+            if (recevier_id != current_user_id)
+                mBuilder.addFormDataPart("message[receiver_id]", recevier_id + "");
             else
-                mBuilder.addFormDataPart("message[receiver_id]" ,sender_id+"");
+                mBuilder.addFormDataPart("message[receiver_id]", sender_id + "");
 
             mBuilder.addFormDataPart("message[text]", messageText);
 
-            RequestBody  requestBody = mBuilder.build();
+            RequestBody requestBody = mBuilder.build();
             Request request1 = new Request.Builder()
                     .url("http://test.biyeta.com/api/v1/messages")
                     .post(requestBody)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
-
-
-
 
 
             try {
@@ -332,39 +325,66 @@ public class InboxSingleChat extends CustomActionBarActivity {
 
     class FetchMessage extends AsyncTask<String, String, String> {
 
-        ArrayList<Integer> newMessage=new ArrayList<>();
+        ArrayList<Integer> newMessage = new ArrayList<>();
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             mSwipeRefreshLayout.setRefreshing(false);
 
-            Log.e("fii",s+"sss");
+            Log.e("fii", s + "sss");
 
             Gson gson = new Gson();
             try {
+                JSONObject jsonObject = new JSONObject(s);
+                if ( jsonObject.has("no_results") )
+                {
+
+                }
+                else
+                {
+                    try {
 
 
-                InputStream is = new ByteArrayInputStream(s.getBytes());
-                InputStreamReader isr = new InputStreamReader(is);
-                response = gson.fromJson(isr, ChatHead.class);
-                for (int i = response.getMessages().size() - 1; i >= 0; i--) {
-                    if (!messageId.contains(response.getMessages().get(i).getId())) {
-                        messageId.add(response.getMessages().get(i).getId());
-                        Message message = response.getMessages().get(i);
-                        listMessage.add(message);
-                        inboxListAdapter.notifyDataSetChanged();
+                        InputStream is = new ByteArrayInputStream(s.getBytes());
+                        InputStreamReader isr = new InputStreamReader(is);
+                        response = gson.fromJson(isr, ChatHead.class);
+
+                        if (null == listMessage)
+                        {
+                            Log.e("here","null");
+                            listMessage = response.getMessages();
+                            inboxListAdapter = new ChatListAdapter(InboxSingleChat.this, listMessage) {
+                                @Override
+                                public void load() {
+                                    // Toast.makeText(InboxSingleChat.this,"load more data",Toast.LENGTH_SHORT).show();
+                                }
+                            };
+
+                            recyclerView.setAdapter(inboxListAdapter);
+
+                        }
+
+                        for (int i = response.getMessages().size() - 1; i >= 0; i--) {
+                            if (!messageId.contains(response.getMessages().get(i).getId())) {
+                                messageId.add(response.getMessages().get(i).getId());
+                                Message message = response.getMessages().get(i);
+                                listMessage.add(message);
+                                inboxListAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.e("fuck",e.toString());
+                     //   Toast.makeText(InboxSingleChat.this, "Server Disconnected", Toast.LENGTH_SHORT).show();
+                      //  countDownTimer.cancel();
                     }
                 }
-            }catch (Exception e)
-            {
-                Toast.makeText(InboxSingleChat.this,"Server Disconnected",Toast.LENGTH_SHORT).show();
-                countDownTimer.cancel();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
 
-//            recyclerView.setLayoutManager(new LinearLayoutManager(InboxSingleChat.this));
-//            recyclerView.setItemAnimator(new DefaultItemAnimator());new
+
 
 
         }
@@ -383,14 +403,10 @@ public class InboxSingleChat extends CustomActionBarActivity {
             Request request = null;
 
 
-
-
-                request = new Request.Builder()
-                        .url("http://test.biyeta.com/api/v1/messages/get_conversation?sender_id="+sender_id+"&receiver_id="+recevier_id)
-                        .addHeader("Authorization", "Token token=" + token)
-                        .build();
-
-
+            request = new Request.Builder()
+                    .url("http://test.biyeta.com/api/v1/messages/get_conversation?sender_id=" + sender_id + "&receiver_id=" + recevier_id)
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
 
 
             try {

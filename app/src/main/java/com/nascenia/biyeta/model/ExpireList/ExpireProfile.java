@@ -16,7 +16,7 @@ public class ExpireProfile {
     @SerializedName("current_user_signed_in")
     @Expose
     private Integer currentUserSignedIn;
-    @SerializedName("notification_count")
+    @SerializedName("notificat ion_count")
     @Expose
     private Object notificationCount;
 

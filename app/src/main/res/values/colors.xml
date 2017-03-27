@@ -96,6 +96,11 @@
      <color name="devider">#FFFFFF</color>
 
 
+    <color name="messagelayoutBacground">#FFFFFF</color>
+    <color name="message_text_color">#FFFFFF</color>
+
+
+
 
 
 </resources>
