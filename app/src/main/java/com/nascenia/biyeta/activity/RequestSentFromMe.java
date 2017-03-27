@@ -141,48 +141,59 @@ public class RequestSentFromMe extends CustomActionBarActivity {
         Gson gson = new Gson();
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Log.e("fuck", s + "fuck");
+            //Toast.makeText(RequestSentFromMe.this,s,Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
 
             if (position == 0) {
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    if (null == jsonObject.get("message")) {
 
-                    }
-                    else
+                    if(jsonObject.has("message"))
                     {
+                        Toast.makeText(RequestSentFromMe.this,"null",Toast.LENGTH_SHORT).show();
                         findViewById(R.id.no_message).setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     }
-                } catch (JSONException e) {
-                    Log.e("FUCK",e.toString());
+                    else
+                    {
+                        progressBar.setVisibility(View.GONE);
+                        Gson gson = new Gson();
+                        InputStream is = new ByteArrayInputStream(s.getBytes());
+                        InputStreamReader isr = new InputStreamReader(is);
+                        BiodataProfile response = gson.fromJson(isr, BiodataProfile.class);
 
-                    progressBar.setVisibility(View.GONE);
-                    Gson gson = new Gson();
-                    InputStream is = new ByteArrayInputStream(s.getBytes());
-                    InputStreamReader isr = new InputStreamReader(is);
-                    BiodataProfile response = gson.fromJson(isr, BiodataProfile.class);
+                        BiodatarequestFromMe inboxListAdapter = new BiodatarequestFromMe(response, R.layout.biodata_request_from_me) {
+                            @Override
+                            public void onClickSmile(int id) {
+                                Toast.makeText(RequestSentFromMe.this, id + " ", Toast.LENGTH_SHORT).show();
+                            }
+                        };
+                        recyclerView.setAdapter(inboxListAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-                    BiodatarequestFromMe inboxListAdapter = new BiodatarequestFromMe(response, R.layout.biodata_request_from_me) {
-                        @Override
-                        public void onClickSmile(int id) {
-                            Toast.makeText(RequestSentFromMe.this, id + " ", Toast.LENGTH_SHORT).show();
+                        for (int i = 0; i < response.getProfiles().size(); i++) {
+                            if (response.getProfiles().get(i).getRequestStatus().getAccepted() == false && response.getProfiles().get(i).getRequestStatus().getRejected() == false) {
+                            } else
+                                biodataNotificationCount++;
                         }
-                    };
-                    recyclerView.setAdapter(inboxListAdapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-                    for (int i = 0; i < response.getProfiles().size(); i++) {
-                        if (response.getProfiles().get(i).getRequestStatus().getAccepted() == false && response.getProfiles().get(i).getRequestStatus().getRejected() == false) {
-                        } else
-                            biodataNotificationCount++;
+                        notificationNumberLeft.setText(biodataNotificationCount + "");
+                        findViewById(R.id.no_message).setVisibility(View.GONE);
                     }
 
-                    notificationNumberLeft.setText(biodataNotificationCount + "");
-                    findViewById(R.id.no_message).setVisibility(View.GONE);
+                } catch (JSONException e) {
+
 
                 }
 
@@ -191,7 +202,18 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    if (null == jsonObject.getJSONArray("message")) {
+
+
+                    if (jsonObject.has("message"))
+                    {
+                        Toast.makeText(RequestSentFromMe.this,"null",Toast.LENGTH_SHORT).show();
+                        findViewById(R.id.no_message).setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        Toast.makeText(RequestSentFromMe.this,"Not null",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RequestSentFromMe.this, s, Toast.LENGTH_SHORT).show();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
                         CommuncationRequestFromMeModel response = gson.fromJson(isr, CommuncationRequestFromMeModel.class);
@@ -201,13 +223,11 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                         recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         findViewById(R.id.no_message).setVisibility(View.GONE);
-                    } else {
-
-                        findViewById(R.id.no_message).setVisibility(View.VISIBLE);
-                        recyclerView.setVisibility(View.GONE);
                     }
+
+
                 } catch (JSONException e) {
-                    e.printStackTrace();
+
                 }
 
 

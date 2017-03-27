@@ -132,6 +132,7 @@ public class Match extends Fragment implements View.OnClickListener{
             super.onPostExecute(s);
             progressBar.setVisibility(View.GONE);
 
+
             Gson gson = new Gson();
             InputStream is = new ByteArrayInputStream(s.getBytes());
             InputStreamReader isr = new InputStreamReader(is);

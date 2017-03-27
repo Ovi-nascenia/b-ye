@@ -93,5 +93,9 @@
     <color name="button_back">#AD0202</color>
 
     <color name="text3_font">#AD0202</color>
+     <color name="devider">#FFFFFF</color>
+
+
+
 
 </resources>

@@ -264,6 +264,14 @@
     <string name="again_verification">পুনরায় ভ্যারিফিকেশন কোড পাঠান</string>
     <string name="code_sent_button">ভ্যারিফিকেশন কোড পাঠান</string>
     <string name="verify_mobile">আপনার মোবাইলে নাম্বার ভেরিফাই করুন </string>
+    <string name="expire_message">এরা আপনাকে যোগাযোগের অনুরোধ করেছিলেন। কিন্তু আপনি তাতে সাত দিনের মধ্যে সাড়া দেননি। এদেরকে আপনি যোগাযোগের অনুরোধ করতে পারেন।</string>
+    <string name="bullet_point">●</string>
+
+    <!--FAQ page-->
+
+
+
+
 
 
 </resources>

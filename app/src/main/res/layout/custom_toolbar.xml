@@ -20,7 +20,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="?android:attr/actionModeCloseDrawable"
+        android:src="?android:attr/actionModeCloseDrawable"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:id="@+id/back"

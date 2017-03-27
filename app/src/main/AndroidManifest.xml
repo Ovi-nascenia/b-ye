@@ -74,8 +74,12 @@
 
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.MobileVerification"
-            android:label="@string/title_activity_login" />
+            android:name=".activity.ExpiredConnection"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.FAQActivity"
+            android:theme="@style/AppTheme" />
+
 
     </application>
 

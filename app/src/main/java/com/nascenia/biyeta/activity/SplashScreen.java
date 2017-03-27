@@ -4,13 +4,21 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import com.nascenia.biyeta.appdata.FAQData;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class SplashScreen extends AppCompatActivity {
@@ -51,4 +59,8 @@ public class SplashScreen extends AppCompatActivity {
             }
         }, Constant.SPLASH_TIMEOUT);
     }
+
+
+
+
 }

@@ -146,11 +146,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         startActivity(new Intent(HomeScreen.this, NewUserProfileActivity.class));
                         break;
 
-                    case R.id.nav_inbox:
-                        break;
-
-                    case R.id.nav_fav:
-                        break;
                     case R.id.nav_setting:
                         break;
 
@@ -171,6 +166,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         break;
 
                     case R.id.nav_faq:
+                        startActivity(new Intent(HomeScreen.this,FAQActivity.class));
                         break;
                     case R.id.nav_termsofuse:
 
@@ -196,6 +192,18 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         });
 
 
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if(drawerLayout.isDrawerOpen(Gravity.RIGHT))
+            drawerLayout.closeDrawer(Gravity.RIGHT);
+
+        else
+            finish();
     }
 
     @Override
@@ -267,6 +275,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     @Override
                     public void onClick(View view) {
                         startActivity(new Intent(HomeScreen.this, InboxListView.class));
+                    }
+                });
+                dialog.findViewById(R.id.tv_expire).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(HomeScreen.this, ExpiredConnection.class));
                     }
                 });
                 DisplayMetrics displaymetrics = new DisplayMetrics();

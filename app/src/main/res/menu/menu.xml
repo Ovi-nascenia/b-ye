@@ -8,12 +8,6 @@
             android:title="@string/nav_profile" />
 
         <item
-            android:id="@+id/nav_inbox"
-            android:title="@string/nav_inbox" />
-        <item
-            android:id="@+id/nav_fav"
-            android:title="@string/nav_fav" />
-        <item
             android:id="@+id/nav_setting"
 
             android:title="@string/accunt_setting" />
