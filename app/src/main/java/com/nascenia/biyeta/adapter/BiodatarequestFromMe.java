@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.R;
@@ -61,6 +62,14 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
 
 
 
+        holder.status.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(holder.image.getContext(),"hello",Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
 
         if (profile.isSmileSent()==false)
         {
@@ -79,6 +88,8 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
                 onClickSmile(profile.getId());
             }
         });
+
+
 
 
 

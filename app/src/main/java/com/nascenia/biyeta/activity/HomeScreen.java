@@ -32,7 +32,6 @@ import android.widget.Toast;
 import com.nascenia.biyeta.R;
 
 import com.nascenia.biyeta.appdata.SharePref;
-import com.nascenia.biyeta.fragment.AboutBiyeta;
 import com.nascenia.biyeta.fragment.Blog;
 import com.nascenia.biyeta.fragment.Favourite;
 import com.nascenia.biyeta.fragment.Inbox;
@@ -155,9 +154,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         break;
 
                     case R.id.nav_about_us:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentParentViewGroup, new AboutBiyeta())
-                                .commit();
+//                        getSupportFragmentManager().beginTransaction()
+//                                .replace(R.id.fragmentParentViewGroup, new AboutBiyeta())
+//                                .commit();
+                        startActivity(new Intent(HomeScreen.this,AboutBiyeta.class));
                         break;
                     case R.id.nav_connection:
                         startActivity(new Intent(HomeScreen.this,ContactUs.class));
@@ -316,49 +316,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    class LoadReqeustSenderIdsTask extends AsyncTask<String, String, String> {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-
-            try {
-
-                Response response = new ResourceProvider(HomeScreen.this).fetchGetResponse(
-                        "http://test.biyeta.com/api/v1/requests/request_sender_ids");
-                ResponseBody responseBody = response.body();
-                responseValue = responseBody.string();
-                responseBody.close();
-
-            } catch (Exception e) {
-
-            }
-
-
-            return responseValue;
-        }
-
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            if (responseValue != null) {
-                //Toast.makeText(getBaseContext(), responseValue, Toast.LENGTH_LONG).show();
-                startActivity(new Intent(HomeScreen.this, SendRequestActivity.class).
-                        putExtra("REQUEST_RESPONSE_DATA",
-                                responseValue));
-            } else {
-                Toast.makeText(getBaseContext(), "Can't load data", Toast.LENGTH_LONG).show();
-            }
-
-        }
-    }
 
 
 }

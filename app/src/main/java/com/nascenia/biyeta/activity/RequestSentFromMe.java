@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.gson.Gson;
@@ -26,8 +27,10 @@ import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.fragment.CommunicationRequestFragment;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
 import com.nascenia.biyeta.model.communication_request_from_me.CommuncationRequestFromMeModel;
+import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
@@ -136,6 +139,8 @@ public class RequestSentFromMe extends CustomActionBarActivity {
     }
 
 
+    BiodatarequestFromMe inboxListAdapter;
+    BiodataProfile biodataResponse;
     class LoadBioDataConnection extends AsyncTask<String, String, String> {
 
         Gson gson = new Gson();
@@ -171,20 +176,22 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
-                        BiodataProfile response = gson.fromJson(isr, BiodataProfile.class);
+                         biodataResponse  = gson.fromJson(isr, BiodataProfile.class);
 
-                        BiodatarequestFromMe inboxListAdapter = new BiodatarequestFromMe(response, R.layout.biodata_request_from_me) {
+                        inboxListAdapter = new BiodatarequestFromMe(biodataResponse, R.layout.biodata_request_from_me) {
                             @Override
                             public void onClickSmile(int id) {
                                 //Toast.makeText(RequestSentFromMe.this, id + " ", //Toast.LENGTH_SHORT).show();
                             }
+
+
                         };
                         recyclerView.setAdapter(inboxListAdapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-                        for (int i = 0; i < response.getProfiles().size(); i++) {
-                            if (response.getProfiles().get(i).getRequestStatus().getAccepted() == false && response.getProfiles().get(i).getRequestStatus().getRejected() == false) {
+                        for (int i = 0; i < biodataResponse.getProfiles().size(); i++) {
+                            if (biodataResponse.getProfiles().get(i).getRequestStatus().getAccepted() == false && biodataResponse.getProfiles().get(i).getRequestStatus().getRejected() == false) {
                             } else
                                 biodataNotificationCount++;
                         }
@@ -271,4 +278,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
             return null;
         }
     }
+
+
+
 }

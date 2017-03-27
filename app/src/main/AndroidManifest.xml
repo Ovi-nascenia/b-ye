@@ -82,6 +82,9 @@
         <activity
             android:name=".activity.MobileVerification"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.AboutBiyeta"
+            android:theme="@style/AppTheme" />
 
 
     </application>

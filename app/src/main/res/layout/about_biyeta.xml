@@ -10,18 +10,8 @@
         android:padding="20dp">
 
 
-        <TextView
-            android:id="@+id/about_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_title"
-            android:textSize="25sp"
-            android:padding="15dp"
-            android:gravity="center"
-            android:textColor="@color/about_title"/>
-        <TextView
+         <TextView
             android:id="@+id/about_parag1"
-            android:layout_below="@id/about_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_parag1"

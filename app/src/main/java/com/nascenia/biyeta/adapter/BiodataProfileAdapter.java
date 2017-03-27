@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.R;
@@ -25,10 +26,12 @@ import com.nascenia.biyeta.model.communication.profile.Profile;
  * Created by god father on 3/16/2017.
  */
 
-public class BiodataProfileAdapter extends RecyclerView.Adapter<BiodataProfileAdapter.ViewHolder> {
+public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<BiodataProfileAdapter.ViewHolder> {
 
     private BiodataProfile biodataProfile;
     private int itemLayout;
+
+    public abstract void setConnectionRequest(int id,int position);
 
 
     public BiodataProfileAdapter(BiodataProfile biodataProfile, int itemLayout) {
@@ -60,6 +63,14 @@ public class BiodataProfileAdapter extends RecyclerView.Adapter<BiodataProfileAd
 
 
         holder.call.setText(profile.getRequestStatus().getMessage());
+        holder.call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(holder.image.getContext(),"hello",Toast.LENGTH_SHORT).show();
+                setConnectionRequest(profile.getId(),position);
+
+            }
+        });
 
 
 

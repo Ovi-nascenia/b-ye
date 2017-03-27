@@ -1,6 +1,8 @@
 package com.nascenia.biyeta.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,8 +13,13 @@ import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.ExpiredConnection;
+import com.nascenia.biyeta.activity.HomeScreen;
 import com.nascenia.biyeta.activity.InboxListView;
 import com.nascenia.biyeta.activity.RequestSentFromMe;
+import com.nascenia.biyeta.activity.SendRequestActivity;
+import com.nascenia.biyeta.service.ResourceProvider;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
 
 /**
  * Created by user on 1/5/2017.
@@ -55,6 +62,7 @@ public class Inbox extends Fragment implements View.OnClickListener{
         switch (id)
         {
             case R.id.tv_sent_request:
+                new LoadReqeustSenderIdsTask().execute();
                 break;
 
             case R.id.tv_inbox:
@@ -69,6 +77,51 @@ public class Inbox extends Fragment implements View.OnClickListener{
                 startActivity(new Intent(getContext(), RequestSentFromMe.class));
                 break;
 
+
+        }
+    }
+    private String responseValue = null;
+
+    class LoadReqeustSenderIdsTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            try {
+
+                Response response = new ResourceProvider((Activity) getContext()).fetchGetResponse(
+                        "http://test.biyeta.com/api/v1/requests/request_sender_ids");
+                ResponseBody responseBody = response.body();
+                responseValue = responseBody.string();
+                responseBody.close();
+
+            } catch (Exception e) {
+
+            }
+
+
+            return responseValue;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (responseValue != null) {
+                //Toast.makeText(getBaseContext(), responseValue, Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getContext(), SendRequestActivity.class).
+                        putExtra("REQUEST_RESPONSE_DATA",
+                                responseValue));
+            } else {
+                Toast.makeText(getContext(), "Can't load data", Toast.LENGTH_LONG).show();
+            }
 
         }
     }

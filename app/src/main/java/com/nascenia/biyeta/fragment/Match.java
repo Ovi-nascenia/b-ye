@@ -24,6 +24,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.nascenia.biyeta.activity.InboxListView;
+import com.nascenia.biyeta.activity.RequestSentFromMe;
 import com.nascenia.biyeta.activity.Search_Filter;
 import com.nascenia.biyeta.activity.UserProfileActivity;
 import com.nascenia.biyeta.adapter.BiodataProfileAdapter;
@@ -37,9 +38,14 @@ import com.nascenia.biyeta.model.InboxAllThreads.Example;
 import com.nascenia.biyeta.model.SearchProfileModel;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
 import com.nascenia.biyeta.model.communication.profile.CommunicationProfile;
+import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by user on 1/5/2017.
@@ -168,6 +174,8 @@ public class Match extends Fragment implements View.OnClickListener{
     }
 
 
+    BiodataProfileAdapter inboxListAdapter;
+    BiodataProfile biodataResponse;
     class LoadBiodataConnection extends AsyncTask<String,String,String>
     {
 
@@ -178,9 +186,16 @@ public class Match extends Fragment implements View.OnClickListener{
             Gson gson = new Gson();
             InputStream is = new ByteArrayInputStream(s.getBytes());
             InputStreamReader isr = new InputStreamReader(is);
-            BiodataProfile response = gson.fromJson(isr, BiodataProfile.class);
+            biodataResponse = gson.fromJson(isr, BiodataProfile.class);
 
-            BiodataProfileAdapter inboxListAdapter=new BiodataProfileAdapter(response,R.layout.biodata_layout_item);
+            inboxListAdapter= new BiodataProfileAdapter(biodataResponse, R.layout.biodata_layout_item) {
+                @Override
+                public void setConnectionRequest(int id, int position) {
+
+                    new SendConnectionRequest().execute("http://test.biyeta.com/api/v1/communication_requests",id+"",position+"");
+
+                }
+            };
             recyclerView.setAdapter(inboxListAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -208,4 +223,70 @@ public class Match extends Fragment implements View.OnClickListener{
             return null;
         }
     }
+
+    Response response;
+    int position;
+
+    class SendConnectionRequest extends AsyncTask<String,String ,String >
+    {
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                JSONObject jsonObject=new JSONObject(s);
+                if (jsonObject.has("message"))
+                {
+                    String mes=jsonObject.getJSONArray("message").getJSONObject(0).getString("detail");
+                    Toast.makeText(getContext(),"already sent",Toast.LENGTH_SHORT).show();
+                    biodataResponse.getProfiles().get(position).getRequestStatus().setMessage(mes);
+                    inboxListAdapter.notifyDataSetChanged();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            Log.e("Fuck id",strings[1]);
+
+            Integer id=Integer.parseInt(strings[1]);
+            Integer position=Integer.parseInt(strings[2]);
+            RequestBody requestBody=new FormEncodingBuilder()
+                    .add("profile_id",id+"")
+                    .build();
+
+
+
+
+            Response response;
+            SharePref sharePref = new SharePref(getContext());
+            String token = sharePref.get_data("token");
+
+            Request request = new Request.Builder()
+                    .url(strings[0])
+                    .addHeader("Authorization", "Token token=" + token)
+                    .post(requestBody)
+                    .build();
+            try {
+                response = client.newCall(request).execute();
+                String jsonData = response.body().string();
+                Log.e("fuck",jsonData);
+                return jsonData;
+
+            } catch (Exception e) {
+                Log.e("Fuck",e.toString());
+                return  null;
+
+            }
+
+
+
+        }
+    }
+
 }
