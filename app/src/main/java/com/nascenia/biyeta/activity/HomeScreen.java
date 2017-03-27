@@ -197,13 +197,15 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
 
-        if(drawerLayout.isDrawerOpen(Gravity.RIGHT))
+
+        if(drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
             drawerLayout.closeDrawer(Gravity.RIGHT);
-
-        else
+        }
+        else {
+            super.onBackPressed();
             finish();
+        }
     }
 
     @Override
