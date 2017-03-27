@@ -53,6 +53,7 @@ public class MobileVerification extends CustomActionBarActivity {
         setContentView(R.layout.mobile_verification);
         submitButton = (Button) findViewById(R.id.code_submit_button1);
         phoneNumber = (IntlPhoneInput) findViewById(R.id.my_phone_input);
+        phoneNumber.setEmptyDefault("BD");
         code_textView = (TextView) findViewById(R.id.message_code_textView2);
         resend_textView = (TextView) findViewById(R.id.again_varifycode_textView3);
         verification_code_editText = (EditText) findViewById(R.id.verifycode_editText);
