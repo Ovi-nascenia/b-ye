@@ -251,6 +251,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                             }
 
 
+
                             if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
 
                                 //Loading image from below url into imageView
