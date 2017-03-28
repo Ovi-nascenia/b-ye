@@ -51,4 +51,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'net.rimoto:intlphoneinput:1.0.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 }

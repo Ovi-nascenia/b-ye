@@ -653,7 +653,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
 
         @Override

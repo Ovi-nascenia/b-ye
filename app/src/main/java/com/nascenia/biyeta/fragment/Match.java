@@ -1,8 +1,10 @@
 package com.nascenia.biyeta.fragment;
 
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -75,6 +77,8 @@ public class Match extends Fragment implements View.OnClickListener{
         Log.e("come", "Match");
         View v = inflater.inflate(R.layout.match, null);
 
+
+
         biodata=(TextView)v.findViewById(R.id.biodata);
         biodata.setOnClickListener(this);
         biodata.setBackgroundResource(R.color.colorAccent);
@@ -91,6 +95,7 @@ public class Match extends Fragment implements View.OnClickListener{
         return v;
 
     }
+
 
 
     @Override
