@@ -150,11 +150,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                                 .putExtra("PROFILE_EDIT_OPTION", true));
                         break;
 
-                    case R.id.nav_inbox:
-                        break;
-
-                    case R.id.nav_fav:
-                        break;
+//                    case R.id.nav_inbox:
+//                        break;
+//
+//                    case R.id.nav_fav:
+//                        break;
                     case R.id.nav_setting:
                         break;
 
@@ -246,42 +246,46 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         .commit();
                 break;
             case R.id.inbox:
-
-                inboxImageView.setColorFilter(Color.WHITE);
-
-                Dialog dialog = new Dialog(HomeScreen.this);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setCancelable(true);
-                dialog.setContentView(R.layout.inbox);
-                dialog.findViewById(R.id.tv_sent_request).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        new LoadReqeustSenderIdsTask().execute();
-                    }
-                });
-
-
-                dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(HomeScreen.this, RequestSentFromMe.class));
-                    }
-                });
-
-                dialog.findViewById(R.id.tv_inbox).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(HomeScreen.this, InboxListView.class));
-                    }
-                });
-                DisplayMetrics displaymetrics = new DisplayMetrics();
-                this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                int width = (int) ((int) displaymetrics.widthPixels * 0.8);
-               // int height = (int) ((int) displaymetrics.heightPixels * 0.4);
-                dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-
-                dialog.show();
+                fevImageView.setColorFilter(Color.WHITE);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentParentViewGroup, new Inbox())
+                        .commit();
+//
+//                inboxImageView.setColorFilter(Color.WHITE);
+//
+//                Dialog dialog = new Dialog(HomeScreen.this);
+//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                dialog.setCancelable(true);
+//                dialog.setContentView(R.layout.inbox);
+//                dialog.findViewById(R.id.tv_sent_request).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        new LoadReqeustSenderIdsTask().execute();
+//                    }
+//                });
+//
+//
+//                dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        startActivity(new Intent(HomeScreen.this, RequestSentFromMe.class));
+//                    }
+//                });
+//
+//                dialog.findViewById(R.id.tv_inbox).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        startActivity(new Intent(HomeScreen.this, InboxListView.class));
+//                    }
+//                });
+//                DisplayMetrics displaymetrics = new DisplayMetrics();
+//                this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//                int width = (int) ((int) displaymetrics.widthPixels * 0.8);
+//               // int height = (int) ((int) displaymetrics.heightPixels * 0.4);
+//                dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//
+//
+//                dialog.show();
                 break;
             case R.id.profile:
                 profileImageView.setColorFilter(Color.WHITE);

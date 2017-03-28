@@ -109,7 +109,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         buttonSubmit=(Button)findViewById(R.id.login_submit);
         buttonSubmit.setOnClickListener(this);
 
-        buttonFacebookLogin=(Button)findViewById(R.id.fb_button);
+        buttonFacebookLogin=(Button)findViewById(R.id.login_button);
         buttonFacebookLogin.setOnClickListener(this);
 
         progressBar=(ProgressBar)findViewById(R.id.progressbar);
@@ -137,7 +137,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         int id=view.getId();
         switch (id)
         {
-            case R.id.fb_button:
+            case R.id.login_button:
 
 
 

@@ -517,7 +517,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             finalResultButton.setVisibility(View.VISIBLE);
             finalResultButton.setEnabled(true);
             finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
-            finalResultButton.setTag(00);
+            finalResultButton.setTag("00");
             requestSendButtonsLayout.setVisibility(View.GONE);
 
             new SendRequestTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
@@ -528,18 +528,18 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             finalResultButton.setVisibility(View.VISIBLE);
             finalResultButton.setEnabled(true);
             finalResultButton.setText("পুরো বায়োডাটা দেখার অনুরোধ করুন");
-            finalResultButton.setTag(01);
+            finalResultButton.setTag("01");
             requestSendButtonsLayout.setVisibility(View.GONE);
 
             new SendRequestTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
                     userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/reject");
-        } else if (v.getTag() == 00) {
+        } else if (v.getTag() == "00") {
 
             NetWorkOperation.postData(getBaseContext(),
                     "http://test.biyeta.com/api/v1/communication_requests",
                     userProfile.getProfile().getPersonalInformation().getId() + "");
 
-        } else if (v.getTag() == 01) {
+        } else if (v.getTag() == "01") {
 
             NetWorkOperation.CreateProfileReqeust(getBaseContext(),
                     "http://test.biyeta.com/api/v1/profiles/" +
