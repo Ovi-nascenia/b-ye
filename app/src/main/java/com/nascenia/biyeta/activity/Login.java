@@ -66,16 +66,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     LinearLayout new_account;
     CallbackManager callbackManager;
 
-    EditText etPassword,etUserName;
+    EditText etPassword, etUserName;
     Button buttonSubmit;
     ProgressBar progressBar;
 
     ///sub url
-    String sub_url="sign-in";
+    String sub_url = "sign-in";
 
 
     OkHttpClient client;
-
 
 
     @Override
@@ -83,13 +82,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         //initialize the Okhttp
-        client=new OkHttpClient();
+        client = new OkHttpClient();
         setContentView(R.layout.login);
-
-        if (!Utils.isOnline(Login.this))
-        {
-            Utils.ShowAlert(Login.this,"No Internet");
-        }
 
 
         //hide action bar
@@ -106,20 +100,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    void set_id()
-    {
+    void set_id() {
 
 
-        new_account=(LinearLayout)findViewById(R.id.new_accunt_test);
+        new_account = (LinearLayout) findViewById(R.id.new_accunt_test);
         new_account.setOnClickListener(this);
 
-        etUserName=(EditText)findViewById(R.id.login_email);
-        etPassword=(EditText)findViewById(R.id.login_password);
+        etUserName = (EditText) findViewById(R.id.login_email);
+        etPassword = (EditText) findViewById(R.id.login_password);
 
-        buttonSubmit=(Button)findViewById(R.id.login_submit);
+        buttonSubmit = (Button) findViewById(R.id.login_submit);
         buttonSubmit.setOnClickListener(this);
 
-        buttonFacebookLogin=(LoginButton) findViewById(R.id.login_button);
+        buttonFacebookLogin = (LoginButton) findViewById(R.id.login_button);
         //buttonFacebookLogin.setOnClickListener(this);
         buttonFacebookLogin.setReadPermissions(Arrays.asList(
                 "public_profile", "email", "user_birthday"));
@@ -140,11 +133,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 try {
                                     String email = object.getString("email");
                                     String birthday = object.getString("birthday");
-                                    Log.e("FacebookData",email+" "+birthday+" "+loginResult.getAccessToken());
+                                    Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                               // 01/31/1980 format
+                                // 01/31/1980 format
                             }
                         });
                 Bundle parameters = new Bundle();
@@ -169,18 +162,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         });
 
 
-
-
-
-        progressBar=(ProgressBar)findViewById(R.id.progressbar);
-        icon=(ImageView)findViewById(R.id.icon_view) ;
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        icon = (ImageView) findViewById(R.id.icon_view);
 
         etPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId != 0 || event.getAction() == KeyEvent.ACTION_DOWN) {
 
-                    Toast.makeText(Login.this,"handle now",Toast.LENGTH_SHORT).show();
+                    if (!etPassword.getText().toString().trim().equals(""))
+                        checkValidation();
+                    //Toast.makeText(Login.this,"handle now",Toast.LENGTH_SHORT).show();
                     InputMethodManager imm = (InputMethodManager) Login.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(Login.this.getCurrentFocus().getWindowToken(), 0);
                     return true;
@@ -194,11 +186,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        int id=view.getId();
-        switch (id)
-        {
+        int id = view.getId();
+        switch (id) {
             case R.id.login_button:
-
 
 
                 loginWithFacebook();
@@ -208,39 +198,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.login_submit:
 
-                //get the user name from Edit text
-                String user_name=etUserName.getText().toString();
-                //get the password from Edit Text
-                String password=etPassword.getText().toString();
-
-                ///check the user_name and password is empty
-                if(user_name.trim().equals("")||password.trim().equals(""))
-                {
-                  //  Toast.makeText(Login.this,"Fill the both field",Toast.LENGTH_SHORT).show();
-                    Utils.ShowAlert(Login.this,"Fill the both field");
-
-
-                }
-                //excute  the network operation
-                //
-                else
-                {
-
-                    new LoginRequest().execute(user_name, password);
-                }
-                ///connect the server for chffecking username and password
-                //call a asytask for network operation
-
-
-
-               // Toast.makeText(Login.this,"Cool",Toast.LENGTH_SHORT).show();
-               // startActivity(new Intent(Login.this,HomeScreen.class));
+                checkValidation();
 
                 break;
             case R.id.new_accunt_test:
                 //open a link in a brawer
 
-                String url ="http://www.biyeta.com/";
+                String url = "http://www.biyeta.com/";
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                 CustomTabsIntent customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(this, Uri.parse(url));
@@ -249,27 +213,48 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
 
+    }
+
+    void checkValidation() {
+
+        //get the user name from Edit text
+        String user_name = etUserName.getText().toString();
+        //get the password from Edit Text
+        String password = etPassword.getText().toString();
+
+        ///check the user_name and password is empty
+        if (user_name.trim().equals("") || password.trim().equals("")) {
+            //  Toast.makeText(Login.this,"Fill the both field",Toast.LENGTH_SHORT).show();
+            Utils.ShowAlert(Login.this, "Fill the both field");
+
+
+        }
+        //excute  the network operation
+        //
+        else {
+            if (!Utils.isOnline(Login.this)) {
+                Utils.ShowAlert(Login.this, "No Internet");
+            } else
+
+                new LoginRequest().execute(user_name, password);
+        }
+    }
+
+
+    public void loginWithFacebook() {
+
 
     }
 
 
-   public void loginWithFacebook()
-   {
-
-
-   }
-
-
-
     //
-    private class LoginRequest extends AsyncTask<String,String,String>
-    {
+    private class LoginRequest extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... params) {
             String id = params[0];
-            String password=params[1];
-            Log.e("back",id+"---"+password);
+            String password = params[1];
+            Log.e("back", id + "---" + password);
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("user_login[email]", id)///sent the team passcode
                     .add("user_login[password]", password)
@@ -277,7 +262,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
             Request request = new Request.Builder()
-                    .url(Constant.BASE_URL+sub_url)
+                    .url(Constant.BASE_URL + sub_url)
                     .post(requestBody)
                     .build();
 
@@ -290,13 +275,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             try {
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();
-                Log.e("back",responseString);
+                Log.e("back", responseString);
                 response.body().close();
 
                 return responseString;
                 // do whatever you need to do with responseString
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -310,14 +294,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
             try {
                 //convert string to json object
-                JSONObject jsonObject=new JSONObject(s);
-
-
+                JSONObject jsonObject = new JSONObject(s);
                 Gson gson = new Gson();
                 InputStream is = new ByteArrayInputStream(s.getBytes());
                 InputStreamReader isr = new InputStreamReader(is);
                 LoginInformation response = gson.fromJson(isr, LoginInformation.class);
-
 
 
                 //insert the token in Sharepreference
@@ -336,28 +317,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     if (response.getLoginInformation().getMobileVerified()) {
                         startActivity(new Intent(Login.this, HomeScreen.class));
                         finish();
-                    }
-                    else
-                    {
+                    } else {
                         // check the mobile verify screen
                         startActivity(new Intent(Login.this, MobileVerification.class));
-                        finish();
+                        // finish();
                     }
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
-                    Utils.ShowAlert(Login.this,"Wrong email/password");
+                    Utils.ShowAlert(Login.this, "Wrong email/password");
                 }
 
 
-
-
-
-
             } catch (JSONException e) {
-                Log.e("error","JSON error");
+                Log.e("error", "JSON error");
                 e.printStackTrace();
-                Utils.ShowAlert(Login.this,"Wrong Input");
+                Utils.ShowAlert(Login.this, "Wrong Input");
                 buttonSubmit.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
 
@@ -371,9 +345,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         }
     }
-
-
-
 
 
 }

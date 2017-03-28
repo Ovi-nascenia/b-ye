@@ -1,8 +1,10 @@
 package com.nascenia.biyeta.activity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -11,7 +13,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -52,6 +56,7 @@ import java.util.ArrayList;
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
 
 
+    private static final int REQUEST_PHONE_CALL = 100 ;
     static Context context;
     DrawerLayout drawerLayout;
 
@@ -80,6 +85,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         inboxImageView.setColorFilter(Color.GRAY);
         fevImageView.setColorFilter(Color.GRAY);
         profileImageView.setColorFilter(Color.GRAY);
+
+        if (ContextCompat.checkSelfPermission(HomeScreen.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(HomeScreen.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+        }
+
 
 
     }
