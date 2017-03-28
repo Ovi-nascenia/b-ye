@@ -21,10 +21,10 @@ public class RequestStatus implements Serializable {
     private Integer communicationRequestId;
     @SerializedName("sender")
     @Expose
-    private int sender;
+    private Integer sender;
     @SerializedName("receiver")
     @Expose
-    private int receiver;
+    private Integer receiver;
     @SerializedName("accepted")
     @Expose
     private boolean accepted;
@@ -90,28 +90,28 @@ public class RequestStatus implements Serializable {
         return this;
     }
 
-    public int getSender() {
+    public Integer getSender() {
         return sender;
     }
 
-    public void setSender(int sender) {
+    public void setSender(Integer sender) {
         this.sender = sender;
     }
 
-    public RequestStatus withSender(int sender) {
+    public RequestStatus withSender(Integer sender) {
         this.sender = sender;
         return this;
     }
 
-    public int getReceiver() {
+    public Integer getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(int receiver) {
+    public void setReceiver(Integer receiver) {
         this.receiver = receiver;
     }
 
-    public RequestStatus withReceiver(int receiver) {
+    public RequestStatus withReceiver(Integer receiver) {
         this.receiver = receiver;
         return this;
     }

@@ -163,13 +163,13 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         if (result && clickableButtonIdentifier == 1 && id != null) {
 
             new CommunicationRequestFragment.SendResponseTask().execute(
-                    " http://test.biyeta.com/api/v1/profile_requests/" +
+                    " http://test.biyeta.com/api/v1/communication_requests/" +
                             id + "/accept");
 
         } else if (result && clickableButtonIdentifier == 0 && id != null) {
 
             new CommunicationRequestFragment.SendResponseTask().execute(
-                    " http://test.biyeta.com/api/v1/profile_requests/" +
+                    " http://test.biyeta.com/api/v1/communication_requests/" +
                             id + "/reject");
 
 

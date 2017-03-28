@@ -141,7 +141,6 @@ public class Search extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(getContext(), "Distroy", Toast.LENGTH_SHORT).show();
         Search_Filter.reponse = "";
         profileList.clear();
         mProfile_adapter.notifyDataSetChanged();

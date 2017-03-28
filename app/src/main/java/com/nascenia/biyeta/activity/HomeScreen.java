@@ -150,11 +150,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                                 .putExtra("PROFILE_EDIT_OPTION", true));
                         break;
 
-                    case R.id.nav_inbox:
+                   /* case R.id.nav_inbox:
                         break;
 
                     case R.id.nav_fav:
-                        break;
+                        break;*/
                     case R.id.nav_setting:
                         break;
 
@@ -256,7 +256,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 dialog.findViewById(R.id.tv_sent_request).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        new LoadReqeustSenderIdsTask().execute();
+                       // new LoadReqeustSenderIdsTask().execute();
                     }
                 });
 

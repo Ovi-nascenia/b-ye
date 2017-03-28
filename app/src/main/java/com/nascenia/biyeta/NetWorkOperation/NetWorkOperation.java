@@ -37,7 +37,7 @@ public class NetWorkOperation {
     public static void CreateProfileReqeust(Context context, String url) {
 
         NetWorkOperation.context = context;
-        new CreateProfileRequestTask().equals(url);
+        new CreateProfileRequestTask().execute(url);
     }
 
     static class SendConnectionRequest extends AsyncTask<String, String, String> {
@@ -46,6 +46,7 @@ public class NetWorkOperation {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Log.i("response", s);
 
         }
 
@@ -89,14 +90,38 @@ public class NetWorkOperation {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            try {
+                String s1 = new JSONObject(s).getJSONArray("message").getJSONObject(0).getString("detail");
+                Log.i("responseresult: ", s1);
+                Toast.makeText(NetWorkOperation.context, s1, Toast.LENGTH_LONG).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
 
         }
 
         @Override
         protected String doInBackground(String... strings) {
+            Log.i("profileresponse", strings[0]);
 
+            Response response;
+            SharePref sharePref = new SharePref(NetWorkOperation.context);
+            String token = sharePref.get_data("token");
 
-            return "";
+            Request request = new Request.Builder()
+                    .url(strings[0])
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
+            try {
+                response = client.newCall(request).execute();
+                String jsonData = response.body().string();
+                return jsonData;
+
+            } catch (Exception e) {
+                return null;
+
+            }
 
 
         }
