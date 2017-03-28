@@ -326,6 +326,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
                     SharePref sharePref = new SharePref(Login.this);
+
                     sharePref.set_data("token", response.getLoginInformation().getAuthToken());
                     sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
                     sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
