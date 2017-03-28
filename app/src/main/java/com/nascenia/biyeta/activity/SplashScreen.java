@@ -59,8 +59,4 @@ public class SplashScreen extends AppCompatActivity {
             }
         }, Constant.SPLASH_TIMEOUT);
     }
-
-
-
-
 }

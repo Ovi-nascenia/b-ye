@@ -20,6 +20,7 @@ import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.InboxSingleChat;
 import com.nascenia.biyeta.model.conversation.ChatHead;
 import com.nascenia.biyeta.model.conversation.Message;
+import com.nascenia.biyeta.utils.Utils;
 
 public abstract class ChatListAdapter extends BaseAdapter {
 
@@ -85,7 +86,7 @@ public abstract class ChatListAdapter extends BaseAdapter {
         TextView txtTime= (TextView) convertView.findViewById(R.id.time) ;
 
         txtMsg.setText(m.getText().trim());
-        txtTime.setText(m.getCreatedAt().split("T")[0]);
+        txtTime.setText(Utils.getTime(m.getCreatedAt()));
        // lblFrom.setText(m.getText());
 
         return convertView;
