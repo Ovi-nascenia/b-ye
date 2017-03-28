@@ -23,6 +23,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.model.InboxAllThreads.Example;
 import com.nascenia.biyeta.model.loginInfromation.LoginInformation;
@@ -43,6 +50,7 @@ import com.nascenia.biyeta.utils.Utils;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 /**
  * Created by user on 1/5/2017.
@@ -54,10 +62,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     ImageView icon;
 
     LinearLayout linearLayout;
+    LoginButton buttonFacebookLogin;
     LinearLayout new_account;
+    CallbackManager callbackManager;
 
     EditText etPassword,etUserName;
-    Button buttonSubmit,buttonFacebookLogin;
+    Button buttonSubmit;
     ProgressBar progressBar;
 
     ///sub url
@@ -109,8 +119,58 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         buttonSubmit=(Button)findViewById(R.id.login_submit);
         buttonSubmit.setOnClickListener(this);
 
-        buttonFacebookLogin=(Button)findViewById(R.id.login_button);
-        buttonFacebookLogin.setOnClickListener(this);
+        buttonFacebookLogin=(LoginButton) findViewById(R.id.login_button);
+        //buttonFacebookLogin.setOnClickListener(this);
+        buttonFacebookLogin.setReadPermissions(Arrays.asList(
+                "public_profile", "email", "user_birthday"));
+        callbackManager = CallbackManager.Factory.create();
+
+        buttonFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(final LoginResult loginResult) {
+                // App code
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                Log.v("LoginActivity", response.toString());
+
+                                // Application code
+                                try {
+                                    String email = object.getString("email");
+                                    String birthday = object.getString("birthday");
+                                    Log.e("FacebookData",email+" "+birthday+" "+loginResult.getAccessToken());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                               // 01/31/1980 format
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender,birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+                Log.v("LoginActivity", "cancel");
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+                Log.v("LoginActivity", exception.getCause().toString());
+            }
+        });
+
+
+
+
 
         progressBar=(ProgressBar)findViewById(R.id.progressbar);
         icon=(ImageView)findViewById(R.id.icon_view) ;
@@ -139,6 +199,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         {
             case R.id.login_button:
 
+
+
+                loginWithFacebook();
 
 
                 ///call facebook api for login
@@ -189,6 +252,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+
+   public void loginWithFacebook()
+   {
+
+
+   }
 
 
 
