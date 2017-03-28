@@ -24,11 +24,20 @@ public class NetWorkOperation {
     public static OkHttpClient client = new OkHttpClient();
     static Context context;
 
-    public static void postData(Context context) {
-        context = context;
+    public static void postData(Context context, String url,
+                                String userId) {
+        NetWorkOperation.context = context;
 
         //list position  for update list dynamically according to response
-        new SendConnectionRequest().execute("url", "user_id", "list_position");
+        new SendConnectionRequest().execute(url, userId);
+
+
+    }
+
+    public static void CreateProfileReqeust(Context context, String url) {
+
+        NetWorkOperation.context = context;
+        new CreateProfileRequestTask().equals(url);
     }
 
     static class SendConnectionRequest extends AsyncTask<String, String, String> {
@@ -52,7 +61,7 @@ public class NetWorkOperation {
 
 
             Response response;
-            SharePref sharePref = new SharePref(context);
+            SharePref sharePref = new SharePref(NetWorkOperation.context);
             String token = sharePref.get_data("token");
 
             Request request = new Request.Builder()
@@ -69,6 +78,25 @@ public class NetWorkOperation {
                 return null;
 
             }
+
+
+        }
+    }
+
+    static class CreateProfileRequestTask extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+
+            return "";
 
 
         }

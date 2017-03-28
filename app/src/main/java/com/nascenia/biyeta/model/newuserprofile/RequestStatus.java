@@ -2,12 +2,13 @@
 package com.nascenia.biyeta.model.newuserprofile;
 
 import java.io.Serializable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class RequestStatus implements Serializable
-{
+public class RequestStatus implements Serializable {
 
     @SerializedName("name")
     @Expose
@@ -17,7 +18,7 @@ public class RequestStatus implements Serializable
     private int profileRequestId;
     @SerializedName("communication_request_id")
     @Expose
-    private int communicationRequestId;
+    private Integer communicationRequestId;
     @SerializedName("sender")
     @Expose
     private int sender;
@@ -36,7 +37,19 @@ public class RequestStatus implements Serializable
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("sent")
+    @Expose
+    private boolean sent;
+
     private final static long serialVersionUID = 4465158792950174515L;
+
+    public boolean isSent() {
+        return sent;
+    }
+
+    public void setSent(boolean sent) {
+        this.sent = sent;
+    }
 
     public String getName() {
         return name;
@@ -64,15 +77,15 @@ public class RequestStatus implements Serializable
         return this;
     }
 
-    public int getCommunicationRequestId() {
+    public Integer getCommunicationRequestId() {
         return communicationRequestId;
     }
 
-    public void setCommunicationRequestId(int communicationRequestId) {
+    public void setCommunicationRequestId(Integer communicationRequestId) {
         this.communicationRequestId = communicationRequestId;
     }
 
-    public RequestStatus withCommunicationRequestId(int communicationRequestId) {
+    public RequestStatus withCommunicationRequestId(Integer communicationRequestId) {
         this.communicationRequestId = communicationRequestId;
         return this;
     }
