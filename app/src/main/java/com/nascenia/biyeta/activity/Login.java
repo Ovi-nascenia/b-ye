@@ -121,6 +121,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         buttonFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(final LoginResult loginResult) {
+                Log.e("LoginOvi", loginResult.getAccessToken().toString());
+
+
                 // App code
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
@@ -152,6 +155,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             public void onCancel() {
                 // App code
                 Log.v("LoginActivity", "cancel");
+
             }
 
             @Override
@@ -244,6 +248,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void loginWithFacebook() {
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 
