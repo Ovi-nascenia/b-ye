@@ -601,7 +601,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="45dp"
                 android:padding="@dimen/small_padding"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/accept_icon" />
 
             <TextView
                 android:id="@+id/cancel_textview"
@@ -621,7 +621,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginRight="65dp"
                 android:padding="@dimen/small_padding"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/cancel_icon" />
 
             <TextView
                 android:id="@+id/accept_textview"

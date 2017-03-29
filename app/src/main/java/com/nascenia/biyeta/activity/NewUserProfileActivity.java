@@ -1,10 +1,16 @@
 package com.nascenia.biyeta.activity;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -93,12 +99,19 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private int clickbleButtonIdentifier;
 
     private SharePref sharePref;
-
+    private final int REQUEST_PHONE_CALL = 999999;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user_profile);
+
+        if (ContextCompat.checkSelfPermission(NewUserProfileActivity.this,
+                Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(NewUserProfileActivity.this,
+                    new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+        }
+
         sharePref = new SharePref(NewUserProfileActivity.this);
 
         initView();
@@ -240,10 +253,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     NewUserProfileActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            //setupRecyclerView(moviePage);
-                            //
-                            //Toast.makeText(getApplicationContext(), userProfile.toString() + "", Toast.LENGTH_LONG).show();
-                            //Log.i("responsedata", "totaldata: " + userProfile.getProfile().getPersonalInformation().getGender());
 
 
                             if (userProfile.getProfile().getPersonalInformation().getAboutYourself() != null) {
@@ -316,6 +325,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             }
 
+                            /****************Different state base user profile  below**************/
+
 
                             //biodata request for appuser
 
@@ -327,8 +338,9 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                             null)) {
 
 
-                                Toast.makeText(getBaseContext(), "No Match Found", Toast.LENGTH_LONG).show();
-                                finalResultButton.setTag("send_biodata_request");
+                                // Toast.makeText(getBaseContext(), "No Match Found", Toast.LENGTH_LONG).show();
+                                finalResultButton.setTag(Utils.sendBiodataRequest);
+
                             } else if (userProfile.getProfile().getRequestStatus().getName().
                                     equals("profile request") &&
                                     (userProfile.getProfile().getRequestStatus().getSender() ==
@@ -338,10 +350,11 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     ) {
 
 
-                                familyInfoTagTextView.setVisibility(View.VISIBLE);
+                               /* familyInfoTagTextView.setVisibility(View.VISIBLE);
                                 familyCardView.setVisibility(View.VISIBLE);
                                 SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
-                                        userProfile, familyMemberInfoRecylerView);
+                                        userProfile, familyMemberInfoRecylerView);*/
+
 
                                 finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
                                 finalResultButton.setEnabled(false);
@@ -355,10 +368,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     ) {
 
 
-                                familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                /*familyInfoTagTextView.setVisibility(View.VISIBLE);
                                 familyCardView.setVisibility(View.VISIBLE);
                                 SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
-                                        userProfile, familyMemberInfoRecylerView);
+                                        userProfile, familyMemberInfoRecylerView);*/
 
                                 finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
                                 finalResultButton.setEnabled(false);
@@ -371,10 +384,16 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     (!userProfile.getProfile().getRequestStatus().isRejected())
                                     ) {
 
+
+                                familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                familyCardView.setVisibility(View.VISIBLE);
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                        userProfile, familyMemberInfoRecylerView);
+
                                 finalResultButton.setEnabled(true);
                                 finalResultButton.setVisibility(View.VISIBLE);
-                                finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
-                                finalResultButton.setTag("send_communication_request");
+                                finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                finalResultButton.setTag(Utils.sendCommunicationRequest);
 
                             }
 
@@ -390,19 +409,18 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     (!userProfile.getProfile().getRequestStatus().isRejected())
                                     ) {
 
-                                //  Toast.makeText(getBaseContext(), "profile request from other", Toast.LENGTH_LONG).show();
-                                familyInfoTagTextView.setVisibility(View.VISIBLE);
+
+                                /*familyInfoTagTextView.setVisibility(View.VISIBLE);
                                 familyCardView.setVisibility(View.VISIBLE);
                                 SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
-                                        userProfile, familyMemberInfoRecylerView);
+                                        userProfile, familyMemberInfoRecylerView);*/
 
-                                // clickbleButtonIdentifier = 0;
 
                                 finalResultButton.setVisibility(View.GONE);
                                 requestSendButtonsLayout.setVisibility(View.VISIBLE);
 
-                                acceptImageView.setTag("profile_request_accept");
-                                cancelImageView.setTag("profile_request_cancel");
+                                acceptImageView.setTag(Utils.profileRequestAccept);
+                                cancelImageView.setTag(Utils.profileRequestCancel);
 
 
                             } else if (userProfile.getProfile().getRequestStatus().getName().
@@ -418,7 +436,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                 finalResultButton.setVisibility(View.VISIBLE);
                                 finalResultButton.setEnabled(true);
-                                finalResultButton.setTag("send_biodata_request");
+                                finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                finalResultButton.setTag(Utils.sendBiodataRequest);
 
                             }
 
@@ -432,10 +451,15 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     (userProfile.getProfile().getRequestStatus().getCommunicationRequestId() == null)
                                     ) {
 
+                                familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                familyCardView.setVisibility(View.VISIBLE);
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                        userProfile, familyMemberInfoRecylerView);
+
                                 finalResultButton.setEnabled(true);
                                 finalResultButton.setVisibility(View.VISIBLE);
-                                finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
-                                finalResultButton.setTag("send_communication_request");
+                                finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                finalResultButton.setTag(Utils.sendCommunicationRequest);
 
                             } else {
                                 //sender =appuser
@@ -446,16 +470,29 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                         (userProfile.getProfile().getRequestStatus().isAccepted())
                                         ) {
 
+
+                                    familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                    familyCardView.setVisibility(View.VISIBLE);
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                            userProfile, familyMemberInfoRecylerView);
+
+
+                                    communicationTagTextview.setVisibility(View.VISIBLE);
+                                    communicationCarview.setVisibility(View.VISIBLE);
+                                    SendRequestFragmentView.setDataOnCommunincationRecylerView(getBaseContext(),
+                                            userProfile, communicationInfoRecylerview);
+
+
                                     //send message btn and phone call btn
                                     finalResultButton.setVisibility(View.GONE);
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
-                                    acceptImageView.setImageResource(R.drawable.mail);
-                                    cancelImageView.setImageResource(R.drawable.mobile);
+                                    acceptImageView.setImageResource(R.drawable.envelope_icon);
+                                    cancelImageView.setImageResource(R.drawable.phone_icon);
                                     acceptTextView.setText("মেসেজ পাঠান");
                                     cancelTextView.setText("ফোন করুন");
 
-                                    acceptImageView.setTag("message");
-                                    cancelImageView.setTag("call");
+                                    acceptImageView.setTag(Utils.sendmessage);
+                                    cancelImageView.setTag(Utils.call);
                                 } else if (userProfile.getProfile().getRequestStatus().getName().
                                         equals("communication request") &&
                                         (userProfile.getProfile().getRequestStatus().getSender() ==
@@ -464,9 +501,14 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                     // Toast.makeText(getBaseContext(), "apnar communication request reject hoise", Toast.LENGTH_LONG).show();
                                     //set message : apnar communication request reject hoise,btn action off
-                                    finalResultButton.setText("apnar communication request reject hoyese");
+                                    finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
                                     finalResultButton.setEnabled(false);
 
+
+                                    familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                    familyCardView.setVisibility(View.VISIBLE);
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                            userProfile, familyMemberInfoRecylerView);
 
                                 } else if (userProfile.getProfile().getRequestStatus().getName().
                                         equals("communication request") &&
@@ -478,7 +520,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                     //set message : already communication resquest send,btn action off
                                     //  Toast.makeText(getBaseContext(), " already communication resquest send", Toast.LENGTH_LONG).show();
-                                    finalResultButton.setText("already communication resquest send");
+                                    finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
                                     finalResultButton.setEnabled(false);
 
 
@@ -495,13 +537,26 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     //send message btn and phone call btn
                                     finalResultButton.setVisibility(View.GONE);
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
-                                    acceptImageView.setImageResource(R.drawable.mail);
-                                    cancelImageView.setImageResource(R.drawable.mobile);
+                                    acceptImageView.setImageResource(R.drawable.envelope_icon);
+                                    cancelImageView.setImageResource(R.drawable.phone_icon);
                                     acceptTextView.setText("মেসেজ পাঠান");
                                     cancelTextView.setText("ফোন করুন");
 
-                                    acceptImageView.setTag("message");
-                                    cancelImageView.setTag("call");
+                                    acceptImageView.setTag(Utils.sendmessage);
+                                    cancelImageView.setTag(Utils.call);
+
+
+                                    familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                    familyCardView.setVisibility(View.VISIBLE);
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                            userProfile, familyMemberInfoRecylerView);
+
+
+                                    communicationTagTextview.setVisibility(View.VISIBLE);
+                                    communicationCarview.setVisibility(View.VISIBLE);
+                                    SendRequestFragmentView.setDataOnCommunincationRecylerView(getBaseContext(),
+                                            userProfile, communicationInfoRecylerview);
+
                                 } else if (userProfile.getProfile().getRequestStatus().getName().
                                         equals("communication request") &&
                                         (userProfile.getProfile().getRequestStatus().getReceiver() ==
@@ -511,10 +566,17 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                     //send communication request again
                                     // Toast.makeText(getBaseContext(), " send communication request again", Toast.LENGTH_LONG).show();
+
+
+                                    familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                    familyCardView.setVisibility(View.VISIBLE);
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                            userProfile, familyMemberInfoRecylerView);
+
                                     finalResultButton.setEnabled(true);
                                     finalResultButton.setVisibility(View.VISIBLE);
-                                    finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
-                                    finalResultButton.setTag("send_communication_request");
+                                    finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                    finalResultButton.setTag(Utils.sendCommunicationRequest);
 
 
                                 } else if (userProfile.getProfile().getRequestStatus().getName().
@@ -524,12 +586,16 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                         (!userProfile.getProfile().getRequestStatus().isAccepted()
                                                 && (!userProfile.getProfile().getRequestStatus().isRejected()))) {
 
+                                    familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                    familyCardView.setVisibility(View.VISIBLE);
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                            userProfile, familyMemberInfoRecylerView);
 
                                     finalResultButton.setVisibility(View.GONE);
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
 
-                                    acceptImageView.setTag("comm_request_accept");
-                                    cancelImageView.setTag("comm_request_cancel");
+                                    acceptImageView.setTag(Utils.commRequestAccept);
+                                    cancelImageView.setTag(Utils.commRequestCancel);
                                 }
 
 
@@ -563,75 +629,106 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
 
 
-        //00 means profile request->যোগাযোগের জন্য অনুরোধ করুন
-        //01 means profile request->ুরো বায়োডাটা দেখার অনুরোধ করুন
+        if (v.getTag().equals(Utils.profileRequestAccept)) {
 
-
-        if (v.getTag().equals("profile_request_accept")) {
-
-            requestSendButtonsLayout.setVisibility(View.GONE);
+           /* requestSendButtonsLayout.setVisibility(View.GONE);
             finalResultButton.setVisibility(View.VISIBLE);
             finalResultButton.setEnabled(true);
             finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
-            finalResultButton.setTag("send_communication_request");
+            finalResultButton.setTag("send_communication_request");*/
 
-            new SendRequestTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
-                    userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/accept");
 
-        } else if (v.getTag().equals("profile_request_cancel")) {
+            new SendRequestTask().execute("http://test.biyeta.com/api/v1/profile_requests/" +
+                            userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/accept",
+                    "যোগাযোগের জন্য অনুরোধ করুন", Utils.sendCommunicationRequest, "");
 
-            requestSendButtonsLayout.setVisibility(View.GONE);
+        } else if (v.getTag().equals(Utils.profileRequestCancel)) {
+
+           /* requestSendButtonsLayout.setVisibility(View.GONE);
             finalResultButton.setVisibility(View.VISIBLE);
             finalResultButton.setEnabled(true);
             finalResultButton.setText("পুরো বায়োডাটা দেখার অনুরোধ করুন");
-            finalResultButton.setTag("send_biodata_request");
+            finalResultButton.setTag("send_biodata_request");*/
 
-            new SendRequestTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
-                    userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/reject");
+            new SendRequestTask().execute("http://test.biyeta.com/api/v1/profile_requests/" +
+                            userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/reject",
+                    "পুরো বায়োডাটা দেখার অনুরোধ করুন", Utils.sendBiodataRequest, "");
 
-        } else if (v.getTag().equals("send_communication_request")) {
+        } else if (v.getTag().equals(Utils.sendCommunicationRequest)) {
 
             NetWorkOperation.postData(getBaseContext(),
                     "http://test.biyeta.com/api/v1/communication_requests",
-                    userProfile.getProfile().getPersonalInformation().getId() + "");
+                    userProfile.getProfile().getPersonalInformation().getId() + "", finalResultButton,
+                    "আপনি যোগাযোগের জন্য অনুরোধ করেছেন");
 
-            finalResultButton.setEnabled(false);
-            finalResultButton.setText("আপনি যোগাযোগের জন্য অনুরোধ করেছেন");
+            /*finalResultButton.setEnabled(false);
+            finalResultButton.setText("আপনি যোগাযোগের জন্য অনুরোধ করেছেন");*/
 
-        } else if (v.getTag().equals("send_biodata_request")) {
+        } else if (v.getTag().equals(Utils.sendBiodataRequest)) {
 
 
             NetWorkOperation.CreateProfileReqeust(getBaseContext(),
                     "http://test.biyeta.com/api/v1/profiles/" +
                             userProfile.getProfile().getPersonalInformation().getId()
-                            + "/profile_request");
+                            + "/profile_request", finalResultButton,
+                    "আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন");
 
-            finalResultButton.setEnabled(false);
-            finalResultButton.setText("আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন");
+            /*finalResultButton.setEnabled(false);
+            finalResultButton.setText("আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন");*/
 
-        } else if (v.getTag().equals("comm_request_accept")) {
+        } else if (v.getTag().equals(Utils.commRequestAccept)) {
 
-            acceptImageView.setImageResource(R.drawable.mail);
+
+            new SendRequestTask().execute("http://test.biyeta.com/api/v1/communication_requests/" +
+                    userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/accept", "message_call_block");
+
+            /*acceptImageView.setImageResource(R.drawable.mail);
             cancelImageView.setImageResource(R.drawable.mobile);
             acceptTextView.setText("মেসেজ পাঠান");
             cancelTextView.setText("ফোন করুন");
 
             acceptImageView.setTag("message");
-            cancelImageView.setTag("call");
+            cancelImageView.setTag("call");*/
 
-        } else if (v.getTag().equals("comm_request_cancel")) {
+        } else if (v.getTag().equals(Utils.commRequestCancel)) {
 
+
+            new SendRequestTask().execute("http://test.biyeta.com/api/v1/communication_requests/" +
+                            userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/reject",
+                    "যোগাযোগের জন্য অনুরোধ করুন", Utils.sendCommunicationRequest, "");
+
+           /* requestSendButtonsLayout.setVisibility(View.GONE);
             finalResultButton.setVisibility(View.VISIBLE);
             finalResultButton.setEnabled(true);
             finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
-            finalResultButton.setTag("send_communication_request");
-            requestSendButtonsLayout.setVisibility(View.GONE);
+            finalResultButton.setTag("send_communication_request");*/
 
 
-        } else if (v.getTag().equals("message")) {
+        } else if (v.getTag().equals(Utils.sendmessage)) {
 
-        } else if (v.getTag().equals("call")) {
+            startActivity(new Intent(NewUserProfileActivity.this, InboxSingleChat.class)
+                    .putExtra("sender_id", userProfile.getProfile().getRequestStatus().getSender())
+                    .putExtra("receiver_id", userProfile.getProfile().getRequestStatus().getReceiver())
+                    .putExtra("current_user", sharePref.get_data("user_id"))
+                    .putExtra("userName", userProfile.getProfile().getPersonalInformation().getDisplayName())
+            );
 
+
+        } else if (v.getTag().equals(Utils.call)) {
+
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + userProfile.getProfile()));
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            startActivity(intent);
         }
 
 
@@ -667,6 +764,9 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     private class SendRequestTask extends AsyncTask<String, Void, String> {
 
+        String btnText;
+        String btnTag;
+        String messageCallBlock;
 
         @Override
         protected void onPreExecute() {
@@ -675,6 +775,9 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         @Override
         protected String doInBackground(String... urls) {
+            btnText = urls[1];
+            btnTag = urls[2];
+            messageCallBlock = urls[3];
 
             Response response;
             SharePref sharePref = new SharePref(getBaseContext());
@@ -705,11 +808,32 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
             try {
-                String s1 = new JSONObject(s).getJSONArray("message").getJSONObject(0).getString("detail");
+                /*String s1 = new JSONObject(s).getJSONArray("message").getJSONObject(0).getString("detail");
                 Log.i("responseresult: ", s1);
                 Toast.makeText(getBaseContext(), s1, Toast.LENGTH_LONG).show();
+*/
 
-            } catch (JSONException e) {
+
+                if (messageCallBlock.equals("message_call_block")) {
+
+                    requestSendButtonsLayout.setVisibility(View.GONE);
+                    finalResultButton.setVisibility(View.VISIBLE);
+                    finalResultButton.setEnabled(true);
+                    finalResultButton.setTag(btnTag);
+                    finalResultButton.setText(btnText);
+
+                } else {
+
+                    acceptImageView.setImageResource(R.drawable.mail);
+                    cancelImageView.setImageResource(R.drawable.mobile);
+                    acceptTextView.setText("মেসেজ পাঠান");
+                    cancelTextView.setText("ফোন করুন");
+
+                    acceptImageView.setTag(Utils.sendmessage);
+                    cancelImageView.setTag(Utils.call);
+                }
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

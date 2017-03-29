@@ -32,6 +32,18 @@ public class Utils {
     public static final String Base_URL = "http://test.biyeta.com";
 
 
+    //userprofile request tag
+
+    public static final String profileRequestAccept = "profile_request_accept";
+    public static final String profileRequestCancel = "profile_request_cancel";
+    public static final String sendCommunicationRequest = "send_communication_request";
+    public static final String sendBiodataRequest = "send_biodata_request";
+    public static final String commRequestAccept = "comm_request_accept";
+    public static final String commRequestCancel = "comm_request_cancel";
+    public static final String sendmessage = "message";
+    public static final String call = "call";
+
+
     public static void ShowAlert(Context context, String bodyMessage) {
 
         new AlertDialog.Builder(context)
@@ -214,8 +226,7 @@ public class Utils {
         view.setMaxHeight(scaledBitmap.getHeight());
     }
 
-    public static String getTime(String utcTime)
-    {
+    public static String getTime(String utcTime) {
         Calendar calendar = Calendar.getInstance(), systemCal = Calendar.getInstance();
         DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -230,33 +241,30 @@ public class Utils {
         calendar.setTimeZone(TimeZone.getTimeZone(TimeZone.getDefault().getID()));
         calendar.setTime(date);
         long diffMillis = systemCal.getTimeInMillis() - calendar.getTimeInMillis();
-        long diffSeconds = diffMillis/1000;
-        long diffMins = diffSeconds/60;
-        long diffHours = diffMins/60;
-        long diffDays = diffHours/24;
-        long diffWeeks = diffDays/7;
-        long diffMons = diffDays/30;
-        long diffYears = diffDays/365;
+        long diffSeconds = diffMillis / 1000;
+        long diffMins = diffSeconds / 60;
+        long diffHours = diffMins / 60;
+        long diffDays = diffHours / 24;
+        long diffWeeks = diffDays / 7;
+        long diffMons = diffDays / 30;
+        long diffYears = diffDays / 365;
 
         String strTime = "";
         DateFormat dateFormat;
-        if(diffDays < 1) {
+        if (diffDays < 1) {
             dateFormat = new SimpleDateFormat("hh:mm a");
             strTime = dateFormat.format(calendar.getTimeInMillis());
-        }
-        else if(diffWeeks < 1) {
+        } else if (diffWeeks < 1) {
             dateFormat = new SimpleDateFormat("E, hh:mm a");
             strTime = dateFormat.format(calendar.getTimeInMillis());
-        }
-        else if(diffDays < 365) {
+        } else if (diffDays < 365) {
             dateFormat = new SimpleDateFormat("dd MMM hh:mm a");
             strTime = dateFormat.format(calendar.getTimeInMillis());
-        }
-        else {
+        } else {
             dateFormat = new SimpleDateFormat("dd MMM");
             strTime = dateFormat.format(calendar.getTimeInMillis());
             dateFormat = new SimpleDateFormat("yy hh:mm a");
-            strTime+= "'" + dateFormat.format(calendar.getTimeInMillis());
+            strTime += "'" + dateFormat.format(calendar.getTimeInMillis());
         }
         return strTime;
     }

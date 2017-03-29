@@ -44,6 +44,17 @@ public class SendRequestFragmentView {
 
     public static String responseValue;
 
+
+    /*
+    *
+    * this variable identifies which class reqeust for view show
+    *
+    * if 0 set to this variable,then it means biodata request fragment class call
+    * if 1 set to this variable,then it means communication request fragment class call
+    *
+    * */
+    private int viewRequestClassname;
+
     private static MyCallback<Boolean> mCallback;
     static ProgressDialog progressBar;
     private static int progressBarStatus;
@@ -77,7 +88,8 @@ public class SendRequestFragmentView {
                                                        RecyclerView otherInfoRecylerView,
                                                        ImageView profileViewerPersonImageView,
                                                        ImageView userProfileImage,
-                                                       RecyclerView familyMemberInfoRecylerView) {
+                                                       RecyclerView familyMemberInfoRecylerView,
+                                                       int viewRequestClassname) {
 
 
         //generalInformationArrayList.clear();
@@ -103,7 +115,8 @@ public class SendRequestFragmentView {
                 otherInfoRecylerView,
                 profileViewerPersonImageView,
                 userProfileImage,
-                familyMemberInfoRecylerView);
+                familyMemberInfoRecylerView,
+                viewRequestClassname);
         Thread response = new Thread(responseThread);
         response.start();
 
@@ -123,6 +136,7 @@ public class SendRequestFragmentView {
         private ImageView profileViewerPersonImageView;
         private ImageView userProfileImage;
         private RecyclerView familyMemberInfoRecylerView;
+        private int viewRequestClassname;
 
 
         public ResponseThread(String url,
@@ -134,7 +148,8 @@ public class SendRequestFragmentView {
                               RecyclerView otherInfoRecylerView,
                               ImageView profileViewerPersonImageView,
                               ImageView userProfileImage,
-                              RecyclerView familyMemberInfoRecylerView) {
+                              RecyclerView familyMemberInfoRecylerView,
+                              int viewRequestClassname) {
 
 
             this.callback = callback;
@@ -147,6 +162,7 @@ public class SendRequestFragmentView {
             this.profileViewerPersonImageView = profileViewerPersonImageView;
             this.userProfileImage = userProfileImage;
             this.familyMemberInfoRecylerView = familyMemberInfoRecylerView;
+            this.viewRequestClassname = viewRequestClassname;
 
             dialog = new ProgressDialog(context);
             dialog.setMessage("Please wait...");
@@ -165,7 +181,7 @@ public class SendRequestFragmentView {
                 Log.i("threaddata", "onmethod" + responseValue + " ");
                 responseBody.close();
                 final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
-                
+
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -191,10 +207,17 @@ public class SendRequestFragmentView {
                     }
                 });
 
-                if (callback != null) {
-                    Log.i("calll", "callback block");
-                    callback.onComplete(true, userProfile.getProfile().getRequestStatus().getProfileRequestId()); // will call onComplete() on MyActivity once the job is done
+
+                if (callback != null && this.viewRequestClassname == 0) {
+                    // will call onComplete() on MyActivity once the job is done
+                    callback.onComplete(true, userProfile.getProfile().getRequestStatus().
+                            getProfileRequestId());
+                } else if (callback != null && this.viewRequestClassname == 1) {
+                    // will call onComplete() on MyActivity once the job is done
+                    callback.onComplete(true, userProfile.getProfile().getRequestStatus().
+                            getCommunicationRequestId());
                 }
+
 
             } catch (Exception e) {
                 Log.i("threaddata", "problem " + e.getMessage());

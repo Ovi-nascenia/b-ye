@@ -576,7 +576,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/large_margin"
             android:padding="@dimen/small_padding"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/cancel_icon" />
 
         <TextView
             android:id="@+id/cancel_textview"
@@ -593,7 +593,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:padding="@dimen/small_padding"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/wait_icon"
             android:visibility="visible" />
 
         <TextView
@@ -614,7 +614,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginRight="@dimen/large_margin"
             android:padding="@dimen/small_padding"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/accept_icon" />
 
         <TextView
             android:id="@+id/accept_textview"

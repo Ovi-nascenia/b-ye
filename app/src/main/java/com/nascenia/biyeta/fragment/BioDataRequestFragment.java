@@ -245,7 +245,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 otherInfoRecylerView,
                 profileViewerPersonImageView,
                 userProfileImage,
-                familyMemberInfoRecylerView
+                familyMemberInfoRecylerView,
+                0
         );
 
 

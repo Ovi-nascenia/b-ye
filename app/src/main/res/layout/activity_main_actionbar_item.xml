@@ -32,20 +32,20 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_toLeftOf="@+id/profile"
         android:layout_toRightOf="@+id/search"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="2">
 
 
         <ImageView
             android:id="@+id/match"
             android:layout_width="0dp"
-            android:paddingLeft="@dimen/medium_margin"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/very_large_margin"
             android:layout_weight="1"
+            android:paddingLeft="@dimen/medium_margin"
             android:src="@drawable/match" />
 
         <ImageView
@@ -53,12 +53,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/fev" />
+            android:src="@drawable/fev"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/inbox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/very_large_margin"
             android:layout_weight="1"
             android:paddingRight="@dimen/medium_margin"
             android:src="@drawable/inbox"

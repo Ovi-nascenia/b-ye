@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.nascenia.biyeta.appdata.SharePref;
@@ -25,37 +26,46 @@ public class NetWorkOperation {
     static Context context;
 
     public static void postData(Context context, String url,
-                                String userId) {
+                                String userId, Button finalResultButton, String msg) {
         NetWorkOperation.context = context;
 
         //list position  for update list dynamically according to response
-        new SendConnectionRequest().execute(url, userId);
+        new SendConnectionRequest(finalResultButton).execute(url, userId, msg);
 
 
     }
 
-    public static void CreateProfileReqeust(Context context, String url) {
+    public static void CreateProfileReqeust(Context context, String url, Button finalResultButton, String msg) {
 
         NetWorkOperation.context = context;
-        new CreateProfileRequestTask().execute(url);
+        new CreateProfileRequestTask(finalResultButton).execute(url, msg);
     }
 
     static class SendConnectionRequest extends AsyncTask<String, String, String> {
 
+
+        private Button finalResultButton;
+        private String msg;
+
+        public SendConnectionRequest(Button finalResultButton) {
+            this.finalResultButton = finalResultButton;
+        }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.i("response", s);
 
+            this.finalResultButton.setEnabled(false);
+            this.finalResultButton.setText(msg);
+
         }
 
         @Override
         protected String doInBackground(String... strings) {
 
-
+            msg = strings[2];
             Integer id = Integer.parseInt(strings[1]);
-            Integer position = Integer.parseInt(strings[2]);
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("profile_id", id + "")
                     .build();
@@ -87,23 +97,34 @@ public class NetWorkOperation {
     static class CreateProfileRequestTask extends AsyncTask<String, String, String> {
 
 
+        private Button finalResultButton;
+        private String msg;
+
+        public CreateProfileRequestTask(Button finalResultButton) {
+
+            this.finalResultButton = finalResultButton;
+        }
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            try {
+           /* try {
                 String s1 = new JSONObject(s).getJSONArray("message").getJSONObject(0).getString("detail");
                 Log.i("responseresult: ", s1);
                 Toast.makeText(NetWorkOperation.context, s1, Toast.LENGTH_LONG).show();
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }*/
 
+            this.finalResultButton.setEnabled(false);
+            this.finalResultButton.setText(msg);
 
         }
 
         @Override
         protected String doInBackground(String... strings) {
             Log.i("profileresponse", strings[0]);
+            msg = strings[1];
 
             Response response;
             SharePref sharePref = new SharePref(NetWorkOperation.context);

@@ -151,7 +151,8 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 otherInfoRecylerView,
                 profileViewerPersonImageView,
                 userProfileImage,
-                familyMemberInfoRecylerView
+                familyMemberInfoRecylerView,
+                1
         );
 
 
