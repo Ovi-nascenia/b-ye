@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nascenia.biyeta.activity.NewUserProfileActivity;
@@ -50,6 +51,7 @@ public class Search extends Fragment {
     private RelativeLayout relativeLayout;
     //used for paging track
     private int flag = 1;
+    private TextView emptyText;
     private Snackbar snackbar;
     private Button searchButton;
     private Profile_Adapter mProfile_adapter;
@@ -75,6 +77,7 @@ public class Search extends Fragment {
         View v = inflater.inflate(R.layout.search, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.profile_list);
         searchButton = (Button) v.findViewById(R.id.search_btn);
+        emptyText = (TextView) v.findViewById(R.id.empty_list);
         mProfile_adapter = new Profile_Adapter(profileList) {
             @Override
             public void load() {
@@ -159,6 +162,13 @@ public class Search extends Fragment {
         super.onResume();
         if (!Search_Filter.reponse.equals("")) {
             try {
+                emptyText.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(mProfile_adapter);
+                Log.e("fuck", Search_Filter.reponse);
                 //clear the previous list item
                 profileList.clear();
                 mProfile_adapter.notifyDataSetChanged();
@@ -169,6 +179,7 @@ public class Search extends Fragment {
                 Utils.ShowAlert(getContext(), "Error");
             }
         }
+
 
     }
 
@@ -194,6 +205,7 @@ public class Search extends Fragment {
 
                 profileList.add(profile);
                 mProfile_adapter.notifyDataSetChanged();
+                relativeLayout.setVisibility(View.GONE);
             }
         } catch (JSONException e) {
             Utils.ShowAlert(getContext(), "No Result Found");
@@ -205,19 +217,33 @@ public class Search extends Fragment {
         @Override
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
-            relativeLayout.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            if (flag != 1) snackbar.dismiss();
-            try {
-                JSONObject jsonObject = new JSONObject(res);
-                totalPageNumber = jsonObject.getInt("total_page");
-                loadDataFromResponse(jsonObject);
+
+            if (res == null) Utils.ShowAlert(getContext(), "Network error");
+            else {
+
+                Log.e("SearchResponse", res);
+                relativeLayout.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                if (flag != 1) snackbar.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject(res);
+                    if (jsonObject.has("no_results")) {
+                        emptyText.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                        emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
+                    } else {
 
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (NullPointerException ei) {
-                Utils.ShowAlert(getContext(), "Network Error");
+                        totalPageNumber = jsonObject.getInt("total_page");
+                        loadDataFromResponse(jsonObject);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (NullPointerException ei) {
+                    Utils.ShowAlert(getContext(), "Network Error");
+                }
             }
         }
 

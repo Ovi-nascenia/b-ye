@@ -141,7 +141,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                     String email = object.getString("email");
                                     String birthday = object.getString("birthday");
 
-                                    new LoginByFacebook().execute("http://test.biyeta.com/api/v1/facebook_authorization/authorize",uid,"facebook",email);
+                                    new LoginByFacebook().execute("http://192.168.1.68:3000/api/v1/facebook_authorization/authorize",uid,"facebook",email);
 
                                     Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken().getToken()+"");
                                 } catch (JSONException e) {
@@ -233,6 +233,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
 
             try {
                 JSONObject jsonObject = new JSONObject(s);
@@ -373,13 +374,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                     SharePref sharePref = new SharePref(Login.this);
 
-                    sharePref.set_data("token", response.getLoginInformation().getAuthToken());
-                    sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
-                    sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
-                    sharePref.set_data("gender", response.getLoginInformation().getGender());
-                    sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
-                    sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
+
                     if (response.getLoginInformation().getMobileVerified()) {
+                        sharePref.set_data("token", response.getLoginInformation().getAuthToken());
+                        sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
+                        sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
+                        sharePref.set_data("gender", response.getLoginInformation().getGender());
+                        sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
+                        sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
                         startActivity(new Intent(Login.this, HomeScreen.class));
                         finish();
                     } else {

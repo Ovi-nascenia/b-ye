@@ -350,18 +350,11 @@ public class InboxSingleChat extends CustomActionBarActivity {
                         InputStreamReader isr = new InputStreamReader(is);
                         response = gson.fromJson(isr, ChatHead.class);
 
-                        if (null == listMessage)
+                        if (null == listMessage|| listMessage.size()==0)
                         {
-                            Log.e("here","null");
-                            listMessage = response.getMessages();
-                            inboxListAdapter = new ChatListAdapter(InboxSingleChat.this, listMessage) {
-                                @Override
-                                public void load() {
-                                    // Toast.makeText(InboxSingleChat.this,"load more data",Toast.LENGTH_SHORT).show();
-                                }
-                            };
+                            new LoadMessageThread().execute();
 
-                            recyclerView.setAdapter(inboxListAdapter);
+
 
                         }
 
@@ -374,8 +367,13 @@ public class InboxSingleChat extends CustomActionBarActivity {
                             }
                         }
                     } catch (Exception e) {
-                        Log.e("fuck",e.toString());
-                     //   Toast.makeText(InboxSingleChat.this, "Server Disconnected", Toast.LENGTH_SHORT).show();
+
+
+                        if (null == listMessage|| listMessage.size()==0)
+                        {
+                            new LoadMessageThread().execute();
+                        }
+                        //   Toast.makeText(InboxSingleChat.this, "Server Disconnected", Toast.LENGTH_SHORT).show();
                       //  countDownTimer.cancel();
                     }
                 }

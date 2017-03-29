@@ -18,6 +18,16 @@
             android:layout_alignParentTop="true"
             android:visibility="gone" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/empty_list"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="No List Available"/>
+
 
         <RelativeLayout
             android:id="@+id/RelativeLayoutLeftButton"
@@ -28,6 +38,7 @@
                 android:id="@+id/progressBar1"
                 style="?android:attr/progressBarStyleSmall"
                 android:layout_width="100dp"
+
                 android:layout_height="100dp"
                 android:layout_centerInParent="true" />
 
