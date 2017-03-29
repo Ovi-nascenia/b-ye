@@ -146,8 +146,8 @@
             android:layout_height="0dp"
             android:layout_marginTop="15dp"
             android:layout_weight="1.1"
-            android:orientation="horizontal"
-            android:weightSum="2">
+
+            >
 
             <!--<ImageView-->
                 <!--android:layout_width="0dip"-->
@@ -170,6 +170,9 @@
                 <!--android:textColor="#ffffff"-->
                 <!--android:textSize="20sp" />-->
             <com.facebook.login.widget.LoginButton
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

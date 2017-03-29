@@ -48,6 +48,7 @@ import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.utils.Utils;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -118,10 +119,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 "public_profile", "email", "user_birthday"));
         callbackManager = CallbackManager.Factory.create();
 
+
         buttonFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(final LoginResult loginResult) {
                 Log.e("LoginOvi", loginResult.getAccessToken().toString());
+
 
 
                 // App code
@@ -134,9 +137,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                                 // Application code
                                 try {
+                                    String uid=loginResult.getAccessToken().getUserId();
                                     String email = object.getString("email");
                                     String birthday = object.getString("birthday");
-                                    Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken());
+
+                                    new LoginByFacebook().execute("http://test.biyeta.com/api/v1/facebook_authorization/authorize",uid,"facebook",email);
+
+                                    Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken().getToken()+"");
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -218,6 +225,54 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
     }
+
+
+    public  class  LoginByFacebook extends AsyncTask<String,String,String>
+    {
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.has("message"))
+                {
+                    buttonFacebookLogin.setText(jsonObject.getJSONObject("message").get("detail").toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... parameters) {
+
+
+            RequestBody requestBody=new FormEncodingBuilder()
+                    .add("uid",parameters[1])
+                    .add("provider",parameters[2])
+                    .add("email",parameters[3])
+                    .build();
+
+
+
+            Request request=new Request.Builder().url(parameters[0]).post(requestBody).build();
+
+            try {
+                Response response=client.newCall(request).execute();
+                String responseString = response.body().string();
+                return responseString;
+            } catch (IOException e) {
+
+                e.printStackTrace();
+                return null;
+            }
+
+        }
+    }
+
+
 
     void checkValidation() {
 
