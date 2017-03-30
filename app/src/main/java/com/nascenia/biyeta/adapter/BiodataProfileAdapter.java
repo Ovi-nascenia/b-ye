@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.InboxSingleChat;
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
 import com.nascenia.biyeta.model.biodata.profile.Profile;
 import com.nascenia.biyeta.model.communication.profile.CommunicationProfile;
@@ -64,12 +65,14 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
         holder.userName.setText(profile.getDisplayName());
         holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
         holder.time_date.setText(Utils.getTime(profile.getIsCreatedAt()));
+
+
+        String gender = new SharePref(holder.image.getContext()).get_data("gender");
         Glide.
                 with(holder.image.getContext()).
-                load("http://test.biyeta.com"+profile.getImage()).
-                placeholder(R.drawable.fake_image).
+                load(Utils.Base_URL + profile.getImage()).
+                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
                 into(holder.image);
-//        holder.itemView.setTag(item);
 
 
         Log.e("BiodataMessage",profile.getRequestStatus().getMessage()+"hello ");

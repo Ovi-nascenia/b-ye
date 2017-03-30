@@ -14,11 +14,13 @@ import android.widget.TextView;
  */
 
 import com.bumptech.glide.Glide;
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.SearchProfileModel;
 
 import java.util.List;
 
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.utils.Utils;
 
 public class Match_Adapter extends RecyclerView.Adapter<Match_Adapter.MyViewHolder> {
 
@@ -63,9 +65,12 @@ public class Match_Adapter extends RecyclerView.Adapter<Match_Adapter.MyViewHold
         SearchProfileModel prfile = profile_list.get(position);
         holder.user_name.setText(prfile.getDisplay_name());
 
-        Glide.with(context)
-                .load(Uri.parse("http://previews.123rf.com/images/m_woodhouse/m_woodhouse1201/m_woodhouse120100027/11889656-Funnyl-green-dragon-holding-fireworks-in-vector-Stock-Vector-dragon-cartoon-dinosaur.jpg"))
-                .into(holder.profile_image)
+        String gender = new SharePref(holder.profile_image.getContext()).get_data("gender");
+        Glide.
+                with(holder.profile_image.getContext()).
+                load(Utils.Base_URL + prfile.getImage()).
+                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
+                into(holder.profile_image);
         ;
 
     }

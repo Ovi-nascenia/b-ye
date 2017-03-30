@@ -77,7 +77,7 @@ public class InboxListAdapter extends RecyclerView.Adapter<InboxListAdapter.View
         Glide.
                 with(holder.image.getContext()).
                 load(Utils.Base_URL + item.getSenderImage()).
-                placeholder(gender.equalsIgnoreCase("female")?R.drawable.smile:R.drawable.default_profile_female_icon).
+                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
                 into(holder.image);
 //        holder.itemView.setTag(item);
     }

@@ -44,20 +44,23 @@ import java.util.List;
 
 public class InboxListView extends CustomActionBarActivity {
     public final String INBOX_SUB_URL = "messages";
-    private RecyclerView recyclerView;
     private final OkHttpClient client = new OkHttpClient();
+    ProgressBar progBar;
+    TextView text;
+    Handler mHandler = new Handler();
+    int mProgressStatus = 0;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inbox_view);
         setUpId();
-        setUpToolBar("Inbox",this);
+        setUpToolBar("Inbox", this);
         if (Utils.isOnline(InboxListView.this))
             new LoadMessageThread().execute();
         else
             Utils.ShowAlert(InboxListView.this, "Check Internet Connection");
-
 
 
     }
@@ -75,61 +78,22 @@ public class InboxListView extends CustomActionBarActivity {
 
     }
 
-
-
     class LoadMessageThread extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
-         /*   s="{\n" +
-                    "  \"inbox\": [\n" +
-                    "    {\n" +
-                    "      \"sender_name\": \"Test53\",\n" +
-                    "      \"sender_image\": null,\n" +
-                    "      \"message\": {\n" +
-                    "        \"id\": 168,\n" +
-                    "        \"user_id\": 2820,\n" +
-                    "        \"receiver\": 2769,\n" +
-                    "        \"text\": \"hey test 53 wassup new msg\",\n" +
-                    "        \"created_at\": \"2017-03-09T07:15:44.000Z\",\n" +
-                    "        \"updated_at\": \"2017-03-09T07:15:44.000Z\",\n" +
-                    "        \"is_seen\": false\n" +
-                    "      },\n" +
-                    "      \"unread\": 3\n" +
-                    "    },\n" +
-                    "    {\n" +
-                    "      \"sender_name\": \"Boy072\",\n" +
-                    "      \"sender_image\": null,\n" +
-                    "      \"message\": {\n" +
-                    "        \"id\": 188,\n" +
-                    "        \"user_id\": 2769,\n" +
-                    "        \"receiver\": 2953,\n" +
-                    "        \"text\": \"sent through api\",\n" +
-                    "        \"created_at\": \"2017-03-10T08:56:06.000Z\",\n" +
-                    "        \"updated_at\": \"2017-03-10T08:56:06.000Z\",\n" +
-                    "        \"is_seen\": true\n" +
-                    "      },\n" +
-                    "      \"unread\": 0\n" +
-                    "    }\n" +
-                    "  ]\n" +
-                    "}\n";
-
-                    */
-
-
-            Log.e("fuck","cc"+s);
             Gson gson = new Gson();
             InputStream is = new ByteArrayInputStream(s.getBytes());
             InputStreamReader isr = new InputStreamReader(is);
             Example response = gson.fromJson(isr, Example.class);
 
 
-            InboxListAdapter inboxListAdapter=new InboxListAdapter(response,R.layout.inbox_item);
+            InboxListAdapter inboxListAdapter = new InboxListAdapter(response, R.layout.inbox_item);
             recyclerView.setAdapter(inboxListAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(InboxListView.this));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
+
 
 
         }
@@ -149,7 +113,7 @@ public class InboxListView extends CustomActionBarActivity {
 
 
             request = new Request.Builder()
-                    .url(Constant.BASE_URL+INBOX_SUB_URL)
+                    .url(Constant.BASE_URL + INBOX_SUB_URL)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 
@@ -168,8 +132,4 @@ public class InboxListView extends CustomActionBarActivity {
             return null;
         }
     }
-    ProgressBar progBar;
-    TextView text;
-    Handler mHandler = new Handler();
-    int mProgressStatus=0;
 }

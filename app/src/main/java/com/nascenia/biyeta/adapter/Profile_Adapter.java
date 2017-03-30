@@ -15,11 +15,13 @@ import android.widget.TextView;
  */
 
 import com.bumptech.glide.Glide;
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.SearchProfileModel;
 
 import java.util.List;
 
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.utils.Utils;
 
 public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapter.MyViewHolder> {
     //parent context
@@ -50,11 +52,13 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
         Log.e("image_link", prfile.getImage());
         if ((position >= getItemCount() - 1))
             load();
-        Glide.with(context)
-                .load(Uri.parse("http://test.biyeta.com/" + prfile.getImage()))
-                .placeholder(R.drawable.default_profile_female_icon)
-                .into(holder.profile_image);
-
+        String gender = new SharePref(holder.profile_image.getContext()).get_data("gender");
+        Glide.
+                with(holder.profile_image.getContext()).
+                load(Utils.Base_URL + prfile.getImage()).
+                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
+                into(holder.profile_image);
+        ;
 
     }
 

@@ -18,10 +18,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.InboxSingleChat;
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
 import com.nascenia.biyeta.model.communication.profile.CommunicationProfile;
 import com.nascenia.biyeta.model.communication.profile.Profile;
 import com.nascenia.biyeta.model.newuserprofile.Image;
+import com.nascenia.biyeta.utils.Utils;
 
 /**
  * Created by god father on 3/16/2017.
@@ -53,10 +55,11 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
 
         holder.userName.setText(profile.getDisplayName());
         holder.details.setText(profile.getAge() + "বয়স" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        String gender = new SharePref(holder.image.getContext()).get_data("gender");
         Glide.
                 with(holder.image.getContext()).
-                load("http://test.biyeta.com"+profile.getImage()).
-                placeholder(R.drawable.fake_image).
+                load(Utils.Base_URL + profile.getImage()).
+                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
                 into(holder.image);
 //        holder.itemView.setTag(item);
 
