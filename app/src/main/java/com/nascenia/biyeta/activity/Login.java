@@ -28,6 +28,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
@@ -117,6 +118,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         buttonFacebookLogin.setReadPermissions(Arrays.asList(
                 "public_profile", "email", "user_birthday"));
         callbackManager = CallbackManager.Factory.create();
+
 
 
         buttonFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -277,7 +279,48 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.has("message")) {
-                    buttonFacebookLogin.setText(jsonObject.getJSONObject("message").get("detail").toString());
+                  Utils.ShowAlert(Login.this,jsonObject.getJSONObject("message").get("detail").toString());
+                    LoginManager.getInstance().logOut();
+                }
+                else
+                {
+                    Gson gson = new Gson();
+                    InputStream is = new ByteArrayInputStream(s.getBytes());
+                    InputStreamReader isr = new InputStreamReader(is);
+                    LoginInformation response = gson.fromJson(isr, LoginInformation.class);
+
+
+                    //insert the token in Sharepreference
+
+                    try {
+
+
+                        SharePref sharePref = new SharePref(Login.this);
+
+                        sharePref.set_data("token", response.getLoginInformation().getAuthToken());
+                        sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
+                        sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
+                        sharePref.set_data("gender", response.getLoginInformation().getGender());
+                        sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
+                        sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
+
+
+                        // check the mobile verify screen
+
+                        if (response.getLoginInformation().getMobileVerified()) {
+                            startActivity(new Intent(Login.this, HomeScreen.class));
+                            finish();
+                        } else {
+
+                            startActivity(new Intent(Login.this, MobileVerification.class));
+                            // finish();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Utils.ShowAlert(Login.this, "Wrong email/password");
+                        buttonSubmit.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

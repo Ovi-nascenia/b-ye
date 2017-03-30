@@ -66,7 +66,7 @@
         <activity
             android:name=".activity.SendRequestActivity"
             android:label="@string/title_activity_send_request"
-            android:theme="@style/TabAppTheme" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.RequestSentFromMe"
             android:theme="@style/AppTheme" />

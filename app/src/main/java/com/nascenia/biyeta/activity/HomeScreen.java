@@ -186,6 +186,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         break;
 
                     case R.id.nav_faq:
+                        startActivity(new Intent(HomeScreen.this,FAQActivity.class));
                         break;
                     case R.id.nav_termsofuse:
 

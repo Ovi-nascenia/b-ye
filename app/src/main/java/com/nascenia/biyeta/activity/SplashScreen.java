@@ -49,7 +49,7 @@ public class SplashScreen extends AppCompatActivity {
 
                 /// login  && mobile  verification unsuccessful
                 ///or the first time appp open
-                if (sharePref.get_data("token").equals("key") && (sharePref.get_data("mobile_verified").equals("false")||sharePref.get_data("mobile_verified").equals("key"))) {
+                if (sharePref.get_data("token").equals("key") ||(sharePref.get_data("mobile_verified").equals("false")||sharePref.get_data("mobile_verified").equals("key"))) {
 
                    //
                     Intent loginIntent = new Intent(SplashScreen.this, Login.class);

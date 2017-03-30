@@ -94,7 +94,6 @@ public class Search extends Fragment {
                     snackbar.show();
 
 
-
                     if (Utils.isOnline(getContext()))
                         new GetData().execute();
                     else
