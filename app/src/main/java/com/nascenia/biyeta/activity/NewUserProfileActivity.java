@@ -264,7 +264,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                                 userProfileImage.post(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        Utils.scaleImage(NewUserProfileActivity.this, 1.2f, userProfileImage);
+                                                        Utils.scaleImage(NewUserProfileActivity.this, 2f, userProfileImage);
                                                     }
                                                 });
                                             }
