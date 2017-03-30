@@ -23,6 +23,7 @@ import com.nascenia.biyeta.activity.InboxSingleChat;
 import com.nascenia.biyeta.model.InboxAllThreads.Inbox;
 import com.nascenia.biyeta.model.communication.profile.CommunicationProfile;
 import com.nascenia.biyeta.model.communication.profile.Profile;
+import com.nascenia.biyeta.utils.Utils;
 
 /**
  * Created by god father on 3/16/2017.
@@ -50,7 +51,8 @@ public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdap
         final Profile profile = communicationProfile.getProfiles().get(position);
 
         holder.userName.setText(profile.getDisplayName());
-        holder.details.setText(profile.getAge() + "বয়স" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.time_date.setText(Utils.getTime(profile.getIsCreatedAt()));
         Glide.
                 with(holder.image.getContext()).
                 load("http://test.biyeta.com"+profile.getImage()).
