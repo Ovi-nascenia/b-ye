@@ -307,7 +307,7 @@ public class Match extends Fragment implements View.OnClickListener {
     }
 
     class SendConnectionRequest extends AsyncTask<String, String, String> {
-
+        Integer listposition;
 
         @Override
         protected void onPostExecute(String s) {
@@ -316,8 +316,8 @@ public class Match extends Fragment implements View.OnClickListener {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.has("message")) {
                     String mes = jsonObject.getJSONArray("message").getJSONObject(0).getString("detail");
-                    Toast.makeText(getContext(), "already sent", Toast.LENGTH_SHORT).show();
-                    profileArrayList.get(position).getRequestStatus().setMessage(mes);
+                    Toast.makeText(getContext(), mes, Toast.LENGTH_SHORT).show();
+                    profileArrayList.get(listposition).getRequestStatus().setMessage("আপনি যোগাযোগের  অনুরোধ  করেছেন");
                     biodataListAdapter.notifyDataSetChanged();
                 }
             } catch (JSONException e) {
@@ -329,10 +329,8 @@ public class Match extends Fragment implements View.OnClickListener {
         @Override
         protected String doInBackground(String... strings) {
 
-            Log.e("Fuck id", strings[1]);
-
             Integer id = Integer.parseInt(strings[1]);
-            Integer position = Integer.parseInt(strings[2]);
+            listposition= Integer.parseInt(strings[2]);
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("profile_id", id + "")
                     .build();

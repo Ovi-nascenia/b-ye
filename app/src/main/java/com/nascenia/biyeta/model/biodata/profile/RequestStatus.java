@@ -12,6 +12,19 @@ public class RequestStatus {
     @SerializedName("profile_request_id")
     @Expose
     private Integer profileRequestId;
+
+    public Integer getCommunicationRequestId() {
+        return communicationRequestId;
+    }
+
+    public void setCommunicationRequestId(Integer communicationRequestId) {
+        this.communicationRequestId = communicationRequestId;
+    }
+
+    @SerializedName("communication_request_id")
+    @Expose
+
+    private Integer communicationRequestId;
     @SerializedName("expired")
     @Expose
     private Boolean expired;
