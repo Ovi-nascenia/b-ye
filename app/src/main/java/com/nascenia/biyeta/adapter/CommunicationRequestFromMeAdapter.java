@@ -62,13 +62,14 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
         Profile profile = communcationRequestFromMeModel.getProfiles().get(position);
 
         holder.userName.setText(profile.getDisplayName());
-        holder.details.setText(profile.getAge() + "বয়স" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
         String gender = new SharePref(holder.image.getContext()).get_data("gender");
         Glide.
                 with(holder.image.getContext()).
                 load(Utils.Base_URL + profile.getImage()).
                 placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
                 into(holder.image);
+        holder.time_date.setText(Utils.getTime(profile.getIsCreatedAt()));
 //        holder.itemView.setTag(item);
 
 
