@@ -80,6 +80,11 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
             holder.call.setEnabled(false);
             holder.call.setText(profile.getRequestStatus().getMessage());
         }
+        else
+        {
+            holder.call.setEnabled(true);
+            holder.call.setText(profile.getRequestStatus().getMessage());
+        }
 
         if (position== biodataProfile.size()-1)
             LoadData();

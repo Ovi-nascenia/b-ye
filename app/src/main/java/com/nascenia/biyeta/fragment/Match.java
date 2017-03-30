@@ -81,6 +81,8 @@ public class Match extends Fragment implements View.OnClickListener {
     List<Profile> profileArrayList;
     Response response;
     int position;
+    CommunicationAdapter communicationAdapter;
+    Snackbar snackbar;
 
     public Match() {
         // Required empty public constructor
@@ -108,6 +110,13 @@ public class Match extends Fragment implements View.OnClickListener {
         progressBar = (ProgressBar) v.findViewById(R.id.simpleProgressBar);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.communication_profile_list);
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+            }
+        }));
+
 
         new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests");
 
@@ -122,7 +131,7 @@ public class Match extends Fragment implements View.OnClickListener {
 
         switch (id) {
             case R.id.biodata:
-                biodataPageTrack=1;
+                biodataPageTrack = 1;
                 progressBar.setVisibility(View.VISIBLE);
                 biodata.setTextColor(Color.WHITE);
                 biodata.setBackgroundResource(R.color.colorAccent);
@@ -137,7 +146,7 @@ public class Match extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.connection:
-                connectionPageTrack=1;
+                connectionPageTrack = 1;
 
                 progressBar.setVisibility(View.VISIBLE);
                 connection.setTextColor(Color.WHITE);
@@ -152,7 +161,6 @@ public class Match extends Fragment implements View.OnClickListener {
 
     }
 
-    CommunicationAdapter communicationAdapter;
     class LoadConnection extends AsyncTask<String, String, String> {
 
         @Override
@@ -165,9 +173,9 @@ public class Match extends Fragment implements View.OnClickListener {
             InputStream is = new ByteArrayInputStream(s.getBytes());
             InputStreamReader isr = new InputStreamReader(is);
             CommunicationProfile response = gson.fromJson(isr, CommunicationProfile.class);
-            toalConnectionPage=response.getTotalPage();
+            toalConnectionPage = response.getTotalPage();
 
-            if (connectionPageTrack == 1 ) {
+            if (connectionPageTrack == 1) {
                 toalConnectionPage = response.getTotalPage();
                 profileCommunicationList = response.getProfiles();
 
@@ -176,8 +184,7 @@ public class Match extends Fragment implements View.OnClickListener {
                     @Override
                     public void LoadData() {
                         connectionPageTrack++;
-                        if(connectionPageTrack>1 && connectionPageTrack<= toalConnectionPage)
-                        {
+                        if (connectionPageTrack > 1 && connectionPageTrack <= toalConnectionPage) {
                             new LoadConnection().execute("http://test.biyeta.com/api/v1/communication_requests?page=" + connectionPageTrack);
                             snackbar = Snackbar
                                     .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
@@ -191,12 +198,8 @@ public class Match extends Fragment implements View.OnClickListener {
                 recyclerView.setAdapter(communicationAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-            }
-
-            else if (connectionPageTrack >1 && connectionPageTrack <= toalConnectionPage )
-            {
-                for (int i=0 ; i<response.getProfiles().size(); i++)
-                {
+            } else if (connectionPageTrack > 1 && connectionPageTrack <= toalConnectionPage) {
+                for (int i = 0; i < response.getProfiles().size(); i++) {
                     profileCommunicationList.add(response.getProfiles().get(i));
                     communicationAdapter.notifyDataSetChanged();
                 }
@@ -225,14 +228,13 @@ public class Match extends Fragment implements View.OnClickListener {
             return null;
         }
     }
-    Snackbar snackbar;
 
     class LoadBiodataConnection extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("BiodataResponse",s);
+            Log.e("BiodataResponse", s);
 
             progressBar.setVisibility(View.GONE);
             Gson gson = new Gson();
@@ -244,16 +246,15 @@ public class Match extends Fragment implements View.OnClickListener {
 
             if (biodataPageTrack > 1 && biodataPageTrack <= toalBiodataPage) {
                 snackbar.dismiss();
-                Log.e("testOvi","show more data"+profileArrayList.size());
+                Log.e("testOvi", "show more data" + profileArrayList.size());
 
-               for (int i=0;i<biodataResponse.getProfiles().size();i++)
-                   profileArrayList.add(biodataResponse.getProfiles().get(i));
-                   biodataListAdapter.notifyDataSetChanged();
+                for (int i = 0; i < biodataResponse.getProfiles().size(); i++)
+                    profileArrayList.add(biodataResponse.getProfiles().get(i));
+                biodataListAdapter.notifyDataSetChanged();
 
 
-            }
-            else if (biodataPageTrack == 1) {
-                profileArrayList=biodataResponse.getProfiles();
+            } else if (biodataPageTrack == 1) {
+                profileArrayList = biodataResponse.getProfiles();
 
                 biodataListAdapter = new BiodataProfileAdapter(profileArrayList, R.layout.biodata_layout_item) {
                     @Override
@@ -330,7 +331,7 @@ public class Match extends Fragment implements View.OnClickListener {
         protected String doInBackground(String... strings) {
 
             Integer id = Integer.parseInt(strings[1]);
-            listposition= Integer.parseInt(strings[2]);
+            listposition = Integer.parseInt(strings[2]);
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("profile_id", id + "")
                     .build();
