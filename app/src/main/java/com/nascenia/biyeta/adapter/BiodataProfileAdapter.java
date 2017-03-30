@@ -19,9 +19,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.InboxSingleChat;
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
+import com.nascenia.biyeta.model.biodata.profile.Profile;
 import com.nascenia.biyeta.model.communication.profile.CommunicationProfile;
-import com.nascenia.biyeta.model.communication.profile.Profile;
+import com.nascenia.biyeta.utils.Utils;
+
+
+import java.util.List;
 
 /**
  * Created by god father on 3/16/2017.
@@ -29,14 +34,17 @@ import com.nascenia.biyeta.model.communication.profile.Profile;
 
 public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<BiodataProfileAdapter.ViewHolder> {
 
-    private BiodataProfile biodataProfile;
+    private List<Profile> biodataProfile;
     private int itemLayout;
     int position;
 
+
+
     public abstract void setConnectionRequest(int id,int position);
+    public abstract void LoadData();
 
 
-    public BiodataProfileAdapter(BiodataProfile biodataProfile, int itemLayout) {
+    public BiodataProfileAdapter(List<Profile> biodataProfile, int itemLayout) {
         this.biodataProfile = biodataProfile;
         this.itemLayout = itemLayout;
     }
@@ -52,24 +60,37 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
 
         position=position;
 
-        final com.nascenia.biyeta.model.biodata.profile.Profile profile = biodataProfile.getProfiles().get(position);
+         final Profile profile = biodataProfile.get(position);
 
         holder.userName.setText(profile.getDisplayName());
-        holder.details.setText(profile.getAge() + "বয়স" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.time_date.setText(Utils.getTime(profile.getIsCreatedAt()));
+
+
+        String gender = new SharePref(holder.image.getContext()).get_data("gender");
         Glide.
                 with(holder.image.getContext()).
-                load("http://test.biyeta.com"+profile.getImage()).
-                placeholder(R.drawable.fake_image).
+                load(Utils.Base_URL + profile.getImage()).
+                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
                 into(holder.image);
-//        holder.itemView.setTag(item);
 
 
-        Log.e("fuck",profile.getRequestStatus().getMessage()+"hello ");
+        Log.e("BiodataMessage",profile.getRequestStatus().getMessage()+"hello ");
         holder.call.setText(profile.getRequestStatus().getMessage());
-        if (null != profile.getRequestStatus().getProfileRequestId())
+        if (null != profile.getRequestStatus().getCommunicationRequestId() || profile.getRequestStatus().getMessage().toString().equals("আপনি যোগাযোগের  অনুরোধ  করেছেন")||
+                profile.getRequestStatus().getRejected()||profile.getRequestStatus().getExpired() || profile.getRequestStatus().getAccepted())
         {
             holder.call.setEnabled(false);
+            holder.call.setText(profile.getRequestStatus().getMessage());
         }
+        else
+        {
+            holder.call.setEnabled(true);
+            holder.call.setText(profile.getRequestStatus().getMessage());
+        }
+
+        if (position== biodataProfile.size()-1)
+            LoadData();
 
         final int finalPosition = position;
         holder.call.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +107,7 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
 
     @Override
     public int getItemCount() {
-        return biodataProfile.getProfiles().size();
+        return biodataProfile.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -24,8 +24,7 @@
                 android:layout_weight="1.5"
                 android:padding="@dimen/medium_padding"
                 android:scaleType="fitXY"
-                android:src="@drawable/profile"
-                android:tint="#4b3b3a" />
+                 />
 
             <LinearLayout
                 android:layout_width="0dp"

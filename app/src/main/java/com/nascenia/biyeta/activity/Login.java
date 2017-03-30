@@ -28,6 +28,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
@@ -62,7 +63,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     ImageView icon;
 
-    LinearLayout linearLayout;
     LoginButton buttonFacebookLogin;
     LinearLayout new_account;
     CallbackManager callbackManager;
@@ -118,6 +118,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         buttonFacebookLogin.setReadPermissions(Arrays.asList(
                 "public_profile", "email", "user_birthday"));
         callbackManager = CallbackManager.Factory.create();
+
 
 
         buttonFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -225,6 +226,48 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    void checkValidation() {
+
+        //get the user name from Edit text
+        String user_name = etUserName.getText().toString();
+        //get the password from Edit Text
+        String password = etPassword.getText().toString();
+
+        ///check the user_name and password is empty
+        if (user_name.trim().equals("") || password.trim().equals("")) {
+            //  Toast.makeText(Login.this,"Fill the both field",Toast.LENGTH_SHORT).show();
+            Utils.ShowAlert(Login.this, "Fill the both field");
+
+
+        }
+        //excute  the network operation
+        //
+        else {
+            if (!Utils.isOnline(Login.this)) {
+                Utils.ShowAlert(Login.this, "No Internet");
+            } else
+
+                new LoginRequest().execute(user_name, password);
+        }
+    }
+
+    public void loginWithFacebook() {
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        buttonSubmit.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+    }
 
     public class LoginByFacebook extends AsyncTask<String, String, String> {
 
@@ -236,7 +279,48 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.has("message")) {
-                    buttonFacebookLogin.setText(jsonObject.getJSONObject("message").get("detail").toString());
+                  Utils.ShowAlert(Login.this,jsonObject.getJSONObject("message").get("detail").toString());
+                    LoginManager.getInstance().logOut();
+                }
+                else
+                {
+                    Gson gson = new Gson();
+                    InputStream is = new ByteArrayInputStream(s.getBytes());
+                    InputStreamReader isr = new InputStreamReader(is);
+                    LoginInformation response = gson.fromJson(isr, LoginInformation.class);
+
+
+                    //insert the token in Sharepreference
+
+                    try {
+
+
+                        SharePref sharePref = new SharePref(Login.this);
+
+                        sharePref.set_data("token", response.getLoginInformation().getAuthToken());
+                        sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
+                        sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
+                        sharePref.set_data("gender", response.getLoginInformation().getGender());
+                        sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
+                        sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
+
+
+                        // check the mobile verify screen
+
+                        if (response.getLoginInformation().getMobileVerified()) {
+                            startActivity(new Intent(Login.this, HomeScreen.class));
+                            finish();
+                        } else {
+
+                            startActivity(new Intent(Login.this, MobileVerification.class));
+                            // finish();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Utils.ShowAlert(Login.this, "Wrong email/password");
+                        buttonSubmit.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -268,45 +352,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         }
     }
-
-
-    void checkValidation() {
-
-        //get the user name from Edit text
-        String user_name = etUserName.getText().toString();
-        //get the password from Edit Text
-        String password = etPassword.getText().toString();
-
-        ///check the user_name and password is empty
-        if (user_name.trim().equals("") || password.trim().equals("")) {
-            //  Toast.makeText(Login.this,"Fill the both field",Toast.LENGTH_SHORT).show();
-            Utils.ShowAlert(Login.this, "Fill the both field");
-
-
-        }
-        //excute  the network operation
-        //
-        else {
-            if (!Utils.isOnline(Login.this)) {
-                Utils.ShowAlert(Login.this, "No Internet");
-            } else
-
-                new LoginRequest().execute(user_name, password);
-        }
-    }
-
-
-    public void loginWithFacebook() {
-
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
 
     //
     private class LoginRequest extends AsyncTask<String, String, String> {
@@ -353,40 +398,55 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
+            Log.e("LoginData", s);
+
+
             try {
                 //convert string to json object
                 JSONObject jsonObject = new JSONObject(s);
-                Gson gson = new Gson();
-                InputStream is = new ByteArrayInputStream(s.getBytes());
-                InputStreamReader isr = new InputStreamReader(is);
-                LoginInformation response = gson.fromJson(isr, LoginInformation.class);
+
+                if (jsonObject.has("errors")) {
+                    Utils.ShowAlert(Login.this, jsonObject.getJSONArray("errors").getJSONObject(0).getString("detail"));
+                    buttonSubmit.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    Gson gson = new Gson();
+                    InputStream is = new ByteArrayInputStream(s.getBytes());
+                    InputStreamReader isr = new InputStreamReader(is);
+                    LoginInformation response = gson.fromJson(isr, LoginInformation.class);
 
 
-                //insert the token in Sharepreference
+                    //insert the token in Sharepreference
 
-                try {
-
-
-                    SharePref sharePref = new SharePref(Login.this);
+                    try {
 
 
-                    if (response.getLoginInformation().getMobileVerified()) {
+                        SharePref sharePref = new SharePref(Login.this);
+
                         sharePref.set_data("token", response.getLoginInformation().getAuthToken());
                         sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
                         sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
                         sharePref.set_data("gender", response.getLoginInformation().getGender());
                         sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
                         sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
-                        startActivity(new Intent(Login.this, HomeScreen.class));
-                        finish();
-                    } else {
+
+
                         // check the mobile verify screen
-                        startActivity(new Intent(Login.this, MobileVerification.class));
-                        // finish();
+
+                        if (response.getLoginInformation().getMobileVerified()) {
+                            startActivity(new Intent(Login.this, HomeScreen.class));
+                            finish();
+                        } else {
+
+                            startActivity(new Intent(Login.this, MobileVerification.class));
+                            // finish();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Utils.ShowAlert(Login.this, "Wrong email/password");
+                        buttonSubmit.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Utils.ShowAlert(Login.this, "Wrong email/password");
                 }
 
 
@@ -407,7 +467,5 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         }
     }
-
-
 }
 

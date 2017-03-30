@@ -20,21 +20,29 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.InboxSingleChat;
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.InboxAllThreads.Inbox;
 import com.nascenia.biyeta.model.communication.profile.CommunicationProfile;
 import com.nascenia.biyeta.model.communication.profile.Profile;
+import com.nascenia.biyeta.utils.Utils;
+
+import java.util.List;
 
 /**
  * Created by god father on 3/16/2017.
  */
 
-public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdapter.ViewHolder> {
+public abstract class  CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdapter.ViewHolder> {
 
-    private CommunicationProfile communicationProfile;
+    public abstract void LoadData();
+
+    private List<Profile> communicationProfile;
     private int itemLayout;
+    int currentUserSignedIn;
 
-    public CommunicationAdapter(CommunicationProfile CommunicationProfile, int itemLayout) {
+    public CommunicationAdapter( List<Profile> CommunicationProfile, int itemLayout,int cureentUserSignIn) {
         this.communicationProfile = CommunicationProfile;
+        this.currentUserSignedIn=cureentUserSignIn;
         this.itemLayout = itemLayout;
     }
 
@@ -47,16 +55,21 @@ public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdap
     @Override
     public void onBindViewHolder(final CommunicationAdapter.ViewHolder holder, final int position) {
 
-        final Profile profile = communicationProfile.getProfiles().get(position);
+        final Profile profile = communicationProfile.get(position);
 
         holder.userName.setText(profile.getDisplayName());
-        holder.details.setText(profile.getAge() + "বয়স" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.time_date.setText(Utils.getTime(profile.getIsCreatedAt()));
+        String gender = new SharePref(holder.image.getContext()).get_data("gender");
         Glide.
                 with(holder.image.getContext()).
-                load("http://test.biyeta.com"+profile.getImage()).
-                placeholder(R.drawable.fake_image).
+                load(Utils.Base_URL + profile.getImage()).
+                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
                 into(holder.image);
 //        holder.itemView.setTag(item);
+
+        if (position==communicationProfile.size()-1)
+            LoadData();
 
 
         holder.call.setOnClickListener(new View.OnClickListener() {
@@ -86,9 +99,9 @@ public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdap
             public void onClick(View view) {
                 Intent in=new Intent(holder.image.getContext(), InboxSingleChat.class);
                 Bundle bundle=new Bundle();
-                bundle.putInt("sender_id",communicationProfile.getCurrentUserSignedIn());
+                bundle.putInt("sender_id",currentUserSignedIn);
                 bundle.putInt("receiver_id",profile.getUserId());
-                bundle.putInt("current_user",communicationProfile.getCurrentUserSignedIn());
+                bundle.putInt("current_user",currentUserSignedIn);
                 bundle.putString("userName",profile.getDisplayName());
                 in.putExtras(bundle);
                 holder.image.getContext().startActivity(in);
@@ -98,7 +111,7 @@ public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdap
 
     @Override
     public int getItemCount() {
-        return communicationProfile.getProfiles().size();
+        return communicationProfile.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

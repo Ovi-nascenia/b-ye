@@ -186,6 +186,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         break;
 
                     case R.id.nav_faq:
+                        startActivity(new Intent(HomeScreen.this,FAQActivity.class));
                         break;
                     case R.id.nav_termsofuse:
 
@@ -211,6 +212,19 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         });
 
 
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+
+        if(drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+            drawerLayout.closeDrawer(Gravity.RIGHT);
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -261,7 +275,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         .replace(R.id.fragmentParentViewGroup, new Inbox())
                         .commit();
 //
-//                inboxImageView.setColorFilter(Color.WHITE);
+                inboxImageView.setColorFilter(Color.WHITE);
 //
 //                Dialog dialog = new Dialog(HomeScreen.this);
 //                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

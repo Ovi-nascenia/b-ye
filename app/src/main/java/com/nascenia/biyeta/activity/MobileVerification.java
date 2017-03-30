@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,8 +80,20 @@ public class MobileVerification extends CustomActionBarActivity {
     }
 
     private void requestVerificationCode(String task) {
-        SharePref sharePref = new SharePref(MobileVerification.this);
-        new verificationCodeRequest().execute(phoneNumber.getNumber(),sharePref.get_data("token"), task);
+        if (isValidPhoneNumber(phoneNumber.getNumber())) {
+            SharePref sharePref = new SharePref(MobileVerification.this);
+            new verificationCodeRequest().execute(phoneNumber.getNumber(), sharePref.get_data("token"), task);
+        }
+        else {
+           Toast.makeText(MobileVerification.this,"Enter a valid Mobile Number",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean isValidPhoneNumber(CharSequence phoneNumber) {
+        if (!TextUtils.isEmpty(phoneNumber)) {
+            return Patterns.PHONE.matcher(phoneNumber).matches();
+        }
+        return false;
     }
 
     private class verificationCodeRequest extends AsyncTask<String,String,String>
@@ -160,7 +174,7 @@ public class MobileVerification extends CustomActionBarActivity {
                     retry_time = responseObj.getJSONObject("mobile_verification_information").getString("again_retry_time");
                     retry_time_diff = (Long.parseLong(retry_time) - Long.parseLong(server_time))/(60*60); //convert to hours
                     if(try_count >= 3) {
-                        Utils.ShowAlert(MobileVerification.this, "Please retry after " + retry_time_diff + " hour(s)");
+                        Utils.ShowAlert(MobileVerification.this, R.string.please_retry_after+ retry_time_diff + " hour(s)");
                         return;
                     }
                 }
@@ -170,6 +184,8 @@ public class MobileVerification extends CustomActionBarActivity {
                         String message = responseObj.getJSONObject("message").getString("detail");
                         //Utils.ShowAlert(MobileVerification.this, message);
                         Toast.makeText(MobileVerification.this, message, Toast.LENGTH_SHORT).show();
+                        SharePref sharePref=new SharePref(MobileVerification.this);
+                        sharePref.set_data("mobile_verified","true");
                         startActivity(new Intent(MobileVerification.this, HomeScreen.class));
                         finish();
                     }

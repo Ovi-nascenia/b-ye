@@ -23,9 +23,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"
                 android:padding="@dimen/medium_padding"
-                android:scaleType="fitXY"
-                android:src="@drawable/profile"
-                android:tint="#4b3b3a" />
+                android:scaleType="fitXY"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -58,7 +56,7 @@
                         android:paddingTop="@dimen/medium_padding"
                         android:text="27 march'17"
                         android:textColor="#7c7474"
-                        android:textSize="8sp"
+                        android:textSize="10sp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true" />

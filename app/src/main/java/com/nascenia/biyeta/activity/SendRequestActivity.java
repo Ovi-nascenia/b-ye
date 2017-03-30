@@ -22,7 +22,7 @@ import com.nascenia.biyeta.fragment.CommunicationRequestFragment;
 import com.nascenia.biyeta.model.RequestSenderIds;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 
-public class SendRequestActivity extends AppCompatActivity {
+public class SendRequestActivity extends CustomActionBarActivity {
 
 
     private TabLayout tabLayout;
@@ -40,8 +40,7 @@ public class SendRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_request);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setUpToolBar("আপনাকে পাঠানো অনুরোধ",this);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         container = (LinearLayout) findViewById(R.id.fragment_container);
 
@@ -93,6 +92,11 @@ public class SendRequestActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    void setUpToolBar(String title, Context context) {
+        super.setUpToolBar(title, context);
     }
 
     private void setCustomLayoutOnTabItem() {

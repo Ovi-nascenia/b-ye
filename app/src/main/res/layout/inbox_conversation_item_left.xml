@@ -11,7 +11,7 @@
         android:id="@+id/lblMsgFrom"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/default_profile_female_icon"
+        android:src="@drawable/profile_icon_female"
         android:textColor="@color/lblFromName"
         android:textStyle="italic"
         android:padding="5dp"/>
