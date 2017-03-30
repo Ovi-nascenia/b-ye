@@ -58,9 +58,7 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
                 load(Utils.Base_URL + prfile.getImage()).
                 placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
                 into(holder.profile_image);
-        ;
-
-    }
+        }
 
     @Override
     public int getItemCount() {
