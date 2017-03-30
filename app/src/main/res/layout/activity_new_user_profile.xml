@@ -145,7 +145,10 @@
                         <ImageView
                             android:id="@+id/backPreviousActivityImage"
                             android:layout_width="@dimen/small_image_size"
-                            android:layout_height="@dimen/small_image_size" />
+                            android:layout_height="@dimen/small_image_size"
+                            android:onClick="backBtnAction"
+                            android:src="@drawable/back_arrow"
+                            android:tint="@color/white" />
 
                         <ImageView
                             android:id="@+id/likeImage"
@@ -245,6 +248,7 @@
                                 android:textStyle="bold" />
 
                             <RelativeLayout
+                                android:id="@+id/mobile_layout"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1">
@@ -268,6 +272,7 @@
                             </RelativeLayout>
 
                             <RelativeLayout
+                                android:id="@+id/facebook_layout"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1">
@@ -292,6 +297,7 @@
 
 
                             <RelativeLayout
+                                android:id="@+id/mail_layout"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1">

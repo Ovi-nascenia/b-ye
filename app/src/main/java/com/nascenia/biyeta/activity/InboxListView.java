@@ -1,6 +1,7 @@
 package com.nascenia.biyeta.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.InboxListAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.constant.Constant;
+import com.nascenia.biyeta.fragment.RecyclerItemClickListener;
 import com.nascenia.biyeta.model.InboxAllThreads.Example;
 import com.nascenia.biyeta.model.InboxAllThreads.Inbox;
 import com.nascenia.biyeta.utils.Utils;
@@ -72,12 +74,15 @@ public class InboxListView extends CustomActionBarActivity {
 
     void setUpId() {
         recyclerView = (RecyclerView) findViewById(R.id.all_message_thread);
+
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Message");
 
 
     }
-
+    Example response;
     class LoadMessageThread extends AsyncTask<String, String, String> {
 
         @Override
@@ -86,7 +91,7 @@ public class InboxListView extends CustomActionBarActivity {
             Gson gson = new Gson();
             InputStream is = new ByteArrayInputStream(s.getBytes());
             InputStreamReader isr = new InputStreamReader(is);
-            Example response = gson.fromJson(isr, Example.class);
+             response = gson.fromJson(isr, Example.class);
 
 
             InboxListAdapter inboxListAdapter = new InboxListAdapter(response, R.layout.inbox_item);

@@ -1,6 +1,7 @@
 package com.nascenia.biyeta.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.nascenia.biyeta.adapter.CommunicationRequestFromMeAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.fragment.CommunicationRequestFragment;
+import com.nascenia.biyeta.fragment.RecyclerItemClickListener;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
 import com.nascenia.biyeta.model.communication_request_from_me.CommuncationRequestFromMeModel;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -78,6 +80,31 @@ public class RequestSentFromMe extends CustomActionBarActivity {
         tabLayout.addTab(tabLayout.newTab());
 
         setCustomLayoutOnTabItem();
+
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getBaseContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                if (tabLayout.getSelectedTabPosition() == 0) {
+
+                    Intent intent = new Intent(RequestSentFromMe.this, NewUserProfileActivity.class);
+                    intent.putExtra("id", biodataResponse.getProfiles().get(position).getId() + "");
+                    intent.putExtra("user_name", biodataResponse.getProfiles().get(position).getDisplayName());
+                    intent.putExtra("PROFILE_EDIT_OPTION", false);
+                    startActivity(intent);
+                } else {
+
+                    Intent intent = new Intent(RequestSentFromMe.this, NewUserProfileActivity.class);
+                    intent.putExtra("id", communicationResponse.getProfiles().get(position).getId() + "");
+                    intent.putExtra("user_name", communicationResponse.getProfiles().get(position).getDisplayName());
+                    intent.putExtra("PROFILE_EDIT_OPTION", false);
+                    startActivity(intent);
+                }
+
+
+            }
+        }));
 
     }
 
@@ -141,6 +168,8 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 
     BiodatarequestFromMe inboxListAdapter;
     BiodataProfile biodataResponse;
+    CommuncationRequestFromMeModel communicationResponse;
+
     class LoadBioDataConnection extends AsyncTask<String, String, String> {
 
         Gson gson = new Gson();
@@ -154,7 +183,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-              ////Toast.makeText(RequestSentFromMe.this,s,//Toast.LENGTH_SHORT).show();
+            ////Toast.makeText(RequestSentFromMe.this,s,//Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
 
             if (position == 0) {
@@ -162,21 +191,18 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
 
-                    if(jsonObject.has("message"))
-                    {
+                    if (jsonObject.has("message")) {
                         //Toast.makeText(RequestSentFromMe.this,"null",//Toast.LENGTH_SHORT).show();
                         findViewById(R.id.no_message).setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         findViewById(R.id.no_message).setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
-                         biodataResponse  = gson.fromJson(isr, BiodataProfile.class);
+                        biodataResponse = gson.fromJson(isr, BiodataProfile.class);
 
                         inboxListAdapter = new BiodatarequestFromMe(biodataResponse, R.layout.biodata_request_from_me) {
                             @Override
@@ -212,23 +238,20 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                     JSONObject jsonObject = new JSONObject(s);
 
 
-                    if (jsonObject.has("message"))
-                    {
+                    if (jsonObject.has("message")) {
                         //Toast.makeText(RequestSentFromMe.this,"null",//Toast.LENGTH_SHORT).show();
                         findViewById(R.id.no_message).setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         findViewById(R.id.no_message).setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         //Toast.makeText(RequestSentFromMe.this,"Not null",//Toast.LENGTH_SHORT).show();
                         //Toast.makeText(RequestSentFromMe.this, s, //Toast.LENGTH_SHORT).show();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
-                        CommuncationRequestFromMeModel response = gson.fromJson(isr, CommuncationRequestFromMeModel.class);
+                        communicationResponse = gson.fromJson(isr, CommuncationRequestFromMeModel.class);
 
-                        CommunicationRequestFromMeAdapter communicationRequestFromMeAdapter = new CommunicationRequestFromMeAdapter(response, R.layout.communication_request_sent_from_me_item);
+                        CommunicationRequestFromMeAdapter communicationRequestFromMeAdapter = new CommunicationRequestFromMeAdapter(communicationResponse, R.layout.communication_request_sent_from_me_item);
                         recyclerView.setAdapter(communicationRequestFromMeAdapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -278,7 +301,6 @@ public class RequestSentFromMe extends CustomActionBarActivity {
             return null;
         }
     }
-
 
 
 }

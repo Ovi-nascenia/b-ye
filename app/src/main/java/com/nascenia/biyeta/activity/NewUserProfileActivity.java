@@ -98,6 +98,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private LinearLayout layoutSendSmiley;
     private UserProfile userProfile;
 
+    private RelativeLayout mobileLayout, facebookLayout, mailLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,11 +165,18 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     getIntent().getExtras().getString("id"));
 
 
+
+
         } else {
             Utils.ShowAlert(getBaseContext(), "please check your internet connection");
         }
 
 
+    }
+
+
+    public void backBtnAction(View v){
+        finish();
     }
 
     private void initView() {
@@ -212,6 +221,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
             }
         });
+
+        mobileLayout = (RelativeLayout) findViewById(R.id.mobile_layout);
+        facebookLayout = (RelativeLayout) findViewById(R.id.facebook_layout);
+        mailLayout = (RelativeLayout) findViewById(R.id.mail_layout);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         generalInfoRecyclerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
@@ -280,6 +293,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     Response response = new ResourceProvider(NewUserProfileActivity.this).fetchGetResponse(url);
                     ResponseBody responseBody = response.body();
                     final String responseValue = responseBody.string();
+                    Log.i("responsevalue", responseValue);
                     responseBody.close();
                     userProfile = new Gson().fromJson(responseValue, UserProfile.class);
                     NewUserProfileActivity.this.runOnUiThread(new Runnable() {

@@ -356,11 +356,12 @@ public class Match extends Fragment implements View.OnClickListener {
             try {
                 response = client.newCall(request).execute();
                 String jsonData = response.body().string();
-                Log.e("fuck", jsonData);
+
+
                 return jsonData;
 
             } catch (Exception e) {
-                Log.e("Fuck", e.toString());
+
                 return null;
 
             }
