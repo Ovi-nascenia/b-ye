@@ -85,7 +85,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private Response responseStatus;
 
     private LinearLayout layoutSendSmiley;
-    private int profileId;
     private UserProfile userProfile;
 
 
@@ -123,6 +122,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
+        favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
 
         layoutSendSmiley.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,8 +143,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             }
         });
 
-        favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
-
 
         favoriteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +151,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 if (!userProfile.getProfile().isIsFavorite()) {
 
                     NetWorkOperation.postMethod(getActivity(),
-                            "http://test.biyeta.com/api/v1/smiles",
+                            "http://test.biyeta.com/api/v1/favorites",
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
                             "Token token=" + sharePref.get_data("token"));
@@ -340,13 +338,13 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         if (this.userProfile.getProfile().isIsFavorite()) {
 
             favoriteImageView.setEnabled(false);
-            //change fav icon
+            favoriteImageView.setImageResource(R.drawable.red_favorite);
         }
 
         if (this.userProfile.getProfile().isIsSmileSent()) {
 
             layoutSendSmiley.setEnabled(false);
-            //change smiley  icon
+            emoIconImageView.setImageResource(R.drawable.red_smile);
         }
 
         if (result && clickableButtonIdentifier == 1 && id != null) {

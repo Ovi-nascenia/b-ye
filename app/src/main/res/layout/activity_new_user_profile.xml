@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="@dimen/medium_margin"
-                        android:text="hellow world"
+                        android:text=""
                         android:textColor="#FFFFFF"
                         android:textSize="@dimen/medium_textsize"
                         android:textStyle="bold" />

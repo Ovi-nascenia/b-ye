@@ -113,10 +113,12 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
         layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
+        favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
 
         layoutSendSmiley.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
                     NetWorkOperation.postMethod(getActivity(),
@@ -127,12 +129,12 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                     layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
 
-                }
 
+                }
             }
         });
 
-        favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
+
         favoriteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,13 +142,12 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 if (!userProfile.getProfile().isIsFavorite()) {
 
                     NetWorkOperation.postMethod(getActivity(),
-                            "http://test.biyeta.com/api/v1/smiles",
+                            "http://test.biyeta.com/api/v1/favorites",
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
                             "Token token=" + sharePref.get_data("token"));
                     favoriteImageView.setEnabled(false);
                     favoriteImageView.setImageResource(R.drawable.red_favorite);
-
                 }
 
             }

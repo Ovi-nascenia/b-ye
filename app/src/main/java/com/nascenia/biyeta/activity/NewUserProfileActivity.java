@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.nascenia.biyeta.R.id.emoIconImage;
+
 /**
  * Created by saiful on 3/3/17.
  */
@@ -68,7 +71,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private ViewPager viewPager;
 
     private ImageView indicatorImage1, indicatorImage2, indicatorImage3, userProfileImage,
-            cancelImageView, acceptImageView;
+            cancelImageView, acceptImageView, emoIconImageView, favoriteImageView;
 
     private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView,
             familyMemberInfoRecylerView, communicationInfoRecylerview,
@@ -88,11 +91,12 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private Button finalResultButton;
 
     private RelativeLayout requestSendButtonsLayout;
-    private UserProfile userProfile;
-
 
     private SharePref sharePref;
     private final int REQUEST_PHONE_CALL = 999999;
+
+    private LinearLayout layoutSendSmiley;
+    private UserProfile userProfile;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -167,6 +171,47 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     }
 
     private void initView() {
+
+        layoutSendSmiley = (LinearLayout) findViewById(R.id.layoutSendSmiley);
+        emoIconImageView = (ImageView) findViewById(emoIconImage);
+        favoriteImageView = (ImageView) findViewById(R.id.likeImage);
+        layoutSendSmiley.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!userProfile.getProfile().isIsSmileSent()) {
+
+                    NetWorkOperation.postMethod(getBaseContext(),
+                            "http://test.biyeta.com/api/v1/smiles",
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"));
+                    layoutSendSmiley.setEnabled(false);
+                    emoIconImageView.setImageResource(R.drawable.red_smile);
+
+
+                }
+            }
+        });
+
+
+        favoriteImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!userProfile.getProfile().isIsFavorite()) {
+
+                    NetWorkOperation.postMethod(getBaseContext(),
+                            "http://test.biyeta.com/api/v1/favorites",
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"));
+                    favoriteImageView.setEnabled(false);
+                    favoriteImageView.setImageResource(R.drawable.red_favorite);
+                }
+
+            }
+        });
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         generalInfoRecyclerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
@@ -246,6 +291,19 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     .load(Utils.Base_URL +
                                             sharePref.get_data("profile_picture"))
                                     .into(selfImageView);
+
+
+                            if (userProfile.getProfile().isIsFavorite()) {
+
+                                favoriteImageView.setEnabled(false);
+                                favoriteImageView.setImageResource(R.drawable.red_favorite);
+                            }
+
+                            if (userProfile.getProfile().isIsSmileSent()) {
+
+                                layoutSendSmiley.setEnabled(false);
+                                emoIconImageView.setImageResource(R.drawable.red_smile);
+                            }
 
 
                             if (userProfile.getProfile().getPersonalInformation().getAboutYourself() != null) {

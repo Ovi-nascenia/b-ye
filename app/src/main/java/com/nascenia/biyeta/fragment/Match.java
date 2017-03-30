@@ -1,5 +1,6 @@
 package com.nascenia.biyeta.fragment;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -26,7 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.nascenia.biyeta.activity.HomeScreen;
 import com.nascenia.biyeta.activity.InboxListView;
+import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.activity.RequestSentFromMe;
 import com.nascenia.biyeta.activity.Search_Filter;
 import com.nascenia.biyeta.activity.UserProfileActivity;
@@ -113,6 +116,10 @@ public class Match extends Fragment implements View.OnClickListener {
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+
+
+
+
 
             }
         }));
