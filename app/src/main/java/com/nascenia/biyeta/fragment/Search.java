@@ -46,6 +46,8 @@ import com.nascenia.biyeta.activity.Search_Filter;
 public class Search extends Fragment {
 
     private static int totalPageNumber = 0;
+
+
     private final OkHttpClient client = new OkHttpClient();
     private RecyclerView recyclerView;
     private RelativeLayout relativeLayout;
@@ -91,7 +93,7 @@ public class Search extends Fragment {
                     snack_view.addView(new ProgressBar(getContext()));
                     snackbar.show();
 
-                    snackbar.show();
+
 
                     if (Utils.isOnline(getContext()))
                         new GetData().execute();

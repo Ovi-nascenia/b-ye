@@ -20,9 +20,12 @@ import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.InboxSingleChat;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
+import com.nascenia.biyeta.model.biodata.profile.Profile;
 import com.nascenia.biyeta.model.communication.profile.CommunicationProfile;
-import com.nascenia.biyeta.model.communication.profile.Profile;
 import com.nascenia.biyeta.utils.Utils;
+
+
+import java.util.List;
 
 /**
  * Created by god father on 3/16/2017.
@@ -30,14 +33,17 @@ import com.nascenia.biyeta.utils.Utils;
 
 public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<BiodataProfileAdapter.ViewHolder> {
 
-    private BiodataProfile biodataProfile;
+    private List<Profile> biodataProfile;
     private int itemLayout;
     int position;
 
+
+
     public abstract void setConnectionRequest(int id,int position);
+    public abstract void LoadData();
 
 
-    public BiodataProfileAdapter(BiodataProfile biodataProfile, int itemLayout) {
+    public BiodataProfileAdapter(List<Profile> biodataProfile, int itemLayout) {
         this.biodataProfile = biodataProfile;
         this.itemLayout = itemLayout;
     }
@@ -53,7 +59,7 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
 
         position=position;
 
-        final com.nascenia.biyeta.model.biodata.profile.Profile profile = biodataProfile.getProfiles().get(position);
+         final Profile profile = biodataProfile.get(position);
 
         holder.userName.setText(profile.getDisplayName());
         holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
@@ -68,10 +74,13 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
 
         Log.e("fuck",profile.getRequestStatus().getMessage()+"hello ");
         holder.call.setText(profile.getRequestStatus().getMessage());
-        if (null != profile.getRequestStatus().getProfileRequestId())
-        {
-            holder.call.setEnabled(false);
-        }
+//        if (null != profile.getRequestStatus().getProfileRequestId())
+//        {
+//            holder.call.setEnabled(false);
+//        }
+
+        if (position== biodataProfile.size()-1)
+            LoadData();
 
         final int finalPosition = position;
         holder.call.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +97,7 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
 
     @Override
     public int getItemCount() {
-        return biodataProfile.getProfiles().size();
+        return biodataProfile.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

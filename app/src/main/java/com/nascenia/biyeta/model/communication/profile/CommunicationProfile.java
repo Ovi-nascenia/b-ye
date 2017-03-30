@@ -14,6 +14,22 @@ public class CommunicationProfile {
     @Expose
     private Integer currentUserSignedIn;
 
+
+    @SerializedName("total_page")
+    @Expose
+    private Integer totalPage;
+
+
+    public Integer getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(Integer total_page) {
+        this.totalPage = total_page;
+    }
+
+
+
     public List<Profile> getProfiles() {
         return profiles;
     }
