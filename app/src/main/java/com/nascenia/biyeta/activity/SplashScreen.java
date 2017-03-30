@@ -46,14 +46,29 @@ public class SplashScreen extends AppCompatActivity {
                 // Start your app main activity
                 //
                 SharePref sharePref = new SharePref(SplashScreen.this);
-                if (sharePref.get_data("token").equals("key")) {
-                    Intent i = new Intent(SplashScreen.this, Login.class);
-                    startActivity(i);
+
+                /// login  && mobile  verification unsuccessful
+                ///or the first time appp open
+                if (sharePref.get_data("token").equals("key") && (sharePref.get_data("mobile_verified").equals("false")||sharePref.get_data("mobile_verified").equals("key"))) {
+
+                   //
+                    Intent loginIntent = new Intent(SplashScreen.this, Login.class);
+                    startActivity(loginIntent);
                     ///Kill the current activity
                     finish();
-                } else {
-                    Intent i = new Intent(SplashScreen.this, HomeScreen.class);
-                    startActivity(i);
+                }
+
+                /// login  successfull and  mobile  verification unsuccessful
+                else if ( !sharePref.get_data("token").equals("key") && sharePref.get_data("mobile_verified").equals("false") ){
+                    Intent mobileVerificationIntent = new Intent(SplashScreen.this, MobileVerification.class);
+                    startActivity(mobileVerificationIntent);
+                    finish();
+                }
+
+                //login and mobile verification is true/
+                else {
+                    Intent homeIntent = new Intent(SplashScreen.this, HomeScreen.class);
+                    startActivity(homeIntent);
                     finish();
                 }
             }

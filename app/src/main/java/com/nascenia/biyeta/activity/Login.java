@@ -62,7 +62,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     ImageView icon;
 
-    LinearLayout linearLayout;
     LoginButton buttonFacebookLogin;
     LinearLayout new_account;
     CallbackManager callbackManager;
@@ -126,7 +125,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Log.e("LoginOvi", loginResult.getAccessToken().toString());
 
 
-
                 // App code
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
@@ -137,13 +135,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                                 // Application code
                                 try {
-                                    String uid=loginResult.getAccessToken().getUserId();
+                                    String uid = loginResult.getAccessToken().getUserId();
                                     String email = object.getString("email");
                                     String birthday = object.getString("birthday");
 
-                                    new LoginByFacebook().execute("http://192.168.1.68:3000/api/v1/facebook_authorization/authorize",uid,"facebook",email);
+                                    new LoginByFacebook().execute("http://192.168.1.68:3000/api/v1/facebook_authorization/authorize", uid, "facebook", email);
 
-                                    Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken().getToken()+"");
+                                    Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken().getToken() + "");
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -226,55 +224,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-
-    public  class  LoginByFacebook extends AsyncTask<String,String,String>
-    {
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.has("message"))
-                {
-                    buttonFacebookLogin.setText(jsonObject.getJSONObject("message").get("detail").toString());
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected String doInBackground(String... parameters) {
-
-
-            RequestBody requestBody=new FormEncodingBuilder()
-                    .add("uid",parameters[1])
-                    .add("provider",parameters[2])
-                    .add("email",parameters[3])
-                    .build();
-
-
-
-            Request request=new Request.Builder().url(parameters[0]).post(requestBody).build();
-
-            try {
-                Response response=client.newCall(request).execute();
-                String responseString = response.body().string();
-                return responseString;
-            } catch (IOException e) {
-
-                e.printStackTrace();
-                return null;
-            }
-
-        }
-    }
-
-
-
     void checkValidation() {
 
         //get the user name from Edit text
@@ -300,7 +249,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-
     public void loginWithFacebook() {
 
 
@@ -312,6 +260,55 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        buttonSubmit.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+    }
+
+    public class LoginByFacebook extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.has("message")) {
+                    buttonFacebookLogin.setText(jsonObject.getJSONObject("message").get("detail").toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... parameters) {
+
+
+            RequestBody requestBody = new FormEncodingBuilder()
+                    .add("uid", parameters[1])
+                    .add("provider", parameters[2])
+                    .add("email", parameters[3])
+                    .build();
+
+
+            Request request = new Request.Builder().url(parameters[0]).post(requestBody).build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                return responseString;
+            } catch (IOException e) {
+
+                e.printStackTrace();
+                return null;
+            }
+
+        }
+    }
 
     //
     private class LoginRequest extends AsyncTask<String, String, String> {
@@ -358,40 +355,55 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
+            Log.e("LoginData", s);
+
+
             try {
                 //convert string to json object
                 JSONObject jsonObject = new JSONObject(s);
-                Gson gson = new Gson();
-                InputStream is = new ByteArrayInputStream(s.getBytes());
-                InputStreamReader isr = new InputStreamReader(is);
-                LoginInformation response = gson.fromJson(isr, LoginInformation.class);
+
+                if (jsonObject.has("errors")) {
+                    Utils.ShowAlert(Login.this, jsonObject.getJSONArray("errors").getJSONObject(0).getString("detail"));
+                    buttonSubmit.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    Gson gson = new Gson();
+                    InputStream is = new ByteArrayInputStream(s.getBytes());
+                    InputStreamReader isr = new InputStreamReader(is);
+                    LoginInformation response = gson.fromJson(isr, LoginInformation.class);
 
 
-                //insert the token in Sharepreference
+                    //insert the token in Sharepreference
 
-                try {
-
-
-                    SharePref sharePref = new SharePref(Login.this);
+                    try {
 
 
-                    if (response.getLoginInformation().getMobileVerified()) {
+                        SharePref sharePref = new SharePref(Login.this);
+
                         sharePref.set_data("token", response.getLoginInformation().getAuthToken());
                         sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
                         sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
                         sharePref.set_data("gender", response.getLoginInformation().getGender());
                         sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
                         sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
-                        startActivity(new Intent(Login.this, HomeScreen.class));
-                        finish();
-                    } else {
+
+
                         // check the mobile verify screen
-                        startActivity(new Intent(Login.this, MobileVerification.class));
-                        // finish();
+
+                        if (response.getLoginInformation().getMobileVerified()) {
+                            startActivity(new Intent(Login.this, HomeScreen.class));
+                            finish();
+                        } else {
+
+                            startActivity(new Intent(Login.this, MobileVerification.class));
+                            // finish();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Utils.ShowAlert(Login.this, "Wrong email/password");
+                        buttonSubmit.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Utils.ShowAlert(Login.this, "Wrong email/password");
                 }
 
 
@@ -412,7 +424,5 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         }
     }
-
-
 }
 

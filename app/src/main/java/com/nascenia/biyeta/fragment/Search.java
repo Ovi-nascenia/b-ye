@@ -208,7 +208,10 @@ public class Search extends Fragment {
                 relativeLayout.setVisibility(View.GONE);
             }
         } catch (JSONException e) {
+
             Utils.ShowAlert(getContext(), "No Result Found");
+            emptyText.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
         }
     }
 

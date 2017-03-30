@@ -1,5 +1,6 @@
 package com.nascenia.biyeta.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -598,11 +599,13 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
     //fetch data from
     class Get_Data extends AsyncTask<String, String, String> {
+        ProgressDialog progress = new ProgressDialog(Search_Filter.this);
         @Override
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
+            progress.dismiss();
             Log.i("post", res + "  data");
-            Toast.makeText(getBaseContext(), res + "  data", Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getBaseContext(), res + "  data", Toast.LENGTH_LONG).show();
             parse_data(res);
 
 
@@ -611,6 +614,11 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progress.setMessage("Please Wait ");
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setIndeterminate(true);
+            progress.show();
+
 
 
         }
