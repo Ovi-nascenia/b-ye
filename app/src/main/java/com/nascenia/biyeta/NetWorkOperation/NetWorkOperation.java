@@ -148,4 +148,60 @@ public class NetWorkOperation {
         }
     }
 
+    public static void postMethod(Context context,
+                                  String url,
+                                  String profileId,
+                                  String header,
+                                  String hederParam) {
+
+        NetWorkOperation.context = context;
+
+        new PostTask().execute(url,
+                profileId,
+                header,
+                hederParam);
+
+
+    }
+
+
+    private static class PostTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            Response response;
+
+            RequestBody requestBody = new FormEncodingBuilder()
+                    .add("profile_id", params[1])
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(params[0])
+                    .addHeader(params[2], params[3])
+                    .post(requestBody)
+                    .build();
+            try {
+                response = client.newCall(request).execute();
+                String jsonData = response.body().string();
+                return jsonData;
+
+            } catch (Exception e) {
+                return null;
+
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+    }
 }

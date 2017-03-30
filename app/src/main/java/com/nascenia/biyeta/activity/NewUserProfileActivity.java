@@ -81,7 +81,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private TextView userProfileDescriptionText, userNameTextView, familyInfoTagTextView,
             communicationTagTextview, otherInfoTagTextview, cancelTextView, acceptTextView;
 
-    private ImageView profileViewerPersonImageView, editUserProfileImageView;
+    private ImageView profileViewerPersonImageView, editUserProfileImageView, selfImageView;
 
     private CardView familyCardView, communicationCarview, otherInfoCardView;
 
@@ -90,13 +90,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private RelativeLayout requestSendButtonsLayout;
     private UserProfile userProfile;
 
-    /*
-    *
-    * 0 for profile request(bio-data request)
-    * 1 for communication request
-    *
-    * */
-    private int clickbleButtonIdentifier;
 
     private SharePref sharePref;
     private final int REQUEST_PHONE_CALL = 999999;
@@ -165,12 +158,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/" +
                     getIntent().getExtras().getString("id"));
 
-            Log.i("useid", getIntent().getExtras().getString("id") +
-                    " userid" + sharePref.get_data("user_id"));
-
-           /* fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/" +
-                    "400");*/
-
 
         } else {
             Utils.ShowAlert(getBaseContext(), "please check your internet connection");
@@ -211,6 +198,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         otherInfoCardView = (CardView) findViewById(R.id.other_info_cardview);
 
         editUserProfileImageView = (ImageView) findViewById(R.id.edit_profile_image);
+        selfImageView = (ImageView) findViewById(R.id.self_image);
 
 
         cancelImageView = (ImageView) findViewById(R.id.cancel_imageview);
@@ -247,12 +235,17 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     Response response = new ResourceProvider(NewUserProfileActivity.this).fetchGetResponse(url);
                     ResponseBody responseBody = response.body();
                     final String responseValue = responseBody.string();
-                    Log.i("responsedata", "response value: " + responseValue + " ");
                     responseBody.close();
                     userProfile = new Gson().fromJson(responseValue, UserProfile.class);
                     NewUserProfileActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+
+
+                            Glide.with(getBaseContext())
+                                    .load(Utils.Base_URL +
+                                            sharePref.get_data("profile_picture"))
+                                    .into(selfImageView);
 
 
                             if (userProfile.getProfile().getPersonalInformation().getAboutYourself() != null) {
@@ -262,16 +255,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
 
-                                //Loading image from below url into imageView
-                                Log.i("imageurluser", Utils.Base_URL +
-                                        userProfile.getProfile().getPersonalInformation().getImage()
-                                                .getProfilePicture());
 
-//                                Glide.with(getBaseContext())
-//                                        .load(Utils.Base_URL +
-//                                                userProfile.getProfile().getPersonalInformation().getImage()
-//                                                        .getProfilePicture())
-//                                        .into(userProfileImage);
                                 Picasso.with(NewUserProfileActivity.this)
                                         .load(Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture())
                                         .into(userProfileImage, new Callback() {
@@ -613,17 +597,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     }
 
-
-    private String checkNullField(String value) {
-
-
-        if (value == null || value.isEmpty()) {
-            return "";
-        } else {
-            return value + ",";
-        }
-
-    }
 
     @Override
     public void onClick(View v) {

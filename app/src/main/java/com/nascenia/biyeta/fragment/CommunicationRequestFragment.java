@@ -11,15 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.SendRequestActivity;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
 import com.nascenia.biyeta.model.RequestSenderIds;
+import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.utils.MyCallback;
 import com.nascenia.biyeta.utils.Utils;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
@@ -29,6 +33,8 @@ import com.squareup.okhttp.Response;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.nascenia.biyeta.R.id.emoIconImage;
 
 /**
  * Created by saiful on 3/10/17.
@@ -40,13 +46,15 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     private View _baseView;
 
     private ImageView userProfileImage;
-    private ImageView cancelImageView, waitImageView, acceptImageView;
+    private ImageView cancelImageView, waitImageView, acceptImageView, selfImageView,
+            favoriteImageView, emoIconImageView;
     private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView, otherInfoRecylerView,
             familyMemberInfoRecylerView;
     private ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
     private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
-    private TextView userProfileDescriptionText, communicatiodataNotificationCounterTextview;
-    ;
+    private TextView userProfileDescriptionText, communicatiodataNotificationCounterTextview,
+            userNameTextView;
+
     private ImageView profileViewerPersonImageView;
 
 
@@ -70,6 +78,9 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
     private Response responseStatus;
 
+    private LinearLayout layoutSendSmiley;
+    private int profileId;
+    private UserProfile userProfile;
 
     @Nullable
     @Override
@@ -78,7 +89,8 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                              @Nullable Bundle savedInstanceState) {
 
         _baseView = inflater.inflate(R.layout.fragment_communication_request, container, false);
-
+        sharePref = new SharePref(getActivity());
+        token = sharePref.get_data("token");
 
         if (getArguments().getSerializable("REQUEST_RESPONSE_OBJ") != null) {
             requestSenderIds = (RequestSenderIds) getArguments().getSerializable("REQUEST_RESPONSE_OBJ");
@@ -98,6 +110,48 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         communicatiodataNotificationCounterTextview = (TextView) getActivity().
                 findViewById(R.id.communication_notification_textview);
 
+
+        layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
+        emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
+
+        layoutSendSmiley.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!userProfile.getProfile().isIsSmileSent()) {
+
+                    NetWorkOperation.postMethod(getActivity(),
+                            "http://test.biyeta.com/api/v1/smiles",
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"));
+                    layoutSendSmiley.setEnabled(false);
+                    emoIconImageView.setImageResource(R.drawable.red_smile);
+
+                }
+
+            }
+        });
+
+        favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
+        favoriteImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!userProfile.getProfile().isIsFavorite()) {
+
+                    NetWorkOperation.postMethod(getActivity(),
+                            "http://test.biyeta.com/api/v1/smiles",
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"));
+                    favoriteImageView.setEnabled(false);
+                    favoriteImageView.setImageResource(R.drawable.red_favorite);
+
+                }
+
+            }
+        });
+
         generalInfoRecyclerView = (RecyclerView) _baseView.findViewById(R.id.user_general_info_recycler_view);
         generalInfoRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         matchUserChoiceRecyclerView = (RecyclerView) _baseView.findViewById(R.id.match_user_choice_recyclerView);
@@ -111,6 +165,14 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
         profileViewerPersonImageView = (ImageView) _baseView.findViewById(R.id.viewer_image);
         userProfileImage = (ImageView) _baseView.findViewById(R.id.user_profile_image);
+        selfImageView = (ImageView) _baseView.findViewById(R.id.self_image);
+
+        Glide.with(getActivity())
+                .load(Utils.Base_URL +
+                        sharePref.get_data("profile_picture"))
+                .into(selfImageView);
+
+        userNameTextView = (TextView) _baseView.findViewById(R.id.user_name);
 
         cancelImageView = (ImageView) _baseView.findViewById(R.id.cancel_imageview);
         waitImageView = (ImageView) _baseView.findViewById(R.id.wait_imageview);
@@ -152,14 +214,30 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 profileViewerPersonImageView,
                 userProfileImage,
                 familyMemberInfoRecylerView,
-                1
+                1,
+                userNameTextView
         );
 
 
     }
 
     @Override
-    public void onComplete(Boolean result, Integer id) {
+    public void onComplete(Boolean result, Integer id, UserProfile userProfile) {
+
+        this.userProfile = userProfile;
+
+        if (this.userProfile.getProfile().isIsFavorite()) {
+
+            favoriteImageView.setEnabled(false);
+            favoriteImageView.setImageResource(R.drawable.red_favorite);
+        }
+
+        if (this.userProfile.getProfile().isIsSmileSent()) {
+
+            layoutSendSmiley.setEnabled(false);
+            emoIconImageView.setImageResource(R.drawable.red_smile);
+
+        }
 
         if (result && clickableButtonIdentifier == 1 && id != null) {
 

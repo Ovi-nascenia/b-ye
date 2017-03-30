@@ -13,10 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.HomeScreen;
 import com.nascenia.biyeta.activity.SendRequestActivity;
@@ -35,6 +38,8 @@ import com.squareup.okhttp.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.nascenia.biyeta.R.id.emoIconImage;
+
 /**
  * Created by saiful on 3/10/17.
  */
@@ -44,14 +49,14 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
     private View _baseView;
 
-    private ImageView cancelImageView, waitImageView, acceptImageView;
+    private ImageView cancelImageView, waitImageView, acceptImageView, emoIconImageView;
     private TextView cancelTextView, waitTextView, acceptTextView, communicationTagTextView;
     private CardView communicationCardLayout;
 
-    private ImageView userProfileImage;
+    private ImageView userProfileImage, selfImageView, favoriteImageView;
     private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView, otherInfoRecylerView,
             familyMemberInfoRecylerView;
-    private TextView userProfileDescriptionText;
+    private TextView userProfileDescriptionText, userNameTextView;
     private ImageView profileViewerPersonImageView;
 
 
@@ -78,6 +83,10 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private int id;
 
     private Response responseStatus;
+
+    private LinearLayout layoutSendSmiley;
+    private int profileId;
+    private UserProfile userProfile;
 
 
     @Nullable
@@ -112,6 +121,49 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         biodataNotificationCounterTextview = (TextView) getActivity().findViewById(
                 R.id.biodata_notification_textview);
 
+        layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
+        emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
+
+        layoutSendSmiley.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!userProfile.getProfile().isIsSmileSent()) {
+
+                    NetWorkOperation.postMethod(getActivity(),
+                            "http://test.biyeta.com/api/v1/smiles",
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"));
+                    layoutSendSmiley.setEnabled(false);
+                    emoIconImageView.setImageResource(R.drawable.red_smile);
+
+
+                }
+            }
+        });
+
+        favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
+
+
+        favoriteImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!userProfile.getProfile().isIsFavorite()) {
+
+                    NetWorkOperation.postMethod(getActivity(),
+                            "http://test.biyeta.com/api/v1/smiles",
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"));
+                    favoriteImageView.setEnabled(false);
+                    favoriteImageView.setImageResource(R.drawable.red_favorite);
+                }
+
+            }
+        });
+
 
         communicationTagTextView = (TextView) _baseView.findViewById(R.id.communication_tag_textview);
         communicationTagTextView.setVisibility(View.GONE);
@@ -132,6 +184,16 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         profileViewerPersonImageView = (ImageView) _baseView.findViewById(R.id.viewer_image);
         userProfileImage = (ImageView) _baseView.findViewById(R.id.user_profile_image);
+        selfImageView = (ImageView) _baseView.findViewById(R.id.self_image);
+
+        Glide.with(getActivity())
+                .load(Utils.Base_URL +
+                        sharePref.get_data("profile_picture"))
+                .into(selfImageView);
+
+
+        userNameTextView = (TextView) _baseView.findViewById(R.id.user_name);
+
 
         cancelImageView = (ImageView) _baseView.findViewById(R.id.cancel_imageview);
         waitImageView = (ImageView) _baseView.findViewById(R.id.wait_imageview);
@@ -246,7 +308,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 profileViewerPersonImageView,
                 userProfileImage,
                 familyMemberInfoRecylerView,
-                0
+                0,
+                userNameTextView
         );
 
 
@@ -269,7 +332,22 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     }
 
     @Override
-    public void onComplete(Boolean result, Integer id) {
+    public void onComplete(Boolean result, Integer id, UserProfile userProfile) {
+
+        this.userProfile = userProfile;
+
+
+        if (this.userProfile.getProfile().isIsFavorite()) {
+
+            favoriteImageView.setEnabled(false);
+            //change fav icon
+        }
+
+        if (this.userProfile.getProfile().isIsSmileSent()) {
+
+            layoutSendSmiley.setEnabled(false);
+            //change smiley  icon
+        }
 
         if (result && clickableButtonIdentifier == 1 && id != null) {
 

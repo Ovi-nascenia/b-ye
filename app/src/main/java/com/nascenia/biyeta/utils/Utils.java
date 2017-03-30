@@ -268,4 +268,60 @@ public class Utils {
         }
         return strTime;
     }
+
+
+    public static String setBanglaProfileTitle(String value) {
+
+
+        switch (value) {
+
+            case "home town":
+                value = "দেশের বাড়ি";
+                break;
+
+            case "age":
+                value = "বয়স";
+                break;
+
+            case "height":
+                value = "উচ্চতা";
+                break;
+
+            case "skin color":
+                value = "গায়ের রং";
+                break;
+
+            case "health":
+                value = "স্বাস্থ্য";
+                break;
+
+            case "marital status":
+                value = "বৈবাহিক অবস্থা";
+                break;
+
+            case "educational qualification":
+                value = "শিক্ষাগত যোগ্যতা";
+                break;
+
+            case "own house":
+                value = "নিজের বাড়ি";
+                break;
+
+            case "occupation":
+                value = "পেশা";
+                break;
+
+
+            default:
+                value = "";
+                break;
+
+
+        }
+
+        return value;
+
+    }
+
+
 }

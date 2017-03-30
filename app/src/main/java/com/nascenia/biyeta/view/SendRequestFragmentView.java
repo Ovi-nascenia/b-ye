@@ -10,12 +10,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
 import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.adapter.OtherInfoRecylerViewAdapter;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
@@ -28,6 +31,8 @@ import com.nascenia.biyeta.utils.MyCallback;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
@@ -43,6 +48,7 @@ public class SendRequestFragmentView {
 
 
     public static String responseValue;
+    private SharePref sharePref;
 
 
     /*
@@ -89,7 +95,8 @@ public class SendRequestFragmentView {
                                                        ImageView profileViewerPersonImageView,
                                                        ImageView userProfileImage,
                                                        RecyclerView familyMemberInfoRecylerView,
-                                                       int viewRequestClassname) {
+                                                       int viewRequestClassname,
+                                                       TextView userNameTextView) {
 
 
         //generalInformationArrayList.clear();
@@ -116,7 +123,8 @@ public class SendRequestFragmentView {
                 profileViewerPersonImageView,
                 userProfileImage,
                 familyMemberInfoRecylerView,
-                viewRequestClassname);
+                viewRequestClassname,
+                userNameTextView);
         Thread response = new Thread(responseThread);
         response.start();
 
@@ -137,7 +145,7 @@ public class SendRequestFragmentView {
         private ImageView userProfileImage;
         private RecyclerView familyMemberInfoRecylerView;
         private int viewRequestClassname;
-
+        private TextView userNameTextView;
 
         public ResponseThread(String url,
                               Context context,
@@ -149,7 +157,8 @@ public class SendRequestFragmentView {
                               ImageView profileViewerPersonImageView,
                               ImageView userProfileImage,
                               RecyclerView familyMemberInfoRecylerView,
-                              int viewRequestClassname) {
+                              int viewRequestClassname,
+                              TextView userNameTextView) {
 
 
             this.callback = callback;
@@ -163,6 +172,7 @@ public class SendRequestFragmentView {
             this.userProfileImage = userProfileImage;
             this.familyMemberInfoRecylerView = familyMemberInfoRecylerView;
             this.viewRequestClassname = viewRequestClassname;
+            this.userNameTextView = userNameTextView;
 
             dialog = new ProgressDialog(context);
             dialog.setMessage("Please wait...");
@@ -187,7 +197,15 @@ public class SendRequestFragmentView {
                     public void run() {
                         Log.i("taskon", "run");
 
+                        userNameTextView.setText(userProfile.getProfile().
+                                getPersonalInformation().getDisplayName());
+
                         setUserDetailsInfo(userProfile, userProfileDescriptionText);
+                        setUserImage(context,
+                                userProfile,
+                                profileViewerPersonImageView,
+                                userProfileImage);
+
                         setDataonGeneralInfoRecylerView(context,
                                 userProfile,
                                 generalInfoRecyclerView);
@@ -208,14 +226,16 @@ public class SendRequestFragmentView {
                 });
 
 
-                if (callback != null && this.viewRequestClassname == 0) {
+                if (callback != null && this.viewRequestClassname == 0 && userProfile != null) {
                     // will call onComplete() on MyActivity once the job is done
-                    callback.onComplete(true, userProfile.getProfile().getRequestStatus().
-                            getProfileRequestId());
-                } else if (callback != null && this.viewRequestClassname == 1) {
+                    callback.onComplete(true,
+                            userProfile.getProfile().getRequestStatus().getProfileRequestId(),
+                            userProfile);
+                } else if (callback != null && this.viewRequestClassname == 1 && userProfile != null) {
                     // will call onComplete() on MyActivity once the job is done
-                    callback.onComplete(true, userProfile.getProfile().getRequestStatus().
-                            getCommunicationRequestId());
+                    callback.onComplete(true,
+                            userProfile.getProfile().getRequestStatus().getCommunicationRequestId(),
+                            userProfile);
                 }
 
 
@@ -295,7 +315,51 @@ public class SendRequestFragmentView {
     }
 
 
-    public static void setUserImage(UserProfile userProfile, View view) {
+    public static void setUserImage(final Context context,
+                                    final UserProfile userProfile,
+                                    final ImageView profileViewerPersonImageView,
+                                    final ImageView userProfileImage) {
+
+
+        if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
+
+            Picasso.with(context)
+                    .load(Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture())
+                    .into(userProfileImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            userProfileImage.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.scaleImage(context, 1.2f, userProfileImage);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError() {
+                        }
+                    });
+
+
+            Glide.with(context)
+                    .load(Utils.Base_URL +
+                            userProfile.getProfile().getPersonalInformation().
+                                    getImage().getProfilePicture())
+                    .into(profileViewerPersonImageView);
+
+
+        } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
+                (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))) {
+            userProfileImage.setImageResource(R.drawable.hel2);
+            profileViewerPersonImageView.setImageResource(R.drawable.hel2);
+        } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
+                (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.FEMALE_GENDER))) {
+            userProfileImage.setImageResource(R.drawable.hel);
+            profileViewerPersonImageView.setImageResource(R.drawable.hel);
+        } else {
+        }
+
 
     }
 
@@ -821,56 +885,56 @@ public class SendRequestFragmentView {
 
 
         if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHomeTown())).equals("")) {
-            matchUserChoiceArrayList.add(new MatchUserChoice("home town"
+            matchUserChoiceArrayList.add(new MatchUserChoice(Utils.setBanglaProfileTitle("home town")
                     , userProfile.getProfile().getMatchingAttributes().getHomeTown()));
 
         }
 
 
         if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getAge())).equals("")) {
-            matchUserChoiceArrayList.add(new MatchUserChoice("age"
+            matchUserChoiceArrayList.add(new MatchUserChoice(Utils.setBanglaProfileTitle("age")
                     , userProfile.getProfile().getMatchingAttributes().getAge()));
 
         }
 
         if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHeight())).equals("")) {
-            matchUserChoiceArrayList.add(new MatchUserChoice("height"
+            matchUserChoiceArrayList.add(new MatchUserChoice(Utils.setBanglaProfileTitle("height")
                     , userProfile.getProfile().getMatchingAttributes().getHeight()));
 
         }
 
         if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getSkinColor())).equals("")) {
-            matchUserChoiceArrayList.add(new MatchUserChoice("skin color"
+            matchUserChoiceArrayList.add(new MatchUserChoice(Utils.setBanglaProfileTitle("skin color")
                     , userProfile.getProfile().getMatchingAttributes().getSkinColor()));
 
         }
 
         if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getHealth())).equals("")) {
-            matchUserChoiceArrayList.add(new MatchUserChoice("health"
+            matchUserChoiceArrayList.add(new MatchUserChoice(Utils.setBanglaProfileTitle("health")
                     , userProfile.getProfile().getMatchingAttributes().getHealth()));
 
         }
         if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getMaritalStatus())).equals("")) {
-            matchUserChoiceArrayList.add(new MatchUserChoice("marital status"
+            matchUserChoiceArrayList.add(new MatchUserChoice(Utils.setBanglaProfileTitle("marital status")
                     , userProfile.getProfile().getMatchingAttributes().getMaritalStatus()));
 
         }
 
 
         if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getTitleEducationalQualification())).equals("")) {
-            matchUserChoiceArrayList.add(new MatchUserChoice("educational qualification"
+            matchUserChoiceArrayList.add(new MatchUserChoice(Utils.setBanglaProfileTitle("educational qualification")
                     , userProfile.getProfile().getMatchingAttributes().getTitleEducationalQualification()));
 
         }
 
         if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse())).equals("")) {
-            matchUserChoiceArrayList.add(new MatchUserChoice("own house"
+            matchUserChoiceArrayList.add(new MatchUserChoice(Utils.setBanglaProfileTitle("own house")
                     , userProfile.getProfile().getMatchingAttributes().getTitleOwnHouse()));
 
         }
 
         if (!(checkNullField(userProfile.getProfile().getMatchingAttributes().getTitleOccupation())).equals("")) {
-            matchUserChoiceArrayList.add(new MatchUserChoice("occupation"
+            matchUserChoiceArrayList.add(new MatchUserChoice(Utils.setBanglaProfileTitle("occupation")
                     , userProfile.getProfile().getMatchingAttributes().getTitleOccupation()));
 
         }

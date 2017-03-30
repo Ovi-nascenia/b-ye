@@ -126,7 +126,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Log.e("LoginOvi", loginResult.getAccessToken().toString());
 
 
-
                 // App code
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
@@ -137,13 +136,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                                 // Application code
                                 try {
-                                    String uid=loginResult.getAccessToken().getUserId();
+                                    String uid = loginResult.getAccessToken().getUserId();
                                     String email = object.getString("email");
                                     String birthday = object.getString("birthday");
 
-                                    new LoginByFacebook().execute("http://192.168.1.68:3000/api/v1/facebook_authorization/authorize",uid,"facebook",email);
+                                    new LoginByFacebook().execute("http://192.168.1.68:3000/api/v1/facebook_authorization/authorize", uid, "facebook", email);
 
-                                    Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken().getToken()+"");
+                                    Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken().getToken() + "");
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -227,8 +226,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    public  class  LoginByFacebook extends AsyncTask<String,String,String>
-    {
+    public class LoginByFacebook extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPostExecute(String s) {
@@ -237,8 +235,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
             try {
                 JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.has("message"))
-                {
+                if (jsonObject.has("message")) {
                     buttonFacebookLogin.setText(jsonObject.getJSONObject("message").get("detail").toString());
                 }
             } catch (JSONException e) {
@@ -250,18 +247,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         protected String doInBackground(String... parameters) {
 
 
-            RequestBody requestBody=new FormEncodingBuilder()
-                    .add("uid",parameters[1])
-                    .add("provider",parameters[2])
-                    .add("email",parameters[3])
+            RequestBody requestBody = new FormEncodingBuilder()
+                    .add("uid", parameters[1])
+                    .add("provider", parameters[2])
+                    .add("email", parameters[3])
                     .build();
 
 
-
-            Request request=new Request.Builder().url(parameters[0]).post(requestBody).build();
+            Request request = new Request.Builder().url(parameters[0]).post(requestBody).build();
 
             try {
-                Response response=client.newCall(request).execute();
+                Response response = client.newCall(request).execute();
                 String responseString = response.body().string();
                 return responseString;
             } catch (IOException e) {
@@ -272,7 +268,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         }
     }
-
 
 
     void checkValidation() {
