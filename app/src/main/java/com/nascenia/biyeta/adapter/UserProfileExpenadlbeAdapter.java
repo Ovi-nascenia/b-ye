@@ -89,7 +89,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         childViewHolder.bind(child);
         if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1)) {
 
-            childViewHolder.itemDividerLayout.setVisibility(View.VISIBLE);
+//            childViewHolder.itemDividerLayout.setVisibility(View.VISIBLE);
         } else
             childViewHolder.itemDividerLayout.setVisibility(View.GONE);
 
