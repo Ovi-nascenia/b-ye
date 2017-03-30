@@ -261,7 +261,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         .replace(R.id.fragmentParentViewGroup, new Inbox())
                         .commit();
 //
-//                inboxImageView.setColorFilter(Color.WHITE);
+                inboxImageView.setColorFilter(Color.WHITE);
 //
 //                Dialog dialog = new Dialog(HomeScreen.this);
 //                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
