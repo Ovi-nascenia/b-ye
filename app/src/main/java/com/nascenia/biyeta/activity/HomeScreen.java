@@ -213,6 +213,19 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+
+
+        if(drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+            drawerLayout.closeDrawer(Gravity.RIGHT);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

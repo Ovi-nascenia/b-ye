@@ -15,9 +15,11 @@ import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.InboxListView;
 import com.nascenia.biyeta.activity.InboxSingleChat;
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.InboxAllThreads.Example;
 import com.nascenia.biyeta.model.InboxAllThreads.Inbox;
 import com.nascenia.biyeta.model.InboxMessageModel;
+import com.nascenia.biyeta.utils.Utils;
 
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class InboxListAdapter extends RecyclerView.Adapter<InboxListAdapter.View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Inbox item = example.getInbox().get(position);
         holder.userName.setText(item.getSenderName());
-        holder.time_date.setText(item.getMessage().getCreatedAt());
+        holder.time_date.setText(Utils.getTime(item.getMessage().getCreatedAt()));
         holder.message.setText(item.getMessage().getText());
 
         holder.message.setOnClickListener(new View.OnClickListener() {
@@ -71,10 +73,11 @@ public class InboxListAdapter extends RecyclerView.Adapter<InboxListAdapter.View
             holder.message.setTypeface(null, Typeface.NORMAL);
 
 
+        String gender = new SharePref(holder.image.getContext()).get_data("gender");
         Glide.
                 with(holder.image.getContext()).
-                load(item.getSenderImage()).
-                placeholder(R.drawable.default_profile_female_icon).
+                load(Utils.Base_URL + item.getSenderImage()).
+                placeholder(gender.equalsIgnoreCase("female")?R.drawable.smile:R.drawable.default_profile_female_icon).
                 into(holder.image);
 //        holder.itemView.setTag(item);
     }

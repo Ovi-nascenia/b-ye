@@ -58,7 +58,7 @@
                         android:paddingTop="@dimen/medium_padding"
                         android:text="27 march'17"
                         android:textColor="#7c7474"
-                        android:textSize="8sp"
+                        android:textSize="10sp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true" />
