@@ -94,7 +94,7 @@
                     android:textStyle="normal" />
 
                 <LinearLayout
-                    android:background="#eeeddd"
+
                     android:id="@+id/phone"
                     android:paddingRight="10dp"
                     android:layout_width="wrap_content"
@@ -105,13 +105,23 @@
                     android:layout_height="0dp"
                     android:text="@string/make_call">
                     <ImageView
+                        android:background="#eeeddd"
                         android:id="@+id/smile_ico"
                         android:padding="5dp"
                         android:layout_width="50dp"
                         android:src="@drawable/smile"
                         android:layout_height="match_parent" />
                     <TextView
+                        android:background="#eeeddd"
                         android:id="@+id/status"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
+                        android:text="@string/send_smile"/>
+
+                    <TextView
+                        android:background="#eeeddd"
+                        android:id="@+id/message"
                         android:layout_width="wrap_content"
                         android:gravity="center"
                         android:layout_height="match_parent"

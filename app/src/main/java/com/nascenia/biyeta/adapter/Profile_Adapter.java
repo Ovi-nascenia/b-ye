@@ -47,7 +47,7 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
     public void onBindViewHolder(MyViewHolder holder, int position) {
         SearchProfileModel prfile = profile_list.get(position);
         holder.user_name.setText(prfile.getDisplay_name());
-        holder.details.setText(prfile.getAge() + " বছর, " + prfile.getHeight_ft() + "'" + prfile.getHeight_inc() + "\", " + prfile.getProfessional_group() + ", "
+        holder.details.setText(Utils.convertEnglishDigittoBangla(Integer.parseInt(prfile.getAge())) + " বছর, " + prfile.getHeight_ft() + "'" + prfile.getHeight_inc() + "\", " + prfile.getProfessional_group() + ", "
                 + prfile.getSkin_color() + ", " + prfile.getHealth() + ", " + prfile.getLocation());
         Log.e("image_link", prfile.getImage());
         if ((position >= getItemCount() - 1))

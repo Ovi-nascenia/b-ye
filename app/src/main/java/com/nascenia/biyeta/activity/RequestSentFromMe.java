@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
+import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.BiodataProfileAdapter;
 import com.nascenia.biyeta.adapter.BiodatarequestFromMe;
@@ -88,18 +89,10 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 
                 if (tabLayout.getSelectedTabPosition() == 0) {
 
-                    Intent intent = new Intent(RequestSentFromMe.this, NewUserProfileActivity.class);
-                    intent.putExtra("id", biodataResponse.getProfiles().get(position).getId() + "");
-                    intent.putExtra("user_name", biodataResponse.getProfiles().get(position).getDisplayName());
-                    intent.putExtra("PROFILE_EDIT_OPTION", false);
-                    startActivity(intent);
+
                 } else {
 
-                    Intent intent = new Intent(RequestSentFromMe.this, NewUserProfileActivity.class);
-                    intent.putExtra("id", communicationResponse.getProfiles().get(position).getId() + "");
-                    intent.putExtra("user_name", communicationResponse.getProfiles().get(position).getDisplayName());
-                    intent.putExtra("PROFILE_EDIT_OPTION", false);
-                    startActivity(intent);
+
                 }
 
 
@@ -166,9 +159,10 @@ public class RequestSentFromMe extends CustomActionBarActivity {
     }
 
 
-    BiodatarequestFromMe inboxListAdapter;
+    BiodatarequestFromMe biodataFromMeAdapter;
     BiodataProfile biodataResponse;
     CommuncationRequestFromMeModel communicationResponse;
+    CommunicationRequestFromMeAdapter communicationRequestFromMeAdapter;
 
     class LoadBioDataConnection extends AsyncTask<String, String, String> {
 
@@ -204,15 +198,28 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                         InputStreamReader isr = new InputStreamReader(is);
                         biodataResponse = gson.fromJson(isr, BiodataProfile.class);
 
-                        inboxListAdapter = new BiodatarequestFromMe(biodataResponse, R.layout.biodata_request_from_me) {
+                        biodataFromMeAdapter = new BiodatarequestFromMe(biodataResponse, R.layout.biodata_request_from_me) {
                             @Override
-                            public void onClickSmile(int id) {
+                            public void onClickSmile(int id,int position) {
+
+                                new SendSmile().execute("http://test.biyeta.com/api/v1/smiles",id+"",position+"");
+
                                 //Toast.makeText(RequestSentFromMe.this, id + " ", //Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onClickItem(int id, int position) {
+                                Intent intent = new Intent(RequestSentFromMe.this, NewUserProfileActivity.class);
+                                intent.putExtra("id", biodataResponse.getProfiles().get(position).getId() + "");
+                                intent.putExtra("user_name", biodataResponse.getProfiles().get(position).getDisplayName());
+                                intent.putExtra("PROFILE_EDIT_OPTION", false);
+                                startActivity(intent);
+
                             }
 
 
                         };
-                        recyclerView.setAdapter(inboxListAdapter);
+                        recyclerView.setAdapter(biodataFromMeAdapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -251,7 +258,25 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                         InputStreamReader isr = new InputStreamReader(is);
                         communicationResponse = gson.fromJson(isr, CommuncationRequestFromMeModel.class);
 
-                        CommunicationRequestFromMeAdapter communicationRequestFromMeAdapter = new CommunicationRequestFromMeAdapter(communicationResponse, R.layout.communication_request_sent_from_me_item);
+                        communicationRequestFromMeAdapter = new CommunicationRequestFromMeAdapter(communicationResponse, R.layout.communication_request_sent_from_me_item) {
+                            @Override
+                            public void onMakeConnection(int id, int position) {
+
+                                new SendConnection().execute("http://test.biyeta.com/api/v1/communication_requests", id + "", position + "");
+
+                            }
+
+                            @Override
+                            public void onClickProfile(int id, int position) {
+
+                                Intent intent = new Intent(RequestSentFromMe.this, NewUserProfileActivity.class);
+                                intent.putExtra("id", communicationResponse.getProfiles().get(position).getId() + "");
+                                intent.putExtra("user_name", communicationResponse.getProfiles().get(position).getDisplayName());
+                                intent.putExtra("PROFILE_EDIT_OPTION", false);
+                                startActivity(intent);
+
+                            }
+                        };
                         recyclerView.setAdapter(communicationRequestFromMeAdapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -299,6 +324,119 @@ public class RequestSentFromMe extends CustomActionBarActivity {
             }
 
             return null;
+        }
+    }
+
+
+    public  class SendSmile extends AsyncTask<String,String,String>
+    {
+
+
+        int position;
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("SmileResponse",s);
+            try {
+                JSONObject jsonObject=new JSONObject(s);
+
+                if (jsonObject.has("message"))
+                {
+                    biodataResponse.getProfiles().get(position).setSmileSent(true);
+                    biodataFromMeAdapter.notifyDataSetChanged();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            Log.e("Smile",strings[0]+" "+strings[1]);
+            position = Integer.parseInt(strings[2]);
+            RequestBody requestBody = new FormEncodingBuilder()
+                    .add("profile_id", strings[1])
+                    .build();
+
+
+            Response response;
+            SharePref sharePref = new SharePref(RequestSentFromMe.this);
+            String token = sharePref.get_data("token");
+
+            Request request = new Request.Builder()
+                    .url(strings[0])
+                    .addHeader("Authorization", "Token token=" + token)
+                    .post(requestBody)
+                    .build();
+            try {
+                response = client.newCall(request).execute();
+                String jsonData = response.body().string();
+                return jsonData;
+
+            } catch (Exception e) {
+                return null;
+
+            }
+        }
+    }
+
+
+    class SendConnection extends AsyncTask<String, String, String> {
+
+        int listposition;
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.has("message")) {
+                  ///  Toast.makeText(RequestSentFromMe.this, " sent", Toast.LENGTH_SHORT).show();
+                    communicationResponse.getProfiles().get(listposition).getRequestStatus().setExpired(false);
+                    communicationResponse.getProfiles().get(listposition).getRequestStatus().setMessage("আপনি যোগাযোগের  অনুরোধ  করেছেন");
+
+                    communicationRequestFromMeAdapter.notifyDataSetChanged();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            //  Log.e(" id", strings[1]);
+
+            Integer id = Integer.parseInt(strings[1]);
+            listposition = Integer.parseInt(strings[2]);
+            RequestBody requestBody = new FormEncodingBuilder()
+                    .add("profile_id", id + "")
+                    .build();
+
+
+            Response response;
+            SharePref sharePref = new SharePref(RequestSentFromMe.this);
+            String token = sharePref.get_data("token");
+
+            Request request = new Request.Builder()
+                    .url(strings[0])
+                    .addHeader("Authorization", "Token token=" + token)
+                    .post(requestBody)
+                    .build();
+            try {
+                response = client.newCall(request).execute();
+                String jsonData = response.body().string();
+                return jsonData;
+
+            } catch (Exception e) {
+                return null;
+
+            }
+
+
         }
     }
 

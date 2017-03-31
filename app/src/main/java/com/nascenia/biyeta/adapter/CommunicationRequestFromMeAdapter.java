@@ -40,10 +40,12 @@ import com.nascenia.biyeta.model.communication_request_from_me.CommuncationReque
 import com.nascenia.biyeta.model.newuserprofile.Image;
 import com.nascenia.biyeta.utils.Utils;
 
-public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<CommunicationRequestFromMeAdapter.ViewHolder> {
+public abstract class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<CommunicationRequestFromMeAdapter.ViewHolder> {
 
     private CommuncationRequestFromMeModel communcationRequestFromMeModel;
     private int itemLayout;
+    public abstract void onMakeConnection(int id , int position);
+    public abstract void onClickProfile(int id , int position);
 
     public CommunicationRequestFromMeAdapter(CommuncationRequestFromMeModel biodataProfile, int itemLayout) {
         this.communcationRequestFromMeModel = biodataProfile;
@@ -59,7 +61,7 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
     @Override
     public void onBindViewHolder(final CommunicationRequestFromMeAdapter.ViewHolder holder, final int position) {
 
-        Profile profile = communcationRequestFromMeModel.getProfiles().get(position);
+        final Profile profile = communcationRequestFromMeModel.getProfiles().get(position);
 
         holder.userName.setText(profile.getDisplayName());
         holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
@@ -87,6 +89,51 @@ public class CommunicationRequestFromMeAdapter extends RecyclerView.Adapter<Comm
             holder.connectoion.setVisibility(View.GONE);
             holder.status.setText(profile.getRequestStatus().getMessage());
         }
+
+        holder.connectoion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onMakeConnection(profile.getId(),position);
+            }
+        }) ;
+
+
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(profile.getId(),position);
+            }
+        }) ;
+
+
+        holder.userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(profile.getId(),position);
+            }
+        }) ;
+
+        holder.details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(profile.getId(),position);
+            }
+        }) ;
+
+
+        holder.time_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(profile.getId(),position);
+            }
+        }) ;
+
+        holder.connectoion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onMakeConnection(profile.getId(),position);
+            }
+        }) ;
 
 
     }
