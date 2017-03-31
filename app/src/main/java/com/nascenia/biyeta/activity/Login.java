@@ -141,7 +141,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                     String email = object.getString("email");
                                     String birthday = object.getString("birthday");
 
-                                    new LoginByFacebook().execute("http://192.168.1.68:3000/api/v1/facebook_authorization/authorize", uid, "facebook", email);
+                                    new LoginByFacebook().execute("http://test.biyeta.com/api/v1/facebook_authorization/authorize", uid, "facebook", email);
 
                                     Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken().getToken() + "");
                                 } catch (JSONException e) {
@@ -274,6 +274,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Log.e("facebook login",s);
 
 
             try {
