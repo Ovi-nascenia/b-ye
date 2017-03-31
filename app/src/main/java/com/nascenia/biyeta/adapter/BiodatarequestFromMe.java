@@ -32,8 +32,9 @@ import com.nascenia.biyeta.utils.Utils;
 public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<BiodatarequestFromMe.ViewHolder> {
 
 
-    public abstract void onClickSmile(int id,int position);
-    public abstract void onClickItem(int id,int position);
+    public abstract void onClickSmile(int id, int position);
+
+    public abstract void onClickItem(int id, int position);
 
     private BiodataProfile biodataProfile;
     private int itemLayout;
@@ -55,22 +56,23 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
         final com.nascenia.biyeta.model.biodata.profile.Profile profile = biodataProfile.getProfiles().get(position);
 
         holder.userName.setText(profile.getDisplayName());
-        holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.details.setText(Utils.convertEnglishDigittoBangla(profile.getAge()) + " বছর" + ", " +
+                Utils.convertEnglishDigittoBangla(profile.getHeightFt()) + "'" +
+                Utils.convertEnglishDigittoBangla(profile.getHeightInc()) + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
         String gender = new SharePref(holder.image.getContext()).get_data("gender");
         Glide.
                 with(holder.image.getContext()).
                 load(Utils.Base_URL + profile.getImage()).
-                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
+                placeholder(gender.equalsIgnoreCase("female") ? R.drawable.profile_icon_male : R.drawable.profile_icon_female).
                 into(holder.image);
         holder.time_date.setText(Utils.getTime(profile.getIsCreatedAt()));
 //        holder.itemView.setTag(item);
 
 
-
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickItem(profile.getId(),position);
+                onClickItem(profile.getId(), position);
 
 
             }
@@ -78,7 +80,7 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickItem(profile.getId(),position);
+                onClickItem(profile.getId(), position);
 
 
             }
@@ -86,7 +88,7 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
         holder.userName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickItem(profile.getId(),position);
+                onClickItem(profile.getId(), position);
 
 
             }
@@ -96,21 +98,18 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
         holder.status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickSmile(profile.getId(),position);
+                onClickSmile(profile.getId(), position);
 
 
             }
         });
 
-        if (profile.isSmileSent()==false)
-        {
+        if (profile.isSmileSent() == false) {
             holder.imageViewSmile.setVisibility(View.VISIBLE);
             holder.status.setText("হাসি পাঠান");
             holder.message.setVisibility(View.GONE);
             //holder.message.setText(profile.getRequestStatus().getMessage());
-        }
-
-        else {
+        } else {
             holder.imageViewSmile.setVisibility(View.GONE);
             holder.status.setVisibility(View.GONE);
             holder.message.setText(profile.getRequestStatus().getMessage());
@@ -119,12 +118,9 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
         holder.imageViewSmile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickSmile(profile.getId(),position);
+                onClickSmile(profile.getId(), position);
             }
         });
-
-
-
 
 
     }
@@ -150,9 +146,9 @@ public abstract class BiodatarequestFromMe extends RecyclerView.Adapter<Biodatar
             details = (TextView) itemView.findViewById(R.id.details);
             userName = (TextView) itemView.findViewById(R.id.user_name);
             time_date = (TextView) itemView.findViewById(R.id.date_time);
-            status=(TextView) itemView.findViewById(R.id.status);
-            imageViewSmile=(ImageView) itemView.findViewById(R.id.smile_ico);
-            message=(TextView) itemView.findViewById(R.id.message);
+            status = (TextView) itemView.findViewById(R.id.status);
+            imageViewSmile = (ImageView) itemView.findViewById(R.id.smile_ico);
+            message = (TextView) itemView.findViewById(R.id.message);
 
 
         }

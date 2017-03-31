@@ -28,6 +28,7 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
     Context context;
     //list of all profile
     private List<SearchProfileModel> profile_list;
+
     public Profile_Adapter(List<SearchProfileModel> moviesList) {
         this.profile_list = moviesList;
     }
@@ -47,7 +48,10 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
     public void onBindViewHolder(MyViewHolder holder, int position) {
         SearchProfileModel prfile = profile_list.get(position);
         holder.user_name.setText(prfile.getDisplay_name());
-        holder.details.setText(Utils.convertEnglishDigittoBangla(Integer.parseInt(prfile.getAge())) + " বছর, " + prfile.getHeight_ft() + "'" + prfile.getHeight_inc() + "\", " + prfile.getProfessional_group() + ", "
+        holder.details.setText(Utils.convertEnglishDigittoBangla(Integer.parseInt(prfile.getAge()))
+                + " বছর, " + Utils.convertEnglishDigittoBangla(Integer.parseInt(prfile.getHeight_ft()))
+                + "'" + Utils.convertEnglishDigittoBangla(Integer.parseInt(prfile.getHeight_inc()))
+                + "\", " + prfile.getProfessional_group() + ", "
                 + prfile.getSkin_color() + ", " + prfile.getHealth() + ", " + prfile.getLocation());
         Log.e("image_link", prfile.getImage());
         if ((position >= getItemCount() - 1))
@@ -56,9 +60,9 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
         Glide.
                 with(holder.profile_image.getContext()).
                 load(Utils.Base_URL + prfile.getImage()).
-                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
+                placeholder(gender.equalsIgnoreCase("female") ? R.drawable.profile_icon_male : R.drawable.profile_icon_female).
                 into(holder.profile_image);
-        }
+    }
 
     @Override
     public int getItemCount() {

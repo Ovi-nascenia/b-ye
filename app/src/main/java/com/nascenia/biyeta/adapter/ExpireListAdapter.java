@@ -26,7 +26,7 @@ import com.nascenia.biyeta.utils.Utils;
 public abstract class ExpireListAdapter extends RecyclerView.Adapter<ExpireListAdapter.ViewHolder> {
 
 
-    public abstract void onClickSmile(int id,int postion);
+    public abstract void onClickSmile(int id, int postion);
 
     private ExpireProfile ExpireProfile;
     private int itemLayout;
@@ -45,19 +45,19 @@ public abstract class ExpireListAdapter extends RecyclerView.Adapter<ExpireListA
     @Override
     public void onBindViewHolder(final ExpireListAdapter.ViewHolder holder, final int position) {
 
-      final Profile profile = ExpireProfile.getProfiles().get(position);
+        final Profile profile = ExpireProfile.getProfiles().get(position);
 
         holder.userName.setText(profile.getDisplayName());
-        holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.details.setText(Utils.convertEnglishDigittoBangla(profile.getAge()) + " বছর" + ", " +
+                Utils.convertEnglishDigittoBangla(profile.getHeightFt()) + "'" +
+                Utils.convertEnglishDigittoBangla(profile.getHeightInc()) + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
         String gender = new SharePref(holder.image.getContext()).get_data("gender");
         Glide.
                 with(holder.image.getContext()).
                 load(Utils.Base_URL + profile.getImage()).
-                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
+                placeholder(gender.equalsIgnoreCase("female") ? R.drawable.profile_icon_male : R.drawable.profile_icon_female).
                 into(holder.image);
         holder.time_date.setText(Utils.getTime(profile.getIsCreatedAt()));
-
-
 
 
 //        if (profile.isSmileSent()==false)
@@ -74,10 +74,9 @@ public abstract class ExpireListAdapter extends RecyclerView.Adapter<ExpireListA
         holder.status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickSmile(profile.getId(),position);
+                onClickSmile(profile.getId(), position);
             }
         });
-
 
 
     }
@@ -101,7 +100,7 @@ public abstract class ExpireListAdapter extends RecyclerView.Adapter<ExpireListA
             details = (TextView) itemView.findViewById(R.id.details);
             userName = (TextView) itemView.findViewById(R.id.user_name);
             time_date = (TextView) itemView.findViewById(R.id.date_time);
-            status=(Button) itemView.findViewById(R.id.status);
+            status = (Button) itemView.findViewById(R.id.status);
 
 
         }

@@ -44,8 +44,10 @@ public abstract class CommunicationRequestFromMeAdapter extends RecyclerView.Ada
 
     private CommuncationRequestFromMeModel communcationRequestFromMeModel;
     private int itemLayout;
-    public abstract void onMakeConnection(int id , int position);
-    public abstract void onClickProfile(int id , int position);
+
+    public abstract void onMakeConnection(int id, int position);
+
+    public abstract void onClickProfile(int id, int position);
 
     public CommunicationRequestFromMeAdapter(CommuncationRequestFromMeModel biodataProfile, int itemLayout) {
         this.communcationRequestFromMeModel = biodataProfile;
@@ -64,12 +66,14 @@ public abstract class CommunicationRequestFromMeAdapter extends RecyclerView.Ada
         final Profile profile = communcationRequestFromMeModel.getProfiles().get(position);
 
         holder.userName.setText(profile.getDisplayName());
-        holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.details.setText(Utils.convertEnglishDigittoBangla(profile.getAge()) + " বছর" + ", " +
+                Utils.convertEnglishDigittoBangla(profile.getHeightFt()) + "'" +
+                Utils.convertEnglishDigittoBangla(profile.getHeightInc()) + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
         String gender = new SharePref(holder.image.getContext()).get_data("gender");
         Glide.
                 with(holder.image.getContext()).
                 load(Utils.Base_URL + profile.getImage()).
-                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
+                placeholder(gender.equalsIgnoreCase("female") ? R.drawable.profile_icon_male : R.drawable.profile_icon_female).
                 into(holder.image);
         holder.time_date.setText(Utils.getTime(profile.getIsCreatedAt()));
 //        holder.itemView.setTag(item);
@@ -84,8 +88,7 @@ public abstract class CommunicationRequestFromMeAdapter extends RecyclerView.Ada
                 holder.connectoion.setVisibility(View.GONE);
                 holder.status.setText(profile.getRequestStatus().getMessage());
             }
-        }
-        else {
+        } else {
             holder.connectoion.setVisibility(View.GONE);
             holder.status.setText(profile.getRequestStatus().getMessage());
         }
@@ -93,47 +96,47 @@ public abstract class CommunicationRequestFromMeAdapter extends RecyclerView.Ada
         holder.connectoion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onMakeConnection(profile.getId(),position);
+                onMakeConnection(profile.getId(), position);
             }
-        }) ;
+        });
 
 
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickProfile(profile.getId(),position);
+                onClickProfile(profile.getId(), position);
             }
-        }) ;
+        });
 
 
         holder.userName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickProfile(profile.getId(),position);
+                onClickProfile(profile.getId(), position);
             }
-        }) ;
+        });
 
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickProfile(profile.getId(),position);
+                onClickProfile(profile.getId(), position);
             }
-        }) ;
+        });
 
 
         holder.time_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickProfile(profile.getId(),position);
+                onClickProfile(profile.getId(), position);
             }
-        }) ;
+        });
 
         holder.connectoion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onMakeConnection(profile.getId(),position);
+                onMakeConnection(profile.getId(), position);
             }
-        }) ;
+        });
 
 
     }

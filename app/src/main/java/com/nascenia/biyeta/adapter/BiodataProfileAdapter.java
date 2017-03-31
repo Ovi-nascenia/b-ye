@@ -39,8 +39,8 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
     int position;
 
 
+    public abstract void setConnectionRequest(int id, int position);
 
-    public abstract void setConnectionRequest(int id,int position);
     public abstract void LoadData();
 
 
@@ -58,12 +58,14 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
     @Override
     public void onBindViewHolder(final BiodataProfileAdapter.ViewHolder holder, int position) {
 
-        position=position;
+        position = position;
 
-         final Profile profile = biodataProfile.get(position);
+        final Profile profile = biodataProfile.get(position);
 
         holder.userName.setText(profile.getDisplayName());
-        holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.details.setText(Utils.convertEnglishDigittoBangla(profile.getAge()) + " বছর" + ", " +
+                Utils.convertEnglishDigittoBangla(profile.getHeightFt()) +
+                "'" + Utils.convertEnglishDigittoBangla(profile.getHeightInc()) + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
         holder.time_date.setText(Utils.getTime(profile.getIsCreatedAt()));
 
 
@@ -71,25 +73,22 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
         Glide.
                 with(holder.image.getContext()).
                 load(Utils.Base_URL + profile.getImage()).
-                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
+                placeholder(gender.equalsIgnoreCase("female") ? R.drawable.profile_icon_male : R.drawable.profile_icon_female).
                 into(holder.image);
 
 
-        Log.e("BiodataMessage",profile.getRequestStatus().getMessage()+"hello ");
+        Log.e("BiodataMessage", profile.getRequestStatus().getMessage() + "hello ");
         holder.call.setText(profile.getRequestStatus().getMessage());
-        if (null != profile.getRequestStatus().getCommunicationRequestId() || profile.getRequestStatus().getMessage().toString().equals("আপনি যোগাযোগের  অনুরোধ  করেছেন")||
-                profile.getRequestStatus().getRejected()||profile.getRequestStatus().getExpired() || profile.getRequestStatus().getAccepted())
-        {
+        if (null != profile.getRequestStatus().getCommunicationRequestId() || profile.getRequestStatus().getMessage().toString().equals("আপনি যোগাযোগের  অনুরোধ  করেছেন") ||
+                profile.getRequestStatus().getRejected() || profile.getRequestStatus().getExpired() || profile.getRequestStatus().getAccepted()) {
             holder.call.setEnabled(false);
             holder.call.setText(profile.getRequestStatus().getMessage());
-        }
-        else
-        {
+        } else {
             holder.call.setEnabled(true);
             holder.call.setText(profile.getRequestStatus().getMessage());
         }
 
-        if (position== biodataProfile.size()-1)
+        if (position == biodataProfile.size() - 1)
             LoadData();
 
         final int finalPosition = position;
@@ -100,7 +99,6 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
 
             }
         });
-
 
 
     }
@@ -124,7 +122,7 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
             details = (TextView) itemView.findViewById(R.id.details);
             userName = (TextView) itemView.findViewById(R.id.user_name);
             time_date = (TextView) itemView.findViewById(R.id.date_time);
-            call=(Button)itemView.findViewById(R.id.phone);
+            call = (Button) itemView.findViewById(R.id.phone);
 
 
         }

@@ -32,7 +32,7 @@ import java.util.List;
  * Created by god father on 3/16/2017.
  */
 
-public abstract class  CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdapter.ViewHolder> {
+public abstract class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdapter.ViewHolder> {
 
     public abstract void LoadData();
 
@@ -40,9 +40,9 @@ public abstract class  CommunicationAdapter extends RecyclerView.Adapter<Communi
     private int itemLayout;
     int currentUserSignedIn;
 
-    public CommunicationAdapter( List<Profile> CommunicationProfile, int itemLayout,int cureentUserSignIn) {
+    public CommunicationAdapter(List<Profile> CommunicationProfile, int itemLayout, int cureentUserSignIn) {
         this.communicationProfile = CommunicationProfile;
-        this.currentUserSignedIn=cureentUserSignIn;
+        this.currentUserSignedIn = cureentUserSignIn;
         this.itemLayout = itemLayout;
     }
 
@@ -58,17 +58,19 @@ public abstract class  CommunicationAdapter extends RecyclerView.Adapter<Communi
         final Profile profile = communicationProfile.get(position);
 
         holder.userName.setText(profile.getDisplayName());
-        holder.details.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" + profile.getHeightInc() + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
+        holder.details.setText(Utils.convertEnglishDigittoBangla(profile.getAge()) + " বছর" + ", " +
+                Utils.convertEnglishDigittoBangla(profile.getHeightFt()) + "'" +
+                Utils.convertEnglishDigittoBangla(profile.getHeightInc()) + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());
         holder.time_date.setText(Utils.getTime(profile.getIsCreatedAt()));
         String gender = new SharePref(holder.image.getContext()).get_data("gender");
         Glide.
                 with(holder.image.getContext()).
                 load(Utils.Base_URL + profile.getImage()).
-                placeholder(gender.equalsIgnoreCase("female")?R.drawable.profile_icon_male:R.drawable.profile_icon_female).
+                placeholder(gender.equalsIgnoreCase("female") ? R.drawable.profile_icon_male : R.drawable.profile_icon_female).
                 into(holder.image);
 //        holder.itemView.setTag(item);
 
-        if (position==communicationProfile.size()-1)
+        if (position == communicationProfile.size() - 1)
             LoadData();
 
 
@@ -86,23 +88,22 @@ public abstract class  CommunicationAdapter extends RecyclerView.Adapter<Communi
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
                     return;
-                }
-                else {
+                } else {
                     holder.call.getContext().startActivity(callIntent);
                 }
 
             }
         });
-        holder.message.setOnClickListener(new View.OnClickListener(){
+        holder.message.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Intent in=new Intent(holder.image.getContext(), InboxSingleChat.class);
-                Bundle bundle=new Bundle();
-                bundle.putInt("sender_id",currentUserSignedIn);
-                bundle.putInt("receiver_id",profile.getUserId());
-                bundle.putInt("current_user",currentUserSignedIn);
-                bundle.putString("userName",profile.getDisplayName());
+                Intent in = new Intent(holder.image.getContext(), InboxSingleChat.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("sender_id", currentUserSignedIn);
+                bundle.putInt("receiver_id", profile.getUserId());
+                bundle.putInt("current_user", currentUserSignedIn);
+                bundle.putString("userName", profile.getDisplayName());
                 in.putExtras(bundle);
                 holder.image.getContext().startActivity(in);
             }
@@ -120,7 +121,7 @@ public abstract class  CommunicationAdapter extends RecyclerView.Adapter<Communi
         public TextView userName;
         public TextView details;
         public TextView time_date;
-        Button call,message;
+        Button call, message;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -128,8 +129,8 @@ public abstract class  CommunicationAdapter extends RecyclerView.Adapter<Communi
             details = (TextView) itemView.findViewById(R.id.details);
             userName = (TextView) itemView.findViewById(R.id.user_name);
             time_date = (TextView) itemView.findViewById(R.id.date_time);
-            call=(Button)itemView.findViewById(R.id.phone);
-            message=(Button)itemView.findViewById(R.id.message);
+            call = (Button) itemView.findViewById(R.id.phone);
+            message = (Button) itemView.findViewById(R.id.message);
 
         }
     }
