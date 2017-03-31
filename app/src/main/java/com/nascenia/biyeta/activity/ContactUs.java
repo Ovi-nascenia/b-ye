@@ -143,11 +143,11 @@ public class ContactUs extends CustomActionBarActivity {
             try {
                 response = okHttpClient.newCall(request).execute();
                 String jsonData = response.body().string();
-                Log.e("fuck", response.toString());
+                Log.e("Contact Us", response.toString());
                 return jsonData;
 
             } catch (Exception e) {
-                Log.e("fuck", e.toString());
+                Log.e("Contact Us", e.toString());
                 return null;
 
             }

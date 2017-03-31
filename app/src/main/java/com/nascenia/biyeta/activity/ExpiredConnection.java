@@ -210,11 +210,11 @@ public class ExpiredConnection extends CustomActionBarActivity {
             try {
                 response = client.newCall(request).execute();
                 String jsonData = response.body().string();
-                Log.e("fuck", jsonData);
+                Log.e("jsonData", jsonData);
                 return jsonData;
 
             } catch (Exception e) {
-                Log.e("Fuck", e.toString());
+                Log.e("jsonData", e.toString());
                 return null;
 
             }

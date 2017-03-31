@@ -124,7 +124,7 @@ public class InboxSingleChat extends CustomActionBarActivity {
                 messageText = editTextMesaageField.getText().toString();
 
 
-                Log.e("fuck", editTextMesaageField.getText().toString());
+                Log.e("InBoxText", editTextMesaageField.getText().toString());
                 TempMessage message = new TempMessage(editTextMesaageField.getText().toString(), "3-2-2017");
                 editTextMesaageField.setText("");
                 new SendMessage().execute();

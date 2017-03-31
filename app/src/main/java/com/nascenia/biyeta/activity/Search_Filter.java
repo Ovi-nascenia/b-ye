@@ -740,8 +740,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             }
 
             for (int i = 1; i < 65; i++) {
-                //Log.e("fuck",location_option.getString(i+""));
-                locationId.add(i);
+                 locationId.add(i);
                 all_location.add(location_option.getString(i + "").toString());
                 if (location_choose.contains(i + "")) {
                     Log.e("true", i + "");
