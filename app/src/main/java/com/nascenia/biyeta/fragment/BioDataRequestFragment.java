@@ -49,7 +49,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
     private View _baseView;
 
-    private ImageView cancelImageView, waitImageView, acceptImageView, emoIconImageView;
+    private ImageView cancelImageView, waitImageView, acceptImageView, emoIconImageView,
+            mobileCheckIconImageView, fbCheckIconImageView, mailCheckIconImageView;
     private TextView cancelTextView, waitTextView, acceptTextView, communicationTagTextView;
     private CardView communicationCardLayout;
 
@@ -123,7 +124,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
         favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
-
         layoutSendSmiley.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +161,10 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
             }
         });
+
+        mobileCheckIconImageView = (ImageView) _baseView.findViewById(R.id.mobile_check_icon);
+        fbCheckIconImageView = (ImageView) _baseView.findViewById(R.id.fb_check_icon);
+        mailCheckIconImageView = (ImageView) _baseView.findViewById(R.id.mail_check_icon);
 
 
         communicationTagTextView = (TextView) _baseView.findViewById(R.id.communication_tag_textview);
@@ -334,6 +338,11 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         this.userProfile = userProfile;
 
+        //setVerification image
+        SendRequestFragmentView.setVerificationIcon(userProfile,
+                mobileCheckIconImageView,
+                fbCheckIconImageView,
+                mailCheckIconImageView);
 
         if (this.userProfile.getProfile().isIsFavorite()) {
 

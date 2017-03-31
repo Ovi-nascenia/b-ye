@@ -71,7 +71,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private ViewPager viewPager;
 
     private ImageView indicatorImage1, indicatorImage2, indicatorImage3, userProfileImage,
-            cancelImageView, acceptImageView, emoIconImageView, favoriteImageView;
+            cancelImageView, acceptImageView, emoIconImageView, favoriteImageView,
+            mobileCheckIconImageView, fbCheckIconImageView, mailCheckIconImageView;
 
     private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView,
             familyMemberInfoRecylerView, communicationInfoRecylerview,
@@ -165,8 +166,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     getIntent().getExtras().getString("id"));
 
 
-
-
         } else {
             Utils.ShowAlert(getBaseContext(), "please check your internet connection");
         }
@@ -175,7 +174,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     }
 
 
-    public void backBtnAction(View v){
+    public void backBtnAction(View v) {
         finish();
     }
 
@@ -225,6 +224,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         mobileLayout = (RelativeLayout) findViewById(R.id.mobile_layout);
         facebookLayout = (RelativeLayout) findViewById(R.id.facebook_layout);
         mailLayout = (RelativeLayout) findViewById(R.id.mail_layout);
+
+        mobileCheckIconImageView = (ImageView) findViewById(R.id.mobile_check_icon);
+        fbCheckIconImageView = (ImageView) findViewById(R.id.fb_check_icon);
+        mailCheckIconImageView = (ImageView) findViewById(R.id.mail_check_icon);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         generalInfoRecyclerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
@@ -305,6 +308,13 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     .load(Utils.Base_URL +
                                             sharePref.get_data("profile_picture"))
                                     .into(selfImageView);
+
+
+                            //setVerification image
+                            SendRequestFragmentView.setVerificationIcon(userProfile,
+                                    mobileCheckIconImageView,
+                                    fbCheckIconImageView,
+                                    mailCheckIconImageView);
 
 
                             if (userProfile.getProfile().isIsFavorite()) {

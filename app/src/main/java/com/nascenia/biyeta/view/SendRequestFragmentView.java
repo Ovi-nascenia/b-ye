@@ -2,6 +2,7 @@ package com.nascenia.biyeta.view;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.VoiceInteractor;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
@@ -1043,6 +1044,31 @@ public class SendRequestFragmentView {
         } else {
             return value + ",";
         }
+
+    }
+
+
+    public static void setVerificationIcon(UserProfile userProfile,
+                                           ImageView mobileIcon,
+                                           ImageView fbIcon,
+                                           ImageView mailIcon) {
+
+
+        if (userProfile.getProfile().getVerifications() != null &&
+                userProfile.getProfile().getVerifications().isMobile()) {
+            mobileIcon.setVisibility(View.VISIBLE);
+        }
+
+        if (userProfile.getProfile().getVerifications() != null &&
+                userProfile.getProfile().getVerifications().isFacebook()) {
+            fbIcon.setVisibility(View.VISIBLE);
+        }
+
+        if (userProfile.getProfile().getVerifications() != null &&
+                userProfile.getProfile().getVerifications().isEmail()) {
+            mailIcon.setVisibility(View.VISIBLE);
+        }
+
 
     }
 

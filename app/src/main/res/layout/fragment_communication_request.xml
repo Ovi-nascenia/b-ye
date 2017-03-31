@@ -231,13 +231,15 @@
                                     android:src="@drawable/mobile" />
 
                                 <ImageView
+                                    android:id="@+id/mobile_check_icon"
                                     android:layout_width="@dimen/check_image_size"
                                     android:layout_height="@dimen/check_image_size"
                                     android:layout_alignParentRight="true"
                                     android:layout_alignParentTop="true"
                                     android:layout_marginRight="@dimen/check_image_right_margin"
                                     android:layout_marginTop="@dimen/check_image_top_margin"
-                                    android:src="@drawable/check_icon" />
+                                    android:src="@drawable/check_icon"
+                                    android:visibility="invisible" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -254,13 +256,15 @@
                                     android:src="@drawable/facebook" />
 
                                 <ImageView
+                                    android:id="@+id/fb_check_icon"
                                     android:layout_width="@dimen/check_image_size"
                                     android:layout_height="@dimen/check_image_size"
                                     android:layout_alignParentRight="true"
                                     android:layout_alignParentTop="true"
                                     android:layout_marginRight="@dimen/check_image_right_small_margin"
                                     android:layout_marginTop="@dimen/check_image_top_margin"
-                                    android:src="@drawable/check_icon" />
+                                    android:src="@drawable/check_icon"
+                                    android:visibility="invisible" />
                             </RelativeLayout>
 
 
@@ -277,6 +281,7 @@
                                     android:src="@drawable/mail" />
 
                                 <ImageView
+                                    android:id="@+id/mail_check_icon"
                                     android:layout_width="@dimen/check_image_size"
                                     android:layout_height="@dimen/check_image_size"
                                     android:layout_alignParentRight="true"
@@ -284,7 +289,7 @@
                                     android:layout_marginRight="@dimen/check_image_right_margin"
                                     android:layout_marginTop="@dimen/check_image_top_margin"
                                     android:src="@drawable/check_icon"
-                                    android:visibility="gone" />
+                                    android:visibility="invisible" />
                             </RelativeLayout>
 
 

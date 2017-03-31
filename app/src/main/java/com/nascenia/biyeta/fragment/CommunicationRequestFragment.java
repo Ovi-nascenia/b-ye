@@ -45,9 +45,11 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
     private View _baseView;
 
-    private ImageView userProfileImage;
-    private ImageView cancelImageView, waitImageView, acceptImageView, selfImageView,
-            favoriteImageView, emoIconImageView;
+
+    private ImageView userProfileImage, cancelImageView, waitImageView, acceptImageView, selfImageView,
+            favoriteImageView, emoIconImageView, mobileCheckIconImageView,
+            fbCheckIconImageView, mailCheckIconImageView;
+
     private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView, otherInfoRecylerView,
             familyMemberInfoRecylerView;
     private ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
@@ -115,6 +117,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
         favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
 
+
         layoutSendSmiley.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,6 +155,11 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
             }
         });
+
+
+        mobileCheckIconImageView = (ImageView) _baseView.findViewById(R.id.mobile_check_icon);
+        fbCheckIconImageView = (ImageView) _baseView.findViewById(R.id.fb_check_icon);
+        mailCheckIconImageView = (ImageView) _baseView.findViewById(R.id.mail_check_icon);
 
         generalInfoRecyclerView = (RecyclerView) _baseView.findViewById(R.id.user_general_info_recycler_view);
         generalInfoRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -226,6 +234,12 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     public void onComplete(Boolean result, Integer id, UserProfile userProfile) {
 
         this.userProfile = userProfile;
+
+        //setVerification image
+        SendRequestFragmentView.setVerificationIcon(userProfile,
+                mobileCheckIconImageView,
+                fbCheckIconImageView,
+                mailCheckIconImageView);
 
         if (this.userProfile.getProfile().isIsFavorite()) {
 
