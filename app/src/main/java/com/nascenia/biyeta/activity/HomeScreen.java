@@ -56,7 +56,7 @@ import java.util.ArrayList;
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
 
 
-    private static final int REQUEST_PHONE_CALL = 100 ;
+    private static final int REQUEST_PHONE_CALL = 100;
     static Context context;
     DrawerLayout drawerLayout;
 
@@ -87,9 +87,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         profileImageView.setColorFilter(Color.GRAY);
 
         if (ContextCompat.checkSelfPermission(HomeScreen.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(HomeScreen.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+            ActivityCompat.requestPermissions(HomeScreen.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
         }
-
 
 
     }
@@ -134,10 +133,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 //                  });
                     }
 
-                @Override
-                public void onError() {
-                }
-            });
+                    @Override
+                    public void onError() {
+                    }
+                });
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
@@ -146,18 +145,17 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 //set false other item
 
 
-
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
                     drawerLayout.closeDrawer(Gravity.RIGHT);
 
-                int id=menuItem.getItemId();
-                switch (id)
-                {
+                int id = menuItem.getItemId();
+                switch (id) {
                     case R.id.nav_profile:
                         startActivity(new Intent(HomeScreen.this, NewUserProfileActivity.class).
                                 putExtra("id", sharePref.get_data("user_id")).
                                 putExtra("user_name", sharePref.get_data("display_name"))
-                                .putExtra("PROFILE_EDIT_OPTION", true));
+                                .putExtra("PROFILE_EDIT_OPTION", true)
+                               );
                         break;
 
 //                    case R.id.nav_inbox:
@@ -169,7 +167,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         break;
 
                     case R.id.nav_balance:
-                        startActivity(new Intent(HomeScreen.this,PaymentActivity.class));
+                        startActivity(new Intent(HomeScreen.this, PaymentActivity.class));
 
                         break;
 
@@ -177,20 +175,20 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 //                        getSupportFragmentManager().beginTransaction()
 //                                .replace(R.id.fragmentParentViewGroup, new AboutBiyeta())
 //                                .commit();
-                        startActivity(new Intent(HomeScreen.this,AboutBiyeta.class));
+                        startActivity(new Intent(HomeScreen.this, AboutBiyeta.class));
                         break;
                     case R.id.nav_connection:
-                        startActivity(new Intent(HomeScreen.this,ContactUs.class));
+                        startActivity(new Intent(HomeScreen.this, ContactUs.class));
 
 
                         break;
 
                     case R.id.nav_faq:
-                        startActivity(new Intent(HomeScreen.this,FAQActivity.class));
+                        startActivity(new Intent(HomeScreen.this, FAQActivity.class));
                         break;
                     case R.id.nav_termsofuse:
 
-                        startActivity(new Intent(HomeScreen.this,TermOfUse.class));
+                        startActivity(new Intent(HomeScreen.this, TermOfUse.class));
 
                         break;
                     case R.id.nav_logout:
@@ -206,7 +204,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 }
 
 
-
                 return true;
             }
         });
@@ -219,10 +216,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     public void onBackPressed() {
 
 
-        if(drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+        if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
             drawerLayout.closeDrawer(Gravity.RIGHT);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -324,9 +320,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         }
 
     }
-
-
-
 
 
 }
