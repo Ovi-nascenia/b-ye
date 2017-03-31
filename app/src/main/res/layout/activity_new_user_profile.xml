@@ -528,7 +528,8 @@
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:layout_alignParentLeft="true"
-                                    android:scaleType="fitXY" />
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/profile_icon_female"/>
 
 
                                 <TextView
@@ -553,7 +554,8 @@
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:layout_alignParentRight="true"
-                                    android:layout_marginRight="@dimen/small_margin" />
+                                    android:layout_marginRight="@dimen/small_margin"
+                                    android:src="@drawable/profile_icon_male"/>
 
                                 <TextView
                                     android:layout_width="150dp"

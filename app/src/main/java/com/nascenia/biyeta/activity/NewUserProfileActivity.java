@@ -374,7 +374,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
                                     (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))) {
-                                userProfileImage.setImageResource(R.drawable.large_profile_icon_male);
+                                userProfileImage.setImageResource(R.drawable.profile_icon_male);
                                 profileViewerPersonImageView.setImageResource(R.drawable.profile_icon_male);
                             } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
                                     (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.FEMALE_GENDER))) {

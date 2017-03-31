@@ -71,11 +71,7 @@
                     android:layout_height="match_parent"
                     android:background="#ffffff"
                     android:gravity="center"
-                    android:hint="@string/email"
-                    android:text="biyeta2@gmail.com"
-
-
-                    />
+                    android:hint="@string/email"/>
             </android.support.v7.widget.CardView>
 
 
@@ -101,10 +97,7 @@
                     android:background="#ffffff"
                     android:gravity="center"
                     android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:text="12345678"
-
-                    />
+                    android:inputType="textPassword" />
             </android.support.v7.widget.CardView>
 
 

@@ -834,7 +834,7 @@ public class SendRequestFragmentView {
                     checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
                             +
                             checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
-                    , R.drawable.hel2));
+                    , R.drawable.profile_icon_male));
 
         }
 
@@ -850,7 +850,7 @@ public class SendRequestFragmentView {
                     checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())
                             +
                             checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())
-                    , R.drawable.hel));
+                    , R.drawable.profile_icon_female));
 
         }
 
