@@ -455,7 +455,7 @@ public class SendRequestFragmentView {
             }
 
             //add brother information
-            if (userProfile.getProfile().getFamilyMembers().getNumberOfSisters() > 0) {
+            if (userProfile.getProfile().getFamilyMembers().getNumberOfBrothers() > 0) {
 
                 familyMemberCounter = 0;
 
