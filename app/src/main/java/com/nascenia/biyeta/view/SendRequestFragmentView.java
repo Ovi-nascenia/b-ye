@@ -60,13 +60,7 @@ public class SendRequestFragmentView {
     * if 1 set to this variable,then it means communication request fragment class call
     *
     * */
-    private int viewRequestClassname;
 
-    private static MyCallback<Boolean> mCallback;
-    static ProgressDialog progressBar;
-    private static int progressBarStatus;
-    private static Handler progressBarHandler = new Handler();
-    private static long fileSize;
 
     private static ProgressDialog dialog;
 
@@ -352,12 +346,12 @@ public class SendRequestFragmentView {
 
         } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
                 (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))) {
-            userProfileImage.setImageResource(R.drawable.hel2);
-            profileViewerPersonImageView.setImageResource(R.drawable.hel2);
+            userProfileImage.setImageResource(R.drawable.profile_icon_male);
+            profileViewerPersonImageView.setImageResource(R.drawable.profile_icon_male);
         } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
                 (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.FEMALE_GENDER))) {
-            userProfileImage.setImageResource(R.drawable.hel);
-            profileViewerPersonImageView.setImageResource(R.drawable.hel);
+            userProfileImage.setImageResource(R.drawable.profile_icon_female);
+            profileViewerPersonImageView.setImageResource(R.drawable.profile_icon_female);
         } else {
         }
 
@@ -425,12 +419,12 @@ public class SendRequestFragmentView {
                     sisterChildItemList.add(new UserProfileChild(
                             "বোন " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
 
-                            checkNullField(userProfile.getProfile().getFamilyMembers().getSisters().
-                                    get(i).getName())
+                            checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getSisters().get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getSisters().get(i).getOccupation())
-                                    + checkNullField(userProfile.getProfile().getFamilyMembers()
-                                    .getSisters().get(i).getDesignation())
+                                    + checkNullField(userProfile.getProfile().getFamilyMembers().
+                                    getSisters().get(i).getDesignation())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers()
                                     .getSisters().get(i).getInstitute())
 

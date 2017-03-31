@@ -1,6 +1,7 @@
 package com.nascenia.biyeta.activity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -101,6 +102,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     private RelativeLayout mobileLayout, facebookLayout, mailLayout;
 
+    private ProgressDialog progressDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,10 +165,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         if (Utils.isOnline(getBaseContext())) {
 
-            Log.i("idid", getIntent().getExtras().getString("id"));
             fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/" +
                     getIntent().getExtras().getString("id"));
-
 
         } else {
             Utils.ShowAlert(getBaseContext(), "please check your internet connection");
@@ -180,6 +181,12 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     }
 
     private void initView() {
+
+
+        progressDialog = new ProgressDialog(NewUserProfileActivity.this);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setCancelable(true);
+
 
         layoutSendSmiley = (LinearLayout) findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) findViewById(emoIconImage);
@@ -289,6 +296,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     private void fetchUserProfileDetails(final String url) {
 
+        progressDialog.show();
 
         new Thread(new Runnable() {
             @Override
@@ -366,12 +374,12 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
                                     (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))) {
-                                userProfileImage.setImageResource(R.drawable.hel2);
-                                profileViewerPersonImageView.setImageResource(R.drawable.hel2);
+                                userProfileImage.setImageResource(R.drawable.large_profile_icon_male);
+                                profileViewerPersonImageView.setImageResource(R.drawable.profile_icon_male);
                             } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
                                     (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.FEMALE_GENDER))) {
-                                userProfileImage.setImageResource(R.drawable.hel);
-                                profileViewerPersonImageView.setImageResource(R.drawable.hel);
+                                userProfileImage.setImageResource(R.drawable.profile_icon_female);
+                                profileViewerPersonImageView.setImageResource(R.drawable.profile_icon_female);
                             } else {
                             }
 
@@ -667,7 +675,9 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
                             }
-
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
                         }
                     });
 
