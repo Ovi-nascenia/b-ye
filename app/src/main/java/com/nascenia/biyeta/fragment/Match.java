@@ -167,6 +167,7 @@ public class Match extends Fragment implements View.OnClickListener {
         }
 
     }
+    CommunicationProfile communicationProfileResponse;
 
     class LoadConnection extends AsyncTask<String, String, String> {
 
@@ -179,15 +180,15 @@ public class Match extends Fragment implements View.OnClickListener {
             Gson gson = new Gson();
             InputStream is = new ByteArrayInputStream(s.getBytes());
             InputStreamReader isr = new InputStreamReader(is);
-            CommunicationProfile response = gson.fromJson(isr, CommunicationProfile.class);
-            toalConnectionPage = response.getTotalPage();
+            communicationProfileResponse = gson.fromJson(isr, CommunicationProfile.class);
+            toalConnectionPage = communicationProfileResponse.getTotalPage();
 
             if (connectionPageTrack == 1) {
-                toalConnectionPage = response.getTotalPage();
-                profileCommunicationList = response.getProfiles();
+                toalConnectionPage = communicationProfileResponse.getTotalPage();
+                profileCommunicationList = communicationProfileResponse.getProfiles();
 
 
-                communicationAdapter = new CommunicationAdapter(profileCommunicationList, R.layout.common_user_profile_item, response.getCurrentUserSignedIn()) {
+                communicationAdapter = new CommunicationAdapter(profileCommunicationList, R.layout.common_user_profile_item, communicationProfileResponse.getCurrentUserSignedIn()) {
                     @Override
                     public void LoadData() {
                         connectionPageTrack++;
@@ -201,13 +202,22 @@ public class Match extends Fragment implements View.OnClickListener {
                         }
 
                     }
+
+                    @Override
+                    public void onClickProfile(int position) {
+                        Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
+                        intent.putExtra("id", communicationProfileResponse.getProfiles().get(position).getId()+"");
+                        intent.putExtra("user_name", communicationProfileResponse.getProfiles().get(position).getDisplayName());
+                        intent.putExtra("PROFILE_EDIT_OPTION", false);
+                        startActivity(intent);
+                    }
                 };
                 recyclerView.setAdapter(communicationAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
             } else if (connectionPageTrack > 1 && connectionPageTrack <= toalConnectionPage) {
-                for (int i = 0; i < response.getProfiles().size(); i++) {
-                    profileCommunicationList.add(response.getProfiles().get(i));
+                for (int i = 0; i < communicationProfileResponse.getProfiles().size(); i++) {
+                    profileCommunicationList.add(communicationProfileResponse.getProfiles().get(i));
                     communicationAdapter.notifyDataSetChanged();
                 }
             }
@@ -283,6 +293,15 @@ public class Match extends Fragment implements View.OnClickListener {
                             snackbar.show();
                         }
 
+                    }
+
+                    @Override
+                    public void onClickProfile(int position) {
+                        Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
+                        intent.putExtra("id", biodataResponse.getProfiles().get(position).getId()+"");
+                        intent.putExtra("user_name", biodataResponse.getProfiles().get(position).getDisplayName());
+                        intent.putExtra("PROFILE_EDIT_OPTION", false);
+                        startActivity(intent);
                     }
                 };
                 recyclerView.setAdapter(biodataListAdapter);

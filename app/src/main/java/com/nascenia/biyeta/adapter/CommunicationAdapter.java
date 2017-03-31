@@ -35,6 +35,7 @@ import java.util.List;
 public abstract class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdapter.ViewHolder> {
 
     public abstract void LoadData();
+    public abstract void onClickProfile(int position);
 
     private List<Profile> communicationProfile;
     private int itemLayout;
@@ -106,6 +107,32 @@ public abstract class CommunicationAdapter extends RecyclerView.Adapter<Communic
                 bundle.putString("userName", profile.getDisplayName());
                 in.putExtras(bundle);
                 holder.image.getContext().startActivity(in);
+            }
+        });
+
+
+        holder.userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(position);
+            }
+        });
+        holder.details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(position);
+            }
+        });
+        holder.time_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(position);
+            }
+        });
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(position);
             }
         });
     }

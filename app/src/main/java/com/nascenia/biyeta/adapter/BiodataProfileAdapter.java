@@ -37,11 +37,14 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
     private List<Profile> biodataProfile;
     private int itemLayout;
     int position;
+    Profile profile;
 
 
     public abstract void setConnectionRequest(int id, int position);
 
     public abstract void LoadData();
+    public abstract void onClickProfile(int position);
+
 
 
     public BiodataProfileAdapter(List<Profile> biodataProfile, int itemLayout) {
@@ -56,11 +59,9 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
     }
 
     @Override
-    public void onBindViewHolder(final BiodataProfileAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final BiodataProfileAdapter.ViewHolder holder,final int position) {
 
-        position = position;
-
-        final Profile profile = biodataProfile.get(position);
+         profile = biodataProfile.get(position);
 
         holder.userName.setText(profile.getDisplayName());
         holder.details.setText(Utils.convertEnglishDigittoBangla(profile.getAge()) + " বছর" + ", " +
@@ -91,14 +92,51 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
         if (position == biodataProfile.size() - 1)
             LoadData();
 
-        final int finalPosition = position;
+
         holder.call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setConnectionRequest(profile.getId(), finalPosition);
+                setConnectionRequest(profile.getId(), position);
 
             }
         });
+
+
+        holder.userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(position);;
+
+            }
+        });
+
+        holder.details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(position);
+
+            }
+        });
+
+
+
+
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(position);
+
+            }
+        });
+
+        holder.time_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickProfile(position);
+
+            }
+        });
+
 
 
     }
