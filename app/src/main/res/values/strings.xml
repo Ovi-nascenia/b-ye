@@ -214,7 +214,8 @@
     <!--Account_Recharge_page-->
     <string name="account_recharge_title">ব্যালেন্স ও রিচার্জ </string>
     <string name="account_recharge_currentbalance">বর্তমান ব্যালেন্স ১০০ টাকা </string>
-    <string name="account_recharge_descrip1">প্রতিটি যোগাযোগের মূল্য ১০০ টাকা। আপনি আরও একজনকে যোগাযোগের অনুরোধ পাঠাতে পারবেন। </string>
+    <string name="every_payment">প্রতিটি যোগাযোগের মূল্য ১০০ টাকা।</string>
+    <string name="account_recharge_descrip1"> আপনি আরও একজনকে যোগাযোগের অনুরোধ পাঠাতে পারবেন। </string>
     <string name="account_recharge_descrip2">শুধুমাত্র যোগাযোগের অনুরোধ গ্রহন করলেই আপনার অ্যাকাউণ্ট থেকে টাকা নেয়া হবে। এক সপ্তাহের মধ্যে অনুরোধ গৃহীত না হলে অ্যাকাউণ্টে টাকা ফেরত আসবে। </string>
     <string name="load_money_title">অ্যাকাউণ্টে টাকা লোড করুন। </string>
     <string name="online_payment_option">অনলাইন পেমেণ্ট (ডেবিট/ক্রেডিট/নেক্সাস কার্ড) </string>
