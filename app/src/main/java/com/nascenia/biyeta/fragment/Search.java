@@ -169,7 +169,7 @@ public class Search extends Fragment {
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(mProfile_adapter);
-                Log.e("fuck", Search_Filter.reponse);
+                Log.e("Search_Filter", Search_Filter.reponse);
                 //clear the previous list item
                 profileList.clear();
                 mProfile_adapter.notifyDataSetChanged();

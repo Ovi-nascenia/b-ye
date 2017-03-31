@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -72,17 +73,23 @@ public class PaymentActivity extends CustomActionBarActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progressBar.dismiss();
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.has("balance")) {
+            if (s==null)
+            {
+                Utils.ShowAlert(PaymentActivity.this, "Network error");
+            }
+            else {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.has("balance")) {
 
-                    balanceAmountTextView.setText("বর্তমান ব্যালেন্স "+ jsonObject.getString("balance")+" টাকা");
-                    profileVisitNumberTextView.setText(jsonObject.getString("total_request"));
+                        balanceAmountTextView.setText("বর্তমান ব্যালেন্স " + jsonObject.getString("balance") + " টাকা");
+                        profileVisitNumberTextView.setText(jsonObject.getString("total_request"));
 
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
         }
 

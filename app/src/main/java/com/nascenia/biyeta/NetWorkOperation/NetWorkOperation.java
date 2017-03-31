@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -41,6 +42,22 @@ public class NetWorkOperation {
         new CreateProfileRequestTask(finalResultButton).execute(url, msg);
     }
 
+    public static void postMethod(Context context,
+                                  String url,
+                                  String profileId,
+                                  String header,
+                                  String hederParam) {
+
+        NetWorkOperation.context = context;
+
+        new PostTask().execute(url,
+                profileId,
+                header,
+                hederParam);
+
+
+    }
+
     static class SendConnectionRequest extends AsyncTask<String, String, String> {
 
 
@@ -54,10 +71,14 @@ public class NetWorkOperation {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.i("response", s);
+            if (s == null) Utils.ShowAlert(context, "Check Internet Connection");
+            else {
+                Log.i("response", s);
 
-            this.finalResultButton.setEnabled(false);
-            this.finalResultButton.setText(msg);
+                this.finalResultButton.setEnabled(false);
+                this.finalResultButton.setText(msg);
+            }
+
 
         }
 
@@ -108,14 +129,6 @@ public class NetWorkOperation {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-           /* try {
-                String s1 = new JSONObject(s).getJSONArray("message").getJSONObject(0).getString("detail");
-                Log.i("responseresult: ", s1);
-                Toast.makeText(NetWorkOperation.context, s1, Toast.LENGTH_LONG).show();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
-
             this.finalResultButton.setEnabled(false);
             this.finalResultButton.setText(msg);
 
@@ -147,23 +160,6 @@ public class NetWorkOperation {
 
         }
     }
-
-    public static void postMethod(Context context,
-                                  String url,
-                                  String profileId,
-                                  String header,
-                                  String hederParam) {
-
-        NetWorkOperation.context = context;
-
-        new PostTask().execute(url,
-                profileId,
-                header,
-                hederParam);
-
-
-    }
-
 
     private static class PostTask extends AsyncTask<String, String, String> {
 

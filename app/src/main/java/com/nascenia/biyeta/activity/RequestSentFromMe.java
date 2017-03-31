@@ -30,6 +30,7 @@ import com.nascenia.biyeta.fragment.CommunicationRequestFragment;
 import com.nascenia.biyeta.fragment.RecyclerItemClickListener;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
 import com.nascenia.biyeta.model.communication_request_from_me.CommuncationRequestFromMeModel;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -164,6 +165,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
     CommuncationRequestFromMeModel communicationResponse;
     CommunicationRequestFromMeAdapter communicationRequestFromMeAdapter;
 
+
     class LoadBioDataConnection extends AsyncTask<String, String, String> {
 
         Gson gson = new Gson();
@@ -179,114 +181,119 @@ public class RequestSentFromMe extends CustomActionBarActivity {
             super.onPostExecute(s);
             ////Toast.makeText(RequestSentFromMe.this,s,//Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
+            if (s==null)
+            {
+                Utils.ShowAlert(RequestSentFromMe.this, "Network error");
+            }
+            else {
 
-            if (position == 0) {
+                if (position == 0) {
 
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
 
-                    if (jsonObject.has("message")) {
-                        //Toast.makeText(RequestSentFromMe.this,"null",//Toast.LENGTH_SHORT).show();
-                        findViewById(R.id.no_message).setVisibility(View.VISIBLE);
-                        recyclerView.setVisibility(View.GONE);
-                    } else {
-                        findViewById(R.id.no_message).setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
-                        Gson gson = new Gson();
-                        InputStream is = new ByteArrayInputStream(s.getBytes());
-                        InputStreamReader isr = new InputStreamReader(is);
-                        biodataResponse = gson.fromJson(isr, BiodataProfile.class);
+                        if (jsonObject.has("message")) {
+                            //Toast.makeText(RequestSentFromMe.this,"null",//Toast.LENGTH_SHORT).show();
+                            findViewById(R.id.no_message).setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.GONE);
+                        } else {
+                            findViewById(R.id.no_message).setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                            Gson gson = new Gson();
+                            InputStream is = new ByteArrayInputStream(s.getBytes());
+                            InputStreamReader isr = new InputStreamReader(is);
+                            biodataResponse = gson.fromJson(isr, BiodataProfile.class);
 
-                        biodataFromMeAdapter = new BiodatarequestFromMe(biodataResponse, R.layout.biodata_request_from_me) {
-                            @Override
-                            public void onClickSmile(int id,int position) {
+                            biodataFromMeAdapter = new BiodatarequestFromMe(biodataResponse, R.layout.biodata_request_from_me) {
+                                @Override
+                                public void onClickSmile(int id, int position) {
 
-                                new SendSmile().execute("http://test.biyeta.com/api/v1/smiles",id+"",position+"");
+                                    new SendSmile().execute("http://test.biyeta.com/api/v1/smiles", id + "", position + "");
 
-                                //Toast.makeText(RequestSentFromMe.this, id + " ", //Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(RequestSentFromMe.this, id + " ", //Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onClickItem(int id, int position) {
+                                    Intent intent = new Intent(RequestSentFromMe.this, NewUserProfileActivity.class);
+                                    intent.putExtra("id", biodataResponse.getProfiles().get(position).getId() + "");
+                                    intent.putExtra("user_name", biodataResponse.getProfiles().get(position).getDisplayName());
+                                    intent.putExtra("PROFILE_EDIT_OPTION", false);
+                                    startActivity(intent);
+
+                                }
+
+
+                            };
+                            recyclerView.setAdapter(biodataFromMeAdapter);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
+                            recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                            for (int i = 0; i < biodataResponse.getProfiles().size(); i++) {
+                                if (biodataResponse.getProfiles().get(i).getRequestStatus().getAccepted() == false && biodataResponse.getProfiles().get(i).getRequestStatus().getRejected() == false) {
+                                } else
+                                    biodataNotificationCount++;
                             }
 
-                            @Override
-                            public void onClickItem(int id, int position) {
-                                Intent intent = new Intent(RequestSentFromMe.this, NewUserProfileActivity.class);
-                                intent.putExtra("id", biodataResponse.getProfiles().get(position).getId() + "");
-                                intent.putExtra("user_name", biodataResponse.getProfiles().get(position).getDisplayName());
-                                intent.putExtra("PROFILE_EDIT_OPTION", false);
-                                startActivity(intent);
-
-                            }
-
-
-                        };
-                        recyclerView.setAdapter(biodataFromMeAdapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
-                        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-                        for (int i = 0; i < biodataResponse.getProfiles().size(); i++) {
-                            if (biodataResponse.getProfiles().get(i).getRequestStatus().getAccepted() == false && biodataResponse.getProfiles().get(i).getRequestStatus().getRejected() == false) {
-                            } else
-                                biodataNotificationCount++;
+                            notificationNumberLeft.setText(biodataNotificationCount + "");
+                            findViewById(R.id.no_message).setVisibility(View.GONE);
                         }
 
-                        notificationNumberLeft.setText(biodataNotificationCount + "");
-                        findViewById(R.id.no_message).setVisibility(View.GONE);
+                    } catch (JSONException e) {
+
+
                     }
 
-                } catch (JSONException e) {
+                } else {
 
 
-                }
-
-            } else {
-
-
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
 
 
-                    if (jsonObject.has("message")) {
-                        //Toast.makeText(RequestSentFromMe.this,"null",//Toast.LENGTH_SHORT).show();
-                        findViewById(R.id.no_message).setVisibility(View.VISIBLE);
-                        recyclerView.setVisibility(View.GONE);
-                    } else {
-                        findViewById(R.id.no_message).setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
-                        //Toast.makeText(RequestSentFromMe.this,"Not null",//Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(RequestSentFromMe.this, s, //Toast.LENGTH_SHORT).show();
-                        InputStream is = new ByteArrayInputStream(s.getBytes());
-                        InputStreamReader isr = new InputStreamReader(is);
-                        communicationResponse = gson.fromJson(isr, CommuncationRequestFromMeModel.class);
+                        if (jsonObject.has("message")) {
+                            //Toast.makeText(RequestSentFromMe.this,"null",//Toast.LENGTH_SHORT).show();
+                            findViewById(R.id.no_message).setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.GONE);
+                        } else {
+                            findViewById(R.id.no_message).setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                            //Toast.makeText(RequestSentFromMe.this,"Not null",//Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(RequestSentFromMe.this, s, //Toast.LENGTH_SHORT).show();
+                            InputStream is = new ByteArrayInputStream(s.getBytes());
+                            InputStreamReader isr = new InputStreamReader(is);
+                            communicationResponse = gson.fromJson(isr, CommuncationRequestFromMeModel.class);
 
-                        communicationRequestFromMeAdapter = new CommunicationRequestFromMeAdapter(communicationResponse, R.layout.communication_request_sent_from_me_item) {
-                            @Override
-                            public void onMakeConnection(int id, int position) {
+                            communicationRequestFromMeAdapter = new CommunicationRequestFromMeAdapter(communicationResponse, R.layout.communication_request_sent_from_me_item) {
+                                @Override
+                                public void onMakeConnection(int id, int position) {
 
-                                new SendConnection().execute("http://test.biyeta.com/api/v1/communication_requests", id + "", position + "");
+                                    new SendConnection().execute("http://test.biyeta.com/api/v1/communication_requests", id + "", position + "");
 
-                            }
+                                }
 
-                            @Override
-                            public void onClickProfile(int id, int position) {
+                                @Override
+                                public void onClickProfile(int id, int position) {
 
-                                Intent intent = new Intent(RequestSentFromMe.this, NewUserProfileActivity.class);
-                                intent.putExtra("id", communicationResponse.getProfiles().get(position).getId() + "");
-                                intent.putExtra("user_name", communicationResponse.getProfiles().get(position).getDisplayName());
-                                intent.putExtra("PROFILE_EDIT_OPTION", false);
-                                startActivity(intent);
+                                    Intent intent = new Intent(RequestSentFromMe.this, NewUserProfileActivity.class);
+                                    intent.putExtra("id", communicationResponse.getProfiles().get(position).getId() + "");
+                                    intent.putExtra("user_name", communicationResponse.getProfiles().get(position).getDisplayName());
+                                    intent.putExtra("PROFILE_EDIT_OPTION", false);
+                                    startActivity(intent);
 
-                            }
-                        };
-                        recyclerView.setAdapter(communicationRequestFromMeAdapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
-                        recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        findViewById(R.id.no_message).setVisibility(View.GONE);
+                                }
+                            };
+                            recyclerView.setAdapter(communicationRequestFromMeAdapter);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(RequestSentFromMe.this));
+                            recyclerView.setItemAnimator(new DefaultItemAnimator());
+                            findViewById(R.id.no_message).setVisibility(View.GONE);
+                        }
+
+
+                    } catch (JSONException e) {
+
                     }
-
-
-                } catch (JSONException e) {
-
-                }
 
 
 //                for (int i = 0; i < response.getProfiles().size(); i++) {
@@ -295,9 +302,10 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 //                        connectionNotification++;
 //                }
 
-                notificationNumberRight.setText(connectionNotification + "");
+                    notificationNumberRight.setText(connectionNotification + "");
 
 
+                }
             }
 
 

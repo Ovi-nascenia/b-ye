@@ -398,65 +398,71 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Log.e("LoginData", s);
+            //Log.e("LoginData", s);
 
+            if (s==null)
+            {
+                Utils.ShowAlert(Login.this, "Network error");
+            }
+            else {
 
-            try {
-                //convert string to json object
-                JSONObject jsonObject = new JSONObject(s);
+                try {
+                    //convert string to json object
+                    JSONObject jsonObject = new JSONObject(s);
 
-                if (jsonObject.has("errors")) {
-                    Utils.ShowAlert(Login.this, jsonObject.getJSONArray("errors").getJSONObject(0).getString("detail"));
-                    buttonSubmit.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.GONE);
-                } else {
-                    Gson gson = new Gson();
-                    InputStream is = new ByteArrayInputStream(s.getBytes());
-                    InputStreamReader isr = new InputStreamReader(is);
-                    LoginInformation response = gson.fromJson(isr, LoginInformation.class);
-
-
-                    //insert the token in Sharepreference
-
-                    try {
-
-
-                        SharePref sharePref = new SharePref(Login.this);
-
-                        sharePref.set_data("token", response.getLoginInformation().getAuthToken());
-                        sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
-                        sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
-                        sharePref.set_data("gender", response.getLoginInformation().getGender());
-                        sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
-                        sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
-
-
-                        // check the mobile verify screen
-
-                        if (response.getLoginInformation().getMobileVerified()) {
-                            startActivity(new Intent(Login.this, HomeScreen.class));
-                            finish();
-                        } else {
-
-                            startActivity(new Intent(Login.this, MobileVerification.class));
-                            // finish();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Utils.ShowAlert(Login.this, "Wrong email/password");
+                    if (jsonObject.has("errors")) {
+                        Utils.ShowAlert(Login.this, jsonObject.getJSONArray("errors").getJSONObject(0).getString("detail"));
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
+                    } else {
+                        Gson gson = new Gson();
+                        InputStream is = new ByteArrayInputStream(s.getBytes());
+                        InputStreamReader isr = new InputStreamReader(is);
+                        LoginInformation response = gson.fromJson(isr, LoginInformation.class);
+
+
+                        //insert the token in Sharepreference
+
+                        try {
+
+
+                            SharePref sharePref = new SharePref(Login.this);
+
+                            sharePref.set_data("token", response.getLoginInformation().getAuthToken());
+                            sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
+                            sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
+                            sharePref.set_data("gender", response.getLoginInformation().getGender());
+                            sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
+                            sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
+
+
+                            // check the mobile verify screen
+
+                            if (response.getLoginInformation().getMobileVerified()) {
+                                startActivity(new Intent(Login.this, HomeScreen.class));
+                                finish();
+                            } else {
+
+                                startActivity(new Intent(Login.this, MobileVerification.class));
+                                // finish();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Utils.ShowAlert(Login.this, "Wrong email/password");
+                            buttonSubmit.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                        }
                     }
+
+
+                } catch (JSONException e) {
+                    Log.e("error", "JSON error");
+                    e.printStackTrace();
+                    Utils.ShowAlert(Login.this, "Wrong Input");
+                    buttonSubmit.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+
                 }
-
-
-            } catch (JSONException e) {
-                Log.e("error", "JSON error");
-                e.printStackTrace();
-                Utils.ShowAlert(Login.this, "Wrong Input");
-                buttonSubmit.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
-
             }
         }
 
