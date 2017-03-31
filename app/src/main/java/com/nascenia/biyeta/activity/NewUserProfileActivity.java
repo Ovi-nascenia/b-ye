@@ -162,6 +162,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         if (Utils.isOnline(getBaseContext())) {
 
+            Log.i("idid", getIntent().getExtras().getString("id"));
             fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/" +
                     getIntent().getExtras().getString("id"));
 
