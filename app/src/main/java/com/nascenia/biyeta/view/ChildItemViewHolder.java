@@ -1,6 +1,7 @@
 package com.nascenia.biyeta.view;
 
 import android.support.annotation.NonNull;
+import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -23,9 +24,11 @@ public class ChildItemViewHolder extends ChildViewHolder {
      * @param itemView The {@link View} being hosted in this ViewHolder
      */
 
-    TextView titleTextView;
-    EditText titleResultTextView;
+    public TextView titleTextView;
+    public EditText titleResultTextView;
     public LinearLayout itemDividerLayout;
+
+    public static KeyListener listener;
 
 
     public ChildItemViewHolder(@NonNull View itemView) {
@@ -33,7 +36,7 @@ public class ChildItemViewHolder extends ChildViewHolder {
 
         titleTextView = (TextView) itemView.findViewById(R.id.titleTextView);
         titleResultTextView = (EditText) itemView.findViewById(R.id.titleResultTextView);
-        titleResultTextView.setKeyListener(null);
+        titleResultTextView.setEnabled(false);
         itemDividerLayout = (LinearLayout) itemView.findViewById(R.id.divider);
     }
 

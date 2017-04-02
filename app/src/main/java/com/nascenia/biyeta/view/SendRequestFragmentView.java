@@ -2,9 +2,7 @@ package com.nascenia.biyeta.view;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.app.VoiceInteractor;
 import android.content.Context;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -14,13 +12,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
-import com.nascenia.biyeta.activity.NewUserProfileActivity;
+
 import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
 import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.adapter.OtherInfoRecylerViewAdapter;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
-import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
 import com.nascenia.biyeta.model.UserProfileChild;
@@ -35,9 +32,6 @@ import com.squareup.okhttp.ResponseBody;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -393,7 +387,7 @@ public class SendRequestFragmentView {
 
 
             //add mother information
-            if (userProfile.getProfile().getFamilyMembers().getFather() != null) {
+            if (userProfile.getProfile().getFamilyMembers().getMother() != null) {
 
                 parentChildItemList.add(new UserProfileChild("মা",
                         checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
@@ -1030,7 +1024,7 @@ public class SendRequestFragmentView {
         }
     }
 
-    private static String checkNullField(String value) {
+    public static String checkNullField(String value) {
 
 
         if (value == null || value.isEmpty()) {

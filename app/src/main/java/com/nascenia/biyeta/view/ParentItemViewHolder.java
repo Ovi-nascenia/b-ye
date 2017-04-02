@@ -52,27 +52,15 @@ public class ParentItemViewHolder extends ParentViewHolder {
             @Override
             public void onClick(View v) {
                 if (isExpanded()) {
-                    /*collapseView();
-                    lnIndicator1.setVisibility(View.GONE);
-                    lnIndicator2.setVisibility(View.VISIBLE);
-                    lnIndicator2.setBackgroundColor(ContextCompat.getColor(holderContext, R.color.without_expand_color));
-                    parentListItemExpandImageView.setImageResource(R.drawable.down_arrow);*/
-
                     setExpandAction();
                 } else {
-                    /*expandView();
-                    lnIndicator1.setVisibility(View.VISIBLE);
-                    lnIndicator1.setBackgroundColor(ContextCompat.getColor(holderContext, R.color.with_expand_color));
-                    lnIndicator2.setVisibility(View.GONE);
-                    parentListItemExpandImageView.setImageResource(R.drawable.up_arrow);*/
-
                     setCollapseAction();
                 }
             }
         });
 
 
-        editItemBtn.setOnClickListener(new View.OnClickListener() {
+     /*   editItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -84,7 +72,7 @@ public class ParentItemViewHolder extends ParentViewHolder {
 
 
             }
-        });
+        });*/
 
     }
 

@@ -6,9 +6,13 @@ package com.nascenia.biyeta.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.method.KeyListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
 
@@ -32,6 +36,8 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     private List<UserProfileParent> userProfilesListParent;
     private Context baseContext;
     private boolean isProfileEditOptionEnable;
+
+    private ChildItemViewHolder childViewHolder;
 
 
     public UserProfileExpenadlbeAdapter(Context baseContext, List<UserProfileParent> userProfilesListParent, boolean isProfileEditOptionEnable) {
@@ -59,7 +65,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     }
 
     @Override
-    public void onBindParentViewHolder(@NonNull ParentItemViewHolder parentViewHolder, int parentPosition, @NonNull UserProfileParent parent) {
+    public void onBindParentViewHolder(@NonNull final ParentItemViewHolder parentViewHolder, int parentPosition, @NonNull UserProfileParent parent) {
 
         parentViewHolder.bind(parent);
         if (parentPosition == (userProfilesListParent.size() - 1)) {
@@ -79,19 +85,37 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
             parentViewHolder.editItemBtn.setVisibility(View.VISIBLE);
         }
 
+
+        parentViewHolder.editItemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(baseContext, "editing is on", Toast.LENGTH_SHORT).show();
+                childViewHolder.titleResultTextView.setEnabled(true);
+                Log.i("editext", childViewHolder.titleResultTextView.toString());
+
+
+            }
+        });
+
     }
 
 
     @Override
-    public void onBindChildViewHolder(@NonNull ChildItemViewHolder childViewHolder, int parentPosition, int childPosition, @NonNull UserProfileChild child) {
-
+    public void onBindChildViewHolder(@NonNull final ChildItemViewHolder childViewHolder, int parentPosition, int childPosition, @NonNull UserProfileChild child) {
 
         childViewHolder.bind(child);
+        this.childViewHolder = childViewHolder;
+
+        Log.i("editext", childViewHolder.titleResultTextView.toString());
+
+
         if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1)) {
 
 //            childViewHolder.itemDividerLayout.setVisibility(View.VISIBLE);
         } else
             childViewHolder.itemDividerLayout.setVisibility(View.GONE);
+
 
     }
 }

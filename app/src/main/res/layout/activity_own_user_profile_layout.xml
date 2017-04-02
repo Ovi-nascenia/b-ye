@@ -361,19 +361,11 @@
 
                     </android.support.v7.widget.CardView>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/medium_margin"
-                        android:layout_marginTop="@dimen/medium_margin"
-                        android:text="সাধারণ তথ্যাবলি"
-                        android:textColor="#F44336"
-                        android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold" />
 
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
                         android:background="#FFFFFF">
 
                         <android.support.v7.widget.RecyclerView
@@ -390,200 +382,165 @@
                     </android.support.v7.widget.CardView>
 
 
-                    <TextView
-                        android:id="@+id/family_info_tag"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/medium_margin"
-                        android:layout_marginTop="@dimen/medium_margin"
-                        android:text="পরিবার"
-                        android:textColor="#F44336"
-                        android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/family_info_recylerview_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        app:cardBackgroundColor="#FFFFFF">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/family_info_recylerview"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/small_margin"
-                            android:layout_marginRight="@dimen/small_margin"
-                            android:layout_marginTop="@dimen/medium_margin"
-                            android:scrollbars="vertical"
-                            android:visibility="visible" />
-
-
-                    </android.support.v7.widget.CardView>
-
-
-                    <TextView
-                        android:id="@+id/other_info_tag"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/medium_margin"
-                        android:layout_marginTop="@dimen/medium_margin"
-                        android:text="বিবিধ প্রশ্নের উত্তর"
-                        android:textColor="#F44336"
-                        android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/other_info_cardview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        app:cardBackgroundColor="#FFFFFF">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/other_info_recylerview"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/small_margin"
-                            android:layout_marginRight="@dimen/small_margin"
-                            android:layout_marginTop="@dimen/medium_margin"
-                            android:scrollbars="vertical"
-                            android:visibility="visible" />
-
-
-                    </android.support.v7.widget.CardView>
-
-
-                    <TextView
-                        android:id="@+id/communication_tag_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/medium_margin"
-                        android:layout_marginTop="@dimen/medium_margin"
-                        android:text="যোগাযোগ"
-                        android:textColor="#F44336"
-                        android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/communication_card_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
-                        android:visibility="gone">
-
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-
-                            <android.support.v7.widget.RecyclerView
-                                android:id="@+id/communication_info_recylerview"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/small_margin"
-                                android:layout_marginRight="@dimen/small_margin"
-                                android:layout_marginTop="@dimen/medium_margin"
-                                android:scrollbars="vertical"
-                                android:visibility="visible" />
-
-
-                        </FrameLayout>
-
-
-                    </android.support.v7.widget.CardView>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/medium_margin"
-                        android:layout_marginTop="@dimen/medium_margin"
-                        android:text=" আপনার পছন্দের সাথে তার মিল"
-                        android:textColor="#F44336"
-                        android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold" />
-
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
                         android:background="#FFFFFF">
 
-
-                        <LinearLayout
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/education_recylerView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
                             android:layout_marginTop="@dimen/medium_margin"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/viewer_image"
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp"
-                                    android:layout_alignParentLeft="true"
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/profile_icon_female" />
-
-
-                                <TextView
-                                    android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_below="@+id/viewer_image"
-                                    android:gravity="center"
-                                    android:text="তার বৈশিষ্ট্য" />
-
-
-                                <Button
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="25dp"
-                                    android:layout_centerInParent="true"
-                                    android:background="#FF3B426C"
-                                    android:text="মিল"
-                                    android:textColor="#FFFFFF" />
-
-                                <ImageView
-                                    android:id="@+id/self_image"
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="@dimen/small_margin"
-                                    android:src="@drawable/profile_icon_male" />
-
-                                <TextView
-                                    android:layout_width="150dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_below="@+id/self_image"
-                                    android:layout_marginRight="@dimen/small_margin"
-                                    android:gravity="right"
-                                    android:lines="1"
-                                    android:text="আপনার পছন্দের মিল"
-                                    android:textSize="@dimen/small_textsize" />
-
-                            </RelativeLayout>
-
-
-                            <android.support.v7.widget.RecyclerView
-                                android:id="@+id/match_user_choice_recyclerView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/small_margin"
-                                android:layout_marginRight="@dimen/small_margin"
-                                android:layout_marginTop="@dimen/medium_margin"
-                                android:scrollbars="vertical" />
-
-                        </LinearLayout>
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
 
 
                     </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
+
+                        android:background="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/profession_recylerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:background="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/parents_recylerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:background="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/brother_recylerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:background="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/sister_recylerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:background="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/child_recylerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:background="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/other_relative_recylerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:background="#FFFFFF">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/other_info_recylerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/medium_margin"
+                            android:scrollbars="vertical"
+                            android:visibility="visible" />
+
+
+                    </android.support.v7.widget.CardView>
+
 
                 </LinearLayout>
 
@@ -593,76 +550,6 @@
 
 
     </android.support.design.widget.CoordinatorLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/r1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <RelativeLayout
-            android:id="@+id/request_send_buttons_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#BDBDBD"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/cancel_imageview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="45dp"
-                android:padding="@dimen/small_padding"
-                android:src="@drawable/accept_icon" />
-
-            <TextView
-                android:id="@+id/cancel_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/cancel_imageview"
-                android:layout_marginLeft="45dp"
-                android:text="বাতিল করুন"
-                android:textColor="#000000" />
-
-
-            <ImageView
-                android:id="@+id/accept_imageview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginRight="65dp"
-                android:padding="@dimen/small_padding"
-                android:src="@drawable/cancel_icon" />
-
-            <TextView
-                android:id="@+id/accept_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/accept_imageview"
-                android:layout_marginRight="65dp"
-                android:text="গ্রহণ করুন"
-                android:textColor="#000000" />
-
-
-        </RelativeLayout>
-
-
-        <Button
-            android:id="@+id/finalResultBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="পুরো বায়োডাটা দেখার অনুরোধ করুন"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:visibility="visible" />
-
-
-    </RelativeLayout>
 
 
 </RelativeLayout>
