@@ -151,6 +151,7 @@ public class Profession_Adapter extends BaseAdapter {
 
         } else if (this.gridItemType.equals("OCCUPATION") && !aBoolean) {
 
+
             removeItemfromGridViewList(Search_Filter.occupationGridItemCheckedCheckBoxPositionList, Search_Filter.occupationId.get(position));
 
         } else if (this.gridItemType.equals("PROFESSION") && !aBoolean) {
