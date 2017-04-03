@@ -141,7 +141,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
                 // update highlighted item in the navigation menu
-                menuItem.setChecked(true);
+            //    menuItem.setChecked(true);
                 //set false other item
 
 
