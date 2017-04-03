@@ -36,17 +36,13 @@ public class Utils {
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
     public static final String Base_URL = "http://test.biyeta.com";
-    public static final String FACEBOOK_SUBURL="/api/v1/facebook_authorization/authorize";
-    public static final String FACEBOOK_LOGIN_URL=Base_URL+FACEBOOK_SUBURL;
-
-
-
+    public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
+    public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
 
 
     ///debug section
 
-    public static final String LOGIN_DEBUG="LoginDebug";
-
+    public static final String LOGIN_DEBUG = "LoginDebug";
 
 
     //userprofile request tag
@@ -154,21 +150,37 @@ public class Utils {
 
 
     public static String formatString(String result) {
+        Log.i("finalresult", "enter method " + result.length());
+
 
         if (result.startsWith(",") | result.startsWith(" : ")) {
 
             result = removeChar(result, 0);
+            Log.i("finalresult", "enter first if  " + result + " " + result.length());
         }
 
-        if (result.charAt(result.length() - 1) == ',' |
+
+       /* if (result.charAt(result.length() - 1) == ',' |
                 result.charAt(result.length() - 1) == ' ') {
 
             result = removeChar(result, result.length() - 1);
+            Log.i("finalresult", "enter 2nd if  " + result + " " + result.length());
         }
 
-        if (result.charAt(result.length() - 1) == ':') {
+        if (result.charAt(result.length() - 1) == ':' |
+                result.charAt(result.length() - 1) == ' ') {
 
             result = removeChar(result, result.length() - 1);
+            Log.i("finalresult", "enter 3rd if  " + result + " " + result.length());
+        }*/
+
+
+        // Log.i("finalresult", "after all if  " + result + " " + result.length());
+
+
+        if (result.lastIndexOf(',') > 0) {
+
+            result = result.substring(0, result.lastIndexOf(','));
         }
 
         result = result.replaceAll(",,", ",");
@@ -339,7 +351,6 @@ public class Utils {
         return value;
 
     }
-
 
 
     private void calculateHashKey(Context context, String yourPackageName) {

@@ -96,7 +96,6 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_own_user_profile_layout);
 
-
         initView();
 
         fetchUserProfileInfo();

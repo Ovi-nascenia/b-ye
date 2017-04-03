@@ -38,7 +38,6 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     private Context baseContext;
     private boolean isProfileEditOptionEnable;
 
-    private ChildItemViewHolder childViewHolder;
 
     public static ArrayList<Boolean> parentPositionList = new ArrayList<>();
 
@@ -114,9 +113,6 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     public void onBindChildViewHolder(@NonNull final ChildItemViewHolder childViewHolder, int parentPosition, int childPosition, @NonNull UserProfileChild child) {
 
         childViewHolder.bind(child);
-        this.childViewHolder = childViewHolder;
-
-        Log.i("editext", childViewHolder.titleResultTextView.toString());
 
         if (parentPositionList.get(parentPosition)) {
             childViewHolder.titleResultTextView.setEnabled(true);

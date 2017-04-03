@@ -127,6 +127,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         layoutSendSmiley.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getActivity(), userProfile.getProfile().isIsSmileSent() + "", Toast.LENGTH_LONG).show();
 
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
@@ -147,7 +148,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         favoriteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(getActivity(), "click", Toast.LENGTH_LONG).show();
                 if (!userProfile.getProfile().isIsFavorite()) {
 
                     NetWorkOperation.postMethod(getActivity(),
@@ -334,26 +335,45 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     }
 
     @Override
-    public void onComplete(Boolean result, Integer id, UserProfile userProfile) {
+    public void onComplete(Boolean result, Integer id, final UserProfile userProfile) {
 
         this.userProfile = userProfile;
 
-        //setVerification image
-        SendRequestFragmentView.setVerificationIcon(userProfile,
-                mobileCheckIconImageView,
-                fbCheckIconImageView,
-                mailCheckIconImageView);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //setVerification image
+                SendRequestFragmentView.setVerificationIcon(userProfile,
+                        mobileCheckIconImageView,
+                        fbCheckIconImageView,
+                        mailCheckIconImageView);
+            }
+        });
+
 
         if (this.userProfile.getProfile().isIsFavorite()) {
 
-            favoriteImageView.setEnabled(false);
-            favoriteImageView.setImageResource(R.drawable.red_favorite);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    favoriteImageView.setEnabled(false);
+                    favoriteImageView.setImageResource(R.drawable.red_favorite);
+                }
+            });
+
         }
 
         if (this.userProfile.getProfile().isIsSmileSent()) {
 
-            layoutSendSmiley.setEnabled(false);
-            emoIconImageView.setImageResource(R.drawable.red_smile);
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    layoutSendSmiley.setEnabled(false);
+                    emoIconImageView.setImageResource(R.drawable.red_smile);
+                }
+            });
+
         }
 
         if (result && clickableButtonIdentifier == 1 && id != null) {
