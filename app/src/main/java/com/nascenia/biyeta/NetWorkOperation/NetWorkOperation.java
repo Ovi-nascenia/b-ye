@@ -1,12 +1,14 @@
 package com.nascenia.biyeta.NetWorkOperation;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -25,6 +27,7 @@ import org.json.JSONObject;
 public class NetWorkOperation {
     public static OkHttpClient client = new OkHttpClient();
     static Context context;
+    private static ProgressDialog progressDialog;
 
     public static void postData(Context context, String url,
                                 String userId, Button finalResultButton, String msg) {
@@ -47,6 +50,10 @@ public class NetWorkOperation {
                                   String profileId,
                                   String header,
                                   String hederParam) {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setCancelable(true);
+
 
         NetWorkOperation.context = context;
 
@@ -166,6 +173,8 @@ public class NetWorkOperation {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            progressDialog.show();
         }
 
         @Override
@@ -198,6 +207,10 @@ public class NetWorkOperation {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
         }
     }
 }

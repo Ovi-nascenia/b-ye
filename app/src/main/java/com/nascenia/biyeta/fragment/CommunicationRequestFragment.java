@@ -231,26 +231,45 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     }
 
     @Override
-    public void onComplete(Boolean result, Integer id, UserProfile userProfile) {
+    public void onComplete(Boolean result, Integer id, final UserProfile userProfile) {
 
         this.userProfile = userProfile;
 
-        //setVerification image
-        SendRequestFragmentView.setVerificationIcon(userProfile,
-                mobileCheckIconImageView,
-                fbCheckIconImageView,
-                mailCheckIconImageView);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //setVerification image
+                SendRequestFragmentView.setVerificationIcon(userProfile,
+                        mobileCheckIconImageView,
+                        fbCheckIconImageView,
+                        mailCheckIconImageView);
+            }
+        });
+
 
         if (this.userProfile.getProfile().isIsFavorite()) {
 
-            favoriteImageView.setEnabled(false);
-            favoriteImageView.setImageResource(R.drawable.red_favorite);
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    favoriteImageView.setEnabled(false);
+                    favoriteImageView.setImageResource(R.drawable.red_favorite);
+                }
+            });
+
         }
 
         if (this.userProfile.getProfile().isIsSmileSent()) {
 
-            layoutSendSmiley.setEnabled(false);
-            emoIconImageView.setImageResource(R.drawable.red_smile);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    layoutSendSmiley.setEnabled(false);
+                    emoIconImageView.setImageResource(R.drawable.red_smile);
+                }
+            });
+
 
         }
 
