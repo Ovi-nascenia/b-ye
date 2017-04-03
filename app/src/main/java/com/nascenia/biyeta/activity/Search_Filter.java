@@ -495,7 +495,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
 
                 if (Utils.isOnline(Search_Filter.this))
-                     new GetResult().execute();
+                     new GetResult().execute("http://test.biyeta.com/api/v1/search/filtered-results");
                 else
                     Toast.makeText(Search_Filter.this,"Check Internet Connection",Toast.LENGTH_LONG).show();
 
@@ -565,11 +565,33 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         }
     }
 
+    int flag=1;
+    int total_page;
     class GetResult extends AsyncTask<String, String, String> {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             reponse = ch;
+            try {
+                JSONObject jsonObject=new JSONObject(s);
+                total_page=jsonObject.getInt("total_page");
+                Search.jsonObjects.add(jsonObject);
+                flag++;
+                Log.e("fuck",total_page+"  "+s);
+                if (total_page!=1 && flag<= total_page )
+                {
+
+
+                    new GetResult().execute("http://test.biyeta.com/api/v1/search/filtered-results?page="+flag);
+                }
+                else if (flag>total_page)
+                {
+                    finish();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             finish();
             ///   Toast.makeText(Search_Filter.this, ch, Toast.LENGTH_SHORT).show();
         }
@@ -588,7 +610,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
             RequestBody body = RequestBody.create(JSON, porcessJSon());
             Request request = new Request.Builder()
-                    .url("http://test.biyeta.com/api/v1/search/filtered-results")
+                    .url(strings[0])
                     .addHeader("Authorization", "Token token=" + token)
                     .post(body)
                     .build();

@@ -86,6 +86,7 @@ public class InboxListView extends CustomActionBarActivity {
 
         @Override
         protected void onPostExecute(String s) {
+            Log.e("test",s);
             super.onPostExecute(s);
 
             if ( s==null )
@@ -103,6 +104,11 @@ public class InboxListView extends CustomActionBarActivity {
                         recyclerView.setVisibility(View.GONE);
 
                     }
+                    else if (jsonObject.getJSONArray("inbox").length()==0)
+                    {
+                        emptyMessage.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    }
                     else {
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
@@ -117,6 +123,8 @@ public class InboxListView extends CustomActionBarActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    emptyMessage.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
                 }
 
             }

@@ -158,6 +158,8 @@ public class Search extends Fragment {
 
     }
 
+    public  static ArrayList<JSONObject> jsonObjects=new ArrayList<>();
+
     @Override
     public void onResume() {
         super.onResume();
@@ -174,7 +176,10 @@ public class Search extends Fragment {
                 profileList.clear();
                 mProfile_adapter.notifyDataSetChanged();
                 JSONObject jsonObject = new JSONObject(Search_Filter.reponse);
-                loadDataFromResponse(jsonObject);
+                for (int i=0;i<jsonObjects.size();i++) {
+                    Log.e("fuckSearch",i+"  ");
+                    loadDataFromResponse(jsonObjects.get(i));
+                }
 
             } catch (JSONException e) {
                 Utils.ShowAlert(getContext(), "Error");

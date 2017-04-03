@@ -35,6 +35,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3.5"
                 android:padding="@dimen/medium_padding"
+                android:maxLines="1"
+                android:ellipsize="end"
 
 
                 android:weightSum="14"
@@ -111,6 +113,8 @@
                         android:layout_width="wrap_content"
                         android:gravity="center"
                         android:textSize="10dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:layout_height="match_parent"
                         android:text="@string/connection_again"/>
 

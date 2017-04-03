@@ -191,6 +191,9 @@ public class Match extends Fragment implements View.OnClickListener {
                         recyclerView.setVisibility(View.GONE);
                     }
                     else {
+                        emptyMessage.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
@@ -291,7 +294,8 @@ public class Match extends Fragment implements View.OnClickListener {
                         recyclerView.setVisibility(View.GONE);
 
                     } else {
-
+                        emptyMessage.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
 
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());

@@ -54,6 +54,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:layout_weight="2"
+                        android:maxLines="1"
+                        android:ellipsize="end"
 
                         android:text="User Name"
                         android:textColor="@color/colorPrimary"

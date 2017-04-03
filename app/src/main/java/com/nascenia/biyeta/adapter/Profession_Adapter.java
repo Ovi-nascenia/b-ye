@@ -131,7 +131,7 @@ public class Profession_Adapter extends BaseAdapter {
 
         if (this.gridItemType.equals("LOCATION") && aBoolean) {
 
-            Search_Filter.locationGridItemCheckedCheckBoxPositionList.add(Search_Filter.occupationId.get(position));
+            Search_Filter.locationGridItemCheckedCheckBoxPositionList.add(Search_Filter.locationId.get(position));
             Log.i("listdata", "LOCATION  " + Search_Filter.locationGridItemCheckedCheckBoxPositionList.size());
 
 

@@ -62,7 +62,7 @@
                             android:layout_height="wrap_content"
                             app:activeLineColor="#FFAB00"
                             app:activeThumbColor="#D50000"
-                            app:count="32"
+                            app:count="33"
                             app:labelFontSize="8sp"
                             app:lineColor="#212121"
                             app:showLabels="true"
