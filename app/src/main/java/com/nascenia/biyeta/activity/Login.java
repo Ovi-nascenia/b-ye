@@ -61,20 +61,22 @@ import java.util.Arrays;
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
+
+    //icon image
+    //big image load through glide
     ImageView icon;
 
+    //facebook login button
     LoginButton buttonFacebookLogin;
-    LinearLayout new_account;
     CallbackManager callbackManager;
-
-    EditText etPassword, etUserName;
-    Button buttonSubmit;
-    ProgressBar progressBar;
+    //for open new account
+    private LinearLayout new_account;
+    private EditText etPassword, etUserName;
+    private Button buttonSubmit;
+    private ProgressBar progressBar;
 
     ///sub url
-    String sub_url = "sign-in";
-
-
+    String SUB_URL = "sign-in";
     OkHttpClient client;
 
 
@@ -141,8 +143,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                     String email = object.getString("email");
                                     String birthday = object.getString("birthday");
 
-                                    new LoginByFacebook().execute("http://test.biyeta.com/api/v1/facebook_authorization/authorize", uid, "facebook", email);
-
+                                    //send data from facebook to our server
+                                    new LoginByFacebook().execute(Utils.FACEBOOK_LOGIN_URL, uid, "facebook", email);
                                     Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken().getToken() + "");
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -369,30 +371,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
             Request request = new Request.Builder()
-                    .url(Constant.BASE_URL + sub_url)
+                    .url(Constant.BASE_URL + SUB_URL)
                     .post(requestBody)
                     .build();
 
-          /*  Request request = new Request.Builder()
-                    .url(url)
-                    .addHeader("Accept", "application/vnd.tenfour-v1, application/json")
-
-                    .post(requestBody)
-                    .build();*/
             try {
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();
-                Log.e("back", responseString);
+                Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
 
                 return responseString;
-                // do whatever you need to do with responseString
             } catch (Exception e) {
                 e.printStackTrace();
+                return null;
             }
 
 
-            return "false";
         }
 
         @Override
@@ -400,7 +395,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             super.onPostExecute(s);
 
             //Log.e("LoginData", s);
-
             if (s==null)
             {
                 Utils.ShowAlert(Login.this, "Network error");

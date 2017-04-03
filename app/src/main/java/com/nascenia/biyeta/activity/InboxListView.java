@@ -50,6 +50,7 @@ public class InboxListView extends CustomActionBarActivity {
     ProgressBar progBar;
     TextView text;
     Handler mHandler = new Handler();
+    TextView emptyMessage;
     int mProgressStatus = 0;
     private RecyclerView recyclerView;
 
@@ -73,10 +74,8 @@ public class InboxListView extends CustomActionBarActivity {
     }
 
     void setUpId() {
+        emptyMessage=(TextView)findViewById(R.id.empty_message);
         recyclerView = (RecyclerView) findViewById(R.id.all_message_thread);
-
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Message");
 
@@ -88,16 +87,40 @@ public class InboxListView extends CustomActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Gson gson = new Gson();
-            InputStream is = new ByteArrayInputStream(s.getBytes());
-            InputStreamReader isr = new InputStreamReader(is);
-             response = gson.fromJson(isr, Example.class);
+
+            if ( s==null )
+            {
+                emptyMessage.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
+            else
+            {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    if (jsonObject.has("errors"))
+                    {
 
 
-            InboxListAdapter inboxListAdapter = new InboxListAdapter(response, R.layout.inbox_item);
-            recyclerView.setAdapter(inboxListAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(InboxListView.this));
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    }
+                    else {
+                        Gson gson = new Gson();
+                        InputStream is = new ByteArrayInputStream(s.getBytes());
+                        InputStreamReader isr = new InputStreamReader(is);
+                        response = gson.fromJson(isr, Example.class);
+
+
+                        InboxListAdapter inboxListAdapter = new InboxListAdapter(response, R.layout.inbox_item);
+                        recyclerView.setAdapter(inboxListAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(InboxListView.this));
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
 
 
 

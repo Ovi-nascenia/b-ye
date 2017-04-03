@@ -87,6 +87,8 @@ public class Match extends Fragment implements View.OnClickListener {
     int position;
     CommunicationAdapter communicationAdapter;
     Snackbar snackbar;
+    CommunicationProfile communicationProfileResponse;
+    TextView emptyMessage;
 
     public Match() {
         // Required empty public constructor
@@ -103,6 +105,8 @@ public class Match extends Fragment implements View.OnClickListener {
         Log.e("come", "Match");
         View v = inflater.inflate(R.layout.match, null);
 
+        emptyMessage=(TextView)v.findViewById(R.id.empty_message);
+
 
         biodata = (TextView) v.findViewById(R.id.biodata);
         biodata.setOnClickListener(this);
@@ -117,9 +121,6 @@ public class Match extends Fragment implements View.OnClickListener {
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
-
-
 
 
             }
@@ -168,7 +169,6 @@ public class Match extends Fragment implements View.OnClickListener {
         }
 
     }
-    CommunicationProfile communicationProfileResponse;
 
     class LoadConnection extends AsyncTask<String, String, String> {
 
@@ -177,58 +177,74 @@ public class Match extends Fragment implements View.OnClickListener {
             super.onPostExecute(s);
             progressBar.setVisibility(View.GONE);
 
-            if (s==null)
-            {
-                Utils.ShowAlert(getContext(),"Check Internet Connection");
+            if (s == null) {
+                Utils.ShowAlert(getContext(), "Check Internet Connection");
 
-            }
-            else {
+            } else {
 
 
-                Gson gson = new Gson();
-                InputStream is = new ByteArrayInputStream(s.getBytes());
-                InputStreamReader isr = new InputStreamReader(is);
-                communicationProfileResponse = gson.fromJson(isr, CommunicationProfile.class);
-                toalConnectionPage = communicationProfileResponse.getTotalPage();
-
-                if (connectionPageTrack == 1) {
-                    toalConnectionPage = communicationProfileResponse.getTotalPage();
-                    profileCommunicationList = communicationProfileResponse.getProfiles();
-
-
-                    communicationAdapter = new CommunicationAdapter(profileCommunicationList, R.layout.common_user_profile_item, communicationProfileResponse.getCurrentUserSignedIn()) {
-                        @Override
-                        public void LoadData() {
-                            connectionPageTrack++;
-                            if (connectionPageTrack > 1 && connectionPageTrack <= toalConnectionPage) {
-                                new LoadConnection().execute("http://test.biyeta.com/api/v1/communication_requests?page=" + connectionPageTrack);
-                                snackbar = Snackbar
-                                        .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
-                                Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
-                                snack_view.addView(new ProgressBar(getContext()));
-                                snackbar.show();
-                            }
-
-                        }
-
-                        @Override
-                        public void onClickProfile(int position) {
-                            Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
-                            intent.putExtra("id", communicationProfileResponse.getProfiles().get(position).getId() + "");
-                            intent.putExtra("user_name", communicationProfileResponse.getProfiles().get(position).getDisplayName());
-                            intent.putExtra("PROFILE_EDIT_OPTION", false);
-                            startActivity(intent);
-                        }
-                    };
-                    recyclerView.setAdapter(communicationAdapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                } else if (connectionPageTrack > 1 && connectionPageTrack <= toalConnectionPage) {
-                    for (int i = 0; i < communicationProfileResponse.getProfiles().size(); i++) {
-                        profileCommunicationList.add(communicationProfileResponse.getProfiles().get(i));
-                        communicationAdapter.notifyDataSetChanged();
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    if (jsonObject.has("no_results"))
+                    {
+                        emptyMessage.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
                     }
+                    else {
+                        Gson gson = new Gson();
+                        InputStream is = new ByteArrayInputStream(s.getBytes());
+                        InputStreamReader isr = new InputStreamReader(is);
+                        communicationProfileResponse = gson.fromJson(isr, CommunicationProfile.class);
+                        toalConnectionPage = communicationProfileResponse.getTotalPage();
+
+                        if (connectionPageTrack == 1) {
+                            toalConnectionPage = communicationProfileResponse.getTotalPage();
+                            profileCommunicationList = communicationProfileResponse.getProfiles();
+
+
+                            communicationAdapter = new CommunicationAdapter(profileCommunicationList, R.layout.common_user_profile_item, communicationProfileResponse.getCurrentUserSignedIn()) {
+                                @Override
+                                public void LoadData() {
+                                    connectionPageTrack++;
+                                    if (connectionPageTrack > 1 && connectionPageTrack <= toalConnectionPage) {
+                                        new LoadConnection().execute("http://test.biyeta.com/api/v1/communication_requests?page=" + connectionPageTrack);
+                                        snackbar = Snackbar
+                                                .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
+                                        Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
+                                        snack_view.addView(new ProgressBar(getContext()));
+                                        snackbar.show();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onClickProfile(int position) {
+                                    Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
+                                    intent.putExtra("id", communicationProfileResponse.getProfiles().get(position).getId() + "");
+                                    intent.putExtra("user_name", communicationProfileResponse.getProfiles().get(position).getDisplayName());
+                                    intent.putExtra("PROFILE_EDIT_OPTION", false);
+                                    startActivity(intent);
+                                }
+                            };
+                            recyclerView.setAdapter(communicationAdapter);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        } else if (connectionPageTrack > 1 && connectionPageTrack <= toalConnectionPage) {
+                            for (int i = 0; i < communicationProfileResponse.getProfiles().size(); i++) {
+                                profileCommunicationList.add(communicationProfileResponse.getProfiles().get(i));
+                                communicationAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+
+                } catch (JSONException e)
+                {
+                    emptyMessage.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
                 }
+
+
+
             }
         }
 
@@ -261,68 +277,81 @@ public class Match extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progressBar.setVisibility(View.GONE);
-            if (s==null)
-            {
-                Utils.ShowAlert(getContext(),"Check Internet Connection");
-            }
-            else {
+            if (s == null) {
+                Utils.ShowAlert(getContext(), "Check Internet Connection");
+            } else {
                 Log.e("BiodataResponse", s);
 
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(s);
+                    if (jsonObject.has("no_results")) {
 
-                Gson gson = new Gson();
-                InputStream is = new ByteArrayInputStream(s.getBytes());
-                InputStreamReader isr = new InputStreamReader(is);
-                biodataResponse = gson.fromJson(isr, BiodataProfile.class);
+                        emptyMessage.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
 
-                toalBiodataPage = biodataResponse.getTotalPage();
-
-                if (biodataPageTrack > 1 && biodataPageTrack <= toalBiodataPage) {
-                    snackbar.dismiss();
-                    Log.e("testOvi", "show more data" + profileArrayList.size());
-
-                    for (int i = 0; i < biodataResponse.getProfiles().size(); i++)
-                        profileArrayList.add(biodataResponse.getProfiles().get(i));
-                    biodataListAdapter.notifyDataSetChanged();
+                    } else {
 
 
-                } else if (biodataPageTrack == 1) {
-                    profileArrayList = biodataResponse.getProfiles();
+                        Gson gson = new Gson();
+                        InputStream is = new ByteArrayInputStream(s.getBytes());
+                        InputStreamReader isr = new InputStreamReader(is);
+                        biodataResponse = gson.fromJson(isr, BiodataProfile.class);
 
-                    biodataListAdapter = new BiodataProfileAdapter(profileArrayList, R.layout.biodata_layout_item) {
-                        @Override
-                        public void setConnectionRequest(int id, int position) {
+                        toalBiodataPage = biodataResponse.getTotalPage();
 
-                            new SendConnectionRequest().execute("http://test.biyeta.com/api/v1/communication_requests", id + "", position + "");
+                        if (biodataPageTrack > 1 && biodataPageTrack <= toalBiodataPage) {
+                            snackbar.dismiss();
+                            Log.e("testOvi", "show more data" + profileArrayList.size());
 
+                            for (int i = 0; i < biodataResponse.getProfiles().size(); i++)
+                                profileArrayList.add(biodataResponse.getProfiles().get(i));
+                            biodataListAdapter.notifyDataSetChanged();
+
+
+                        } else if (biodataPageTrack == 1) {
+                            profileArrayList = biodataResponse.getProfiles();
+
+                            biodataListAdapter = new BiodataProfileAdapter(profileArrayList, R.layout.biodata_layout_item) {
+                                @Override
+                                public void setConnectionRequest(int id, int position) {
+
+                                    new SendConnectionRequest().execute("http://test.biyeta.com/api/v1/communication_requests", id + "", position + "");
+
+                                }
+
+                                @Override
+                                public void LoadData() {
+                                    biodataPageTrack++;
+                                    if (biodataPageTrack <= toalBiodataPage) {
+                                        new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests?page=" + biodataPageTrack);
+                                        snackbar = Snackbar
+                                                .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
+                                        Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
+                                        snack_view.addView(new ProgressBar(getContext()));
+                                        snackbar.show();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onClickProfile(int position) {
+                                    Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
+                                    intent.putExtra("id", biodataResponse.getProfiles().get(position).getId() + "");
+                                    intent.putExtra("user_name", biodataResponse.getProfiles().get(position).getDisplayName());
+                                    intent.putExtra("PROFILE_EDIT_OPTION", false);
+                                    startActivity(intent);
+                                }
+                            };
+                            recyclerView.setAdapter(biodataListAdapter);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            recyclerView.setItemAnimator(new DefaultItemAnimator());
                         }
-
-                        @Override
-                        public void LoadData() {
-                            biodataPageTrack++;
-                            if (biodataPageTrack <= toalBiodataPage) {
-                                new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests?page=" + biodataPageTrack);
-                                snackbar = Snackbar
-                                        .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
-                                Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
-                                snack_view.addView(new ProgressBar(getContext()));
-                                snackbar.show();
-                            }
-
-                        }
-
-                        @Override
-                        public void onClickProfile(int position) {
-                            Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
-                            intent.putExtra("id", biodataResponse.getProfiles().get(position).getId() + "");
-                            intent.putExtra("user_name", biodataResponse.getProfiles().get(position).getDisplayName());
-                            intent.putExtra("PROFILE_EDIT_OPTION", false);
-                            startActivity(intent);
-                        }
-                    };
-                    recyclerView.setAdapter(biodataListAdapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
             }
         }
 
@@ -355,20 +384,20 @@ public class Match extends Fragment implements View.OnClickListener {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (s==null) Utils.ShowAlert(getContext(),"Check Internet Connection");
+            if (s == null) Utils.ShowAlert(getContext(), "Check Internet Connection");
             else
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.has("message")) {
-                    String mes = jsonObject.getJSONArray("message").getJSONObject(0).getString("detail");
-                    Toast.makeText(getContext(), mes, Toast.LENGTH_SHORT).show();
-                    profileArrayList.get(listposition).getRequestStatus().setMessage("আপনি যোগাযোগের  অনুরোধ  করেছেন");
-                    biodataListAdapter.notifyDataSetChanged();
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.has("message")) {
+                        String mes = jsonObject.getJSONArray("message").getJSONObject(0).getString("detail");
+                        Toast.makeText(getContext(), mes, Toast.LENGTH_SHORT).show();
+                        profileArrayList.get(listposition).getRequestStatus().setMessage("আপনি যোগাযোগের  অনুরোধ  করেছেন");
+                        biodataListAdapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Utils.ShowAlert(getContext(), "Check Internet Connection");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Utils.ShowAlert(getContext(),"Check Internet Connection");
-            }
 
         }
 
