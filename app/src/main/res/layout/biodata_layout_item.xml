@@ -52,8 +52,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:layout_weight="2"
-
-                        android:text="User Name"
+                        android:text="User Name fhjt fhg hgf "
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/medium_textsize" />
                     <ImageView

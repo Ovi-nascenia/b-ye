@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nascenia.biyeta.constant.Constant;
+import com.nascenia.biyeta.fragment.Search;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -109,7 +111,10 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         setContentView(R.layout.filter_search);
         setUpId();
         initializeVariable();
-        new Get_Data().execute();
+        if (Utils.isOnline(this))
+            new Get_Data().execute();
+        else
+            Utils.ShowAlert(this,"Check Internet Connection");
         set_rangeView_lebel();
 
     }
@@ -488,7 +493,11 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             @Override
             public void onClick(View view) {
 
-                new GetResult().execute();
+
+                if (Utils.isOnline(Search_Filter.this))
+                     new GetResult().execute();
+                else
+                    Toast.makeText(Search_Filter.this,"Check Internet Connection",Toast.LENGTH_LONG).show();
 
             }
 
@@ -604,9 +613,24 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
             progress.dismiss();
-            Log.i("post", res + "  data");
-          //  Toast.makeText(getBaseContext(), res + "  data", Toast.LENGTH_LONG).show();
-            parse_data(res);
+            if ( res==null )
+            {
+                Utils.ShowAlert(Search_Filter.this,"Check Internet Connection");
+            }
+            else {
+
+                try {
+                    JSONObject jsonObject=new JSONObject(res);
+                    Log.i("post", res + "  data");
+                    //  Toast.makeText(getBaseContext(), res + "  data", Toast.LENGTH_LONG).show();
+                    parse_data(res);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Utils.ShowAlert(Search_Filter.this,"Check Internet Connection");
+
+                }
+
+            }
 
 
         }

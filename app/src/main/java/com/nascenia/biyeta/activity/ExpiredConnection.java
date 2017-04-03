@@ -47,7 +47,7 @@ public class ExpiredConnection extends CustomActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expire_connection);
-        setUpToolBar("Expired Connection", this);
+        setUpToolBar(getString(R.string.expire_request), this);
         setUpId();
         new LoadData().execute("http://test.biyeta.com/api/v1/requests/expired_communication_requests");
 
