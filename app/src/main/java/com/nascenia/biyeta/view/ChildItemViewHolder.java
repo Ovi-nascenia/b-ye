@@ -36,7 +36,7 @@ public class ChildItemViewHolder extends ChildViewHolder {
 
         titleTextView = (TextView) itemView.findViewById(R.id.titleTextView);
         titleResultTextView = (EditText) itemView.findViewById(R.id.titleResultTextView);
-//        titleResultTextView.setEnabled(false);
+        titleResultTextView.setEnabled(false);
         itemDividerLayout = (LinearLayout) itemView.findViewById(R.id.divider);
     }
 

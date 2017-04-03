@@ -10,7 +10,8 @@
         android:id="@+id/coordnatelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/r1">
+        android:layout_above="@+id/r1"
+        android:visibility="invisible">
 
 
         <android.support.design.widget.AppBarLayout
@@ -67,7 +68,7 @@
                             android:gravity="center"
                             android:padding="@dimen/small_padding"
                             android:src="@drawable/editicon"
-                            android:visibility="visible" />
+                            android:visibility="invisible" />
 
                     </RelativeLayout>
 
@@ -344,7 +345,8 @@
                         android:text="তার সম্পর্কে"
                         android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.nascenia.biyeta.activity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -90,6 +91,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    private CoordinatorLayout coordnatelayout;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,6 +126,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     OwnUserProfileActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+
+                            coordnatelayout.setVisibility(View.VISIBLE);
 
                             if (userProfile.getProfile().getPersonalInformation().getAboutYourself() != null) {
                                 userProfileDescriptionText.setText(userProfile.getProfile().
@@ -864,6 +869,9 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(OwnUserProfileActivity.this);
         progressDialog.setMessage("Please wait...");
         progressDialog.setCancelable(true);
+
+        coordnatelayout = (CoordinatorLayout) findViewById(R.id.coordnatelayout);
+
 
         userProfileDescriptionText = (TextView) findViewById(R.id.userProfileDescriptionText);
 

@@ -114,7 +114,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         if (Utils.isOnline(this))
             new Get_Data().execute();
         else
-            Utils.ShowAlert(this,"Check Internet Connection");
+            Utils.ShowAlert(this, "Check Internet Connection");
         set_rangeView_lebel();
 
     }
@@ -566,8 +566,9 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         }
     }
 
-    int flag=1;
+    int flag = 1;
     int total_page;
+
     class GetResult extends AsyncTask<String, String, String> {
         ProgressDialog progress = new ProgressDialog(Search_Filter.this);;
         @Override
@@ -583,8 +584,6 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             reponse = ch;
-
-
             try {
                 JSONObject jsonObject=new JSONObject(s);
                 if(jsonObject.has("no_results"))
@@ -613,6 +612,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                 e.printStackTrace();
             }
 
+            finish();
             ///   Toast.makeText(Search_Filter.this, ch, Toast.LENGTH_SHORT).show();
         }
 

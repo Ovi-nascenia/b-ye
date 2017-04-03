@@ -39,7 +39,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     private boolean isProfileEditOptionEnable;
 
 
-    public static ArrayList<Boolean> parentPositionList = new ArrayList<>();
+    /*public static ArrayList<Boolean> parentPositionList = new ArrayList<>();*/
 
 
     public UserProfileExpenadlbeAdapter(Context baseContext, List<UserProfileParent> userProfilesListParent, boolean isProfileEditOptionEnable) {
@@ -49,11 +49,11 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         this.baseContext = baseContext;
         this.isProfileEditOptionEnable = isProfileEditOptionEnable;
 
-        for (int i = 0; i < userProfilesListParent.size(); i++) {
+        /*for (int i = 0; i < userProfilesListParent.size(); i++) {
 
             parentPositionList.add(false);
 
-        }
+        }*/
 
     }
 
@@ -82,14 +82,9 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
 
         parentViewHolder.lnIndicator1.setVisibility(View.INVISIBLE);
 
-        /*if (this.profileEditOption.equals("OWN_PROFILE")) {
-            parentViewHolder.editItemBtn.setVisibility(View.VISIBLE);
-        }else {
-            parentViewHolder.editItemBtn.setVisibility(View.VISIBLE);
-        }*/
 
 
-        if (this.isProfileEditOptionEnable) {
+      /*  if (this.isProfileEditOptionEnable) {
             parentViewHolder.editItemBtn.setVisibility(View.VISIBLE);
         }
 
@@ -104,7 +99,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
 
 
             }
-        });
+        });*/
 
     }
 
@@ -113,12 +108,12 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     public void onBindChildViewHolder(@NonNull final ChildItemViewHolder childViewHolder, int parentPosition, int childPosition, @NonNull UserProfileChild child) {
 
         childViewHolder.bind(child);
-
+/*
         if (parentPositionList.get(parentPosition)) {
             childViewHolder.titleResultTextView.setEnabled(true);
         } else {
             childViewHolder.titleResultTextView.setEnabled(false);
-        }
+        }*/
 
 
         if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1)) {

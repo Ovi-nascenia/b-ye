@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -59,6 +60,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.nascenia.biyeta.R.id.coordnatelayout;
 import static com.nascenia.biyeta.R.id.emoIconImage;
 
 /**
@@ -84,11 +86,13 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
 
     private TextView userProfileDescriptionText, userNameTextView, familyInfoTagTextView,
-            communicationTagTextview, otherInfoTagTextview, cancelTextView, acceptTextView;
+            communicationTagTextview, otherInfoTagTextview, cancelTextView, acceptTextView,
+            userProfileDescriptionTextViewTag, generalInfoTagTextview, matchUserChoiceTextViewTag;
 
     private ImageView profileViewerPersonImageView, editUserProfileImageView, selfImageView;
 
-    private CardView familyCardView, communicationCarview, otherInfoCardView;
+    private CardView familyCardView, communicationCarview, otherInfoCardView, userProfileDescriptionCardview,
+            generalInfoCarView, matchUserChoiceCardView;
 
     private Button finalResultButton;
 
@@ -97,12 +101,16 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private SharePref sharePref;
     private final int REQUEST_PHONE_CALL = 999999;
 
-    private LinearLayout layoutSendSmiley;
+    private LinearLayout layoutSendSmiley, matchPersonLayout, smileyandVerificationLayout;
     private UserProfile userProfile;
 
     private RelativeLayout mobileLayout, facebookLayout, mailLayout;
 
     private ProgressDialog progressDialog;
+
+    private RelativeLayout bottomRelativeLayout;
+    private CoordinatorLayout coordnatelayout;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -182,10 +190,25 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     private void initView() {
 
+        bottomRelativeLayout = (RelativeLayout) findViewById(R.id.r1);
+        coordnatelayout = (CoordinatorLayout) findViewById(R.id.coordnatelayout);
+
+        userProfileDescriptionTextViewTag = (TextView) findViewById(R.id.user_profile_description_textView_tag);
+        userProfileDescriptionCardview = (CardView) findViewById(R.id.user_profile_description_cardview);
+
+        generalInfoTagTextview = (TextView) findViewById(R.id.generalInfoTagTextview);
+        generalInfoCarView = (CardView) findViewById(R.id.generalInfoCarView);
+
+        matchUserChoiceTextViewTag = (TextView) findViewById(R.id.matchUserChoiceTextViewTag);
+        matchUserChoiceCardView = (CardView) findViewById(R.id.matchUserChoiceCardView);
+
+        matchPersonLayout = (LinearLayout) findViewById(R.id.matchPersonLayout);
 
         progressDialog = new ProgressDialog(NewUserProfileActivity.this);
         progressDialog.setMessage("Please wait...");
         progressDialog.setCancelable(true);
+
+        smileyandVerificationLayout = (LinearLayout) findViewById(R.id.smileyandVerificationLayout);
 
 
         layoutSendSmiley = (LinearLayout) findViewById(R.id.layoutSendSmiley);
@@ -312,12 +335,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                         @Override
                         public void run() {
 
+                            coordnatelayout.setVisibility(View.VISIBLE);
+                            bottomRelativeLayout.setVisibility(View.VISIBLE);
 
-                            Glide.with(getBaseContext())
-                                    .load(Utils.Base_URL +
-                                            sharePref.get_data("profile_picture"))
-                                    .into(selfImageView);
-
+                            smileyandVerificationLayout.setVisibility(View.VISIBLE);
 
                             //setVerification image
                             SendRequestFragmentView.setVerificationIcon(userProfile,
@@ -340,6 +361,9 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
                             if (userProfile.getProfile().getPersonalInformation().getAboutYourself() != null) {
+
+                                userProfileDescriptionTextViewTag.setVisibility(View.VISIBLE);
+                                userProfileDescriptionCardview.setVisibility(View.VISIBLE);
                                 userProfileDescriptionText.setText(userProfile.getProfile().getPersonalInformation().getAboutYourself());
                             }
 
@@ -384,9 +408,20 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                             }
 
 
+                            generalInfoTagTextview.setVisibility(View.VISIBLE);
+                            generalInfoCarView.setVisibility(View.VISIBLE);
                             SendRequestFragmentView.setDataonGeneralInfoRecylerView(
                                     getBaseContext(), userProfile, generalInfoRecyclerView);
 
+
+                            Glide.with(getBaseContext())
+                                    .load(Utils.Base_URL +
+                                            sharePref.get_data("profile_picture"))
+                                    .into(selfImageView);
+
+
+                            matchUserChoiceTextViewTag.setVisibility(View.VISIBLE);
+                            matchUserChoiceCardView.setVisibility(View.VISIBLE);
                             SendRequestFragmentView.setDataonMatchUserChoiceRecylerView(getBaseContext(),
                                     userProfile, matchUserChoiceRecyclerView);
 

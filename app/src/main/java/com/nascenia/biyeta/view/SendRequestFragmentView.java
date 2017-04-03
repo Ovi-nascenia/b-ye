@@ -3,10 +3,12 @@ package com.nascenia.biyeta.view;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -85,7 +87,9 @@ public class SendRequestFragmentView {
                                                        ImageView userProfileImage,
                                                        RecyclerView familyMemberInfoRecylerView,
                                                        int viewRequestClassname,
-                                                       TextView userNameTextView) {
+                                                       TextView userNameTextView,
+                                                       CoordinatorLayout coordinatorLayout,
+                                                       RelativeLayout relativeLayout) {
 
 
         //generalInformationArrayList.clear();
@@ -113,7 +117,9 @@ public class SendRequestFragmentView {
                 userProfileImage,
                 familyMemberInfoRecylerView,
                 viewRequestClassname,
-                userNameTextView);
+                userNameTextView,
+                coordinatorLayout,
+                relativeLayout);
         Thread response = new Thread(responseThread);
         response.start();
 
@@ -135,6 +141,8 @@ public class SendRequestFragmentView {
         private RecyclerView familyMemberInfoRecylerView;
         private int viewRequestClassname;
         private TextView userNameTextView;
+        private CoordinatorLayout coordinatorLayout;
+        private RelativeLayout relativeLayout;
 
         public ResponseThread(String url,
                               Context context,
@@ -147,7 +155,9 @@ public class SendRequestFragmentView {
                               ImageView userProfileImage,
                               RecyclerView familyMemberInfoRecylerView,
                               int viewRequestClassname,
-                              TextView userNameTextView) {
+                              TextView userNameTextView,
+                              CoordinatorLayout coordinatorLayout,
+                              RelativeLayout relativeLayout) {
 
 
             this.callback = callback;
@@ -162,6 +172,8 @@ public class SendRequestFragmentView {
             this.familyMemberInfoRecylerView = familyMemberInfoRecylerView;
             this.viewRequestClassname = viewRequestClassname;
             this.userNameTextView = userNameTextView;
+            this.coordinatorLayout = coordinatorLayout;
+            this.relativeLayout = relativeLayout;
 
             dialog = new ProgressDialog(context);
             dialog.setMessage("Please wait...");
@@ -185,6 +197,9 @@ public class SendRequestFragmentView {
                     @Override
                     public void run() {
                         Log.i("taskon", "run");
+
+                        coordinatorLayout.setVisibility(View.VISIBLE);
+                        relativeLayout.setVisibility(View.VISIBLE);
 
                         userNameTextView.setText(userProfile.getProfile().
                                 getPersonalInformation().getDisplayName());

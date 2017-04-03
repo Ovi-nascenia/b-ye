@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -88,6 +89,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private LinearLayout layoutSendSmiley;
     private UserProfile userProfile;
 
+    private RelativeLayout bottomRelativeLayout;
+    private CoordinatorLayout coordnatelayout;
+
 
     @Nullable
     @Override
@@ -120,6 +124,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         biodataNotificationCounterTextview = (TextView) getActivity().findViewById(
                 R.id.biodata_notification_textview);
+
+        bottomRelativeLayout = (RelativeLayout) _baseView.findViewById(R.id.r1);
+        coordnatelayout = (CoordinatorLayout) _baseView.findViewById(R.id.coordnatelayout);
 
         layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
@@ -312,7 +319,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 userProfileImage,
                 familyMemberInfoRecylerView,
                 0,
-                userNameTextView
+                userNameTextView,
+                coordnatelayout,
+                bottomRelativeLayout
         );
 
 

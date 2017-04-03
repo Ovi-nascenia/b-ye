@@ -189,10 +189,12 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/smileyandVerificationLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/small_margin"
                         android:orientation="horizontal"
+                        android:visibility="invisible"
                         android:weightSum="2">
 
                         <LinearLayout
@@ -335,6 +337,7 @@
 
 
                     <TextView
+                        android:id="@+id/user_profile_description_textView_tag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/medium_margin"
@@ -342,12 +345,15 @@
                         android:text="তার সম্পর্কে"
                         android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/user_profile_description_cardview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#FFFFFF">
+                        android:background="#FFFFFF"
+                        android:visibility="invisible">
 
                         <TextView
                             android:id="@+id/userProfileDescriptionText"
@@ -362,6 +368,7 @@
                     </android.support.v7.widget.CardView>
 
                     <TextView
+                        android:id="@+id/generalInfoTagTextview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/medium_margin"
@@ -369,12 +376,15 @@
                         android:text="সাধারণ তথ্যাবলি"
                         android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/generalInfoCarView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#FFFFFF">
+                        android:background="#FFFFFF"
+                        android:visibility="invisible">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/user_general_info_recycler_view"
@@ -498,6 +508,7 @@
                     </android.support.v7.widget.CardView>
 
                     <TextView
+                        android:id="@+id/matchUserChoiceTextViewTag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/medium_margin"
@@ -505,15 +516,19 @@
                         android:text=" আপনার পছন্দের সাথে তার মিল"
                         android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/matchUserChoiceCardView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#FFFFFF">
+                        android:background="#FFFFFF"
+                        android:visibility="invisible">
 
 
                         <LinearLayout
+                            android:id="@+id/matchPersonLayout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="@dimen/medium_margin"
@@ -599,7 +614,8 @@
         android:id="@+id/r1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible">
 
         <RelativeLayout
             android:id="@+id/request_send_buttons_layout"

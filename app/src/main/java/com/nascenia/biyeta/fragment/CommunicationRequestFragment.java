@@ -3,6 +3,7 @@ package com.nascenia.biyeta.fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +86,9 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     private int profileId;
     private UserProfile userProfile;
 
+    private RelativeLayout bottomRelativeLayout;
+    private CoordinatorLayout coordnatelayout;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -112,6 +117,9 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         communicatiodataNotificationCounterTextview = (TextView) getActivity().
                 findViewById(R.id.communication_notification_textview);
 
+
+        bottomRelativeLayout = (RelativeLayout) _baseView.findViewById(R.id.r1);
+        coordnatelayout = (CoordinatorLayout) _baseView.findViewById(R.id.coordnatelayout);
 
         layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
@@ -224,7 +232,9 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 userProfileImage,
                 familyMemberInfoRecylerView,
                 1,
-                userNameTextView
+                userNameTextView,
+                coordnatelayout,
+                bottomRelativeLayout
         );
 
 
