@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.ParentViewHolder;
 import com.nascenia.biyeta.model.UserProfileParent;
@@ -60,19 +61,19 @@ public class ParentItemViewHolder extends ParentViewHolder {
         });
 
 
-     /*   editItemBtn.setOnClickListener(new View.OnClickListener() {
+        editItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (isExpanded()) {
+                /*if (isExpanded()) {
                     setExpandAction();
                 } else {
                     setCollapseAction();
-                }
+                }*/
 
 
             }
-        });*/
+        });
 
     }
 
