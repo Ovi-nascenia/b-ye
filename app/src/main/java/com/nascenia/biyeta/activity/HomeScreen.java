@@ -144,6 +144,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             //    menuItem.setChecked(true);
                 //set false other item
 
+                //
 
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
                     drawerLayout.closeDrawer(Gravity.RIGHT);
