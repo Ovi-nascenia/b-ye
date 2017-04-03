@@ -264,6 +264,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
