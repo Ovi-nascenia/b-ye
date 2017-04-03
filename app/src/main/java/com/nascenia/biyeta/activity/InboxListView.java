@@ -99,7 +99,8 @@ public class InboxListView extends CustomActionBarActivity {
                     JSONObject jsonObject=new JSONObject(s);
                     if (jsonObject.has("errors"))
                     {
-
+                        emptyMessage.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
 
                     }
                     else {
