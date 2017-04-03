@@ -33,6 +33,10 @@ public class NetWorkOperation {
                                 String userId, Button finalResultButton, String msg) {
         NetWorkOperation.context = context;
 
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setCancelable(true);
+
         //list position  for update list dynamically according to response
         new SendConnectionRequest(finalResultButton).execute(url, userId, msg);
 
@@ -42,6 +46,11 @@ public class NetWorkOperation {
     public static void CreateProfileReqeust(Context context, String url, Button finalResultButton, String msg) {
 
         NetWorkOperation.context = context;
+
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setCancelable(true);
+
         new CreateProfileRequestTask(finalResultButton).execute(url, msg);
     }
 
@@ -50,12 +59,12 @@ public class NetWorkOperation {
                                   String profileId,
                                   String header,
                                   String hederParam) {
+        NetWorkOperation.context = context;
+
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Please wait...");
         progressDialog.setCancelable(true);
 
-
-        NetWorkOperation.context = context;
 
         new PostTask().execute(url,
                 profileId,
@@ -75,19 +84,13 @@ public class NetWorkOperation {
             this.finalResultButton = finalResultButton;
         }
 
+
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if (s == null) Utils.ShowAlert(context, "Check Internet Connection");
-            else {
-                Log.i("response", s);
-
-                this.finalResultButton.setEnabled(false);
-                this.finalResultButton.setText(msg);
-            }
-
-
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.show();
         }
+
 
         @Override
         protected String doInBackground(String... strings) {
@@ -120,6 +123,26 @@ public class NetWorkOperation {
 
 
         }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (s == null) Utils.ShowAlert(context, "Check Internet Connection");
+            else {
+                Log.i("response", s);
+
+                this.finalResultButton.setEnabled(false);
+                this.finalResultButton.setText(msg);
+            }
+
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+
+        }
+
+
     }
 
     static class CreateProfileRequestTask extends AsyncTask<String, String, String> {
@@ -134,12 +157,12 @@ public class NetWorkOperation {
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            this.finalResultButton.setEnabled(false);
-            this.finalResultButton.setText(msg);
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.show();
 
         }
+
 
         @Override
         protected String doInBackground(String... strings) {
@@ -164,6 +187,19 @@ public class NetWorkOperation {
 
             }
 
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            this.finalResultButton.setEnabled(false);
+            this.finalResultButton.setText(msg);
+
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
 
         }
     }
