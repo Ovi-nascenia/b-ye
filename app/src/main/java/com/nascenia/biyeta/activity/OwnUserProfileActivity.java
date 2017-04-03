@@ -95,8 +95,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_own_user_profile_layout);
-
-
+        
         initView();
 
         fetchUserProfileInfo();
@@ -350,6 +349,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
 
             educationalInfoChildItemList.add(new UserProfileChild("শিক্ষা", education));
+            Log.i("education", education);
 
 
             if (educationalInfoChildItemList.size() > 0) {
