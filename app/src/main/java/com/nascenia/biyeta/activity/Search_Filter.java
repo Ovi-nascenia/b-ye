@@ -121,6 +121,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
 
     void initializeVariable() {
+
         locationGridItemCheckedCheckBoxPositionList.clear();
         occupationGridItemCheckedCheckBoxPositionList.clear();
         professionGridItemCheckedCheckBoxPositionList.clear();
@@ -144,8 +145,8 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         for (int i = 18; i <= 50; i++)
             age_lebel.add(i + "");
 
-        for (int i = 4; i < 8; i++) {
-            for (int j = 0; j < 13; j++)
+        for (int i = 4; i <= 7; i++) {
+            for (int j = 0; j < 12; j++)
                 heightLebel.add(i + "'" + j + "\"");
 
 
@@ -568,31 +569,50 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
     int flag=1;
     int total_page;
     class GetResult extends AsyncTask<String, String, String> {
+        ProgressDialog progress = new ProgressDialog(Search_Filter.this);;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.setMessage("Please Wait ");
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setIndeterminate(true);
+            progress.show();
+        }
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             reponse = ch;
+
+
             try {
                 JSONObject jsonObject=new JSONObject(s);
-                total_page=jsonObject.getInt("total_page");
-                Search.jsonObjects.add(jsonObject);
-                flag++;
-                Log.e("fuck",total_page+"  "+s);
-                if (total_page!=1 && flag<= total_page )
+                if(jsonObject.has("no_results"))
                 {
-
-
-                    new GetResult().execute("http://test.biyeta.com/api/v1/search/filtered-results?page="+flag);
-                }
-                else if (flag>total_page)
-                {
+                    Search.jsonObjects.add(jsonObject);
+                    progress.dismiss();
                     finish();
+                }
+
+
+
+                else {
+                    total_page=jsonObject.getInt("total_page");
+                    Search.jsonObjects.add(jsonObject);
+                    flag++;
+
+                    if (total_page != 1 && flag <= total_page) {
+                        new GetResult().execute("http://test.biyeta.com/api/v1/search/filtered-results?page=" + flag);
+                    } else if (flag > total_page) {
+                        progress.dismiss();
+
+                        finish();
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            finish();
             ///   Toast.makeText(Search_Filter.this, ch, Toast.LENGTH_SHORT).show();
         }
 

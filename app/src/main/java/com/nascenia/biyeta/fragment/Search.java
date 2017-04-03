@@ -177,7 +177,7 @@ public class Search extends Fragment {
                 mProfile_adapter.notifyDataSetChanged();
                 JSONObject jsonObject = new JSONObject(Search_Filter.reponse);
                 for (int i=0;i<jsonObjects.size();i++) {
-                    Log.e("fuckSearch",i+"  ");
+
                     loadDataFromResponse(jsonObjects.get(i));
                 }
 
@@ -192,30 +192,39 @@ public class Search extends Fragment {
     void loadDataFromResponse(JSONObject jsonObject) {
         try {
 
+            if (jsonObject.has("no_results")) {
+                emptyText.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
+            }
 
             for (int i = 0; i < jsonObject.getJSONArray("profiles").length(); i++)
 
             {
-                String id = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("id");
-                String age = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("age");
-                String height_ft = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_ft");
-                String height_inc = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_inc");
-                String display_name = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name");
-                String occupation = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("occupation");
-                String professional_group = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("professional_group");
-                String skin_color = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("skin_color");
-                String health = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("health");
-                String location = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
-                String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
-                SearchProfileModel profile = new SearchProfileModel(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
 
-                profileList.add(profile);
-                mProfile_adapter.notifyDataSetChanged();
-                relativeLayout.setVisibility(View.GONE);
+
+                    String id = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("id");
+                    String age = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("age");
+                    String height_ft = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_ft");
+                    String height_inc = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_inc");
+                    String display_name = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("display_name");
+                    String occupation = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("occupation");
+                    String professional_group = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("professional_group");
+                    String skin_color = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("skin_color");
+                    String health = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("health");
+                    String location = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
+                    String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
+                    SearchProfileModel profile = new SearchProfileModel(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
+
+                    profileList.add(profile);
+                    mProfile_adapter.notifyDataSetChanged();
+                    relativeLayout.setVisibility(View.GONE);
+
             }
         } catch (JSONException e) {
+            Log.e("Search error",e.toString());
 
-            Utils.ShowAlert(getContext(), "No Result Found");
+
             emptyText.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }

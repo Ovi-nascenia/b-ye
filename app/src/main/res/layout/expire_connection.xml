@@ -31,7 +31,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Epired List is Empty"
+        android:text="Your Expired List is Empty"
         android:id="@+id/empty_message"
         android:gravity="center"
         android:textColor="@color/colorPrimary"

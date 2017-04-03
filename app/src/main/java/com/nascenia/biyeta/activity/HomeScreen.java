@@ -1,56 +1,33 @@
 package com.nascenia.biyeta.activity;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ActionMenuView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 
 import com.nascenia.biyeta.appdata.SharePref;
-import com.nascenia.biyeta.fragment.Blog;
 import com.nascenia.biyeta.fragment.Favourite;
 import com.nascenia.biyeta.fragment.Inbox;
 import com.nascenia.biyeta.fragment.Match;
-import com.nascenia.biyeta.fragment.PrivacyPolicy;
 import com.nascenia.biyeta.fragment.Search;
-import com.nascenia.biyeta.service.ResourceProvider;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
@@ -141,7 +118,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
                 // update highlighted item in the navigation menu
-            //    menuItem.setChecked(true);
+                //    menuItem.setChecked(true);
                 //set false other item
 
                 //
@@ -183,6 +160,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
                         break;
+
+                    case R.id.nav_policy:
+                        startActivity(new Intent(HomeScreen.this, PrivacyPolicy.class));
+                        break;
+
 
                     case R.id.nav_faq:
                         startActivity(new Intent(HomeScreen.this, FAQActivity.class));

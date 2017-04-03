@@ -109,6 +109,12 @@
             android:theme="@style/AppTheme" />
 
         <activity
+            android:name=".activity.PrivacyPolicy"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+
+
+        <activity
             android:name=".activity.OwnUserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

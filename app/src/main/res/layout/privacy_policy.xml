@@ -11,18 +11,8 @@
         android:layout_height="match_parent"
         android:padding="20dp">
 
-        <TextView
-            android:id="@+id/privacy_policy_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/privacy_policy_title"
-            android:textSize="25sp"
-            android:padding="15dp"
-            android:gravity="center"
-            android:textColor="@color/privacy_policy_title"/>
-        <TextView
+       <TextView
             android:id="@+id/privacy_policy_parag1"
-            android:layout_below="@id/privacy_policy_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/privacy_policy_parag1"

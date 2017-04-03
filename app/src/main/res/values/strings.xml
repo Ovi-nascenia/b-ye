@@ -18,9 +18,9 @@
     <string name="height"> উচ্চতা </string>
     <string name="body">গড়ন </string>
     <string name="body_color">গায়ের রং </string>
-    <string name="education_male">পাত্রের শিক্ষাগত যোগ্যতা </string>
-    <string name="profession_identity_male">পাত্রের প্রফেশনাল গ্রুপ </string>
-    <string name="profession_male">পাত্রের পেশা</string>
+    <string name="education_male">  শিক্ষাগত যোগ্যতা </string>
+    <string name="profession_identity_male">প্রফেশনাল গ্রুপ </string>
+    <string name="profession_male">পেশা</string>
 
 
     <string name="profession_text">পেশা</string>
