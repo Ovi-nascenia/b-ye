@@ -67,7 +67,7 @@
                             android:gravity="center"
                             android:padding="@dimen/small_padding"
                             android:src="@drawable/editicon"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
                     </RelativeLayout>
 
@@ -155,7 +155,8 @@
                             android:layout_width="@dimen/small_image_size"
                             android:layout_height="@dimen/small_image_size"
                             android:layout_alignParentRight="true"
-                            android:src="@drawable/favourite" />
+                            android:src="@drawable/favourite"
+                            android:visibility="invisible" />
 
 
                     </RelativeLayout>
@@ -193,6 +194,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/small_margin"
                         android:orientation="horizontal"
+                        android:visibility="gone"
                         android:weightSum="2">
 
                         <LinearLayout

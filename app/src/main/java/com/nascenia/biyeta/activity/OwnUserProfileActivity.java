@@ -6,7 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
@@ -18,6 +22,8 @@ import com.nascenia.biyeta.service.ResourceProvider;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -42,6 +48,10 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     private UserProfile userProfile;
 
     private int familyMemberCounter;
+
+    private ImageView userProfileImage;
+
+    private TextView userProfileDescriptionText;
 
 
     private ArrayList<UserProfileChild> personalInfoChildItemList = new ArrayList<UserProfileChild>();
@@ -115,6 +125,13 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
+                            if (userProfile.getProfile().getPersonalInformation().getAboutYourself() != null) {
+                                userProfileDescriptionText.setText(userProfile.getProfile().
+                                        getPersonalInformation().getAboutYourself());
+                            }
+
+
+                            setUserOwnImage(userProfile);
                             setDataOnPersonalInfoRecylerView(userProfile);
                             setDataOnEducationalRecylerView(userProfile);
                             setDataOnProfessionRecylerView(userProfile);
@@ -135,6 +152,45 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             }
         }).start();
+
+
+    }
+
+    private void setUserOwnImage(UserProfile userProfile) {
+
+
+        if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
+
+
+            Picasso.with(OwnUserProfileActivity.this)
+                    .load(Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture())
+                    .into(userProfileImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            userProfileImage.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.scaleImage(OwnUserProfileActivity.this, 2f, userProfileImage);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError() {
+                        }
+                    });
+
+
+        } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
+                (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))) {
+            userProfileImage.setImageResource(R.drawable.profile_icon_male);
+
+        } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
+                (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.FEMALE_GENDER))) {
+            userProfileImage.setImageResource(R.drawable.profile_icon_female);
+
+        } else {
+        }
 
 
     }
@@ -810,6 +866,10 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         progressDialog.setMessage("Please wait...");
         progressDialog.setCancelable(true);
 
+        userProfileDescriptionText = (TextView) findViewById(R.id.userProfileDescriptionText);
+
+        userProfileImage = (ImageView) findViewById(R.id.user_profile_image);
+
 
         personalInfoRecylerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
         personalInfoRecylerView.setLayoutManager(new LinearLayoutManager(this));
@@ -839,5 +899,9 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         otherInformationRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
+    }
+
+    public void backBtnAction(View v) {
+        finish();
     }
 }

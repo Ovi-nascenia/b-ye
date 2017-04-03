@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nascenia.biyeta.model.UserProfileParent;
@@ -39,6 +40,8 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
 
     private ChildItemViewHolder childViewHolder;
 
+    public static ArrayList<Boolean> parentPositionList = new ArrayList<>();
+
 
     public UserProfileExpenadlbeAdapter(Context baseContext, List<UserProfileParent> userProfilesListParent, boolean isProfileEditOptionEnable) {
         super(userProfilesListParent);
@@ -46,6 +49,12 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         this.userProfilesListParent = userProfilesListParent;
         this.baseContext = baseContext;
         this.isProfileEditOptionEnable = isProfileEditOptionEnable;
+
+        for (int i = 0; i < userProfilesListParent.size(); i++) {
+
+            parentPositionList.add(false);
+
+        }
 
     }
 
@@ -65,7 +74,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     }
 
     @Override
-    public void onBindParentViewHolder(@NonNull final ParentItemViewHolder parentViewHolder, int parentPosition, @NonNull UserProfileParent parent) {
+    public void onBindParentViewHolder(@NonNull final ParentItemViewHolder parentViewHolder, final int parentPosition, @NonNull UserProfileParent parent) {
 
         parentViewHolder.bind(parent);
         if (parentPosition == (userProfilesListParent.size() - 1)) {
@@ -91,8 +100,8 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
             public void onClick(View v) {
 
                 Toast.makeText(baseContext, "editing is on", Toast.LENGTH_SHORT).show();
-                childViewHolder.titleResultTextView.setEnabled(true);
-                Log.i("editext", childViewHolder.titleResultTextView.toString());
+                parentPositionList.set(parentPosition, true);
+                notifyParentChanged(parentPosition);
 
 
             }
@@ -108,6 +117,12 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         this.childViewHolder = childViewHolder;
 
         Log.i("editext", childViewHolder.titleResultTextView.toString());
+
+        if (parentPositionList.get(parentPosition)) {
+            childViewHolder.titleResultTextView.setEnabled(true);
+        } else {
+            childViewHolder.titleResultTextView.setEnabled(false);
+        }
 
 
         if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1)) {
