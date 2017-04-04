@@ -98,9 +98,7 @@
 
     <color name="messagelayoutBacground">#FFFFFF</color>
     <color name="message_text_color">#FFFFFF</color>
-
-
-
+    <color name="faq_text_ques_color">#BC0025</color>
 
 
 </resources>
