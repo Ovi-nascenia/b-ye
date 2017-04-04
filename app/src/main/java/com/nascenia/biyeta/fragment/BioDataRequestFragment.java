@@ -45,7 +45,7 @@ import static com.nascenia.biyeta.R.id.emoIconImage;
  * Created by saiful on 3/10/17.
  */
 
-public class BioDataRequestFragment extends Fragment implements MyCallback<Boolean>, View.OnClickListener {
+public class BioDataRequestFragment extends Fragment implements MyCallback<Boolean> {
 
 
     private View _baseView;
@@ -109,14 +109,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
 
         return _baseView;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.e("Destroy","Destroy");
-        BioDataRequestFragment.profileRequestSenderIdsList.clear();
-
     }
 
     @Override
@@ -215,8 +207,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         waitImageView = (ImageView) _baseView.findViewById(R.id.wait_imageview);
         acceptImageView = (ImageView) _baseView.findViewById(R.id.accept_imageview);
 
-        acceptImageView.setOnClickListener(this);
-        cancelImageView.setOnClickListener(this);
 
         cancelTextView = (TextView) _baseView.findViewById(R.id.cancel_textview);
         waitTextView = (TextView) _baseView.findViewById(R.id.wait_textview);
@@ -304,16 +294,56 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
     }
 
+
+    public static int user_id = 99;
+
     private void setRequestView(int id) {
 
         currentId = id;
 
-        /*//Log.i("asynctaskdata FFFF", "currentId " + currentId + " urlResponseId " + urlResponseId);
-        Log.i("asynctaskdataFFFFFF", "viewurl: " + url + id);
-        Log.i("asynctaskdataFFFFFF", "viewurl: " +
-                BioDataRequestFragment.profileRequestSenderIdsList.toString());*/
+        /*if (clickableButtonIdentifier == 1) {
 
-        SendRequestFragmentView.fetchUserProfileDetailsResponse(
+            *//*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                    id + "/accept");*//*
+
+            Log.i("requestList", user_id + " accept ");
+
+        } else if (clickableButtonIdentifier == 0) {
+            *//*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                    id + "/reject");
+*//*
+            Log.i("requestList", user_id + " reject");
+
+
+        }*/
+
+        Log.i("requestList", "currentview: " + id);
+        new SendRequestFragmentView() {
+            @Override
+            public void loadNextProfile(int clickBtnId, int userProfileRequestId) {
+
+
+                if (clickBtnId == 1) {
+
+            /*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                    userProfileRequestId + "/accept");*/
+
+                    Log.i("requestList", userProfileRequestId + " accept ");
+
+                } else if (clickBtnId == 0) {
+
+
+            /*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                    userProfileRequestId + "/reject");
+*/
+                    Log.i("requestList", userProfileRequestId + " reject");
+
+
+                }
+                processResponse(clickBtnId);
+
+            }
+        }.fetchUserProfileDetailsResponse(
                 Utils.PROFILES_URL + id,
                 getActivity(),
                 this,
@@ -327,7 +357,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 0,
                 userNameTextView,
                 coordnatelayout,
-                bottomRelativeLayout
+                bottomRelativeLayout,
+                acceptImageView,
+                cancelImageView
         );
 
 
@@ -391,29 +423,33 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         }
 
-        if (result && clickableButtonIdentifier == 1 && id != null) {
+      /*  if (result && clickableButtonIdentifier == 1 && id != null) {
 
-         //   new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-         //           id + "/accept");
+            *//*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                    id + "/accept");*//*
+
+            Log.i("requestList", id + " accept ");
 
         } else if (result && clickableButtonIdentifier == 0 && id != null) {
-          //  new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-           //         id + "/reject");
+            *//*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                    id + "/reject");
+*//*
+            Log.i("requestList", id + " reject");
 
 
         } else {
 
-        }
+        }*/
 
     }
 
 
-    @Override
+    /*@Override
     public void onClick(View v) {
 
         switch (v.getId()) {
             case R.id.accept_imageview:
-                processResponse(1);
+                //processResponse(1);
 
 
                 break;
@@ -422,7 +458,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
                 break;
         }
-    }
+    }*/
 
     private void processResponse(int btnClickIdentifier) {
         SendRequestActivity.biodataRequestCounter--;
@@ -457,6 +493,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         }
 
     }
+
 
     private class SendResponseTask extends AsyncTask<String, Void, String> {
 

@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.ExpiredConnection;
 import com.nascenia.biyeta.activity.HomeScreen;
 import com.nascenia.biyeta.activity.InboxListView;
 import com.nascenia.biyeta.activity.RequestSentFromMe;
 import com.nascenia.biyeta.activity.SendRequestActivity;
+import com.nascenia.biyeta.model.RequestSenderIds;
 import com.nascenia.biyeta.service.ResourceProvider;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
@@ -25,7 +27,7 @@ import com.squareup.okhttp.ResponseBody;
  * Created by user on 1/5/2017.
  *//////lll
 
-public class Inbox extends Fragment implements View.OnClickListener{
+public class Inbox extends Fragment implements View.OnClickListener {
 
     public Inbox() {
         // Required empty public constructor
@@ -34,7 +36,7 @@ public class Inbox extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("oncreate","InboxOnCreate");
+        Log.e("oncreate", "InboxOnCreate");
     }
 
     @Override
@@ -42,7 +44,7 @@ public class Inbox extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        Log.e("come","inbox");
+        Log.e("come", "inbox");
         View v = inflater.inflate(R.layout.inbox, null);
         v.findViewById(R.id.tv_expire).setOnClickListener(this);
         v.findViewById(R.id.tv_inbox).setOnClickListener(this);
@@ -58,28 +60,28 @@ public class Inbox extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
 
-        int id=view.getId();
-        switch (id)
-        {
+        int id = view.getId();
+        switch (id) {
             case R.id.tv_sent_request:
                 new LoadReqeustSenderIdsTask().execute();
                 break;
 
             case R.id.tv_inbox:
                 startActivity(new Intent(getContext(), InboxListView.class));
-             break;
+                break;
 
             case R.id.tv_expire:
                 startActivity(new Intent(getContext(), ExpiredConnection.class));
                 break;
 
-            case  R.id.tv_sent_request_from_me:
+            case R.id.tv_sent_request_from_me:
                 startActivity(new Intent(getContext(), RequestSentFromMe.class));
                 break;
 
 
         }
     }
+
     private String responseValue = null;
 
     class LoadReqeustSenderIdsTask extends AsyncTask<String, String, String> {
@@ -119,6 +121,13 @@ public class Inbox extends Fragment implements View.OnClickListener{
                 startActivity(new Intent(getContext(), SendRequestActivity.class).
                         putExtra("REQUEST_RESPONSE_DATA",
                                 responseValue));
+                RequestSenderIds requestSenderIds = new Gson().fromJson(responseValue, RequestSenderIds.class);
+
+                Log.i("requestList", requestSenderIds.getRequests().getCommunicationRequestSenderIds().toString());
+
+                Log.i("requestList", requestSenderIds.getRequests().getProfileRequestSenderIds().toString());
+
+
             } else {
                 Toast.makeText(getContext(), "Can't load data", Toast.LENGTH_LONG).show();
             }

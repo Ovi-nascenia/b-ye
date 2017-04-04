@@ -220,7 +220,35 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     private void setRequestView(int id) {
 
         currentId = id;
-        SendRequestFragmentView.fetchUserProfileDetailsResponse(
+        new SendRequestFragmentView() {
+            @Override
+            public void loadNextProfile(int clickBtnId, int userProfileRequestId) {
+
+
+                if (clickBtnId == 1) {
+
+                    new CommunicationRequestFragment.SendResponseTask().execute(
+                            Utils.COMMUNICATION_REQUEST_URL +
+                                    userProfileRequestId + "/accept");
+
+
+                    Log.i("requestList", userProfileRequestId + " accept ");
+
+                } else if (clickBtnId == 0) {
+
+
+                    new CommunicationRequestFragment.SendResponseTask().execute(
+                            Utils.COMMUNICATION_REQUEST_URL +
+                                    userProfileRequestId + "/reject");
+
+                    Log.i("requestList", userProfileRequestId + " reject");
+
+
+                }
+                processResponse(clickBtnId);
+
+            }
+        }.fetchUserProfileDetailsResponse(
                 Utils.PROFILES_URL + id,
                 getActivity(),
                 this,
@@ -234,7 +262,10 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 1,
                 userNameTextView,
                 coordnatelayout,
-                bottomRelativeLayout
+                bottomRelativeLayout,
+                acceptImageView,
+                cancelImageView
+
         );
 
 
@@ -283,7 +314,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
         }
 
-        if (result && clickableButtonIdentifier == 1 && id != null) {
+      /*  if (result && clickableButtonIdentifier == 1 && id != null) {
 
             new CommunicationRequestFragment.SendResponseTask().execute(
                     Utils.COMMUNICATION_REQUEST_URL +
@@ -298,7 +329,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
         } else if (result && clickableButtonIdentifier == 555 && id != null) {
 
-        }
+        }*/
 
 
     }
@@ -342,7 +373,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.accept_imageview:
+            /*case R.id.accept_imageview:
                 processResponse(1);
 
 
@@ -351,6 +382,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 processResponse(0);
 
                 break;
+            */
             case R.id.wait_imageview:
                 waitButtonAction(id);
 
