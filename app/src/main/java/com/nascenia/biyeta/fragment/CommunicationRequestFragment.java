@@ -210,7 +210,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
             setRequestView(CommunicationRequestFragment.communicationRequestSenderIdsList.get(0));
         } else {
-            Utils.ShowAlert(getActivity(), "No more reqeust left");
+            Utils.ShowAlert(getActivity(), "আপনার কোন অনুরোধ নেই");
         }
 
 
@@ -330,10 +330,10 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 }
             } else {
                 setRequestView(currentId);
-                Utils.ShowAlert(getActivity(), "No more reqeust left");
+                Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
             }
         } else {
-            Utils.ShowAlert(getActivity(), "No more reqeust ");
+            Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
         }
 
     }

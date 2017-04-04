@@ -62,8 +62,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private ImageView profileViewerPersonImageView;
 
 
-
-
     public static List<Integer> profileRequestSenderIdsList = null;
 
     private RequestSenderIds requestSenderIds;
@@ -292,7 +290,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
             setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
         } else {
-            Utils.ShowAlert(getActivity(), "No more reqeust left");
+            Utils.ShowAlert(getActivity(), "আপনার কোন অনুরোধ নেই");
         }
 
 
@@ -444,10 +442,10 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 }
             } else {
                 setRequestView(currentId);
-                Utils.ShowAlert(getActivity(), "No more reqeust left");
+                Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
             }
         } else {
-            Utils.ShowAlert(getActivity(), "No more reqeust ");
+            Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
         }
 
     }
