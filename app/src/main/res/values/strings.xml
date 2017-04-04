@@ -3,7 +3,7 @@
     <string name="title_activity_home_screen">HomeScreen</string>
 
 
-    <string name="search">খুঁজন</string>
+    <string name="search">খুজুঁন </string>
     <string name="match">মিল</string>
     <string name="fev">প্রিয়</string>
     <string name="inbox">ইনবক্স</string>
@@ -13,7 +13,7 @@
     <string name="login">লগইন</string>
     <string name="new_account">নতুন একাউন্ট খুলুন </string>
     <string name="title_activity_login">Login</string>
-    <string name="willing_search">ইচ্ছা  মত খুঁজন </string>
+    <string name="willing_search">ইচ্ছা  মতন খুজুঁন </string>
     <string name="age">বয়স</string>
     <string name="height"> উচ্চতা </string>
     <string name="body">গড়ন </string>
@@ -271,6 +271,10 @@
     <!--facebook login from my account -->
 
     <!--<string name="facebook_app_id">871780212961408</string>-->
+
+
+
+
 
 
 </resources>

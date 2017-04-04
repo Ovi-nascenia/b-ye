@@ -59,7 +59,7 @@ public class InboxListView extends CustomActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inbox_view);
         setUpId();
-        setUpToolBar("Inbox", this);
+        setUpToolBar(getString(R.string.inbox), this);
         if (Utils.isOnline(InboxListView.this))
             new LoadMessageThread().execute();
         else
