@@ -805,15 +805,34 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
             }
 
-            for (int i = 1; i < 65; i++) {
-                 locationId.add(i);
-                all_location.add(location_option.getString(i + "").toString());
-                if (location_choose.contains(i + "")) {
-                    Log.e("true", i + "");
+
+            Iterator iterr = location_option.keys();
+            while (iterr.hasNext()) {
+                String key = (String) iterr.next();
+                locationId.add(Integer.parseInt(key));
+                String issue = location_option.getString(key);
+                all_location.add(issue);
+                if (location_choose.contains(Integer.parseInt(key) + ""))
                     is_checked_location.add(true);
-                } else
+                else
                     is_checked_location.add(false);
             }
+
+//            for (int i = 1; i < 65; i++) {
+//                 locationId.add(i);
+//                all_location.add(location_option.getString(i + "").toString());
+//                if (location_choose.contains(i + "")) {
+//                    Log.e("true", i + "");
+//                    is_checked_location.add(true);
+//                } else
+//                    is_checked_location.add(false);
+//            }
+
+
+
+
+
+
 
             Profession_Adapter locationAdapter = new Profession_Adapter(getApplicationContext(), all_location, is_checked_location, "LOCATION");
             gridViewLocation.setAdapter(locationAdapter);
