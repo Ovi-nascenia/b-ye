@@ -62,7 +62,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     private ImageView profileViewerPersonImageView;
 
 
-    private String url = "http://test.biyeta.com/api/v1/profiles/420";
+    // private String url = "http://test.biyeta.com/api/v1/profiles/420";
     private RequestSenderIds requestSenderIds;
     public static List<Integer> communicationRequestSenderIdsList = null;
 
@@ -133,7 +133,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
                     NetWorkOperation.postMethod(getActivity(),
-                            "http://test.biyeta.com/api/v1/smiles",
+                            Utils.SEND_SMILE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
                             "Token token=" + sharePref.get_data("token"));
@@ -153,7 +153,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 if (!userProfile.getProfile().isIsFavorite()) {
 
                     NetWorkOperation.postMethod(getActivity(),
-                            "http://test.biyeta.com/api/v1/favorites",
+                            Utils.FAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
                             "Token token=" + sharePref.get_data("token"));
@@ -221,7 +221,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
         currentId = id;
         SendRequestFragmentView.fetchUserProfileDetailsResponse(
-                url + id,
+                Utils.PROFILES_URL + id,
                 getActivity(),
                 this,
                 userProfileDescriptionText,
@@ -286,13 +286,13 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         if (result && clickableButtonIdentifier == 1 && id != null) {
 
             new CommunicationRequestFragment.SendResponseTask().execute(
-                    " http://test.biyeta.com/api/v1/communication_requests/" +
+                    Utils.COMMUNICATION_REQUEST_URL +
                             id + "/accept");
 
         } else if (result && clickableButtonIdentifier == 0 && id != null) {
 
             new CommunicationRequestFragment.SendResponseTask().execute(
-                    " http://test.biyeta.com/api/v1/communication_requests/" +
+                    Utils.COMMUNICATION_REQUEST_URL +
                             id + "/reject");
 
 

@@ -62,7 +62,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private ImageView profileViewerPersonImageView;
 
 
-    private String url = "http://test.biyeta.com/api/v1/profiles/";
+
 
     public static List<Integer> profileRequestSenderIdsList = null;
 
@@ -139,7 +139,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
                     NetWorkOperation.postMethod(getActivity(),
-                            "http://test.biyeta.com/api/v1/smiles",
+                            Utils.SEND_SMILE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
                             "Token token=" + sharePref.get_data("token"));
@@ -159,7 +159,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 if (!userProfile.getProfile().isIsFavorite()) {
 
                     NetWorkOperation.postMethod(getActivity(),
-                            "http://test.biyeta.com/api/v1/favorites",
+                            Utils.FAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
                             "Token token=" + sharePref.get_data("token"));
@@ -302,13 +302,13 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         currentId = id;
 
-        //Log.i("asynctaskdata FFFF", "currentId " + currentId + " urlResponseId " + urlResponseId);
+        /*//Log.i("asynctaskdata FFFF", "currentId " + currentId + " urlResponseId " + urlResponseId);
         Log.i("asynctaskdataFFFFFF", "viewurl: " + url + id);
         Log.i("asynctaskdataFFFFFF", "viewurl: " +
-                BioDataRequestFragment.profileRequestSenderIdsList.toString());
+                BioDataRequestFragment.profileRequestSenderIdsList.toString());*/
 
         SendRequestFragmentView.fetchUserProfileDetailsResponse(
-                url + id,
+                Utils.PROFILES_URL + id,
                 getActivity(),
                 this,
                 userProfileDescriptionText,
@@ -387,11 +387,11 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         if (result && clickableButtonIdentifier == 1 && id != null) {
 
-            new SendResponseTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
+            new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
                     id + "/accept");
 
         } else if (result && clickableButtonIdentifier == 0 && id != null) {
-            new SendResponseTask().execute(" http://test.biyeta.com/api/v1/profile_requests/" +
+            new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
                     id + "/reject");
 
 

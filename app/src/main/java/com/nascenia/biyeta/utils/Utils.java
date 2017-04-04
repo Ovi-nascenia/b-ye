@@ -39,6 +39,13 @@ public class Utils {
     public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
     public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
 
+    public static final String SEND_SMILE_URL = "http://test.biyeta.com/api/v1/smiles";
+    public static final String FAVORITE_URL = "http://test.biyeta.com/api/v1/favorites";
+    public static final String PROFILE_REQUEST_URL = "http://test.biyeta.com/api/v1/profile_requests/";
+    public static final String COMMUNICATION_REQUEST_URL = "http://test.biyeta.com/api/v1/communication_requests";
+    public static final String PROFILES_URL = "http://test.biyeta.com/api/v1/profiles/";
+    public static final String APPUSER_OWN_PROFILE_VIEW_URL = "http://test.biyeta.com/api/v1/profiles/view";
+
 
     ///debug section
 

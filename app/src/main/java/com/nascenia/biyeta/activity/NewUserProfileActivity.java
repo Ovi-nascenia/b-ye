@@ -168,7 +168,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         if (Utils.isOnline(getBaseContext())) {
 
-            fetchUserProfileDetails("http://test.biyeta.com/api/v1/profiles/" +
+            fetchUserProfileDetails(Utils.PROFILES_URL +
                     getIntent().getExtras().getString("id"));
 
         } else {
@@ -215,7 +215,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
                     NetWorkOperation.postMethod(getBaseContext(),
-                            "http://test.biyeta.com/api/v1/smiles",
+                            Utils.SEND_SMILE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
                             "Token token=" + sharePref.get_data("token"));
@@ -235,7 +235,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                 if (!userProfile.getProfile().isIsFavorite()) {
 
                     NetWorkOperation.postMethod(getBaseContext(),
-                            "http://test.biyeta.com/api/v1/favorites",
+                            Utils.FAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
                             "Token token=" + sharePref.get_data("token"));
@@ -730,7 +730,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             finalResultButton.setTag("send_communication_request");*/
 
 
-            new SendRequestTask().execute("http://test.biyeta.com/api/v1/profile_requests/" +
+            new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
                             userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/accept",
                     "যোগাযোগের জন্য অনুরোধ করুন", Utils.sendCommunicationRequest, "");
 
@@ -742,14 +742,14 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             finalResultButton.setText("পুরো বায়োডাটা দেখার অনুরোধ করুন");
             finalResultButton.setTag("send_biodata_request");*/
 
-            new SendRequestTask().execute("http://test.biyeta.com/api/v1/profile_requests/" +
+            new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
                             userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/reject",
                     "পুরো বায়োডাটা দেখার অনুরোধ করুন", Utils.sendBiodataRequest, "");
 
         } else if (v.getTag().equals(Utils.sendCommunicationRequest)) {
 
             NetWorkOperation.postData(getBaseContext(),
-                    "http://test.biyeta.com/api/v1/communication_requests",
+                    Utils.COMMUNICATION_REQUEST_URL,
                     userProfile.getProfile().getPersonalInformation().getId() + "", finalResultButton,
                     "আপনি যোগাযোগের জন্য অনুরোধ করেছেন");
 
@@ -760,7 +760,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
             NetWorkOperation.CreateProfileReqeust(getBaseContext(),
-                    "http://test.biyeta.com/api/v1/profiles/" +
+                    Utils.PROFILES_URL +
                             userProfile.getProfile().getPersonalInformation().getId()
                             + "/profile_request", finalResultButton,
                     "আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন");
@@ -771,7 +771,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         } else if (v.getTag().equals(Utils.commRequestAccept)) {
 
 
-            new SendRequestTask().execute("http://test.biyeta.com/api/v1/communication_requests/" +
+            new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL +
                     userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/accept", "message_call_block");
 
             /*acceptImageView.setImageResource(R.drawable.mail);
@@ -785,7 +785,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         } else if (v.getTag().equals(Utils.commRequestCancel)) {
 
 
-            new SendRequestTask().execute("http://test.biyeta.com/api/v1/communication_requests/" +
+            new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL  +
                             userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/reject",
                     "যোগাযোগের জন্য অনুরোধ করুন", Utils.sendCommunicationRequest, "");
 

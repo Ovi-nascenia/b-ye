@@ -115,7 +115,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 try {
 
                     Response response = new ResourceProvider(OwnUserProfileActivity.this).
-                            fetchGetResponse("http://test.biyeta.com/api/v1/profiles/view");
+                            fetchGetResponse(Utils.APPUSER_OWN_PROFILE_VIEW_URL);
                     ResponseBody responseBody = response.body();
                     final String responseValue = responseBody.string();
                     Log.i("ownresponsevalue", responseValue);
