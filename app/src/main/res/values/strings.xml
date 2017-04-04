@@ -50,6 +50,7 @@
 
 
     <!-- Navigation Drawer menu labels -->
+
     <string name="nav_profile">প্রোফাইল</string>
     <string name="nav_inbox">ইনবক্স</string>
     <string name="nav_fav">আপনার পছন্দ</string>
@@ -64,6 +65,9 @@
     <string name="nav_faq">FAQ</string>
     <string name="nav_termsofuse">টার্মস অব ইউস</string>
     <string name="other">অন্যান্য</string>
+
+
+    <string name="no_internet_connection"> ইন্টারনেট সংযোগ নেই</string>
 
 
     <string name="make_call">ফোন করুন</string>

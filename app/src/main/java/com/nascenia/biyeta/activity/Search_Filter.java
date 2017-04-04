@@ -577,7 +577,8 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             progress.setMessage("Please Wait ");
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setIndeterminate(true);
-            progress.show();
+            if ( !progress.isShowing() )
+                  progress.show();
         }
 
         @Override
@@ -612,7 +613,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                 e.printStackTrace();
             }
 
-            finish();
+
             ///   Toast.makeText(Search_Filter.this, ch, Toast.LENGTH_SHORT).show();
         }
 

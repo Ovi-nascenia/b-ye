@@ -19,6 +19,9 @@
         android:layout_below="@+id/tabs"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
     <ImageView
+
+        android:paddingTop="@dimen/small_padding"
+        android:paddingBottom="@dimen/small_padding"
         android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,6 +33,8 @@
 
 
     <LinearLayout
+        android:paddingTop="@dimen/small_padding"
+        android:paddingBottom="@dimen/small_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/profile"
@@ -77,6 +82,9 @@
     </LinearLayout>
 
     <ImageView
+
+        android:paddingTop="@dimen/small_padding"
+        android:paddingBottom="@dimen/small_padding"
         android:id="@+id/profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

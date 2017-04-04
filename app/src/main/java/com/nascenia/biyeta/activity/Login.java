@@ -246,7 +246,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //
         else {
             if (!Utils.isOnline(Login.this)) {
-                Utils.ShowAlert(Login.this, "No Internet");
+                Utils.ShowAlert(Login.this,getString(R.string.no_internet_connection));
             } else
 
                 new LoginRequest().execute(user_name, password);
@@ -398,7 +398,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             //Log.e("LoginData", s);
             if (s==null)
             {
-                Utils.ShowAlert(Login.this, "Network error");
+                Utils.ShowAlert(Login.this,getString(R.string.no_internet_connection));
             }
             else {
 

@@ -112,6 +112,14 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("Destroy","Destroy");
+        BioDataRequestFragment.profileRequestSenderIdsList.clear();
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         // Toast.makeText(getActivity(), "resume", Toast.LENGTH_LONG).show();
@@ -385,12 +393,12 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         if (result && clickableButtonIdentifier == 1 && id != null) {
 
-            new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-                    id + "/accept");
+         //   new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+         //           id + "/accept");
 
         } else if (result && clickableButtonIdentifier == 0 && id != null) {
-            new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-                    id + "/reject");
+          //  new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+           //         id + "/reject");
 
 
         } else {
