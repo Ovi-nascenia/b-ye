@@ -10,6 +10,7 @@
         android:id="@+id/coordnatelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         android:layout_above="@+id/r1">
 
 
@@ -155,6 +156,7 @@
                             android:layout_width="@dimen/small_image_size"
                             android:layout_height="@dimen/small_image_size"
                             android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/small_margin"
                             android:src="@drawable/favourite" />
 
 

@@ -82,14 +82,11 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             otherInfoRecylerView;
 
 
-    private ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
-    private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
-
     private TextView userProfileDescriptionText, userNameTextView, familyInfoTagTextView,
             communicationTagTextview, otherInfoTagTextview, cancelTextView, acceptTextView,
             userProfileDescriptionTextViewTag, generalInfoTagTextview, matchUserChoiceTextViewTag;
 
-    private ImageView profileViewerPersonImageView, editUserProfileImageView, selfImageView;
+    private ImageView profileViewerPersonImageView, selfImageView;
 
     private CardView familyCardView, communicationCarview, otherInfoCardView, userProfileDescriptionCardview,
             generalInfoCarView, matchUserChoiceCardView;
@@ -101,10 +98,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private SharePref sharePref;
     private final int REQUEST_PHONE_CALL = 999999;
 
-    private LinearLayout layoutSendSmiley, matchPersonLayout, smileyandVerificationLayout;
+    private LinearLayout layoutSendSmiley, smileyandVerificationLayout;
     private UserProfile userProfile;
-
-    private RelativeLayout mobileLayout, facebookLayout, mailLayout;
 
     private ProgressDialog progressDialog;
 
@@ -202,7 +197,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         matchUserChoiceTextViewTag = (TextView) findViewById(R.id.matchUserChoiceTextViewTag);
         matchUserChoiceCardView = (CardView) findViewById(R.id.matchUserChoiceCardView);
 
-        matchPersonLayout = (LinearLayout) findViewById(R.id.matchPersonLayout);
 
         progressDialog = new ProgressDialog(NewUserProfileActivity.this);
         progressDialog.setMessage("Please wait...");
@@ -252,9 +246,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             }
         });
 
-        mobileLayout = (RelativeLayout) findViewById(R.id.mobile_layout);
-        facebookLayout = (RelativeLayout) findViewById(R.id.facebook_layout);
-        mailLayout = (RelativeLayout) findViewById(R.id.mail_layout);
 
         mobileCheckIconImageView = (ImageView) findViewById(R.id.mobile_check_icon);
         fbCheckIconImageView = (ImageView) findViewById(R.id.fb_check_icon);
@@ -289,7 +280,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         otherInfoTagTextview = (TextView) findViewById(R.id.other_info_tag);
         otherInfoCardView = (CardView) findViewById(R.id.other_info_cardview);
 
-        editUserProfileImageView = (ImageView) findViewById(R.id.edit_profile_image);
+
         selfImageView = (ImageView) findViewById(R.id.self_image);
 
 
