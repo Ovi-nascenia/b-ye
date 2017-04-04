@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId 'com.nascenia.biyeta'
         minSdkVersion 16
@@ -40,17 +40,16 @@ dependencies {
     compile 'com.android.support:cardview-v7:25.0.+'
     compile 'com.android.support:recyclerview-v7:25.0.+'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.0'
+    compile 'com.google.code.gson:gson:2.8.0'
     compile 'me.bendik.simplerangeview:simplerangeview:0.1.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.android.support:customtabs:25.0.1'
     compile 'com.bignerdranch.android:expandablerecyclerview:3.0.0-RC1'
-
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'org.apache.commons:commons-collections4:4.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'net.rimoto:intlphoneinput:1.0.1'
     testCompile 'junit:junit:4.12'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-    compile "me.henrytao:smooth-app-bar-layout:24.1.0.0"
+    compile 'me.henrytao:smooth-app-bar-layout:24.1.0.0'
 }
