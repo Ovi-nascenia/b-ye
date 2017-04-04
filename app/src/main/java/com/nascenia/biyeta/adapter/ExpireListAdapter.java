@@ -27,6 +27,8 @@ public abstract class ExpireListAdapter extends RecyclerView.Adapter<ExpireListA
 
 
     public abstract void onClickSmile(int id, int postion);
+    public abstract void profileLoad(int id,String userName);
+
 
     private ExpireProfile ExpireProfile;
     private int itemLayout;
@@ -75,6 +77,25 @@ public abstract class ExpireListAdapter extends RecyclerView.Adapter<ExpireListA
             @Override
             public void onClick(View view) {
                 onClickSmile(profile.getId(), position);
+            }
+        });
+
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                profileLoad(profile.getId(),profile.getDisplayName());
+            }
+        });
+        holder.userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                profileLoad(profile.getId(),profile.getDisplayName());
+            }
+        });
+        holder.details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                profileLoad(profile.getId(),profile.getDisplayName());
             }
         });
 

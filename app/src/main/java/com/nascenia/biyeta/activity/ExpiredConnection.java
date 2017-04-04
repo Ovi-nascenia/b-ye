@@ -67,11 +67,7 @@ public class ExpiredConnection extends CustomActionBarActivity {
             @Override
             public void onItemClick(View view, int position) {
 
-                Intent intent = new Intent(ExpiredConnection.this, NewUserProfileActivity.class);
-                intent.putExtra("id", response.getProfiles().get(position).getId() + "");
-                intent.putExtra("user_name", response.getProfiles().get(position).getDisplayName());
-                intent.putExtra("PROFILE_EDIT_OPTION", false);
-                startActivity(intent);
+
 
 
             }
@@ -115,6 +111,15 @@ public class ExpiredConnection extends CustomActionBarActivity {
 
                                 new SendConnection().execute("http://test.biyeta.com/api/v1/communication_requests", id + "", position + "");
                                 //  Toast.makeText(RequestSentFromMe.this, id + " ", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void profileLoad(int id,String userName) {
+                                Intent intent = new Intent(ExpiredConnection.this, NewUserProfileActivity.class);
+                                intent.putExtra("id",id + "");
+                                intent.putExtra("user_name", userName);
+                                intent.putExtra("PROFILE_EDIT_OPTION", false);
+                                startActivity(intent);
                             }
 
                         };
@@ -176,8 +181,7 @@ public class ExpiredConnection extends CustomActionBarActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.has("message")) {
-                    Toast.makeText(ExpiredConnection.this, "already sent", Toast.LENGTH_SHORT).show();
-                    response.getProfiles().remove(position);
+                     response.getProfiles().remove(position);
                     expireListAdapter.notifyDataSetChanged();
                 }
             } catch (JSONException e) {
