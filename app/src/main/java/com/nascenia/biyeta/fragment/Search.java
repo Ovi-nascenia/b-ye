@@ -266,6 +266,7 @@ public class Search extends Fragment {
                 {
 
 
+
                     String id = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("id");
                     String age = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("age");
                     String height_ft = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("height_ft");
