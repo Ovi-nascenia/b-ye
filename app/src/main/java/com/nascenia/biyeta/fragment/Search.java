@@ -80,6 +80,8 @@ public class Search extends Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.profile_list);
         searchButton = (Button) v.findViewById(R.id.search_btn);
         emptyText = (TextView) v.findViewById(R.id.empty_list);
+
+
         mProfile_adapter = new Profile_Adapter(profileList) {
             @Override
             public void load() {
@@ -202,6 +204,8 @@ public class Search extends Fragment {
                 emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
             }
             else {
+                emptyText.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
 
                 for (int i = 0; i < jsonObject.getJSONArray("profiles").length(); i++)
 
@@ -222,8 +226,8 @@ public class Search extends Fragment {
                     SearchProfileModel profile = new SearchProfileModel(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
 
                      profileList.add(profile);
-                    mProfile_adapter.notifyDataSetChanged();
-                    relativeLayout.setVisibility(View.GONE);
+                     mProfile_adapter.notifyDataSetChanged();
+                     relativeLayout.setVisibility(View.GONE);
 
                 }
             }

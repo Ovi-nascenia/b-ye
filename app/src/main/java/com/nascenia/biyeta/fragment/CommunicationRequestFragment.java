@@ -219,7 +219,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
             setRequestView(CommunicationRequestFragment.communicationRequestSenderIdsList.get(0));
         } else {
-            Utils.ShowAlert(getActivity(), "আপনার কোন অনুরোধ নেই");
+
             relativeLayoutFullFrame.setVisibility(View.GONE);
             noListAvailable.setVisibility(View.VISIBLE);
 

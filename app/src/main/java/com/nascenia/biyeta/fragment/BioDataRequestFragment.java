@@ -50,6 +50,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
     private View _baseView;
 
+    RelativeLayout relativeLayoutFullFrame;
+    TextView noListAvailable;
+
     private ImageView cancelImageView, waitImageView, acceptImageView, emoIconImageView,
             mobileCheckIconImageView, fbCheckIconImageView, mailCheckIconImageView;
     private TextView cancelTextView, waitTextView, acceptTextView, communicationTagTextView;
@@ -106,6 +109,12 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             profileRequestSenderIdsList = requestSenderIds.getRequests().getProfileRequestSenderIds();
 
         }
+
+        relativeLayoutFullFrame=(RelativeLayout)_baseView.findViewById(R.id.communtication_request_layout);
+        noListAvailable=(TextView)_baseView.findViewById(R.id.no_data);
+
+        relativeLayoutFullFrame.setVisibility(View.VISIBLE);
+        noListAvailable.setVisibility(View.GONE);
 
 
         return _baseView;
@@ -288,7 +297,13 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
             setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
         } else {
-            Utils.ShowAlert(getActivity(), "আপনার কোন অনুরোধ নেই");
+
+
+                relativeLayoutFullFrame.setVisibility(View.GONE);
+                noListAvailable.setVisibility(View.VISIBLE);
+
+
+
         }
 
 
