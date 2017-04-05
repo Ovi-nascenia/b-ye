@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -93,6 +94,10 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
     private CoordinatorLayout coordnatelayout;
 
+    private TextView userNameTextView;
+
+    private CardView educationCardView, professionCardview, brotherCardview, sisterCardview,
+            otherRelativeCardview, childCardView, otherInfoCardview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,7 +139,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                         getPersonalInformation().getAboutYourself());
                             }
 
-
+                            userNameTextView.setText(getIntent().getExtras().getString("user_name"));
                             setUserOwnImage(userProfile);
                             setDataOnPersonalInfoRecylerView(userProfile);
                             setDataOnEducationalRecylerView(userProfile);
@@ -262,6 +267,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     otherInfoChildItemHeader,
                     true));
 
+        } else {
+            otherInfoCardview.setVisibility(View.GONE);
         }
 
             /*..................................other inormation block end.........................................*/
@@ -374,13 +381,13 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     private void setDataOnPersonalInfoRecylerView(UserProfile userProfile) {
 
         //add personal Information
-        personalInfoChildItemList.add(new UserProfileChild("age",
+        personalInfoChildItemList.add(new UserProfileChild("বয়স",
                 Utils.convertEnglishDigittoBangla(
                         userProfile.getProfile().getPersonalInformation().getAge()) + " বছর,"
 
         ));
 
-        personalInfoChildItemList.add(new UserProfileChild("height",
+        personalInfoChildItemList.add(new UserProfileChild("উচ্চতা",
                 Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightFt())
                         + "'" +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightInc())
@@ -388,11 +395,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         ));
 
 
-        personalInfoChildItemList.add(new UserProfileChild("Religion",
+        personalInfoChildItemList.add(new UserProfileChild("ধর্ম",
                 userProfile.getProfile().getProfileReligion().getReligion()
         ));
 
-        personalInfoChildItemList.add(new UserProfileChild("Cast",
+        personalInfoChildItemList.add(new UserProfileChild("বর্ণ",
                 userProfile.getProfile().getProfileReligion().getCast()
         ));
 
@@ -638,43 +645,58 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             /*..................................childs block start.........................................*/
 
+
             //add child information
-            if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
-                    userProfile.getProfile().getFamilyMembers().isChildLivesWithYou()) {
+            if (userProfile.getProfile().getPersonalInformation().getMaritalStatus().equals("অবিবাহিত")) {
 
-                childsChildItemList.add(new UserProfileChild("সন্তান",
-                        Utils.convertEnglishDigittoBangla(
-                                userProfile.getProfile().getFamilyMembers().getNumberOfChild())
-                                + " জন সন্তান, তার সাথে থাকে"));
+                childCardView.setVisibility(View.GONE);
 
-            } else if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
-                    !(userProfile.getProfile().getFamilyMembers().isChildLivesWithYou())) {
+            } else if (userProfile.getProfile().getPersonalInformation().getMaritalStatus().equals("বিবাহিত")) {
 
-                childsChildItemList.add(new UserProfileChild("সন্তান",
-                        Utils.convertEnglishDigittoBangla(
-                                userProfile.getProfile().getFamilyMembers().getNumberOfChild())
-                                + " জন সন্তান, তার সাথে থাকে না"));
-            }
+                if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
+                        userProfile.getProfile().getFamilyMembers().isChildLivesWithYou()) {
+
+                    childsChildItemList.add(new UserProfileChild("সন্তান",
+                            Utils.convertEnglishDigittoBangla(
+                                    userProfile.getProfile().getFamilyMembers().getNumberOfChild())
+                                    + " জন সন্তান, তার সাথে থাকে"));
+
+                } else if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
+                        !(userProfile.getProfile().getFamilyMembers().isChildLivesWithYou())) {
+
+                    childsChildItemList.add(new UserProfileChild("সন্তান",
+                            Utils.convertEnglishDigittoBangla(
+                                    userProfile.getProfile().getFamilyMembers().getNumberOfChild())
+                                    + " জন সন্তান, তার সাথে থাকে না"));
+                }
 
 
-            //add childlist data to mainparentlist
-            if (childsChildItemList.size() > 0) {
+                //add childlist data to mainparentlist
+                if (childsChildItemList.size() > 0) {
 
-                childsChildItemHeader.add(new UserProfileParent("সন্তান"
-                        , childsChildItemList));
+                    childsChildItemHeader.add(new UserProfileParent("সন্তান"
+                            , childsChildItemList));
 
-                childRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
-                        childsChildItemHeader,
-                        true));
+                    childRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                            childsChildItemHeader,
+                            true));
+                } else {
+                    childsChildItemList.add(new UserProfileChild("সন্তান", "কোন সন্তান নেই"));
+                    childsChildItemHeader.add(new UserProfileParent("সন্তান", childsChildItemList));
+
+                    childRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                            childsChildItemHeader,
+                            true));
+
+                }
+
+
             } else {
-                childsChildItemList.add(new UserProfileChild("সন্তান", "কোন সন্তান নেই"));
-                childsChildItemHeader.add(new UserProfileParent("সন্তান", childsChildItemList));
-
-                childRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
-                        childsChildItemHeader,
-                        true));
-
+                childCardView.setVisibility(View.GONE);
             }
+
+
+
 
             /*..................................childs block end.........................................*/
 
@@ -852,6 +874,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 otherRelativeInfoRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
                         otherRelativeChildItemHeader,
                         true));
+            } else {
+                otherRelativeCardview.setVisibility(View.GONE);
             }
 
 
@@ -866,6 +890,15 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     private void initView() {
 
 
+       /* educationCardView = (CardView) findViewById(R.id.education_cardview);
+        professionCardview = (CardView) findViewById(R.id.profession_cardview);
+        brotherCardview = (CardView) findViewById(R.id.brother_cardview);
+        sisterCardview = (CardView) findViewById(R.id.sister_cardview);*/
+        otherRelativeCardview = (CardView) findViewById(R.id.other_relative_cardview);
+        childCardView = (CardView) findViewById(R.id.child_cardView);
+        otherInfoCardview = (CardView) findViewById(R.id.other_info_cardview);
+
+
         progressDialog = new ProgressDialog(OwnUserProfileActivity.this);
         progressDialog.setMessage("Please wait...");
         progressDialog.setCancelable(true);
@@ -876,7 +909,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         userProfileDescriptionText = (TextView) findViewById(R.id.userProfileDescriptionText);
 
         userProfileImage = (ImageView) findViewById(R.id.user_profile_image);
-
+        userNameTextView = (TextView) findViewById(R.id.user_name);
 
         personalInfoRecylerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
         personalInfoRecylerView.setLayoutManager(new LinearLayoutManager(this));

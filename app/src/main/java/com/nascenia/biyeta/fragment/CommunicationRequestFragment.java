@@ -51,7 +51,6 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     TextView noListAvailable;
 
 
-
     private ImageView userProfileImage, cancelImageView, waitImageView, acceptImageView, selfImageView,
             favoriteImageView, emoIconImageView, mobileCheckIconImageView,
             fbCheckIconImageView, mailCheckIconImageView;
@@ -110,8 +109,8 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
 
         initView();
-        relativeLayoutFullFrame=(RelativeLayout)_baseView.findViewById(R.id.communtication_request_layout);
-        noListAvailable=(TextView)_baseView.findViewById(R.id.no_data);
+        relativeLayoutFullFrame = (RelativeLayout) _baseView.findViewById(R.id.communtication_request_layout);
+        noListAvailable = (TextView) _baseView.findViewById(R.id.no_data);
 
         relativeLayoutFullFrame.setVisibility(View.VISIBLE);
         noListAvailable.setVisibility(View.GONE);

@@ -387,6 +387,7 @@
 
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/education_cardview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/medium_margin"
@@ -407,6 +408,7 @@
 
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/profession_cardview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/medium_margin"
@@ -448,6 +450,7 @@
 
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/brother_cardview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/medium_margin"
@@ -468,6 +471,7 @@
 
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/sister_cardview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/medium_margin"
@@ -488,6 +492,7 @@
 
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/child_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/medium_margin"
@@ -508,6 +513,7 @@
 
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/other_relative_cardview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/medium_margin"
@@ -527,6 +533,7 @@
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/other_info_cardview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/medium_margin"

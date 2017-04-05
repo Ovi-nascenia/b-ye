@@ -50,8 +50,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
     private View _baseView;
 
-    RelativeLayout relativeLayoutFullFrame;
-    TextView noListAvailable;
+    private TextView noListAvailable;
 
     private ImageView cancelImageView, waitImageView, acceptImageView, emoIconImageView,
             mobileCheckIconImageView, fbCheckIconImageView, mailCheckIconImageView;
@@ -110,20 +109,14 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         }
 
-        relativeLayoutFullFrame=(RelativeLayout)_baseView.findViewById(R.id.communtication_request_layout);
-        noListAvailable=(TextView)_baseView.findViewById(R.id.no_data);
-
-        relativeLayoutFullFrame.setVisibility(View.VISIBLE);
+        noListAvailable = (TextView) _baseView.findViewById(R.id.no_data);
         noListAvailable.setVisibility(View.GONE);
-
-
         return _baseView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Toast.makeText(getActivity(), BioDataRequestFragment.profileRequestSenderIdsList.size() + " resume", Toast.LENGTH_LONG).show();
 
     }
 
@@ -293,17 +286,13 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         //Toast.makeText(getActivity(), "start", Toast.LENGTH_LONG).show();
         initView();
 
+
         if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
 
             setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
         } else {
-
-
-                relativeLayoutFullFrame.setVisibility(View.GONE);
-                noListAvailable.setVisibility(View.VISIBLE);
-
-
-
+            //Utils.ShowAlert(getActivity(), "আপনার কোন অনুরোধ নেই");
+            noListAvailable.setVisibility(View.VISIBLE);
         }
 
 

@@ -381,7 +381,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                             }
                                         });
 
-                                Glide.with(getBaseContext())
+                                Glide.with(NewUserProfileActivity.this)
                                         .load(Utils.Base_URL +
                                                 userProfile.getProfile().getPersonalInformation().
                                                         getImage().getProfilePicture())

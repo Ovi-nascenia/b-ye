@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +27,7 @@ public class SendRequestActivity extends CustomActionBarActivity {
 
 
     private TabLayout tabLayout;
-    private LinearLayout container;
+    private FrameLayout container;
 
     private View tabItemView1, tabItemView2;
     private Bundle bundle;
@@ -42,7 +43,7 @@ public class SendRequestActivity extends CustomActionBarActivity {
         setContentView(R.layout.activity_send_request);
         setUpToolBar("আপনাকে পাঠানো অনুরোধ",this);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        container = (LinearLayout) findViewById(R.id.fragment_container);
+        container = (FrameLayout) findViewById(R.id.fragment_container);
 
 
         //create tabs title
@@ -152,14 +153,4 @@ public class SendRequestActivity extends CustomActionBarActivity {
     }
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-
-       /* if (BioDataRequestFragment.profileRequestSenderIdsList != null) {
-            BioDataRequestFragment.profileRequestSenderIdsList.clear();
-        }*/
-
-    }
 }
