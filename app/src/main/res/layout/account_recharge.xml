@@ -135,10 +135,12 @@
                 android:text="@string/recharge_amount_text"
                 android:textColor="@color/recharge_amount"
                 android:padding="10dp"
-                android:textSize="20sp"/>
+                android:textSize="16sp"/>
 
             <EditText
                 android:enabled="false"
+                android:visibility="gone"
+
                 android:id="@+id/recharge_amountET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -162,10 +164,12 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/taka"
+                android:visibility="gone"
                 android:textColor="@color/taka"
                 android:textSize="20dp" />
 
             <Button
+                android:visibility="gone"
                 android:enabled="false"
                 android:id="@+id/recharge_Button"
                 android:layout_width="match_parent"

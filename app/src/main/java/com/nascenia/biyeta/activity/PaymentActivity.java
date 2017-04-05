@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.util.Linkify;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
@@ -28,6 +29,7 @@ public class PaymentActivity extends CustomActionBarActivity {
 
     TextView balanceAmountTextView;
     TextView profileVisitNumberTextView;
+    TextView detailsPayment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,11 @@ public class PaymentActivity extends CustomActionBarActivity {
 
         balanceAmountTextView = (TextView) findViewById(R.id.current_balance);
         profileVisitNumberTextView = (TextView) findViewById(R.id.account_recharge_descrip1);
+        detailsPayment=(TextView)findViewById(R.id.recharge_amountTV) ;
+        detailsPayment.setText(" কার্ড-এর মাধ্যমে টাকা প্রদানের জন্য বিয়েটার ওয়েবসাইটে(www.biyeta.com) লগইন করা অবস্থায় এই লিঙ্ক-এ ক্লিক করুন- http://biyeta.com/payments/new ");
+
+// Makes the textView's Phone and URL (hyperlink) select and go.
+        Linkify.addLinks(detailsPayment, Linkify.WEB_URLS | Linkify.PHONE_NUMBERS);
 
 
         WebView mWebView = (WebView) findViewById(R.id.money_send_confirmation);
