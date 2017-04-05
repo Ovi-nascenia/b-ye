@@ -34,14 +34,13 @@
                 android:id="@+id/parentListItemTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/medium_margin"
                 android:gravity="center"
                 android:padding="@dimen/medium_padding"
-                android:text="xxxxxxxxxxx"
-                android:textColor="#4e4c4c"
+                android:text=""
+                android:textColor="#F44336"
                 android:textSize="@dimen/item_textsize"
                 android:textStyle="bold" />
 

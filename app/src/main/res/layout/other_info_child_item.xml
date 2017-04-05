@@ -29,8 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/large_margin"
             android:layout_weight="1"
-            android:text="hello world"
-            android:textColor="#757575"
+            android:text=""
+            android:textColor="#e6e6e9"
             android:textSize="@dimen/item_textsize"
             android:textStyle="normal" />
 
@@ -41,8 +41,8 @@
             android:layout_marginLeft="@dimen/negative_large_margin"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:text="hello world"
-            android:textColor="#757575"
+            android:text=""
+            android:textColor="#00011F"
             android:textSize="@dimen/item_textsize"
             android:textStyle="normal" />
     </LinearLayout>
