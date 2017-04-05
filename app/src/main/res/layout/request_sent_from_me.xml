@@ -24,10 +24,11 @@
         android:visibility="visible" />
     <TextView
         android:id="@+id/no_message"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="No Request Found"
+        android:layout_height="match_parent"
+        android:textSize="14sp"
+        android:text=" কোন অনুরোধ পাঠান নি"
         android:gravity="center"
         android:textColor="@color/colorPrimary"/>
 

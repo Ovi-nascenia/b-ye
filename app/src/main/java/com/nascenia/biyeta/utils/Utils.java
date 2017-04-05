@@ -79,6 +79,21 @@ public class Utils {
     }
 
 
+    public static void ShowInternetConnectionError(Context context)
+    {
+        new AlertDialog.Builder(context)
+                .setTitle("ইন্টারনেট")
+                .setMessage("ইন্টারনেট সংযোগ নেই")
+                .setCancelable(false)
+                .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+
     public static boolean isOnline(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -105,7 +105,7 @@ public class Match extends Fragment implements View.OnClickListener {
         Log.e("come", "Match");
         View v = inflater.inflate(R.layout.match, null);
 
-        emptyMessage=(TextView)v.findViewById(R.id.empty_message);
+        emptyMessage = (TextView) v.findViewById(R.id.empty_message);
 
 
         biodata = (TextView) v.findViewById(R.id.biodata);
@@ -178,19 +178,17 @@ public class Match extends Fragment implements View.OnClickListener {
             progressBar.setVisibility(View.GONE);
 
             if (s == null) {
-                Utils.ShowAlert(getContext(), "Check Internet Connection");
+                Utils.ShowInternetConnectionError(getContext());
 
             } else {
 
 
                 try {
-                    JSONObject jsonObject=new JSONObject(s);
-                    if (jsonObject.has("no_results"))
-                    {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.has("no_results")) {
                         emptyMessage.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                    }
-                    else {
+                    } else {
                         emptyMessage.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
 
@@ -240,12 +238,10 @@ public class Match extends Fragment implements View.OnClickListener {
                         }
                     }
 
-                } catch (JSONException e)
-                {
+                } catch (JSONException e) {
                     emptyMessage.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                 }
-
 
 
             }
@@ -281,7 +277,7 @@ public class Match extends Fragment implements View.OnClickListener {
             super.onPostExecute(s);
             progressBar.setVisibility(View.GONE);
             if (s == null) {
-                Utils.ShowAlert(getContext(), "Check Internet Connection");
+                Utils.ShowInternetConnectionError(getContext());
             } else {
                 Log.e("BiodataResponse", s);
 
@@ -382,25 +378,27 @@ public class Match extends Fragment implements View.OnClickListener {
         }
     }
 
+
+    ///send communication request
     class SendConnectionRequest extends AsyncTask<String, String, String> {
         Integer listposition;
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (s == null) Utils.ShowAlert(getContext(), "Check Internet Connection");
+            if (s == null) Utils.ShowInternetConnectionError(getContext());
             else
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.has("message")) {
                         String mes = jsonObject.getJSONArray("message").getJSONObject(0).getString("detail");
                         Toast.makeText(getContext(), mes, Toast.LENGTH_SHORT).show();
-                        profileArrayList.get(listposition).getRequestStatus().setMessage("আপনি যোগাযোগের  অনুরোধ  করেছেন");
+                        profileArrayList.get(listposition).getRequestStatus().setMessage(mes);
                         biodataListAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Utils.ShowAlert(getContext(), "Check Internet Connection");
+                    Utils.ShowInternetConnectionError(getContext());
                 }
 
         }

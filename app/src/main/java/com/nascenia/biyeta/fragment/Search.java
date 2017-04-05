@@ -222,7 +222,7 @@ public class Search extends Fragment {
 
             }
         } catch (JSONException e) {
-            Log.e("Search error",e.toString());
+            Utils.ShowInternetConnectionError(getContext());
 
 
             emptyText.setVisibility(View.VISIBLE);

@@ -47,6 +47,10 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
     private View _baseView;
 
+    RelativeLayout relativeLayoutFullFrame;
+    TextView noListAvailable;
+
+
 
     private ImageView userProfileImage, cancelImageView, waitImageView, acceptImageView, selfImageView,
             favoriteImageView, emoIconImageView, mobileCheckIconImageView,
@@ -107,6 +111,9 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
 
         initView();
+        relativeLayoutFullFrame=(RelativeLayout)_baseView.findViewById(R.id.communtication_request_layout);
+        noListAvailable=(TextView)_baseView.findViewById(R.id.no_data);
+
 
         return _baseView;
     }
@@ -211,6 +218,9 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
             setRequestView(CommunicationRequestFragment.communicationRequestSenderIdsList.get(0));
         } else {
             Utils.ShowAlert(getActivity(), "আপনার কোন অনুরোধ নেই");
+            relativeLayoutFullFrame.setVisibility(View.GONE);
+            noListAvailable.setVisibility(View.VISIBLE);
+
         }
 
 
