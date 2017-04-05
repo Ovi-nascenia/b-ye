@@ -195,6 +195,7 @@ public class Search extends Fragment {
     void loadDataFromResponse(JSONObject jsonObject) {
         try {
 
+
             if (jsonObject.has("no_results")) {
                 emptyText.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
