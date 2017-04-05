@@ -97,7 +97,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private RelativeLayout requestSendButtonsLayout;
 
     private SharePref sharePref;
-    private final int REQUEST_PHONE_CALL = 999999;
+    private final int REQUEST_PHONE_CALL = 100;
 
     private LinearLayout layoutSendSmiley, smileyandVerificationLayout;
     private UserProfile userProfile;
