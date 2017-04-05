@@ -245,10 +245,12 @@ public abstract class SendRequestFragmentView {
 
                                 //Toast.makeText(context, userProfile.getProfile().getRequestStatus().getProfileRequestId() + " ", Toast.LENGTH_LONG).show();
 
-                                if (viewRequestClassname == 0) {
+                                if (viewRequestClassname == Utils.BIODATA_REQUEST_FRAGEMNT_CLASS) {
                                     loadNextProfile(1, userProfile.getProfile().getRequestStatus().getProfileRequestId());
-                                } else {
+                                } else if (viewRequestClassname == Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS) {
                                     loadNextProfile(1, userProfile.getProfile().getRequestStatus().getCommunicationRequestId());
+                                } else {
+                                    Log.i("classdata", "No Data recived");
                                 }
                             }
                         });
@@ -258,10 +260,12 @@ public abstract class SendRequestFragmentView {
                             @Override
                             public void onClick(View v) {
 
-                                if (viewRequestClassname == 0) {
+                                if (viewRequestClassname == Utils.BIODATA_REQUEST_FRAGEMNT_CLASS) {
                                     loadNextProfile(0, userProfile.getProfile().getRequestStatus().getProfileRequestId());
-                                } else {
+                                } else if (viewRequestClassname == Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS) {
                                     loadNextProfile(0, userProfile.getProfile().getRequestStatus().getCommunicationRequestId());
+                                } else {
+                                    Log.i("classdata", "No Data recived");
                                 }
                             }
                         });
@@ -274,13 +278,15 @@ public abstract class SendRequestFragmentView {
                 });
 
 
-                if (callback != null && this.viewRequestClassname == 0 && userProfile != null) {
-                    // will call onComplete() on MyActivity once the job is done
+                if (callback != null && this.viewRequestClassname ==
+                        Utils.BIODATA_REQUEST_FRAGEMNT_CLASS && userProfile != null) {
+                    // will call onComplete() on BiodataRequestFragment once the job is done
                     callback.onComplete(true,
                             userProfile.getProfile().getRequestStatus().getProfileRequestId(),
                             userProfile);
-                } else if (callback != null && this.viewRequestClassname == 1 && userProfile != null) {
-                    // will call onComplete() on MyActivity once the job is done
+                } else if (callback != null && this.viewRequestClassname ==
+                        Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS && userProfile != null) {
+                    // will call onComplete() on CommunicationRequestClass once the job is done
                     callback.onComplete(true,
                             userProfile.getProfile().getRequestStatus().getCommunicationRequestId(),
                             userProfile);

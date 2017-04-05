@@ -114,7 +114,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     @Override
     public void onResume() {
         super.onResume();
-        // Toast.makeText(getActivity(), "resume", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), BioDataRequestFragment.profileRequestSenderIdsList.size() + " resume", Toast.LENGTH_LONG).show();
 
     }
 
@@ -301,22 +301,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         currentId = id;
 
-        /*if (clickableButtonIdentifier == 1) {
-
-            *//*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-                    id + "/accept");*//*
-
-            Log.i("requestList", user_id + " accept ");
-
-        } else if (clickableButtonIdentifier == 0) {
-            *//*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-                    id + "/reject");
-*//*
-            Log.i("requestList", user_id + " reject");
-
-
-        }*/
-
         Log.i("requestList", "currentview: " + id);
         new SendRequestFragmentView() {
             @Override
@@ -325,17 +309,17 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
                 if (clickBtnId == 1) {
 
-            /*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-                    userProfileRequestId + "/accept");*/
+                    new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                            userProfileRequestId + "/accept");
 
                     Log.i("requestList", userProfileRequestId + " accept ");
 
                 } else if (clickBtnId == 0) {
 
 
-            /*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-                    userProfileRequestId + "/reject");
-*/
+                    new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                            userProfileRequestId + "/reject");
+
                     Log.i("requestList", userProfileRequestId + " reject");
 
 
@@ -354,7 +338,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 profileViewerPersonImageView,
                 userProfileImage,
                 familyMemberInfoRecylerView,
-                0,
+                Utils.BIODATA_REQUEST_FRAGEMNT_CLASS,
                 userNameTextView,
                 coordnatelayout,
                 bottomRelativeLayout,
@@ -423,42 +407,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         }
 
-      /*  if (result && clickableButtonIdentifier == 1 && id != null) {
-
-            *//*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-                    id + "/accept");*//*
-
-            Log.i("requestList", id + " accept ");
-
-        } else if (result && clickableButtonIdentifier == 0 && id != null) {
-            *//*new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-                    id + "/reject");
-*//*
-            Log.i("requestList", id + " reject");
-
-
-        } else {
-
-        }*/
 
     }
 
-
-    /*@Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.accept_imageview:
-                //processResponse(1);
-
-
-                break;
-            case R.id.cancel_imageview:
-                processResponse(0);
-
-                break;
-        }
-    }*/
 
     private void processResponse(int btnClickIdentifier) {
         SendRequestActivity.biodataRequestCounter--;
