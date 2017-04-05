@@ -113,6 +113,9 @@ public class Search extends Fragment {
         relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutLeftButton);
 
 
+
+
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,9 +149,20 @@ public class Search extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         Search_Filter.reponse = "";
+        emptyText.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        jsonObjects.clear();
         profileList.clear();
         mProfile_adapter.notifyDataSetChanged();
 
