@@ -45,7 +45,7 @@ import static com.nascenia.biyeta.R.id.emoIconImage;
  * Created by saiful on 3/10/17.
  */
 
-public class BioDataRequestFragment extends Fragment implements MyCallback<Boolean>, View.OnClickListener {
+public class BioDataRequestFragment extends Fragment implements MyCallback<Boolean> {
 
 
     private View _baseView;
@@ -62,7 +62,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private ImageView profileViewerPersonImageView;
 
 
-    public static List<Integer> profileRequestSenderIdsList =new ArrayList<>( );
+    public static List<Integer> profileRequestSenderIdsList = null;
 
     private RequestSenderIds requestSenderIds;
     private TextView biodataNotificationCounterTextview;
@@ -81,9 +81,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private String token;
     private SharePref sharePref;
     private int id;
-
-    RelativeLayout relativeLayoutFullFrame;
-    TextView noListAvailable;
 
     private Response responseStatus;
 
@@ -109,31 +106,15 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             profileRequestSenderIdsList = requestSenderIds.getRequests().getProfileRequestSenderIds();
 
         }
-        relativeLayoutFullFrame=(RelativeLayout)_baseView.findViewById(R.id.communtication_request_layout);
-        noListAvailable=(TextView)_baseView.findViewById(R.id.no_data);
-
-        relativeLayoutFullFrame.setVisibility(View.VISIBLE);
-        noListAvailable.setVisibility(View.GONE);
-
-
-
 
 
         return _baseView;
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.e("Destroy","Destroy");
-        //BioDataRequestFragment.profileRequestSenderIdsList.clear();
-
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        // Toast.makeText(getActivity(), "resume", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), BioDataRequestFragment.profileRequestSenderIdsList.size() + " resume", Toast.LENGTH_LONG).show();
 
     }
 
@@ -226,8 +207,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         waitImageView = (ImageView) _baseView.findViewById(R.id.wait_imageview);
         acceptImageView = (ImageView) _baseView.findViewById(R.id.accept_imageview);
 
-        acceptImageView.setOnClickListener(this);
-        cancelImageView.setOnClickListener(this);
 
         cancelTextView = (TextView) _baseView.findViewById(R.id.cancel_textview);
         waitTextView = (TextView) _baseView.findViewById(R.id.wait_textview);
@@ -310,23 +289,45 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
         } else {
             Utils.ShowAlert(getActivity(), "আপনার কোন অনুরোধ নেই");
-            relativeLayoutFullFrame.setVisibility(View.VISIBLE);
-            noListAvailable.setVisibility(View.GONE);
         }
 
 
     }
 
+
+    public static int user_id = 99;
+
     private void setRequestView(int id) {
 
         currentId = id;
 
-        /*//Log.i("asynctaskdata FFFF", "currentId " + currentId + " urlResponseId " + urlResponseId);
-        Log.i("asynctaskdataFFFFFF", "viewurl: " + url + id);
-        Log.i("asynctaskdataFFFFFF", "viewurl: " +
-                BioDataRequestFragment.profileRequestSenderIdsList.toString());*/
+        Log.i("requestList", "currentview: " + id);
+        new SendRequestFragmentView() {
+            @Override
+            public void loadNextProfile(int clickBtnId, int userProfileRequestId) {
 
-        SendRequestFragmentView.fetchUserProfileDetailsResponse(
+
+                if (clickBtnId == 1) {
+
+                    new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                            userProfileRequestId + "/accept");
+
+                    Log.i("requestList", userProfileRequestId + " accept ");
+
+                } else if (clickBtnId == 0) {
+
+
+                    new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                            userProfileRequestId + "/reject");
+
+                    Log.i("requestList", userProfileRequestId + " reject");
+
+
+                }
+                processResponse(clickBtnId);
+
+            }
+        }.fetchUserProfileDetailsResponse(
                 Utils.PROFILES_URL + id,
                 getActivity(),
                 this,
@@ -337,10 +338,12 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 profileViewerPersonImageView,
                 userProfileImage,
                 familyMemberInfoRecylerView,
-                0,
+                Utils.BIODATA_REQUEST_FRAGEMNT_CLASS,
                 userNameTextView,
                 coordnatelayout,
-                bottomRelativeLayout
+                bottomRelativeLayout,
+                acceptImageView,
+                cancelImageView
         );
 
 
@@ -404,38 +407,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         }
 
-        if (result && clickableButtonIdentifier == 1 && id != null) {
-
-         //   new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-         //           id + "/accept");
-
-        } else if (result && clickableButtonIdentifier == 0 && id != null) {
-          //  new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-           //         id + "/reject");
-
-
-        } else {
-
-        }
 
     }
 
-
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.accept_imageview:
-                processResponse(1);
-
-
-                break;
-            case R.id.cancel_imageview:
-                processResponse(0);
-
-                break;
-        }
-    }
 
     private void processResponse(int btnClickIdentifier) {
         SendRequestActivity.biodataRequestCounter--;
@@ -470,6 +444,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         }
 
     }
+
 
     private class SendResponseTask extends AsyncTask<String, Void, String> {
 

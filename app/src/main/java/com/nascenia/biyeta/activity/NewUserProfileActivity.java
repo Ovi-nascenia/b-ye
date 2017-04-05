@@ -73,6 +73,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private Toolbar toolbar;
     private ViewPager viewPager;
 
+
     private ImageView indicatorImage1, indicatorImage2, indicatorImage3, userProfileImage,
             cancelImageView, acceptImageView, emoIconImageView, favoriteImageView,
             mobileCheckIconImageView, fbCheckIconImageView, mailCheckIconImageView;
@@ -96,7 +97,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private RelativeLayout requestSendButtonsLayout;
 
     private SharePref sharePref;
-    private final int REQUEST_PHONE_CALL = 999999;
+    private final int REQUEST_PHONE_CALL = 100;
 
     private LinearLayout layoutSendSmiley, smileyandVerificationLayout;
     private UserProfile userProfile;
@@ -166,13 +167,13 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         });
 
 
-        if (Utils.isOnline(getBaseContext())) {
+        if (Utils.isOnline(getApplicationContext())) {
 
             fetchUserProfileDetails(Utils.PROFILES_URL +
                     getIntent().getExtras().getString("id"));
 
         } else {
-            Utils.ShowAlert(getBaseContext(), "please check your internet connection");
+            Utils.ShowAlert(getApplicationContext(), "please check your internet connection");
         }
 
 
@@ -214,7 +215,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
-                    NetWorkOperation.postMethod(getBaseContext(),
+                    NetWorkOperation.postMethod(NewUserProfileActivity.this,
                             Utils.SEND_SMILE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
@@ -234,7 +235,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                 if (!userProfile.getProfile().isIsFavorite()) {
 
-                    NetWorkOperation.postMethod(getBaseContext(),
+                    NetWorkOperation.postMethod(NewUserProfileActivity.this,
                             Utils.FAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
@@ -748,7 +749,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         } else if (v.getTag().equals(Utils.sendCommunicationRequest)) {
 
-            NetWorkOperation.postData(getBaseContext(),
+            NetWorkOperation.postData(NewUserProfileActivity.this,
                     Utils.COMMUNICATION_REQUEST_URL,
                     userProfile.getProfile().getPersonalInformation().getId() + "", finalResultButton,
                     "আপনি যোগাযোগের জন্য অনুরোধ করেছেন");
@@ -759,7 +760,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         } else if (v.getTag().equals(Utils.sendBiodataRequest)) {
 
 
-            NetWorkOperation.CreateProfileReqeust(getBaseContext(),
+            NetWorkOperation.CreateProfileReqeust(NewUserProfileActivity.this,
                     Utils.PROFILES_URL +
                             userProfile.getProfile().getPersonalInformation().getId()
                             + "/profile_request", finalResultButton,
@@ -785,7 +786,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         } else if (v.getTag().equals(Utils.commRequestCancel)) {
 
 
-            new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL  +
+            new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL +
                             userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/reject",
                     "যোগাযোগের জন্য অনুরোধ করুন", Utils.sendCommunicationRequest, "");
 

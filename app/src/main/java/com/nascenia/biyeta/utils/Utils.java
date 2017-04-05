@@ -46,6 +46,9 @@ public class Utils {
     public static final String PROFILES_URL = "http://test.biyeta.com/api/v1/profiles/";
     public static final String APPUSER_OWN_PROFILE_VIEW_URL = "http://test.biyeta.com/api/v1/profiles/view";
 
+    public static final int BIODATA_REQUEST_FRAGEMNT_CLASS = 000;
+    public static final int COMMUNICATION_REQUEST_FRAGEMNT_CLASS = 111;
+
 
     ///debug section
 

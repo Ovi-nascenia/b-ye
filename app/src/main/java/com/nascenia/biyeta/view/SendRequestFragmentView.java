@@ -7,9 +7,11 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -20,6 +22,7 @@ import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.adapter.OtherInfoRecylerViewAdapter;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
 import com.nascenia.biyeta.model.UserProfileChild;
@@ -41,11 +44,14 @@ import java.util.ArrayList;
  * Created by saiful on 3/13/17.
  */
 
-public class SendRequestFragmentView {
+public abstract class SendRequestFragmentView {
 
 
     public static String responseValue;
     private SharePref sharePref;
+
+
+    public abstract void loadNextProfile(int clickBtnId, int userProfileRequestId);
 
 
     /*
@@ -76,20 +82,22 @@ public class SendRequestFragmentView {
     ;
 
 
-    public static void fetchUserProfileDetailsResponse(final String url,
-                                                       final Context context,
-                                                       final MyCallback<Boolean> mCallback,
-                                                       TextView userProfileDescriptionText,
-                                                       RecyclerView generalInfoRecyclerView,
-                                                       RecyclerView matchUserChoiceRecyclerView,
-                                                       RecyclerView otherInfoRecylerView,
-                                                       ImageView profileViewerPersonImageView,
-                                                       ImageView userProfileImage,
-                                                       RecyclerView familyMemberInfoRecylerView,
-                                                       int viewRequestClassname,
-                                                       TextView userNameTextView,
-                                                       CoordinatorLayout coordinatorLayout,
-                                                       RelativeLayout relativeLayout) {
+    public void fetchUserProfileDetailsResponse(final String url,
+                                                final Context context,
+                                                final MyCallback<Boolean> mCallback,
+                                                TextView userProfileDescriptionText,
+                                                RecyclerView generalInfoRecyclerView,
+                                                RecyclerView matchUserChoiceRecyclerView,
+                                                RecyclerView otherInfoRecylerView,
+                                                ImageView profileViewerPersonImageView,
+                                                ImageView userProfileImage,
+                                                RecyclerView familyMemberInfoRecylerView,
+                                                int viewRequestClassname,
+                                                TextView userNameTextView,
+                                                CoordinatorLayout coordinatorLayout,
+                                                RelativeLayout relativeLayout,
+                                                ImageView acceptImageView,
+                                                ImageView rejectImageView) {
 
 
         //generalInformationArrayList.clear();
@@ -119,7 +127,9 @@ public class SendRequestFragmentView {
                 viewRequestClassname,
                 userNameTextView,
                 coordinatorLayout,
-                relativeLayout);
+                relativeLayout,
+                acceptImageView,
+                rejectImageView);
         Thread response = new Thread(responseThread);
         response.start();
 
@@ -127,7 +137,7 @@ public class SendRequestFragmentView {
     }
 
 
-    public static class ResponseThread implements Runnable {
+    public class ResponseThread implements Runnable {
 
         private MyCallback<Boolean> callback;
         private String url;
@@ -143,6 +153,8 @@ public class SendRequestFragmentView {
         private TextView userNameTextView;
         private CoordinatorLayout coordinatorLayout;
         private RelativeLayout relativeLayout;
+        private ImageView acceptImageView;
+        private ImageView rejectImageView;
 
         public ResponseThread(String url,
                               Context context,
@@ -157,7 +169,9 @@ public class SendRequestFragmentView {
                               int viewRequestClassname,
                               TextView userNameTextView,
                               CoordinatorLayout coordinatorLayout,
-                              RelativeLayout relativeLayout) {
+                              RelativeLayout relativeLayout,
+                              ImageView acceptImageView,
+                              ImageView rejectImageView) {
 
 
             this.callback = callback;
@@ -174,6 +188,8 @@ public class SendRequestFragmentView {
             this.userNameTextView = userNameTextView;
             this.coordinatorLayout = coordinatorLayout;
             this.relativeLayout = relativeLayout;
+            this.acceptImageView = acceptImageView;
+            this.rejectImageView = rejectImageView;
 
             dialog = new ProgressDialog(context);
             dialog.setMessage("Please wait...");
@@ -192,6 +208,7 @@ public class SendRequestFragmentView {
                 Log.i("threaddata", "onmethod" + responseValue + " ");
                 responseBody.close();
                 final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
+                BioDataRequestFragment.user_id = userProfile.getProfile().getRequestStatus().getProfileRequestId();
 
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
@@ -222,6 +239,37 @@ public class SendRequestFragmentView {
                         setDataonOtherInfoRecylerView(context,
                                 userProfile, otherInfoRecylerView);
 
+                        acceptImageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                //Toast.makeText(context, userProfile.getProfile().getRequestStatus().getProfileRequestId() + " ", Toast.LENGTH_LONG).show();
+
+                                if (viewRequestClassname == Utils.BIODATA_REQUEST_FRAGEMNT_CLASS) {
+                                    loadNextProfile(1, userProfile.getProfile().getRequestStatus().getProfileRequestId());
+                                } else if (viewRequestClassname == Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS) {
+                                    loadNextProfile(1, userProfile.getProfile().getRequestStatus().getCommunicationRequestId());
+                                } else {
+                                    Log.i("classdata", "No Data recived");
+                                }
+                            }
+                        });
+
+
+                        rejectImageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (viewRequestClassname == Utils.BIODATA_REQUEST_FRAGEMNT_CLASS) {
+                                    loadNextProfile(0, userProfile.getProfile().getRequestStatus().getProfileRequestId());
+                                } else if (viewRequestClassname == Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS) {
+                                    loadNextProfile(0, userProfile.getProfile().getRequestStatus().getCommunicationRequestId());
+                                } else {
+                                    Log.i("classdata", "No Data recived");
+                                }
+                            }
+                        });
+
 
                         if (dialog.isShowing()) {
                             dialog.dismiss();
@@ -230,13 +278,15 @@ public class SendRequestFragmentView {
                 });
 
 
-                if (callback != null && this.viewRequestClassname == 0 && userProfile != null) {
-                    // will call onComplete() on MyActivity once the job is done
+                if (callback != null && this.viewRequestClassname ==
+                        Utils.BIODATA_REQUEST_FRAGEMNT_CLASS && userProfile != null) {
+                    // will call onComplete() on BiodataRequestFragment once the job is done
                     callback.onComplete(true,
                             userProfile.getProfile().getRequestStatus().getProfileRequestId(),
                             userProfile);
-                } else if (callback != null && this.viewRequestClassname == 1 && userProfile != null) {
-                    // will call onComplete() on MyActivity once the job is done
+                } else if (callback != null && this.viewRequestClassname ==
+                        Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS && userProfile != null) {
+                    // will call onComplete() on CommunicationRequestClass once the job is done
                     callback.onComplete(true,
                             userProfile.getProfile().getRequestStatus().getCommunicationRequestId(),
                             userProfile);
