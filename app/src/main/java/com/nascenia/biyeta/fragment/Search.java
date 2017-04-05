@@ -220,7 +220,7 @@ public class Search extends Fragment {
                     String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
                     SearchProfileModel profile = new SearchProfileModel(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
 
-                    profileList.add(profile);
+                     profileList.add(profile);
                     mProfile_adapter.notifyDataSetChanged();
                     relativeLayout.setVisibility(View.GONE);
 
