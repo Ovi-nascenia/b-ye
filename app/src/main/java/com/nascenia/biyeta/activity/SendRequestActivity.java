@@ -159,7 +159,7 @@ public class SendRequestActivity extends CustomActionBarActivity {
 
        /* if (BioDataRequestFragment.profileRequestSenderIdsList != null) {
             BioDataRequestFragment.profileRequestSenderIdsList.clear();
-        }
+        }*/
 
     }
 }
