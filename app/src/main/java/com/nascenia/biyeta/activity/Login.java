@@ -238,7 +238,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         ///check the user_name and password is empty
         if (user_name.trim().equals("") || password.trim().equals("")) {
             //  Toast.makeText(Login.this,"Fill the both field",Toast.LENGTH_SHORT).show();
-            Utils.ShowAlert(Login.this, "Fill the both field");
+            Utils.ShowAlert(Login.this, "ইমেইল এবং পাসওয়ার্ড  পূরণ করুন");
 
 
         }
@@ -321,7 +321,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Utils.ShowAlert(Login.this, "Wrong email/password");
+                        Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                     }
@@ -444,7 +444,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Utils.ShowAlert(Login.this, "Wrong email/password");
+                            Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
                             buttonSubmit.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);
                         }
@@ -454,7 +454,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 } catch (JSONException e) {
                     Log.e("error", "JSON error");
                     e.printStackTrace();
-                    Utils.ShowAlert(Login.this, "Wrong Input");
+                    Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
                     buttonSubmit.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
 

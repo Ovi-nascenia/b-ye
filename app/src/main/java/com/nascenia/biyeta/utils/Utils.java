@@ -70,7 +70,7 @@ public class Utils {
     public static void ShowAlert(Context context, String bodyMessage) {
 
         new AlertDialog.Builder(context)
-                .setTitle("Error")
+//                .setTitle("Error")
                 .setMessage(bodyMessage)
                 .setCancelable(false)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
