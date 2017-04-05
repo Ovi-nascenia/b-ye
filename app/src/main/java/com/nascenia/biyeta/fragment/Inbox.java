@@ -116,6 +116,18 @@ public class Inbox extends Fragment implements View.OnClickListener{
 
             if (responseValue != null) {
                 //Toast.makeText(getBaseContext(), responseValue, Toast.LENGTH_LONG).show();
+                if (BioDataRequestFragment.profileRequestSenderIdsList != null) {
+                    BioDataRequestFragment.profileRequestSenderIdsList.clear();
+                }
+
+
+                if (CommunicationRequestFragment.communicationRequestSenderIdsList != null) {
+                    CommunicationRequestFragment.communicationRequestSenderIdsList.clear();
+                }
+
+
+                SendRequestActivity.biodataRequestCounter = 0;
+                SendRequestActivity.communicationRequestCounter = 0;
                 startActivity(new Intent(getContext(), SendRequestActivity.class).
                         putExtra("REQUEST_RESPONSE_DATA",
                                 responseValue));

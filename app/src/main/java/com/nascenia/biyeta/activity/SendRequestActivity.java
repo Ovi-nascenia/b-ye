@@ -157,17 +157,6 @@ public class SendRequestActivity extends CustomActionBarActivity {
         super.onStop();
 
 
-        if (BioDataRequestFragment.profileRequestSenderIdsList != null) {
-            BioDataRequestFragment.profileRequestSenderIdsList.clear();
-        }
 
-
-        if (CommunicationRequestFragment.communicationRequestSenderIdsList != null) {
-            CommunicationRequestFragment.communicationRequestSenderIdsList.clear();
-        }
-
-
-        SendRequestActivity.biodataRequestCounter = 0;
-        SendRequestActivity.communicationRequestCounter = 0;
     }
 }

@@ -114,6 +114,7 @@ public class Search extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                jsonObjects.clear();
                 startActivity(new Intent(getContext(), Search_Filter.class));
             }
         });
@@ -163,27 +164,29 @@ public class Search extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (!Search_Filter.reponse.equals("")) {
-            try {
+        if ( !jsonObjects.isEmpty()) {
+         //    try {
+
+                Log.e("fuck","fuck");
                 emptyText.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(mProfile_adapter);
-                Log.e("Search_Filter", Search_Filter.reponse);
+                Log.e("Search_Filter", jsonObjects.size()+"");
                 //clear the previous list item
                 profileList.clear();
                 mProfile_adapter.notifyDataSetChanged();
-                JSONObject jsonObject = new JSONObject(Search_Filter.reponse);
+          //    JSONObject jsonObject = new JSONObject(Search_Filter.reponse);
                 for (int i=0;i<jsonObjects.size();i++) {
 
                     loadDataFromResponse(jsonObjects.get(i));
                 }
 
-            } catch (JSONException e) {
-                Utils.ShowAlert(getContext(), "Error");
-            }
+//            } catch (JSONException e) {
+//                Utils.ShowAlert(getContext(), "Error");
+//            }
         }
 
 
@@ -197,10 +200,11 @@ public class Search extends Fragment {
                 recyclerView.setVisibility(View.GONE);
                 emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
             }
+            else {
 
-            for (int i = 0; i < jsonObject.getJSONArray("profiles").length(); i++)
+                for (int i = 0; i < jsonObject.getJSONArray("profiles").length(); i++)
 
-            {
+                {
 
 
                     String id = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("id");
@@ -220,14 +224,17 @@ public class Search extends Fragment {
                     mProfile_adapter.notifyDataSetChanged();
                     relativeLayout.setVisibility(View.GONE);
 
+                }
             }
         } catch (JSONException e) {
+            Log.e("fuck fact",e.toString());
             Utils.ShowInternetConnectionError(getContext());
 
 
             emptyText.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }
+
     }
 
     //fetch data from

@@ -15,7 +15,7 @@ import com.nascenia.biyeta.R;
  * Created by god father on 3/17/2017.
  */
 
-public abstract class CustomActionBarActivity extends AppCompatActivity {
+public  class CustomActionBarActivity extends AppCompatActivity {
 
     void setUpToolBar(String title, final Context context)
     {

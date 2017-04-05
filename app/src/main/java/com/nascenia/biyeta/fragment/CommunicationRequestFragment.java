@@ -114,6 +114,9 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         relativeLayoutFullFrame=(RelativeLayout)_baseView.findViewById(R.id.communtication_request_layout);
         noListAvailable=(TextView)_baseView.findViewById(R.id.no_data);
 
+        relativeLayoutFullFrame.setVisibility(View.VISIBLE);
+        noListAvailable.setVisibility(View.GONE);
+
 
         return _baseView;
     }

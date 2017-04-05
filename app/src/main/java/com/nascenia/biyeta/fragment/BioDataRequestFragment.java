@@ -62,7 +62,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private ImageView profileViewerPersonImageView;
 
 
-    public static List<Integer> profileRequestSenderIdsList = null;
+    public static List<Integer> profileRequestSenderIdsList =new ArrayList<>( );
 
     private RequestSenderIds requestSenderIds;
     private TextView biodataNotificationCounterTextview;
@@ -81,6 +81,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private String token;
     private SharePref sharePref;
     private int id;
+
+    RelativeLayout relativeLayoutFullFrame;
+    TextView noListAvailable;
 
     private Response responseStatus;
 
@@ -106,6 +109,14 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             profileRequestSenderIdsList = requestSenderIds.getRequests().getProfileRequestSenderIds();
 
         }
+        relativeLayoutFullFrame=(RelativeLayout)_baseView.findViewById(R.id.communtication_request_layout);
+        noListAvailable=(TextView)_baseView.findViewById(R.id.no_data);
+
+        relativeLayoutFullFrame.setVisibility(View.VISIBLE);
+        noListAvailable.setVisibility(View.GONE);
+
+
+
 
 
         return _baseView;
@@ -115,7 +126,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     public void onDestroy() {
         super.onDestroy();
         Log.e("Destroy","Destroy");
-        BioDataRequestFragment.profileRequestSenderIdsList.clear();
+        //BioDataRequestFragment.profileRequestSenderIdsList.clear();
 
     }
 
@@ -299,6 +310,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
         } else {
             Utils.ShowAlert(getActivity(), "আপনার কোন অনুরোধ নেই");
+            relativeLayoutFullFrame.setVisibility(View.VISIBLE);
+            noListAvailable.setVisibility(View.GONE);
         }
 
 

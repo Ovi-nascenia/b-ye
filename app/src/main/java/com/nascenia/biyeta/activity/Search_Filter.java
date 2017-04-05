@@ -590,7 +590,8 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                 if(jsonObject.has("no_results"))
                 {
                     Search.jsonObjects.add(jsonObject);
-                    progress.dismiss();
+                ///   progress.dismiss();
+                    reponse="";
                     finish();
                 }
 
@@ -600,11 +601,15 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                     total_page=jsonObject.getInt("total_page");
                     Search.jsonObjects.add(jsonObject);
                     flag++;
+                    Log.e("test response",s);
+
+
 
                     if (total_page != 1 && flag <= total_page) {
+                        Log.e("test",flag+"  "+total_page);
                         new GetResult().execute("http://test.biyeta.com/api/v1/search/filtered-results?page=" + flag);
                     } else if (flag > total_page) {
-                        progress.dismiss();
+                       // progress.dismiss();
 
                         finish();
                     }
