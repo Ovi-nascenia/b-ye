@@ -108,6 +108,7 @@ public class Search extends Fragment {
         };
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
+
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mProfile_adapter);
         relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutLeftButton);
@@ -116,11 +117,11 @@ public class Search extends Fragment {
             @Override
             public void onClick(View view) {
                 jsonObjects.clear();
-                if (Utils.isOnline(getActivity()))
-                    startActivity(new Intent(getContext(), Search_Filter.class));
-                else
-                    Utils.ShowAlert(getActivity(), getString(R.string.no_internet_connection));
 
+                if (Utils.isOnline(getContext()))
+                  startActivity(new Intent(getContext(), Search_Filter.class));
+                else
+                    Utils.ShowInternetConnectionError(getContext());
             }
         });
 
@@ -253,8 +254,7 @@ public class Search extends Fragment {
                 }
             }
         } catch (JSONException e) {
-            Log.e("fuck fact",e.toString());
-            Utils.ShowInternetConnectionError(getContext());
+             Utils.ShowInternetConnectionError(getContext());
 
 
             emptyText.setVisibility(View.VISIBLE);
