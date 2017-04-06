@@ -173,7 +173,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     getIntent().getExtras().getString("id"));
 
         } else {
-            Utils.ShowAlert(getApplicationContext(), getString(R.string.no_internet_connection));
+            Utils.ShowAlert(NewUserProfileActivity.this, getString(R.string.no_internet_connection));
+            finish();
         }
 
 

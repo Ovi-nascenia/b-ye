@@ -85,10 +85,10 @@ public class Utils {
     public static void ShowInternetConnectionError(Context context)
     {
         new AlertDialog.Builder(context)
-                .setTitle("ইন্টারনেট")
+//                .setTitle("ইন্টারনেট")
                 .setMessage("ইন্টারনেট সংযোগ নেই")
                 .setCancelable(false)
-                .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

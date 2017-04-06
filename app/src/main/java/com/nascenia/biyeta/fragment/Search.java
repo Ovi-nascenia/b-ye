@@ -112,10 +112,6 @@ public class Search extends Fragment {
         recyclerView.setAdapter(mProfile_adapter);
         relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutLeftButton);
 
-
-
-
-
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,11 +131,18 @@ public class Search extends Fragment {
                     public void onItemClick(View view, int position) {
                         Log.i("username", profileList.get(position).getDisplay_name() + " " +
                                 profileList.get(position).getId());
-                        Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
-                        intent.putExtra("id", profileList.get(position).getId());
-                        intent.putExtra("user_name", profileList.get(position).getDisplay_name());
-                        intent.putExtra("PROFILE_EDIT_OPTION", false);
-                        startActivity(intent);
+                        if(Utils.isOnline(getActivity())) {
+                            Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
+                            intent.putExtra("id", profileList.get(position).getId());
+                            intent.putExtra("user_name",
+                                    profileList.get(position).getDisplay_name());
+                            intent.putExtra("PROFILE_EDIT_OPTION", false);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            Utils.ShowInternetConnectionError(getActivity());
+                        }
                     }
                 })
         );
