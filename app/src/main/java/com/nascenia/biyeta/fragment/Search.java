@@ -108,6 +108,7 @@ public class Search extends Fragment {
         };
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
+
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mProfile_adapter);
         relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutLeftButton);
