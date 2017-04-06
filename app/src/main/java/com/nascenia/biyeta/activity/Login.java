@@ -117,12 +117,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         buttonFacebookLogin = (LoginButton) findViewById(R.id.login_button);
         //buttonFacebookLogin.setOnClickListener(this);
+
         buttonFacebookLogin.setReadPermissions(Arrays.asList(
                 "public_profile", "email", "user_birthday"));
         callbackManager = CallbackManager.Factory.create();
 
 
 
+        buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
         buttonFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(final LoginResult loginResult) {
@@ -170,7 +172,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onError(FacebookException exception) {
                 // App code
-                Log.v("LoginActivity", exception.getCause().toString());
+                Utils.ShowAlert(Login.this,getString(R.string.no_internet_connection));
             }
         });
 
@@ -285,6 +287,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 if (jsonObject.has("message")) {
                   Utils.ShowAlert(Login.this,jsonObject.getJSONObject("message").get("detail").toString());
                     LoginManager.getInstance().logOut();
+                    buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
                 }
                 else
                 {

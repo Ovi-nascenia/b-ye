@@ -120,7 +120,10 @@ public class Search extends Fragment {
             @Override
             public void onClick(View view) {
                 jsonObjects.clear();
-                startActivity(new Intent(getContext(), Search_Filter.class));
+                if (Utils.isOnline(getContext()))
+                  startActivity(new Intent(getContext(), Search_Filter.class));
+                else
+                    Utils.ShowInternetConnectionError(getContext());
             }
         });
 
@@ -246,8 +249,7 @@ public class Search extends Fragment {
                 }
             }
         } catch (JSONException e) {
-            Log.e("fuck fact",e.toString());
-            Utils.ShowInternetConnectionError(getContext());
+             Utils.ShowInternetConnectionError(getContext());
 
 
             emptyText.setVisibility(View.VISIBLE);
