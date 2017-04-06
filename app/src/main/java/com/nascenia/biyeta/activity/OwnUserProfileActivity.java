@@ -281,7 +281,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         if (userProfile.getProfile().getProfession() != null &&
                 !(checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())).equals("")) {
 
-            professionChildItemList.add(new UserProfileChild("professional_group",
+            professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle("professional_group"),
                     userProfile.getProfile().getProfession().getProfessionalGroup()));
 
         }
@@ -290,7 +290,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         if (userProfile.getProfile().getProfession() != null &&
                 !(checkNullField(userProfile.getProfile().getProfession().getOccupation())).equals("")) {
 
-            professionChildItemList.add(new UserProfileChild("occupation",
+            professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle("occupation"),
                     userProfile.getProfile().getProfession().getOccupation()));
 
         }
@@ -299,7 +299,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         if (userProfile.getProfile().getProfession() != null &&
                 !(checkNullField(userProfile.getProfile().getProfession().getDesignation())).equals("")) {
 
-            professionChildItemList.add(new UserProfileChild("designation",
+            professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle("designation"),
                     userProfile.getProfile().getProfession().getDesignation()));
 
         }
@@ -308,7 +308,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         if (userProfile.getProfile().getProfession() != null &&
                 !(checkNullField(userProfile.getProfile().getProfession().getInstitute())).equals("")) {
 
-            professionChildItemList.add(new UserProfileChild("institute",
+            professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle("institute"),
                     userProfile.getProfile().getProfession().getInstitute()));
 
         }

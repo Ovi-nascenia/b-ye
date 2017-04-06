@@ -30,7 +30,7 @@
             android:layout_marginLeft="@dimen/large_margin"
             android:layout_weight="1"
             android:text=""
-            android:textColor="#e6e6e9"
+            android:textColor="@color/title_textview_item_color"
             android:textSize="@dimen/item_textsize"
             android:textStyle="normal" />
 

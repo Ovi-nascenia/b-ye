@@ -93,12 +93,15 @@
     <color name="button_back">#AD0202</color>
 
     <color name="text3_font">#AD0202</color>
-     <color name="devider">#FFFFFF</color>
+    <color name="devider">#FFFFFF</color>
 
 
     <color name="messagelayoutBacground">#FFFFFF</color>
     <color name="message_text_color">#FFFFFF</color>
     <color name="faq_text_ques_color">#BC0025</color>
+
+
+    <color name="title_textview_item_color">#bebcba</color>
 
 
 </resources>

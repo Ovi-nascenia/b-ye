@@ -171,6 +171,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
             fetchUserProfileDetails(Utils.PROFILES_URL +
                     getIntent().getExtras().getString("id"));
+            Log.i("profileidacti", getIntent().getExtras().getString("id"));
 
         } else {
             Utils.ShowAlert(getApplicationContext(), getString(R.string.no_internet_connection));
