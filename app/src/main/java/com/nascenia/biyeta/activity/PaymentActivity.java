@@ -82,7 +82,7 @@ public class PaymentActivity extends CustomActionBarActivity {
             progressBar.dismiss();
             if (s==null)
             {
-                Utils.ShowAlert(PaymentActivity.this, "Network error");
+                Utils.ShowAlert(PaymentActivity.this, getString(R.string.no_internet_connection));
             }
             else {
                 try {

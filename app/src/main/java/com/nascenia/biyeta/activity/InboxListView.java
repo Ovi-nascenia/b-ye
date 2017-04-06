@@ -63,7 +63,7 @@ public class InboxListView extends CustomActionBarActivity {
         if (Utils.isOnline(InboxListView.this))
             new LoadMessageThread().execute();
         else
-            Utils.ShowAlert(InboxListView.this, "Check Internet Connection");
+            Utils.ShowAlert(InboxListView.this, getString(R.string.no_internet_connection));
 
 
     }

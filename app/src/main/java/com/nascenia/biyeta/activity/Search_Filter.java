@@ -114,7 +114,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         if (Utils.isOnline(this))
             new Get_Data().execute();
         else
-            Utils.ShowAlert(this, "Check Internet Connection");
+            Utils.ShowAlert(this, getString(R.string.no_internet_connection));
         set_rangeView_lebel();
 
     }
@@ -498,7 +498,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                 if (Utils.isOnline(Search_Filter.this))
                      new GetResult().execute("http://test.biyeta.com/api/v1/search/filtered-results");
                 else
-                    Toast.makeText(Search_Filter.this,"Check Internet Connection",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Search_Filter.this,getString(R.string.no_internet_connection),Toast.LENGTH_LONG).show();
 
             }
 
@@ -663,7 +663,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             progress.dismiss();
             if ( res==null )
             {
-                Utils.ShowAlert(Search_Filter.this,"Check Internet Connection");
+                Utils.ShowAlert(Search_Filter.this, getString(R.string.no_internet_connection));
             }
             else {
 
@@ -674,7 +674,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                     parse_data(res);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Utils.ShowAlert(Search_Filter.this,"Check Internet Connection");
+                    Utils.ShowAlert(Search_Filter.this, getString(R.string.no_internet_connection));
 
                 }
 

@@ -183,7 +183,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
             progressBar.setVisibility(View.GONE);
             if (s==null)
             {
-                Utils.ShowAlert(RequestSentFromMe.this, "Network error");
+                Utils.ShowAlert(RequestSentFromMe.this, getString(R.string.no_internet_connection));
             }
             else {
 

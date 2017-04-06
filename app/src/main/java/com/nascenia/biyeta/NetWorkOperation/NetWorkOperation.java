@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.utils.Utils;
@@ -128,7 +129,7 @@ public class NetWorkOperation {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (s == null) Utils.ShowAlert(context, "Check Internet Connection");
+            if (s == null) Utils.ShowAlert(context, "ইন্টারনেট সংযোগ নেই");
             else {
                 Log.i("response", s);
 

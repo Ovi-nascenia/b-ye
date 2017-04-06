@@ -99,7 +99,7 @@ public class Search extends Fragment {
                     if (Utils.isOnline(getContext()))
                         new GetData().execute();
                     else
-                        Utils.ShowAlert(getContext(), "Check Internet Connection");
+                        Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
                 } else {
 
                 }
@@ -128,7 +128,7 @@ public class Search extends Fragment {
         if (Utils.isOnline(getContext()))
             new GetData().execute();
         else
-            Utils.ShowAlert(getContext(), "Check Internet Connection");
+            Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -262,7 +262,7 @@ public class Search extends Fragment {
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
 
-            if (res == null) Utils.ShowAlert(getContext(), "Network error");
+            if (res == null) Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
             else {
 
                 Log.e("SearchResponse", res);
@@ -286,7 +286,7 @@ public class Search extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (NullPointerException ei) {
-                    Utils.ShowAlert(getContext(), "Network Error");
+                    Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
                 }
             }
         }
