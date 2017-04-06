@@ -89,7 +89,7 @@ public class PaymentActivity extends CustomActionBarActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.has("balance")) {
 
-                        balanceAmountTextView.setText("বর্তমান ব্যালেন্স " + jsonObject.getString("balance") + " টাকা");
+                        balanceAmountTextView.setText("বর্তমান ব্যালেন্স " + Utils.convertEnglishDigittoBangla(Integer.parseInt(jsonObject.getString("balance"))) + " টাকা");
                         profileVisitNumberTextView.setText(jsonObject.getString("total_request"));
 
                     }

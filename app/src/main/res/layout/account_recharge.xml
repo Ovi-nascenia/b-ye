@@ -135,7 +135,7 @@
                 android:text="@string/recharge_amount_text"
                 android:textColor="@color/recharge_amount"
                 android:padding="10dp"
-                android:textSize="16sp"/>
+                android:textSize="20sp"/>
 
             <EditText
                 android:enabled="false"

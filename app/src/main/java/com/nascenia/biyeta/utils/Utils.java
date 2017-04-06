@@ -388,7 +388,7 @@ public class Utils {
     }
 
 
-    private void calculateHashKey(Context context, String yourPackageName) {
+    public static void calculateHashKey(Context context, String yourPackageName) {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(
                     yourPackageName,
