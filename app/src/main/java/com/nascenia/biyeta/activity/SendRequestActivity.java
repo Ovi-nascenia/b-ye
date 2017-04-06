@@ -41,7 +41,7 @@ public class SendRequestActivity extends CustomActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_request);
-        setUpToolBar("আপনাকে পাঠানো অনুরোধ",this);
+        setUpToolBar("আপনাকে পাঠানো অনুরোধ", this);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         container = (FrameLayout) findViewById(R.id.fragment_container);
 
@@ -109,7 +109,8 @@ public class SendRequestActivity extends CustomActionBarActivity {
         biodataNotificationCounterTextview = (TextView) tabItemView1.
                 findViewById(R.id.biodata_notification_textview);
 
-        if (requestSenderIds.getRequests().getProfileRequestCount() > 0) {
+        if (requestSenderIds.getRequests().getProfileRequestSenderIds() != null &&
+                requestSenderIds.getRequests().getProfileRequestCount() > 0) {
             SendRequestActivity.biodataRequestCounter = requestSenderIds.
                     getRequests().getProfileRequestCount();
 
@@ -118,7 +119,6 @@ public class SendRequestActivity extends CustomActionBarActivity {
                     SendRequestActivity.biodataRequestCounter + "");
 
         }
-
         tabLayout.getTabAt(0).setCustomView(tabItemView1);
 
 
@@ -127,7 +127,8 @@ public class SendRequestActivity extends CustomActionBarActivity {
         communicationNotificationCounterTextview = (TextView) tabItemView2.
                 findViewById(R.id.communication_notification_textview);
 
-        if (requestSenderIds.getRequests().getCommunicationRequestCount() > 0) {
+        if (requestSenderIds.getRequests().getCommunicationRequestCount() != null &&
+                requestSenderIds.getRequests().getCommunicationRequestCount() > 0) {
             SendRequestActivity.communicationRequestCounter = requestSenderIds.
                     getRequests().getCommunicationRequestCount();
 

@@ -20,8 +20,11 @@ import com.nascenia.biyeta.activity.RequestSentFromMe;
 import com.nascenia.biyeta.activity.SendRequestActivity;
 import com.nascenia.biyeta.model.RequestSenderIds;
 import com.nascenia.biyeta.service.ResourceProvider;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
+
+import org.json.JSONObject;
 
 /**
  * Created by user on 1/5/2017.
@@ -107,6 +110,7 @@ public class Inbox extends Fragment implements View.OnClickListener {
 
             }
 
+            Log.i("requestresponsevalue", responseValue);
 
             return responseValue;
         }
@@ -116,37 +120,37 @@ public class Inbox extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            if (responseValue != null) {
+            try {
+                if (responseValue != null && !new JSONObject(s).has("message")) {
 
-                //Toast.makeText(getBaseContext(), responseValue, Toast.LENGTH_LONG).show();
-                if (BioDataRequestFragment.profileRequestSenderIdsList != null) {
-                    BioDataRequestFragment.profileRequestSenderIdsList.clear();
+                    //Toast.makeText(getBaseContext(), responseValue, Toast.LENGTH_LONG).show();
+                    if (BioDataRequestFragment.profileRequestSenderIdsList != null) {
+                        BioDataRequestFragment.profileRequestSenderIdsList.clear();
+                    }
+
+
+                    if (CommunicationRequestFragment.communicationRequestSenderIdsList != null) {
+                        CommunicationRequestFragment.communicationRequestSenderIdsList.clear();
+                    }
+
+
+                    SendRequestActivity.biodataRequestCounter = 0;
+                    SendRequestActivity.communicationRequestCounter = 0;
+
+
+                    startActivity(new Intent(getContext(), SendRequestActivity.class).
+                            putExtra("REQUEST_RESPONSE_DATA",
+                                    responseValue));
+                    RequestSenderIds requestSenderIds = new Gson().fromJson(responseValue, RequestSenderIds.class);
+
+
+                } else {
+                    Utils.ShowAlert(getActivity(), "আপনাকে পাঠানো কোন অনুরোধ নেই");
                 }
 
-
-                if (CommunicationRequestFragment.communicationRequestSenderIdsList != null) {
-                    CommunicationRequestFragment.communicationRequestSenderIdsList.clear();
-                }
-
-
-                SendRequestActivity.biodataRequestCounter = 0;
-                SendRequestActivity.communicationRequestCounter = 0;
-
-
-                startActivity(new Intent(getContext(), SendRequestActivity.class).
-                        putExtra("REQUEST_RESPONSE_DATA",
-                                responseValue));
-                RequestSenderIds requestSenderIds = new Gson().fromJson(responseValue, RequestSenderIds.class);
-
-
-                Log.i("requestList", requestSenderIds.getRequests().getCommunicationRequestSenderIds().toString());
-
-                Log.i("requestList", requestSenderIds.getRequests().getProfileRequestSenderIds().toString());
-
-
-            } else {
-                Toast.makeText(getContext(), "Can't load data", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
             }
+
 
         }
     }

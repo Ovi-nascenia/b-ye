@@ -33,6 +33,9 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,6 +204,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
         cancelImageView = (ImageView) _baseView.findViewById(R.id.cancel_imageview);
         waitImageView = (ImageView) _baseView.findViewById(R.id.wait_imageview);
+        waitImageView.setOnClickListener(this);
         acceptImageView = (ImageView) _baseView.findViewById(R.id.accept_imageview);
 
 
@@ -210,6 +214,10 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     @Override
     public void onStart() {
         super.onStart();
+
+        Log.i("requestListCom", "onstart method  " +
+                CommunicationRequestFragment.communicationRequestSenderIdsList.size() + "  " +
+                CommunicationRequestFragment.communicationRequestSenderIdsList.toString());
 
 
         initView();
@@ -233,30 +241,30 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         currentId = id;
         new SendRequestFragmentView() {
             @Override
-            public void loadNextProfile(int clickBtnId, int userProfileRequestId) {
+            public void loadNextProfile(int clickBtnId, int userCommunicationRequestId) {
 
 
                 if (clickBtnId == 1) {
 
                     new CommunicationRequestFragment.SendResponseTask().execute(
                             Utils.COMMUNICATION_REQUEST_URL +
-                                    userProfileRequestId + "/accept");
+                                    userCommunicationRequestId + "/accept");
 
+                    processResponse(clickBtnId);
 
-                    Log.i("requestList", userProfileRequestId + " accept ");
 
                 } else if (clickBtnId == 0) {
 
 
                     new CommunicationRequestFragment.SendResponseTask().execute(
                             Utils.COMMUNICATION_REQUEST_URL +
-                                    userProfileRequestId + "/reject");
+                                    userCommunicationRequestId + "/reject");
 
-                    Log.i("requestList", userProfileRequestId + " reject");
 
+                    processResponse(clickBtnId);
 
                 }
-                processResponse(clickBtnId);
+
 
             }
         }.fetchUserProfileDetailsResponse(
@@ -330,14 +338,18 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
 
     private void processResponse(int btnClickIdentifier) {
+
         SendRequestActivity.communicationRequestCounter--;
 
+
         if (!CommunicationRequestFragment.communicationRequestSenderIdsList.isEmpty()) {
+
             communicatiodataNotificationCounterTextview.setText(
                     SendRequestActivity.communicationRequestCounter + "");
 
-            if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() == 1)
-                urlResponseId = CommunicationRequestFragment.communicationRequestSenderIdsList.get(0);
+
+           /* if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() == 1)
+                urlResponseId = CommunicationRequestFragment.communicationRequestSenderIdsList.get(0);*/
 
 
             if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() > 0) {
@@ -348,16 +360,27 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                     setRequestView(CommunicationRequestFragment.communicationRequestSenderIdsList.get(0));
 
                 } else if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() == 1) {
-                    id = CommunicationRequestFragment.communicationRequestSenderIdsList.get(0);
 
+                    id = CommunicationRequestFragment.communicationRequestSenderIdsList.get(0);
                     CommunicationRequestFragment.communicationRequestSenderIdsList.remove(0);
-                    setRequestView(id);
+
+                    coordnatelayout.setVisibility(View.INVISIBLE);
+                    bottomRelativeLayout.setVisibility(View.INVISIBLE);
+                    noListAvailable.setVisibility(View.VISIBLE);
+                    Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
+                    //  setRequestView(id);
                 }
             } else {
-                setRequestView(currentId);
+                //setRequestView(currentId);
+                coordnatelayout.setVisibility(View.INVISIBLE);
+                bottomRelativeLayout.setVisibility(View.INVISIBLE);
+                noListAvailable.setVisibility(View.VISIBLE);
                 Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
             }
         } else {
+            coordnatelayout.setVisibility(View.INVISIBLE);
+            bottomRelativeLayout.setVisibility(View.INVISIBLE);
+            noListAvailable.setVisibility(View.VISIBLE);
             Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
         }
 
@@ -369,7 +392,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         switch (v.getId()) {
             case R.id.wait_imageview:
                 waitButtonAction(id);
-
+                //Toast.makeText(getContext(), "wait", Toast.LENGTH_LONG).show();
 
                 break;
         }
@@ -377,11 +400,12 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
     private void waitButtonAction(int btnClickIdentifier) {
 
-        SendRequestActivity.communicationRequestCounter--;
+
+        // SendRequestActivity.communicationRequestCounter--;
 
         if (!CommunicationRequestFragment.communicationRequestSenderIdsList.isEmpty()) {
-            communicatiodataNotificationCounterTextview.setText(
-                    SendRequestActivity.communicationRequestCounter + "");
+            /*communicatiodataNotificationCounterTextview.setText(
+                    SendRequestActivity.communicationRequestCounter + "");*/
 
             if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() == 1)
                 urlResponseId = CommunicationRequestFragment.communicationRequestSenderIdsList.get(0);
@@ -405,11 +429,15 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 }
             } else {
                 setRequestView(currentId);
-                Utils.ShowAlert(getActivity(), "No more reqeust left");
+                Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
             }
         } else {
-            Utils.ShowAlert(getActivity(), "No more reqeust ");
+            Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
         }
+
+        Log.i("requestListCom", "wait method end " +
+                CommunicationRequestFragment.communicationRequestSenderIdsList.size() + "  " +
+                CommunicationRequestFragment.communicationRequestSenderIdsList.toString());
 
     }
 
@@ -453,6 +481,18 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("FFFFFF", s);
+
+            try {
+                JSONObject headObj = new JSONObject(s);
+
+                Toast.makeText(getActivity(),
+                        headObj.getJSONArray("message").getJSONObject(0).getString("detail"),
+                        Toast.LENGTH_LONG).show();
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }
     }

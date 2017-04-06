@@ -577,7 +577,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#BDBDBD">
+        android:background="#BDBDBD"
+        android:visibility="invisible">
 
         <ImageView
             android:id="@+id/cancel_imageview"
@@ -640,16 +641,16 @@
     </RelativeLayout>
 
 
-
-
     <TextView
         android:id="@+id/no_data"
         android:layout_width="match_parent"
-        android:textColor="@color/colorPrimaryDark"
+        android:layout_height="match_parent"
+        android:gravity="top"
         android:text="@string/no_request_from_me"
-        android:gravity="center"
-        android:visibility="gone"
-        android:layout_height="match_parent" />
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/medium_textsize"
+        android:padding="@dimen/small_padding"
+        android:visibility="visible" />
 
 </RelativeLayout>
 

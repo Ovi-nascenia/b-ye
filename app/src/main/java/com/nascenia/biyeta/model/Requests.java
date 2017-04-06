@@ -3,25 +3,26 @@ package com.nascenia.biyeta.model;
 
 import java.io.Serializable;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Requests implements Serializable
-{
+public class Requests implements Serializable {
 
     @SerializedName("profile_request_sender_ids")
     @Expose
     private List<Integer> profileRequestSenderIds = null;
     @SerializedName("profile_request_count")
     @Expose
-    private int profileRequestCount;
+    private Integer profileRequestCount;
     @SerializedName("communication_request_sender_ids")
     @Expose
     private List<Integer> communicationRequestSenderIds = null;
     @SerializedName("communication_request_count")
     @Expose
-    private int communicationRequestCount;
+    private Integer communicationRequestCount;
     private final static long serialVersionUID = -3085104288692434484L;
 
     public List<Integer> getProfileRequestSenderIds() {
@@ -32,11 +33,11 @@ public class Requests implements Serializable
         this.profileRequestSenderIds = profileRequestSenderIds;
     }
 
-    public int getProfileRequestCount() {
+    public Integer getProfileRequestCount() {
         return profileRequestCount;
     }
 
-    public void setProfileRequestCount(int profileRequestCount) {
+    public void setProfileRequestCount(Integer profileRequestCount) {
         this.profileRequestCount = profileRequestCount;
     }
 
@@ -48,11 +49,11 @@ public class Requests implements Serializable
         this.communicationRequestSenderIds = communicationRequestSenderIds;
     }
 
-    public int getCommunicationRequestCount() {
+    public Integer getCommunicationRequestCount() {
         return communicationRequestCount;
     }
 
-    public void setCommunicationRequestCount(int communicationRequestCount) {
+    public void setCommunicationRequestCount(Integer communicationRequestCount) {
         this.communicationRequestCount = communicationRequestCount;
     }
 

@@ -48,8 +48,6 @@ public abstract class SendRequestFragmentView {
 
 
     public static String responseValue;
-    private SharePref sharePref;
-
 
     public abstract void loadNextProfile(int clickBtnId, int userProfileRequestId);
 
@@ -95,11 +93,12 @@ public abstract class SendRequestFragmentView {
                                                 int viewRequestClassname,
                                                 TextView userNameTextView,
                                                 CoordinatorLayout coordinatorLayout,
-                                                RelativeLayout relativeLayout,
+                                                RelativeLayout bottomRelativeLayout,
                                                 ImageView acceptImageView,
                                                 ImageView rejectImageView) {
 
-
+        //Toast.makeText(context, "fetchmethod", Toast.LENGTH_LONG).show();
+        Log.i("btnreaction", "fetchmethod");
         //generalInformationArrayList.clear();
         //  matchUserChoiceArrayList.clear();
         //  otherInformationArrayList.clear();
@@ -127,7 +126,7 @@ public abstract class SendRequestFragmentView {
                 viewRequestClassname,
                 userNameTextView,
                 coordinatorLayout,
-                relativeLayout,
+                bottomRelativeLayout,
                 acceptImageView,
                 rejectImageView);
         Thread response = new Thread(responseThread);
@@ -152,7 +151,7 @@ public abstract class SendRequestFragmentView {
         private int viewRequestClassname;
         private TextView userNameTextView;
         private CoordinatorLayout coordinatorLayout;
-        private RelativeLayout relativeLayout;
+        private RelativeLayout bottomRelativeLayout;
         private ImageView acceptImageView;
         private ImageView rejectImageView;
 
@@ -169,7 +168,7 @@ public abstract class SendRequestFragmentView {
                               int viewRequestClassname,
                               TextView userNameTextView,
                               CoordinatorLayout coordinatorLayout,
-                              RelativeLayout relativeLayout,
+                              RelativeLayout bottomRelativeLayout,
                               ImageView acceptImageView,
                               ImageView rejectImageView) {
 
@@ -187,7 +186,7 @@ public abstract class SendRequestFragmentView {
             this.viewRequestClassname = viewRequestClassname;
             this.userNameTextView = userNameTextView;
             this.coordinatorLayout = coordinatorLayout;
-            this.relativeLayout = relativeLayout;
+            this.bottomRelativeLayout = bottomRelativeLayout;
             this.acceptImageView = acceptImageView;
             this.rejectImageView = rejectImageView;
 
@@ -216,7 +215,7 @@ public abstract class SendRequestFragmentView {
                         Log.i("taskon", "run");
 
                         coordinatorLayout.setVisibility(View.VISIBLE);
-                        relativeLayout.setVisibility(View.VISIBLE);
+                        bottomRelativeLayout.setVisibility(View.VISIBLE);
 
                         userNameTextView.setText(userProfile.getProfile().
                                 getPersonalInformation().getDisplayName());
@@ -243,7 +242,8 @@ public abstract class SendRequestFragmentView {
                             @Override
                             public void onClick(View v) {
 
-                                //Toast.makeText(context, userProfile.getProfile().getRequestStatus().getProfileRequestId() + " ", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(context, "accept btn fetch", Toast.LENGTH_LONG).show();
+                                Log.i("btnreaction", "accept btn fetch");
 
                                 if (viewRequestClassname == Utils.BIODATA_REQUEST_FRAGEMNT_CLASS) {
                                     loadNextProfile(1, userProfile.getProfile().getRequestStatus().getProfileRequestId());
@@ -259,6 +259,7 @@ public abstract class SendRequestFragmentView {
                         rejectImageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                Toast.makeText(context, "rej btn fetch", Toast.LENGTH_LONG).show();
 
                                 if (viewRequestClassname == Utils.BIODATA_REQUEST_FRAGEMNT_CLASS) {
                                     loadNextProfile(0, userProfile.getProfile().getRequestStatus().getProfileRequestId());

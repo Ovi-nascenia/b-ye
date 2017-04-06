@@ -36,6 +36,9 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -305,7 +308,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         currentId = id;
 
-        Log.i("requestList", "currentview: " + id);
         new SendRequestFragmentView() {
             @Override
             public void loadNextProfile(int clickBtnId, int userProfileRequestId) {
@@ -315,8 +317,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
                     new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
                             userProfileRequestId + "/accept");
-
-                    Log.i("requestList", userProfileRequestId + " accept ");
+                    processResponse(clickBtnId);
 
                 } else if (clickBtnId == 0) {
 
@@ -324,11 +325,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                     new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
                             userProfileRequestId + "/reject");
 
-                    Log.i("requestList", userProfileRequestId + " reject");
-
-
+                    processResponse(clickBtnId);
                 }
-                processResponse(clickBtnId);
+
 
             }
         }.fetchUserProfileDetailsResponse(
@@ -419,11 +418,12 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         SendRequestActivity.biodataRequestCounter--;
 
         if (!BioDataRequestFragment.profileRequestSenderIdsList.isEmpty()) {
+
             biodataNotificationCounterTextview.setText(
                     SendRequestActivity.biodataRequestCounter + "");
 
-            if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1)
-                urlResponseId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
+            /*if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1)
+                urlResponseId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);*/
 
 
             if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
@@ -434,16 +434,27 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                     setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
 
                 } else if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1) {
-                    id = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
 
+                    id = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
                     BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
-                    setRequestView(id);
+
+                    coordnatelayout.setVisibility(View.INVISIBLE);
+                    bottomRelativeLayout.setVisibility(View.INVISIBLE);
+                    noListAvailable.setVisibility(View.VISIBLE);
+                    Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
+                    //setRequestView(id);
                 }
             } else {
-                setRequestView(currentId);
+                // setRequestView(currentId);
+                coordnatelayout.setVisibility(View.INVISIBLE);
+                bottomRelativeLayout.setVisibility(View.INVISIBLE);
+                noListAvailable.setVisibility(View.VISIBLE);
                 Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
             }
         } else {
+            coordnatelayout.setVisibility(View.INVISIBLE);
+            bottomRelativeLayout.setVisibility(View.INVISIBLE);
+            noListAvailable.setVisibility(View.VISIBLE);
             Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
         }
 
@@ -490,7 +501,17 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("FFFFFF", s);
+            try {
+                JSONObject headObj = new JSONObject(s);
 
+                Toast.makeText(getActivity(),
+                        headObj.getJSONArray("message").getJSONObject(0).getString("detail"),
+                        Toast.LENGTH_LONG).show();
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
