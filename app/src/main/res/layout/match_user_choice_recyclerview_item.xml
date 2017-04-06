@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="title textview :"
-            android:textColor="#e6e6e9"
+            android:textColor="@color/title_textview_item_color"
             android:textSize="@dimen/medium_textsize" />
 
         <TextView

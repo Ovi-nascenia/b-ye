@@ -640,19 +640,7 @@
     </RelativeLayout>
 
 
-    <LinearLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="invisible">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#FF00FF" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/no_data"

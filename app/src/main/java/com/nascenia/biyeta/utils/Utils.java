@@ -82,8 +82,7 @@ public class Utils {
     }
 
 
-    public static void ShowInternetConnectionError(Context context)
-    {
+    public static void ShowInternetConnectionError(Context context) {
         new AlertDialog.Builder(context)
 //                .setTitle("ইন্টারনেট")
                 .setMessage("ইন্টারনেট সংযোগ নেই")
@@ -365,6 +364,17 @@ public class Utils {
                 value = "পেশা";
                 break;
 
+            case "professional_group":
+                value = "প্রোফেশনাল গ্রুপ";
+                break;
+
+            case "designation":
+                value = "পদবি";
+                break;
+
+            case "institute":
+                value = "প্রতিষ্ঠান";
+                break;
 
             default:
                 value = "";
