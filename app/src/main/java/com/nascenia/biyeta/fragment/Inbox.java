@@ -16,6 +16,7 @@ import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.ExpiredConnection;
 import com.nascenia.biyeta.activity.HomeScreen;
 import com.nascenia.biyeta.activity.InboxListView;
+import com.nascenia.biyeta.activity.OwnUserProfileActivity;
 import com.nascenia.biyeta.activity.RequestSentFromMe;
 import com.nascenia.biyeta.activity.SendRequestActivity;
 import com.nascenia.biyeta.model.RequestSenderIds;
@@ -106,11 +107,8 @@ public class Inbox extends Fragment implements View.OnClickListener {
                 responseValue = responseBody.string();
                 responseBody.close();
 
-            } catch (Exception e) {
 
-            }
-
-            Log.i("requestresponsevalue", responseValue);
+            } catch (Exception e) {}
 
             return responseValue;
         }
@@ -119,6 +117,7 @@ public class Inbox extends Fragment implements View.OnClickListener {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
 
             try {
                 if (responseValue != null && !new JSONObject(s).has("message")) {
@@ -143,6 +142,15 @@ public class Inbox extends Fragment implements View.OnClickListener {
                                     responseValue));
                     RequestSenderIds requestSenderIds = new Gson().fromJson(responseValue, RequestSenderIds.class);
 
+
+                } else if (responseValue == null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utils.ShowAlert(getActivity(), getString(R.string.no_internet_connection));
+                            //getActivity().finish();
+                        }
+                    });
 
                 } else {
                     Utils.ShowAlert(getActivity(), "আপনাকে পাঠানো কোন অনুরোধ নেই");

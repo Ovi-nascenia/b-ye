@@ -106,7 +106,15 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         initView();
 
-        fetchUserProfileInfo();
+
+        if (Utils.isOnline(getApplicationContext())) {
+
+            fetchUserProfileInfo();
+
+        } else {
+            Utils.ShowAlert(OwnUserProfileActivity.this, getString(R.string.no_internet_connection));
+            //finish();
+        }
     }
 
     private void fetchUserProfileInfo() {

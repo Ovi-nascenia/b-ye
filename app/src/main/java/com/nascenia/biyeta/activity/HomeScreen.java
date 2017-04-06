@@ -42,7 +42,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private String responseValue = null;
     private SharePref sharePref;
 
-    private ImageView searchImageView, matchImageView, fevImageView, inboxImageView, profileImageView, menuProfileImgView;
+    private ImageView searchImageView, matchImageView, fevImageView, inboxImageView,
+            profileImageView, menuProfileImgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
