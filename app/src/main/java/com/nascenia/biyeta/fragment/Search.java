@@ -116,7 +116,11 @@ public class Search extends Fragment {
             @Override
             public void onClick(View view) {
                 jsonObjects.clear();
-                startActivity(new Intent(getContext(), Search_Filter.class));
+                if (Utils.isOnline(getActivity()))
+                    startActivity(new Intent(getContext(), Search_Filter.class));
+                else
+                    Utils.ShowAlert(getActivity(), getString(R.string.no_internet_connection));
+
             }
         });
 

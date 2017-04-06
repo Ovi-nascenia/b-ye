@@ -498,7 +498,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                 if (Utils.isOnline(Search_Filter.this))
                      new GetResult().execute("http://test.biyeta.com/api/v1/search/filtered-results");
                 else
-                    Toast.makeText(Search_Filter.this,getString(R.string.no_internet_connection),Toast.LENGTH_LONG).show();
+                    Utils.ShowAlert(Search_Filter.this, getString(R.string.no_internet_connection));
 
             }
 
