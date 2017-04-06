@@ -215,11 +215,6 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     public void onStart() {
         super.onStart();
 
-        Log.i("requestListCom", "onstart method  " +
-                CommunicationRequestFragment.communicationRequestSenderIdsList.size() + "  " +
-                CommunicationRequestFragment.communicationRequestSenderIdsList.toString());
-
-
         initView();
 
         if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() > 0) {
@@ -227,9 +222,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
             setRequestView(CommunicationRequestFragment.communicationRequestSenderIdsList.get(0));
         } else {
 
-            relativeLayoutFullFrame.setVisibility(View.GONE);
             noListAvailable.setVisibility(View.VISIBLE);
-
         }
 
 

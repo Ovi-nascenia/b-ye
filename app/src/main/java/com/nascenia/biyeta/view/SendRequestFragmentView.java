@@ -207,7 +207,6 @@ public abstract class SendRequestFragmentView {
                 Log.i("threaddata", "onmethod" + responseValue + " ");
                 responseBody.close();
                 final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
-                BioDataRequestFragment.user_id = userProfile.getProfile().getRequestStatus().getProfileRequestId();
 
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
@@ -259,7 +258,7 @@ public abstract class SendRequestFragmentView {
                         rejectImageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(context, "rej btn fetch", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(context, "rej btn fetch", Toast.LENGTH_LONG).show();
 
                                 if (viewRequestClassname == Utils.BIODATA_REQUEST_FRAGEMNT_CLASS) {
                                     loadNextProfile(0, userProfile.getProfile().getRequestStatus().getProfileRequestId());

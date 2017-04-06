@@ -286,23 +286,20 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     @Override
     public void onStart() {
         super.onStart();
-        //Toast.makeText(getActivity(), "start", Toast.LENGTH_LONG).show();
-        initView();
 
+        initView();
 
         if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
 
             setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
         } else {
-            //Utils.ShowAlert(getActivity(), "আপনার কোন অনুরোধ নেই");
+
             noListAvailable.setVisibility(View.VISIBLE);
         }
 
 
     }
 
-
-    public static int user_id = 99;
 
     private void setRequestView(int id) {
 
