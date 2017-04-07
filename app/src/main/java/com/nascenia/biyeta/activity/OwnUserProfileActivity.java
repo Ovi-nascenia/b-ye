@@ -911,7 +911,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
 
         progressDialog = new ProgressDialog(OwnUserProfileActivity.this);
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage(getResources().getString(R.string.progress_dialog_message));
         progressDialog.setCancelable(true);
 
         coordnatelayout = (CoordinatorLayout) findViewById(R.id.coordnatelayout);

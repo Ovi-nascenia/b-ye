@@ -183,7 +183,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
         progressDialog = new ProgressDialog(NewUserProfileActivity.this);
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage(getResources().getString(R.string.progress_dialog_message));
         progressDialog.setCancelable(true);
 
         smileyandVerificationLayout = (LinearLayout) findViewById(R.id.smileyandVerificationLayout);
@@ -757,7 +757,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
             new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL +
-                    userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/accept", Utils.MESSAGE_CALL_BLOCK);
+                            userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/accept",
+                    Utils.MESSAGE_CALL_BLOCK);
 
 
         } else if (v.getTag().equals(Utils.commRequestCancel)) {
@@ -912,6 +913,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                     acceptImageView.setTag(Utils.sendmessage);
                     cancelImageView.setTag(Utils.call);
+                } else {
+                    Log.i("casetest", "no case match");
                 }
 
 

@@ -574,7 +574,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress.setMessage("Please Wait ");
+            progress.setMessage(getResources().getString(R.string.progress_dialog_message));
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setIndeterminate(true);
             if ( !progress.isShowing() )
