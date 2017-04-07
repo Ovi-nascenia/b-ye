@@ -101,12 +101,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         //set profile image on drawer
         if (sharePref.get_data("profile_picture").equals("key") &&
-                (sharePref.get_data("gender").equals(Utils.MALE_GENDER))
+                (sharePref.get_data("gender").equalsIgnoreCase(Utils.MALE_GENDER))
                 ) {
             menuProfileImgView.setImageResource(R.drawable.profile_icon_male);
 
         } else if (sharePref.get_data("profile_picture").equals("key") &&
-                (sharePref.get_data("gender").equals(Utils.FEMALE_GENDER))
+                (sharePref.get_data("gender").equalsIgnoreCase(Utils.FEMALE_GENDER))
                 ) {
             menuProfileImgView.setImageResource(R.drawable.profile_icon_female);
         } else if (!sharePref.get_data("profile_picture").equals("key")) {
