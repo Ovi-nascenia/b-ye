@@ -20,6 +20,7 @@
                 android:id="@+id/close_expire_connection"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:tint="@color/colorPrimary"
                 android:src="@drawable/ic_highlight_off_black_24dp"/>
         <TextView
             android:layout_width="match_parent"
