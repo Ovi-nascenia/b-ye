@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
@@ -41,7 +42,7 @@ public class PaymentActivity extends CustomActionBarActivity {
         balanceAmountTextView = (TextView) findViewById(R.id.current_balance);
         profileVisitNumberTextView = (TextView) findViewById(R.id.account_recharge_descrip1);
         detailsPayment=(TextView)findViewById(R.id.recharge_amountTV) ;
-        detailsPayment.setText(" কার্ড-এর মাধ্যমে টাকা প্রদানের জন্য বিয়েটার ওয়েবসাইটে(www.biyeta.com) লগইন করা অবস্থায় এই লিঙ্ক-এ ক্লিক করুন- http://biyeta.com/payments/new ");
+        detailsPayment.setText(" কার্ড-এর মাধ্যমে টাকা প্রদানের জন্য  বিয়েটার ওয়েবসাইটে (www.biyeta.com) লগইন করা অবস্থায় এই লিঙ্ক-এ ক্লিক করুন- http://biyeta.com/payments/new ");
 
 // Makes the textView's Phone and URL (hyperlink) select and go.
         Linkify.addLinks(detailsPayment, Linkify.WEB_URLS | Linkify.PHONE_NUMBERS);
@@ -79,6 +80,8 @@ public class PaymentActivity extends CustomActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Log.e("testtt",s);
+
             progressBar.dismiss();
             if (s==null)
             {
@@ -89,7 +92,7 @@ public class PaymentActivity extends CustomActionBarActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.has("balance")) {
 
-                        balanceAmountTextView.setText("বর্তমান ব্যালেন্স " + Utils.convertEnglishDigittoBangla(Integer.parseInt(jsonObject.getString("balance"))) + " টাকা");
+                        balanceAmountTextView.setText("বর্তমান ব্যালেন্স " + Utils.convertEnglishYearDigittoBangla(jsonObject.getInt("balance")) + " টাকা");
                         profileVisitNumberTextView.setText(jsonObject.getString("total_request"));
 
                     }
