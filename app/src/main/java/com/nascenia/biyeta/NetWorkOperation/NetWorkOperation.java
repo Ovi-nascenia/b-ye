@@ -39,7 +39,7 @@ public class NetWorkOperation {
         NetWorkOperation.context = context;
 
         progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage(context.getResources().getString(R.string.progress_dialog_message));
         progressDialog.setCancelable(true);
 
         new SendConnectionRequest(finalResultButton).execute(url, userId, msg);
@@ -53,7 +53,7 @@ public class NetWorkOperation {
         NetWorkOperation.context = context;
 
         progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage(context.getResources().getString(R.string.progress_dialog_message));
         progressDialog.setCancelable(true);
 
         new CreateProfileRequestTask(finalResultButton).execute(url, msg);
@@ -68,7 +68,7 @@ public class NetWorkOperation {
         NetWorkOperation.context = context;
 
         progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage(context.getResources().getString(R.string.progress_dialog_message));
         progressDialog.setCancelable(true);
 
 
