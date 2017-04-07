@@ -63,6 +63,9 @@ public class Match extends Fragment implements View.OnClickListener {
 
 
     private final OkHttpClient client = new OkHttpClient();
+
+    ArrayList<BiodataProfile>responseObject=new ArrayList();
+    ArrayList<CommunicationProfile>responseCommunication=new ArrayList();
     TextView biodata;
     TextView connection;
     RecyclerView recyclerView;
@@ -89,7 +92,6 @@ public class Match extends Fragment implements View.OnClickListener {
     Snackbar snackbar;
     CommunicationProfile communicationProfileResponse;
     TextView emptyMessage;
-
     public Match() {
         // Required empty public constructor
     }
@@ -104,8 +106,7 @@ public class Match extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         Log.e("come", "Match");
         View v = inflater.inflate(R.layout.match, null);
-
-        emptyMessage = (TextView) v.findViewById(R.id.empty_message);
+         emptyMessage = (TextView) v.findViewById(R.id.empty_message);
 
 
         biodata = (TextView) v.findViewById(R.id.biodata);
@@ -137,9 +138,13 @@ public class Match extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
 
-        new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests");
+
+
+      //  new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests");
 
     }
+
+
 
     @Override
     public void onClick(View view) {
@@ -197,6 +202,7 @@ public class Match extends Fragment implements View.OnClickListener {
                         emptyMessage.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     } else {
+
                         emptyMessage.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
 
@@ -204,6 +210,7 @@ public class Match extends Fragment implements View.OnClickListener {
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
                         communicationProfileResponse = gson.fromJson(isr, CommunicationProfile.class);
+                        responseCommunication.add(communicationProfileResponse);
                         toalConnectionPage = communicationProfileResponse.getTotalPage();
 
                         if (connectionPageTrack == 1) {
@@ -228,9 +235,14 @@ public class Match extends Fragment implements View.OnClickListener {
 
                                 @Override
                                 public void onClickProfile(int position) {
+
+                                    int pos;
+                                    int i=position/10;
+                                    pos=position%10;
+                                    CommunicationProfile con=responseCommunication.get(i);
                                     Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
-                                    intent.putExtra("id", communicationProfileResponse.getProfiles().get(position).getId() + "");
-                                    intent.putExtra("user_name", communicationProfileResponse.getProfiles().get(position).getDisplayName());
+                                    intent.putExtra("id", con.getProfiles().get(pos).getId() + "");
+                                    intent.putExtra("user_name", con.getProfiles().get(pos).getDisplayName());
                                     intent.putExtra("PROFILE_EDIT_OPTION", false);
                                     startActivity(intent);
                                 }
@@ -305,6 +317,7 @@ public class Match extends Fragment implements View.OnClickListener {
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
                         biodataResponse = gson.fromJson(isr, BiodataProfile.class);
+                        responseObject.add(biodataResponse);
 
                         toalBiodataPage = biodataResponse.getTotalPage();
 
@@ -344,9 +357,13 @@ public class Match extends Fragment implements View.OnClickListener {
 
                                 @Override
                                 public void onClickProfile(int position) {
+                                    int pos;
+                                    int i=position/10;
+                                    pos=position%10;
+                                    BiodataProfile bioProfile=responseObject.get(i);
                                     Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
-                                    intent.putExtra("id", biodataResponse.getProfiles().get(position).getId() + "");
-                                    intent.putExtra("user_name", biodataResponse.getProfiles().get(position).getDisplayName());
+                                    intent.putExtra("id", bioProfile.getProfiles().get(pos).getId() + "");
+                                    intent.putExtra("user_name", bioProfile.getProfiles().get(pos).getDisplayName());
                                     intent.putExtra("PROFILE_EDIT_OPTION", false);
                                     startActivity(intent);
                                 }
