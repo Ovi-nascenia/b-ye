@@ -87,13 +87,13 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private ProgressDialog progressDialog;
 
     private RelativeLayout bottomRelativeLayout;
-    private CoordinatorLayout coordnatelayout;
+   // private CoordinatorLayout //coordnatelayout;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_user_profile);
+        setContentView(R.layout.new_user_temp);
 
         if (ContextCompat.checkSelfPermission(NewUserProfileActivity.this,
                 Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -170,7 +170,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private void initView() {
 
         bottomRelativeLayout = (RelativeLayout) findViewById(R.id.r1);
-        coordnatelayout = (CoordinatorLayout) findViewById(R.id.coordnatelayout);
+        //coordnatelayout = (CoordinatorLayout) findViewById(R.id.//coordnatelayout);
 
         userProfileDescriptionTextViewTag = (TextView) findViewById(R.id.user_profile_description_textView_tag);
         userProfileDescriptionCardview = (CardView) findViewById(R.id.user_profile_description_cardview);
@@ -326,7 +326,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                         @Override
                         public void run() {
 
-                            coordnatelayout.setVisibility(View.VISIBLE);
+                            //coordnatelayout.setVisibility(View.VISIBLE);
                             bottomRelativeLayout.setVisibility(View.VISIBLE);
 
                             smileyandVerificationLayout.setVisibility(View.VISIBLE);
@@ -341,14 +341,21 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                             if (userProfile.getProfile().isIsFavorite()) {
 
                                 //favoriteImageView.setEnabled(false);
-                                favoriteImageView.setImageResource(R.drawable.red_favorite);
+                               // favoriteImageView.setImageResource(R.drawable.red_favorite);
+                                Glide.with(NewUserProfileActivity.this)
+                                        .load(R.drawable.red_favorite)
+                                        .into(favoriteImageView);
                                 Log.i("favoriteStatus", "initial " + userProfile.getProfile().isIsFavorite());
                             }
 
                             if (userProfile.getProfile().isIsSmileSent()) {
 
                                 layoutSendSmiley.setEnabled(false);
-                                emoIconImageView.setImageResource(R.drawable.red_smile);
+
+                           //     emoIconImageView.setImageResource(R.drawable.red_smile);
+                                Glide.with(NewUserProfileActivity.this)
+                                        .load(R.drawable.red_smile)
+                                        .into(emoIconImageView);
                             }
 
 
@@ -390,12 +397,28 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
                                     (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))) {
-                                userProfileImage.setImageResource(R.drawable.profile_icon_male);
-                                profileViewerPersonImageView.setImageResource(R.drawable.profile_icon_male);
+                              //  userProfileImage.setImageResource(R.drawable.profile_icon_male);
+                                Glide.with(NewUserProfileActivity.this)
+                                        .load(R.drawable.profile_icon_male)
+                                        .into(userProfileImage);
+
+                                Glide.with(NewUserProfileActivity.this)
+                                        .load(R.drawable.profile_icon_male)
+                                        .into(profileViewerPersonImageView);
+
+
+                              //  profileViewerPersonImageView.setImageResource(R.drawable.profile_icon_male);
                             } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
                                     (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.FEMALE_GENDER))) {
-                                userProfileImage.setImageResource(R.drawable.profile_icon_female);
-                                profileViewerPersonImageView.setImageResource(R.drawable.profile_icon_female);
+//                                userProfileImage.setImageResource(R.drawable.profile_icon_female);
+//                                profileViewerPersonImageView.setImageResource(R.drawable.profile_icon_female);
+                                Glide.with(NewUserProfileActivity.this)
+                                        .load(R.drawable.profile_icon_female)
+                                        .into(userProfileImage);
+
+                                Glide.with(NewUserProfileActivity.this)
+                                        .load(R.drawable.profile_icon_female)
+                                        .into(profileViewerPersonImageView);
                             } else {
                             }
 
@@ -588,8 +611,15 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     //send message btn and phone call btn
                                     finalResultButton.setVisibility(View.GONE);
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
-                                    acceptImageView.setImageResource(R.drawable.envelope_icon);
-                                    cancelImageView.setImageResource(R.drawable.phone_icon);
+                                //    acceptImageView.setImageResource(R.drawable.envelope_icon);
+                                    Glide.with(NewUserProfileActivity.this)
+                                            .load(R.drawable.envelope_icon)
+                                            .into(acceptImageView);
+
+                                   // cancelImageView.setImageResource(R.drawable.phone_icon);
+                                    Glide.with(NewUserProfileActivity.this)
+                                            .load(R.drawable.phone_icon)
+                                            .into(cancelImageView);
                                     acceptTextView.setText("মেসেজ পাঠান");
                                     cancelTextView.setText("ফোন করুন");
 
@@ -639,8 +669,20 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     //send message btn and phone call btn
                                     finalResultButton.setVisibility(View.GONE);
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
-                                    acceptImageView.setImageResource(R.drawable.envelope_icon);
-                                    cancelImageView.setImageResource(R.drawable.phone_icon);
+
+//                                    acceptImageView.setImageResource(R.drawable.envelope_icon);
+//                                    cancelImageView.setImageResource(R.drawable.phone_icon);
+
+                                    //    acceptImageView.setImageResource(R.drawable.envelope_icon);
+                                    Glide.with(NewUserProfileActivity.this)
+                                            .load(R.drawable.envelope_icon)
+                                            .into(acceptImageView);
+
+                                    // cancelImageView.setImageResource(R.drawable.phone_icon);
+                                    Glide.with(NewUserProfileActivity.this)
+                                            .load(R.drawable.phone_icon)
+                                            .into(cancelImageView);
+
                                     acceptTextView.setText("মেসেজ পাঠান");
                                     cancelTextView.setText("ফোন করুন");
 
@@ -917,8 +959,18 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                 } else {
 
-                    acceptImageView.setImageResource(R.drawable.mail);
-                    cancelImageView.setImageResource(R.drawable.mobile);
+//                    acceptImageView.setImageResource(R.drawable.mail);
+//                    cancelImageView.setImageResource(R.drawable.mobile);
+
+                    //    acceptImageView.setImageResource(R.drawable.envelope_icon);
+                    Glide.with(NewUserProfileActivity.this)
+                            .load(R.drawable.mail)
+                            .into(acceptImageView);
+
+                    // cancelImageView.setImageResource(R.drawable.phone_icon);
+                    Glide.with(NewUserProfileActivity.this)
+                            .load(R.drawable.mobile)
+                            .into(cancelImageView);
                     acceptTextView.setText("মেসেজ পাঠান");
                     cancelTextView.setText("ফোন করুন");
 

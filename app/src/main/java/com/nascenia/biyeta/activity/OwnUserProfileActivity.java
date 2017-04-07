@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -118,7 +119,9 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     }
 
     private void fetchUserProfileInfo() {
-        progressDialog.show();
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
 
         new Thread(new Runnable() {
             @Override
@@ -164,6 +167,10 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
+                   // Toast.makeText(OwnUserProfileActivity.this,"Error in loading page",Toast.LENGTH_LONG).show();
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
                 }
 
 

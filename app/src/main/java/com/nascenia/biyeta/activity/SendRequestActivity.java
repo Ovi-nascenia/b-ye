@@ -105,38 +105,38 @@ public class SendRequestActivity extends CustomActionBarActivity {
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         //biodata tab view
-        tabItemView1 = inflater.inflate(R.layout.custom_tab_item1, null);
-        biodataNotificationCounterTextview = (TextView) tabItemView1.
-                findViewById(R.id.biodata_notification_textview);
-
-        if (requestSenderIds.getRequests().getProfileRequestSenderIds() != null &&
-                requestSenderIds.getRequests().getProfileRequestCount() > 0) {
-            SendRequestActivity.biodataRequestCounter = requestSenderIds.
-                    getRequests().getProfileRequestCount();
-
-            biodataNotificationCounterTextview.setVisibility(View.VISIBLE);
-            biodataNotificationCounterTextview.setText(
-                    SendRequestActivity.biodataRequestCounter + "");
-
-        }
+        tabItemView1 = inflater.inflate(R.layout.custom_tabbar_with_notification, null);
+//        biodataNotificationCounterTextview = (TextView) tabItemView1.
+//                findViewById(R.id.biodata_notification_textview);
+//
+//        if (requestSenderIds.getRequests().getProfileRequestSenderIds() != null &&
+//                requestSenderIds.getRequests().getProfileRequestCount() > 0) {
+//            SendRequestActivity.biodataRequestCounter = requestSenderIds.
+//                    getRequests().getProfileRequestCount();
+//
+//            biodataNotificationCounterTextview.setVisibility(View.VISIBLE);
+//            biodataNotificationCounterTextview.setText(
+//                    SendRequestActivity.biodataRequestCounter + "");
+//
+//        }
         tabLayout.getTabAt(0).setCustomView(tabItemView1);
 
 
         //communication tab view
-        tabItemView2 = inflater.inflate(R.layout.custom_tab_item2, null);
-        communicationNotificationCounterTextview = (TextView) tabItemView2.
-                findViewById(R.id.communication_notification_textview);
-
-        if (requestSenderIds.getRequests().getCommunicationRequestCount() != null &&
-                requestSenderIds.getRequests().getCommunicationRequestCount() > 0) {
-            SendRequestActivity.communicationRequestCounter = requestSenderIds.
-                    getRequests().getCommunicationRequestCount();
-
-
-            communicationNotificationCounterTextview.setVisibility(View.VISIBLE);
-            communicationNotificationCounterTextview.setText(
-                    SendRequestActivity.communicationRequestCounter + "");
-        }
+        tabItemView2 = inflater.inflate(R.layout.custom_tabbar_with_notification, null);
+//        communicationNotificationCounterTextview = (TextView) tabItemView2.
+//                findViewById(R.id.communication_notification_textview);
+//
+//        if (requestSenderIds.getRequests().getCommunicationRequestCount() != null &&
+//                requestSenderIds.getRequests().getCommunicationRequestCount() > 0) {
+//            SendRequestActivity.communicationRequestCounter = requestSenderIds.
+//                    getRequests().getCommunicationRequestCount();
+//
+//
+//            communicationNotificationCounterTextview.setVisibility(View.VISIBLE);
+//            communicationNotificationCounterTextview.setText(
+//                    SendRequestActivity.communicationRequestCounter + "");
+//        }
         tabLayout.getTabAt(1).setCustomView(tabItemView2);
 
 

@@ -36,7 +36,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private static final int REQUEST_PHONE_CALL = 100;
     static Context context;
     DrawerLayout drawerLayout;
-
+    public  static  int tab_click=99;
 
     private View actionBarView;
     private String responseValue = null;
@@ -118,11 +118,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
-                // update highlighted item in the navigation menu
-                //    menuItem.setChecked(true);
-                //set false other item
 
-                //
 
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
                     drawerLayout.closeDrawer(Gravity.RIGHT);
@@ -137,11 +133,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         );
                         break;
 
-//                    case R.id.nav_inbox:
-//                        break;
-//
-//                    case R.id.nav_fav:
-//                        break;
+
                     case R.id.nav_setting:
                         break;
 
@@ -151,9 +143,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         break;
 
                     case R.id.nav_about_us:
-//                        getSupportFragmentManager().beginTransaction()
-//                                .replace(R.id.fragmentParentViewGroup, new AboutBiyeta())
-//                                .commit();
                         startActivity(new Intent(HomeScreen.this, AboutBiyeta.class));
                         break;
                     case R.id.nav_connection:
@@ -228,6 +217,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         int id = view.getId();
         switch (id) {
             case R.id.search:
+            //    tab_click=0;
                 searchImageView.setColorFilter(Color.WHITE);
 
 
@@ -236,6 +226,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         .commit();
                 break;
             case R.id.match:
+             //   tab_click=1;
                 matchImageView.setColorFilter(Color.WHITE);
 
                 getSupportFragmentManager().beginTransaction()
@@ -243,6 +234,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         .commit();
                 break;
             case R.id.favorite:
+            //    tab_click=3;
 
                 fevImageView.setColorFilter(Color.WHITE);
                 getSupportFragmentManager().beginTransaction()
@@ -250,48 +242,16 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         .commit();
                 break;
             case R.id.inbox:
+            //    tab_click=4;
                 fevImageView.setColorFilter(Color.WHITE);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentParentViewGroup, new Inbox())
                         .commit();
-//
+
                 inboxImageView.setColorFilter(Color.WHITE);
-//
-//                Dialog dialog = new Dialog(HomeScreen.this);
-//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                dialog.setCancelable(true);
-//                dialog.setContentView(R.layout.inbox);
-//                dialog.findViewById(R.id.tv_sent_request).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        new LoadReqeustSenderIdsTask().execute();
-//                    }
-//                });
-//
-//
-//                dialog.findViewById(R.id.tv_sent_request_from_me).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        startActivity(new Intent(HomeScreen.this, RequestSentFromMe.class));
-//                    }
-//                });
-//
-//                dialog.findViewById(R.id.tv_inbox).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        startActivity(new Intent(HomeScreen.this, InboxListView.class));
-//                    }
-//                });
-//                DisplayMetrics displaymetrics = new DisplayMetrics();
-//                this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-//                int width = (int) ((int) displaymetrics.widthPixels * 0.8);
-//               // int height = (int) ((int) displaymetrics.heightPixels * 0.4);
-//                dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-//
-//
-//                dialog.show();
-                break;
+         break;
             case R.id.profile:
+
                 profileImageView.setColorFilter(Color.WHITE);
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                     drawerLayout.closeDrawer(Gravity.RIGHT);

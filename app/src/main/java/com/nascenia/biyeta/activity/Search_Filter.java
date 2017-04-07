@@ -584,6 +584,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Log.e("test response",s);
             reponse = ch;
             try {
                 JSONObject jsonObject=new JSONObject(s);

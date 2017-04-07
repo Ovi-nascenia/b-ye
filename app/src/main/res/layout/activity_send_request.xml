@@ -1,10 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:fitsSystemWindows="true"
+
     android:orientation="vertical"
     tools:context=".activity.SendRequestActivity">
 
@@ -35,14 +35,16 @@
         android:background="@color/colorPrimary"
         app:tabBackground="@drawable/tab_color_selector"
         app:tabGravity="fill"
-        app:tabMode="fixed" />
+        android:layout_alignParentTop="true"
+         />
 
 
     <FrameLayout
+        android:layout_below="@+id/tab_layout"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" />
 
 
-</LinearLayout>
+</RelativeLayout>
