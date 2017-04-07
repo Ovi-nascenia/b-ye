@@ -168,8 +168,21 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
                             "Token token=" + sharePref.get_data("token"));
-                    favoriteImageView.setEnabled(false);
+                    //favoriteImageView.setEnabled(false);
+                    userProfile.getProfile().setIsFavorite(true);
                     favoriteImageView.setImageResource(R.drawable.red_favorite);
+                } else {
+
+                    NetWorkOperation.postMethod(getActivity(),
+                            Utils.UNFAVORITE_URL,
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"));
+
+                    userProfile.getProfile().setIsFavorite(false);
+                    favoriteImageView.setImageResource(R.drawable.favorite);
+
+
                 }
 
             }
@@ -306,7 +319,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    favoriteImageView.setEnabled(false);
+                    //favoriteImageView.setEnabled(false);
                     favoriteImageView.setImageResource(R.drawable.red_favorite);
                 }
             });

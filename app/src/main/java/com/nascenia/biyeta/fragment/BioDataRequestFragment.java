@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.HomeScreen;
+import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.activity.SendRequestActivity;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.RequestSenderIds;
@@ -158,7 +159,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         favoriteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "click", Toast.LENGTH_LONG).show();
+
                 if (!userProfile.getProfile().isIsFavorite()) {
 
                     NetWorkOperation.postMethod(getActivity(),
@@ -166,8 +167,21 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
                             "Token token=" + sharePref.get_data("token"));
-                    favoriteImageView.setEnabled(false);
+                    //favoriteImageView.setEnabled(false);
+                    userProfile.getProfile().setIsFavorite(true);
                     favoriteImageView.setImageResource(R.drawable.red_favorite);
+                } else {
+
+                    NetWorkOperation.postMethod(getActivity(),
+                            Utils.UNFAVORITE_URL,
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"));
+
+                    userProfile.getProfile().setIsFavorite(false);
+                    favoriteImageView.setImageResource(R.drawable.favorite);
+
+
                 }
 
             }
@@ -387,7 +401,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    favoriteImageView.setEnabled(false);
+                    //favoriteImageView.setEnabled(false);
                     favoriteImageView.setImageResource(R.drawable.red_favorite);
                 }
             });
