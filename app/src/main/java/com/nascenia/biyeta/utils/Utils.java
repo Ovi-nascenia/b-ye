@@ -311,12 +311,12 @@ public class Utils {
             dateFormat = new SimpleDateFormat("E, hh:mm a");
             strTime = dateFormat.format(calendar.getTimeInMillis());
         } else if (diffDays < 365) {
-            dateFormat = new SimpleDateFormat("dd MMM hh:mm a");
+            dateFormat = new SimpleDateFormat("dd MMM");
             strTime = dateFormat.format(calendar.getTimeInMillis());
         } else {
             dateFormat = new SimpleDateFormat("dd MMM");
             strTime = dateFormat.format(calendar.getTimeInMillis());
-            dateFormat = new SimpleDateFormat("yy hh:mm a");
+            dateFormat = new SimpleDateFormat("yy");
             strTime += "'" + dateFormat.format(calendar.getTimeInMillis());
         }
         return strTime;
