@@ -99,7 +99,7 @@ public class InboxSingleChat extends CustomActionBarActivity {
                 if (flag < response.getTotalMessage()) {
                     flag++;
                     new LoadMessageThread().execute();
-                    Toast.makeText(InboxSingleChat.this, "load more data", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(InboxSingleChat.this, "load more data", Toast.LENGTH_SHORT).show();
                 } else
                     mSwipeRefreshLayout.setRefreshing(false);
 
@@ -214,7 +214,7 @@ public class InboxSingleChat extends CustomActionBarActivity {
 
 
                     } catch (Exception e) {
-                        Toast.makeText(InboxSingleChat.this, "No Message", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InboxSingleChat.this, "কোন মেসেজ নাই", Toast.LENGTH_SHORT).show();
                     }
                 }
             } catch (JSONException e) {
@@ -271,7 +271,7 @@ public class InboxSingleChat extends CustomActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(InboxSingleChat.this, s, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(InboxSingleChat.this, s, Toast.LENGTH_SHORT).show();
 
 
         }

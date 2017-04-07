@@ -290,7 +290,6 @@ public class Search extends Fragment {
                         emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
                     }
 
-
                     else {
 
 
