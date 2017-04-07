@@ -134,6 +134,14 @@ public class Match extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests");
+
+    }
+
+    @Override
     public void onClick(View view) {
 
         int id = view.getId();

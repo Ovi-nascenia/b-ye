@@ -278,6 +278,8 @@
     <string name="bullet_point">●</string>
     <string name="facebook_app_id">403568326678447</string>
     <string name="please_retry_after">"Please retry after "</string>
+
+    <string name="incomplete_profile_message">আপনার প্রোফাইলটি অসম্পূর্ণ রয়েছে। অনুগ্রহপূর্বক প্রোফাইলটি সম্পূর্ণ করে লগইন করুন।</string>
     <!--FAQ page-->
 
 

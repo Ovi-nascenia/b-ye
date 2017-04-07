@@ -67,6 +67,8 @@ public class Utils {
     public static final String commRequestCancel = "comm_request_cancel";
     public static final String sendmessage = "message";
     public static final String call = "call";
+    public static final String MESSAGE_CALL_BLOCK = "message_call_block";
+
 
 
     public static void ShowAlert(Context context, String bodyMessage) {

@@ -61,7 +61,6 @@ import java.util.Arrays;
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
-
     //icon image
     //big image load through glide
     ImageView icon;
@@ -123,7 +122,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         callbackManager = CallbackManager.Factory.create();
 
 
-
         buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
         buttonFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -172,7 +170,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onError(FacebookException exception) {
                 // App code
-                Utils.ShowAlert(Login.this,getString(R.string.no_internet_connection));
+                Utils.ShowAlert(Login.this, getString(R.string.no_internet_connection));
             }
         });
 
@@ -248,7 +246,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //
         else {
             if (!Utils.isOnline(Login.this)) {
-                Utils.ShowAlert(Login.this,getString(R.string.no_internet_connection));
+                Utils.ShowAlert(Login.this, getString(R.string.no_internet_connection));
             } else
 
                 new LoginRequest().execute(user_name, password);
@@ -279,18 +277,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("facebook login",s);
+            Log.e("facebook login", s);
 
 
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.has("message")) {
-                  Utils.ShowAlert(Login.this,jsonObject.getJSONObject("message").get("detail").toString());
+                    Utils.ShowAlert(Login.this, jsonObject.getJSONObject("message").get("detail").toString());
                     LoginManager.getInstance().logOut();
                     buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
-                }
-                else
-                {
+                } else {
                     Gson gson = new Gson();
                     InputStream is = new ByteArrayInputStream(s.getBytes());
                     InputStreamReader isr = new InputStreamReader(is);
@@ -304,6 +300,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                         SharePref sharePref = new SharePref(Login.this);
 
+
                         sharePref.set_data("token", response.getLoginInformation().getAuthToken());
                         sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
                         sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
@@ -311,6 +308,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
                         sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
 
+
+                        //check display name
 
                         // check the mobile verify screen
 
@@ -399,11 +398,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             super.onPostExecute(s);
 
             //Log.e("LoginData", s);
-            if (s==null)
-            {
-                Utils.ShowAlert(Login.this,getString(R.string.no_internet_connection));
-            }
-            else {
+            if (s == null) {
+                Utils.ShowAlert(Login.this, getString(R.string.no_internet_connection));
+            } else {
 
                 try {
                     //convert string to json object
@@ -413,6 +410,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         Utils.ShowAlert(Login.this, jsonObject.getJSONArray("errors").getJSONObject(0).getString("detail"));
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
+                    } else if (jsonObject.getJSONObject("login_information").getString("display_name").equals("null")) {
+                        buttonSubmit.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        Utils.ShowAlert(Login.this, getString(R.string.incomplete_profile_message));
                     } else {
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());

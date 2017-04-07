@@ -74,42 +74,37 @@ public class InboxListView extends CustomActionBarActivity {
     }
 
     void setUpId() {
-        emptyMessage=(TextView)findViewById(R.id.empty_message);
+        emptyMessage = (TextView) findViewById(R.id.empty_message);
         recyclerView = (RecyclerView) findViewById(R.id.all_message_thread);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Message");
 
 
     }
+
     Example response;
+
     class LoadMessageThread extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPostExecute(String s) {
-            Log.e("test",s);
+            Log.e("test", s);
             super.onPostExecute(s);
 
-            if ( s==null )
-            {
+            if (s == null) {
                 emptyMessage.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
-            }
-            else
-            {
+            } else {
                 try {
-                    JSONObject jsonObject=new JSONObject(s);
-                    if (jsonObject.has("errors"))
-                    {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.has("errors")) {
                         emptyMessage.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
 
-                    }
-                    else if (jsonObject.getJSONArray("inbox").length()==0)
-                    {
+                    } else if (jsonObject.getJSONArray("inbox").length() == 0) {
                         emptyMessage.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                    }
-                    else {
+                    } else {
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
@@ -130,9 +125,6 @@ public class InboxListView extends CustomActionBarActivity {
             }
 
 
-
-
-
         }
 
         @Override
@@ -147,7 +139,7 @@ public class InboxListView extends CustomActionBarActivity {
             SharePref sharePref = new SharePref(InboxListView.this);
             String token = sharePref.get_data("token");
             Request request = null;
-
+            Log.v("test", Constant.BASE_URL + INBOX_SUB_URL);
 
             request = new Request.Builder()
                     .url(Constant.BASE_URL + INBOX_SUB_URL)

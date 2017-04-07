@@ -30,20 +30,24 @@ public class NetWorkOperation {
     static Context context;
     private static ProgressDialog progressDialog;
 
-    public static void postData(Context context, String url,
-                                String userId, Button finalResultButton, String msg) {
+    //this method is used for sending communication request to the server
+    public static void postData(Context context,
+                                String url,
+                                String userId,
+                                Button finalResultButton,
+                                String msg) {
         NetWorkOperation.context = context;
 
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Please wait...");
         progressDialog.setCancelable(true);
 
-        //list position  for update list dynamically according to response
         new SendConnectionRequest(finalResultButton).execute(url, userId, msg);
 
 
     }
 
+    //this method is used for sending biodata request to the server
     public static void CreateProfileReqeust(Context context, String url, Button finalResultButton, String msg) {
 
         NetWorkOperation.context = context;
@@ -55,6 +59,7 @@ public class NetWorkOperation {
         new CreateProfileRequestTask(finalResultButton).execute(url, msg);
     }
 
+    // this mehtod is used only for sending favorite,unvfavorite and smile response to the server
     public static void postMethod(Context context,
                                   String url,
                                   String profileId,
@@ -79,7 +84,7 @@ public class NetWorkOperation {
 
 
         private Button finalResultButton;
-        private String msg;
+        // private String msg;
 
         public SendConnectionRequest(Button finalResultButton) {
             this.finalResultButton = finalResultButton;
@@ -96,7 +101,7 @@ public class NetWorkOperation {
         @Override
         protected String doInBackground(String... strings) {
 
-            msg = strings[2];
+            //   msg = strings[2];
             Integer id = Integer.parseInt(strings[1]);
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("profile_id", id + "")
@@ -134,22 +139,18 @@ public class NetWorkOperation {
                 Log.i("response", s);
 
                 try {
-                    JSONObject jsonObject=new JSONObject(s);
-                    if (jsonObject.has("message"))
-                    {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.has("message")) {
                         this.finalResultButton.setText(jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"));
                         this.finalResultButton.setEnabled(false);
-                    }
-                    else
-                    {
+                    } else {
+                        this.finalResultButton.setEnabled(false);
                         this.finalResultButton.setText("Error");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-
-                this.finalResultButton.setEnabled(false);
 
             }
 
@@ -210,9 +211,25 @@ public class NetWorkOperation {
 
         @Override
         protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            this.finalResultButton.setEnabled(false);
-            this.finalResultButton.setText(msg);
+            if (s == null) Utils.ShowAlert(context, "ইন্টারনেট সংযোগ নেই");
+            else {
+                Log.i("response", s);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.has("message")) {
+                        this.finalResultButton.setText(jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"));
+                        this.finalResultButton.setEnabled(false);
+                    } else {
+                        this.finalResultButton.setEnabled(false);
+                        this.finalResultButton.setText("Error");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
 
             if (progressDialog.isShowing()) {
                 progressDialog.dismiss();

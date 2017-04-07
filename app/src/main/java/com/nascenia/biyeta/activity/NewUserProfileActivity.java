@@ -342,7 +342,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                 //favoriteImageView.setEnabled(false);
                                 favoriteImageView.setImageResource(R.drawable.red_favorite);
-                                Log.i("favoriteStatus", "initial " + userProfile.getProfile().isIsFavorite());
+
                             }
 
                             if (userProfile.getProfile().isIsSmileSent()) {
@@ -724,28 +724,16 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         if (v.getTag().equals(Utils.profileRequestAccept)) {
 
-           /* requestSendButtonsLayout.setVisibility(View.GONE);
-            finalResultButton.setVisibility(View.VISIBLE);
-            finalResultButton.setEnabled(true);
-            finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
-            finalResultButton.setTag("send_communication_request");*/
-
-
             new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
                             userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/accept",
-                    "যোগাযোগের জন্য অনুরোধ করুন", Utils.sendCommunicationRequest, "");
+                    "যোগাযোগের জন্য অনুরোধ করুন", Utils.sendCommunicationRequest, Utils.profileRequestAccept);
 
         } else if (v.getTag().equals(Utils.profileRequestCancel)) {
 
-           /* requestSendButtonsLayout.setVisibility(View.GONE);
-            finalResultButton.setVisibility(View.VISIBLE);
-            finalResultButton.setEnabled(true);
-            finalResultButton.setText("পুরো বায়োডাটা দেখার অনুরোধ করুন");
-            finalResultButton.setTag("send_biodata_request");*/
 
             new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
                             userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/reject",
-                    "পুরো বায়োডাটা দেখার অনুরোধ করুন", Utils.sendBiodataRequest, "");
+                    "পুরো বায়োডাটা দেখার অনুরোধ করুন", Utils.sendBiodataRequest, Utils.profileRequestCancel);
 
         } else if (v.getTag().equals(Utils.sendCommunicationRequest)) {
 
@@ -754,8 +742,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     userProfile.getProfile().getPersonalInformation().getId() + "", finalResultButton,
                     "আপনি যোগাযোগের জন্য অনুরোধ করেছেন");
 
-            /*finalResultButton.setEnabled(false);
-            finalResultButton.setText("আপনি যোগাযোগের জন্য অনুরোধ করেছেন");*/
 
         } else if (v.getTag().equals(Utils.sendBiodataRequest)) {
 
@@ -766,35 +752,20 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                             + "/profile_request", finalResultButton,
                     "আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন");
 
-            /*finalResultButton.setEnabled(false);
-            finalResultButton.setText("আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন");*/
 
         } else if (v.getTag().equals(Utils.commRequestAccept)) {
 
 
             new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL +
-                    userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/accept", "message_call_block");
+                    userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/accept", Utils.MESSAGE_CALL_BLOCK);
 
-            /*acceptImageView.setImageResource(R.drawable.mail);
-            cancelImageView.setImageResource(R.drawable.mobile);
-            acceptTextView.setText("মেসেজ পাঠান");
-            cancelTextView.setText("ফোন করুন");
-
-            acceptImageView.setTag("message");
-            cancelImageView.setTag("call");*/
 
         } else if (v.getTag().equals(Utils.commRequestCancel)) {
 
 
             new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL +
                             userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/reject",
-                    "যোগাযোগের জন্য অনুরোধ করুন", Utils.sendCommunicationRequest, "");
-
-           /* requestSendButtonsLayout.setVisibility(View.GONE);
-            finalResultButton.setVisibility(View.VISIBLE);
-            finalResultButton.setEnabled(true);
-            finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
-            finalResultButton.setTag("send_communication_request");*/
+                    "যোগাযোগের জন্য অনুরোধ করুন", Utils.sendCommunicationRequest, Utils.commRequestCancel);
 
 
         } else if (v.getTag().equals(Utils.sendmessage)) {
@@ -859,7 +830,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         String btnText;
         String btnTag;
-        String messageCallBlock;
+        String userResponseCase;
 
         @Override
         protected void onPreExecute() {
@@ -870,7 +841,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         protected String doInBackground(String... urls) {
             btnText = urls[1];
             btnTag = urls[2];
-            messageCallBlock = urls[3];
+            userResponseCase = urls[3];
 
             Response response;
             SharePref sharePref = new SharePref(getBaseContext());
@@ -901,13 +872,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
             try {
-                /*String s1 = new JSONObject(s).getJSONArray("message").getJSONObject(0).getString("detail");
-                Log.i("responseresult: ", s1);
-                Toast.makeText(getBaseContext(), s1, Toast.LENGTH_LONG).show();
-*/
 
-
-                if (messageCallBlock.equals("message_call_block")) {
+               /* if (userResponseCase.equals("message_call_block")) {
 
                     requestSendButtonsLayout.setVisibility(View.GONE);
                     finalResultButton.setVisibility(View.VISIBLE);
@@ -924,7 +890,30 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                     acceptImageView.setTag(Utils.sendmessage);
                     cancelImageView.setTag(Utils.call);
+                }*/
+
+
+                if (userResponseCase.equals(Utils.profileRequestAccept) ||
+                        userResponseCase.equals(Utils.profileRequestCancel) ||
+                        userResponseCase.equals(Utils.commRequestCancel)) {
+
+                    requestSendButtonsLayout.setVisibility(View.GONE);
+                    finalResultButton.setVisibility(View.VISIBLE);
+                    finalResultButton.setEnabled(true);
+                    finalResultButton.setTag(btnTag);
+                    finalResultButton.setText(btnText);
+
+                } else if (userResponseCase.equals(Utils.MESSAGE_CALL_BLOCK)) {
+
+                    acceptImageView.setImageResource(R.drawable.mail);
+                    cancelImageView.setImageResource(R.drawable.mobile);
+                    acceptTextView.setText("মেসেজ পাঠান");
+                    cancelTextView.setText("ফোন করুন");
+
+                    acceptImageView.setTag(Utils.sendmessage);
+                    cancelImageView.setTag(Utils.call);
                 }
+
 
             } catch (Exception e) {
                 e.printStackTrace();

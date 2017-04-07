@@ -98,6 +98,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
     private CardView educationCardView, professionCardview, brotherCardview, sisterCardview,
             otherRelativeCardview, childCardView, otherInfoCardview;
+    private String res;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,6 +132,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             fetchGetResponse(Utils.APPUSER_OWN_PROFILE_VIEW_URL);
                     ResponseBody responseBody = response.body();
                     final String responseValue = responseBody.string();
+                    res = responseValue;
                     Log.i("ownresponsevalue", responseValue);
                     responseBody.close();
                     userProfile = new Gson().fromJson(responseValue, UserProfile.class);
@@ -163,6 +165,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         }
                     });
                 } catch (Exception e) {
+                    Log.i("errormsg", e.getMessage().toString()+" "+res);
                     e.printStackTrace();
                 }
 
