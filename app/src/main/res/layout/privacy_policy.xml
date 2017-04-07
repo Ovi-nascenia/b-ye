@@ -9,14 +9,13 @@
         android:id="@+id/rl_privacy_policy"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:padding="15dp">
 
        <TextView
             android:id="@+id/privacy_policy_parag1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/privacy_policy_parag1"
-            android:layout_marginTop="15dp"
             android:textSize="@dimen/textSize_privacy_policy_parag"
             android:textColor="@color/privacy_policy_parag"/>
         <TextView
