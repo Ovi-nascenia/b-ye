@@ -191,7 +191,7 @@ public abstract class SendRequestFragmentView {
             this.rejectImageView = rejectImageView;
 
             dialog = new ProgressDialog(context);
-            dialog.setMessage("Please wait...");
+            dialog.setMessage(context.getResources().getString(R.string.progress_dialog_message));
             dialog.setCancelable(true);
             dialog.show();
             responseValue = null;

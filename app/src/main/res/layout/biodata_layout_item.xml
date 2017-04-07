@@ -79,6 +79,7 @@
                         android:textColor="#440b0a0a"
                         android:text="7 fev '17"
                         android:textSize="8sp"
+                        android:gravity="right"
                         android:tint="@color/colorPrimaryDark"
                         android:layout_toRightOf="@+id/user_name"/>
                 </LinearLayout>

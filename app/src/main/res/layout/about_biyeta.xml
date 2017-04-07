@@ -7,7 +7,7 @@
         android:id="@+id/rl_about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:padding="15dp">
 
 
          <TextView
@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_parag1"
-            android:layout_marginTop="15dp"
             android:textSize="@dimen/textSize_about_parag"
             android:textColor="@color/about_parag"/>
 
