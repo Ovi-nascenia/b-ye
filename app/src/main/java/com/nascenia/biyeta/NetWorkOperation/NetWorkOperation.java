@@ -133,8 +133,24 @@ public class NetWorkOperation {
             else {
                 Log.i("response", s);
 
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    if (jsonObject.has("message"))
+                    {
+                        this.finalResultButton.setText(jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"));
+                        this.finalResultButton.setEnabled(false);
+                    }
+                    else
+                    {
+                        this.finalResultButton.setText("Error");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
                 this.finalResultButton.setEnabled(false);
-                this.finalResultButton.setText(msg);
+
             }
 
             if (progressDialog.isShowing()) {

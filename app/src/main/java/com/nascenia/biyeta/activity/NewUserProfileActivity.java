@@ -2,7 +2,6 @@ package com.nascenia.biyeta.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -26,24 +25,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
-import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
-import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
-import com.nascenia.biyeta.adapter.OtherInfoRecylerViewAdapter;
-import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
-import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.fragment.ProfileImageFirstFragment;
-import com.nascenia.biyeta.model.GeneralInformation;
-import com.nascenia.biyeta.model.MatchUserChoice;
-import com.nascenia.biyeta.model.UserProfileChild;
-import com.nascenia.biyeta.model.UserProfileParent;
-import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.service.ResourceProvider;
 import com.nascenia.biyeta.utils.Utils;
@@ -55,12 +43,6 @@ import com.squareup.okhttp.ResponseBody;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import static com.nascenia.biyeta.R.id.coordnatelayout;
 import static com.nascenia.biyeta.R.id.emoIconImage;
 
 /**
@@ -241,8 +223,24 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
                             "Token token=" + sharePref.get_data("token"));
-                    favoriteImageView.setEnabled(false);
+
+
+                    //favoriteImageView.setEnabled(false);
+                    userProfile.getProfile().setIsFavorite(true);
                     favoriteImageView.setImageResource(R.drawable.red_favorite);
+
+                } else {
+
+                    NetWorkOperation.postMethod(NewUserProfileActivity.this,
+                            Utils.UNFAVORITE_URL,
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"));
+
+                    userProfile.getProfile().setIsFavorite(false);
+                    favoriteImageView.setImageResource(R.drawable.favorite);
+
+
                 }
 
             }
@@ -342,8 +340,9 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             if (userProfile.getProfile().isIsFavorite()) {
 
-                                favoriteImageView.setEnabled(false);
+                                //favoriteImageView.setEnabled(false);
                                 favoriteImageView.setImageResource(R.drawable.red_favorite);
+                                Log.i("favoriteStatus", "initial " + userProfile.getProfile().isIsFavorite());
                             }
 
                             if (userProfile.getProfile().isIsSmileSent()) {

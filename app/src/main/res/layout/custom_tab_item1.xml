@@ -32,7 +32,7 @@
             android:layout_marginTop="@dimen/small_margin"
             android:layout_toLeftOf="@+id/badge_notification_4"
             android:paddingRight="@dimen/small_padding"
-            android:text="বায়োডাটার অনুরোধ"
+            android:text="বায়োডাটা"
             android:textColor="#FF353333"
             android:textSize="15sp" />
     </RelativeLayout>

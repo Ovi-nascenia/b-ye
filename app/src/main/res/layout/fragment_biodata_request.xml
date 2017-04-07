@@ -66,7 +66,7 @@
                             android:layout_width="@dimen/small_image_size"
                             android:layout_height="@dimen/small_image_size"
                             android:layout_alignParentRight="true"
-                            android:src="@drawable/favourite" />
+                            android:src="@drawable/favorite" />
 
 
                         <ImageView

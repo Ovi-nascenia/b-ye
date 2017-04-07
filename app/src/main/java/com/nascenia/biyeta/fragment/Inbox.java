@@ -102,13 +102,14 @@ public class Inbox extends Fragment implements View.OnClickListener {
             try {
 
                 Response response = new ResourceProvider((Activity) getContext()).fetchGetResponse(
-                        "http://test.biyeta.com/api/v1/requests/request_sender_ids");
+                        Utils.REQUEST_SENDER_IDS_URL);
                 ResponseBody responseBody = response.body();
                 responseValue = responseBody.string();
                 responseBody.close();
 
 
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
 
             return responseValue;
         }

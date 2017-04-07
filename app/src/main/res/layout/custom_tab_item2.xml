@@ -31,7 +31,7 @@
             android:layout_marginTop="@dimen/small_margin"
             android:layout_toLeftOf="@+id/communication_notification_textview"
             android:paddingRight="@dimen/small_padding"
-            android:text="যোগাযোগের অনুরোধ"
+            android:text="যোগাযোগ"
             android:textColor="#FF353333"
             android:textSize="15sp" />
     </RelativeLayout>

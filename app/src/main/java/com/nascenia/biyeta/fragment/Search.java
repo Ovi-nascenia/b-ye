@@ -282,7 +282,16 @@ public class Search extends Fragment {
                         emptyText.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                         emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
-                    } else {
+                    }
+                    else if (jsonObject.has("total_page") && !jsonObject.has("profiles"))
+                    {
+                        emptyText.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                        emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
+                    }
+
+
+                    else {
 
 
                         totalPageNumber = jsonObject.getInt("total_page");
