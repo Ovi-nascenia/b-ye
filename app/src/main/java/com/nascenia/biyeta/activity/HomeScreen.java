@@ -26,6 +26,7 @@ import com.nascenia.biyeta.fragment.Favourite;
 import com.nascenia.biyeta.fragment.Inbox;
 import com.nascenia.biyeta.fragment.Match;
 import com.nascenia.biyeta.fragment.Search;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -97,24 +98,42 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         TextView display_name = (TextView) header.findViewById(R.id.displayname);
         display_name.setText(sharePref.get_data("display_name"));
         menuProfileImgView = (ImageView) header.findViewById(R.id.img_profile);
+
         //set profile image on drawer
-        Picasso.with(this)
-                .load("http://test.biyeta.com" + sharePref.get_data("profile_picture"))
-                .into(menuProfileImgView, new Callback() {
-                    @Override
-                    public void onSuccess() {
+        if (sharePref.get_data("profile_picture").equals("key") &&
+                (sharePref.get_data("gender").equals(Utils.MALE_GENDER))
+                ) {
+            menuProfileImgView.setImageResource(R.drawable.profile_icon_male);
+
+        } else if (sharePref.get_data("profile_picture").equals("key") &&
+                (sharePref.get_data("gender").equals(Utils.FEMALE_GENDER))
+                ) {
+            menuProfileImgView.setImageResource(R.drawable.profile_icon_female);
+        } else if (!sharePref.get_data("profile_picture").equals("key")) {
+            Picasso.with(this)
+                    .load("http://test.biyeta.com" + sharePref.get_data("profile_picture"))
+                    .into(menuProfileImgView, new Callback() {
+                        @Override
+                        public void onSuccess() {
 //                  menuProfileImgView.post(new Runnable() {
 //                  @Override
 //                  public void run() {
 //                      Utils.scaleImage(HomeScreen.this, 1.2f, menuProfileImgView);
 //                  }
 //                  });
-                    }
+                        }
 
-                    @Override
-                    public void onError() {
-                    }
-                });
+                        @Override
+                        public void onError() {
+                        }
+                    });
+
+
+        } else {
+            Log.i("image", "no image found");
+        }
+
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
@@ -137,13 +156,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         );
                         break;
 
-//                    case R.id.nav_inbox:
-//                        break;
-//
-//                    case R.id.nav_fav:
-//                        break;
-                    case R.id.nav_setting:
-                        break;
 
                     case R.id.nav_balance:
                         startActivity(new Intent(HomeScreen.this, PaymentActivity.class));
@@ -151,9 +163,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         break;
 
                     case R.id.nav_about_us:
-//                        getSupportFragmentManager().beginTransaction()
-//                                .replace(R.id.fragmentParentViewGroup, new AboutBiyeta())
-//                                .commit();
+
                         startActivity(new Intent(HomeScreen.this, AboutBiyeta.class));
                         break;
                     case R.id.nav_connection:

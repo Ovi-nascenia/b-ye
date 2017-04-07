@@ -165,7 +165,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         }
                     });
                 } catch (Exception e) {
-                    Log.i("errormsg", e.getMessage().toString()+" "+res);
+                    Log.i("errormsg", e.getMessage().toString() + " " + res);
                     e.printStackTrace();
                 }
 
@@ -178,9 +178,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
     private void setUserOwnImage(UserProfile userProfile) {
 
-
         if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
-
 
             Picasso.with(OwnUserProfileActivity.this)
                     .load(Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture())
