@@ -3,8 +3,10 @@ package com.nascenia.biyeta.fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -94,6 +96,8 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
     private RelativeLayout bottomRelativeLayout;
     private CoordinatorLayout coordnatelayout;
+    private AppBarLayout appBarLayout;
+    private NestedScrollView nestedScrollView;
 
     @Nullable
     @Override
@@ -134,6 +138,8 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
         bottomRelativeLayout = (RelativeLayout) _baseView.findViewById(R.id.r1);
         coordnatelayout = (CoordinatorLayout) _baseView.findViewById(R.id.coordnatelayout);
+        appBarLayout = (AppBarLayout) _baseView.findViewById(R.id.appbar_layout);
+        nestedScrollView = (NestedScrollView) _baseView.findViewById(R.id.nested_scrollview);
 
         layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
@@ -294,7 +300,9 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 acceptImageView,
                 cancelImageView,
                 otherInfoTextViewTag,
-                otherInfoCardLayout
+                otherInfoCardLayout,
+                appBarLayout,
+                nestedScrollView
 
         );
 
@@ -375,24 +383,33 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                     id = CommunicationRequestFragment.communicationRequestSenderIdsList.get(0);
                     CommunicationRequestFragment.communicationRequestSenderIdsList.remove(0);
 
-                    coordnatelayout.setVisibility(View.INVISIBLE);
+                    // coordnatelayout.setVisibility(View.INVISIBLE);
+                    appBarLayout.setVisibility(View.GONE);
+                    nestedScrollView.setVisibility(View.GONE);
                     bottomRelativeLayout.setVisibility(View.INVISIBLE);
                     noListAvailable.setVisibility(View.VISIBLE);
-                    Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
+                    Utils.ShowAlert(getActivity(),
+                            getActivity().getResources().getString(R.string.no_request_dialog_message));
                     //  setRequestView(id);
                 }
             } else {
                 //setRequestView(currentId);
-                coordnatelayout.setVisibility(View.INVISIBLE);
+                // coordnatelayout.setVisibility(View.INVISIBLE);
+                appBarLayout.setVisibility(View.GONE);
+                nestedScrollView.setVisibility(View.GONE);
                 bottomRelativeLayout.setVisibility(View.INVISIBLE);
                 noListAvailable.setVisibility(View.VISIBLE);
-                Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
+                Utils.ShowAlert(getActivity(),
+                        getActivity().getResources().getString(R.string.no_request_dialog_message));
             }
         } else {
-            coordnatelayout.setVisibility(View.INVISIBLE);
+            // coordnatelayout.setVisibility(View.INVISIBLE);
+            appBarLayout.setVisibility(View.GONE);
+            nestedScrollView.setVisibility(View.GONE);
             bottomRelativeLayout.setVisibility(View.INVISIBLE);
             noListAvailable.setVisibility(View.VISIBLE);
-            Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
+            Utils.ShowAlert(getActivity(),
+                    getActivity().getResources().getString(R.string.no_request_dialog_message));
         }
 
     }
@@ -440,15 +457,14 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 }
             } else {
                 setRequestView(currentId);
-                Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
+                Utils.ShowAlert(getActivity(),
+                        getActivity().getResources().getString(R.string.no_request_dialog_message));
             }
         } else {
-            Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
+            Utils.ShowAlert(getActivity(),
+                    getActivity().getResources().getString(R.string.no_request_dialog_message));
         }
 
-        Log.i("requestListCom", "wait method end " +
-                CommunicationRequestFragment.communicationRequestSenderIdsList.size() + "  " +
-                CommunicationRequestFragment.communicationRequestSenderIdsList.toString());
 
     }
 

@@ -287,5 +287,7 @@
     <string name="after_sending_communication_request_text">আপনি যোগাযোগের জন্য অনুরোধ করেছেন</string>
     <string name="after_sending_biodata_request_text">আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন</string>
 
+    <string name="no_request_dialog_message">আপনার আর কোন অনুরোধ নেই</string>
+
 
 </resources>

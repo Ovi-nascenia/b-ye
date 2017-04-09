@@ -15,12 +15,14 @@
         android:layout_above="@+id/r1"
         android:layout_marginBottom="@dimen/adverisement_item_layout_head_margin"
         android:fitsSystemWindows="true"
-        android:visibility="invisible">
+        android:visibility="visible">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:theme="@style/AppTheme.AppBarOverlay"
+            android:visibility="gone">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
@@ -142,8 +144,10 @@
 
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nested_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 

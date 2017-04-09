@@ -3,7 +3,9 @@ package com.nascenia.biyeta.view;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -98,7 +100,9 @@ public abstract class SendRequestFragmentView {
                                                 ImageView acceptImageView,
                                                 ImageView rejectImageView,
                                                 TextView otherInfoTextViewTag,
-                                                CardView otherInfoCardLayout) {
+                                                CardView otherInfoCardLayout,
+                                                AppBarLayout appBarLayout,
+                                                NestedScrollView nestedScrollView) {
 
         //Toast.makeText(context, "fetchmethod", Toast.LENGTH_LONG).show();
         Log.i("btnreaction", "fetchmethod");
@@ -133,7 +137,9 @@ public abstract class SendRequestFragmentView {
                 acceptImageView,
                 rejectImageView,
                 otherInfoTextViewTag,
-                otherInfoCardLayout);
+                otherInfoCardLayout,
+                appBarLayout,
+                nestedScrollView);
         Thread response = new Thread(responseThread);
         response.start();
 
@@ -161,6 +167,8 @@ public abstract class SendRequestFragmentView {
         private ImageView rejectImageView;
         private TextView otherInfoTextViewTag;
         private CardView otherInfoCardLayout;
+        private AppBarLayout appBarLayout;
+        private NestedScrollView nestedScrollView;
 
         public ResponseThread(String url,
                               Context context,
@@ -179,7 +187,9 @@ public abstract class SendRequestFragmentView {
                               ImageView acceptImageView,
                               ImageView rejectImageView,
                               TextView otherInfoTextViewTag,
-                              CardView otherInfoCardLayout) {
+                              CardView otherInfoCardLayout,
+                              AppBarLayout appBarLayout,
+                              NestedScrollView nestedScrollView) {
 
 
             this.callback = callback;
@@ -200,6 +210,8 @@ public abstract class SendRequestFragmentView {
             this.rejectImageView = rejectImageView;
             this.otherInfoTextViewTag = otherInfoTextViewTag;
             this.otherInfoCardLayout = otherInfoCardLayout;
+            this.appBarLayout = appBarLayout;
+            this.nestedScrollView = nestedScrollView;
 
             dialog = new ProgressDialog(context);
             dialog.setMessage(context.getResources().getString(R.string.progress_dialog_message));
@@ -224,8 +236,11 @@ public abstract class SendRequestFragmentView {
                     public void run() {
                         Log.i("taskon", "run");
 
-                        coordinatorLayout.setVisibility(View.VISIBLE);
+                        // coordinatorLayout.setVisibility(View.VISIBLE);
+                        appBarLayout.setVisibility(View.VISIBLE);
+                        nestedScrollView.setVisibility(View.VISIBLE);
                         bottomRelativeLayout.setVisibility(View.VISIBLE);
+
 
                         userNameTextView.setText(userProfile.getProfile().
                                 getPersonalInformation().getDisplayName());
