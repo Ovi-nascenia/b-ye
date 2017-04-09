@@ -819,7 +819,6 @@ public abstract class SendRequestFragmentView {
 
 
     public static void setDataonGeneralInfoRecylerView(Context activity, UserProfile userProfile, RecyclerView view) {
-        Log.i("userdetails", "recyler method");
 
 
      /*   generalInformationArrayList = new ArrayList<GeneralInformation>();*/
@@ -880,7 +879,8 @@ public abstract class SendRequestFragmentView {
                         getEducationInformation().get(i);
 
 
-                if (educationInformation.getPassingYear() != null) {
+                //previous code
+                /*if (educationInformation.getPassingYear() != null) {
 
 
                     education = education + checkNullField(educationInformation.getName()) +
@@ -896,7 +896,24 @@ public abstract class SendRequestFragmentView {
                             checkNullField(educationInformation.getSubject()) + " : ";
 
 
+                }*/
+
+                //latest code
+                education = education + checkNullField(educationInformation.getHighestDegree()) +
+                        checkNullField(educationInformation.getSubject()) +
+                        checkNullField(educationInformation.getInstitution());
+
+
+                if (educationInformation.getPassingYear() != null) {
+
+                    education = education + Utils.convertEnglishYearDigittoBangla(
+                            educationInformation.getPassingYear()) + " : ";
+
+                } else {
+                    education = education + " : ";
+
                 }
+
 
             }
 
