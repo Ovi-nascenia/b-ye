@@ -22,6 +22,7 @@ import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.fragment.CommunicationRequestFragment;
 import com.nascenia.biyeta.model.RequestSenderIds;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
+import com.nascenia.biyeta.utils.Utils;
 
 public class SendRequestActivity extends CustomActionBarActivity {
 
@@ -116,7 +117,7 @@ public class SendRequestActivity extends CustomActionBarActivity {
 
             biodataNotificationCounterTextview.setVisibility(View.VISIBLE);
             biodataNotificationCounterTextview.setText(
-                    SendRequestActivity.biodataRequestCounter + "");
+                    Utils.convertEnglishYearDigittoBangla(SendRequestActivity.biodataRequestCounter) + "");
 
         }
         tabLayout.getTabAt(0).setCustomView(tabItemView1);
@@ -135,7 +136,7 @@ public class SendRequestActivity extends CustomActionBarActivity {
 
             communicationNotificationCounterTextview.setVisibility(View.VISIBLE);
             communicationNotificationCounterTextview.setText(
-                    SendRequestActivity.communicationRequestCounter + "");
+                    Utils.convertEnglishYearDigittoBangla(SendRequestActivity.communicationRequestCounter) + "");
         }
         tabLayout.getTabAt(1).setCustomView(tabItemView2);
 
