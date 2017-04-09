@@ -599,7 +599,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/cancel_imageview"
             android:layout_marginLeft="@dimen/large_margin"
-            android:text="বাতিল করুন"
+            android:text="প্রত্যাখ্যান করুন"
             android:textColor="#000000" />
 
         <ImageView

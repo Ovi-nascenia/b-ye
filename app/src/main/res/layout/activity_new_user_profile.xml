@@ -10,8 +10,8 @@
         android:id="@+id/coordnatelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
-        android:layout_above="@+id/r1">
+        android:layout_above="@+id/r1"
+        android:visibility="invisible">
 
 
         <android.support.design.widget.AppBarLayout
@@ -641,7 +641,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/cancel_imageview"
                 android:layout_marginLeft="45dp"
-                android:text="বাতিল করুন"
+                android:text="প্রত্যাখ্যান করুন"
                 android:textColor="#000000" />
 
 
