@@ -282,12 +282,10 @@
     <string name="incomplete_profile_message">আপনার প্রোফাইলটি অসম্পূর্ণ রয়েছে। অনুগ্রহপূর্বক প্রোফাইলটি সম্পূর্ণ করে লগইন করুন।</string>
     <string name="progress_dialog_message">অনুগ্রহপূর্বক অপেক্ষা করুন</string>
 
-    <!--FAQ page-->
-
-
-    <!--facebook login from my account -->
-
-    <!--<string name="facebook_app_id">871780212961408</string>-->
+    <string name="send_communication_request_text">যোগাযোগের জন্য অনুরোধ করুন</string>
+    <string name="biodata_request_text">পুরো বায়োডাটা দেখার অনুরোধ করুন</string>
+    <string name="after_sending_communication_request_text">আপনি যোগাযোগের জন্য অনুরোধ করেছেন</string>
+    <string name="after_sending_biodata_request_text">আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন</string>
 
 
 </resources>

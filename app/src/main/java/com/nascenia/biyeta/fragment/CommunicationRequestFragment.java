@@ -143,7 +143,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
-                    NetWorkOperation.postMethod(getActivity(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
                             Utils.SEND_SMILE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
@@ -163,7 +163,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
                 if (!userProfile.getProfile().isIsFavorite()) {
 
-                    NetWorkOperation.postMethod(getActivity(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
                             Utils.FAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
@@ -173,7 +173,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                     favoriteImageView.setImageResource(R.drawable.red_favorite);
                 } else {
 
-                    NetWorkOperation.postMethod(getActivity(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
                             Utils.UNFAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",

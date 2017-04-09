@@ -22,25 +22,20 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
-import com.nascenia.biyeta.activity.HomeScreen;
-import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.activity.SendRequestActivity;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.RequestSenderIds;
-import com.nascenia.biyeta.model.newuserprofile.RequestStatus;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.utils.MyCallback;
 import com.nascenia.biyeta.utils.Utils;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.nascenia.biyeta.R.id.emoIconImage;
@@ -142,7 +137,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
-                    NetWorkOperation.postMethod(getActivity(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
                             Utils.SEND_SMILE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
@@ -162,7 +157,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
                 if (!userProfile.getProfile().isIsFavorite()) {
 
-                    NetWorkOperation.postMethod(getActivity(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
                             Utils.FAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
@@ -172,7 +167,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                     favoriteImageView.setImageResource(R.drawable.red_favorite);
                 } else {
 
-                    NetWorkOperation.postMethod(getActivity(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
                             Utils.UNFAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",

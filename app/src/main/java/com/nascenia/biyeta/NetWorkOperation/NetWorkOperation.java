@@ -31,11 +31,11 @@ public class NetWorkOperation {
     private static ProgressDialog progressDialog;
 
     //this method is used for sending communication request to the server
-    public static void postData(Context context,
-                                String url,
-                                String userId,
-                                Button finalResultButton,
-                                String msg) {
+    public static void createCommunicationReqeust(Context context,
+                                                  String url,
+                                                  String userId,
+                                                  Button finalResultButton,
+                                                  String msg) {
         NetWorkOperation.context = context;
 
         progressDialog = new ProgressDialog(context);
@@ -48,7 +48,7 @@ public class NetWorkOperation {
     }
 
     //this method is used for sending biodata request to the server
-    public static void CreateProfileReqeust(Context context, String url, Button finalResultButton, String msg) {
+    public static void createProfileReqeust(Context context, String url, Button finalResultButton, String msg) {
 
         NetWorkOperation.context = context;
 
@@ -60,11 +60,11 @@ public class NetWorkOperation {
     }
 
     // this mehtod is used only for sending favorite,unvfavorite and smile response to the server
-    public static void postMethod(Context context,
-                                  String url,
-                                  String profileId,
-                                  String header,
-                                  String hederParam) {
+    public static void sendFavoriteUnFavoriteandSmileRequest(Context context,
+                                                             String url,
+                                                             String profileId,
+                                                             String header,
+                                                             String hederParam) {
         NetWorkOperation.context = context;
 
         progressDialog = new ProgressDialog(context);

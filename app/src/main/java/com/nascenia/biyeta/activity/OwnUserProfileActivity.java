@@ -96,8 +96,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
     private TextView userNameTextView;
 
-    private CardView educationCardView, professionCardview, brotherCardview, sisterCardview,
-            otherRelativeCardview, childCardView, otherInfoCardview;
+    private CardView otherRelativeCardview, childCardView, otherInfoCardview;
     private String res;
 
     @Override
