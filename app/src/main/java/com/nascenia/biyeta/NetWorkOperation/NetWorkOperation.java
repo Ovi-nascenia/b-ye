@@ -211,7 +211,8 @@ public class NetWorkOperation {
 
         @Override
         protected void onPostExecute(String s) {
-            if (s == null) Utils.ShowAlert(context, "ইন্টারনেট সংযোগ নেই");
+            if (s == null)
+                Utils.ShowAlert(context, context.getResources().getString(R.string.no_internet_connection));
             else {
                 Log.i("response", s);
 

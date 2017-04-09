@@ -385,6 +385,7 @@
                     </android.support.v7.widget.CardView>
 
                     <TextView
+                        android:id="@+id/other_info_textView_tag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/medium_margin"
@@ -392,11 +393,14 @@
                         android:text="বিবিধ প্রশ্নের উত্তর"
                         android:textColor="#F44336"
                         android:textSize="@dimen/item_textsize"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/other_info_cardview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         app:cardBackgroundColor="#FFFFFF">
 
                         <android.support.v7.widget.RecyclerView
@@ -646,10 +650,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
+        android:padding="@dimen/small_padding"
         android:text="@string/no_request_from_me"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/medium_textsize"
-        android:padding="@dimen/small_padding"
         android:visibility="visible" />
 
 </RelativeLayout>

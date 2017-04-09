@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -63,8 +64,8 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     private ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
     private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
     private TextView userProfileDescriptionText, communicatiodataNotificationCounterTextview,
-            userNameTextView;
-
+            userNameTextView, otherInfoTextViewTag;
+    private CardView otherInfoCardLayout;
     private ImageView profileViewerPersonImageView;
 
 
@@ -128,6 +129,8 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         communicatiodataNotificationCounterTextview = (TextView) getActivity().
                 findViewById(R.id.communication_notification_textview);
 
+        otherInfoTextViewTag = (TextView) _baseView.findViewById(R.id.other_info_textView_tag);
+        otherInfoCardLayout = (CardView) _baseView.findViewById(R.id.other_info_cardview);
 
         bottomRelativeLayout = (RelativeLayout) _baseView.findViewById(R.id.r1);
         coordnatelayout = (CoordinatorLayout) _baseView.findViewById(R.id.coordnatelayout);
@@ -289,7 +292,9 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 coordnatelayout,
                 bottomRelativeLayout,
                 acceptImageView,
-                cancelImageView
+                cancelImageView,
+                otherInfoTextViewTag,
+                otherInfoCardLayout
 
         );
 

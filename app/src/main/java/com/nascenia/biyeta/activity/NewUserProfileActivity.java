@@ -423,10 +423,14 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             if (userProfile.getProfile().getOtherInformation() != null) {
 
-                                otherInfoTagTextview.setVisibility(View.VISIBLE);
+                                /*otherInfoTagTextview.setVisibility(View.VISIBLE);
                                 otherInfoCardView.setVisibility(View.VISIBLE);
-                                SendRequestFragmentView.setDataonOtherInfoRecylerView(getBaseContext(), userProfile,
-                                        otherInfoRecylerView);
+                                */
+                                SendRequestFragmentView.setDataonOtherInfoRecylerView(getBaseContext(),
+                                        userProfile,
+                                        otherInfoRecylerView,
+                                        otherInfoTagTextview,
+                                        otherInfoCardView);
 
                             }
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -95,7 +96,9 @@ public abstract class SendRequestFragmentView {
                                                 CoordinatorLayout coordinatorLayout,
                                                 RelativeLayout bottomRelativeLayout,
                                                 ImageView acceptImageView,
-                                                ImageView rejectImageView) {
+                                                ImageView rejectImageView,
+                                                TextView otherInfoTextViewTag,
+                                                CardView otherInfoCardLayout) {
 
         //Toast.makeText(context, "fetchmethod", Toast.LENGTH_LONG).show();
         Log.i("btnreaction", "fetchmethod");
@@ -128,7 +131,9 @@ public abstract class SendRequestFragmentView {
                 coordinatorLayout,
                 bottomRelativeLayout,
                 acceptImageView,
-                rejectImageView);
+                rejectImageView,
+                otherInfoTextViewTag,
+                otherInfoCardLayout);
         Thread response = new Thread(responseThread);
         response.start();
 
@@ -154,6 +159,8 @@ public abstract class SendRequestFragmentView {
         private RelativeLayout bottomRelativeLayout;
         private ImageView acceptImageView;
         private ImageView rejectImageView;
+        private TextView otherInfoTextViewTag;
+        private CardView otherInfoCardLayout;
 
         public ResponseThread(String url,
                               Context context,
@@ -170,7 +177,9 @@ public abstract class SendRequestFragmentView {
                               CoordinatorLayout coordinatorLayout,
                               RelativeLayout bottomRelativeLayout,
                               ImageView acceptImageView,
-                              ImageView rejectImageView) {
+                              ImageView rejectImageView,
+                              TextView otherInfoTextViewTag,
+                              CardView otherInfoCardLayout) {
 
 
             this.callback = callback;
@@ -189,6 +198,8 @@ public abstract class SendRequestFragmentView {
             this.bottomRelativeLayout = bottomRelativeLayout;
             this.acceptImageView = acceptImageView;
             this.rejectImageView = rejectImageView;
+            this.otherInfoTextViewTag = otherInfoTextViewTag;
+            this.otherInfoCardLayout = otherInfoCardLayout;
 
             dialog = new ProgressDialog(context);
             dialog.setMessage(context.getResources().getString(R.string.progress_dialog_message));
@@ -235,7 +246,9 @@ public abstract class SendRequestFragmentView {
                                 userProfile,
                                 familyMemberInfoRecylerView);
                         setDataonOtherInfoRecylerView(context,
-                                userProfile, otherInfoRecylerView);
+                                userProfile, otherInfoRecylerView,
+                                otherInfoTextViewTag,
+                                otherInfoCardLayout);
 
                         acceptImageView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -305,14 +318,16 @@ public abstract class SendRequestFragmentView {
 
     public static void setDataonOtherInfoRecylerView(Context context,
                                                      UserProfile userProfile,
-                                                     RecyclerView otherInfoRecylerView) {
+                                                     RecyclerView otherInfoRecylerView,
+                                                     TextView otherInfoTextViewTag,
+                                                     CardView otherInfoCarView) {
 
         otherInformationArrayList.clear();
 
         if (!(checkNullField(userProfile.getProfile().getOtherInformation().getFasting()).equals(""))) {
 
             otherInformationArrayList.add(new MatchUserChoice("রোজা রাখেন?",
-                    checkNullField(userProfile.getProfile().getOtherInformation().getFasting())));
+                    userProfile.getProfile().getOtherInformation().getFasting()));
 
         }
 
@@ -320,7 +335,7 @@ public abstract class SendRequestFragmentView {
         if (!(checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()).equals(""))) {
 
             otherInformationArrayList.add(new MatchUserChoice("নামাজ পড়েন?",
-                    checkNullField(userProfile.getProfile().getOtherInformation().getPrayer())));
+                    userProfile.getProfile().getOtherInformation().getPrayer()));
 
         }
 
@@ -331,7 +346,7 @@ public abstract class SendRequestFragmentView {
 
 
             otherInformationArrayList.add(new MatchUserChoice("বিয়ের পরে চাকরি?",
-                    checkNullField(userProfile.getProfile().getOtherInformation().getJobAfterMarriage())));
+                    userProfile.getProfile().getOtherInformation().getJobAfterMarriage()));
         }
 
 
@@ -341,21 +356,28 @@ public abstract class SendRequestFragmentView {
 
 
             otherInformationArrayList.add(new MatchUserChoice("হিজাব পড়েন?",
-                    checkNullField(userProfile.getProfile().getOtherInformation().getHijab())));
+                    userProfile.getProfile().getOtherInformation().getHijab()));
         }
 
         if ((userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))
 
-                & (!(checkNullField(userProfile.getProfile().getOtherInformation().getHijab()).equals("")))) {
+                & (!(checkNullField(userProfile.getProfile().getOtherInformation().getOwnHouse()).equals("")))) {
 
 
             otherInformationArrayList.add(new MatchUserChoice("নিজের বাসা আছে?",
-                    checkNullField(userProfile.getProfile().getOtherInformation().getOwnHouse())));
+                    userProfile.getProfile().getOtherInformation().getOwnHouse()));
         }
 
 
-        otherInfoRecylerView.setAdapter(new OtherInfoRecylerViewAdapter(
-                context, otherInformationArrayList));
+        if (otherInformationArrayList.size() > 0) {
+
+            otherInfoTextViewTag.setVisibility(View.VISIBLE);
+            otherInfoCarView.setVisibility(View.VISIBLE);
+
+            otherInfoRecylerView.setAdapter(new OtherInfoRecylerViewAdapter(
+                    context, otherInformationArrayList));
+        }
+
 
     }
 

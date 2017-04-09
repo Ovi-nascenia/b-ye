@@ -53,8 +53,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
     private ImageView cancelImageView, waitImageView, acceptImageView, emoIconImageView,
             mobileCheckIconImageView, fbCheckIconImageView, mailCheckIconImageView;
-    private TextView cancelTextView, waitTextView, acceptTextView, communicationTagTextView;
-    private CardView communicationCardLayout;
+    private TextView cancelTextView, waitTextView, acceptTextView, communicationTagTextView,
+            otherInfoTextViewTag;
+    private CardView communicationCardLayout, otherInfoCardLayout;
 
     private ImageView userProfileImage, selfImageView, favoriteImageView;
     private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView, otherInfoRecylerView,
@@ -123,6 +124,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
         biodataNotificationCounterTextview = (TextView) getActivity().findViewById(
                 R.id.biodata_notification_textview);
+
+        otherInfoTextViewTag = (TextView) _baseView.findViewById(R.id.other_info_textView_tag);
+        otherInfoCardLayout = (CardView) _baseView.findViewById(R.id.other_info_cardview);
 
         bottomRelativeLayout = (RelativeLayout) _baseView.findViewById(R.id.r1);
         coordnatelayout = (CoordinatorLayout) _baseView.findViewById(R.id.coordnatelayout);
@@ -352,7 +356,9 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 coordnatelayout,
                 bottomRelativeLayout,
                 acceptImageView,
-                cancelImageView
+                cancelImageView,
+                otherInfoTextViewTag,
+                otherInfoCardLayout
         );
 
 
