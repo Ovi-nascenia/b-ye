@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.fragment.Match;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -141,6 +142,8 @@ public class NetWorkOperation {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.has("message")) {
+                        Match.pause_is_called=2;
+                        NewUserProfileActivity.message=jsonObject.getJSONArray("message").getJSONObject(0).getString("detail");
                         this.finalResultButton.setText(jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"));
                         this.finalResultButton.setEnabled(false);
                     } else {

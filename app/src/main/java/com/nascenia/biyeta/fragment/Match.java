@@ -64,8 +64,8 @@ public class Match extends Fragment implements View.OnClickListener {
 
     private final OkHttpClient client = new OkHttpClient();
 
-    ArrayList<BiodataProfile>responseObject=new ArrayList();
-    ArrayList<CommunicationProfile>responseCommunication=new ArrayList();
+    ArrayList<BiodataProfile> responseObject = new ArrayList();
+    ArrayList<CommunicationProfile> responseCommunication = new ArrayList();
     TextView biodata;
     TextView connection;
     RecyclerView recyclerView;
@@ -85,13 +85,15 @@ public class Match extends Fragment implements View.OnClickListener {
     BiodataProfileAdapter biodataListAdapter;
     BiodataProfile biodataResponse;
 
-    List<Profile> profileArrayList;
+    List<Profile> profileArrayList = new ArrayList<>();
     Response response;
-    int position;
+   public static int profile_position;
     CommunicationAdapter communicationAdapter;
     Snackbar snackbar;
     CommunicationProfile communicationProfileResponse;
     TextView emptyMessage;
+    public static int pause_is_called=0;
+
     public Match() {
         // Required empty public constructor
     }
@@ -105,8 +107,9 @@ public class Match extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.e("come", "Match");
+        pause_is_called=0;
         View v = inflater.inflate(R.layout.match, null);
-         emptyMessage = (TextView) v.findViewById(R.id.empty_message);
+        emptyMessage = (TextView) v.findViewById(R.id.empty_message);
 
 
         biodata = (TextView) v.findViewById(R.id.biodata);
@@ -115,9 +118,7 @@ public class Match extends Fragment implements View.OnClickListener {
 
         connection = (TextView) v.findViewById(R.id.connection);
         connection.setOnClickListener(this);
-
         progressBar = (ProgressBar) v.findViewById(R.id.simpleProgressBar);
-
         recyclerView = (RecyclerView) v.findViewById(R.id.communication_profile_list);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -139,12 +140,18 @@ public class Match extends Fragment implements View.OnClickListener {
         super.onResume();
 
 
-
-      //  new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests");
+        if (pause_is_called==2) {
+            profileArrayList.get(profile_position).getRequestStatus().setMessage(NewUserProfileActivity.message);
+            biodataListAdapter.notifyDataSetChanged();
+        }
 
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        pause_is_called=1;
+    }
 
     @Override
     public void onClick(View view) {
@@ -236,10 +243,11 @@ public class Match extends Fragment implements View.OnClickListener {
                                 @Override
                                 public void onClickProfile(int position) {
 
+
                                     int pos;
-                                    int i=position/10;
-                                    pos=position%10;
-                                    CommunicationProfile con=responseCommunication.get(i);
+                                    int i = position / 10;
+                                    pos = position % 10;
+                                    CommunicationProfile con = responseCommunication.get(i);
                                     Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
                                     intent.putExtra("id", con.getProfiles().get(pos).getId() + "");
                                     intent.putExtra("user_name", con.getProfiles().get(pos).getDisplayName());
@@ -357,10 +365,13 @@ public class Match extends Fragment implements View.OnClickListener {
 
                                 @Override
                                 public void onClickProfile(int position) {
+                                    Log.e("check", profileArrayList.get(position).getDisplayName());
+                                    profile_position=position;
+
                                     int pos;
-                                    int i=position/10;
-                                    pos=position%10;
-                                    BiodataProfile bioProfile=responseObject.get(i);
+                                    int i = position / 10;
+                                    pos = position % 10;
+                                    BiodataProfile bioProfile = responseObject.get(i);
                                     Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
                                     intent.putExtra("id", bioProfile.getProfiles().get(pos).getId() + "");
                                     intent.putExtra("user_name", bioProfile.getProfiles().get(pos).getDisplayName());
