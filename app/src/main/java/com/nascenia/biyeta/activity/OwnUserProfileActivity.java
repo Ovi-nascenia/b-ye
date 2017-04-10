@@ -219,7 +219,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (!(checkNullField(userProfile.getProfile().getOtherInformation().getFasting()).equals(""))) {
 
-            otherInfoChildItemList.add(new UserProfileChild("রোজা রাখেন?",
+            otherInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.fast_text),
                     userProfile.getProfile().getOtherInformation().getFasting()));
 
         }
@@ -227,7 +227,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (!(checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()).equals(""))) {
 
-            otherInfoChildItemList.add(new UserProfileChild("নামাজ পড়েন?",
+            otherInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.prayet_text),
                     userProfile.getProfile().getOtherInformation().getPrayer()));
 
         }
@@ -238,7 +238,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 & (!(checkNullField(userProfile.getProfile().getOtherInformation().getJobAfterMarriage()).equals("")))) {
 
 
-            otherInfoChildItemList.add(new UserProfileChild("বিয়ের পরে চাকরি?",
+            otherInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.after_marrige_job_text),
                     userProfile.getProfile().getOtherInformation().getJobAfterMarriage()));
 
         }
@@ -249,7 +249,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 & (!(checkNullField(userProfile.getProfile().getOtherInformation().getHijab()).equals("")))) {
 
 
-            otherInfoChildItemList.add(new UserProfileChild("হিজাব পড়েন?",
+            otherInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.hijab_text),
                     userProfile.getProfile().getOtherInformation().getHijab()));
 
         }
@@ -260,7 +260,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 & (!(checkNullField(userProfile.getProfile().getOtherInformation().getOwnHouse()).equals("")))) {
 
 
-            otherInfoChildItemList.add(new UserProfileChild("নিজের বাসা আছে?",
+            otherInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.own_house_text),
                     userProfile.getProfile().getOtherInformation().getOwnHouse()));
 
         }
@@ -268,7 +268,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (otherInfoChildItemList.size() > 0) {
             otherInfoChildItemHeader.add(new UserProfileParent(
-                    "বিবিধ প্রশ্নের উত্তর"
+                    getResources().getString(R.string.other_question_ans_text)
                     , otherInfoChildItemList));
 
             otherInformationRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
@@ -286,49 +286,53 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     private void setDataOnProfessionRecylerView(UserProfile userProfile) {
 
 
-        if (userProfile.getProfile().getProfession() != null &&
-                !(checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())).equals("")) {
+        if (userProfile.getProfile().getProfession() != null) {
 
-            professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle("professional_group"),
-                    userProfile.getProfile().getProfession().getProfessionalGroup()));
+            if (!(checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())).equals("")) {
 
-        }
+                professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle(
+                        getResources().getString(R.string.professional_group_text)),
+                        userProfile.getProfile().getProfession().getProfessionalGroup()));
 
-
-        if (userProfile.getProfile().getProfession() != null &&
-                !(checkNullField(userProfile.getProfile().getProfession().getOccupation())).equals("")) {
-
-            professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle("occupation"),
-                    userProfile.getProfile().getProfession().getOccupation()));
-
-        }
+            }
 
 
-        if (userProfile.getProfile().getProfession() != null &&
-                !(checkNullField(userProfile.getProfile().getProfession().getDesignation())).equals("")) {
+            if (!(checkNullField(userProfile.getProfile().getProfession().getOccupation())).equals("")) {
 
-            professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle("designation"),
-                    userProfile.getProfile().getProfession().getDesignation()));
+                professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle(
+                        getResources().getString(R.string.occupation_text)),
+                        userProfile.getProfile().getProfession().getOccupation()));
 
-        }
-
-
-        if (userProfile.getProfile().getProfession() != null &&
-                !(checkNullField(userProfile.getProfile().getProfession().getInstitute())).equals("")) {
-
-            professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle("institute"),
-                    userProfile.getProfile().getProfession().getInstitute()));
-
-        }
+            }
 
 
-        if (professionChildItemList.size() > 0) {
+            if (!(checkNullField(userProfile.getProfile().getProfession().getDesignation())).equals("")) {
 
-            professionChildItemHeader.add(new UserProfileParent("পেশা", professionChildItemList));
-            professionRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
-                    professionChildItemHeader,
-                    true));
+                professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle(
+                        getResources().getString(R.string.designation_text)),
+                        userProfile.getProfile().getProfession().getDesignation()));
 
+            }
+
+
+            if (!(checkNullField(userProfile.getProfile().getProfession().getInstitute())).equals("")) {
+
+                professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle(
+                        getResources().getString(R.string.institute_text)),
+                        userProfile.getProfile().getProfession().getInstitute()));
+
+            }
+
+
+            if (professionChildItemList.size() > 0) {
+
+                professionChildItemHeader.add(new UserProfileParent(
+                        getResources().getString(R.string.profession_text), professionChildItemList));
+                professionRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                        professionChildItemHeader,
+                        true));
+
+            }
         }
 
 
@@ -389,13 +393,14 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     private void setDataOnPersonalInfoRecylerView(UserProfile userProfile) {
 
         //add personal Information
-        personalInfoChildItemList.add(new UserProfileChild("বয়স",
+        personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.age),
                 Utils.convertEnglishDigittoBangla(
-                        userProfile.getProfile().getPersonalInformation().getAge()) + " বছর,"
+                        userProfile.getProfile().getPersonalInformation().getAge()) +
+                        " " + getResources().getString(R.string.year) + ","
 
         ));
 
-        personalInfoChildItemList.add(new UserProfileChild("উচ্চতা",
+        personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.height),
                 Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightFt())
                         + "'" +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightInc())
@@ -403,11 +408,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         ));
 
 
-        personalInfoChildItemList.add(new UserProfileChild("ধর্ম",
+        personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.religion_text),
                 userProfile.getProfile().getProfileReligion().getReligion()
         ));
 
-        personalInfoChildItemList.add(new UserProfileChild("বর্ণ",
+        personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.cast_text),
                 userProfile.getProfile().getProfileReligion().getCast()
         ));
 
@@ -415,7 +420,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())).equals("")) {
 
 
-            personalInfoChildItemList.add(new UserProfileChild("বর্তমান অবস্থান",
+            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.present_loaction_text),
                     userProfile.getProfile().getProfileLivingIn().getCountry()
             ));
         }
@@ -423,7 +428,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())).equals("")) {
 
-            personalInfoChildItemList.add(new UserProfileChild("দেশের বাড়ি",
+            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.home_town),
                     userProfile.getProfile().getProfileLivingIn().getLocation()
             ));
 
@@ -432,7 +437,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())).equals("")) {
 
-            personalInfoChildItemList.add(new UserProfileChild("গায়ের রং",
+            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.body_color),
                     userProfile.getProfile().getPersonalInformation().getSkinColor()
             ));
 
@@ -440,7 +445,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())).equals("")) {
 
-            personalInfoChildItemList.add(new UserProfileChild("উচ্চতা",
+            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.body),
                     userProfile.getProfile().getPersonalInformation().getWeight()
             ));
 
@@ -450,7 +455,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getMaritalStatus()))
                 .equals("")) {
 
-            personalInfoChildItemList.add(new UserProfileChild("বৈবাহিক অবস্থা",
+            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.marital_status),
                     userProfile.getProfile().getPersonalInformation().getMaritalStatus()
             ));
 
@@ -459,7 +464,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         //add personal Child Item list to parent list
         if (personalInfoChildItemList.size() > 0) {
-            personalInfoChildItemHeader.add(new UserProfileParent("ব্যাক্তিগত তথ্য", personalInfoChildItemList));
+            personalInfoChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.personal_info), personalInfoChildItemList));
 
             personalInfoRecylerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
                     personalInfoChildItemHeader,

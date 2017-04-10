@@ -593,7 +593,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/large_margin"
+            android:layout_marginLeft="30dp"
             android:padding="@dimen/small_padding"
             android:src="@drawable/cancel_icon" />
 
@@ -611,6 +611,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginRight="@dimen/small_margin"
             android:padding="@dimen/small_padding"
             android:src="@drawable/wait_icon"
             android:visibility="visible" />
@@ -621,6 +622,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/wait_imageview"
             android:layout_centerHorizontal="true"
+            android:layout_marginRight="@dimen/small_margin"
             android:text="অপেক্ষমাণ রাখুন"
             android:textColor="#000000"
             android:visibility="visible" />
@@ -631,7 +633,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginRight="@dimen/large_margin"
+            android:layout_marginRight="30dp"
             android:padding="@dimen/small_padding"
             android:src="@drawable/accept_icon" />
 
@@ -641,7 +643,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/accept_imageview"
-            android:layout_marginRight="@dimen/large_margin"
+            android:layout_marginRight="30dp"
             android:text="গ্রহণ করুন"
             android:textColor="#000000" />
 

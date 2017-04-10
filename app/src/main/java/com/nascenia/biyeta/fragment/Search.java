@@ -50,7 +50,7 @@ public class Search extends Fragment {
 
     private final OkHttpClient client = new OkHttpClient();
     private RecyclerView recyclerView;
-    private RelativeLayout relativeLayout;
+    private RelativeLayout progressBarLayout;
     //used for paging track
     private int flag = 1;
     private TextView emptyText;
@@ -98,8 +98,14 @@ public class Search extends Fragment {
 
                     if (Utils.isOnline(getContext()))
                         new GetData().execute();
-                    else
+                    else {
+                        if(snackbar.isShown()){
+                            snackbar.dismiss();
+                        }
+                        progressBarLayout.setVisibility(View.GONE);
                         Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
+                    }
+
                 } else {
 
                 }
@@ -111,7 +117,7 @@ public class Search extends Fragment {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mProfile_adapter);
-        relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutLeftButton);
+        progressBarLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutLeftButton);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +125,7 @@ public class Search extends Fragment {
                 jsonObjects.clear();
 
                 if (Utils.isOnline(getContext()))
-                  startActivity(new Intent(getContext(), Search_Filter.class));
+                    startActivity(new Intent(getContext(), Search_Filter.class));
                 else
                     Utils.ShowInternetConnectionError(getContext());
             }
@@ -128,24 +134,25 @@ public class Search extends Fragment {
 
         if (Utils.isOnline(getContext()))
             new GetData().execute();
-        else
+        else {
+
+            progressBarLayout.setVisibility(View.GONE);
             Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
+        }
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         Log.i("username", profileList.get(position).getDisplay_name() + " " +
                                 profileList.get(position).getId());
-                        if(Utils.isOnline(getActivity())) {
+                        if (Utils.isOnline(getActivity())) {
                             Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
                             intent.putExtra("id", profileList.get(position).getId());
                             intent.putExtra("user_name",
                                     profileList.get(position).getDisplay_name());
                             intent.putExtra("PROFILE_EDIT_OPTION", false);
                             startActivity(intent);
-                        }
-                        else
-                        {
+                        } else {
                             Utils.ShowInternetConnectionError(getActivity());
                         }
                     }
@@ -161,7 +168,6 @@ public class Search extends Fragment {
         super.onStart();
 
     }
-
 
 
     @Override
@@ -183,30 +189,30 @@ public class Search extends Fragment {
 
     }
 
-    public  static ArrayList<JSONObject> jsonObjects=new ArrayList<>();
+    public static ArrayList<JSONObject> jsonObjects = new ArrayList<>();
 
     @Override
     public void onResume() {
         super.onResume();
-        if ( !jsonObjects.isEmpty()) {
-         //    try {
+        if (!jsonObjects.isEmpty()) {
+            //    try {
 
-                Log.e("fuck","fuck");
-                emptyText.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(mProfile_adapter);
-                Log.e("Search_Filter", jsonObjects.size()+"");
-                //clear the previous list item
-                profileList.clear();
-                mProfile_adapter.notifyDataSetChanged();
-          //    JSONObject jsonObject = new JSONObject(Search_Filter.reponse);
-                for (int i=0;i<jsonObjects.size();i++) {
+            Log.e("fuck", "fuck");
+            emptyText.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setAdapter(mProfile_adapter);
+            Log.e("Search_Filter", jsonObjects.size() + "");
+            //clear the previous list item
+            profileList.clear();
+            mProfile_adapter.notifyDataSetChanged();
+            //    JSONObject jsonObject = new JSONObject(Search_Filter.reponse);
+            for (int i = 0; i < jsonObjects.size(); i++) {
 
-                    loadDataFromResponse(jsonObjects.get(i));
-                }
+                loadDataFromResponse(jsonObjects.get(i));
+            }
 
 //            } catch (JSONException e) {
 //                Utils.ShowAlert(getContext(), "Error");
@@ -224,8 +230,7 @@ public class Search extends Fragment {
                 emptyText.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
                 emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
-            }
-            else {
+            } else {
                 emptyText.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
 
@@ -247,14 +252,14 @@ public class Search extends Fragment {
                     String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
                     SearchProfileModel profile = new SearchProfileModel(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
 
-                     profileList.add(profile);
-                     mProfile_adapter.notifyDataSetChanged();
-                     relativeLayout.setVisibility(View.GONE);
+                    profileList.add(profile);
+                    mProfile_adapter.notifyDataSetChanged();
+                    progressBarLayout.setVisibility(View.GONE);
 
                 }
             }
         } catch (JSONException e) {
-             Utils.ShowInternetConnectionError(getContext());
+            Utils.ShowInternetConnectionError(getContext());
 
 
             emptyText.setVisibility(View.VISIBLE);
@@ -269,11 +274,15 @@ public class Search extends Fragment {
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
 
-            if (res == null) Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
-            else {
+            if (res == null) {
+                if (snackbar.isShown()) {
+                    snackbar.dismiss();
+                }
+                Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
+            } else {
 
                 Log.e("SearchResponse", res);
-                relativeLayout.setVisibility(View.GONE);
+                progressBarLayout.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
                 if (flag != 1) snackbar.dismiss();
                 try {
@@ -282,15 +291,11 @@ public class Search extends Fragment {
                         emptyText.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                         emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
-                    }
-                    else if (jsonObject.has("total_page") && !jsonObject.has("profiles"))
-                    {
+                    } else if (jsonObject.has("total_page") && !jsonObject.has("profiles")) {
                         emptyText.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                         emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
-                    }
-
-                    else {
+                    } else {
 
 
                         totalPageNumber = jsonObject.getInt("total_page");
@@ -301,6 +306,10 @@ public class Search extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (NullPointerException ei) {
+                    if (snackbar.isShown()) {
+                        snackbar.dismiss();
+                    }
+                    progressBarLayout.setVisibility(View.GONE);
                     Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
                 }
             }
