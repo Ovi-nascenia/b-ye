@@ -86,6 +86,19 @@
 
     <string name="no_internet_connection"> ইন্টারনেট সংযোগ নেই</string>
 
+    <string name="father_text">বাবা</string>
+    <string name="mother_text">মা</string>
+    <string name="brother_text">ভাই</string>
+    <string name="sister_text">বোন</string>
+    <string name="child_text">সন্তান</string>
+    <string name="no_child_text">কোন সন্তান নেই</string>
+
+    <string name="no_brother_text">কোন ভাই নেই</string>
+    <string name="no_sister_text">কোন বোন নেই</string>
+
+    <string name="married_text">বিবাহিত</string>
+    <string name="unmarried_text">অবিবাহিত</string>
+
 
     <string name="make_call">ফোন করুন</string>
     <string name="make_message">মেসেজ পাঠান</string>

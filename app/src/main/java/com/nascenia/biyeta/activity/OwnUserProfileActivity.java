@@ -377,7 +377,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             if (educationalInfoChildItemList.size() > 0) {
 
-                educationalInfoChildItemHeader.add(new UserProfileParent("শিক্ষাগত যোগ্যতা", educationalInfoChildItemList));
+                educationalInfoChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.education_male), educationalInfoChildItemList));
                 educationRecylerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
                         educationalInfoChildItemHeader,
                         true));
@@ -483,7 +483,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
             //add father information
             if (userProfile.getProfile().getFamilyMembers().getFather() != null) {
 
-                parentChildItemList.add(new UserProfileChild("বাবা",
+                parentChildItemList.add(new UserProfileChild(getResources().getString(R.string.father_text),
                         checkNullField(userProfile.getProfile().getFamilyMembers().getFather()
                                 .getName())
                                 + checkNullField(userProfile.getProfile().getFamilyMembers()
@@ -500,7 +500,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
             //add mother information
             if (userProfile.getProfile().getFamilyMembers().getFather() != null) {
 
-                parentChildItemList.add(new UserProfileChild("মা",
+                parentChildItemList.add(new UserProfileChild(getResources().getString(R.string.mother_text),
                         checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
                                 .getName())
                                 + checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
@@ -516,7 +516,10 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             //add parentchildlist data to mainparentlist
             if (parentChildItemList.size() > 0) {
-                parentChildItemHeader.add(new UserProfileParent("বাবা-মা", parentChildItemList));
+                parentChildItemHeader.add(new UserProfileParent(
+                        getResources().getString(R.string.father_text) + "-" +
+                                getResources().getString(R.string.mother_text),
+                        parentChildItemList));
 
                 parentsRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
                         parentChildItemHeader,
@@ -538,7 +541,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     familyMemberCounter = i + 1;
 
                     brothersChildItemList.add(new UserProfileChild(
-                            "ভাই " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            getResources().getString(R.string.brother_text) + Utils.convertEnglishDigittoBangla(familyMemberCounter),
 
                             checkNullField(userProfile.getProfile().getFamilyMembers().getBrothers().
                                     get(i).getName())
@@ -573,7 +576,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
             //add brotherchildlist data to mainparentlist
             if (brothersChildItemList.size() > 0) {
                 brothersChildItemHeader.add(new UserProfileParent(
-                        "ভাই(" + Utils.convertEnglishDigittoBangla(brothersChildItemList.size()) + ")"
+                        getResources().getString(R.string.brother_text) + "("
+                                + Utils.convertEnglishDigittoBangla(brothersChildItemList.size()) + ")"
                         , brothersChildItemList));
 
                 brotherRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
@@ -582,8 +586,10 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             } else {
 
-                brothersChildItemList.add(new UserProfileChild("ভাই", "কোন ভাই নেই"));
-                brothersChildItemHeader.add(new UserProfileParent("ভাই", brothersChildItemList));
+                brothersChildItemList.add(new UserProfileChild(getResources().getString(R.string.brother_text)
+                        , getResources().getString(R.string.no_brother_text)));
+                brothersChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.brother_text)
+                        , brothersChildItemList));
                 brotherRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
                         brothersChildItemHeader,
                         true));
@@ -603,7 +609,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
                     familyMemberCounter = i + 1;
                     sistersChildItemList.add(new UserProfileChild(
-                            "বোন " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            getResources().getString(R.string.sister_text)
+                                    + Utils.convertEnglishDigittoBangla(familyMemberCounter),
 
                             checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getSisters().get(i).getName())
@@ -637,7 +644,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
             //add sisterchildlist data to mainparentlist
             if (sistersChildItemList.size() > 0) {
                 sistersChildItemHeader.add(new UserProfileParent(
-                        "বোন(" + Utils.convertEnglishDigittoBangla(sistersChildItemList.size()) + ")"
+                        getResources().getString(R.string.brother_text) + "("
+                                + Utils.convertEnglishDigittoBangla(sistersChildItemList.size()) + ")"
                         , sistersChildItemList));
 
                 sisterRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
@@ -646,8 +654,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             } else {
 
-                sistersChildItemList.add(new UserProfileChild("বোন", "কোন বোন নেই"));
-                sistersChildItemHeader.add(new UserProfileParent("বোন", sistersChildItemList));
+                sistersChildItemList.add(new UserProfileChild(
+                        getResources().getString(R.string.brother_text),
+                        getResources().getString(R.string.no_sister_text)));
+                sistersChildItemHeader.add(new UserProfileParent(
+                        getResources().getString(R.string.brother_text), sistersChildItemList));
                 sisterRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
                         sistersChildItemHeader,
                         true));
@@ -660,42 +671,44 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
 
             //add child information
-            if (userProfile.getProfile().getPersonalInformation().getMaritalStatus().equals("অবিবাহিত")) {
+            if (userProfile.getProfile().getPersonalInformation().getMaritalStatus().
+                    equals(getResources().getString(R.string.unmarried_text))) {
 
                 childCardView.setVisibility(View.GONE);
 
-            } else if (userProfile.getProfile().getPersonalInformation().getMaritalStatus().equals("বিবাহিত")) {
+            } else if (userProfile.getProfile().getPersonalInformation().getMaritalStatus().
+                    equals(getResources().getString(R.string.married_text))) {
 
                 if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
                         userProfile.getProfile().getFamilyMembers().isChildLivesWithYou()) {
 
-                    childsChildItemList.add(new UserProfileChild("সন্তান",
+                    childsChildItemList.add(new UserProfileChild(getResources().getString(R.string.child_text),
                             Utils.convertEnglishDigittoBangla(
                                     userProfile.getProfile().getFamilyMembers().getNumberOfChild())
-                                    + " জন সন্তান, তার সাথে থাকে"));
+                                    + " জন সন্তান, সাথে থাকে"));
 
                 } else if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
                         !(userProfile.getProfile().getFamilyMembers().isChildLivesWithYou())) {
 
-                    childsChildItemList.add(new UserProfileChild("সন্তান",
+                    childsChildItemList.add(new UserProfileChild(getResources().getString(R.string.child_text),
                             Utils.convertEnglishDigittoBangla(
                                     userProfile.getProfile().getFamilyMembers().getNumberOfChild())
-                                    + " জন সন্তান, তার সাথে থাকে না"));
+                                    + " জন সন্তান, সাথে থাকে না"));
                 }
 
 
                 //add childlist data to mainparentlist
                 if (childsChildItemList.size() > 0) {
 
-                    childsChildItemHeader.add(new UserProfileParent("সন্তান"
+                    childsChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.child_text)
                             , childsChildItemList));
 
                     childRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
                             childsChildItemHeader,
                             true));
                 } else {
-                    childsChildItemList.add(new UserProfileChild("সন্তান", "কোন সন্তান নেই"));
-                    childsChildItemHeader.add(new UserProfileParent("সন্তান", childsChildItemList));
+                    childsChildItemList.add(new UserProfileChild(getResources().getString(R.string.child_text), getResources().getString(R.string.no_child_text)));
+                    childsChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.child_text), childsChildItemList));
 
                     childRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
                             childsChildItemHeader,
