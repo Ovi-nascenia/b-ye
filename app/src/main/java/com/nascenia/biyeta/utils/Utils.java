@@ -369,7 +369,7 @@ public class Utils {
                 break;
 
             case "professional_group":
-                value = "প্রোফেশনাল গ্রুপ";
+                value = "প্রফেশনাল গ্রুপ";
                 break;
 
             case "designation":

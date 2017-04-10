@@ -592,7 +592,7 @@ public abstract class SendRequestFragmentView {
             if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
                     userProfile.getProfile().getFamilyMembers().isChildLivesWithYou()) {
 
-                childItemList.add(new UserProfileChild("সন্তান",
+                childItemList.add(new UserProfileChild(context.getResources().getString(R.string.child_text),
                         Utils.convertEnglishDigittoBangla(
                                 userProfile.getProfile().getFamilyMembers().getNumberOfChild())
                                 + " জন সন্তান, তার সাথে থাকে"));
@@ -600,7 +600,7 @@ public abstract class SendRequestFragmentView {
             } else if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
                     !(userProfile.getProfile().getFamilyMembers().isChildLivesWithYou())) {
 
-                childItemList.add(new UserProfileChild("সন্তান",
+                childItemList.add(new UserProfileChild(context.getResources().getString(R.string.child_text),
                         Utils.convertEnglishDigittoBangla(
                                 userProfile.getProfile().getFamilyMembers().getNumberOfChild())
                                 + " জন সন্তান, তার সাথে থাকে না"));
@@ -786,7 +786,7 @@ public abstract class SendRequestFragmentView {
 
         } else {
 
-            sisterChildItemList.add(new UserProfileChild("বোন", "কোন বোন নেই"));
+            sisterChildItemList.add(new UserProfileChild("বোন", context.getResources().getString(R.string.no_sister_text)));
             mainparentItemList.add(new UserProfileParent("বোন", sisterChildItemList));
 
         }
@@ -800,7 +800,7 @@ public abstract class SendRequestFragmentView {
 
         } else {
 
-            brotherChildItemList.add(new UserProfileChild("ভাই", "কোন ভাই নেই"));
+            brotherChildItemList.add(new UserProfileChild("ভাই", context.getResources().getString(R.string.no_brother_text)));
             mainparentItemList.add(new UserProfileParent("ভাই", brotherChildItemList));
 
         }
@@ -813,7 +813,7 @@ public abstract class SendRequestFragmentView {
                     , childItemList));
 
         } else {
-            childItemList.add(new UserProfileChild("সন্তান", "কোন সন্তান নেই"));
+            childItemList.add(new UserProfileChild("সন্তান", context.getResources().getString(R.string.no_child_text)));
             mainparentItemList.add(new UserProfileParent("সন্তান", childItemList));
 
         }
@@ -822,7 +822,7 @@ public abstract class SendRequestFragmentView {
         if (otherCHildItemList.size() > 0) {
 
             mainparentItemList.add(new UserProfileParent(
-                    "অন্যান্য(" + Utils.convertEnglishDigittoBangla(otherCHildItemList.size()) + ")"
+                    context.getResources().getString(R.string.other) + "(" + Utils.convertEnglishDigittoBangla(otherCHildItemList.size()) + ")"
                     , otherCHildItemList));
         }
 
@@ -841,7 +841,8 @@ public abstract class SendRequestFragmentView {
 
         generalInformationArrayList.add(new GeneralInformation(
                 Utils.convertEnglishDigittoBangla(
-                        userProfile.getProfile().getPersonalInformation().getAge()) + " বছর," +
+                        userProfile.getProfile().getPersonalInformation().getAge()) + " " +
+                        activity.getResources().getString(R.string.year) + "," +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightFt())
                         + "'" +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightInc())
@@ -858,8 +859,8 @@ public abstract class SendRequestFragmentView {
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    "বর্তমান অবস্থান-" + checkNullField(
-                            userProfile.getProfile().getProfileLivingIn().getCountry())
+                    activity.getResources().getString(R.string.present_loaction_text) + "-" +
+                            userProfile.getProfile().getProfileLivingIn().getCountry()
                     , R.drawable.pla));
 
         }
@@ -869,8 +870,9 @@ public abstract class SendRequestFragmentView {
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    "দেশের বাড়ি-" + checkNullField(
-                            userProfile.getProfile().getProfileLivingIn().getLocation()), R.drawable.hom));
+                    activity.getResources().getString(R.string.home_town) + "-" +
+                            userProfile.getProfile().getProfileLivingIn().getLocation(),
+                    R.drawable.hom));
 
         }
 
@@ -880,7 +882,7 @@ public abstract class SendRequestFragmentView {
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())
+                    userProfile.getProfile().getProfession().getProfessionalGroup()
                     , R.drawable.pro));
         }
 
@@ -976,7 +978,7 @@ public abstract class SendRequestFragmentView {
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    checkNullField(userProfile.getProfile().getPersonalInformation().getMaritalStatus())
+                    userProfile.getProfile().getPersonalInformation().getMaritalStatus()
                     , R.drawable.mar));
         }
 
@@ -1084,7 +1086,7 @@ public abstract class SendRequestFragmentView {
 
             //add present address
             if (!presentAddress.equals("")) {
-                communicationArrayList.add(new MatchUserChoice("বর্তমান ঠিকানা",
+                communicationArrayList.add(new MatchUserChoice(context.getResources().getString(R.string.present_address_text),
                         presentAddress));
 
             }
@@ -1112,13 +1114,13 @@ public abstract class SendRequestFragmentView {
             //add permanent address
             if (permanentAddress != null) {
 
-                communicationArrayList.add(new MatchUserChoice("স্থায়ী ঠিকানা", permanentAddress));
+                communicationArrayList.add(new MatchUserChoice(context.getResources().getString(R.string.permanent_address_text), permanentAddress));
             }
 
 
             if (!(checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getDistrict()).equals(""))) {
 
-                communicationArrayList.add(new MatchUserChoice("জেলা",
+                communicationArrayList.add(new MatchUserChoice(context.getResources().getString(R.string.district),
                         userProfile.getProfile().getAddress().getPermanentAddress().getDistrict()));
 
             }
@@ -1126,7 +1128,7 @@ public abstract class SendRequestFragmentView {
 
             if (!(checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getCountry()).equals(""))) {
 
-                communicationArrayList.add(new MatchUserChoice("দেশ",
+                communicationArrayList.add(new MatchUserChoice(context.getResources().getString(R.string.country),
                         userProfile.getProfile().getAddress().getPermanentAddress().getCountry()));
 
             }
@@ -1134,7 +1136,7 @@ public abstract class SendRequestFragmentView {
 
             if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getMobileNo()).equals(""))) {
 
-                communicationArrayList.add(new MatchUserChoice("ফোন নম্বর",
+                communicationArrayList.add(new MatchUserChoice(context.getResources().getString(R.string.phone_number),
                         userProfile.getProfile().getPersonalInformation().getMobileNo()));
 
             }

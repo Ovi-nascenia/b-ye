@@ -801,14 +801,23 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         } else if (v.getTag().equals(Utils.call)) {
 
-            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + userProfile.getProfile()));
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +
+                    userProfile.getProfile().getPersonalInformation().getMobileNo()));
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) !=
                     PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
+
+
+                if (ContextCompat.checkSelfPermission(NewUserProfileActivity.this,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(NewUserProfileActivity.this,
+                            new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                }
+
                 //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
+                /*  public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                                          int[] grantResults)*/
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
                 return;

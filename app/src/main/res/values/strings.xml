@@ -41,10 +41,17 @@
     <string name="cast_text">বর্ণ</string>
     <string name="home_town">দেশের বাড়ি</string>
     <string name="present_loaction_text">বর্তমান অবস্থান</string>
+    <string name="permanent_address_text">্থায়ী ঠিকানা</string>
+    <string name="present_address_text">বর্তমান ঠিকান</string>
+
     <string name="age_text">বয়স</string>
     <string name="degree_name_text">ডিগ্রীর নাম</string>
     <string name="about_me">about</string>
     <string name="area">দেশের বাড়ি</string>
+    <string name="district">জেলা</string>
+    <string name="country">দেশ</string>
+    <string name="phone_number">ফোন নম্বর</string>
+
 
     <string name="title_activity_send_request">Request send</string>
 
