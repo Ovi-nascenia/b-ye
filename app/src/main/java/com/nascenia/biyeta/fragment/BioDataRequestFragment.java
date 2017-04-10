@@ -56,7 +56,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private ImageView cancelImageView, waitImageView, acceptImageView, emoIconImageView,
             mobileCheckIconImageView, fbCheckIconImageView, mailCheckIconImageView;
     private TextView cancelTextView, waitTextView, acceptTextView, communicationTagTextView,
-            otherInfoTextViewTag;
+            otherInfoTextViewTag,
+            sendEmoIconTextTag;
     private CardView communicationCardLayout, otherInfoCardLayout;
 
     private ImageView userProfileImage, selfImageView, favoriteImageView;
@@ -137,6 +138,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         appBarLayout = (AppBarLayout) _baseView.findViewById(R.id.appbar_layout);
         nestedScrollView = (NestedScrollView) _baseView.findViewById(R.id.nested_scrollview);
 
+        sendEmoIconTextTag = (TextView) _baseView.findViewById(R.id.sendEmoIconTextTag);
         layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
         favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
@@ -154,6 +156,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                             "Token token=" + sharePref.get_data("token"));
                     layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
+                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
 
 
                 }
@@ -426,6 +429,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 public void run() {
                     layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
+                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
                 }
             });
 

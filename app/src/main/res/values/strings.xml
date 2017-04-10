@@ -53,6 +53,7 @@
     <string name="message">মেসেজ</string>
     <string name="smile">হাসি </string>
     <string name="send_smile">হাসি পাঠান </string>
+    <string name="after_send_smile_text">হাসি পাঠিয়েছেন</string>
     <string name="verification_request">ভেরিফিকেশন অনুরোধ</string>
     <string name="expire_request">মেয়াদ উত্তীর্ণ অনুরোধ</string>
     <string name="trash">ট্র্যাশ</string>

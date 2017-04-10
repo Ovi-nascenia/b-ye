@@ -71,7 +71,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     private TextView userProfileDescriptionText, userNameTextView, familyInfoTagTextView,
             communicationTagTextview, otherInfoTagTextview, cancelTextView, acceptTextView,
-            userProfileDescriptionTextViewTag, generalInfoTagTextview, matchUserChoiceTextViewTag;
+            userProfileDescriptionTextViewTag, generalInfoTagTextview, matchUserChoiceTextViewTag,
+            sendEmoIconTextTag;
 
     private ImageView profileViewerPersonImageView, selfImageView;
 
@@ -194,6 +195,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         smileyandVerificationLayout = (LinearLayout) findViewById(R.id.smileyandVerificationLayout);
 
 
+        sendEmoIconTextTag = (TextView) findViewById(R.id.sendEmoIconTextTag);
         layoutSendSmiley = (LinearLayout) findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) findViewById(emoIconImage);
         favoriteImageView = (ImageView) findViewById(R.id.likeImage);
@@ -210,6 +212,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                             "Token token=" + sharePref.get_data("token"));
                     layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
+                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
 
 
                 }
@@ -354,6 +357,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                 layoutSendSmiley.setEnabled(false);
                                 emoIconImageView.setImageResource(R.drawable.red_smile);
+                                sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
                             }
 
 

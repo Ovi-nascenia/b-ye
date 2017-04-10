@@ -54,7 +54,8 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     private View _baseView;
 
     RelativeLayout relativeLayoutFullFrame;
-    TextView noListAvailable;
+    TextView noListAvailable, sendEmoIconTextTag;
+    ;
 
 
     private ImageView userProfileImage, cancelImageView, waitImageView, acceptImageView, selfImageView,
@@ -141,6 +142,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         appBarLayout = (AppBarLayout) _baseView.findViewById(R.id.appbar_layout);
         nestedScrollView = (NestedScrollView) _baseView.findViewById(R.id.nested_scrollview);
 
+        sendEmoIconTextTag = (TextView) _baseView.findViewById(R.id.sendEmoIconTextTag);
         layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
         favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
@@ -159,7 +161,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                             "Token token=" + sharePref.get_data("token"));
                     layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
-
+                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
 
                 }
             }
@@ -346,6 +348,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 public void run() {
                     layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
+                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
                 }
             });
 
