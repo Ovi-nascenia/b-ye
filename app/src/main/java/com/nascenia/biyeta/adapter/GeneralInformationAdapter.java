@@ -53,6 +53,11 @@ public class GeneralInformationAdapter extends RecyclerView.Adapter<GeneralInfor
         holder.titleImageView.setImageResource(
                 this.generalInformationArrayList.get(position).getItemImageDrwableId());
 
+
+        if (position == this.generalInformationArrayList.size() - 1) {
+            holder.bottomLine.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -74,13 +79,14 @@ public class GeneralInformationAdapter extends RecyclerView.Adapter<GeneralInfor
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView titlegeneralInfoValueTextview;
+        TextView titlegeneralInfoValueTextview, bottomLine;
         ImageView titleImageView;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
+            bottomLine = (TextView) itemView.findViewById(R.id.bottom_line);
             titlegeneralInfoValueTextview = (TextView) itemView.findViewById(R.id.title_value_textview);
             titleImageView = (ImageView) itemView.findViewById(R.id.title_imageView);
 

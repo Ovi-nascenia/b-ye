@@ -76,11 +76,11 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     public void onBindParentViewHolder(@NonNull final ParentItemViewHolder parentViewHolder, final int parentPosition, @NonNull UserProfileParent parent) {
 
         parentViewHolder.bind(parent);
-        if (parentPosition == (userProfilesListParent.size() - 1)) {
+       /* if (parentPosition == (userProfilesListParent.size() - 1)) {
             parentViewHolder.lnIndicator2.setVisibility(View.GONE);
         }
 
-        parentViewHolder.lnIndicator1.setVisibility(View.INVISIBLE);
+        parentViewHolder.lnIndicator1.setVisibility(View.INVISIBLE);*/
 
 
 
@@ -116,11 +116,16 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         }*/
 
 
-        if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1)) {
+       /* if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1)) {
 
 //            childViewHolder.itemDividerLayout.setVisibility(View.VISIBLE);
         } else
+            childViewHolder.itemDividerLayout.setVisibility(View.GONE);*/
+
+
+        if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1)) {
             childViewHolder.itemDividerLayout.setVisibility(View.GONE);
+        }
 
 
     }

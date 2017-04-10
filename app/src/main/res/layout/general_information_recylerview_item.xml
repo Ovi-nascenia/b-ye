@@ -4,13 +4,6 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/medium_margin">
 
-    <ImageView
-        android:id="@+id/title_imageView"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:src="@drawable/hom" />
-
     <TextView
         android:id="@+id/title_value_textview"
         android:layout_width="wrap_content"
@@ -21,4 +14,24 @@
         android:text="title textview vlaue :"
         android:textColor="#00011F"
         android:textSize="@dimen/medium_textsize" />
+
+    <TextView
+        android:id="@+id/bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignLeft="@+id/title_value_textview"
+        android:layout_alignStart="@+id/title_value_textview"
+        android:layout_below="@+id/title_imageView"
+        android:layout_marginRight="@dimen/large_margin"
+        android:layout_marginTop="@dimen/large_margin"
+        android:background="#eeeeee" />
+
+    <ImageView
+        android:id="@+id/title_imageView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/hom" />
 </RelativeLayout>
