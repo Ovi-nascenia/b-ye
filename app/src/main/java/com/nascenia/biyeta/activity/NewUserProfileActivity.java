@@ -57,6 +57,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     private Toolbar toolbar;
     private ViewPager viewPager;
+    public static String message;
 
 
     private ImageView indicatorImage1, indicatorImage2, indicatorImage3, userProfileImage,
