@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,6 +47,7 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import static com.nascenia.biyeta.R.id.details;
 import static com.nascenia.biyeta.R.id.emoIconImage;
 
 /**
@@ -86,13 +88,14 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private SharePref sharePref;
     private final int REQUEST_PHONE_CALL = 100;
 
-    private LinearLayout layoutSendSmiley, smileyandVerificationLayout;
+    private LinearLayout layoutSendSmiley, smileyandVerificationLayout,detilsInfoLayout;
     private UserProfile userProfile;
 
     private ProgressDialog progressDialog;
 
     private RelativeLayout bottomRelativeLayout;
     private CoordinatorLayout coordnatelayout;
+    private NestedScrollView nestedScrollView;
 
 
     @Override
@@ -174,6 +177,12 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     }
 
     private void initView() {
+
+        nestedScrollView = (NestedScrollView) findViewById(R.id.nested_scrollview);
+
+
+        detilsInfoLayout = (LinearLayout) findViewById(R.id.detils_info_layout);
+        nestedScrollView.smoothScrollBy(0,detilsInfoLayout.getTop());
 
         bottomRelativeLayout = (RelativeLayout) findViewById(R.id.r1);
         coordnatelayout = (CoordinatorLayout) findViewById(R.id.coordnatelayout);
