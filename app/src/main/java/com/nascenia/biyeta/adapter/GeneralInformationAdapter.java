@@ -49,7 +49,9 @@ public class GeneralInformationAdapter extends RecyclerView.Adapter<GeneralInfor
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         holder.titlegeneralInfoValueTextview.setText(
-                Utils.formatString(this.generalInformationArrayList.get(position).getGeneralInfo()));
+                Utils.formatString(this.generalInformationArrayList.get(position).getGeneralInfo())
+                        .replace(",", ", ")
+        );
         holder.titleImageView.setImageResource(
                 this.generalInformationArrayList.get(position).getItemImageDrwableId());
 

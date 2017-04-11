@@ -46,7 +46,9 @@ public class OtherInfoRecylerViewAdapter extends RecyclerView.Adapter<OtherInfoR
     public void onBindViewHolder(OtherInfoRecylerViewAdapter.MyViewHolder holder, int position) {
         holder.titleTextView.setText(infoArrayList.get(position).getTitleName());
         holder.titleResultTextView.setText(
-                Utils.formatString(infoArrayList.get(position).getTitleNameValue()));
+                Utils.formatString(infoArrayList.get(position).getTitleNameValue())
+                .replace(",",", ")
+        );
 
         if (position == this.infoArrayList.size() - 1) {
             holder.itemDivider.setVisibility(View.GONE);

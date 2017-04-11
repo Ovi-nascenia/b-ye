@@ -44,7 +44,9 @@ public class ChildItemViewHolder extends ChildViewHolder {
     public void bind(UserProfileChild userProfileChild) {
 
         titleTextView.setText(userProfileChild.getTitle());
-        titleResultTextView.setText(Utils.formatString(userProfileChild.getTitleResult()));
+        titleResultTextView.setText(Utils.formatString(userProfileChild.getTitleResult())
+                .replace(",", ", ")
+        );
 
 
     }
