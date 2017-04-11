@@ -52,6 +52,13 @@
     <string name="country">দেশ</string>
     <string name="phone_number">ফোন নম্বর</string>
 
+    <string name="send_smiley_message">হাসি পাঠানো হয়েছে</string>
+    <string name="favorite_message">ফেভারিট করা হয়েছে</string>
+    <string name="unfavorite_message">আনফেভারিট করেছেন</string>
+
+    <string name="send_biodata_request_message"> বায়োডাটার অনুরোধ পাঠানো হয়েছে</string>
+    <string name="send_communication_request_message">যোগাযোগের অনুরোধ পাঠানো হয়েছে</string>
+
 
     <string name="title_activity_send_request">Request send</string>
 

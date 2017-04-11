@@ -158,10 +158,17 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                             Utils.SEND_SMILE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
-                            "Token token=" + sharePref.get_data("token"));
-                    layoutSendSmiley.setEnabled(false);
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.SMILEY_BUTTON_PRESS_TAG);
+
+                    /* layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
-                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
+                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));*/
 
                 }
             }
@@ -178,20 +185,33 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                             Utils.FAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
-                            "Token token=" + sharePref.get_data("token"));
-                    //favoriteImageView.setEnabled(false);
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.FAVORITE_BUTTON_PRESS_TAG);
+
+                    /*//favoriteImageView.setEnabled(false);
                     userProfile.getProfile().setIsFavorite(true);
-                    favoriteImageView.setImageResource(R.drawable.red_favorite);
+                    favoriteImageView.setImageResource(R.drawable.red_favorite);*/
                 } else {
 
                     NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
                             Utils.UNFAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
-                            "Token token=" + sharePref.get_data("token"));
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.UNFAVORITE_BUTTON_PRESS_TAG);
 
-                    userProfile.getProfile().setIsFavorite(false);
-                    favoriteImageView.setImageResource(R.drawable.favorite);
+                    /*userProfile.getProfile().setIsFavorite(false);
+                    favoriteImageView.setImageResource(R.drawable.favorite);*/
 
 
                 }

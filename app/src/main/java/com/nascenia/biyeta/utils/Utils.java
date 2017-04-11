@@ -51,6 +51,10 @@ public class Utils {
     public static final int BIODATA_REQUEST_FRAGEMNT_CLASS = 000;
     public static final int COMMUNICATION_REQUEST_FRAGEMNT_CLASS = 111;
 
+    public static final int SMILEY_BUTTON_PRESS_TAG = 222;
+    public static final int FAVORITE_BUTTON_PRESS_TAG = 1;
+    public static final int UNFAVORITE_BUTTON_PRESS_TAG = 0;
+
 
     ///debug section
 
@@ -68,7 +72,6 @@ public class Utils {
     public static final String sendmessage = "message";
     public static final String call = "call";
     public static final String MESSAGE_CALL_BLOCK = "message_call_block";
-
 
 
     public static void ShowAlert(Context context, String bodyMessage) {
