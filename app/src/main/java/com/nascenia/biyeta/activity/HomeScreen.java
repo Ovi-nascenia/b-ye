@@ -111,7 +111,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             menuProfileImgView.setImageResource(R.drawable.profile_icon_female);
         } else if (!sharePref.get_data("profile_picture").equals("key")) {
             Picasso.with(this)
-                    .load("http://test.biyeta.com" + sharePref.get_data("profile_picture"))
+                    .load(Utils.Base_URL + sharePref.get_data("profile_picture"))
                     .into(menuProfileImgView, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -158,6 +158,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
                     case R.id.nav_balance:
+                        if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
+                            drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(HomeScreen.this, PaymentActivity.class));
 
                         break;

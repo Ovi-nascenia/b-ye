@@ -176,8 +176,10 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     }
 
     private void setUserOwnImage(UserProfile userProfile) {
+        //Log.i("ownprofileimage", userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture().toString());
 
         if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
+            Log.i("ownprofileimage", Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture());
 
             Picasso.with(OwnUserProfileActivity.this)
                     .load(Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture())

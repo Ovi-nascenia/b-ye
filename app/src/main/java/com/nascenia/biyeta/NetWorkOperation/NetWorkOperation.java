@@ -159,9 +159,9 @@ public class NetWorkOperation {
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    Toast.makeText(context, context.getResources().getString(R.string.send_communication_request_message), Toast.LENGTH_LONG).show();
                     if (jsonObject.has("message")) {
                         Match.pause_is_called = 2;
+                        Toast.makeText(context, jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"), Toast.LENGTH_LONG).show();
                         NewUserProfileActivity.message = jsonObject.getJSONArray("message").getJSONObject(0).getString("detail");
                         this.finalResultButton.setText(jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"));
                         this.finalResultButton.setEnabled(false);
@@ -241,8 +241,8 @@ public class NetWorkOperation {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
 
-                    Toast.makeText(context, context.getResources().getString(R.string.send_biodata_request_message), Toast.LENGTH_LONG).show();
                     if (jsonObject.has("message")) {
+                        Toast.makeText(context, jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"), Toast.LENGTH_LONG).show();
                         this.finalResultButton.setText(jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"));
                         this.finalResultButton.setEnabled(false);
                     } else {

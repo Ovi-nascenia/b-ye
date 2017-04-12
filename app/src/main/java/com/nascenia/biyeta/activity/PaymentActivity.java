@@ -41,7 +41,7 @@ public class PaymentActivity extends CustomActionBarActivity {
 
         balanceAmountTextView = (TextView) findViewById(R.id.current_balance);
         profileVisitNumberTextView = (TextView) findViewById(R.id.account_recharge_descrip1);
-        detailsPayment=(TextView)findViewById(R.id.recharge_amountTV) ;
+        detailsPayment = (TextView) findViewById(R.id.recharge_amountTV);
         detailsPayment.setText(" কার্ড-এর মাধ্যমে টাকা প্রদানের জন্য  বিয়েটার ওয়েবসাইটে (www.biyeta.com) লগইন করা অবস্থায় এই লিঙ্ক-এ ক্লিক করুন- http://biyeta.com/payments/new ");
 
 // Makes the textView's Phone and URL (hyperlink) select and go.
@@ -71,7 +71,7 @@ public class PaymentActivity extends CustomActionBarActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar=new ProgressDialog(PaymentActivity.this);
+            progressBar = new ProgressDialog(PaymentActivity.this);
             progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressBar.show();
 
@@ -80,14 +80,16 @@ public class PaymentActivity extends CustomActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("testtt",s);
+            Log.e("testtt", s);
+            if (progressBar.isShowing()) {
 
-            progressBar.dismiss();
-            if (s==null)
-            {
-                Utils.ShowAlert(PaymentActivity.this, getString(R.string.no_internet_connection));
+                progressBar.dismiss();
             }
-            else {
+
+
+            if (s == null) {
+                Utils.ShowAlert(PaymentActivity.this, getString(R.string.no_internet_connection));
+            } else {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.has("balance")) {
