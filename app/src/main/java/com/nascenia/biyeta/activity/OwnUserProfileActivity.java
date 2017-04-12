@@ -49,7 +49,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
     private UserProfile userProfile;
 
-    private int familyMemberCounter;
+    // private int familyMemberCounter;
 
     private ImageView userProfileImage;
 
@@ -498,7 +498,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
 
             //add mother information
-            if (userProfile.getProfile().getFamilyMembers().getFather() != null) {
+            if (userProfile.getProfile().getFamilyMembers().getMother() != null) {
 
                 parentChildItemList.add(new UserProfileChild(getResources().getString(R.string.mother_text),
                         checkNullField(userProfile.getProfile().getFamilyMembers().getMother()
@@ -536,13 +536,13 @@ public class OwnUserProfileActivity extends AppCompatActivity {
             //add brother information
             if (userProfile.getProfile().getFamilyMembers().getNumberOfBrothers() > 0) {
 
-                familyMemberCounter = 0;
+                // familyMemberCounter = 0;
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getBrothers().size(); i++) {
-                    familyMemberCounter = i + 1;
+                    //   familyMemberCounter = i + 1;
 
                     brothersChildItemList.add(new UserProfileChild(
-                            getResources().getString(R.string.brother_text) + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            //getResources().getString(R.string.brother_text) + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            getResources().getString(R.string.brother_text),
                             checkNullField(userProfile.getProfile().getFamilyMembers().getBrothers().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -603,15 +603,16 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfSisters() > 0) {
 
-                familyMemberCounter = 0;
+                //familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getSisters().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    //familyMemberCounter = i + 1;
                     sistersChildItemList.add(new UserProfileChild(
-                            getResources().getString(R.string.sister_text)
-                                    + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            /*getResources().getString(R.string.sister_text)
+                                    + Utils.convertEnglishDigittoBangla(familyMemberCounter),*/
 
+                            getResources().getString(R.string.sister_text),
                             checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getSisters().get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -644,7 +645,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
             //add sisterchildlist data to mainparentlist
             if (sistersChildItemList.size() > 0) {
                 sistersChildItemHeader.add(new UserProfileParent(
-                        getResources().getString(R.string.brother_text) + "("
+                        getResources().getString(R.string.sister_text) + "("
                                 + Utils.convertEnglishDigittoBangla(sistersChildItemList.size()) + ")"
                         , sistersChildItemList));
 
@@ -655,10 +656,10 @@ public class OwnUserProfileActivity extends AppCompatActivity {
             } else {
 
                 sistersChildItemList.add(new UserProfileChild(
-                        getResources().getString(R.string.brother_text),
+                        getResources().getString(R.string.sister_text),
                         getResources().getString(R.string.no_sister_text)));
                 sistersChildItemHeader.add(new UserProfileParent(
-                        getResources().getString(R.string.brother_text), sistersChildItemList));
+                        getResources().getString(R.string.sister_text), sistersChildItemList));
                 sisterRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
                         sistersChildItemHeader,
                         true));
@@ -694,6 +695,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             Utils.convertEnglishDigittoBangla(
                                     userProfile.getProfile().getFamilyMembers().getNumberOfChild())
                                     + " জন সন্তান, সাথে থাকে না"));
+                } else {
+                    Log.i("childstatus", "nothing found");
                 }
 
 
@@ -760,13 +763,14 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfKaka() > 0) {
 
-                familyMemberCounter = 0;
+                //   familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getKakas().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    //  familyMemberCounter = i + 1;
                     otherRelativeChildItemList.add(new UserProfileChild(
-                            "চাচা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            //"চাচা " + Utils.convertEnglishDigittoBangla(i + 1),
+                            "চাচা ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getKakas().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -787,14 +791,14 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfMama() > 0) {
 
-                familyMemberCounter = 0;
+                // familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getMamas().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    // familyMemberCounter = i + 1;
                     otherRelativeChildItemList.add(new UserProfileChild(
-                            "মামা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            //  "মামা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "মামা ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getMamas().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -816,14 +820,14 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfFufa() > 0) {
 
-                familyMemberCounter = 0;
+                //familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getFufas().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    //  familyMemberCounter = i + 1;
                     otherRelativeChildItemList.add(new UserProfileChild(
-                            "ফুপা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            //"ফুপা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "ফুপা ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getFufas().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -867,13 +871,14 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfKhalu() > 0) {
 
-                familyMemberCounter = 0;
+                // familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getKhalus().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    //   familyMemberCounter = i + 1;
                     otherRelativeChildItemList.add(new UserProfileChild(
-                            "খালু " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            //        "খালু " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "খালু ",
 
                             checkNullField(userProfile.getProfile().getFamilyMembers().getKhalus().
                                     get(i).getName())
