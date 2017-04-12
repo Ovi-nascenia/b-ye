@@ -88,7 +88,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private SharePref sharePref;
     private final int REQUEST_PHONE_CALL = 100;
 
-    private LinearLayout layoutSendSmiley, smileyandVerificationLayout,detilsInfoLayout;
+    private LinearLayout layoutSendSmiley, smileyandVerificationLayout, detilsInfoLayout;
     private UserProfile userProfile;
 
     private ProgressDialog progressDialog;
@@ -172,6 +172,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     }
 
 
+
+
     public void backBtnAction(View v) {
         finish();
     }
@@ -182,7 +184,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
         detilsInfoLayout = (LinearLayout) findViewById(R.id.detils_info_layout);
-        nestedScrollView.smoothScrollBy(0,detilsInfoLayout.getTop());
+        nestedScrollView.smoothScrollBy(0, detilsInfoLayout.getTop());
 
         bottomRelativeLayout = (RelativeLayout) findViewById(R.id.r1);
         coordnatelayout = (CoordinatorLayout) findViewById(R.id.coordnatelayout);

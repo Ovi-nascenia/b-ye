@@ -28,8 +28,6 @@ public class ChildItemViewHolder extends ChildViewHolder {
     public EditText titleResultTextView;
     public LinearLayout itemDividerLayout;
 
-    public static KeyListener listener;
-
 
     public ChildItemViewHolder(@NonNull View itemView) {
         super(itemView);
