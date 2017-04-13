@@ -507,15 +507,15 @@ public abstract class SendRequestFragmentView {
             //add sister information
             if (userProfile.getProfile().getFamilyMembers().getNumberOfSisters() > 0) {
 
-                familyMemberCounter = 0;
+                //  familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getSisters().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    // familyMemberCounter = i + 1;
 
                     sisterChildItemList.add(new UserProfileChild(
-                            "বোন " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            /// "বোন " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "বোন ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getSisters().get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -549,14 +549,14 @@ public abstract class SendRequestFragmentView {
             //add brother information
             if (userProfile.getProfile().getFamilyMembers().getNumberOfBrothers() > 0) {
 
-                familyMemberCounter = 0;
+                // familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getBrothers().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    //  familyMemberCounter = i + 1;
                     brotherChildItemList.add(new UserProfileChild(
-                            "ভাই " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            //  "ভাই " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "ভাই ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getBrothers().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -635,13 +635,14 @@ public abstract class SendRequestFragmentView {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfKaka() > 0) {
 
-                familyMemberCounter = 0;
+                //  familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getKakas().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    // familyMemberCounter = i + 1;
                     otherCHildItemList.add(new UserProfileChild(
-                            "চাচা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            //"চাচা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "চাচা ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getKakas().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -662,14 +663,14 @@ public abstract class SendRequestFragmentView {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfMama() > 0) {
 
-                familyMemberCounter = 0;
+                //  familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getMamas().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    // familyMemberCounter = i + 1;
                     otherCHildItemList.add(new UserProfileChild(
-                            "মামা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            //"মামা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "মামা ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getMamas().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -691,14 +692,14 @@ public abstract class SendRequestFragmentView {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfFufa() > 0) {
 
-                familyMemberCounter = 0;
+                //familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getFufas().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    // familyMemberCounter = i + 1;
                     otherCHildItemList.add(new UserProfileChild(
-                            "ফুপা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            //   "ফুপা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "ফুপা ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getFufas().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -742,14 +743,14 @@ public abstract class SendRequestFragmentView {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfKhalu() > 0) {
 
-                familyMemberCounter = 0;
+                // familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getKhalus().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    // familyMemberCounter = i + 1;
                     otherCHildItemList.add(new UserProfileChild(
-                            "খালু " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            //  "খালু " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "খালু ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getKhalus().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
