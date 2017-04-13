@@ -172,8 +172,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     }
 
 
-
-
     public void backBtnAction(View v) {
         finish();
     }
@@ -808,7 +806,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
             new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL +
-                            userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/accept",
+                            userProfile.getProfile().getRequestStatus().getCommunicationRequestId()
+                            + "/accept",
+                    "",
+                    "",
                     Utils.MESSAGE_CALL_BLOCK);
 
 
@@ -898,6 +899,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            progressDialog.show();
         }
 
         @Override
@@ -933,6 +936,9 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
 
             try {
 
@@ -946,13 +952,15 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                             userResponseCase.equals(Utils.profileRequestCancel) ||
                             userResponseCase.equals(Utils.commRequestCancel)) {
 
-                        if (jsonObject.has("message")) {
 
-                            requestSendButtonsLayout.setVisibility(View.GONE);
-                            finalResultButton.setVisibility(View.VISIBLE);
-                            finalResultButton.setEnabled(true);
-                            finalResultButton.setTag(btnTag);
-                            finalResultButton.setText(btnText);
+                        requestSendButtonsLayout.setVisibility(View.GONE);
+                        finalResultButton.setVisibility(View.VISIBLE);
+                        finalResultButton.setEnabled(true);
+                        finalResultButton.setTag(btnTag);
+                        finalResultButton.setText(btnText);
+
+
+                        if (jsonObject.has("message")) {
                             Toast.makeText(getApplicationContext(),
                                     jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"),
                                     Toast.LENGTH_LONG).show();
@@ -962,6 +970,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                     } else if (userResponseCase.equals(Utils.MESSAGE_CALL_BLOCK)) {
 
+
                         acceptImageView.setImageResource(R.drawable.mail);
                         cancelImageView.setImageResource(R.drawable.mobile);
                         acceptTextView.setText("মেসেজ পাঠান");
@@ -969,6 +978,13 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                         acceptImageView.setTag(Utils.sendmessage);
                         cancelImageView.setTag(Utils.call);
+
+                        if (jsonObject.has("message")) {
+                            Toast.makeText(getApplicationContext(),
+                                    jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"),
+                                    Toast.LENGTH_LONG).show();
+                        }
+
                     } else {
                         Log.i("casetest", "no case match");
                     }
