@@ -81,6 +81,10 @@
     <string name="disabilities_text">প্রতিবন্ধকতা</string>
 
 
+    <string name="cancel_btn_Text">প্রত্যাখ্যান করুন</string>
+    <string name="accept_btn_text">গ্রহণ করুন</string>
+
+
     <!-- Navigation Drawer menu labels -->
 
     <string name="nav_profile">প্রোফাইল</string>

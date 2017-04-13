@@ -83,7 +83,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     private Button finalResultButton;
 
-    private RelativeLayout requestSendButtonsLayout;
+    private LinearLayout requestSendButtonsLayout;
 
     private SharePref sharePref;
     private final int REQUEST_PHONE_CALL = 100;
@@ -332,7 +332,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         cancelTextView = (TextView) findViewById(R.id.cancel_textview);
         acceptTextView = (TextView) findViewById(R.id.accept_textview);
 
-        requestSendButtonsLayout = (RelativeLayout) findViewById(R.id.request_send_buttons_layout);
+        requestSendButtonsLayout = (LinearLayout) findViewById(R.id.request_send_buttons_layout);
         finalResultButton = (Button) findViewById(R.id.finalResultBtn);
         finalResultButton.setOnClickListener(this);
 
@@ -634,8 +634,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
                                     acceptImageView.setImageResource(R.drawable.envelope_icon);
                                     cancelImageView.setImageResource(R.drawable.phone_icon);
-                                    acceptTextView.setText("মেসেজ পাঠান");
-                                    cancelTextView.setText("ফোন করুন");
+                                    acceptTextView.setText(getResources().getString(R.string.make_message));
+                                    cancelTextView.setText(getResources().getString(R.string.make_call));
 
                                     acceptImageView.setTag(Utils.sendmessage);
                                     cancelImageView.setTag(Utils.call);
@@ -685,8 +685,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
                                     acceptImageView.setImageResource(R.drawable.envelope_icon);
                                     cancelImageView.setImageResource(R.drawable.phone_icon);
-                                    acceptTextView.setText("মেসেজ পাঠান");
-                                    cancelTextView.setText("ফোন করুন");
+                                    acceptTextView.setText(getResources().getString(R.string.make_message));
+                                    cancelTextView.setText(getResources().getString(R.string.make_call));
 
                                     acceptImageView.setTag(Utils.sendmessage);
                                     cancelImageView.setTag(Utils.call);
@@ -971,10 +971,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     } else if (userResponseCase.equals(Utils.MESSAGE_CALL_BLOCK)) {
 
 
-                        acceptImageView.setImageResource(R.drawable.mail);
-                        cancelImageView.setImageResource(R.drawable.mobile);
-                        acceptTextView.setText("মেসেজ পাঠান");
-                        cancelTextView.setText("ফোন করুন");
+                        acceptImageView.setImageResource(R.drawable.envelope_icon);
+                        cancelImageView.setImageResource(R.drawable.phone_icon);
+                        acceptTextView.setText(getResources().getString(R.string.make_message));
+                        cancelTextView.setText(getResources().getString(R.string.make_call));
 
                         acceptImageView.setTag(Utils.sendmessage);
                         cancelImageView.setTag(Utils.call);
