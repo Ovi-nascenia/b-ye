@@ -358,7 +358,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     Response response = new ResourceProvider(NewUserProfileActivity.this).fetchGetResponse(url);
                     ResponseBody responseBody = response.body();
                     final String responseValue = responseBody.string();
-                    Log.i("responsevalue", responseValue);
+                    Log.i("profileresponsevalue", responseValue);
                     responseBody.close();
                     userProfile = new Gson().fromJson(responseValue, UserProfile.class);
                     NewUserProfileActivity.this.runOnUiThread(new Runnable() {

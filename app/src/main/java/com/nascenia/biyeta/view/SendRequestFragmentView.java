@@ -918,6 +918,7 @@ public abstract class SendRequestFragmentView {
 
                 //latest code
                 education = education + checkNullField(educationInformation.getHighestDegree()) +
+                        checkNullField(educationInformation.getName()) +
                         checkNullField(educationInformation.getSubject()) +
                         checkNullField(educationInformation.getInstitution());
 

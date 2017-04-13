@@ -87,7 +87,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="@dimen/medium_margin"
                         android:text=""
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/medium_textsize"
                         android:textStyle="bold" />
 

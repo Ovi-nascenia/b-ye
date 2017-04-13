@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
+import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.UserProfileChild;
 import com.nascenia.biyeta.model.UserProfileParent;
@@ -100,11 +101,15 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     private CardView otherRelativeCardview, childCardView, otherInfoCardview;
     private String res;
 
+    private SharePref sharePref;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_own_user_profile_layout);
 
+
+        sharePref = new SharePref(OwnUserProfileActivity.this);
         initView();
 
 
@@ -201,15 +206,25 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     });
 
 
-        } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
-                (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))) {
-            userProfileImage.setImageResource(R.drawable.profile_icon_male);
-
-        } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
-                (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.FEMALE_GENDER))) {
-            userProfileImage.setImageResource(R.drawable.profile_icon_female);
-
         } else {
+
+            if (!sharePref.get_data("profile_picture").equals("key")) {
+                Glide.with(OwnUserProfileActivity.this)
+                        .load(Utils.Base_URL + sharePref.get_data("profile_picture"))
+                        .into(userProfileImage);
+            } else {
+                if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
+                        (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))) {
+                    userProfileImage.setImageResource(R.drawable.profile_icon_male);
+                    userProfileImage.setImageResource(R.drawable.profile_icon_male);
+                } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
+                        (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.FEMALE_GENDER))) {
+                    userProfileImage.setImageResource(R.drawable.profile_icon_female);
+                    userProfileImage.setImageResource(R.drawable.profile_icon_female);
+                } else {
+                    Log.i("image", "nothing found");
+                }
+            }
         }
 
 
