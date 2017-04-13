@@ -274,9 +274,9 @@
     <string name="account_recharge_currentbalance">বর্তমান ব্যালেন্স ১০০ টাকা </string>
     <string name="every_payment">প্রতিটি যোগাযোগের মূল্য ১০০ টাকা।</string>
     <string name="account_recharge_descrip1"> আপনি আরও একজনকে যোগাযোগের অনুরোধ পাঠাতে পারবেন। </string>
-    <string name="account_recharge_descrip2">শুধুমাত্র যোগাযোগের অনুরোধ গ্রহন করলেই আপনার অ্যাকাউণ্ট থেকে টাকা নেয়া হবে। এক সপ্তাহের মধ্যে অনুরোধ গৃহীত না হলে অ্যাকাউণ্টে টাকা ফেরত আসবে। </string>
-    <string name="load_money_title">অ্যাকাউণ্টে টাকা লোড করুন। </string>
-    <string name="online_payment_option">অনলাইন পেমেণ্ট (ডেবিট/ক্রেডিট/নেক্সাস কার্ড) </string>
+    <string name="account_recharge_descrip2">শুধুমাত্র যোগাযোগের অনুরোধ গ্রহণ করলেই আপনার অ্যাকাউন্ট থেকে টাকা নেয়া হবে। এক সপ্তাহের মধ্যে অনুরোধ গৃহীত না হলে অ্যাকাউন্টে টাকা ফেরত আসবে। </string>
+    <string name="load_money_title"> অ্যাকাউন্টে টাকা লোড করুন। </string>
+    <string name="online_payment_option">অনলাইন পেমেন্ট (ডেবিট/ক্রেডিট/নেক্সাস কার্ড) </string>
     <string name="recharge_amount_text">রিচার্জ-এর পরিমান </string>
     <string name="recharge_amount">১০০০ </string>
     <string name="taka">টাকা </string>
@@ -288,7 +288,7 @@
         ]]>
        </string>
     <string name="money_sent_procedureTitle">যেভাবে বিকাশ করবেন </string>
-    <string name="bKash_precedureDescrip">যে কোন পারসোনাল অ্যাকাউণ্ট থেকে পাঠানো যাবে, এজেন্ট অ্যাকাউণ্ট থেকে নয় </string>
+    <string name="bKash_precedureDescrip">যে কোন পারসোনাল অ্যাকাউন্ট থেকে পাঠানো যাবে, এজেন্ট অ্যাকাউন্ট থেকে নয়। </string>
     <string name="bullet_point_recharge">●</string>
 
     <string name="no_request_from_me">
@@ -304,7 +304,7 @@
     <string name="recharge_step3">পাঠানোর নম্বর দিনঃ ০১৭৫৫ ৬৯০ ০০০ </string>
     <string name="recharge_step4">টাকার পরিমাণ দিন </string>
     <string name="recharge_step5">কাউন্টার নম্বর দিনঃ ১ </string>
-    <string name="recharge_step6">রেফারেণ্স নম্বর দিনঃ ১ </string>
+    <string name="recharge_step6">রেফারেন্স নম্বর দিনঃ ১ </string>
     <string name="recharge_step7">পিন নম্বর দিয়ে টাকা পাঠিয়ে দিন </string>
 
 

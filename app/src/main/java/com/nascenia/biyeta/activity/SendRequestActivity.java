@@ -110,6 +110,7 @@ public class SendRequestActivity extends CustomActionBarActivity {
         biodataNotificationCounterTextview = (TextView) tabItemView1.
                 findViewById(R.id.biodata_notification_textview);
 
+
         if (requestSenderIds.getRequests().getProfileRequestSenderIds() != null &&
                 requestSenderIds.getRequests().getProfileRequestCount() > 0) {
             SendRequestActivity.biodataRequestCounter = requestSenderIds.

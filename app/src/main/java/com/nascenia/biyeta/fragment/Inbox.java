@@ -141,7 +141,7 @@ public class Inbox extends Fragment implements View.OnClickListener {
                     startActivity(new Intent(getContext(), SendRequestActivity.class).
                             putExtra("REQUEST_RESPONSE_DATA",
                                     responseValue));
-                    RequestSenderIds requestSenderIds = new Gson().fromJson(responseValue, RequestSenderIds.class);
+                   // RequestSenderIds requestSenderIds = new Gson().fromJson(responseValue, RequestSenderIds.class);
 
 
                 } else if (responseValue == null) {

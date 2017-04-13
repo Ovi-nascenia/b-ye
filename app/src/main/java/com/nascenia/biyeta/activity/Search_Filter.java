@@ -103,12 +103,13 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             "ডক্টরেট পড়ছি",
             "ডক্টরেট"
     };
-
+    ProgressDialog progress ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.filter_search);
+        progress = new ProgressDialog(Search_Filter.this);
         setUpId();
         initializeVariable();
         if (Utils.isOnline(this))
@@ -569,8 +570,9 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
     int flag = 1;
     int total_page;
 
+
     class GetResult extends AsyncTask<String, String, String> {
-        ProgressDialog progress = new ProgressDialog(Search_Filter.this);;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -592,6 +594,9 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                     Search.jsonObjects.add(jsonObject);
                 ///   progress.dismiss();
                     reponse="";
+                    if ( !progress.isShowing() )
+                        progress.dismiss();
+
                     finish();
                 }
 
@@ -610,6 +615,8 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                         new GetResult().execute(Utils.Base_URL+"/api/v1/search/filtered-results?page=" + flag);
                     } else if (flag > total_page) {
                        // progress.dismiss();
+                        if ( !progress.isShowing() )
+                            progress.dismiss();
 
                         finish();
                     }

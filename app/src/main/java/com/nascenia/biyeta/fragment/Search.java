@@ -197,7 +197,7 @@ public class Search extends Fragment {
         if (!jsonObjects.isEmpty()) {
             //    try {
 
-            Log.e("fuck", "fuck");
+
             emptyText.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

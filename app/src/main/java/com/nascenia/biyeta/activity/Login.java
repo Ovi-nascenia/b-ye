@@ -400,6 +400,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             //Log.e("LoginData", s);
             if (s == null) {
                 Utils.ShowAlert(Login.this, getString(R.string.no_internet_connection));
+                buttonSubmit.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             } else {
 
                 try {
