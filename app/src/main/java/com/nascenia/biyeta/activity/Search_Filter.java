@@ -496,7 +496,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
 
                 if (Utils.isOnline(Search_Filter.this))
-                     new GetResult().execute("http://test.biyeta.com/api/v1/search/filtered-results");
+                     new GetResult().execute(Utils.Base_URL+"/api/v1/search/filtered-results");
                 else
                     Utils.ShowAlert(Search_Filter.this, getString(R.string.no_internet_connection));
 
@@ -607,7 +607,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
                     if (total_page != 1 && flag <= total_page) {
                         Log.e("test",flag+"  "+total_page);
-                        new GetResult().execute("http://test.biyeta.com/api/v1/search/filtered-results?page=" + flag);
+                        new GetResult().execute(Utils.Base_URL+"/api/v1/search/filtered-results?page=" + flag);
                     } else if (flag > total_page) {
                        // progress.dismiss();
 

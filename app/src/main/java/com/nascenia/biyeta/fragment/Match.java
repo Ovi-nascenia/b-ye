@@ -129,7 +129,7 @@ public class Match extends Fragment implements View.OnClickListener {
         }));
 
 
-        new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests");
+        new LoadBiodataConnection().execute(Utils.Base_URL+"/api/v1/profile_requests");
 
         return v;
 
@@ -170,7 +170,7 @@ public class Match extends Fragment implements View.OnClickListener {
                 recyclerView.setAdapter(null);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests");
+                new LoadBiodataConnection().execute(Utils.Base_URL+"/api/v1/profile_requests");
 
                 break;
 
@@ -183,7 +183,7 @@ public class Match extends Fragment implements View.OnClickListener {
 
                 biodata.setTextColor(Color.BLACK);
                 biodata.setBackgroundColor(Color.GRAY);
-                new LoadConnection().execute(" http://test.biyeta.com/api/v1/communication_requests");
+                new LoadConnection().execute(Utils.Base_URL+"/api/v1/communication_requests");
 
                 break;
         }
@@ -230,7 +230,7 @@ public class Match extends Fragment implements View.OnClickListener {
                                 public void LoadData() {
                                     connectionPageTrack++;
                                     if (connectionPageTrack > 1 && connectionPageTrack <= toalConnectionPage) {
-                                        new LoadConnection().execute("http://test.biyeta.com/api/v1/communication_requests?page=" + connectionPageTrack);
+                                        new LoadConnection().execute(Utils.Base_URL+"/api/v1/communication_requests?page=" + connectionPageTrack);
                                         snackbar = Snackbar
                                                 .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
                                         Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
@@ -345,7 +345,7 @@ public class Match extends Fragment implements View.OnClickListener {
                                 @Override
                                 public void setConnectionRequest(int id, int position) {
 
-                                    new SendConnectionRequest().execute("http://test.biyeta.com/api/v1/communication_requests", id + "", position + "");
+                                    new SendConnectionRequest().execute(Utils.Base_URL+"/api/v1/communication_requests", id + "", position + "");
 
                                 }
 
@@ -353,7 +353,7 @@ public class Match extends Fragment implements View.OnClickListener {
                                 public void LoadData() {
                                     biodataPageTrack++;
                                     if (biodataPageTrack <= toalBiodataPage) {
-                                        new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests?page=" + biodataPageTrack);
+                                        new LoadBiodataConnection().execute(Utils.Base_URL+"/api/v1/profile_requests?page=" + biodataPageTrack);
                                         snackbar = Snackbar
                                                 .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
                                         Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -136,7 +137,7 @@ public class ContactUs extends CustomActionBarActivity {
             String token = sharePref.get_data("token");
 
             Request request = new Request.Builder()
-                    .url("http://test.biyeta.com/api/v1/contacts")
+                    .url(Utils.Base_URL+"/api/v1/contacts")
                     .addHeader("Authorization", "Token token=" + token)
                     .post(requestBody)
                     .build();

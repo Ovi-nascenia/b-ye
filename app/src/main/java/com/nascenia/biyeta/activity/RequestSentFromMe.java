@@ -69,7 +69,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 
         setUpId();
 
-        new LoadBioDataConnection().execute(" http://test.biyeta.com/api/v1/requests/sent_profile_requests");
+        new LoadBioDataConnection().execute(Utils.Base_URL+"/api/v1/requests/sent_profile_requests");
 
 
     }
@@ -135,12 +135,12 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                 if (tab.getPosition() == 0) {
 
                     position = 0;
-                    new LoadBioDataConnection().execute(" http://test.biyeta.com/api/v1/requests/sent_profile_requests");
+                    new LoadBioDataConnection().execute(Utils.Base_URL+"/api/v1/requests/sent_profile_requests");
                     //replaceFragment(new BioDataRequestFragment());
                 } else {
                     position = 1;
 
-                    new LoadBioDataConnection().execute("http://test.biyeta.com/api/v1/requests/sent_communication_requests");
+                    new LoadBioDataConnection().execute(Utils.Base_URL+"/api/v1/requests/sent_communication_requests");
                     //replaceFragment(new CommunicationRequestFragment());
                 }
             }
@@ -209,7 +209,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                                 @Override
                                 public void onClickSmile(int id, int position) {
 
-                                    new SendSmile().execute("http://test.biyeta.com/api/v1/smiles", id + "", position + "");
+                                    new SendSmile().execute(Utils.Base_URL+"/api/v1/smiles", id + "", position + "");
 
                                     //Toast.makeText(RequestSentFromMe.this, id + " ", //Toast.LENGTH_SHORT).show();
                                 }
@@ -269,7 +269,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                                 @Override
                                 public void onMakeConnection(int id, int position) {
 
-                                    new SendConnection().execute("http://test.biyeta.com/api/v1/communication_requests", id + "", position + "");
+                                    new SendConnection().execute(Utils.Base_URL+"/api/v1/communication_requests", id + "", position + "");
 
                                 }
 

@@ -1,5 +1,7 @@
 package com.nascenia.biyeta.constant;
 
+import com.nascenia.biyeta.utils.Utils;
+
 /**
  * Created by user on 1/9/2017.
  */
@@ -8,7 +10,7 @@ public class Constant {
 
     public static final int SPLASH_TIMEOUT = 3000;
 
-    public static final String BASE_URL = "http://test.biyeta.com/api/v1/";
+    public static final String BASE_URL = Utils.Base_URL+"/api/v1/";
 
     private static String profileItemBanglaName = "";
 

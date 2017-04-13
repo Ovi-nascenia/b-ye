@@ -113,7 +113,7 @@ public class PaymentActivity extends CustomActionBarActivity {
             Request request = null;
 
             request = new Request.Builder()
-                    .url("http://test.biyeta.com/api/v1/payments/balance")
+                    .url(Utils.Base_URL+"/api/v1/payments/balance")
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 

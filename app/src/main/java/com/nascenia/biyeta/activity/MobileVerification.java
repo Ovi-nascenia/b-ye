@@ -117,7 +117,7 @@ public class MobileVerification extends CustomActionBarActivity {
                     formBody = new FormEncodingBuilder()
                             .add("mobile_number", urls[0])
                             .build();
-                    url = "http://test.biyeta.com/api/v1/mobile_verifications";
+                    url = Utils.Base_URL+"/api/v1/mobile_verifications";
                 }
                 else if(urls[2].equalsIgnoreCase("resend"))     //resend verification code
                 {
@@ -125,14 +125,14 @@ public class MobileVerification extends CustomActionBarActivity {
                             .add("mobile_number", urls[0])
                             .add("verification_id", verification_id + "")
                             .build();
-                    url = "http://test.biyeta.com/api/v1/mobile_verifications/resend_code";
+                    url = Utils.Base_URL+"/api/v1/mobile_verifications/resend_code";
                 }
                 else {                                         //verify mobile
                     formBody = new FormEncodingBuilder()
                             .add("verification_code", urls[2])
                             .add("verification_id", verification_id + "")
                             .build();
-                   url = "http://test.biyeta.com/api/v1/mobile_verifications/verify_mobile";
+                   url = Utils.Base_URL+"/api/v1/mobile_verifications/verify_mobile";
                 }
 
                 request = new Request.Builder()

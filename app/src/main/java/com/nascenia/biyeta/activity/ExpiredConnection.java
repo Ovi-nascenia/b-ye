@@ -21,6 +21,7 @@ import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.fragment.RecyclerItemClickListener;
 import com.nascenia.biyeta.model.ExpireList.ExpireProfile;
 import com.nascenia.biyeta.model.biodata.profile.BiodataProfile;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -49,7 +50,7 @@ public class ExpiredConnection extends CustomActionBarActivity {
         setContentView(R.layout.expire_connection);
         setUpToolBar(getString(R.string.expire_request), this);
         setUpId();
-        new LoadData().execute("http://test.biyeta.com/api/v1/requests/expired_communication_requests");
+        new LoadData().execute(Utils.Base_URL+"/api/v1/requests/expired_communication_requests");
 
 
     }
@@ -109,7 +110,7 @@ public class ExpiredConnection extends CustomActionBarActivity {
                                 Toast.makeText(ExpiredConnection.this, "Sent Connection", Toast.LENGTH_SHORT).show();
                                 position = postion;
 
-                                new SendConnection().execute("http://test.biyeta.com/api/v1/communication_requests", id + "", position + "");
+                                new SendConnection().execute(Utils.Base_URL+"/api/v1/communication_requests", id + "", position + "");
                                 //  Toast.makeText(RequestSentFromMe.this, id + " ", Toast.LENGTH_SHORT).show();
                             }
 

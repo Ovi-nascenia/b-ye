@@ -32,6 +32,7 @@ import com.nascenia.biyeta.model.InboxAllThreads.Inbox;
 import com.nascenia.biyeta.model.conversation.ChatHead;
 import com.nascenia.biyeta.model.conversation.Message;
 import com.nascenia.biyeta.model.conversation.TempMessage;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -240,13 +241,13 @@ public class InboxSingleChat extends CustomActionBarActivity {
 
             if (flag > 1) {
                 request = new Request.Builder()
-                        .url("http://test.biyeta.com/api/v1/messages/get_conversation?sender_id=" + sender_id + "&receiver_id=" + recevier_id + "&page=" + flag)
+                        .url(Utils.Base_URL+"/api/v1/messages/get_conversation?sender_id=" + sender_id + "&receiver_id=" + recevier_id + "&page=" + flag)
                         .addHeader("Authorization", "Token token=" + token)
                         .build();
             } else
 
                 request = new Request.Builder()
-                        .url("http://test.biyeta.com/api/v1/messages/get_conversation?sender_id=" + sender_id + "&receiver_id=" + recevier_id)
+                        .url(Utils.Base_URL+"/api/v1/messages/get_conversation?sender_id=" + sender_id + "&receiver_id=" + recevier_id)
                         .addHeader("Authorization", "Token token=" + token)
                         .build();
 
@@ -301,7 +302,7 @@ public class InboxSingleChat extends CustomActionBarActivity {
 
             RequestBody requestBody = mBuilder.build();
             Request request1 = new Request.Builder()
-                    .url("http://test.biyeta.com/api/v1/messages")
+                    .url(Utils.Base_URL+"/api/v1/messages")
                     .post(requestBody)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
@@ -402,7 +403,7 @@ public class InboxSingleChat extends CustomActionBarActivity {
 
 
             request = new Request.Builder()
-                    .url("http://test.biyeta.com/api/v1/messages/get_conversation?sender_id=" + sender_id + "&receiver_id=" + recevier_id)
+                    .url(Utils.Base_URL+"/api/v1/messages/get_conversation?sender_id=" + sender_id + "&receiver_id=" + recevier_id)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 

@@ -332,13 +332,13 @@ public class Search extends Fragment {
             Request request = null;
             if (flag != 1) {
                 request = new Request.Builder()
-                        .url("http://test.biyeta.com/api/v1/search/results?page=" + flag)
+                        .url(Utils.Base_URL+"/api/v1/search/results?page=" + flag)
                         .addHeader("Authorization", "Token token=" + token)
                         .build();
             } else {
 
                 request = new Request.Builder()
-                        .url("http://test.biyeta.com/api/v1/search/results")
+                        .url(Utils.Base_URL+"/api/v1/search/results")
                         .addHeader("Authorization", "Token token=" + token)
                         .build();
             }
