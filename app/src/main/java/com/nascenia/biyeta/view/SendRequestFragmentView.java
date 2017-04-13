@@ -984,6 +984,41 @@ public abstract class SendRequestFragmentView {
         }
 
 
+        if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getBloodGroup()))
+                .equals("")) {
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    userProfile.getProfile().getPersonalInformation().getBloodGroup()
+                    , R.drawable.blood_group));
+
+        }
+
+        if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getDisabilities()))
+                .equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    userProfile.getProfile().getPersonalInformation().getDisabilities() +
+                            checkNullField(userProfile.getProfile().getPersonalInformation().getDisabilitiesDescription())
+                    , R.drawable.disabilities));
+
+        }
+
+
+        if ((userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER)) &&
+                (!(checkNullField(userProfile.getProfile().getPersonalInformation().getSmoking()))
+                        .equals(""))
+                ) {
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    userProfile.getProfile().getPersonalInformation().getSmoking()
+                    , R.drawable.smoking));
+
+        }
+
+
         view.setAdapter(new GeneralInformationAdapter(
                 activity, generalInformationArrayList));
 

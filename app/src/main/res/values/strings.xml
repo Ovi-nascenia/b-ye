@@ -76,6 +76,11 @@
     <string name="connection">যোগাযোগ</string>
 
 
+    <string name="blood_group_text">রক্তের গ্রুপ</string>
+    <string name="smoking_text">ধূমপান</string>
+    <string name="disabilities_text">প্রতিবন্ধকতা</string>
+
+
     <!-- Navigation Drawer menu labels -->
 
     <string name="nav_profile">প্রোফাইল</string>

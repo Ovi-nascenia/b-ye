@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
+import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.UserProfileChild;
 import com.nascenia.biyeta.model.UserProfileParent;
 import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
@@ -463,6 +464,37 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         }
 
+
+        if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getBloodGroup()))
+                .equals("")) {
+
+
+            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.blood_group_text),
+                    userProfile.getProfile().getPersonalInformation().getBloodGroup()
+            ));
+
+        }
+
+        if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getDisabilities()))
+                .equals("")) {
+
+
+            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.disabilities_text),
+
+                    userProfile.getProfile().getPersonalInformation().getDisabilities() +
+                            checkNullField(userProfile.getProfile().getPersonalInformation().getDisabilitiesDescription())
+            ));
+        }
+
+        if ((userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER)) &&
+                (!(checkNullField(userProfile.getProfile().getPersonalInformation().getSmoking()))
+                        .equals(""))
+                ) {
+
+            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.smoking_text),
+                    userProfile.getProfile().getPersonalInformation().getSmoking()));
+
+        }
 
         //add personal Child Item list to parent list
         if (personalInfoChildItemList.size() > 0) {
