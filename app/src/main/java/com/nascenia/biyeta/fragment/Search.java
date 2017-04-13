@@ -22,8 +22,10 @@ import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.activity.UserProfileActivity;
 import com.nascenia.biyeta.model.SearchProfileModel;
 import com.nascenia.biyeta.utils.Utils;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
@@ -31,6 +33,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import com.nascenia.biyeta.appdata.SharePref;
@@ -46,6 +49,10 @@ import com.nascenia.biyeta.activity.Search_Filter;
 public class Search extends Fragment {
 
     private static int totalPageNumber = 0;
+    public   static int totalFilterPage=1;
+    public   static int searchFilterPage=1;
+    public   static int comeFromSearch=0;
+
 
 
     private final OkHttpClient client = new OkHttpClient();
@@ -80,6 +87,7 @@ public class Search extends Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.profile_list);
         searchButton = (Button) v.findViewById(R.id.search_btn);
         emptyText = (TextView) v.findViewById(R.id.empty_list);
+        comeFromSearch=0;
 
 
         mProfile_adapter = new Profile_Adapter(profileList) {
@@ -87,6 +95,25 @@ public class Search extends Fragment {
             public void load() {
 
 
+                if (comeFromSearch ==1) {
+                    searchFilterPage++;
+                    if (searchFilterPage < totalFilterPage)
+                    if (Utils.isOnline(getContext())) {
+                        snackbar = Snackbar
+                                .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
+                        Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
+                        snack_view.addView(new ProgressBar(getContext()));
+                        snackbar.show();
+                        new GetData().execute();
+                    }
+                    else {
+                        if(snackbar.isShown()){
+                            snackbar.dismiss();
+                        }
+                        progressBarLayout.setVisibility(View.GONE);
+                        Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
+                    }
+                }
                 flag++;
                 if (flag <= totalPageNumber && Search_Filter.reponse.equals("")) {
                     snackbar = Snackbar
@@ -330,17 +357,40 @@ public class Search extends Fragment {
             SharePref sharePref = new SharePref(getContext());
             String token = sharePref.get_data("token");
             Request request = null;
-            if (flag != 1) {
-                request = new Request.Builder()
-                        .url(Utils.Base_URL+"/api/v1/search/results?page=" + flag)
-                        .addHeader("Authorization", "Token token=" + token)
-                        .build();
-            } else {
 
-                request = new Request.Builder()
-                        .url(Utils.Base_URL+"/api/v1/search/results")
-                        .addHeader("Authorization", "Token token=" + token)
-                        .build();
+            if (comeFromSearch==1)
+            {
+                Log.e("ComeFromSearch","ComefromSearch");
+                if (searchFilterPage<totalFilterPage)
+                {
+                    Log.e("fuck",Utils.Base_URL+"/api/v1/search/filtered-results?page="+searchFilterPage);
+                    MediaType JSON
+                            = MediaType.parse("application/json; charset=utf-8");
+
+
+
+                    RequestBody body = RequestBody.create(JSON, Search_Filter.rowData);
+                    request = new Request.Builder()
+                            .url(Utils.Base_URL+"/api/v1/search/filtered-results?page="+searchFilterPage)
+                            .addHeader("Authorization", "Token token=" + token)
+                            .post(body)
+                            .build();
+                }
+
+            }
+            else {
+                if (flag != 1) {
+                    request = new Request.Builder()
+                            .url(Utils.Base_URL + "/api/v1/search/results?page=" + flag)
+                            .addHeader("Authorization", "Token token=" + token)
+                            .build();
+                } else {
+
+                    request = new Request.Builder()
+                            .url(Utils.Base_URL + "/api/v1/search/results")
+                            .addHeader("Authorization", "Token token=" + token)
+                            .build();
+                }
             }
 
             try {

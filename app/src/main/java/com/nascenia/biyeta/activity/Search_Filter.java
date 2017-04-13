@@ -55,6 +55,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
     MyGridView gridView;
     MyGridView gridViewOccupation, gridViewLocation;
+    static  public String rowData;
     private final OkHttpClient client = new OkHttpClient();
 
 
@@ -570,9 +571,8 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
     int flag = 1;
     int total_page;
 
-
     class GetResult extends AsyncTask<String, String, String> {
-
+        ProgressDialog progress = new ProgressDialog(Search_Filter.this);;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -603,23 +603,26 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
 
                 else {
+                    Search.totalFilterPage=jsonObject.getInt("total_page");
+                    Search.comeFromSearch=1;
                     total_page=jsonObject.getInt("total_page");
                     Search.jsonObjects.add(jsonObject);
                     flag++;
                     Log.e("test response",s);
+                    if (progress.isShowing())
+                        progress.dismiss();
+                    finish();
 
 
 
-                    if (total_page != 1 && flag <= total_page) {
-                        Log.e("test",flag+"  "+total_page);
-                        new GetResult().execute(Utils.Base_URL+"/api/v1/search/filtered-results?page=" + flag);
-                    } else if (flag > total_page) {
-                       // progress.dismiss();
-                        if ( !progress.isShowing() )
-                            progress.dismiss();
-
-                        finish();
-                    }
+//                    if (total_page != 1 && flag <= total_page) {
+//                        Log.e("test",flag+"  "+total_page);
+                      //  new GetResult().execute(Utils.Base_URL+"/api/v1/search/filtered-results?page=" + flag);
+//                    } else if (flag > total_page) {
+//                       // progress.dismiss();
+//
+//                        finish();
+//                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -635,6 +638,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             final String token = sharePref.get_data("token");
 
             Log.e("Ovi Test", porcessJSon());
+            rowData=porcessJSon();
 
             MediaType JSON
                     = MediaType.parse("application/json; charset=utf-8");
