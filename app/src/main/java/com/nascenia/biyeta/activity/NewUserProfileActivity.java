@@ -4,14 +4,18 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -97,6 +101,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private CoordinatorLayout coordnatelayout;
     private NestedScrollView nestedScrollView;
 
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private AppBarLayout appbar_layout;
+    TextView toolbarUserName;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,6 +120,42 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         sharePref = new SharePref(NewUserProfileActivity.this);
 
         initView();
+
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitle(getIntent().getExtras().getString("user_name"));
+
+        appbar_layout = (AppBarLayout) findViewById(R.id.appbar_layout);
+        toolbarUserName = (TextView) findViewById(R.id.toolbar_user_name);
+        appbar_layout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                /*if (verticalOffset == -collapsingToolbarLayout.getHeight() + toolbar.getHeight()) {
+                    //toolbar is collapsed here
+                    //write your code here
+                    toolbarUserName.setVisibility(View.VISIBLE);
+                    toolbarUserName.setText(getIntent().getExtras().getString("user_name"));
+                    Log.i("coord", "collapse");
+
+                } else {
+                    userNameTextView.setVisibility(View.VISIBLE);
+                    userNameTextView.setText(getIntent().getExtras().getString("user_name"));
+                    Log.i("coord", "expand");
+                }
+*/
+
+
+                if (collapsingToolbarLayout.getHeight() + verticalOffset < 2 * ViewCompat.getMinimumHeight(collapsingToolbarLayout)) {
+                    Log.i("coord", "collapse");
+                } else {
+                    Log.i("coord", "expand");
+                }
+
+
+            }
+        });
+
+
 
 
         /*if (getIntent().getExtras().getBoolean("PROFILE_EDIT_OPTION")) {
@@ -308,7 +352,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         userProfileImage = (ImageView) findViewById(R.id.user_profile_image);
         userNameTextView = (TextView) findViewById(R.id.user_name);
 
-        userNameTextView.setText(getIntent().getExtras().getString("user_name"));
+        // userNameTextView.setText(getIntent().getExtras().getString("user_name"));
 
         familyInfoTagTextView = (TextView) findViewById(R.id.family_info_tag);
         familyCardView = (CardView) findViewById(R.id.family_info_recylerview_card);
@@ -339,7 +383,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         indicatorImage1 = (ImageView) findViewById(R.id.page1);
         indicatorImage2 = (ImageView) findViewById(R.id.page2);
