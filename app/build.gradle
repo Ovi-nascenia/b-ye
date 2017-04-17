@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
+    buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
         applicationId 'com.nascenia.biyeta'
         minSdkVersion 16
@@ -31,6 +33,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
     compile 'com.android.support:appcompat-v7:25.0.1'
@@ -49,7 +52,15 @@ dependencies {
     compile 'org.apache.commons:commons-collections4:4.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'net.rimoto:intlphoneinput:1.0.1'
-    testCompile 'junit:junit:4.12'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'me.henrytao:smooth-app-bar-layout:24.1.0.0'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+
+
+    androidTestCompile 'com.android.support:support-annotations:' + rootProject.supportLibVersion;
+    androidTestCompile 'com.android.support.test:runner:' + rootProject.runnerVersion;
+    androidTestCompile 'com.android.support.test:rules:' + rootProject.rulesVersion;
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.espressoVersion;
 }

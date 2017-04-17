@@ -38,6 +38,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,6 +83,8 @@ public class InboxSingleChat extends CustomActionBarActivity {
         sender_id = intent.getIntExtra("sender_id", 4);
         recevier_id = intent.getIntExtra("receiver_id", 4);
         current_user_id = intent.getIntExtra("current_user", 4);
+
+        Log.e("fuck",current_user_id+"");
         userName = intent.getStringExtra("userName");
         messageId = new ArrayList<>();
         setUpToolBar(userName, this);

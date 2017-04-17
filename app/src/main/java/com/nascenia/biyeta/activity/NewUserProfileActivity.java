@@ -825,10 +825,14 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         } else if (v.getTag().equals(Utils.sendmessage)) {
 
+
+
+            Log.e("MessageName",userProfile.getProfile().getRequestStatus().getSender()+" "+userProfile.getProfile().getRequestStatus().getReceiver()+ " "+ sharePref.get_data("user_id"));
+
             startActivity(new Intent(NewUserProfileActivity.this, InboxSingleChat.class)
                     .putExtra("sender_id", userProfile.getProfile().getRequestStatus().getSender())
                     .putExtra("receiver_id", userProfile.getProfile().getRequestStatus().getReceiver())
-                    .putExtra("current_user", sharePref.get_data("user_id"))
+                    .putExtra("current_user", Integer.parseInt(sharePref.get_data("user_id")))
                     .putExtra("userName", userProfile.getProfile().getPersonalInformation().getDisplayName())
             );
 

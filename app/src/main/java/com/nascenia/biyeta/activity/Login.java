@@ -54,6 +54,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by user on 1/5/2017.
  */
@@ -61,18 +64,31 @@ import java.util.Arrays;
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
-    //icon image
     //big image load through glide
+    @BindView(R.id.icon_view)
     ImageView icon;
 
-    //facebook login button
+
+    @BindView(R.id.login_button)
     LoginButton buttonFacebookLogin;
+
+
     CallbackManager callbackManager;
     //for open new account
-    private LinearLayout new_account;
-    private EditText etPassword, etUserName;
-    private Button buttonSubmit;
-    private ProgressBar progressBar;
+    @BindView(R.id.new_accunt_test)
+    LinearLayout new_account;
+
+    @BindView(R.id.login_password)
+    EditText etPassword;
+
+    @BindView(R.id.login_email)
+    EditText etUserName;
+
+    @BindView(R.id.login_submit)
+    Button buttonSubmit;
+
+    @BindView(R.id.progressbar)
+    ProgressBar progressBar;
 
     ///sub url
     String SUB_URL = "sign-in";
@@ -85,7 +101,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         //initialize the Okhttp
         client = new OkHttpClient();
+
+
         setContentView(R.layout.login);
+        ButterKnife.bind(this);
 
 
         //hide action bar
@@ -105,16 +124,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     void set_id() {
 
 
-        new_account = (LinearLayout) findViewById(R.id.new_accunt_test);
         new_account.setOnClickListener(this);
 
-        etUserName = (EditText) findViewById(R.id.login_email);
-        etPassword = (EditText) findViewById(R.id.login_password);
-
-        buttonSubmit = (Button) findViewById(R.id.login_submit);
         buttonSubmit.setOnClickListener(this);
 
-        buttonFacebookLogin = (LoginButton) findViewById(R.id.login_button);
         //buttonFacebookLogin.setOnClickListener(this);
 
         buttonFacebookLogin.setReadPermissions(Arrays.asList(
@@ -174,9 +187,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
-
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        icon = (ImageView) findViewById(R.id.icon_view);
 
         etPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
