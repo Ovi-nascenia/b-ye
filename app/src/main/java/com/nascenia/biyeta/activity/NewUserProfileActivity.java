@@ -828,7 +828,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             startActivity(new Intent(NewUserProfileActivity.this, InboxSingleChat.class)
                     .putExtra("sender_id", userProfile.getProfile().getRequestStatus().getSender())
                     .putExtra("receiver_id", userProfile.getProfile().getRequestStatus().getReceiver())
-                    .putExtra("current_user", sharePref.get_data("user_id"))
+                    .putExtra("current_user", Integer.parseInt(sharePref.get_data("user_id")))
                     .putExtra("userName", userProfile.getProfile().getPersonalInformation().getDisplayName())
             );
 
