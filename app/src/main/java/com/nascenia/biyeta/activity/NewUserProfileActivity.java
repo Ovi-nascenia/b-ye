@@ -560,7 +560,9 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                 familyCardView.setVisibility(View.VISIBLE);
                                 SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
                                         userProfile, familyMemberInfoRecylerView);*/
-
+                                Toast.makeText(getApplicationContext(),
+                                        getResources().getString(R.string.profile_request_message),
+                                        Toast.LENGTH_LONG).show();
 
                                 finalResultButton.setVisibility(View.GONE);
                                 requestSendButtonsLayout.setVisibility(View.VISIBLE);
@@ -736,6 +738,11 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     familyCardView.setVisibility(View.VISIBLE);
                                     SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
                                             userProfile, familyMemberInfoRecylerView);
+
+                                    Toast.makeText(getApplicationContext(),
+                                            getResources().getString(R.string.communication_request_message),
+                                            Toast.LENGTH_LONG).show();
+
 
                                     finalResultButton.setVisibility(View.GONE);
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);

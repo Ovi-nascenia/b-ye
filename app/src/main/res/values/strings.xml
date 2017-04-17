@@ -307,6 +307,8 @@
     <string name="recharge_step6">রেফারেন্স নম্বর দিনঃ ১ </string>
     <string name="recharge_step7">পিন নম্বর দিয়ে টাকা পাঠিয়ে দিন </string>
 
+    <string name="profile_request_message">আপনার কাছে বায়োডাটা দেখার অনুরোধ করেছেন</string>
+    <string name="communication_request_message">আপনার কাছে যোগাযোগের  অনুরোধ করেছেন</string>
 
     <!--Balance_Reply_page-->
 
