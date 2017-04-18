@@ -711,6 +711,13 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                     //set message : already communication resquest send,btn action off
                                     //  Toast.makeText(getBaseContext(), " already communication resquest send", Toast.LENGTH_LONG).show();
+
+                                    familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                    familyCardView.setVisibility(View.VISIBLE);
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                            userProfile, familyMemberInfoRecylerView);
+
+
                                     finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
                                     finalResultButton.setEnabled(false);
 
