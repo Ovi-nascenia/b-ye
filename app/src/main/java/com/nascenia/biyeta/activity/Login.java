@@ -118,7 +118,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //buttonFacebookLogin.setOnClickListener(this);
 
         buttonFacebookLogin.setReadPermissions(Arrays.asList(
-                "public_profile", "email", "user_birthday"));
+                "public_profile", "email"));
         callbackManager = CallbackManager.Factory.create();
 
 
@@ -141,11 +141,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 try {
                                     String uid = loginResult.getAccessToken().getUserId();
                                     String email = object.getString("email");
-                                    String birthday = object.getString("birthday");
 
                                     //send data from facebook to our server
                                     new LoginByFacebook().execute(Utils.FACEBOOK_LOGIN_URL, uid, "facebook", email);
-                                    Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken().getToken() + "");
+                                    Log.e("FacebookData", email + " " + loginResult.getAccessToken().getToken() + "");
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -153,7 +152,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,birthday");
+                parameters.putString("fields", "id,name,email");
                 request.setParameters(parameters);
                 request.executeAsync();
 
@@ -345,16 +344,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
             Request request = new Request.Builder().url(parameters[0]).post(requestBody).build();
-
+            String responseString = null;
             try {
                 Response response = client.newCall(request).execute();
-                String responseString = response.body().string();
-                return responseString;
-            } catch (IOException e) {
+                responseString = response.body().string();
+//                return responseString;
+            } catch (Exception e) {
 
                 e.printStackTrace();
-                return null;
+//                return null;
             }
+
+            return responseString;
 
         }
     }

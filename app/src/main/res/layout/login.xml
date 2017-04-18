@@ -68,7 +68,7 @@
                     android:gravity="center"
                     android:hint="@string/email"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:nextFocusForward="@+id/login_password" />
             </android.support.v7.widget.CardView>
