@@ -69,7 +69,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 
         setUpId();
 
-        new LoadBioDataConnection().execute(Utils.Base_URL+"/api/v1/requests/sent_profile_requests");
+        new LoadBioDataConnection().execute(Utils.Base_URL + "/api/v1/requests/sent_profile_requests");
 
 
     }
@@ -135,12 +135,12 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                 if (tab.getPosition() == 0) {
 
                     position = 0;
-                    new LoadBioDataConnection().execute(Utils.Base_URL+"/api/v1/requests/sent_profile_requests");
+                    new LoadBioDataConnection().execute(Utils.Base_URL + "/api/v1/requests/sent_profile_requests");
                     //replaceFragment(new BioDataRequestFragment());
                 } else {
                     position = 1;
 
-                    new LoadBioDataConnection().execute(Utils.Base_URL+"/api/v1/requests/sent_communication_requests");
+                    new LoadBioDataConnection().execute(Utils.Base_URL + "/api/v1/requests/sent_communication_requests");
                     //replaceFragment(new CommunicationRequestFragment());
                 }
             }
@@ -181,11 +181,9 @@ public class RequestSentFromMe extends CustomActionBarActivity {
             super.onPostExecute(s);
             ////Toast.makeText(RequestSentFromMe.this,s,//Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
-            if (s==null)
-            {
+            if (s == null) {
                 Utils.ShowAlert(RequestSentFromMe.this, getString(R.string.no_internet_connection));
-            }
-            else {
+            } else {
 
                 if (position == 0) {
 
@@ -209,7 +207,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                                 @Override
                                 public void onClickSmile(int id, int position) {
 
-                                    new SendSmile().execute(Utils.Base_URL+"/api/v1/smiles", id + "", position + "");
+                                    new SendSmile().execute(Utils.Base_URL + "/api/v1/smiles", id + "", position + "");
 
                                     //Toast.makeText(RequestSentFromMe.this, id + " ", //Toast.LENGTH_SHORT).show();
                                 }
@@ -236,7 +234,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                                     biodataNotificationCount++;
                             }
 
-                            notificationNumberLeft.setText(biodataNotificationCount + "");
+                            notificationNumberLeft.setText(Utils.convertEnglishYearDigittoBangla(biodataNotificationCount) + "");
                             findViewById(R.id.no_message).setVisibility(View.GONE);
                         }
 
@@ -269,7 +267,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                                 @Override
                                 public void onMakeConnection(int id, int position) {
 
-                                    new SendConnection().execute(Utils.Base_URL+"/api/v1/communication_requests", id + "", position + "");
+                                    new SendConnection().execute(Utils.Base_URL + "/api/v1/communication_requests", id + "", position + "");
 
                                 }
 
@@ -302,7 +300,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 //                        connectionNotification++;
 //                }
 
-                    notificationNumberRight.setText(connectionNotification + "");
+                    notificationNumberRight.setText(Utils.convertEnglishYearDigittoBangla(connectionNotification) + "");
 
 
                 }
@@ -336,20 +334,19 @@ public class RequestSentFromMe extends CustomActionBarActivity {
     }
 
 
-    public  class SendSmile extends AsyncTask<String,String,String>
-    {
+    public class SendSmile extends AsyncTask<String, String, String> {
 
 
         int position;
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("SmileResponse",s);
+            Log.e("SmileResponse", s);
             try {
-                JSONObject jsonObject=new JSONObject(s);
+                JSONObject jsonObject = new JSONObject(s);
 
-                if (jsonObject.has("message"))
-                {
+                if (jsonObject.has("message")) {
                     biodataResponse.getProfiles().get(position).setSmileSent(true);
                     biodataFromMeAdapter.notifyDataSetChanged();
                 }
@@ -362,7 +359,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
         @Override
         protected String doInBackground(String... strings) {
 
-            Log.e("Smile",strings[0]+" "+strings[1]);
+            Log.e("Smile", strings[0] + " " + strings[1]);
             position = Integer.parseInt(strings[2]);
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("profile_id", strings[1])
@@ -401,7 +398,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.has("message")) {
-                  ///  Toast.makeText(RequestSentFromMe.this, " sent", Toast.LENGTH_SHORT).show();
+                    ///  Toast.makeText(RequestSentFromMe.this, " sent", Toast.LENGTH_SHORT).show();
                     communicationResponse.getProfiles().get(listposition).getRequestStatus().setExpired(false);
                     communicationResponse.getProfiles().get(listposition).getRequestStatus().setMessage("আপনি যোগাযোগের  অনুরোধ  করেছেন");
 
