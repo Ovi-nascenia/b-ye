@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.nascenia.biyeta.R;
 
 import com.nascenia.biyeta.appdata.SharePref;
@@ -190,6 +191,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     case R.id.nav_logout:
                         //SharePref sharePref = new SharePref(HomeScreen.this);
                         sharePref.set_data("token", "key");
+                        try {
+                            LoginManager.getInstance().logOut();
+                        }catch (Exception ex)
+                        {
+                            ex.printStackTrace();
+                        }
                         startActivity(new Intent(HomeScreen.this, Login.class));
                         finish();
 
