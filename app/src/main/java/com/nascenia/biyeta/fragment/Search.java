@@ -22,8 +22,10 @@ import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.activity.UserProfileActivity;
 import com.nascenia.biyeta.model.SearchProfileModel;
 import com.nascenia.biyeta.utils.Utils;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
@@ -31,6 +33,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import com.nascenia.biyeta.appdata.SharePref;
@@ -46,11 +49,15 @@ import com.nascenia.biyeta.activity.Search_Filter;
 public class Search extends Fragment {
 
     private static int totalPageNumber = 0;
+    public   static int totalFilterPage=1;
+    public   static int searchFilterPage=1;
+    public   static int comeFromSearch=0;
+
 
 
     private final OkHttpClient client = new OkHttpClient();
     private RecyclerView recyclerView;
-    private RelativeLayout relativeLayout;
+    private RelativeLayout progressBarLayout;
     //used for paging track
     private int flag = 1;
     private TextView emptyText;
@@ -80,11 +87,33 @@ public class Search extends Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.profile_list);
         searchButton = (Button) v.findViewById(R.id.search_btn);
         emptyText = (TextView) v.findViewById(R.id.empty_list);
+        comeFromSearch=0;
+
+
         mProfile_adapter = new Profile_Adapter(profileList) {
             @Override
             public void load() {
 
 
+                if (comeFromSearch ==1) {
+                    searchFilterPage++;
+                    if (searchFilterPage < totalFilterPage)
+                    if (Utils.isOnline(getContext())) {
+                        snackbar = Snackbar
+                                .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
+                        Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
+                        snack_view.addView(new ProgressBar(getContext()));
+                        snackbar.show();
+                        new GetData().execute();
+                    }
+                    else {
+                        if(snackbar.isShown()){
+                            snackbar.dismiss();
+                        }
+                        progressBarLayout.setVisibility(View.GONE);
+                        Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
+                    }
+                }
                 flag++;
                 if (flag <= totalPageNumber && Search_Filter.reponse.equals("")) {
                     snackbar = Snackbar
@@ -96,8 +125,14 @@ public class Search extends Fragment {
 
                     if (Utils.isOnline(getContext()))
                         new GetData().execute();
-                    else
-                        Utils.ShowAlert(getContext(), "Check Internet Connection");
+                    else {
+                        if(snackbar.isShown()){
+                            snackbar.dismiss();
+                        }
+                        progressBarLayout.setVisibility(View.GONE);
+                        Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
+                    }
+
                 } else {
 
                 }
@@ -106,35 +141,47 @@ public class Search extends Fragment {
         };
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
+
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mProfile_adapter);
-        relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutLeftButton);
-
+        progressBarLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutLeftButton);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 jsonObjects.clear();
-                startActivity(new Intent(getContext(), Search_Filter.class));
+
+                if (Utils.isOnline(getContext()))
+                    startActivity(new Intent(getContext(), Search_Filter.class));
+                else
+                    Utils.ShowInternetConnectionError(getContext());
             }
         });
 
 
         if (Utils.isOnline(getContext()))
             new GetData().execute();
-        else
-            Utils.ShowAlert(getContext(), "Check Internet Connection");
+        else {
+
+            progressBarLayout.setVisibility(View.GONE);
+            Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
+        }
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         Log.i("username", profileList.get(position).getDisplay_name() + " " +
                                 profileList.get(position).getId());
-                        Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
-                        intent.putExtra("id", profileList.get(position).getId());
-                        intent.putExtra("user_name", profileList.get(position).getDisplay_name());
-                        intent.putExtra("PROFILE_EDIT_OPTION", false);
-                        startActivity(intent);
+                        if (Utils.isOnline(getActivity())) {
+                            Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
+                            intent.putExtra("id", profileList.get(position).getId());
+                            intent.putExtra("user_name",
+                                    profileList.get(position).getDisplay_name());
+                            intent.putExtra("PROFILE_EDIT_OPTION", false);
+                            startActivity(intent);
+                        } else {
+                            Utils.ShowInternetConnectionError(getActivity());
+                        }
                     }
                 })
         );
@@ -144,9 +191,19 @@ public class Search extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         Search_Filter.reponse = "";
+        emptyText.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        jsonObjects.clear();
         profileList.clear();
         mProfile_adapter.notifyDataSetChanged();
 
@@ -159,30 +216,30 @@ public class Search extends Fragment {
 
     }
 
-    public  static ArrayList<JSONObject> jsonObjects=new ArrayList<>();
+    public static ArrayList<JSONObject> jsonObjects = new ArrayList<>();
 
     @Override
     public void onResume() {
         super.onResume();
-        if ( !jsonObjects.isEmpty()) {
-         //    try {
+        if (!jsonObjects.isEmpty()) {
+            //    try {
 
-                Log.e("fuck","fuck");
-                emptyText.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(mProfile_adapter);
-                Log.e("Search_Filter", jsonObjects.size()+"");
-                //clear the previous list item
-                profileList.clear();
-                mProfile_adapter.notifyDataSetChanged();
-          //    JSONObject jsonObject = new JSONObject(Search_Filter.reponse);
-                for (int i=0;i<jsonObjects.size();i++) {
 
-                    loadDataFromResponse(jsonObjects.get(i));
-                }
+            emptyText.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setAdapter(mProfile_adapter);
+            Log.e("Search_Filter", jsonObjects.size() + "");
+            //clear the previous list item
+            profileList.clear();
+            mProfile_adapter.notifyDataSetChanged();
+            //    JSONObject jsonObject = new JSONObject(Search_Filter.reponse);
+            for (int i = 0; i < jsonObjects.size(); i++) {
+
+                loadDataFromResponse(jsonObjects.get(i));
+            }
 
 //            } catch (JSONException e) {
 //                Utils.ShowAlert(getContext(), "Error");
@@ -195,12 +252,14 @@ public class Search extends Fragment {
     void loadDataFromResponse(JSONObject jsonObject) {
         try {
 
+
             if (jsonObject.has("no_results")) {
                 emptyText.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
                 emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
-            }
-            else {
+            } else {
+                emptyText.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
 
                 for (int i = 0; i < jsonObject.getJSONArray("profiles").length(); i++)
 
@@ -221,14 +280,13 @@ public class Search extends Fragment {
                     String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
                     SearchProfileModel profile = new SearchProfileModel(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
 
-                     profileList.add(profile);
+                    profileList.add(profile);
                     mProfile_adapter.notifyDataSetChanged();
-                    relativeLayout.setVisibility(View.GONE);
+                    progressBarLayout.setVisibility(View.GONE);
 
                 }
             }
         } catch (JSONException e) {
-            Log.e("fuck fact",e.toString());
             Utils.ShowInternetConnectionError(getContext());
 
 
@@ -244,16 +302,24 @@ public class Search extends Fragment {
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
 
-            if (res == null) Utils.ShowAlert(getContext(), "Network error");
-            else {
+            if (res == null) {
+                if (snackbar.isShown()) {
+                    snackbar.dismiss();
+                }
+                Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
+            } else {
 
                 Log.e("SearchResponse", res);
-                relativeLayout.setVisibility(View.GONE);
+                progressBarLayout.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
                 if (flag != 1) snackbar.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject(res);
                     if (jsonObject.has("no_results")) {
+                        emptyText.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                        emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
+                    } else if (jsonObject.has("total_page") && !jsonObject.has("profiles")) {
                         emptyText.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                         emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
@@ -268,7 +334,11 @@ public class Search extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (NullPointerException ei) {
-                    Utils.ShowAlert(getContext(), "Network Error");
+                    if (snackbar.isShown()) {
+                        snackbar.dismiss();
+                    }
+                    progressBarLayout.setVisibility(View.GONE);
+                    Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
                 }
             }
         }
@@ -288,17 +358,40 @@ public class Search extends Fragment {
             SharePref sharePref = new SharePref(getContext());
             String token = sharePref.get_data("token");
             Request request = null;
-            if (flag != 1) {
-                request = new Request.Builder()
-                        .url("http://test.biyeta.com/api/v1/search/results?page=" + flag)
-                        .addHeader("Authorization", "Token token=" + token)
-                        .build();
-            } else {
 
-                request = new Request.Builder()
-                        .url("http://test.biyeta.com/api/v1/search/results")
-                        .addHeader("Authorization", "Token token=" + token)
-                        .build();
+            if (comeFromSearch==1)
+            {
+                Log.e("ComeFromSearch","ComefromSearch");
+                if (searchFilterPage<totalFilterPage)
+                {
+                    Log.e("fuck",Utils.Base_URL+"/api/v1/search/filtered-results?page="+searchFilterPage);
+                    MediaType JSON
+                            = MediaType.parse("application/json; charset=utf-8");
+
+
+
+                    RequestBody body = RequestBody.create(JSON, Search_Filter.rowData);
+                    request = new Request.Builder()
+                            .url(Utils.Base_URL+"/api/v1/search/filtered-results?page="+searchFilterPage)
+                            .addHeader("Authorization", "Token token=" + token)
+                            .post(body)
+                            .build();
+                }
+
+            }
+            else {
+                if (flag != 1) {
+                    request = new Request.Builder()
+                            .url(Utils.Base_URL + "/api/v1/search/results?page=" + flag)
+                            .addHeader("Authorization", "Token token=" + token)
+                            .build();
+                } else {
+
+                    request = new Request.Builder()
+                            .url(Utils.Base_URL + "/api/v1/search/results")
+                            .addHeader("Authorization", "Token token=" + token)
+                            .build();
+                }
             }
 
             try {

@@ -73,39 +73,32 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     }
 
     @Override
-    public void onBindParentViewHolder(@NonNull final ParentItemViewHolder parentViewHolder, final int parentPosition, @NonNull UserProfileParent parent) {
+    public void onBindParentViewHolder(@NonNull final ParentItemViewHolder parentViewHolder,
+                                       final int parentPosition,
+                                       @NonNull UserProfileParent parent) {
 
         parentViewHolder.bind(parent);
-        if (parentPosition == (userProfilesListParent.size() - 1)) {
+       /* if (parentPosition == (userProfilesListParent.size() - 1)) {
             parentViewHolder.lnIndicator2.setVisibility(View.GONE);
         }
 
-        parentViewHolder.lnIndicator1.setVisibility(View.INVISIBLE);
+        parentViewHolder.lnIndicator1.setVisibility(View.INVISIBLE);*/
 
 
 
       /*  if (this.isProfileEditOptionEnable) {
             parentViewHolder.editItemBtn.setVisibility(View.VISIBLE);
-        }
+        }*/
 
-
-        parentViewHolder.editItemBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(baseContext, "editing is on", Toast.LENGTH_SHORT).show();
-                parentPositionList.set(parentPosition, true);
-                notifyParentChanged(parentPosition);
-
-
-            }
-        });*/
 
     }
 
 
     @Override
-    public void onBindChildViewHolder(@NonNull final ChildItemViewHolder childViewHolder, int parentPosition, int childPosition, @NonNull UserProfileChild child) {
+    public void onBindChildViewHolder(@NonNull final ChildItemViewHolder childViewHolder,
+                                      int parentPosition,
+                                      int childPosition,
+                                      @NonNull UserProfileChild child) {
 
         childViewHolder.bind(child);
 /*
@@ -116,11 +109,17 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         }*/
 
 
-        if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1)) {
+       /* if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1)) {
 
 //            childViewHolder.itemDividerLayout.setVisibility(View.VISIBLE);
         } else
+            childViewHolder.itemDividerLayout.setVisibility(View.GONE);*/
+
+
+        if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1))
             childViewHolder.itemDividerLayout.setVisibility(View.GONE);
+        else
+            childViewHolder.itemDividerLayout.setVisibility(View.VISIBLE);
 
 
     }

@@ -63,6 +63,9 @@ public class Match extends Fragment implements View.OnClickListener {
 
 
     private final OkHttpClient client = new OkHttpClient();
+
+    ArrayList<BiodataProfile> responseObject = new ArrayList();
+    ArrayList<CommunicationProfile> responseCommunication = new ArrayList();
     TextView biodata;
     TextView connection;
     RecyclerView recyclerView;
@@ -82,13 +85,14 @@ public class Match extends Fragment implements View.OnClickListener {
     BiodataProfileAdapter biodataListAdapter;
     BiodataProfile biodataResponse;
 
-    List<Profile> profileArrayList;
+    List<Profile> profileArrayList = new ArrayList<>();
     Response response;
-    int position;
+    public static int profile_position;
     CommunicationAdapter communicationAdapter;
     Snackbar snackbar;
     CommunicationProfile communicationProfileResponse;
     TextView emptyMessage;
+    public static int pause_is_called = 0;
 
     public Match() {
         // Required empty public constructor
@@ -103,8 +107,8 @@ public class Match extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.e("come", "Match");
+        pause_is_called = 0;
         View v = inflater.inflate(R.layout.match, null);
-
         emptyMessage = (TextView) v.findViewById(R.id.empty_message);
 
 
@@ -114,9 +118,7 @@ public class Match extends Fragment implements View.OnClickListener {
 
         connection = (TextView) v.findViewById(R.id.connection);
         connection.setOnClickListener(this);
-
         progressBar = (ProgressBar) v.findViewById(R.id.simpleProgressBar);
-
         recyclerView = (RecyclerView) v.findViewById(R.id.communication_profile_list);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -127,10 +129,28 @@ public class Match extends Fragment implements View.OnClickListener {
         }));
 
 
-        new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests");
+        new LoadBiodataConnection().execute(Utils.Base_URL+"/api/v1/profile_requests");
 
         return v;
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+        if (pause_is_called == 2) {
+            profileArrayList.get(profile_position).getRequestStatus().setMessage(NewUserProfileActivity.message);
+            biodataListAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        pause_is_called = 1;
     }
 
     @Override
@@ -150,7 +170,7 @@ public class Match extends Fragment implements View.OnClickListener {
                 recyclerView.setAdapter(null);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests");
+                new LoadBiodataConnection().execute(Utils.Base_URL+"/api/v1/profile_requests");
 
                 break;
 
@@ -163,7 +183,7 @@ public class Match extends Fragment implements View.OnClickListener {
 
                 biodata.setTextColor(Color.BLACK);
                 biodata.setBackgroundColor(Color.GRAY);
-                new LoadConnection().execute(" http://test.biyeta.com/api/v1/communication_requests");
+                new LoadConnection().execute(Utils.Base_URL+"/api/v1/communication_requests");
 
                 break;
         }
@@ -189,6 +209,7 @@ public class Match extends Fragment implements View.OnClickListener {
                         emptyMessage.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     } else {
+
                         emptyMessage.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
 
@@ -196,6 +217,7 @@ public class Match extends Fragment implements View.OnClickListener {
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
                         communicationProfileResponse = gson.fromJson(isr, CommunicationProfile.class);
+                        responseCommunication.add(communicationProfileResponse);
                         toalConnectionPage = communicationProfileResponse.getTotalPage();
 
                         if (connectionPageTrack == 1) {
@@ -208,7 +230,7 @@ public class Match extends Fragment implements View.OnClickListener {
                                 public void LoadData() {
                                     connectionPageTrack++;
                                     if (connectionPageTrack > 1 && connectionPageTrack <= toalConnectionPage) {
-                                        new LoadConnection().execute("http://test.biyeta.com/api/v1/communication_requests?page=" + connectionPageTrack);
+                                        new LoadConnection().execute(Utils.Base_URL+"/api/v1/communication_requests?page=" + connectionPageTrack);
                                         snackbar = Snackbar
                                                 .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
                                         Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
@@ -220,9 +242,15 @@ public class Match extends Fragment implements View.OnClickListener {
 
                                 @Override
                                 public void onClickProfile(int position) {
+
+
+                                    int pos;
+                                    int i = position / 10;
+                                    pos = position % 10;
+                                    CommunicationProfile con = responseCommunication.get(i);
                                     Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
-                                    intent.putExtra("id", communicationProfileResponse.getProfiles().get(position).getId() + "");
-                                    intent.putExtra("user_name", communicationProfileResponse.getProfiles().get(position).getDisplayName());
+                                    intent.putExtra("id", profileCommunicationList.get(pos).getId() + "");
+                                    intent.putExtra("user_name", profileCommunicationList.get(pos).getDisplayName());
                                     intent.putExtra("PROFILE_EDIT_OPTION", false);
                                     startActivity(intent);
                                 }
@@ -297,6 +325,7 @@ public class Match extends Fragment implements View.OnClickListener {
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
                         biodataResponse = gson.fromJson(isr, BiodataProfile.class);
+                        responseObject.add(biodataResponse);
 
                         toalBiodataPage = biodataResponse.getTotalPage();
 
@@ -316,7 +345,7 @@ public class Match extends Fragment implements View.OnClickListener {
                                 @Override
                                 public void setConnectionRequest(int id, int position) {
 
-                                    new SendConnectionRequest().execute("http://test.biyeta.com/api/v1/communication_requests", id + "", position + "");
+                                    new SendConnectionRequest().execute(Utils.Base_URL+"/api/v1/communication_requests", id + "", position + "");
 
                                 }
 
@@ -324,7 +353,7 @@ public class Match extends Fragment implements View.OnClickListener {
                                 public void LoadData() {
                                     biodataPageTrack++;
                                     if (biodataPageTrack <= toalBiodataPage) {
-                                        new LoadBiodataConnection().execute("http://test.biyeta.com/api/v1/profile_requests?page=" + biodataPageTrack);
+                                        new LoadBiodataConnection().execute(Utils.Base_URL+"/api/v1/profile_requests?page=" + biodataPageTrack);
                                         snackbar = Snackbar
                                                 .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
                                         Snackbar.SnackbarLayout snack_view = (Snackbar.SnackbarLayout) snackbar.getView();
@@ -336,9 +365,16 @@ public class Match extends Fragment implements View.OnClickListener {
 
                                 @Override
                                 public void onClickProfile(int position) {
+                                    Log.e("check", profileArrayList.get(position).getDisplayName());
+                                    profile_position = position;
+
+                                    int pos;
+                                    int i = position / 10;
+                                    pos = position % 10;
+                                    BiodataProfile bioProfile = responseObject.get(i);
                                     Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
-                                    intent.putExtra("id", biodataResponse.getProfiles().get(position).getId() + "");
-                                    intent.putExtra("user_name", biodataResponse.getProfiles().get(position).getDisplayName());
+                                    intent.putExtra("id", profileArrayList.get(pos).getId() + "");
+                                    intent.putExtra("user_name", profileArrayList.get(position).getDisplayName());
                                     intent.putExtra("PROFILE_EDIT_OPTION", false);
                                     startActivity(intent);
                                 }

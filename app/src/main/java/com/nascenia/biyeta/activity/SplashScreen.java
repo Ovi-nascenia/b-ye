@@ -11,11 +11,13 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+//import com.crashlytics.android.Crashlytics;
 import com.nascenia.biyeta.appdata.FAQData;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.R;
 
+//import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,9 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*Fabric.with(this, new Crashlytics());
+
+        throw new NullPointerException();*/
 
         //hide the ActionBar
         getSupportActionBar().hide();

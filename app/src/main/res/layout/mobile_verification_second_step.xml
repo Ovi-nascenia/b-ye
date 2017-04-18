@@ -30,7 +30,7 @@
         app:flagPaddingStart="4dp"
         app:flagPaddingTop="4dp"
         app:flagPaddingBottom="4dp"
-        android:id="@+id/my_phone_input2"
+        android:id="@+id/my_phone_inputoo"
         android:padding="5dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/numbervarifytextView2"/>-->
@@ -38,7 +38,6 @@
         android:id="@+id/code_submit_button2"
         android:layout_width="170dp"
         android:layout_height="35dp"
-        android:layout_below="@+id/my_phone_input2"
         android:text="@string/code_submit_button"
         android:padding="10dp"
         android:background="@drawable/buttonshape"

@@ -16,7 +16,7 @@
             android:layout_below="@+id/relativeParent"
             android:background="@color/without_expand_color"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="gone">
 
         </LinearLayout>
 
@@ -34,14 +34,13 @@
                 android:id="@+id/parentListItemTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/medium_margin"
                 android:gravity="center"
                 android:padding="@dimen/medium_padding"
-                android:text="xxxxxxxxxxx"
-                android:textColor="#4e4c4c"
+                android:text=""
+                android:textColor="#F44336"
                 android:textSize="@dimen/item_textsize"
                 android:textStyle="bold" />
 
@@ -75,7 +74,7 @@
                 android:layout_marginRight="@dimen/medium_margin"
                 android:background="#000000"
                 android:orientation="horizontal"
-                android:visibility="visible"></LinearLayout>
+                android:visibility="gone"></LinearLayout>
 
 
         </RelativeLayout>

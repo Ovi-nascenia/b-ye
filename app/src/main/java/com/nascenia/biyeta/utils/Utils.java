@@ -35,16 +35,25 @@ public class Utils {
 
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
-    public static final String Base_URL = "http://test.biyeta.com";
+    public static final String Base_URL = "http://www.biyeta.com";
     public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
     public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
 
-    public static final String SEND_SMILE_URL = "http://test.biyeta.com/api/v1/smiles";
-    public static final String FAVORITE_URL = "http://test.biyeta.com/api/v1/favorites";
-    public static final String PROFILE_REQUEST_URL = "http://test.biyeta.com/api/v1/profile_requests/";
-    public static final String COMMUNICATION_REQUEST_URL = "http://test.biyeta.com/api/v1/communication_requests";
-    public static final String PROFILES_URL = "http://test.biyeta.com/api/v1/profiles/";
-    public static final String APPUSER_OWN_PROFILE_VIEW_URL = "http://test.biyeta.com/api/v1/profiles/view";
+    public static final String SEND_SMILE_URL = Utils.Base_URL+"/api/v1/smiles";
+    public static final String FAVORITE_URL = Utils.Base_URL+"/api/v1/favorites";
+    public static final String UNFAVORITE_URL = Utils.Base_URL+"/api/v1/favorites/unfavorate";
+    public static final String PROFILE_REQUEST_URL = Utils.Base_URL+"/api/v1/profile_requests/";
+    public static final String COMMUNICATION_REQUEST_URL = Utils.Base_URL+"/api/v1/communication_requests/";
+    public static final String PROFILES_URL = Utils.Base_URL+"/api/v1/profiles/";
+    public static final String APPUSER_OWN_PROFILE_VIEW_URL = Utils.Base_URL+"/api/v1/profiles/view";
+    public static final String REQUEST_SENDER_IDS_URL = Utils.Base_URL+"/api/v1/requests/request_sender_ids";
+
+    public static final int BIODATA_REQUEST_FRAGEMNT_CLASS = 000;
+    public static final int COMMUNICATION_REQUEST_FRAGEMNT_CLASS = 111;
+
+    public static final int SMILEY_BUTTON_PRESS_TAG = 222;
+    public static final int FAVORITE_BUTTON_PRESS_TAG = 1;
+    public static final int UNFAVORITE_BUTTON_PRESS_TAG = 0;
 
 
     ///debug section
@@ -62,12 +71,13 @@ public class Utils {
     public static final String commRequestCancel = "comm_request_cancel";
     public static final String sendmessage = "message";
     public static final String call = "call";
+    public static final String MESSAGE_CALL_BLOCK = "message_call_block";
 
 
     public static void ShowAlert(Context context, String bodyMessage) {
 
         new AlertDialog.Builder(context)
-                .setTitle("Error")
+//                .setTitle("Error")
                 .setMessage(bodyMessage)
                 .setCancelable(false)
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -79,13 +89,12 @@ public class Utils {
     }
 
 
-    public static void ShowInternetConnectionError(Context context)
-    {
+    public static void ShowInternetConnectionError(Context context) {
         new AlertDialog.Builder(context)
-                .setTitle("ইন্টারনেট")
+//                .setTitle("ইন্টারনেট")
                 .setMessage("ইন্টারনেট সংযোগ নেই")
                 .setCancelable(false)
-                .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -309,12 +318,12 @@ public class Utils {
             dateFormat = new SimpleDateFormat("E, hh:mm a");
             strTime = dateFormat.format(calendar.getTimeInMillis());
         } else if (diffDays < 365) {
-            dateFormat = new SimpleDateFormat("dd MMM hh:mm a");
+            dateFormat = new SimpleDateFormat("dd MMM");
             strTime = dateFormat.format(calendar.getTimeInMillis());
         } else {
             dateFormat = new SimpleDateFormat("dd MMM");
             strTime = dateFormat.format(calendar.getTimeInMillis());
-            dateFormat = new SimpleDateFormat("yy hh:mm a");
+            dateFormat = new SimpleDateFormat("yy");
             strTime += "'" + dateFormat.format(calendar.getTimeInMillis());
         }
         return strTime;
@@ -362,6 +371,17 @@ public class Utils {
                 value = "পেশা";
                 break;
 
+            case "professional_group":
+                value = "প্রফেশনাল গ্রুপ";
+                break;
+
+            case "designation":
+                value = "পদবি";
+                break;
+
+            case "institute":
+                value = "প্রতিষ্ঠান";
+                break;
 
             default:
                 value = "";
@@ -375,7 +395,7 @@ public class Utils {
     }
 
 
-    private void calculateHashKey(Context context, String yourPackageName) {
+    public static void calculateHashKey(Context context, String yourPackageName) {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(
                     yourPackageName,

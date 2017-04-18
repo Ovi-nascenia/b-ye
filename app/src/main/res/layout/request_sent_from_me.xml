@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="14sp"
-        android:text=" কোন অনুরোধ পাঠান নি"
+        android:text=" কোন অনুরোধ পাঠাননি"
         android:gravity="center"
         android:textColor="@color/colorPrimary"/>
 

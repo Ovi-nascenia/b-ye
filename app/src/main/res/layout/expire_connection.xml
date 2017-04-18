@@ -20,18 +20,20 @@
                 android:id="@+id/close_expire_connection"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:tint="@color/colorPrimary"
                 android:src="@drawable/ic_highlight_off_black_24dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/expire_message"/>
+            android:text="@string/expire_message"
+            android:paddingBottom="20dp"/>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Your Expired List is Empty"
+        android:layout_height="match_parent"
+        android:text="কোন অনুরোধ নেই"
         android:id="@+id/empty_message"
         android:gravity="center"
         android:textColor="@color/colorPrimary"

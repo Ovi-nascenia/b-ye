@@ -2,7 +2,6 @@ package com.nascenia.biyeta.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -14,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,18 +32,8 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
-import com.nascenia.biyeta.adapter.GeneralInformationAdapter;
-import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
-import com.nascenia.biyeta.adapter.OtherInfoRecylerViewAdapter;
-import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
-import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.fragment.ProfileImageFirstFragment;
-import com.nascenia.biyeta.model.GeneralInformation;
-import com.nascenia.biyeta.model.MatchUserChoice;
-import com.nascenia.biyeta.model.UserProfileChild;
-import com.nascenia.biyeta.model.UserProfileParent;
-import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.service.ResourceProvider;
 import com.nascenia.biyeta.utils.Utils;
@@ -55,12 +45,9 @@ import com.squareup.okhttp.ResponseBody;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
-import static com.nascenia.biyeta.R.id.coordnatelayout;
+import static com.nascenia.biyeta.R.id.details;
 import static com.nascenia.biyeta.R.id.emoIconImage;
 
 /**
@@ -72,6 +59,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     private Toolbar toolbar;
     private ViewPager viewPager;
+    public static String message;
+
 
     private ImageView indicatorImage1, indicatorImage2, indicatorImage3, userProfileImage,
             cancelImageView, acceptImageView, emoIconImageView, favoriteImageView,
@@ -84,7 +73,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     private TextView userProfileDescriptionText, userNameTextView, familyInfoTagTextView,
             communicationTagTextview, otherInfoTagTextview, cancelTextView, acceptTextView,
-            userProfileDescriptionTextViewTag, generalInfoTagTextview, matchUserChoiceTextViewTag;
+            userProfileDescriptionTextViewTag, generalInfoTagTextview, matchUserChoiceTextViewTag,
+            sendEmoIconTextTag;
 
     private ImageView profileViewerPersonImageView, selfImageView;
 
@@ -93,18 +83,19 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     private Button finalResultButton;
 
-    private RelativeLayout requestSendButtonsLayout;
+    private LinearLayout requestSendButtonsLayout;
 
     private SharePref sharePref;
-    private final int REQUEST_PHONE_CALL = 999999;
+    private final int REQUEST_PHONE_CALL = 100;
 
-    private LinearLayout layoutSendSmiley, smileyandVerificationLayout;
+    private LinearLayout layoutSendSmiley, smileyandVerificationLayout, detilsInfoLayout;
     private UserProfile userProfile;
 
     private ProgressDialog progressDialog;
 
     private RelativeLayout bottomRelativeLayout;
     private CoordinatorLayout coordnatelayout;
+    private NestedScrollView nestedScrollView;
 
 
     @Override
@@ -166,13 +157,15 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         });
 
 
-        if (Utils.isOnline(getBaseContext())) {
+        if (Utils.isOnline(getApplicationContext())) {
 
             fetchUserProfileDetails(Utils.PROFILES_URL +
                     getIntent().getExtras().getString("id"));
+            Log.i("profileId", getIntent().getExtras().getString("id"));
 
         } else {
-            Utils.ShowAlert(getBaseContext(), "please check your internet connection");
+            Utils.ShowAlert(NewUserProfileActivity.this, getString(R.string.no_internet_connection));
+            finish();
         }
 
 
@@ -184,6 +177,12 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     }
 
     private void initView() {
+
+        nestedScrollView = (NestedScrollView) findViewById(R.id.nested_scrollview);
+
+
+        detilsInfoLayout = (LinearLayout) findViewById(R.id.detils_info_layout);
+        nestedScrollView.smoothScrollBy(0, detilsInfoLayout.getTop());
 
         bottomRelativeLayout = (RelativeLayout) findViewById(R.id.r1);
         coordnatelayout = (CoordinatorLayout) findViewById(R.id.coordnatelayout);
@@ -199,12 +198,13 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
         progressDialog = new ProgressDialog(NewUserProfileActivity.this);
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage(getResources().getString(R.string.progress_dialog_message));
         progressDialog.setCancelable(true);
 
         smileyandVerificationLayout = (LinearLayout) findViewById(R.id.smileyandVerificationLayout);
 
 
+        sendEmoIconTextTag = (TextView) findViewById(R.id.sendEmoIconTextTag);
         layoutSendSmiley = (LinearLayout) findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) findViewById(emoIconImage);
         favoriteImageView = (ImageView) findViewById(R.id.likeImage);
@@ -214,13 +214,24 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
-                    NetWorkOperation.postMethod(getBaseContext(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(NewUserProfileActivity.this,
                             Utils.SEND_SMILE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
-                            "Token token=" + sharePref.get_data("token"));
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.SMILEY_BUTTON_PRESS_TAG);
+
+
+/*
                     layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
+                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
+*/
 
 
                 }
@@ -234,13 +245,41 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                 if (!userProfile.getProfile().isIsFavorite()) {
 
-                    NetWorkOperation.postMethod(getBaseContext(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(NewUserProfileActivity.this,
                             Utils.FAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
-                            "Token token=" + sharePref.get_data("token"));
-                    favoriteImageView.setEnabled(false);
-                    favoriteImageView.setImageResource(R.drawable.red_favorite);
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.FAVORITE_BUTTON_PRESS_TAG);
+
+
+                    /*//favoriteImageView.setEnabled(false);
+                    userProfile.getProfile().setIsFavorite(true);
+                    favoriteImageView.setImageResource(R.drawable.red_favorite);*/
+
+                } else {
+
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(NewUserProfileActivity.this,
+                            Utils.UNFAVORITE_URL,
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.UNFAVORITE_BUTTON_PRESS_TAG);
+
+                   /* userProfile.getProfile().setIsFavorite(false);
+                    favoriteImageView.setImageResource(R.drawable.favorite);*/
+
+
                 }
 
             }
@@ -293,7 +332,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         cancelTextView = (TextView) findViewById(R.id.cancel_textview);
         acceptTextView = (TextView) findViewById(R.id.accept_textview);
 
-        requestSendButtonsLayout = (RelativeLayout) findViewById(R.id.request_send_buttons_layout);
+        requestSendButtonsLayout = (LinearLayout) findViewById(R.id.request_send_buttons_layout);
         finalResultButton = (Button) findViewById(R.id.finalResultBtn);
         finalResultButton.setOnClickListener(this);
 
@@ -319,7 +358,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     Response response = new ResourceProvider(NewUserProfileActivity.this).fetchGetResponse(url);
                     ResponseBody responseBody = response.body();
                     final String responseValue = responseBody.string();
-                    Log.i("responsevalue", responseValue);
+                    Log.i("profileresponsevalue", responseValue);
                     responseBody.close();
                     userProfile = new Gson().fromJson(responseValue, UserProfile.class);
                     NewUserProfileActivity.this.runOnUiThread(new Runnable() {
@@ -340,14 +379,16 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             if (userProfile.getProfile().isIsFavorite()) {
 
-                                favoriteImageView.setEnabled(false);
+                                //favoriteImageView.setEnabled(false);
                                 favoriteImageView.setImageResource(R.drawable.red_favorite);
+
                             }
 
                             if (userProfile.getProfile().isIsSmileSent()) {
 
                                 layoutSendSmiley.setEnabled(false);
                                 emoIconImageView.setImageResource(R.drawable.red_smile);
+                                sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
                             }
 
 
@@ -380,7 +421,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                             }
                                         });
 
-                                Glide.with(getBaseContext())
+                                Glide.with(NewUserProfileActivity.this)
                                         .load(Utils.Base_URL +
                                                 userProfile.getProfile().getPersonalInformation().
                                                         getImage().getProfilePicture())
@@ -419,10 +460,14 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             if (userProfile.getProfile().getOtherInformation() != null) {
 
-                                otherInfoTagTextview.setVisibility(View.VISIBLE);
+                                /*otherInfoTagTextview.setVisibility(View.VISIBLE);
                                 otherInfoCardView.setVisibility(View.VISIBLE);
-                                SendRequestFragmentView.setDataonOtherInfoRecylerView(getBaseContext(), userProfile,
-                                        otherInfoRecylerView);
+                                */
+                                SendRequestFragmentView.setDataonOtherInfoRecylerView(getBaseContext(),
+                                        userProfile,
+                                        otherInfoRecylerView,
+                                        otherInfoTagTextview,
+                                        otherInfoCardView);
 
                             }
 
@@ -515,7 +560,9 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                 familyCardView.setVisibility(View.VISIBLE);
                                 SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
                                         userProfile, familyMemberInfoRecylerView);*/
-
+                                Toast.makeText(getApplicationContext(),
+                                        getResources().getString(R.string.profile_request_message),
+                                        Toast.LENGTH_LONG).show();
 
                                 finalResultButton.setVisibility(View.GONE);
                                 requestSendButtonsLayout.setVisibility(View.VISIBLE);
@@ -589,8 +636,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
                                     acceptImageView.setImageResource(R.drawable.envelope_icon);
                                     cancelImageView.setImageResource(R.drawable.phone_icon);
-                                    acceptTextView.setText("মেসেজ পাঠান");
-                                    cancelTextView.setText("ফোন করুন");
+                                    acceptTextView.setText(getResources().getString(R.string.make_message));
+                                    cancelTextView.setText(getResources().getString(R.string.make_call));
 
                                     acceptImageView.setTag(Utils.sendmessage);
                                     cancelImageView.setTag(Utils.call);
@@ -621,6 +668,13 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                     //set message : already communication resquest send,btn action off
                                     //  Toast.makeText(getBaseContext(), " already communication resquest send", Toast.LENGTH_LONG).show();
+
+                                    familyInfoTagTextView.setVisibility(View.VISIBLE);
+                                    familyCardView.setVisibility(View.VISIBLE);
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                            userProfile, familyMemberInfoRecylerView);
+
+
                                     finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
                                     finalResultButton.setEnabled(false);
 
@@ -640,8 +694,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
                                     acceptImageView.setImageResource(R.drawable.envelope_icon);
                                     cancelImageView.setImageResource(R.drawable.phone_icon);
-                                    acceptTextView.setText("মেসেজ পাঠান");
-                                    cancelTextView.setText("ফোন করুন");
+                                    acceptTextView.setText(getResources().getString(R.string.make_message));
+                                    cancelTextView.setText(getResources().getString(R.string.make_call));
 
                                     acceptImageView.setTag(Utils.sendmessage);
                                     cancelImageView.setTag(Utils.call);
@@ -692,6 +746,11 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
                                             userProfile, familyMemberInfoRecylerView);
 
+                                    Toast.makeText(getApplicationContext(),
+                                            getResources().getString(R.string.communication_request_message),
+                                            Toast.LENGTH_LONG).show();
+
+
                                     finalResultButton.setVisibility(View.GONE);
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
 
@@ -723,77 +782,59 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         if (v.getTag().equals(Utils.profileRequestAccept)) {
 
-           /* requestSendButtonsLayout.setVisibility(View.GONE);
-            finalResultButton.setVisibility(View.VISIBLE);
-            finalResultButton.setEnabled(true);
-            finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
-            finalResultButton.setTag("send_communication_request");*/
-
-
             new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
                             userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/accept",
-                    "যোগাযোগের জন্য অনুরোধ করুন", Utils.sendCommunicationRequest, "");
+                    getResources().getString(R.string.send_communication_request_text),
+                    Utils.sendCommunicationRequest,
+                    Utils.profileRequestAccept);
 
         } else if (v.getTag().equals(Utils.profileRequestCancel)) {
 
-           /* requestSendButtonsLayout.setVisibility(View.GONE);
-            finalResultButton.setVisibility(View.VISIBLE);
-            finalResultButton.setEnabled(true);
-            finalResultButton.setText("পুরো বায়োডাটা দেখার অনুরোধ করুন");
-            finalResultButton.setTag("send_biodata_request");*/
 
             new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
                             userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/reject",
-                    "পুরো বায়োডাটা দেখার অনুরোধ করুন", Utils.sendBiodataRequest, "");
+                    getResources().getString(R.string.biodata_request_text),
+                    Utils.sendBiodataRequest,
+                    Utils.profileRequestCancel);
 
         } else if (v.getTag().equals(Utils.sendCommunicationRequest)) {
 
-            NetWorkOperation.postData(getBaseContext(),
+            NetWorkOperation.createCommunicationReqeust(NewUserProfileActivity.this,
                     Utils.COMMUNICATION_REQUEST_URL,
-                    userProfile.getProfile().getPersonalInformation().getId() + "", finalResultButton,
-                    "আপনি যোগাযোগের জন্য অনুরোধ করেছেন");
+                    userProfile.getProfile().getPersonalInformation().getId() + "",
+                    finalResultButton,
+                    getResources().getString(R.string.after_sending_communication_request_text));
 
-            /*finalResultButton.setEnabled(false);
-            finalResultButton.setText("আপনি যোগাযোগের জন্য অনুরোধ করেছেন");*/
 
         } else if (v.getTag().equals(Utils.sendBiodataRequest)) {
 
 
-            NetWorkOperation.CreateProfileReqeust(getBaseContext(),
-                    Utils.PROFILES_URL +
-                            userProfile.getProfile().getPersonalInformation().getId()
-                            + "/profile_request", finalResultButton,
-                    "আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন");
+            NetWorkOperation.createProfileReqeust(NewUserProfileActivity.this,
+                    Utils.PROFILES_URL + userProfile.getProfile().getPersonalInformation().getId()
+                            + "/profile_request",
+                    finalResultButton,
+                    getResources().getString(R.string.after_sending_biodata_request_text));
 
-            /*finalResultButton.setEnabled(false);
-            finalResultButton.setText("আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন");*/
 
         } else if (v.getTag().equals(Utils.commRequestAccept)) {
 
 
             new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL +
-                    userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/accept", "message_call_block");
+                            userProfile.getProfile().getRequestStatus().getCommunicationRequestId()
+                            + "/accept",
+                    "",
+                    "",
+                    Utils.MESSAGE_CALL_BLOCK);
 
-            /*acceptImageView.setImageResource(R.drawable.mail);
-            cancelImageView.setImageResource(R.drawable.mobile);
-            acceptTextView.setText("মেসেজ পাঠান");
-            cancelTextView.setText("ফোন করুন");
-
-            acceptImageView.setTag("message");
-            cancelImageView.setTag("call");*/
 
         } else if (v.getTag().equals(Utils.commRequestCancel)) {
 
 
-            new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL  +
+            new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL +
                             userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/reject",
-                    "যোগাযোগের জন্য অনুরোধ করুন", Utils.sendCommunicationRequest, "");
-
-           /* requestSendButtonsLayout.setVisibility(View.GONE);
-            finalResultButton.setVisibility(View.VISIBLE);
-            finalResultButton.setEnabled(true);
-            finalResultButton.setText("যোগাযোগের জন্য অনুরোধ করুন");
-            finalResultButton.setTag("send_communication_request");*/
+                    getResources().getString(R.string.send_communication_request_text),
+                    Utils.sendCommunicationRequest,
+                    Utils.commRequestCancel);
 
 
         } else if (v.getTag().equals(Utils.sendmessage)) {
@@ -801,21 +842,30 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             startActivity(new Intent(NewUserProfileActivity.this, InboxSingleChat.class)
                     .putExtra("sender_id", userProfile.getProfile().getRequestStatus().getSender())
                     .putExtra("receiver_id", userProfile.getProfile().getRequestStatus().getReceiver())
-                    .putExtra("current_user", sharePref.get_data("user_id"))
+                    .putExtra("current_user", Integer.parseInt(sharePref.get_data("user_id")))
                     .putExtra("userName", userProfile.getProfile().getPersonalInformation().getDisplayName())
             );
 
 
         } else if (v.getTag().equals(Utils.call)) {
 
-            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + userProfile.getProfile()));
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +
+                    userProfile.getProfile().getPersonalInformation().getMobileNo()));
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) !=
                     PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
+
+
+                if (ContextCompat.checkSelfPermission(NewUserProfileActivity.this,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(NewUserProfileActivity.this,
+                            new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                }
+
                 //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
+                /*  public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                                          int[] grantResults)*/
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
                 return;
@@ -858,18 +908,20 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         String btnText;
         String btnTag;
-        String messageCallBlock;
+        String userResponseCase;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            progressDialog.show();
         }
 
         @Override
         protected String doInBackground(String... urls) {
             btnText = urls[1];
             btnTag = urls[2];
-            messageCallBlock = urls[3];
+            userResponseCase = urls[3];
 
             Response response;
             SharePref sharePref = new SharePref(getBaseContext());
@@ -898,32 +950,60 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
 
             try {
-                /*String s1 = new JSONObject(s).getJSONArray("message").getJSONObject(0).getString("detail");
-                Log.i("responseresult: ", s1);
-                Toast.makeText(getBaseContext(), s1, Toast.LENGTH_LONG).show();
-*/
 
-
-                if (messageCallBlock.equals("message_call_block")) {
-
-                    requestSendButtonsLayout.setVisibility(View.GONE);
-                    finalResultButton.setVisibility(View.VISIBLE);
-                    finalResultButton.setEnabled(true);
-                    finalResultButton.setTag(btnTag);
-                    finalResultButton.setText(btnText);
-
+                if (s == null) {
+                    Utils.ShowAlert(NewUserProfileActivity.this, getResources().getString(R.string.no_internet_connection));
                 } else {
 
-                    acceptImageView.setImageResource(R.drawable.mail);
-                    cancelImageView.setImageResource(R.drawable.mobile);
-                    acceptTextView.setText("মেসেজ পাঠান");
-                    cancelTextView.setText("ফোন করুন");
+                    JSONObject jsonObject = new JSONObject(s);
 
-                    acceptImageView.setTag(Utils.sendmessage);
-                    cancelImageView.setTag(Utils.call);
+                    if (userResponseCase.equals(Utils.profileRequestAccept) ||
+                            userResponseCase.equals(Utils.profileRequestCancel) ||
+                            userResponseCase.equals(Utils.commRequestCancel)) {
+
+
+                        requestSendButtonsLayout.setVisibility(View.GONE);
+                        finalResultButton.setVisibility(View.VISIBLE);
+                        finalResultButton.setEnabled(true);
+                        finalResultButton.setTag(btnTag);
+                        finalResultButton.setText(btnText);
+
+
+                        if (jsonObject.has("message")) {
+                            Toast.makeText(getApplicationContext(),
+                                    jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"),
+                                    Toast.LENGTH_LONG).show();
+
+                        }
+
+
+                    } else if (userResponseCase.equals(Utils.MESSAGE_CALL_BLOCK)) {
+
+
+                        acceptImageView.setImageResource(R.drawable.envelope_icon);
+                        cancelImageView.setImageResource(R.drawable.phone_icon);
+                        acceptTextView.setText(getResources().getString(R.string.make_message));
+                        cancelTextView.setText(getResources().getString(R.string.make_call));
+
+                        acceptImageView.setTag(Utils.sendmessage);
+                        cancelImageView.setTag(Utils.call);
+
+                        if (jsonObject.has("message")) {
+                            Toast.makeText(getApplicationContext(),
+                                    jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"),
+                                    Toast.LENGTH_LONG).show();
+                        }
+
+                    } else {
+                        Log.i("casetest", "no case match");
+                    }
                 }
+
 
             } catch (Exception e) {
                 e.printStackTrace();

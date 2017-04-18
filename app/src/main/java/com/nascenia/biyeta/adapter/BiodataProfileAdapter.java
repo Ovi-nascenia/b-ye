@@ -80,11 +80,21 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
 
         Log.e("BiodataMessage", profile.getRequestStatus().getMessage() + "hello ");
         holder.call.setText(profile.getRequestStatus().getMessage());
-        if (null != profile.getRequestStatus().getCommunicationRequestId() || profile.getRequestStatus().getMessage().toString().equals("আপনি যোগাযোগের  অনুরোধ  করেছেন") ||
+
+
+        try {
+
+
+        if (null != profile.getRequestStatus().getCommunicationRequestId() || profile.getRequestStatus().getMessage().equals("আপনি যোগাযোগের  অনুরোধ  করেছেন") ||
                 profile.getRequestStatus().getRejected() || profile.getRequestStatus().getExpired() || profile.getRequestStatus().getAccepted()) {
             holder.call.setEnabled(false);
             holder.call.setText(profile.getRequestStatus().getMessage());
         } else {
+            holder.call.setEnabled(true);
+            holder.call.setText(profile.getRequestStatus().getMessage());
+        }
+        }catch (Exception e)
+        {
             holder.call.setEnabled(true);
             holder.call.setText(profile.getRequestStatus().getMessage());
         }

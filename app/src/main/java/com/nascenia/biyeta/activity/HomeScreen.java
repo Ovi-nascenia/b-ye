@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.nascenia.biyeta.R;
 
 import com.nascenia.biyeta.appdata.SharePref;
@@ -26,6 +27,7 @@ import com.nascenia.biyeta.fragment.Favourite;
 import com.nascenia.biyeta.fragment.Inbox;
 import com.nascenia.biyeta.fragment.Match;
 import com.nascenia.biyeta.fragment.Search;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -42,7 +44,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private String responseValue = null;
     private SharePref sharePref;
 
-    private ImageView searchImageView, matchImageView, fevImageView, inboxImageView, profileImageView, menuProfileImgView;
+    private ImageView searchImageView, matchImageView, fevImageView, inboxImageView,
+            profileImageView, menuProfileImgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,24 +99,42 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         TextView display_name = (TextView) header.findViewById(R.id.displayname);
         display_name.setText(sharePref.get_data("display_name"));
         menuProfileImgView = (ImageView) header.findViewById(R.id.img_profile);
+
         //set profile image on drawer
-        Picasso.with(this)
-                .load("http://test.biyeta.com" + sharePref.get_data("profile_picture"))
-                .into(menuProfileImgView, new Callback() {
-                    @Override
-                    public void onSuccess() {
+        if (sharePref.get_data("profile_picture").equals("key") &&
+                (sharePref.get_data("gender").equalsIgnoreCase(Utils.MALE_GENDER))
+                ) {
+            menuProfileImgView.setImageResource(R.drawable.profile_icon_male);
+
+        } else if (sharePref.get_data("profile_picture").equals("key") &&
+                (sharePref.get_data("gender").equalsIgnoreCase(Utils.FEMALE_GENDER))
+                ) {
+            menuProfileImgView.setImageResource(R.drawable.profile_icon_female);
+        } else if (!sharePref.get_data("profile_picture").equals("key")) {
+            Picasso.with(this)
+                    .load(Utils.Base_URL + sharePref.get_data("profile_picture"))
+                    .into(menuProfileImgView, new Callback() {
+                        @Override
+                        public void onSuccess() {
 //                  menuProfileImgView.post(new Runnable() {
 //                  @Override
 //                  public void run() {
 //                      Utils.scaleImage(HomeScreen.this, 1.2f, menuProfileImgView);
 //                  }
 //                  });
-                    }
+                        }
 
-                    @Override
-                    public void onError() {
-                    }
-                });
+                        @Override
+                        public void onError() {
+                        }
+                    });
+
+
+        } else {
+            Log.i("image", "no image found");
+        }
+
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
@@ -136,23 +157,16 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         );
                         break;
 
-//                    case R.id.nav_inbox:
-//                        break;
-//
-//                    case R.id.nav_fav:
-//                        break;
-                    case R.id.nav_setting:
-                        break;
 
                     case R.id.nav_balance:
+                        if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
+                            drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(HomeScreen.this, PaymentActivity.class));
 
                         break;
 
                     case R.id.nav_about_us:
-//                        getSupportFragmentManager().beginTransaction()
-//                                .replace(R.id.fragmentParentViewGroup, new AboutBiyeta())
-//                                .commit();
+
                         startActivity(new Intent(HomeScreen.this, AboutBiyeta.class));
                         break;
                     case R.id.nav_connection:
@@ -177,6 +191,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     case R.id.nav_logout:
                         //SharePref sharePref = new SharePref(HomeScreen.this);
                         sharePref.set_data("token", "key");
+                        try {
+                            LoginManager.getInstance().logOut();
+                        }catch (Exception ex)
+                        {
+                            ex.printStackTrace();
+                        }
                         startActivity(new Intent(HomeScreen.this, Login.class));
                         finish();
 

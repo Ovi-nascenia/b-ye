@@ -7,14 +7,14 @@
             android:id="@+id/nav_profile"
             android:title="@string/nav_profile" />
 
-        <item
-            android:id="@+id/nav_setting"
 
-            android:title="@string/accunt_setting" />
         <item
             android:id="@+id/nav_balance"
             android:title="@string/balance_recharge"/>
         </group>
+
+
+
 
 
     <item android:title="@string/other">

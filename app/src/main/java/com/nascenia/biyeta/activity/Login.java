@@ -61,7 +61,6 @@ import java.util.Arrays;
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
-
     //icon image
     //big image load through glide
     ImageView icon;
@@ -117,12 +116,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         buttonFacebookLogin = (LoginButton) findViewById(R.id.login_button);
         //buttonFacebookLogin.setOnClickListener(this);
+
         buttonFacebookLogin.setReadPermissions(Arrays.asList(
-                "public_profile", "email", "user_birthday"));
+                "public_profile", "email"));
         callbackManager = CallbackManager.Factory.create();
 
 
-
+        buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
         buttonFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(final LoginResult loginResult) {
@@ -141,11 +141,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 try {
                                     String uid = loginResult.getAccessToken().getUserId();
                                     String email = object.getString("email");
-                                    String birthday = object.getString("birthday");
 
                                     //send data from facebook to our server
                                     new LoginByFacebook().execute(Utils.FACEBOOK_LOGIN_URL, uid, "facebook", email);
-                                    Log.e("FacebookData", email + " " + birthday + " " + loginResult.getAccessToken().getToken() + "");
+                                    Log.e("FacebookData", email + " " + loginResult.getAccessToken().getToken() + "");
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -153,7 +152,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,birthday");
+                parameters.putString("fields", "id,name,email");
                 request.setParameters(parameters);
                 request.executeAsync();
 
@@ -170,7 +169,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onError(FacebookException exception) {
                 // App code
-                Log.v("LoginActivity", exception.getCause().toString());
+                Utils.ShowAlert(Login.this, getString(R.string.no_internet_connection));
             }
         });
 
@@ -238,7 +237,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         ///check the user_name and password is empty
         if (user_name.trim().equals("") || password.trim().equals("")) {
             //  Toast.makeText(Login.this,"Fill the both field",Toast.LENGTH_SHORT).show();
-            Utils.ShowAlert(Login.this, "Fill the both field");
+            Utils.ShowAlert(Login.this, "ইমেইল এবং পাসওয়ার্ড  পূরণ করুন");
 
 
         }
@@ -246,7 +245,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //
         else {
             if (!Utils.isOnline(Login.this)) {
-                Utils.ShowAlert(Login.this,getString(R.string.no_internet_connection));
+                Utils.ShowAlert(Login.this, getString(R.string.no_internet_connection));
             } else
 
                 new LoginRequest().execute(user_name, password);
@@ -277,17 +276,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("facebook login",s);
+            Log.e("facebook login", s);
 
 
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.has("message")) {
-                  Utils.ShowAlert(Login.this,jsonObject.getJSONObject("message").get("detail").toString());
+                    Utils.ShowAlert(Login.this, jsonObject.getJSONObject("message").get("detail").toString());
                     LoginManager.getInstance().logOut();
-                }
-                else
-                {
+                    buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
+                } else {
                     Gson gson = new Gson();
                     InputStream is = new ByteArrayInputStream(s.getBytes());
                     InputStreamReader isr = new InputStreamReader(is);
@@ -301,6 +299,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                         SharePref sharePref = new SharePref(Login.this);
 
+
                         sharePref.set_data("token", response.getLoginInformation().getAuthToken());
                         sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
                         sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
@@ -308,6 +307,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
                         sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
 
+
+                        //check display name
 
                         // check the mobile verify screen
 
@@ -321,7 +322,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Utils.ShowAlert(Login.this, "Wrong email/password");
+                        Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                     }
@@ -343,16 +344,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
             Request request = new Request.Builder().url(parameters[0]).post(requestBody).build();
-
+            String responseString = null;
             try {
                 Response response = client.newCall(request).execute();
-                String responseString = response.body().string();
-                return responseString;
-            } catch (IOException e) {
+                responseString = response.body().string();
+//                return responseString;
+            } catch (Exception e) {
 
                 e.printStackTrace();
-                return null;
+//                return null;
             }
+
+            return responseString;
 
         }
     }
@@ -396,11 +399,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             super.onPostExecute(s);
 
             //Log.e("LoginData", s);
-            if (s==null)
-            {
-                Utils.ShowAlert(Login.this,getString(R.string.no_internet_connection));
-            }
-            else {
+            if (s == null) {
+                Utils.ShowAlert(Login.this, getString(R.string.no_internet_connection));
+                buttonSubmit.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            } else {
 
                 try {
                     //convert string to json object
@@ -410,6 +413,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         Utils.ShowAlert(Login.this, jsonObject.getJSONArray("errors").getJSONObject(0).getString("detail"));
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
+                    } else if (jsonObject.getJSONObject("login_information").getString("display_name").equals("null")) {
+                        buttonSubmit.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        Utils.ShowAlert(Login.this, getString(R.string.incomplete_profile_message));
                     } else {
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
@@ -444,7 +451,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Utils.ShowAlert(Login.this, "Wrong email/password");
+                            Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
                             buttonSubmit.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);
                         }
@@ -454,7 +461,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 } catch (JSONException e) {
                     Log.e("error", "JSON error");
                     e.printStackTrace();
-                    Utils.ShowAlert(Login.this, "Wrong Input");
+                    Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
                     buttonSubmit.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
 

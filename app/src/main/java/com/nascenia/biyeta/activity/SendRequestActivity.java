@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,12 +22,13 @@ import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.fragment.CommunicationRequestFragment;
 import com.nascenia.biyeta.model.RequestSenderIds;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
+import com.nascenia.biyeta.utils.Utils;
 
 public class SendRequestActivity extends CustomActionBarActivity {
 
 
     private TabLayout tabLayout;
-    private LinearLayout container;
+    private FrameLayout container;
 
     private View tabItemView1, tabItemView2;
     private Bundle bundle;
@@ -40,9 +42,9 @@ public class SendRequestActivity extends CustomActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_request);
-        setUpToolBar("আপনাকে পাঠানো অনুরোধ",this);
+        setUpToolBar("আপনাকে পাঠানো অনুরোধ", this);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        container = (LinearLayout) findViewById(R.id.fragment_container);
+        container = (FrameLayout) findViewById(R.id.fragment_container);
 
 
         //create tabs title
@@ -108,16 +110,17 @@ public class SendRequestActivity extends CustomActionBarActivity {
         biodataNotificationCounterTextview = (TextView) tabItemView1.
                 findViewById(R.id.biodata_notification_textview);
 
-        if (requestSenderIds.getRequests().getProfileRequestCount() > 0) {
+
+        if (requestSenderIds.getRequests().getProfileRequestSenderIds() != null &&
+                requestSenderIds.getRequests().getProfileRequestCount() > 0) {
             SendRequestActivity.biodataRequestCounter = requestSenderIds.
                     getRequests().getProfileRequestCount();
 
             biodataNotificationCounterTextview.setVisibility(View.VISIBLE);
             biodataNotificationCounterTextview.setText(
-                    SendRequestActivity.biodataRequestCounter + "");
+                    Utils.convertEnglishYearDigittoBangla(SendRequestActivity.biodataRequestCounter) + "");
 
         }
-
         tabLayout.getTabAt(0).setCustomView(tabItemView1);
 
 
@@ -126,14 +129,15 @@ public class SendRequestActivity extends CustomActionBarActivity {
         communicationNotificationCounterTextview = (TextView) tabItemView2.
                 findViewById(R.id.communication_notification_textview);
 
-        if (requestSenderIds.getRequests().getCommunicationRequestCount() > 0) {
+        if (requestSenderIds.getRequests().getCommunicationRequestCount() != null &&
+                requestSenderIds.getRequests().getCommunicationRequestCount() > 0) {
             SendRequestActivity.communicationRequestCounter = requestSenderIds.
                     getRequests().getCommunicationRequestCount();
 
 
             communicationNotificationCounterTextview.setVisibility(View.VISIBLE);
             communicationNotificationCounterTextview.setText(
-                    SendRequestActivity.communicationRequestCounter + "");
+                    Utils.convertEnglishYearDigittoBangla(SendRequestActivity.communicationRequestCounter) + "");
         }
         tabLayout.getTabAt(1).setCustomView(tabItemView2);
 
@@ -152,11 +156,4 @@ public class SendRequestActivity extends CustomActionBarActivity {
     }
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-
-
-    }
 }

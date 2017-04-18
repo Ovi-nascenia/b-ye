@@ -6,7 +6,7 @@
     <string name="search">খুঁজুন</string>
     <string name="match">মিল</string>
     <string name="fev">প্রিয়</string>
-    <string name="inbox">ইনবক্স</string>
+    <string name="inbox">মেসেজ</string>
     <string name="profile">প্রোফাইল</string>
     <string name="password">পাসওয়ার্ড</string>
     <string name="email">ইমেইল</string>
@@ -21,18 +21,44 @@
     <string name="education_male">  শিক্ষাগত যোগ্যতা </string>
     <string name="profession_identity_male">প্রফেশনাল গ্রুপ </string>
     <string name="profession_male">পেশা</string>
+    <string name="year">বছর</string>
+    <string name="marital_status">বৈবাহিক অবস্থা</string>
 
+    <string name="personal_info">"ব্যক্তিগত তথ্য"</string>
+
+
+    <string name="other_question_ans_text">বিবিধ প্রশ্নের উত্তর</string>
+    <string name="fast_text">রোজা রাখেন?</string>
+    <string name="prayet_text">নামাজ পড়েন?</string>
+    <string name="after_marrige_job_text">বিয়ের পরে চাকরি?</string>
+    <string name="hijab_text">হিজাব পড়েন?</string>
+    <string name="own_house_text">নিজের বাসা আছে?</string>
 
     <string name="profession_text">পেশা</string>
     <string name="location_text">বর্তমান অবস্থান </string>
     <string name="height_text">উচ্চতা</string>
     <string name="religion_text">ধর্ম</string>
+    <string name="cast_text">বর্ণ</string>
     <string name="home_town">দেশের বাড়ি</string>
     <string name="present_loaction_text">বর্তমান অবস্থান</string>
+    <string name="permanent_address_text">্থায়ী ঠিকানা</string>
+    <string name="present_address_text">বর্তমান ঠিকান</string>
+
     <string name="age_text">বয়স</string>
     <string name="degree_name_text">ডিগ্রীর নাম</string>
     <string name="about_me">about</string>
     <string name="area">দেশের বাড়ি</string>
+    <string name="district">জেলা</string>
+    <string name="country">দেশ</string>
+    <string name="phone_number">ফোন নম্বর</string>
+
+    <string name="send_smiley_message">হাসি পাঠানো হয়েছে</string>
+    <string name="favorite_message">ফেভারিট করা হয়েছে</string>
+    <string name="unfavorite_message">আনফেভারিট করেছেন</string>
+
+    <string name="send_biodata_request_message"> বায়োডাটার অনুরোধ পাঠানো হয়েছে</string>
+    <string name="send_communication_request_message">যোগাযোগের অনুরোধ পাঠানো হয়েছে</string>
+
 
     <string name="title_activity_send_request">Request send</string>
 
@@ -41,12 +67,22 @@
     <string name="message">মেসেজ</string>
     <string name="smile">হাসি </string>
     <string name="send_smile">হাসি পাঠান </string>
+    <string name="after_send_smile_text">হাসি পাঠিয়েছেন</string>
     <string name="verification_request">ভেরিফিকেশন অনুরোধ</string>
     <string name="expire_request">মেয়াদ উত্তীর্ণ অনুরোধ</string>
     <string name="trash">ট্র্যাশ</string>
 
     <string name="biodata">বায়োডাটা</string>
     <string name="connection">যোগাযোগ</string>
+
+
+    <string name="blood_group_text">রক্তের গ্রুপ</string>
+    <string name="smoking_text">ধূমপান</string>
+    <string name="disabilities_text">প্রতিবন্ধকতা</string>
+
+
+    <string name="cancel_btn_Text">প্রত্যাখ্যান করুন</string>
+    <string name="accept_btn_text">গ্রহণ করুন</string>
 
 
     <!-- Navigation Drawer menu labels -->
@@ -66,8 +102,26 @@
     <string name="nav_termsofuse">টার্মস অব ইউস</string>
     <string name="other">অন্যান্য</string>
 
+    <string name="professional_group_text">professional_group</string>
+    <string name="occupation_text">occupation</string>
+    <string name="designation_text">designation</string>
+    <string name="institute_text">institute</string>
+
 
     <string name="no_internet_connection"> ইন্টারনেট সংযোগ নেই</string>
+
+    <string name="father_text">বাবা</string>
+    <string name="mother_text">মা</string>
+    <string name="brother_text">ভাই</string>
+    <string name="sister_text">বোন</string>
+    <string name="child_text">সন্তান</string>
+    <string name="no_child_text">কোন সন্তান নেই</string>
+
+    <string name="no_brother_text">কোন ভাই নেই</string>
+    <string name="no_sister_text">কোন বোন নেই</string>
+
+    <string name="married_text">বিবাহিত</string>
+    <string name="unmarried_text">অবিবাহিত</string>
 
 
     <string name="make_call">ফোন করুন</string>
@@ -76,7 +130,7 @@
     <string name="connection_again">আবারো যোগাযোগ করুন</string>
 
 
-    <string name="privacy_policy_title">প্রাইভেসি পলেসি</string>
+    <string name="privacy_policy_title">প্রাইভেসি পলিসি</string>
     <string name="privacy_policy_parag1">Biyeta.com is an online matrimonial portal endeavouring constantly to find your best life partner. This privacy statement is common to all the matrimonial sites operated under Biyeta.com Since we are strongly committed to your right to privacy, we have drawn out a privacy statement with regard to the information we collect from you. </string>
     <string name="privacy_policy_parag2">Payments are processed by third party gateway who use secure server for credit card transactions to protect the credit card information of our users and Cookies are used to store the login information. </string>
     <string name="privacy_policy_parag3">What information you need to give in to use this site? </string>
@@ -220,9 +274,9 @@
     <string name="account_recharge_currentbalance">বর্তমান ব্যালেন্স ১০০ টাকা </string>
     <string name="every_payment">প্রতিটি যোগাযোগের মূল্য ১০০ টাকা।</string>
     <string name="account_recharge_descrip1"> আপনি আরও একজনকে যোগাযোগের অনুরোধ পাঠাতে পারবেন। </string>
-    <string name="account_recharge_descrip2">শুধুমাত্র যোগাযোগের অনুরোধ গ্রহন করলেই আপনার অ্যাকাউণ্ট থেকে টাকা নেয়া হবে। এক সপ্তাহের মধ্যে অনুরোধ গৃহীত না হলে অ্যাকাউণ্টে টাকা ফেরত আসবে। </string>
-    <string name="load_money_title">অ্যাকাউণ্টে টাকা লোড করুন। </string>
-    <string name="online_payment_option">অনলাইন পেমেণ্ট (ডেবিট/ক্রেডিট/নেক্সাস কার্ড) </string>
+    <string name="account_recharge_descrip2">শুধুমাত্র যোগাযোগের অনুরোধ গ্রহণ করলেই আপনার অ্যাকাউন্ট থেকে টাকা নেয়া হবে। এক সপ্তাহের মধ্যে অনুরোধ গৃহীত না হলে অ্যাকাউন্টে টাকা ফেরত আসবে। </string>
+    <string name="load_money_title"> অ্যাকাউন্টে টাকা লোড করুন। </string>
+    <string name="online_payment_option">অনলাইন পেমেন্ট (ডেবিট/ক্রেডিট/নেক্সাস কার্ড) </string>
     <string name="recharge_amount_text">রিচার্জ-এর পরিমান </string>
     <string name="recharge_amount">১০০০ </string>
     <string name="taka">টাকা </string>
@@ -234,12 +288,12 @@
         ]]>
        </string>
     <string name="money_sent_procedureTitle">যেভাবে বিকাশ করবেন </string>
-    <string name="bKash_precedureDescrip">যে কোন পারসোনাল অ্যাকাউণ্ট থেকে পাঠানো যাবে, এজেন্ট অ্যাকাউণ্ট থেকে নয় </string>
+    <string name="bKash_precedureDescrip">যে কোন পারসোনাল অ্যাকাউন্ট থেকে পাঠানো যাবে, এজেন্ট অ্যাকাউন্ট থেকে নয়। </string>
     <string name="bullet_point_recharge">●</string>
 
     <string name="no_request_from_me">
-    আপনাকে পাঠানো অনুরোধ  -  কোন অনুরোধ নেই। \n
-    অনুরোধ পাবার জন্য টিপস- \n
+    কোন অনুরোধ নেই। \n\n
+    অনুরোধ পাবার জন্য টিপস- \n\n
     ● প্রোফাইল পিকচার আপলোড করুন। সুন্দর ও মার্জিত ছবি আপলোড করুন। মনে রাখবেন, আপনি বিয়ে করতে যাচ্ছেন বিয়েটার মাধ্যমে।\n
     ● নিজের সম্পর্কে ভালোভাবে লিখুন যাতে বিপরীতপক্ষ আপনার সম্পর্কে জানতে আগ্রহী হয়।\n
     ● বায়োডাটা খুব ভালোভাবে পুরণ করবেন। নিজের সম্পর্কে এবং আত্নীয়-স্বজন সম্পর্কে বিস্তারিত তুলে ধরবেন।\n
@@ -250,9 +304,11 @@
     <string name="recharge_step3">পাঠানোর নম্বর দিনঃ ০১৭৫৫ ৬৯০ ০০০ </string>
     <string name="recharge_step4">টাকার পরিমাণ দিন </string>
     <string name="recharge_step5">কাউন্টার নম্বর দিনঃ ১ </string>
-    <string name="recharge_step6">রেফারেণ্স নম্বর দিনঃ ১ </string>
+    <string name="recharge_step6">রেফারেন্স নম্বর দিনঃ ১ </string>
     <string name="recharge_step7">পিন নম্বর দিয়ে টাকা পাঠিয়ে দিন </string>
 
+    <string name="profile_request_message">আপনার কাছে বায়োডাটা দেখার অনুরোধ করেছেন</string>
+    <string name="communication_request_message">আপনার কাছে যোগাযোগের  অনুরোধ করেছেন</string>
 
     <!--Balance_Reply_page-->
 
@@ -276,14 +332,18 @@
     <string name="verify_mobile">আপনার মোবাইলে নাম্বার ভেরিফাই করুন </string>
     <string name="expire_message">এরা আপনাকে যোগাযোগের অনুরোধ করেছিলেন। কিন্তু আপনি তাতে সাত দিনের মধ্যে সাড়া দেননি। এদেরকে আপনি যোগাযোগের অনুরোধ করতে পারেন।</string>
     <string name="bullet_point">●</string>
-    <string name="facebook_app_id">403568326678447</string>
+    <string name="facebook_app_id">1530203510587417</string>
     <string name="please_retry_after">"Please retry after "</string>
-    <!--FAQ page-->
 
+    <string name="incomplete_profile_message">আপনার প্রোফাইলটি অসম্পূর্ণ রয়েছে। অনুগ্রহপূর্বক প্রোফাইলটি সম্পূর্ণ করে লগইন করুন।</string>
+    <string name="progress_dialog_message">অনুগ্রহপূর্বক অপেক্ষা করুন</string>
 
-    <!--facebook login from my account -->
+    <string name="send_communication_request_text">যোগাযোগের জন্য অনুরোধ করুন</string>
+    <string name="biodata_request_text">পুরো বায়োডাটা দেখার অনুরোধ করুন</string>
+    <string name="after_sending_communication_request_text">আপনি যোগাযোগের জন্য অনুরোধ করেছেন</string>
+    <string name="after_sending_biodata_request_text">আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন</string>
 
-    <!--<string name="facebook_app_id">871780212961408</string>-->
+    <string name="no_request_dialog_message">আপনার আর কোন অনুরোধ নেই</string>
 
 
 </resources>

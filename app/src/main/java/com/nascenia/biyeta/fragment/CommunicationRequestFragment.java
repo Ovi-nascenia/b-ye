@@ -3,8 +3,11 @@ package com.nascenia.biyeta.fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -33,6 +36,9 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +54,8 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     private View _baseView;
 
     RelativeLayout relativeLayoutFullFrame;
-    TextView noListAvailable;
-
+    TextView noListAvailable, sendEmoIconTextTag;
+    ;
 
 
     private ImageView userProfileImage, cancelImageView, waitImageView, acceptImageView, selfImageView,
@@ -61,8 +67,8 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     private ArrayList<GeneralInformation> generalInformationArrayList = new ArrayList<GeneralInformation>();
     private ArrayList<MatchUserChoice> matchUserChoiceArrayList = new ArrayList<MatchUserChoice>();
     private TextView userProfileDescriptionText, communicatiodataNotificationCounterTextview,
-            userNameTextView;
-
+            userNameTextView, otherInfoTextViewTag;
+    private CardView otherInfoCardLayout;
     private ImageView profileViewerPersonImageView;
 
 
@@ -87,11 +93,12 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     private Response responseStatus;
 
     private LinearLayout layoutSendSmiley;
-    private int profileId;
     private UserProfile userProfile;
 
     private RelativeLayout bottomRelativeLayout;
     private CoordinatorLayout coordnatelayout;
+    private AppBarLayout appBarLayout;
+    private NestedScrollView nestedScrollView;
 
     @Nullable
     @Override
@@ -111,8 +118,8 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
 
         initView();
-        relativeLayoutFullFrame=(RelativeLayout)_baseView.findViewById(R.id.communtication_request_layout);
-        noListAvailable=(TextView)_baseView.findViewById(R.id.no_data);
+        relativeLayoutFullFrame = (RelativeLayout) _baseView.findViewById(R.id.communtication_request_layout);
+        noListAvailable = (TextView) _baseView.findViewById(R.id.no_data);
 
         relativeLayoutFullFrame.setVisibility(View.VISIBLE);
         noListAvailable.setVisibility(View.GONE);
@@ -127,10 +134,15 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         communicatiodataNotificationCounterTextview = (TextView) getActivity().
                 findViewById(R.id.communication_notification_textview);
 
+        otherInfoTextViewTag = (TextView) _baseView.findViewById(R.id.other_info_textView_tag);
+        otherInfoCardLayout = (CardView) _baseView.findViewById(R.id.other_info_cardview);
 
         bottomRelativeLayout = (RelativeLayout) _baseView.findViewById(R.id.r1);
         coordnatelayout = (CoordinatorLayout) _baseView.findViewById(R.id.coordnatelayout);
+        appBarLayout = (AppBarLayout) _baseView.findViewById(R.id.appbar_layout);
+        nestedScrollView = (NestedScrollView) _baseView.findViewById(R.id.nested_scrollview);
 
+        sendEmoIconTextTag = (TextView) _baseView.findViewById(R.id.sendEmoIconTextTag);
         layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
         favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
@@ -142,14 +154,21 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
-                    NetWorkOperation.postMethod(getActivity(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
                             Utils.SEND_SMILE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
-                            "Token token=" + sharePref.get_data("token"));
-                    layoutSendSmiley.setEnabled(false);
-                    emoIconImageView.setImageResource(R.drawable.red_smile);
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.SMILEY_BUTTON_PRESS_TAG);
 
+                    /* layoutSendSmiley.setEnabled(false);
+                    emoIconImageView.setImageResource(R.drawable.red_smile);
+                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));*/
 
                 }
             }
@@ -162,13 +181,39 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
                 if (!userProfile.getProfile().isIsFavorite()) {
 
-                    NetWorkOperation.postMethod(getActivity(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
                             Utils.FAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
-                            "Token token=" + sharePref.get_data("token"));
-                    favoriteImageView.setEnabled(false);
-                    favoriteImageView.setImageResource(R.drawable.red_favorite);
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.FAVORITE_BUTTON_PRESS_TAG);
+
+                    /*//favoriteImageView.setEnabled(false);
+                    userProfile.getProfile().setIsFavorite(true);
+                    favoriteImageView.setImageResource(R.drawable.red_favorite);*/
+                } else {
+
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
+                            Utils.UNFAVORITE_URL,
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.UNFAVORITE_BUTTON_PRESS_TAG);
+
+                    /*userProfile.getProfile().setIsFavorite(false);
+                    favoriteImageView.setImageResource(R.drawable.favorite);*/
+
+
                 }
 
             }
@@ -203,6 +248,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
         cancelImageView = (ImageView) _baseView.findViewById(R.id.cancel_imageview);
         waitImageView = (ImageView) _baseView.findViewById(R.id.wait_imageview);
+        waitImageView.setOnClickListener(this);
         acceptImageView = (ImageView) _baseView.findViewById(R.id.accept_imageview);
 
 
@@ -213,17 +259,14 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     public void onStart() {
         super.onStart();
 
-
         initView();
 
         if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() > 0) {
 
             setRequestView(CommunicationRequestFragment.communicationRequestSenderIdsList.get(0));
         } else {
-            Utils.ShowAlert(getActivity(), "আপনার কোন অনুরোধ নেই");
-            relativeLayoutFullFrame.setVisibility(View.GONE);
-            noListAvailable.setVisibility(View.VISIBLE);
 
+            noListAvailable.setVisibility(View.VISIBLE);
         }
 
 
@@ -233,7 +276,35 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     private void setRequestView(int id) {
 
         currentId = id;
-        SendRequestFragmentView.fetchUserProfileDetailsResponse(
+        new SendRequestFragmentView() {
+            @Override
+            public void loadNextProfile(int clickBtnId, int userCommunicationRequestId) {
+
+
+                if (clickBtnId == 1) {
+
+                    new CommunicationRequestFragment.SendResponseTask().execute(
+                            Utils.COMMUNICATION_REQUEST_URL +
+                                    userCommunicationRequestId + "/accept");
+
+                    processResponse(clickBtnId);
+
+
+                } else if (clickBtnId == 0) {
+
+
+                    new CommunicationRequestFragment.SendResponseTask().execute(
+                            Utils.COMMUNICATION_REQUEST_URL +
+                                    userCommunicationRequestId + "/reject");
+
+
+                    processResponse(clickBtnId);
+
+                }
+
+
+            }
+        }.fetchUserProfileDetailsResponse(
                 Utils.PROFILES_URL + id,
                 getActivity(),
                 this,
@@ -244,10 +315,17 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 profileViewerPersonImageView,
                 userProfileImage,
                 familyMemberInfoRecylerView,
-                1,
+                Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS,
                 userNameTextView,
                 coordnatelayout,
-                bottomRelativeLayout
+                bottomRelativeLayout,
+                acceptImageView,
+                cancelImageView,
+                otherInfoTextViewTag,
+                otherInfoCardLayout,
+                appBarLayout,
+                nestedScrollView
+
         );
 
 
@@ -276,7 +354,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    favoriteImageView.setEnabled(false);
+                    //favoriteImageView.setEnabled(false);
                     favoriteImageView.setImageResource(R.drawable.red_favorite);
                 }
             });
@@ -290,26 +368,10 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 public void run() {
                     layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
+                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
                 }
             });
 
-
-        }
-
-        if (result && clickableButtonIdentifier == 1 && id != null) {
-
-            new CommunicationRequestFragment.SendResponseTask().execute(
-                    Utils.COMMUNICATION_REQUEST_URL +
-                            id + "/accept");
-
-        } else if (result && clickableButtonIdentifier == 0 && id != null) {
-
-            new CommunicationRequestFragment.SendResponseTask().execute(
-                    Utils.COMMUNICATION_REQUEST_URL +
-                            id + "/reject");
-
-
-        } else if (result && clickableButtonIdentifier == 555 && id != null) {
 
         }
 
@@ -318,14 +380,18 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
 
     private void processResponse(int btnClickIdentifier) {
+
         SendRequestActivity.communicationRequestCounter--;
 
+
         if (!CommunicationRequestFragment.communicationRequestSenderIdsList.isEmpty()) {
+
             communicatiodataNotificationCounterTextview.setText(
                     SendRequestActivity.communicationRequestCounter + "");
 
-            if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() == 1)
-                urlResponseId = CommunicationRequestFragment.communicationRequestSenderIdsList.get(0);
+
+           /* if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() == 1)
+                urlResponseId = CommunicationRequestFragment.communicationRequestSenderIdsList.get(0);*/
 
 
             if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() > 0) {
@@ -336,17 +402,37 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                     setRequestView(CommunicationRequestFragment.communicationRequestSenderIdsList.get(0));
 
                 } else if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() == 1) {
-                    id = CommunicationRequestFragment.communicationRequestSenderIdsList.get(0);
 
+                    id = CommunicationRequestFragment.communicationRequestSenderIdsList.get(0);
                     CommunicationRequestFragment.communicationRequestSenderIdsList.remove(0);
-                    setRequestView(id);
+
+                    // coordnatelayout.setVisibility(View.INVISIBLE);
+                    appBarLayout.setVisibility(View.GONE);
+                    nestedScrollView.setVisibility(View.GONE);
+                    bottomRelativeLayout.setVisibility(View.INVISIBLE);
+                    noListAvailable.setVisibility(View.VISIBLE);
+                    Utils.ShowAlert(getActivity(),
+                            getActivity().getResources().getString(R.string.no_request_dialog_message));
+                    //  setRequestView(id);
                 }
             } else {
-                setRequestView(currentId);
-                Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
+                //setRequestView(currentId);
+                // coordnatelayout.setVisibility(View.INVISIBLE);
+                appBarLayout.setVisibility(View.GONE);
+                nestedScrollView.setVisibility(View.GONE);
+                bottomRelativeLayout.setVisibility(View.INVISIBLE);
+                noListAvailable.setVisibility(View.VISIBLE);
+                Utils.ShowAlert(getActivity(),
+                        getActivity().getResources().getString(R.string.no_request_dialog_message));
             }
         } else {
-            Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
+            // coordnatelayout.setVisibility(View.INVISIBLE);
+            appBarLayout.setVisibility(View.GONE);
+            nestedScrollView.setVisibility(View.GONE);
+            bottomRelativeLayout.setVisibility(View.INVISIBLE);
+            noListAvailable.setVisibility(View.VISIBLE);
+            Utils.ShowAlert(getActivity(),
+                    getActivity().getResources().getString(R.string.no_request_dialog_message));
         }
 
     }
@@ -355,18 +441,9 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.accept_imageview:
-                processResponse(1);
-
-
-                break;
-            case R.id.cancel_imageview:
-                processResponse(0);
-
-                break;
             case R.id.wait_imageview:
                 waitButtonAction(id);
-
+                //Toast.makeText(getContext(), "wait", Toast.LENGTH_LONG).show();
 
                 break;
         }
@@ -374,11 +451,12 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
     private void waitButtonAction(int btnClickIdentifier) {
 
-        SendRequestActivity.communicationRequestCounter--;
+
+        // SendRequestActivity.communicationRequestCounter--;
 
         if (!CommunicationRequestFragment.communicationRequestSenderIdsList.isEmpty()) {
-            communicatiodataNotificationCounterTextview.setText(
-                    SendRequestActivity.communicationRequestCounter + "");
+            /*communicatiodataNotificationCounterTextview.setText(
+                    SendRequestActivity.communicationRequestCounter + "");*/
 
             if (CommunicationRequestFragment.communicationRequestSenderIdsList.size() == 1)
                 urlResponseId = CommunicationRequestFragment.communicationRequestSenderIdsList.get(0);
@@ -402,11 +480,14 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
                 }
             } else {
                 setRequestView(currentId);
-                Utils.ShowAlert(getActivity(), "No more reqeust left");
+                Utils.ShowAlert(getActivity(),
+                        getActivity().getResources().getString(R.string.no_request_dialog_message));
             }
         } else {
-            Utils.ShowAlert(getActivity(), "No more reqeust ");
+            Utils.ShowAlert(getActivity(),
+                    getActivity().getResources().getString(R.string.no_request_dialog_message));
         }
+
 
     }
 
@@ -450,6 +531,18 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("FFFFFF", s);
+
+            try {
+                JSONObject headObj = new JSONObject(s);
+
+                Toast.makeText(getActivity(),
+                        headObj.getJSONArray("message").getJSONObject(0).getString("detail"),
+                        Toast.LENGTH_LONG).show();
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }
     }

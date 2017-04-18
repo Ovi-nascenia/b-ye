@@ -3,13 +3,18 @@ package com.nascenia.biyeta.view;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -20,6 +25,7 @@ import com.nascenia.biyeta.adapter.MatchUserChoiceAdapter;
 import com.nascenia.biyeta.adapter.OtherInfoRecylerViewAdapter;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.fragment.BioDataRequestFragment;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.MatchUserChoice;
 import com.nascenia.biyeta.model.UserProfileChild;
@@ -41,11 +47,12 @@ import java.util.ArrayList;
  * Created by saiful on 3/13/17.
  */
 
-public class SendRequestFragmentView {
+public abstract class SendRequestFragmentView {
 
 
     public static String responseValue;
-    private SharePref sharePref;
+
+    public abstract void loadNextProfile(int clickBtnId, int userProfileRequestId);
 
 
     /*
@@ -76,22 +83,29 @@ public class SendRequestFragmentView {
     ;
 
 
-    public static void fetchUserProfileDetailsResponse(final String url,
-                                                       final Context context,
-                                                       final MyCallback<Boolean> mCallback,
-                                                       TextView userProfileDescriptionText,
-                                                       RecyclerView generalInfoRecyclerView,
-                                                       RecyclerView matchUserChoiceRecyclerView,
-                                                       RecyclerView otherInfoRecylerView,
-                                                       ImageView profileViewerPersonImageView,
-                                                       ImageView userProfileImage,
-                                                       RecyclerView familyMemberInfoRecylerView,
-                                                       int viewRequestClassname,
-                                                       TextView userNameTextView,
-                                                       CoordinatorLayout coordinatorLayout,
-                                                       RelativeLayout relativeLayout) {
+    public void fetchUserProfileDetailsResponse(final String url,
+                                                final Context context,
+                                                final MyCallback<Boolean> mCallback,
+                                                TextView userProfileDescriptionText,
+                                                RecyclerView generalInfoRecyclerView,
+                                                RecyclerView matchUserChoiceRecyclerView,
+                                                RecyclerView otherInfoRecylerView,
+                                                ImageView profileViewerPersonImageView,
+                                                ImageView userProfileImage,
+                                                RecyclerView familyMemberInfoRecylerView,
+                                                int viewRequestClassname,
+                                                TextView userNameTextView,
+                                                CoordinatorLayout coordinatorLayout,
+                                                RelativeLayout bottomRelativeLayout,
+                                                ImageView acceptImageView,
+                                                ImageView rejectImageView,
+                                                TextView otherInfoTextViewTag,
+                                                CardView otherInfoCardLayout,
+                                                AppBarLayout appBarLayout,
+                                                NestedScrollView nestedScrollView) {
 
-
+        //Toast.makeText(context, "fetchmethod", Toast.LENGTH_LONG).show();
+        Log.i("btnreaction", "fetchmethod");
         //generalInformationArrayList.clear();
         //  matchUserChoiceArrayList.clear();
         //  otherInformationArrayList.clear();
@@ -119,7 +133,13 @@ public class SendRequestFragmentView {
                 viewRequestClassname,
                 userNameTextView,
                 coordinatorLayout,
-                relativeLayout);
+                bottomRelativeLayout,
+                acceptImageView,
+                rejectImageView,
+                otherInfoTextViewTag,
+                otherInfoCardLayout,
+                appBarLayout,
+                nestedScrollView);
         Thread response = new Thread(responseThread);
         response.start();
 
@@ -127,7 +147,7 @@ public class SendRequestFragmentView {
     }
 
 
-    public static class ResponseThread implements Runnable {
+    public class ResponseThread implements Runnable {
 
         private MyCallback<Boolean> callback;
         private String url;
@@ -142,7 +162,13 @@ public class SendRequestFragmentView {
         private int viewRequestClassname;
         private TextView userNameTextView;
         private CoordinatorLayout coordinatorLayout;
-        private RelativeLayout relativeLayout;
+        private RelativeLayout bottomRelativeLayout;
+        private ImageView acceptImageView;
+        private ImageView rejectImageView;
+        private TextView otherInfoTextViewTag;
+        private CardView otherInfoCardLayout;
+        private AppBarLayout appBarLayout;
+        private NestedScrollView nestedScrollView;
 
         public ResponseThread(String url,
                               Context context,
@@ -157,7 +183,13 @@ public class SendRequestFragmentView {
                               int viewRequestClassname,
                               TextView userNameTextView,
                               CoordinatorLayout coordinatorLayout,
-                              RelativeLayout relativeLayout) {
+                              RelativeLayout bottomRelativeLayout,
+                              ImageView acceptImageView,
+                              ImageView rejectImageView,
+                              TextView otherInfoTextViewTag,
+                              CardView otherInfoCardLayout,
+                              AppBarLayout appBarLayout,
+                              NestedScrollView nestedScrollView) {
 
 
             this.callback = callback;
@@ -173,10 +205,16 @@ public class SendRequestFragmentView {
             this.viewRequestClassname = viewRequestClassname;
             this.userNameTextView = userNameTextView;
             this.coordinatorLayout = coordinatorLayout;
-            this.relativeLayout = relativeLayout;
+            this.bottomRelativeLayout = bottomRelativeLayout;
+            this.acceptImageView = acceptImageView;
+            this.rejectImageView = rejectImageView;
+            this.otherInfoTextViewTag = otherInfoTextViewTag;
+            this.otherInfoCardLayout = otherInfoCardLayout;
+            this.appBarLayout = appBarLayout;
+            this.nestedScrollView = nestedScrollView;
 
             dialog = new ProgressDialog(context);
-            dialog.setMessage("Please wait...");
+            dialog.setMessage(context.getResources().getString(R.string.progress_dialog_message));
             dialog.setCancelable(true);
             dialog.show();
             responseValue = null;
@@ -198,8 +236,11 @@ public class SendRequestFragmentView {
                     public void run() {
                         Log.i("taskon", "run");
 
-                        coordinatorLayout.setVisibility(View.VISIBLE);
-                        relativeLayout.setVisibility(View.VISIBLE);
+                        // coordinatorLayout.setVisibility(View.VISIBLE);
+                        appBarLayout.setVisibility(View.VISIBLE);
+                        nestedScrollView.setVisibility(View.VISIBLE);
+                        bottomRelativeLayout.setVisibility(View.VISIBLE);
+
 
                         userNameTextView.setText(userProfile.getProfile().
                                 getPersonalInformation().getDisplayName());
@@ -220,7 +261,42 @@ public class SendRequestFragmentView {
                                 userProfile,
                                 familyMemberInfoRecylerView);
                         setDataonOtherInfoRecylerView(context,
-                                userProfile, otherInfoRecylerView);
+                                userProfile, otherInfoRecylerView,
+                                otherInfoTextViewTag,
+                                otherInfoCardLayout);
+
+                        acceptImageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                //Toast.makeText(context, "accept btn fetch", Toast.LENGTH_LONG).show();
+                                Log.i("btnreaction", "accept btn fetch");
+
+                                if (viewRequestClassname == Utils.BIODATA_REQUEST_FRAGEMNT_CLASS) {
+                                    loadNextProfile(1, userProfile.getProfile().getRequestStatus().getProfileRequestId());
+                                } else if (viewRequestClassname == Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS) {
+                                    loadNextProfile(1, userProfile.getProfile().getRequestStatus().getCommunicationRequestId());
+                                } else {
+                                    Log.i("classdata", "No Data recived");
+                                }
+                            }
+                        });
+
+
+                        rejectImageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //Toast.makeText(context, "rej btn fetch", Toast.LENGTH_LONG).show();
+
+                                if (viewRequestClassname == Utils.BIODATA_REQUEST_FRAGEMNT_CLASS) {
+                                    loadNextProfile(0, userProfile.getProfile().getRequestStatus().getProfileRequestId());
+                                } else if (viewRequestClassname == Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS) {
+                                    loadNextProfile(0, userProfile.getProfile().getRequestStatus().getCommunicationRequestId());
+                                } else {
+                                    Log.i("classdata", "No Data recived");
+                                }
+                            }
+                        });
 
 
                         if (dialog.isShowing()) {
@@ -230,13 +306,15 @@ public class SendRequestFragmentView {
                 });
 
 
-                if (callback != null && this.viewRequestClassname == 0 && userProfile != null) {
-                    // will call onComplete() on MyActivity once the job is done
+                if (callback != null && this.viewRequestClassname ==
+                        Utils.BIODATA_REQUEST_FRAGEMNT_CLASS && userProfile != null) {
+                    // will call onComplete() on BiodataRequestFragment once the job is done
                     callback.onComplete(true,
                             userProfile.getProfile().getRequestStatus().getProfileRequestId(),
                             userProfile);
-                } else if (callback != null && this.viewRequestClassname == 1 && userProfile != null) {
-                    // will call onComplete() on MyActivity once the job is done
+                } else if (callback != null && this.viewRequestClassname ==
+                        Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS && userProfile != null) {
+                    // will call onComplete() on CommunicationRequestClass once the job is done
                     callback.onComplete(true,
                             userProfile.getProfile().getRequestStatus().getCommunicationRequestId(),
                             userProfile);
@@ -255,14 +333,16 @@ public class SendRequestFragmentView {
 
     public static void setDataonOtherInfoRecylerView(Context context,
                                                      UserProfile userProfile,
-                                                     RecyclerView otherInfoRecylerView) {
+                                                     RecyclerView otherInfoRecylerView,
+                                                     TextView otherInfoTextViewTag,
+                                                     CardView otherInfoCarView) {
 
         otherInformationArrayList.clear();
 
         if (!(checkNullField(userProfile.getProfile().getOtherInformation().getFasting()).equals(""))) {
 
             otherInformationArrayList.add(new MatchUserChoice("রোজা রাখেন?",
-                    checkNullField(userProfile.getProfile().getOtherInformation().getFasting())));
+                    userProfile.getProfile().getOtherInformation().getFasting()));
 
         }
 
@@ -270,7 +350,7 @@ public class SendRequestFragmentView {
         if (!(checkNullField(userProfile.getProfile().getOtherInformation().getPrayer()).equals(""))) {
 
             otherInformationArrayList.add(new MatchUserChoice("নামাজ পড়েন?",
-                    checkNullField(userProfile.getProfile().getOtherInformation().getPrayer())));
+                    userProfile.getProfile().getOtherInformation().getPrayer()));
 
         }
 
@@ -281,7 +361,7 @@ public class SendRequestFragmentView {
 
 
             otherInformationArrayList.add(new MatchUserChoice("বিয়ের পরে চাকরি?",
-                    checkNullField(userProfile.getProfile().getOtherInformation().getJobAfterMarriage())));
+                    userProfile.getProfile().getOtherInformation().getJobAfterMarriage()));
         }
 
 
@@ -291,21 +371,28 @@ public class SendRequestFragmentView {
 
 
             otherInformationArrayList.add(new MatchUserChoice("হিজাব পড়েন?",
-                    checkNullField(userProfile.getProfile().getOtherInformation().getHijab())));
+                    userProfile.getProfile().getOtherInformation().getHijab()));
         }
 
         if ((userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))
 
-                & (!(checkNullField(userProfile.getProfile().getOtherInformation().getHijab()).equals("")))) {
+                & (!(checkNullField(userProfile.getProfile().getOtherInformation().getOwnHouse()).equals("")))) {
 
 
             otherInformationArrayList.add(new MatchUserChoice("নিজের বাসা আছে?",
-                    checkNullField(userProfile.getProfile().getOtherInformation().getOwnHouse())));
+                    userProfile.getProfile().getOtherInformation().getOwnHouse()));
         }
 
 
-        otherInfoRecylerView.setAdapter(new OtherInfoRecylerViewAdapter(
-                context, otherInformationArrayList));
+        if (otherInformationArrayList.size() > 0) {
+
+            otherInfoTextViewTag.setVisibility(View.VISIBLE);
+            otherInfoCarView.setVisibility(View.VISIBLE);
+
+            otherInfoRecylerView.setAdapter(new OtherInfoRecylerViewAdapter(
+                    context, otherInformationArrayList));
+        }
+
 
     }
 
@@ -420,15 +507,15 @@ public class SendRequestFragmentView {
             //add sister information
             if (userProfile.getProfile().getFamilyMembers().getNumberOfSisters() > 0) {
 
-                familyMemberCounter = 0;
+                //  familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getSisters().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    // familyMemberCounter = i + 1;
 
                     sisterChildItemList.add(new UserProfileChild(
-                            "বোন " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            /// "বোন " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "বোন ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().
                                     getSisters().get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -462,14 +549,14 @@ public class SendRequestFragmentView {
             //add brother information
             if (userProfile.getProfile().getFamilyMembers().getNumberOfBrothers() > 0) {
 
-                familyMemberCounter = 0;
+                // familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getBrothers().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    //  familyMemberCounter = i + 1;
                     brotherChildItemList.add(new UserProfileChild(
-                            "ভাই " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            //  "ভাই " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "ভাই ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getBrothers().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -505,7 +592,7 @@ public class SendRequestFragmentView {
             if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
                     userProfile.getProfile().getFamilyMembers().isChildLivesWithYou()) {
 
-                childItemList.add(new UserProfileChild("সন্তান",
+                childItemList.add(new UserProfileChild(context.getResources().getString(R.string.child_text),
                         Utils.convertEnglishDigittoBangla(
                                 userProfile.getProfile().getFamilyMembers().getNumberOfChild())
                                 + " জন সন্তান, তার সাথে থাকে"));
@@ -513,7 +600,7 @@ public class SendRequestFragmentView {
             } else if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
                     !(userProfile.getProfile().getFamilyMembers().isChildLivesWithYou())) {
 
-                childItemList.add(new UserProfileChild("সন্তান",
+                childItemList.add(new UserProfileChild(context.getResources().getString(R.string.child_text),
                         Utils.convertEnglishDigittoBangla(
                                 userProfile.getProfile().getFamilyMembers().getNumberOfChild())
                                 + " জন সন্তান, তার সাথে থাকে না"));
@@ -548,13 +635,14 @@ public class SendRequestFragmentView {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfKaka() > 0) {
 
-                familyMemberCounter = 0;
+                //  familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getKakas().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    // familyMemberCounter = i + 1;
                     otherCHildItemList.add(new UserProfileChild(
-                            "চাচা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            //"চাচা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "চাচা ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getKakas().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -575,14 +663,14 @@ public class SendRequestFragmentView {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfMama() > 0) {
 
-                familyMemberCounter = 0;
+                //  familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getMamas().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    // familyMemberCounter = i + 1;
                     otherCHildItemList.add(new UserProfileChild(
-                            "মামা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            //"মামা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "মামা ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getMamas().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -604,14 +692,14 @@ public class SendRequestFragmentView {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfFufa() > 0) {
 
-                familyMemberCounter = 0;
+                //familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getFufas().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    // familyMemberCounter = i + 1;
                     otherCHildItemList.add(new UserProfileChild(
-                            "ফুপা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            //   "ফুপা " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "ফুপা ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getFufas().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -655,14 +743,14 @@ public class SendRequestFragmentView {
 
             if (userProfile.getProfile().getFamilyMembers().getNumberOfKhalu() > 0) {
 
-                familyMemberCounter = 0;
+                // familyMemberCounter = 0;
 
                 for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getKhalus().size(); i++) {
 
-                    familyMemberCounter = i + 1;
+                    // familyMemberCounter = i + 1;
                     otherCHildItemList.add(new UserProfileChild(
-                            "খালু " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
-
+                            //  "খালু " + Utils.convertEnglishDigittoBangla(familyMemberCounter),
+                            "খালু ",
                             checkNullField(userProfile.getProfile().getFamilyMembers().getKhalus().
                                     get(i).getName())
                                     + checkNullField(userProfile.getProfile().getFamilyMembers().
@@ -699,7 +787,7 @@ public class SendRequestFragmentView {
 
         } else {
 
-            sisterChildItemList.add(new UserProfileChild("বোন", "কোন বোন নেই"));
+            sisterChildItemList.add(new UserProfileChild("বোন", context.getResources().getString(R.string.no_sister_text)));
             mainparentItemList.add(new UserProfileParent("বোন", sisterChildItemList));
 
         }
@@ -713,7 +801,7 @@ public class SendRequestFragmentView {
 
         } else {
 
-            brotherChildItemList.add(new UserProfileChild("ভাই", "কোন ভাই নেই"));
+            brotherChildItemList.add(new UserProfileChild("ভাই", context.getResources().getString(R.string.no_brother_text)));
             mainparentItemList.add(new UserProfileParent("ভাই", brotherChildItemList));
 
         }
@@ -726,7 +814,7 @@ public class SendRequestFragmentView {
                     , childItemList));
 
         } else {
-            childItemList.add(new UserProfileChild("সন্তান", "কোন সন্তান নেই"));
+            childItemList.add(new UserProfileChild("সন্তান", context.getResources().getString(R.string.no_child_text)));
             mainparentItemList.add(new UserProfileParent("সন্তান", childItemList));
 
         }
@@ -735,7 +823,7 @@ public class SendRequestFragmentView {
         if (otherCHildItemList.size() > 0) {
 
             mainparentItemList.add(new UserProfileParent(
-                    "অন্যান্য(" + Utils.convertEnglishDigittoBangla(otherCHildItemList.size()) + ")"
+                    context.getResources().getString(R.string.other) + "(" + Utils.convertEnglishDigittoBangla(otherCHildItemList.size()) + ")"
                     , otherCHildItemList));
         }
 
@@ -747,7 +835,6 @@ public class SendRequestFragmentView {
 
 
     public static void setDataonGeneralInfoRecylerView(Context activity, UserProfile userProfile, RecyclerView view) {
-        Log.i("userdetails", "recyler method");
 
 
      /*   generalInformationArrayList = new ArrayList<GeneralInformation>();*/
@@ -755,7 +842,8 @@ public class SendRequestFragmentView {
 
         generalInformationArrayList.add(new GeneralInformation(
                 Utils.convertEnglishDigittoBangla(
-                        userProfile.getProfile().getPersonalInformation().getAge()) + " বছর," +
+                        userProfile.getProfile().getPersonalInformation().getAge()) + " " +
+                        activity.getResources().getString(R.string.year) + "," +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightFt())
                         + "'" +
                         Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightInc())
@@ -772,8 +860,8 @@ public class SendRequestFragmentView {
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    "বর্তমান অবস্থান-" + checkNullField(
-                            userProfile.getProfile().getProfileLivingIn().getCountry())
+                    activity.getResources().getString(R.string.present_loaction_text) + "-" +
+                            userProfile.getProfile().getProfileLivingIn().getCountry()
                     , R.drawable.pla));
 
         }
@@ -783,8 +871,9 @@ public class SendRequestFragmentView {
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    "দেশের বাড়ি-" + checkNullField(
-                            userProfile.getProfile().getProfileLivingIn().getLocation()), R.drawable.hom));
+                    activity.getResources().getString(R.string.home_town) + "-" +
+                            userProfile.getProfile().getProfileLivingIn().getLocation(),
+                    R.drawable.hom));
 
         }
 
@@ -794,7 +883,7 @@ public class SendRequestFragmentView {
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())
+                    userProfile.getProfile().getProfession().getProfessionalGroup()
                     , R.drawable.pro));
         }
 
@@ -808,7 +897,8 @@ public class SendRequestFragmentView {
                         getEducationInformation().get(i);
 
 
-                if (educationInformation.getPassingYear() != null) {
+                //previous code
+                /*if (educationInformation.getPassingYear() != null) {
 
 
                     education = education + checkNullField(educationInformation.getName()) +
@@ -824,7 +914,25 @@ public class SendRequestFragmentView {
                             checkNullField(educationInformation.getSubject()) + " : ";
 
 
+                }*/
+
+                //latest code
+                education = education + checkNullField(educationInformation.getHighestDegree()) +
+                        checkNullField(educationInformation.getName()) +
+                        checkNullField(educationInformation.getSubject()) +
+                        checkNullField(educationInformation.getInstitution());
+
+
+                if (educationInformation.getPassingYear() != null) {
+
+                    education = education + Utils.convertEnglishYearDigittoBangla(
+                            educationInformation.getPassingYear()) + " : ";
+
+                } else {
+                    education = education + " : ";
+
                 }
+
 
             }
 
@@ -872,8 +980,43 @@ public class SendRequestFragmentView {
 
             generalInformationArrayList.add(new GeneralInformation(
 
-                    checkNullField(userProfile.getProfile().getPersonalInformation().getMaritalStatus())
+                    userProfile.getProfile().getPersonalInformation().getMaritalStatus()
                     , R.drawable.mar));
+        }
+
+
+        if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getBloodGroup()))
+                .equals("")) {
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    userProfile.getProfile().getPersonalInformation().getBloodGroup()
+                    , R.drawable.blood_group));
+
+        }
+
+        if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getDisabilities()))
+                .equals("")) {
+
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    userProfile.getProfile().getPersonalInformation().getDisabilities() +
+                            checkNullField(userProfile.getProfile().getPersonalInformation().getDisabilitiesDescription())
+                    , R.drawable.disabilities));
+
+        }
+
+
+        if ((userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER)) &&
+                (!(checkNullField(userProfile.getProfile().getPersonalInformation().getSmoking()))
+                        .equals(""))
+                ) {
+
+            generalInformationArrayList.add(new GeneralInformation(
+
+                    userProfile.getProfile().getPersonalInformation().getSmoking()
+                    , R.drawable.smoking));
+
         }
 
 
@@ -980,7 +1123,7 @@ public class SendRequestFragmentView {
 
             //add present address
             if (!presentAddress.equals("")) {
-                communicationArrayList.add(new MatchUserChoice("বর্তমান ঠিকানা",
+                communicationArrayList.add(new MatchUserChoice(context.getResources().getString(R.string.present_address_text),
                         presentAddress));
 
             }
@@ -1008,13 +1151,13 @@ public class SendRequestFragmentView {
             //add permanent address
             if (permanentAddress != null) {
 
-                communicationArrayList.add(new MatchUserChoice("স্থায়ী ঠিকানা", permanentAddress));
+                communicationArrayList.add(new MatchUserChoice(context.getResources().getString(R.string.permanent_address_text), permanentAddress));
             }
 
 
             if (!(checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getDistrict()).equals(""))) {
 
-                communicationArrayList.add(new MatchUserChoice("জেলা",
+                communicationArrayList.add(new MatchUserChoice(context.getResources().getString(R.string.district),
                         userProfile.getProfile().getAddress().getPermanentAddress().getDistrict()));
 
             }
@@ -1022,7 +1165,7 @@ public class SendRequestFragmentView {
 
             if (!(checkNullField(userProfile.getProfile().getAddress().getPermanentAddress().getCountry()).equals(""))) {
 
-                communicationArrayList.add(new MatchUserChoice("দেশ",
+                communicationArrayList.add(new MatchUserChoice(context.getResources().getString(R.string.country),
                         userProfile.getProfile().getAddress().getPermanentAddress().getCountry()));
 
             }
@@ -1030,7 +1173,7 @@ public class SendRequestFragmentView {
 
             if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getMobileNo()).equals(""))) {
 
-                communicationArrayList.add(new MatchUserChoice("ফোন নম্বর",
+                communicationArrayList.add(new MatchUserChoice(context.getResources().getString(R.string.phone_number),
                         userProfile.getProfile().getPersonalInformation().getMobileNo()));
 
             }

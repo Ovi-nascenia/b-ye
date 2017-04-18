@@ -4,8 +4,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,21 +24,20 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
-import com.nascenia.biyeta.activity.HomeScreen;
 import com.nascenia.biyeta.activity.SendRequestActivity;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.RequestSenderIds;
-import com.nascenia.biyeta.model.newuserprofile.RequestStatus;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.utils.MyCallback;
 import com.nascenia.biyeta.utils.Utils;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import static com.nascenia.biyeta.R.id.emoIconImage;
@@ -45,15 +46,19 @@ import static com.nascenia.biyeta.R.id.emoIconImage;
  * Created by saiful on 3/10/17.
  */
 
-public class BioDataRequestFragment extends Fragment implements MyCallback<Boolean>, View.OnClickListener {
+public class BioDataRequestFragment extends Fragment implements MyCallback<Boolean> {
 
 
     private View _baseView;
 
+    private TextView noListAvailable;
+
     private ImageView cancelImageView, waitImageView, acceptImageView, emoIconImageView,
             mobileCheckIconImageView, fbCheckIconImageView, mailCheckIconImageView;
-    private TextView cancelTextView, waitTextView, acceptTextView, communicationTagTextView;
-    private CardView communicationCardLayout;
+    private TextView cancelTextView, waitTextView, acceptTextView, communicationTagTextView,
+            otherInfoTextViewTag,
+            sendEmoIconTextTag;
+    private CardView communicationCardLayout, otherInfoCardLayout;
 
     private ImageView userProfileImage, selfImageView, favoriteImageView;
     private RecyclerView generalInfoRecyclerView, matchUserChoiceRecyclerView, otherInfoRecylerView,
@@ -62,7 +67,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private ImageView profileViewerPersonImageView;
 
 
-    public static List<Integer> profileRequestSenderIdsList =new ArrayList<>( );
+    public static List<Integer> profileRequestSenderIdsList = null;
 
     private RequestSenderIds requestSenderIds;
     private TextView biodataNotificationCounterTextview;
@@ -82,9 +87,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     private SharePref sharePref;
     private int id;
 
-    RelativeLayout relativeLayoutFullFrame;
-    TextView noListAvailable;
-
     private Response responseStatus;
 
     private LinearLayout layoutSendSmiley;
@@ -92,6 +94,8 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
     private RelativeLayout bottomRelativeLayout;
     private CoordinatorLayout coordnatelayout;
+    private AppBarLayout appBarLayout;
+    private NestedScrollView nestedScrollView;
 
 
     @Nullable
@@ -109,31 +113,15 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             profileRequestSenderIdsList = requestSenderIds.getRequests().getProfileRequestSenderIds();
 
         }
-        relativeLayoutFullFrame=(RelativeLayout)_baseView.findViewById(R.id.communtication_request_layout);
-        noListAvailable=(TextView)_baseView.findViewById(R.id.no_data);
 
-        relativeLayoutFullFrame.setVisibility(View.VISIBLE);
+        noListAvailable = (TextView) _baseView.findViewById(R.id.no_data);
         noListAvailable.setVisibility(View.GONE);
-
-
-
-
-
         return _baseView;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.e("Destroy","Destroy");
-        //BioDataRequestFragment.profileRequestSenderIdsList.clear();
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // Toast.makeText(getActivity(), "resume", Toast.LENGTH_LONG).show();
 
     }
 
@@ -142,9 +130,15 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         biodataNotificationCounterTextview = (TextView) getActivity().findViewById(
                 R.id.biodata_notification_textview);
 
+        otherInfoTextViewTag = (TextView) _baseView.findViewById(R.id.other_info_textView_tag);
+        otherInfoCardLayout = (CardView) _baseView.findViewById(R.id.other_info_cardview);
+
         bottomRelativeLayout = (RelativeLayout) _baseView.findViewById(R.id.r1);
         coordnatelayout = (CoordinatorLayout) _baseView.findViewById(R.id.coordnatelayout);
+        appBarLayout = (AppBarLayout) _baseView.findViewById(R.id.appbar_layout);
+        nestedScrollView = (NestedScrollView) _baseView.findViewById(R.id.nested_scrollview);
 
+        sendEmoIconTextTag = (TextView) _baseView.findViewById(R.id.sendEmoIconTextTag);
         layoutSendSmiley = (LinearLayout) _baseView.findViewById(R.id.layoutSendSmiley);
         emoIconImageView = (ImageView) _baseView.findViewById(emoIconImage);
         favoriteImageView = (ImageView) _baseView.findViewById(R.id.likeImage);
@@ -155,13 +149,21 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
-                    NetWorkOperation.postMethod(getActivity(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
                             Utils.SEND_SMILE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
-                            "Token token=" + sharePref.get_data("token"));
-                    layoutSendSmiley.setEnabled(false);
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.SMILEY_BUTTON_PRESS_TAG);
+
+                    /* layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
+                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));*/
 
 
                 }
@@ -172,16 +174,42 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         favoriteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "click", Toast.LENGTH_LONG).show();
+
                 if (!userProfile.getProfile().isIsFavorite()) {
 
-                    NetWorkOperation.postMethod(getActivity(),
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
                             Utils.FAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
-                            "Token token=" + sharePref.get_data("token"));
-                    favoriteImageView.setEnabled(false);
-                    favoriteImageView.setImageResource(R.drawable.red_favorite);
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.FAVORITE_BUTTON_PRESS_TAG);
+
+                    /* //favoriteImageView.setEnabled(false);
+                    userProfile.getProfile().setIsFavorite(true);
+                    favoriteImageView.setImageResource(R.drawable.red_favorite);*/
+                } else {
+
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(getActivity(),
+                            Utils.UNFAVORITE_URL,
+                            userProfile.getProfile().getPersonalInformation().getId() + "",
+                            "Authorization",
+                            "Token token=" + sharePref.get_data("token"),
+                            userProfile,
+                            favoriteImageView,
+                            layoutSendSmiley,
+                            emoIconImageView,
+                            sendEmoIconTextTag,
+                            Utils.UNFAVORITE_BUTTON_PRESS_TAG);
+
+                    /*userProfile.getProfile().setIsFavorite(false);
+                    favoriteImageView.setImageResource(R.drawable.favorite);*/
+
+
                 }
 
             }
@@ -226,8 +254,6 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         waitImageView = (ImageView) _baseView.findViewById(R.id.wait_imageview);
         acceptImageView = (ImageView) _baseView.findViewById(R.id.accept_imageview);
 
-        acceptImageView.setOnClickListener(this);
-        cancelImageView.setOnClickListener(this);
 
         cancelTextView = (TextView) _baseView.findViewById(R.id.cancel_textview);
         waitTextView = (TextView) _baseView.findViewById(R.id.wait_textview);
@@ -302,31 +328,49 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
     @Override
     public void onStart() {
         super.onStart();
-        //Toast.makeText(getActivity(), "start", Toast.LENGTH_LONG).show();
+
         initView();
 
         if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
 
             setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
         } else {
-            Utils.ShowAlert(getActivity(), "আপনার কোন অনুরোধ নেই");
-            relativeLayoutFullFrame.setVisibility(View.VISIBLE);
-            noListAvailable.setVisibility(View.GONE);
+
+            noListAvailable.setVisibility(View.VISIBLE);
         }
 
 
     }
 
+
     private void setRequestView(int id) {
 
         currentId = id;
 
-        /*//Log.i("asynctaskdata FFFF", "currentId " + currentId + " urlResponseId " + urlResponseId);
-        Log.i("asynctaskdataFFFFFF", "viewurl: " + url + id);
-        Log.i("asynctaskdataFFFFFF", "viewurl: " +
-                BioDataRequestFragment.profileRequestSenderIdsList.toString());*/
+        new SendRequestFragmentView() {
+            @Override
+            public void loadNextProfile(int clickBtnId, int userProfileRequestId) {
 
-        SendRequestFragmentView.fetchUserProfileDetailsResponse(
+
+                if (clickBtnId == 1) {
+
+                    new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                            userProfileRequestId + "/accept");
+
+                    processResponse(clickBtnId);
+
+                } else if (clickBtnId == 0) {
+
+
+                    new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
+                            userProfileRequestId + "/reject");
+
+                    processResponse(clickBtnId);
+                }
+
+
+            }
+        }.fetchUserProfileDetailsResponse(
                 Utils.PROFILES_URL + id,
                 getActivity(),
                 this,
@@ -337,10 +381,16 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 profileViewerPersonImageView,
                 userProfileImage,
                 familyMemberInfoRecylerView,
-                0,
+                Utils.BIODATA_REQUEST_FRAGEMNT_CLASS,
                 userNameTextView,
                 coordnatelayout,
-                bottomRelativeLayout
+                bottomRelativeLayout,
+                acceptImageView,
+                cancelImageView,
+                otherInfoTextViewTag,
+                otherInfoCardLayout,
+                appBarLayout,
+                nestedScrollView
         );
 
 
@@ -384,7 +434,7 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    favoriteImageView.setEnabled(false);
+                    //favoriteImageView.setEnabled(false);
                     favoriteImageView.setImageResource(R.drawable.red_favorite);
                 }
             });
@@ -399,53 +449,26 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                 public void run() {
                     layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
+                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
                 }
             });
 
         }
 
-        if (result && clickableButtonIdentifier == 1 && id != null) {
-
-         //   new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-         //           id + "/accept");
-
-        } else if (result && clickableButtonIdentifier == 0 && id != null) {
-          //  new SendResponseTask().execute(Utils.PROFILE_REQUEST_URL +
-           //         id + "/reject");
-
-
-        } else {
-
-        }
 
     }
 
-
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.accept_imageview:
-                processResponse(1);
-
-
-                break;
-            case R.id.cancel_imageview:
-                processResponse(0);
-
-                break;
-        }
-    }
 
     private void processResponse(int btnClickIdentifier) {
         SendRequestActivity.biodataRequestCounter--;
 
         if (!BioDataRequestFragment.profileRequestSenderIdsList.isEmpty()) {
+
             biodataNotificationCounterTextview.setText(
                     SendRequestActivity.biodataRequestCounter + "");
 
-            if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1)
-                urlResponseId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
+            /*if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1)
+                urlResponseId = BioDataRequestFragment.profileRequestSenderIdsList.get(0);*/
 
 
             if (BioDataRequestFragment.profileRequestSenderIdsList.size() > 0) {
@@ -456,20 +479,41 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
                     setRequestView(BioDataRequestFragment.profileRequestSenderIdsList.get(0));
 
                 } else if (BioDataRequestFragment.profileRequestSenderIdsList.size() == 1) {
-                    id = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
 
+                    id = BioDataRequestFragment.profileRequestSenderIdsList.get(0);
                     BioDataRequestFragment.profileRequestSenderIdsList.remove(0);
-                    setRequestView(id);
+
+                    // coordnatelayout.setVisibility(View.INVISIBLE);
+                    appBarLayout.setVisibility(View.GONE);
+                    nestedScrollView.setVisibility(View.GONE);
+                    bottomRelativeLayout.setVisibility(View.INVISIBLE);
+                    noListAvailable.setVisibility(View.VISIBLE);
+                    Utils.ShowAlert(getActivity(),
+                            getActivity().getResources().getString(R.string.no_request_dialog_message));
+                    //setRequestView(id);
                 }
             } else {
-                setRequestView(currentId);
-                Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
+                // setRequestView(currentId);
+                // coordnatelayout.setVisibility(View.INVISIBLE);
+                appBarLayout.setVisibility(View.GONE);
+                nestedScrollView.setVisibility(View.GONE);
+                bottomRelativeLayout.setVisibility(View.INVISIBLE);
+                noListAvailable.setVisibility(View.VISIBLE);
+                Utils.ShowAlert(getActivity(),
+                        getActivity().getResources().getString(R.string.no_request_dialog_message));
             }
         } else {
-            Utils.ShowAlert(getActivity(), "আপনার আর কোন অনুরোধ নেই");
+            // coordnatelayout.setVisibility(View.INVISIBLE);
+            appBarLayout.setVisibility(View.GONE);
+            nestedScrollView.setVisibility(View.GONE);
+            bottomRelativeLayout.setVisibility(View.INVISIBLE);
+            noListAvailable.setVisibility(View.VISIBLE);
+            Utils.ShowAlert(getActivity(),
+                    getActivity().getResources().getString(R.string.no_request_dialog_message));
         }
 
     }
+
 
     private class SendResponseTask extends AsyncTask<String, Void, String> {
 
@@ -511,7 +555,17 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("FFFFFF", s);
+            try {
+                JSONObject headObj = new JSONObject(s);
 
+                Toast.makeText(getActivity(),
+                        headObj.getJSONArray("message").getJSONObject(0).getString("detail"),
+                        Toast.LENGTH_LONG).show();
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 

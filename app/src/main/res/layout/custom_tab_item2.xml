@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:orientation="horizontal">
 
     <RelativeLayout
@@ -13,11 +14,11 @@
             android:id="@+id/communication_notification_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/text_tab"
             android:background="@drawable/badge_item_count"
             android:gravity="center"
-            android:text="0"
+            android:text="110"
             android:textColor="#000"
             android:textSize="8sp"
             android:textStyle="bold"
@@ -25,13 +26,13 @@
 
 
         <TextView
+            android:id="@+id/text_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/small_margin"
-            android:layout_toLeftOf="@+id/communication_notification_textview"
             android:paddingRight="@dimen/small_padding"
-            android:text="যোগাযোগের অনুরোধ"
+            android:text="যোগাযোগ"
             android:textColor="#FF353333"
             android:textSize="15sp" />
     </RelativeLayout>

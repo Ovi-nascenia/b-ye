@@ -55,6 +55,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
     MyGridView gridView;
     MyGridView gridViewOccupation, gridViewLocation;
+    static  public String rowData;
     private final OkHttpClient client = new OkHttpClient();
 
 
@@ -103,18 +104,19 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             "ডক্টরেট পড়ছি",
             "ডক্টরেট"
     };
-
+    ProgressDialog progress ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.filter_search);
+        progress = new ProgressDialog(Search_Filter.this);
         setUpId();
         initializeVariable();
         if (Utils.isOnline(this))
             new Get_Data().execute();
         else
-            Utils.ShowAlert(this, "Check Internet Connection");
+            Utils.ShowAlert(this, getString(R.string.no_internet_connection));
         set_rangeView_lebel();
 
     }
@@ -496,9 +498,9 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
 
                 if (Utils.isOnline(Search_Filter.this))
-                     new GetResult().execute("http://test.biyeta.com/api/v1/search/filtered-results");
+                     new GetResult().execute(Utils.Base_URL+"/api/v1/search/filtered-results");
                 else
-                    Toast.makeText(Search_Filter.this,"Check Internet Connection",Toast.LENGTH_LONG).show();
+                    Utils.ShowAlert(Search_Filter.this, getString(R.string.no_internet_connection));
 
             }
 
@@ -574,7 +576,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress.setMessage("Please Wait ");
+            progress.setMessage(getResources().getString(R.string.progress_dialog_message));
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setIndeterminate(true);
             if ( !progress.isShowing() )
@@ -592,27 +594,35 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                     Search.jsonObjects.add(jsonObject);
                 ///   progress.dismiss();
                     reponse="";
+                    if ( !progress.isShowing() )
+                        progress.dismiss();
+
                     finish();
                 }
 
 
 
                 else {
+                    Search.totalFilterPage=jsonObject.getInt("total_page");
+                    Search.comeFromSearch=1;
                     total_page=jsonObject.getInt("total_page");
                     Search.jsonObjects.add(jsonObject);
                     flag++;
                     Log.e("test response",s);
+                    if (progress.isShowing())
+                        progress.dismiss();
+                    finish();
 
 
 
-                    if (total_page != 1 && flag <= total_page) {
-                        Log.e("test",flag+"  "+total_page);
-                        new GetResult().execute("http://test.biyeta.com/api/v1/search/filtered-results?page=" + flag);
-                    } else if (flag > total_page) {
-                       // progress.dismiss();
-
-                        finish();
-                    }
+//                    if (total_page != 1 && flag <= total_page) {
+//                        Log.e("test",flag+"  "+total_page);
+                      //  new GetResult().execute(Utils.Base_URL+"/api/v1/search/filtered-results?page=" + flag);
+//                    } else if (flag > total_page) {
+//                       // progress.dismiss();
+//
+//                        finish();
+//                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -628,6 +638,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             final String token = sharePref.get_data("token");
 
             Log.e("Ovi Test", porcessJSon());
+            rowData=porcessJSon();
 
             MediaType JSON
                     = MediaType.parse("application/json; charset=utf-8");
@@ -663,7 +674,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             progress.dismiss();
             if ( res==null )
             {
-                Utils.ShowAlert(Search_Filter.this,"Check Internet Connection");
+                Utils.ShowAlert(Search_Filter.this, getString(R.string.no_internet_connection));
             }
             else {
 
@@ -674,7 +685,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                     parse_data(res);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Utils.ShowAlert(Search_Filter.this,"Check Internet Connection");
+                    Utils.ShowAlert(Search_Filter.this, getString(R.string.no_internet_connection));
 
                 }
 

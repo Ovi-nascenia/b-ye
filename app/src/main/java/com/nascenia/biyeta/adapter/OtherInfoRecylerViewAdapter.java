@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nascenia.biyeta.R;
@@ -45,7 +46,13 @@ public class OtherInfoRecylerViewAdapter extends RecyclerView.Adapter<OtherInfoR
     public void onBindViewHolder(OtherInfoRecylerViewAdapter.MyViewHolder holder, int position) {
         holder.titleTextView.setText(infoArrayList.get(position).getTitleName());
         holder.titleResultTextView.setText(
-                Utils.formatString(infoArrayList.get(position).getTitleNameValue()));
+                Utils.formatString(infoArrayList.get(position).getTitleNameValue())
+                .replace(",",", ")
+        );
+
+        if (position == this.infoArrayList.size() - 1) {
+            holder.itemDivider.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -59,6 +66,7 @@ public class OtherInfoRecylerViewAdapter extends RecyclerView.Adapter<OtherInfoR
 
         TextView titleTextView;
         TextView titleResultTextView;
+        LinearLayout itemDivider;
 
 
         public MyViewHolder(View itemView) {
@@ -66,6 +74,7 @@ public class OtherInfoRecylerViewAdapter extends RecyclerView.Adapter<OtherInfoR
 
             titleTextView = (TextView) itemView.findViewById(R.id.titleTextView);
             titleResultTextView = (TextView) itemView.findViewById(R.id.titleResultTextView);
+            itemDivider = (LinearLayout) itemView.findViewById(R.id.divider);
 
         }
     }
