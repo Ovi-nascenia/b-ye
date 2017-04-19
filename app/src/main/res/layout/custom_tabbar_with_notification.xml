@@ -7,10 +7,8 @@
     <LinearLayout
         android:id="@+id/badge4"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="match_parent">
-
-
+        android:layout_height="match_parent"
+        android:gravity="center">
 
 
         <TextView
@@ -23,16 +21,17 @@
             android:text="বায়োডাটার অনুরোধ"
             android:textColor="#FF353333"
             android:textSize="15sp" />
+
         <TextView
-            android:layout_marginLeft="10dp"
             android:id="@+id/badge_notification_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/badge_item_count"
             android:gravity="center"
-            android:text="0"
+            android:text="০"
             android:textColor="#000"
             android:textSize="8sp"
             android:textStyle="bold"
