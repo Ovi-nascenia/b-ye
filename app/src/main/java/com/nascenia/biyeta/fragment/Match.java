@@ -243,14 +243,14 @@ public class Match extends Fragment implements View.OnClickListener {
                                 @Override
                                 public void onClickProfile(int position) {
 
-
+/*
                                     int pos;
                                     int i = position / 10;
                                     pos = position % 10;
-                                    CommunicationProfile con = responseCommunication.get(i);
+                                    CommunicationProfile con = responseCommunication.get(i);*/
                                     Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
-                                    intent.putExtra("id", profileCommunicationList.get(pos).getId() + "");
-                                    intent.putExtra("user_name", profileCommunicationList.get(pos).getDisplayName());
+                                    intent.putExtra("id", profileCommunicationList.get(position).getId() + "");
+                                    intent.putExtra("user_name", profileCommunicationList.get(position).getDisplayName());
                                     intent.putExtra("PROFILE_EDIT_OPTION", false);
                                     startActivity(intent);
                                 }
@@ -368,12 +368,12 @@ public class Match extends Fragment implements View.OnClickListener {
                                     Log.e("check", profileArrayList.get(position).getDisplayName());
                                     profile_position = position;
 
-                                    int pos;
+                                   /* int pos;
                                     int i = position / 10;
                                     pos = position % 10;
-                                    BiodataProfile bioProfile = responseObject.get(i);
+                                    BiodataProfile bioProfile = responseObject.get(i);*/
                                     Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
-                                    intent.putExtra("id", profileArrayList.get(pos).getId() + "");
+                                    intent.putExtra("id", profileArrayList.get(position).getId() + "");
                                     intent.putExtra("user_name", profileArrayList.get(position).getDisplayName());
                                     intent.putExtra("PROFILE_EDIT_OPTION", false);
                                     startActivity(intent);
