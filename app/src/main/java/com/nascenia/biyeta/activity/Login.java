@@ -291,41 +291,47 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     InputStreamReader isr = new InputStreamReader(is);
                     LoginInformation response = gson.fromJson(isr, LoginInformation.class);
 
+                    if (response.getLoginInformation().getProfileComplete()) {
+                        //insert the token in Sharepreference
 
-                    //insert the token in Sharepreference
-
-                    try {
-
-
-                        SharePref sharePref = new SharePref(Login.this);
+                        try {
 
 
-                        sharePref.set_data("token", response.getLoginInformation().getAuthToken());
-                        sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
-                        sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
-                        sharePref.set_data("gender", response.getLoginInformation().getGender());
-                        sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
-                        sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
+                            SharePref sharePref = new SharePref(Login.this);
 
 
-                        //check display name
+                            sharePref.set_data("token", response.getLoginInformation().getAuthToken());
+                            sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
+                            sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
+                            sharePref.set_data("gender", response.getLoginInformation().getGender());
+                            sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
+                            sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
 
-                        // check the mobile verify screen
 
-                        if (response.getLoginInformation().getMobileVerified()) {
-                            startActivity(new Intent(Login.this, HomeScreen.class));
-                            finish();
-                        } else {
+                            //check display name
 
-                            startActivity(new Intent(Login.this, MobileVerification.class));
-                            // finish();
+                            // check the mobile verify screen
+
+                            if (response.getLoginInformation().getMobileVerified()) {
+                                startActivity(new Intent(Login.this, HomeScreen.class));
+                                finish();
+                            } else {
+
+                                startActivity(new Intent(Login.this, MobileVerification.class));
+                                // finish();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
+                            buttonSubmit.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
-                        buttonSubmit.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
+                    } else {
+                        Utils.ShowAlert(Login.this, getString(R.string.incomplete_profile_message));
+                        LoginManager.getInstance().logOut();
+                        buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
                     }
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -417,7 +423,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         Utils.ShowAlert(Login.this, getString(R.string.incomplete_profile_message));
-                    } else {
+                    }
+
+                    if (Boolean.parseBoolean(jsonObject.getJSONObject("login_information").
+                            getString("is_complete")) == true) {
+
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
                         InputStreamReader isr = new InputStreamReader(is);
@@ -455,6 +465,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             buttonSubmit.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);
                         }
+                    } else {
+                        buttonSubmit.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        Utils.ShowAlert(Login.this, getString(R.string.incomplete_profile_message));
                     }
 
 

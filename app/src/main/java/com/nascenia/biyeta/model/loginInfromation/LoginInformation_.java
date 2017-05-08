@@ -25,6 +25,19 @@ public class LoginInformation_ {
     @Expose
     private Boolean mobileVerified;
 
+
+    @SerializedName("is_complete")
+    @Expose
+    private Boolean isProfileComplete;
+
+    public Boolean getProfileComplete() {
+        return isProfileComplete;
+    }
+
+    public void setProfileComplete(Boolean profileComplete) {
+        isProfileComplete = profileComplete;
+    }
+
     public String getAuthToken() {
         return authToken;
     }
