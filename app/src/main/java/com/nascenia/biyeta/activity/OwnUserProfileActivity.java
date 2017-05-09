@@ -24,6 +24,7 @@ import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.service.ResourceProvider;
 import com.nascenia.biyeta.utils.Utils;
+import com.nascenia.biyeta.view.CustomStopScrollingRecylerLayoutManager;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 import com.squareup.picasso.Callback;
@@ -992,31 +993,31 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         userNameTextView = (TextView) findViewById(R.id.user_name);
 
         personalInfoRecylerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
-        personalInfoRecylerView.setLayoutManager(new LinearLayoutManager(this));
+        personalInfoRecylerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
 
         educationRecylerView = (RecyclerView) findViewById(R.id.education_recylerView);
         educationRecylerView.setLayoutManager(new LinearLayoutManager(this));
 
         professionRecyclerView = (RecyclerView) findViewById(R.id.profession_recylerView);
-        professionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        professionRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
 
         parentsRecyclerView = (RecyclerView) findViewById(R.id.parents_recylerView);
-        parentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        parentsRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
 
         brotherRecyclerView = (RecyclerView) findViewById(R.id.brother_recylerView);
-        brotherRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        brotherRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
 
         sisterRecyclerView = (RecyclerView) findViewById(R.id.sister_recylerView);
-        sisterRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        sisterRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
 
         childRecyclerView = (RecyclerView) findViewById(R.id.child_recylerView);
-        childRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        childRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
 
         otherRelativeInfoRecyclerView = (RecyclerView) findViewById(R.id.other_relative_recylerView);
-        otherRelativeInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        otherRelativeInfoRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
 
         otherInformationRecyclerView = (RecyclerView) findViewById(R.id.other_info_recylerView);
-        otherInformationRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        otherInformationRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
 
 
     }

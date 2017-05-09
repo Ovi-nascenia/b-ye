@@ -37,6 +37,7 @@ import com.nascenia.biyeta.fragment.ProfileImageFirstFragment;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.service.ResourceProvider;
 import com.nascenia.biyeta.utils.Utils;
+import com.nascenia.biyeta.view.CustomStopScrollingRecylerLayoutManager;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -292,15 +293,15 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         generalInfoRecyclerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
-        generalInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        generalInfoRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
         matchUserChoiceRecyclerView = (RecyclerView) findViewById(R.id.match_user_choice_recyclerView);
-        matchUserChoiceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        matchUserChoiceRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
         familyMemberInfoRecylerView = (RecyclerView) findViewById(R.id.family_info_recylerview);
-        familyMemberInfoRecylerView.setLayoutManager(new LinearLayoutManager(this));
+        familyMemberInfoRecylerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
         communicationInfoRecylerview = (RecyclerView) findViewById(R.id.communication_info_recylerview);
-        communicationInfoRecylerview.setLayoutManager(new LinearLayoutManager(this));
+        communicationInfoRecylerview.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
         otherInfoRecylerView = (RecyclerView) findViewById(R.id.other_info_recylerview);
-        otherInfoRecylerView.setLayoutManager(new LinearLayoutManager(this));
+        otherInfoRecylerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
 
         userProfileDescriptionText = (TextView) findViewById(R.id.userProfileDescriptionText);
         profileViewerPersonImageView = (ImageView) findViewById(R.id.viewer_image);

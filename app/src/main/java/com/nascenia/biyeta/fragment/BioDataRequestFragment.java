@@ -30,6 +30,7 @@ import com.nascenia.biyeta.model.RequestSenderIds;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.utils.MyCallback;
 import com.nascenia.biyeta.utils.Utils;
+import com.nascenia.biyeta.view.CustomStopScrollingRecylerLayoutManager;
 import com.nascenia.biyeta.view.SendRequestFragmentView;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -227,13 +228,13 @@ public class BioDataRequestFragment extends Fragment implements MyCallback<Boole
 
 
         generalInfoRecyclerView = (RecyclerView) _baseView.findViewById(R.id.user_general_info_recycler_view);
-        generalInfoRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        generalInfoRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(getActivity()));
         matchUserChoiceRecyclerView = (RecyclerView) _baseView.findViewById(R.id.match_user_choice_recyclerView);
-        matchUserChoiceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        matchUserChoiceRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(getActivity()));
         otherInfoRecylerView = (RecyclerView) _baseView.findViewById(R.id.other_info_recylerview);
-        otherInfoRecylerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        otherInfoRecylerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(getActivity()));
         familyMemberInfoRecylerView = (RecyclerView) _baseView.findViewById(R.id.family_info_recylerview);
-        familyMemberInfoRecylerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        familyMemberInfoRecylerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(getActivity()));
 
         userProfileDescriptionText = (TextView) _baseView.findViewById(R.id.userProfileDescriptionText);
 
