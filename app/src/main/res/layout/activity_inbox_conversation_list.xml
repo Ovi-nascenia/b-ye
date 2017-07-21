@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2ebeb"
+    android:orientation="vertical">
+    <ProgressBar
+        android:id="@+id/progressbar_message"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/empty_message"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="No Message found" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+        <ListView
+            android:id="@+id/person_inbox_list"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:divider="@null"
+            android:stackFromBottom="true"
+            android:transcriptMode="alwaysScroll" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/llMsgCompose"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <EditText
+            android:id="@+id/inputMsg"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="4"
+            android:background="@color/bg_msg_input"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:textColor="@color/text_msg_input" />
+
+        <ImageView
+            android:id="@+id/btnSend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_send"
+            android:text="SEND"
+            android:textColor="@color/white"
+            android:tint="#203eea" />
+    </LinearLayout>
+
+</LinearLayout>

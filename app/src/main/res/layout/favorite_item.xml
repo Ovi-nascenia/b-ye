@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:orientation="vertical"
+    android:padding="@dimen/most_small_padding">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:weightSum="5">
+
+                <ImageView
+                    android:id="@+id/profile_image_fav"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:padding="@dimen/medium_padding"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fake_image" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3.5"
+                android:orientation="vertical"
+
+                android:paddingBottom="@dimen/most_small_padding"
+                android:paddingLeft="@dimen/small_padding"
+                android:paddingRight="@dimen/medium_padding"
+                android:paddingTop="@dimen/small_padding"
+                android:weightSum="8">
+
+                <TextView
+                    android:id="@+id/user_name_fav"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:ellipsize="end"
+                    android:gravity="top"
+                    android:maxLines="1"
+
+                    android:text="User Name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/medium_textsize" />
+
+
+                <TextView
+                    android:id="@+id/details_fav"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:text="Details ..............."
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textStyle="normal" />
+
+                <LinearLayout
+                    android:id="@+id/request_biodata_message_fav"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/phone"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:background="@drawable/btn_border"
+                        android:textColor="@drawable/button_selector"
+                        android:text="@string/make_call"
+                        android:textStyle="normal" />
+
+                    <Button
+                        android:id="@+id/message"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:background="@drawable/btn_border"
+                        android:textColor="@drawable/button_selector"
+                        android:text="@string/make_message"
+                        android:textStyle="normal"/>
+
+                    <Button
+                        android:id="@+id/acceptBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_border"
+                        android:textColor="@drawable/button_selector"
+                        android:text="@string/accept_btn_text"
+                        android:textStyle="normal"/>
+
+                    <Button
+                        android:id="@+id/cancelBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_border"
+                        android:textColor="@drawable/button_selector"
+                        android:text="@string/cancel_btn_Text"
+                        android:textStyle="normal" />
+
+                    <Button
+                        android:id="@+id/request_biodata_fav"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:visibility="gone"
+                        android:textSize="11sp"
+                        android:lines="1"
+                        android:gravity="center"
+                        android:background="@drawable/btn_border"
+                        android:textColor="@drawable/button_selector"
+                        android:text="@string/request_to_see_biodata"
+                        android:textStyle="normal" />
+
+                    <Button
+                        android:id="@+id/connection_button"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:textSize="10dp"
+                        android:maxLines="1"
+                        android:visibility="gone"
+                        android:ellipsize="end"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:layout_marginRight="1dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/connection_again"
+                        android:background="@drawable/btn_border"
+                        android:textColor="@drawable/button_selector"/>
+
+                    <TextView
+                        android:layout_marginLeft="1dp"
+                        android:background="#F2F1F1"
+                        android:id="@+id/status"
+                        android:paddingLeft="2dp"
+                        android:visibility="gone"
+                        android:paddingRight="2dp"
+                        android:textSize="8dp"
+                        android:maxLines="2"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
+                        android:text="expire text"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

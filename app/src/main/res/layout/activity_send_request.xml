@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".activity.SendRequestActivity">
+
+    <!--<android.support.v7.widget.Toolbar-->
+    <!--android:id="@+id/toolbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="?attr/actionBarSize"-->
+    <!--android:background="#FFFFFF"-->
+    <!--android:minHeight="?attr/actionBarSize">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="আপনাকে পাঠানো অনুরোধ"-->
+    <!--android:textAlignment="center"-->
+    <!--android:textColor="#F44336"-->
+    <!--android:textSize="@dimen/medium_textsize"-->
+    <!--android:textStyle="bold" />-->
+
+
+    <!--</android.support.v7.widget.Toolbar>-->
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        style="@style/MyCustomTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:tabBackground="@drawable/tab_color_selector"
+        app:tabGravity="fill"
+        app:tabMode="fixed" />
+
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
+
+
+</LinearLayout>

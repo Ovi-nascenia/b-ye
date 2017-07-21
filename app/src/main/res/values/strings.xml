@@ -1,0 +1,354 @@
+<resources>
+    <string name="app_name">বিয়েটা</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
+
+
+    <string name="search">খুঁজুন</string>
+    <string name="match">মিল</string>
+    <string name="fev">প্রিয়</string>
+    <string name="inbox">মেসেজ</string>
+    <string name="profile">প্রোফাইল</string>
+    <string name="password">পাসওয়ার্ড</string>
+    <string name="email">ইমেইল</string>
+    <string name="login">লগইন</string>
+    <string name="new_account">নতুন একাউন্ট খুলুন </string>
+    <string name="title_activity_login">Login</string>
+    <string name="willing_search">ইচ্ছে মত খুঁজুন </string>
+    <string name="age">বয়স</string>
+    <string name="height"> উচ্চতা </string>
+    <string name="body">গড়ন </string>
+    <string name="body_color">গায়ের রং </string>
+    <string name="education_male">  শিক্ষাগত যোগ্যতা </string>
+    <string name="profession_identity_male">প্রফেশনাল গ্রুপ </string>
+    <string name="profession_male">পেশা</string>
+    <string name="year">বছর</string>
+    <string name="marital_status">বৈবাহিক অবস্থা</string>
+
+    <string name="personal_info">"ব্যক্তিগত তথ্য"</string>
+
+
+    <string name="other_question_ans_text">বিবিধ প্রশ্নের উত্তর</string>
+    <string name="fast_text">রোজা রাখেন?</string>
+    <string name="prayet_text">নামাজ পড়েন?</string>
+    <string name="after_marrige_job_text">বিয়ের পরে চাকরি?</string>
+    <string name="hijab_text">হিজাব পড়েন?</string>
+    <string name="own_house_text">নিজের বাসা আছে?</string>
+
+    <string name="profession_text">পেশা</string>
+    <string name="location_text">বর্তমান অবস্থান </string>
+    <string name="height_text">উচ্চতা</string>
+    <string name="religion_text">ধর্ম</string>
+    <string name="cast_text">বর্ণ</string>
+    <string name="home_town">দেশের বাড়ি</string>
+    <string name="present_loaction_text">বর্তমান অবস্থান</string>
+    <string name="permanent_address_text">্থায়ী ঠিকানা</string>
+    <string name="present_address_text">বর্তমান ঠিকান</string>
+
+    <string name="age_text">বয়স</string>
+    <string name="degree_name_text">ডিগ্রীর নাম</string>
+    <string name="about_me">about</string>
+    <string name="area">দেশের বাড়ি</string>
+    <string name="district">জেলা</string>
+    <string name="country">দেশ</string>
+    <string name="phone_number">ফোন নম্বর</string>
+
+    <string name="send_smiley_message">হাসি পাঠানো হয়েছে</string>
+    <string name="favorite_message">ফেভারিট করা হয়েছে</string>
+    <string name="unfavorite_message">আনফেভারিট করেছেন</string>
+
+    <string name="send_biodata_request_message"> বায়োডাটার অনুরোধ পাঠানো হয়েছে</string>
+    <string name="send_communication_request_message">যোগাযোগের অনুরোধ পাঠানো হয়েছে</string>
+
+
+    <string name="title_activity_send_request">Request send</string>
+
+    <string name="sent_request"> আপনাকে পাঠানো  অনুরোধ</string>
+    <string name="your_sent_request">আপনার  পাঠানো  অনুরোধ</string>
+    <string name="message">মেসেজ</string>
+    <string name="smile">হাসি </string>
+    <string name="send_smile">হাসি পাঠান </string>
+    <string name="after_send_smile_text">হাসি পাঠিয়েছেন</string>
+    <string name="verification_request">ভেরিফিকেশন অনুরোধ</string>
+    <string name="expire_request">মেয়াদ উত্তীর্ণ অনুরোধ</string>
+    <string name="favorites">ফেভারিট</string>
+    <string name="request_to_see_biodata">বায়োডাটা দেখার অনুরোধ করুন</string>
+    <string name="request_to_communicate">যোগাযোগের অনুরোধ করুন</string>
+
+    <string name="trash">ট্র্যাশ</string>
+
+    <string name="biodata">বায়োডাটা</string>
+    <string name="connection">যোগাযোগ</string>
+
+
+    <string name="blood_group_text">রক্তের গ্রুপ</string>
+    <string name="smoking_text">ধূমপান</string>
+    <string name="disabilities_text">প্রতিবন্ধকতা</string>
+
+
+    <string name="cancel_btn_Text">প্রত্যাখ্যান করুন</string>
+    <string name="accept_btn_text">গ্রহণ করুন</string>
+
+
+    <!-- Navigation Drawer menu labels -->
+
+    <string name="nav_profile">প্রোফাইল</string>
+    <string name="nav_inbox">ইনবক্স</string>
+    <string name="nav_fav">আপনার পছন্দ</string>
+    <string name="balance_recharge">ব্যালেন্স ও রিচার্জ</string>
+    <string name="accunt_setting">অ্যাকাউন্ট সেটিংস</string>
+
+    <string name="nav_about_biyeta">বিয়েটা সম্পর্কে</string>
+    <string name="logout">লগ আউট</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_about_us">About Us</string>
+    <string name="nav_policy">প্রাইভেসি পলিসি</string>
+    <string name="nav_faq">FAQ</string>
+    <string name="nav_termsofuse">টার্মস অফ ইউজ</string>
+    <string name="other">অন্যান্য</string>
+
+    <string name="professional_group_text">professional_group</string>
+    <string name="occupation_text">occupation</string>
+    <string name="designation_text">designation</string>
+    <string name="institute_text">institute</string>
+
+
+    <string name="no_internet_connection"> ইন্টারনেট সংযোগ নেই</string>
+
+    <string name="father_text">বাবা</string>
+    <string name="mother_text">মা</string>
+    <string name="brother_text">ভাই</string>
+    <string name="sister_text">বোন</string>
+    <string name="child_text">সন্তান</string>
+    <string name="no_child_text">কোন সন্তান নেই</string>
+
+    <string name="no_brother_text">কোন ভাই নেই</string>
+    <string name="no_sister_text">কোন বোন নেই</string>
+
+    <string name="married_text">বিবাহিত</string>
+    <string name="unmarried_text">অবিবাহিত</string>
+
+
+    <string name="make_call">ফোন করুন</string>
+    <string name="make_message">মেসেজ পাঠান</string>
+
+    <string name="connection_again">আবারো যোগাযোগ করুন</string>
+
+
+    <string name="privacy_policy_title">প্রাইভেসি পলিসি</string>
+    <string name="privacy_policy_parag1">Biyeta.com is an online matrimonial portal endeavouring constantly to find your best life partner. This privacy statement is common to all the matrimonial sites operated under Biyeta.com Since we are strongly committed to your right to privacy, we have drawn out a privacy statement with regard to the information we collect from you. </string>
+    <string name="privacy_policy_parag2">Payments are processed by third party gateway who use secure server for credit card transactions to protect the credit card information of our users and Cookies are used to store the login information. </string>
+    <string name="privacy_policy_parag3">What information you need to give in to use this site? </string>
+    <string name="privacy_policy_parag4">The information we gather from members and visitors who apply for the various services our site offers includes, but may not be limited to, email address, first name, last name, a user-specified password, mailing address, zip code and telephone number. </string>
+    <string name="privacy_policy_parag5">How the site uses the information it collects/tracks? </string>
+    <string name="privacy_policy_parag6">Biyeta collects information from our users primarily to ensure that we are able to fulfill your requirements and to deliver Personalised experience. </string>
+    <string name="privacy_policy_parag7">With whom the site shares the information it collects/tracks? </string>
+    <string name="privacy_policy_parag8">The information collected from any of our users is not shared with any individual or organisation without the former’s approval. Biyeta.com does not sell, rent, or loan any identifiable information at the individual level regarding its customers to any third party. Any information you give us is held with the utmost care and security. We are also bound to cooperate fully should a situation arise where we are required by law or legal process to provide information about a customer. </string>
+    <string name="privacy_policy_parag9">Do all visitors have to pay? </string>
+    <string name="privacy_policy_parag10">No. All visitors to our site may browse the site, search profiles and view any biodata, subject to other party’s permission. Payment is required only when someone wants to contact a potential life partner. </string>
+    <string name="privacy_policy_parag11">How to deactivate account? </string>
+    <string name="privacy_policy_parag12">You can deactivate membership from account settings. </string>
+    <string name="privacy_policy_parag13">Can users contact any number of profiles in a single day? </string>
+    <string name="privacy_policy_parag14">After making required payment and getting permission from the other party, a user can contact any number of times. </string>
+    <string name="privacy_policy_parag15">Notice </string>
+    <string name="privacy_policy_parag16">We may change this Privacy Policy from time to time based on your comments or as a result of a change of policy in our company. If you have any questions regarding our Privacy Statement, please write to support@biyeta.com </string>
+
+
+    <string name="about_title">বিয়েটা সম্পর্কে</string>
+    <string name="about_parag1">বাংলাদেশী ছেলেমেয়েদের বিয়েতে পরিবারের অবদান সবসময়ই ছিল। যুগ যুগ ধরে পারিবারিক অথবা পেশাদার ঘটকের মাধ্যমে পাত্র-পাত্রী বিবাহ বন্ধনে আবদ্ধ করে আসছে। তবে আজকের ব্যস্ত শহুরে জীবনে একজন ব্যক্তির মাধ্যমে ঘটকালির জনপ্রিয়তা কমে এসেছে। ছেলেমেয়েদের নিজের ও পরিবারের কাছে নিজস্ব ভালোলাগা প্রাধান্য পেতে শুরু করেছে। প্রয়োজন দেখা দিয়েছে একটি বিয়ের প্ল্যাটফর্মের যা আমাদের আধুনিক জীবনের সাথে মানানসই হবে এবং নিজস্ব সংস্কৃতি ও মূল্যবোধের সাথে সামাঞ্জস্যপূর্ণ হবে। </string>
+    <string name="about_parag2">এই উপলব্ধি থেকে জন্ম নিয়েছে বিয়েটা, বাংলাদেশের সবচেয়ে আধুনিক বিয়ের প্ল্যাটফর্ম। </string>
+    <string name="bullet_ponit_about">•</string>
+    <string name="about_parag3">বিয়েটার কাছে সবচেয়ে গুরুত্বপূর্ণ হল পাত্র-পাত্রী ও তাদের পরিবারের পছন্দ। তাদের ভালোলাগার উপর ভিত্তি করে বিয়েটার নিজস্ব এলগোরিদমের মাধ্যমে ম্যাচিং করানো হয়। পরবর্তীতে পাত্র-পাত্রী ম্যাচিং এর নানাদিক দেখতে পারেন ও সিদ্ধান্ত নিতে পারেন। </string>
+    <string name="about_parag4">পাত্র-পাত্রী নিজে বায়োডাটা তৈরি করতে পারেন। আবার তাদের বাবা,মা,ভাই ও বোন বায়োডাটা তৈরি করে দিতে পারেন। </string>
+    <string name="about_parag5">ম্যাচিং এর পাশাপাশি জোর দেয়া হয় প্রাইভেসীতে। প্রথমে পাত্র-পাত্রী তাদের পছন্দের মানুষের কিছু মূল আকর্ষণ দেখতে পারেন। পরবর্তীতে তার অনুমতি সাপেক্ষে ছবিসহ পুরো বায়োডাটা দেখতে পারেন। পুরো বায়োডাটা দেখার জন্য কোন চার্জ করা হয়না। </string>
+    <string name="about_parag6">পুরো বায়োডাটা দেখার পর বিয়েটাকে সামান্য মূল্য প্রদানের মাধ্যমে পাত্র-পাত্রী তাদের পছন্দের সঙ্গীর সাথে যোগাযোগ করে পারেন। অন্যান্য বিয়ের প্ল্যাটফর্মের মত বিয়েটাতে কোন ব্যয়বহুল প্যাকেজ নেই। বরং প্রতিটি যোগাযোগের জন্য পাত্র-পাত্রী মূল্য প্রদান করে থাকেন। </string>
+    <string name="about_parag7">বায়োডাটা তৈরির পর পাত্র-পাত্রী অথবা তাদের পরিবার বিনামূল্যে ডাউনলোড করতে পারেন। </string>
+    <string name="about_parag8">দেশী-বিদেশী সবরকম ক্রেডিট/ডেবিট কার্ড এবং পেপ্যাল বিয়েটা সাপোর্ট করে। </string>
+    <string name="about_parag9">বিয়েটাতে আপনাকে জানাই স্বাগতম। যেকোন জিজ্ঞাসায় যোগাযোগ করুন support@biyeta.com </string>
+    <string name="about_parag10">-বিয়েটা টিম </string>
+
+
+    <string name="terms_title"> টার্মস অফ ইউজ </string>
+    <string name="terms_parag1">Welcome to Biyeta.com, your personal matrimonial platform. Biyeta.com is a wedding platform that provides matches to all to be bride and grooms and replaces the traditional newspaper classifieds. Biyeta.com helps match your profile to the prospective suitor. It is a platform for those in seeking a life-partner. Access to the Biyeta.com website is free. However, we charge when a user intends to contact a suitable partner. In order to use the Biyeta.com Site ("Site"), you must be a registrant ("Member") at the site. The Member or any users using the Site agree to be bound by these Terms of Use ("Agreement"). If you wish to become a Member and make use of the Biyeta.com service ("Service"), read these Terms of Use and follow the instructions in the Registration process. This Agreement sets out the legally binding terms for your use of the Site and membership. This Agreement may be modified by Biyeta.com from time to time. </string>
+    <string name="terms_parag2">1. Eligibility </string>
+    <string name="terms_parag3">To register as a member of Biyeta.com or use this Site, you must be of legal marriageable age as per the laws of bangladesh (currently, 18 years or over for females and 21 years or over for males). The Biyeta.com site is only to facilitate match between suitors for lawful matrimonial alliance between persons who are legally competent to enter into matrimony under the laws to which they are subject. Membership in the Service is void where prohibited. By using this Site, you represent and warrant that you have the right, authority, and legal capacity to enter into this Agreement and that you are not prohibited or prevented by any applicable law for the time being in force or any order or decree or injunction from any court, tribunal or any such competent authority restraining you from entering into matrimony. You also agree to abide by all of the terms and conditions of this Agreement. If at any time Biyeta.com is of the opinion (in its sole discretion) or has any reason to believe that you are not eligible to become a member or that you have made any misrepresentation about your eligibility, Biyeta.com reserves the right to forthwith terminate your membership and / or your right to use the Service without any refund to you of any of your unutilized subscription fee. </string>
+    <string name="terms_parag4">2. Term </string>
+    <string name="terms_parag5">You may terminate your membership at any time, for any reason by writing to Biyeta.com. In the event you terminate your membership, you will not be entitled to a refund of any unutilized subscription fees, if any, paid by you, Biyeta.com may terminate your access to the Site and/or your membership for any reason effective upon sending notice to you at the email address as provided you in your application for membership. If Biyeta.com terminates your membership for breach of terms of this Agreement, you will not be entitled to any refund of any unused Subscription fees, if any, paid by you. </string>
+    <string name="terms_parag6">3. Non-Commercial Use by Members </string>
+    <string name="terms_parag7">The Biyeta.com Site is for the personal use of individual members to register their profiles and find matches for the purpose of generating Accepts from relevant matches and cannot be used in connection with any other commercial endeavors. Permission to view full profile and contact are each considered as an “Accept”. This includes providing links to other web sites, whether deemed competitive to Biyeta.com or otherwise. Organizations, companies, and/or businesses cannot become Members of Biyeta.com and should not use the Biyeta.com Service or Site for any purpose. Illegal and/or unauthorized uses of the Site, including unauthorized framing of or linking to the Site will be investigated, and appropriate legal action will be taken, including without limitation, civil, criminal, and injunctive redress. </string>
+    <string name="terms_parag8">4. Other Terms of Use by Members </string>
+    <string name="terms_parag9">a. Biyeta.com reserves the right in it’s sole discretion to review the activity &amp; status of each account &amp; block the account of a member based on such review. </string>
+    <string name="terms_parag10">b. You hereby confirm that as on date of this registration, you do not have any objection to receiving emails, messages and calls from Biyeta.com and members of Biyeta.com as long as you are a registered member of Biyeta.com. This consent shall supersede any preferences set by you with or registration done with the Do Not Disturb (DND Register)/ National Customer Preference Register (NCPR). This consent extends to emails, messages or calls relating but not limited to phone number verification, the provision of matrimonial advertising service, matrimonial enquiries and promotions. </string>
+    <string name="terms_parag11">c. Multiple profiles of the same person are not allowed on Biyeta.com. Biyeta.com reserves the right to deactivate all multiple profiles without any refund of subscription fees. </string>
+    <string name="terms_parag12">d. You cannot engage in advertising to, or solicitation of, other Members to buy or sell any products or services through the Service. You will not transmit any chain letters or junk email to other Biyeta.com Members. Although Biyeta.com cannot monitor the conduct of its Members off the Biyeta.com Site, it is also a violation of these rules to use any information obtained from other members in order to harass, abuse, or harm another person, or in order to contact, advertise to, solicit, or sell to any Member without their prior explicit consent. </string>
+    <string name="terms_parag13">e. In order to protect Biyeta.com and/or our Members from any abuse / misuse, Biyeta.com reserves the right to take appropriate steps as it deems appropriate in its sole discretion in order to protect interest of other Members. </string>
+    <string name="terms_parag14">f. You cannot use any automated processes, including IRC Bots, EXE’s, CGI or any other programs/scripts to view content on or communicate / contact / respond / interact with Biyeta.com and/or its members. </string>
+    <string name="terms_parag15">g. Biyeta.com reserves the right to screen communications/advertisements that you may send to other Member(s) and also regulate the same by deleting unwarranted/obscene communications/advertisements at any time at its sole discretion without prior notice to any Member. </string>
+    <string name="terms_parag16">h. Biyeta.com Members are expected to exercise simple precautions for their privacy and safety. A suggestive guideline of such precautions is enlisted under “Security Tips”. By becoming a Member you hereby agree to abide and adhere to the said Tips. </string>
+    <string name="terms_parag17">5. Proprietary Rights in the Content on Biyeta.com </string>
+    <string name="terms_parag18">Biyeta.com owns and retains all proprietary rights in the Biyeta.com Site and the Biyeta.com Service. The Site contains the copyrighted material, trademarks, and other proprietary information of Biyeta.com, and its licensors. Except for that information which is in the public domain such as member profile or for which permission has been obtained from the user, you cannot copy, modify, publish, transmit, distribute, perform, display, or sell any such proprietary information. Any such act or an attempted act on your part shall constitute a violation of this Agreement and your membership is liable to be terminated forthwith by Biyeta.com without refund of any of your unused Subscription fees. We also reserve our right to take legal action (civil and/or criminal) wherever applicable for any violations. </string>
+    <string name="terms_parag19">6. Content Posted on the Site </string>
+    <string name="terms_parag20">You understand and agree that Biyeta.com may delete any listing, content, communication, photos or profiles (collectively, "Content") that in the sole judgment of Biyeta.com violate this Agreement or which might be offensive, illegal, or that might violate the rights, harm, or threaten the safety of either Biyeta.com and/or its Members. </string>
+    <string name="terms_parag21">a. With respect to Content you submit or make available for inclusion on publicly accessible areas of the Site including but not limited to your contact details, you hereby unconditionally and irrevocably grant to Biyeta.com the license to use, distribute, reproduce, modify, adapt, publicly perform and publicly display such Content on the Site. </string>
+    <string name="terms_parag22">b. You shall use the Services only to find matches for your profile and to reach out to other Members for the purpose of driving an ‘Accept’ from relevant matches. You understand and hereby agree that all information, data, text, photographs, graphics, communications, tags, or other Content whether publicly posted or privately transmitted or otherwise made available to Biyeta.com are the sole responsibility of the person from whom such Content originated and shall be at the member’s/person’s sole risks and consequences. This means that you (and not Biyeta.com) are solely responsible for all Content that you upload, post, email, transmit or otherwise make available via the Service. Biyeta.com does not control the Content posted via the Service and, as such, does not guarantee the accuracy, integrity or quality of such Content. Under no circumstances will Biyeta.com be liable in any way for any Content, including, but not limited to, any errors or omissions in any Content, or any loss or damage of any kind incurred as a result of the use of any Content posted, emailed, transmitted or otherwise made available via the Service. Biyeta.com reserves the right to verify the authenticity of Content posted on the Site. In exercising this right, Biyeta.com may ask you to provide any documentary or other form of evidence supporting the Content you post on the Site. If you fail to produce such evidence, Biyeta.com may, in its sole discretion, terminate your Membership without a refund. </string>
+    <string name="terms_parag23">c. By posting Content/ advertising to any public area of Biyeta.com, you automatically grant, and you represent and warrant that you have the right to grant, to Biyeta.com, and other Biyeta.com Members, an irrevocable, perpetual, non-exclusive, fully-paid, worldwide license to use, copy, perform, display, and distribute such information and content and to prepare derivative works of, or incorporate into other works, such information and content, and to grant and authorize sublicenses of the foregoing. </string>
+    <string name="terms_parag24">d. The following is an indicative list of the kind of Content that is illegal or prohibited on the Site. Biyeta.com will investigate and take appropriate legal action in its sole discretion against anyone who violates this Agreement, including without limitation, removing the offending communication / Content from the Service and terminating the Membership of such violators without a refund. Illegal and prohibitive Content includes Content which: </string>
+    <string name="terms_parag25">v. is blatantly offensive to the community, such as Content that promotes racism, bigotry , hatred or physical harm of any kind against any group or individual; </string>
+    <string name="terms_parag26">vi. harasses or advocates harassment of another person; </string>
+    <string name="terms_parag27">vii. involves the transmission of "junk mail", "chain letters," or unsolicited mass mailing or "spamming"; </string>
+    <string name="terms_parag28">viii. promotes information that you know is false, misleading or promotes illegal activities or conduct that is abusive, threatening, obscene, defamatory or libelous; </string>
+    <string name="terms_parag29">ix. promotes an illegal or unauthorized copy of another person’s copyrighted work, such as providing pirated computer programs or links to them, providing information to circumvent manufacture-installed copy-protect devices, or providing pirated music or links to pirated music files; </string>
+    <string name="terms_parag30">x. contains restricted or password only access pages, or hidden pages or images (those not linked to or from another accessible page); </string>
+    <string name="terms_parag31">xi. displays pornographic or sexually explicit material of any kind; </string>
+    <string name="terms_parag32">xii. provides material that exploits people under the age of 18 in a sexual or violent manner, or solicits personal information from anyone under 18; </string>
+    <string name="terms_parag33">xiii. provides instructional information about illegal activities such as making or buying illegal weapons, violating someone’s privacy, or providing or creating computer viruses; </string>
+    <string name="terms_parag34">xiv. solicits passwords or personal identifying information for commercial or unlawful purposes from other users; and </string>
+    <string name="terms_parag35">xv. Engages in commercial activities and/or sales without our prior written consent such as contests, sweepstakes, barter, advertising, and pyramid schemes. </string>
+    <string name="terms_parag36">§ You must use the Biyeta.com Service in a manner consistent with any and all applicable local, state, and federal laws, rules and regulations. </string>
+    <string name="terms_parag37">§ You cannot include in your Member profile, visible to other members without going through Biyeta’s 2 step process, any telephone numbers, street addresses, URL’s, and email addresses. </string>
+    <string name="terms_parag38">7. Copyright Policy</string>
+    <string name="terms_parag39">You cannot post, distribute, or reproduce in any way any copyrighted material, trademarks, or other proprietary information without obtaining the prior written consent of the owner of such proprietary rights. Without limiting the foregoing, if you believe that your work has been copied and posted on the Biyeta.com service in a way that constitutes copyright infringement, please provide us with the following information: </string>
+    <string name="terms_parag40">an electronic or physical signature of the person authorized to act on behalf of the owner of the copyright interest; </string>
+    <string name="terms_parag41">a description of the copyrighted work that you claim has been infringed; </string>
+    <string name="terms_parag42">a description of where the material that you claim is infringing is located on the our Site; </string>
+    <string name="terms_parag43">your address, telephone number, and email address; </string>
+    <string name="terms_parag44">a written statement by you that you have a good faith belief that the disputed use is not authorized by the copyright owner, its agent, or the law; </string>
+    <string name="terms_parag45">a statement by you, made under penalty of perjury, that the above information in your Notice is accurate and that you are the copyright owner or authorized to act on the copyright owner’s behalf. </string>
+    <string name="terms_parag46">Notice of claims of copyright infringement can be sent to us in writing to the Dhaka address located under the Help/Contact section on the site. </string>
+    <string name="terms_parag47">8. Member Disputes </string>
+    <string name="terms_parag48">You are solely responsible for your advertisement/communications with other Biyeta.com Members. Biyeta.com reserves the right, but has no obligation, to monitor disputes between you and other Members. Biyeta.com also reserves the right to take appropriate action against errant members. However, Biyeta.com is not obliged to share such action with other members, including complainants. Biyeta.com expressly disclaims any responsibility or liability for any transactions or interactions between the members inter-se. </string>
+    <string name="terms_parag49">9. Privacy </string>
+    <string name="terms_parag50">Use of the Biyeta.com Site and/or the Biyeta.com Service is governed by our privacy policy. </string>
+    <string name="terms_parag51">Disclaimers. </string>
+    <string name="terms_parag52">Biyeta.com is not responsible for any incorrect or inaccurate Content/listing posted on the Site or in connection with the Biyeta.com Service, whether caused by Users, Members or by any of the equipment or programming associated with or utilized in the Service, nor for the conduct of any User and/or Member of the Biyeta.com Service whether online or offline. Biyeta.com assumes no responsibility for any error, omission, interruption, deletion, defect, delay in operation or transmission, communications line failure, theft or destruction or unauthorized access to, or alteration of, User and/or Member communications or any communications by Biyeta.com to its Members. Biyeta.com is not responsible for any problems or technical malfunction of any telephone network or lines, computer on-line-systems, servers or providers, computer equipment, software, failure of email or players on account of technical problems or traffic congestion on the Internet or at any web site or combination thereof, including injury or damage to Users and/or Members or to any other person’s computer related to or resulting and/or in connection with the Biyeta.com Service. Under no circumstances will Biyeta.com be responsible for any loss or damage resulting from anyone’s use of the Site or the Service and/or any Content posted on the Biyeta.com Site or transmitted to Biyeta.com Members. The exchange of matrimonial profile(s) through or by "Biyeta.com" is not a matrimonial offer and/or recommendation from/by Biyeta.com. Biyeta.com shall not be responsible for any loss or damage to any individual arising out of, or subsequent to, any relations (including but not limited to matrimonial relations) established pursuant to the use of Biyeta.com. The Site and the Service are provided "AS-IS" and Biyeta.com expressly disclaims any warranty of fitness for a particular purpose or non-infringement. Biyeta.com cannot guarantee and does not promise any specific results from use of the Site and/or the Biyeta.com Service. Biyeta.com expressly disclaims any liability or responsibility whatsoever and howsoever arising as a result of any Content/listing posted on the Site / made available to Biyeta.com by any Members or the users of the Site or any third party. Biyeta.com does not assume any responsibility or liability for any illegal Content posted on the Site by any Members, users or any third party. All liability, whether civil or criminal arising out of any Content that is Posted on the Site will be of that Member / user / third party who has Posted such Content and Biyeta.com reserves its right to claim damages from such Member/ user / third party that it may suffer as a result of such Content Posted on the Site. Biyeta.com does not claim ownership of Content you submit or make available for inclusion on the Service. </string>
+    <string name="terms_parag53">10. Limitation on Liability </string>
+    <string name="terms_parag54">In no event will Biyeta.com be liable to you or any third person for any indirect, consequential, exemplary, incidental, special or punitive damages, including also lost profits arising from your use of the Site or the Biyeta.com Service, even if Biyeta.com has been advised of the possibility of such damages. Notwithstanding anything to the contrary contained herein, Biyeta.com’s liability to you for any cause whatsoever, and regardless of the form of the action, will at all times be limited to the amount paid, if any, by you to Biyeta.com, for the Service during the term of membership. </string>
+    <string name="terms_parag55">11. Jurisdiction </string>
+    <string name="terms_parag56">If there is any dispute about or involving the Site and/or the Service, by using the Site, you unconditionally agree that all such disputes and/or differences will be governed by the laws of bangladesh and shall be subject to the exclusive jurisdiction of Bangladesh. </string>
+    <string name="terms_parag57">12. Indemnity </string>
+    <string name="terms_parag58">You agree to indemnify and hold Biyeta.com, its subsidiaries, affiliates, officers, agents, and other partners and employees, fully indemnified and harmless from any loss, liability, claim, or demand, including reasonable attorney’s fees, made by any third party due to or arising out of your use of the Service in violation of this Agreement and/or arising from a breach of these Terms of Use and/or any breach of your representations and warranties set forth above and/or any fraudulent act on your part. </string>
+    <string name="terms_parag59">13. Other </string>
+    <string name="terms_parag60">By becoming a Member of the Biyeta.com service, you agree to receive certain specific email from Biyeta.com and/or its group sites. You can unsubscribe at any time for any reason quickly and easily by clicking on the unsubscribe link enclosed in the mail. You can also manage your subscription to these emails using the My Alert Manager option. This Agreement, accepted upon use of the Site and further affirmed by becoming a Member of the Biyeta.com service, contains the entire agreement between you and Biyeta.com regarding the use of the Site and/or the Service. If any provision of this Agreement is held invalid, the remainder of this Agreement shall continue in full force and effect. Biyeta.com is a trademark of Nascenia Ltd.Biyeta.com to assist Bangladesh Police / Statutory Investigation Agency Biyeta.com will endeavour to provide all possible assistance to the Bangladesh Police or any other statutory investigation agency to tackle fraudulent users of Biyeta.com, on being specifically instructed by the said authorities to do so.To report fraud or misuse, contact support@biyeta.com describing full case. </string>
+    <string name="terms_parag61">By becoming a member of Biyeta.com and/or using the Services of the Site, you unconditionally and irrevocably confirm that you have read and understood the above provisions and agree to abide by them. </string>
+    <string name="terms_parag62">Please contact us with any questions regarding this service agreement at support@biyeta.com </string>
+    <string name="terms_bullet_point">•</string>
+
+
+    <string name="faq_title">FAQ</string>
+    <string name="faq_ques1">১। বিয়েটা কিভাবে ব্যবহার করতে হয়? </string>
+    <string name="faq_ans1">বিয়েটা ব্যবহার খুব সহজ। প্রথমে রেজিস্ট্রেশন করে নিজের প্রোফাইল তৈরি করুন। বিয়েটা আপনার পছন্দের উপর ভিত্তি করে ম্যাচ দেখাবে। যার সাথে আপনার ভালো মেলে, পুরো বায়োডাটা দেখার জন্য তাকে অনুরোধ করুন। এসময় আপনি তার যোগাযোগের ঠিকানা ও ফোন নম্বর ছাড়া সবই দেখতে পাবেন। পরবর্তীতে বিয়েটাকে সামান্য মূল্য প্রদানের মাধ্যমে তার সাথে যোগাযোগ করতে পারবেন। </string>
+
+    <string name="faq_ques2">২। আমি ছাড়া আরকে আমার বায়োডাটা রেজিস্ট্রেশন করতে পারবে? </string>
+    <string name="faq_ans2">আপনি ছাড়া আপনার বাবা, মা, ভাই ও বোন বিয়েটাতে একাউন্ট তৈরি করতে পারবেন। </string>
+
+    <string name="faq_ques3">৩। বিয়েটাতে রেজিস্ট্রেশনের জন্য আমাকে কত টাকা দিতে হবে? </string>
+    <string name="faq_ans3">বিয়েটাতে রেজিস্ট্রেসন ফ্রি। শুধুমাত্র আরেকজনের সাথে যোগাযোগ করার আগে টাকা দিতে হয়। </string>
+
+    <string name="faq_ques4">৪। বিয়েটার মূল ফিচার কি কি? </string>
+
+
+    <string name="faq_ques5">৫। রেজিস্ট্রেশন করতে অনেক সময় লাগে। আমাকে কি পুরো বায়োডাটা ফিল আপ করতে হবে? </string>
+    <string name="faq_ans5">“শুধু মাত্র অন্যান্য পারিবারিক পরিচয়” ছাড়া অন্য অংশগুলো শুরুতেই পূরণ করা বাধ্যতা মূলক। আপনার সাথে ম্যাচ করানোর জন্য এই তথ্যগুলো প্রয়োজন। </string>
+
+    <string name="faq_ques6">৬। আমি কি আমার ইমেইল, ফোন নাম্বার এসব যথাযথ স্থান ছাড়া আর কোথাও উল্লেখ করতে পারবো? করলে তার ফলাফল কি হতে পারে? </string>
+    <string name="faq_ans6">না। আপনি যেখানে চাওয়া হয় শুধুমাত্র সেখানেই ইমেইল, ফোন নাম্বার, ঠিকানা ইত্যাদি পূরণ করতে পারবেন। অন্য কোথাও উল্লেখ করলে আপনার অ্যাকাউন্ট ব্যান হতে পারে। </string>
+
+    <string name="faq_ques7">৭। আমাকে কেন ভেরিফিকেশনের জন্য উৎসাহিত করা হচ্ছে? </string>
+    <string name="faq_ans7">আপনার ব্যাপারে বিশ্বস্ততা বৃদ্ধির জন্য ভেরিফিকেশন করতে উৎসাহিত করা হচ্ছে। </string>
+
+    <string name="faq_ques8">৮। আমি কি আমার পছন্দ পরিবর্তন করতে পারবো? </string>
+    <string name="faq_ans8">আপনি আপনার পছন্দ যেকোন সময় পরিবর্তন করতে পারেন। সে অনুযায়ী আপনার ম্যাচ দেখানো হবে। </string>
+
+    <string name="faq_ques9">৯। আমি আমার বায়োডাটা ডাউনলোড করতে পারবো? </string>
+    <string name="faq_ans9">আপনি যেকোন সময় নিজের বায়োডাটা doc অথবা pdf ফরম্যাটে ডাউনলোড করতে পারেন। </string>
+    <string name="faq_foot">অন্য যেকোন জিজ্ঞাসার জন্য ইমেইল করুন support@biyeta.com </string>
+
+    <string name="contact_title">যোগাযোগ </string>
+    <string name="contact_name">আপনার নাম </string>
+    <string name="contact_phone_number">আপনার মোবাইল নম্বর (শুধুমাত্র বাংলাদেশী অপারেটর)</string>
+    <string name="contact_email">আপনার ইমেইল </string>
+    <string name="contact_message">মেসেজ </string>
+    <string name="contact_button">পাঠিয়ে দিন </string>
+    <string name="contact_for_help">সাহায্যের জন্য </string>
+    <string name="contact_for_helpNumber">০৯৬৬৬৭৭৮৭৭৯ </string>
+    <string name="contact_for_helpTime">রবি-শুক্র, সকাল ১০টা -সন্ধ্যা ৬টা</string>
+
+
+    <!--Account_Recharge_page-->
+    <string name="account_recharge_title">ব্যালেন্স ও রিচার্জ </string>
+    <string name="account_recharge_currentbalance">বর্তমান ব্যালেন্স ১০০ টাকা </string>
+    <string name="every_payment">প্রতিটি যোগাযোগের মূল্য ১০০ টাকা।</string>
+    <string name="account_recharge_descrip1"> আপনি আরও একজনকে যোগাযোগের অনুরোধ পাঠাতে পারবেন। </string>
+    <string name="account_recharge_descrip2">শুধুমাত্র যোগাযোগের অনুরোধ গ্রহণ করলেই আপনার অ্যাকাউন্ট থেকে টাকা নেয়া হবে। এক সপ্তাহের মধ্যে অনুরোধ গৃহীত না হলে অ্যাকাউন্টে টাকা ফেরত আসবে। </string>
+    <string name="load_money_title"> অ্যাকাউন্টে টাকা লোড করুন। </string>
+    <string name="online_payment_option">অনলাইন পেমেন্ট (ডেবিট/ক্রেডিট/নেক্সাস কার্ড) </string>
+    <string name="recharge_amount_text">রিচার্জ-এর পরিমান </string>
+    <string name="recharge_amount">১০০০ </string>
+    <string name="taka">টাকা </string>
+    <string name="recharge_button">রিচার্জ করুন </string>
+    <string name="recharge_or_text">অথবা </string>
+    <string name="money_sent_confirmation">
+        <![CDATA[
+        <p><b>ন্যূনতম বিকাশ মূল্য ১০০০ (এক হাজার) টাকা। </b> টাকা পাঠিয়ে আপনার <b> ইমেইল আইডি এবং বিকাশ ট্রানজেকশন আইডি </b> SMS করে পাঠিয়ে দিন অথবা আমাদের ফোন করে জানান। </p>
+        ]]>
+       </string>
+    <string name="money_sent_procedureTitle">যেভাবে বিকাশ করবেন </string>
+    <string name="bKash_precedureDescrip">যে কোন পারসোনাল অ্যাকাউন্ট থেকে পাঠানো যাবে, এজেন্ট অ্যাকাউন্ট থেকে নয়। </string>
+    <string name="bullet_point_recharge">●</string>
+
+    <string name="no_request_from_me">
+    কোন অনুরোধ নেই। \n\n
+    অনুরোধ পাবার জন্য টিপস- \n\n
+    ● প্রোফাইল পিকচার আপলোড করুন। সুন্দর ও মার্জিত ছবি আপলোড করুন। মনে রাখবেন, আপনি বিয়ে করতে যাচ্ছেন বিয়েটার মাধ্যমে।\n
+    ● নিজের সম্পর্কে ভালোভাবে লিখুন যাতে বিপরীতপক্ষ আপনার সম্পর্কে জানতে আগ্রহী হয়।\n
+    ● বায়োডাটা খুব ভালোভাবে পুরণ করবেন। নিজের সম্পর্কে এবং আত্নীয়-স্বজন সম্পর্কে বিস্তারিত তুলে ধরবেন।\n
+    ● নিয়মিত অ্যাকাউন্ট-এ লগইন করবেন যাতে আপনাকে বিপরীত পক্ষ সহজেই খুঁজে পায় । \n
+    </string>
+    <string name="recharge_step1">ডায়াল করুন *২৪৭# </string>
+    <string name="recharge_step2">৩ নম্বর অপশন "পেমেন্ট" অপশনটি নির্বাচন করুন </string>
+    <string name="recharge_step3">পাঠানোর নম্বর দিনঃ 01755690000 </string>
+    <string name="recharge_step4">টাকার পরিমাণ দিন </string>
+    <string name="recharge_step5">কাউন্টার নম্বর দিনঃ ১ </string>
+    <string name="recharge_step6">রেফারেন্স নম্বর দিনঃ ১ </string>
+    <string name="recharge_step7">পিন নম্বর দিয়ে টাকা পাঠিয়ে দিন </string>
+
+    <string name="profile_request_message">আপনার কাছে বায়োডাটা দেখার অনুরোধ করেছেন</string>
+    <string name="communication_request_message">আপনার কাছে যোগাযোগের  অনুরোধ করেছেন</string>
+
+    <!--Balance_Reply_page-->
+
+    <string name="balance_reply_google_analytics">ব্যালেন্স রিপ্লায়</string>
+    <string name="balance_message">আপনার অ্যাকাউণ্টে পর্যাপ্ত পরিমান টাকা নেই অনুগ্রহ করে রিচার্জ করুন। </string>
+    <string name="communication_rule">প্রতিটি যোগাযোগের মূল্য ১০০ টাকা। শুধুমাত্র যোগাযোগের অনুরোধ গ্রহন করলেই আপনার অ্যাকাউণ্ট থেকে টাকা নেয়া হবে। এক সপ্তাহের মধ্যে অনুরোধ গৃহীত না হলে অ্যাকাউণ্টে টাকা ফেরত আসবে। </string>
+    <string name="total_send_request">সর্বমোট অনুরোধ পাঠিয়েছেনঃ </string>
+    <string name="total_send_request_value">২টি </string>
+    <string name="successfull_request">সফল অনুরোধঃ </string>
+    <string name="successfull_request_value">১টি </string>
+    <string name="pending_request_text">পেন্ডিং অনুরোধঃ </string>
+    <string name="pending_request_value">১টি </string>
+    <string name="money_load_button">অ্যাকাউণ্টে টাকা লোড করুন </string>
+
+
+    <string name="message_verification">আপনার মোবাইলে একটি মেসেজ পাঠানো হয়েছে। মেসেজে থাকা কোডটি নিচের বাক্সে বসান।</string>
+
+    <string name="varification_code">ভ্যারিফিকেশন কোড</string>
+    <string name="code_submit_button">কোড সাবমিট করুন</string>
+    <string name="again_verification">পুনরায় ভ্যারিফিকেশন কোড পাঠান</string>
+    <string name="code_sent_button">ভ্যারিফিকেশন কোড পাঠান</string>
+    <string name="verify_mobile">আপনার মোবাইলে নাম্বার ভেরিফাই করুন </string>
+    <string name="expire_message">এরা আপনাকে যোগাযোগের অনুরোধ করেছিলেন। কিন্তু আপনি তাতে সাত দিনের মধ্যে সাড়া দেননি। এদেরকে আপনি যোগাযোগের অনুরোধ করতে পারেন।</string>
+    <string name="bullet_point">●</string>
+    <string name="facebook_app_id">1530203510587417</string>
+    <string name="please_retry_after">"Please retry after "</string>
+
+    <string name="incomplete_profile_message">আপনার প্রোফাইলটি অসম্পূর্ণ রয়েছে। অনুগ্রহপূর্বক প্রোফাইলটি সম্পূর্ণ করে লগইন করুন।</string>
+    <string name="progress_dialog_message">অনুগ্রহপূর্বক অপেক্ষা করুন</string>
+
+    <string name="send_communication_request_text">যোগাযোগের জন্য অনুরোধ করুন</string>
+    <string name="biodata_request_text">পুরো বায়োডাটা দেখার অনুরোধ করুন</string>
+    <string name="after_sending_communication_request_text">আপনি যোগাযোগের জন্য অনুরোধ করেছেন</string>
+    <string name="after_sending_biodata_request_text">আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন</string>
+
+    <string name="no_request_dialog_message">আপনার আর কোন অনুরোধ নেই</string>
+
+
+</resources>

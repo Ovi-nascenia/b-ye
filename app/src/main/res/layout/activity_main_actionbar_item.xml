@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- <include layout="@layout/custom_toolbar" />
+ -->
+    <!--<android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/custom_tab_layout_height"
+        app:tabGravity="fill"
+        app:tabMode="fixed" />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabs"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+    <ImageView
+
+        android:paddingTop="@dimen/small_padding"
+        android:paddingBottom="@dimen/small_padding"
+        android:id="@+id/search"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:paddingLeft="@dimen/medium_margin"
+        android:src="@drawable/search"
+        android:visibility="visible" />
+
+
+    <LinearLayout
+        android:paddingTop="@dimen/small_padding"
+        android:paddingBottom="@dimen/small_padding"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_toLeftOf="@+id/profile"
+        android:layout_toRightOf="@+id/search"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+
+        <ImageView
+            android:id="@+id/match"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/very_large_margin"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/medium_margin"
+            android:src="@drawable/match" />
+
+        <ImageView
+            android:id="@+id/favorite"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/fev"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/inbox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/very_large_margin"
+            android:layout_weight="1"
+            android:paddingRight="@dimen/medium_margin"
+            android:src="@drawable/inbox"
+            android:visibility="visible" />
+
+        <!-- <ImageView
+             android:id="@+id/inbox1"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:src="@drawable/inbox"
+             android:visibility="gone" />-->
+
+    </LinearLayout>
+
+    <ImageView
+
+        android:paddingTop="@dimen/small_padding"
+        android:paddingBottom="@dimen/small_padding"
+        android:id="@+id/profile"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:paddingRight="@dimen/medium_margin"
+        android:src="@drawable/profile"
+        android:visibility="visible" />
+</RelativeLayout>

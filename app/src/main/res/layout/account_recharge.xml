@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  >
+
+    <RelativeLayout
+        android:id="@+id/rl_account_recharge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/accountrecharge_backGround_color">
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_account_container"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/roundshapecontainer">
+
+            <TextView
+                android:id="@+id/current_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/account_recharge_currentbalance"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:background="#FFFFFF"
+                android:textColor="@color/balance_title"/>
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/every_payment"
+                android:textSize="20sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                android:background="#FFFFFF"
+                android:textColor="@color/recharge_descrip1"/>
+            <TextView
+                android:id="@+id/account_recharge_descrip1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/account_recharge_descrip1"
+                android:textSize="20sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                android:background="#FFFFFF"
+                android:textColor="@color/recharge_descrip1"/>
+            <TextView
+                android:id="@+id/account_recharge_descrip2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/account_recharge_descrip2"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:background="#FFFFFF"
+                android:textColor="@color/recharge_descrip2"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_load_balance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ll_account_container"
+            android:layout_margin="10dp"
+            android:background="@drawable/roundshapecontainer">
+
+            <TextView
+                android:id="@+id/load_money_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/load_money_title"
+                android:textColor="@color/load_money"
+                android:textSize="20sp"
+                android:padding="10dp"/>
+            <TextView
+                android:id="@+id/online_payment_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/load_money_title"
+                android:text="@string/online_payment_option"
+                android:textColor="@color/online_payment_option"
+                android:textSize="20sp"
+                android:padding="10dp"/>
+
+            <LinearLayout
+                android:id="@+id/ll_payment_card"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:weightSum="3"
+                android:layout_margin="5dp"
+                android:layout_below="@id/online_payment_option"
+                android:orientation="horizontal"
+                android:background="@drawable/linear_oneside_border">
+
+                <ImageView
+                    android:id="@+id/payment_card1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/visa_card"/>
+                <ImageView
+                    android:id="@+id/payment_card2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/master_card"/>
+                <ImageView
+                    android:id="@+id/payment_card3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/dbbl_card"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/recharge_amountTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_payment_card"
+                android:text="@string/recharge_amount_text"
+                android:textColor="@color/recharge_amount"
+                android:padding="10dp"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:enabled="false"
+                android:visibility="gone"
+
+                android:id="@+id/recharge_amountET"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/recharge_amountTV"
+                android:layout_alignRight="@id/recharge_amountTV"
+                android:layout_below="@id/recharge_amountTV"
+                android:hint="@string/recharge_amount"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                android:maxLines="1"
+                android:textColor="@color/recharge_amount"
+                android:background="@drawable/edit_text_border"/>
+
+            <TextView
+                android:id="@+id/taka_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recharge_amountTV"
+                android:layout_toRightOf="@id/recharge_amountET"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/taka"
+                android:visibility="gone"
+                android:textColor="@color/taka"
+                android:textSize="20dp" />
+
+            <Button
+                android:visibility="gone"
+                android:enabled="false"
+                android:id="@+id/recharge_Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recharge_amountET"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/recharge_button"
+                android:textSize="20sp"
+                android:textColor="@color/recharge_buttonText"
+                android:gravity="center"
+                android:background="@drawable/roundshapebuttton"/>
+
+            <TextView
+                android:id="@+id/or_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recharge_or_text"
+                android:textSize="20sp"
+                android:textColor="@color/recharge_or_text"
+                android:gravity="center"
+                android:layout_below="@id/recharge_Button"/>
+
+            <ImageView
+                android:id="@+id/bKash_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@id/or_text"
+                android:layout_margin="20dp"
+                android:src="@drawable/bkash"/>
+
+            <!--<TextView-->
+                <!--android:id="@+id/money_send_confirmation"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/bKash_imageview"-->
+                <!--android:text="@string/money_sent_confirmation"-->
+                <!--android:textSize="20sp"-->
+                <!--android:textColor="@color/money_sent_confirmation"-->
+                <!--android:padding="10dp"/>-->
+            <WebView
+                android:id="@+id/money_send_confirmation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bKash_imageview"
+                >
+
+            </WebView>
+
+            <TextView
+                android:id="@+id/bKash_precedureTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/money_send_confirmation"
+                android:text="@string/money_sent_procedureTitle"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/money_sent_confirmation"
+                android:padding="10dp"/>
+            <TextView
+                android:id="@+id/bKash_precedureDescrip"
+                android:layout_below="@id/bKash_precedureTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bKash_precedureDescrip"
+                android:textSize="20sp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/money_sent_confirmation"/>
+
+            <TextView
+                android:id="@+id/recharge_bullet1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bKash_precedureDescrip"
+                android:text="@string/bullet_point_recharge"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:textColor="@color/recharge_bullet"
+                />
+
+            <TextView
+                android:id="@+id/recharge_step1"
+                android:layout_below="@id/bKash_precedureDescrip"
+                android:layout_alignBaseline="@id/recharge_bullet1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recharge_step1"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/recharge_step"/>
+
+            <TextView
+                android:id="@+id/recharge_bullet2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recharge_bullet1"
+                android:text="@string/bullet_point_recharge"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:textColor="@color/recharge_bullet"
+                />
+
+            <TextView
+                android:id="@+id/recharge_step2"
+                android:layout_below="@id/recharge_step1"
+                android:layout_alignBaseline="@id/recharge_bullet2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recharge_step2"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/recharge_step"/>
+            <TextView
+                android:id="@+id/recharge_bullet3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recharge_bullet2"
+                android:text="@string/bullet_point_recharge"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:textColor="@color/recharge_bullet"
+                />
+
+            <TextView
+                android:id="@+id/recharge_step3"
+                android:layout_below="@id/recharge_step2"
+                android:layout_alignBaseline="@id/recharge_bullet3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recharge_step3"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/recharge_step"/>
+
+            <TextView
+                android:id="@+id/recharge_bullet4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recharge_bullet3"
+                android:text="@string/bullet_point_recharge"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:textColor="@color/recharge_bullet"
+                />
+
+            <TextView
+                android:id="@+id/recharge_step4"
+                android:layout_below="@id/recharge_step3"
+                android:layout_alignBaseline="@id/recharge_bullet4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recharge_step4"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/recharge_step"/>
+
+            <TextView
+                android:id="@+id/recharge_bullet5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recharge_bullet4"
+                android:text="@string/bullet_point_recharge"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:textColor="@color/recharge_bullet"
+                />
+
+            <TextView
+                android:id="@+id/recharge_step5"
+                android:layout_below="@id/recharge_step4"
+                android:layout_alignBaseline="@id/recharge_bullet5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recharge_step5"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/recharge_step"/>
+            <TextView
+                android:id="@+id/recharge_bullet6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recharge_bullet5"
+                android:text="@string/bullet_point_recharge"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:textColor="@color/recharge_bullet"
+                />
+
+            <TextView
+                android:id="@+id/recharge_step6"
+                android:layout_below="@id/recharge_step6"
+                android:layout_alignBaseline="@id/recharge_bullet6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recharge_step6"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/recharge_step"/>
+            <TextView
+                android:id="@+id/recharge_bullet7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recharge_bullet6"
+                android:text="@string/bullet_point_recharge"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:textColor="@color/recharge_bullet"
+                />
+
+            <TextView
+                android:id="@+id/recharge_step7"
+                android:layout_below="@id/recharge_step6"
+                android:layout_alignBaseline="@id/recharge_bullet7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recharge_step7"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/recharge_step"/>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

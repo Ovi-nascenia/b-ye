@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:rsb="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+
+    <ScrollView
+
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/age_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
+                        android:padding="20dp"
+                        android:paddingLeft="10dp"
+                        android:text="@string/age"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+
+                        android:id="@+id/age_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/activity_vertical_margin"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:visibility="gone">
+
+
+                        <me.bendik.simplerangeview.SimpleRangeView
+                            android:id="@+id/age_lebel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:activeLineColor="#FFAB00"
+                            app:activeThumbColor="#D50000"
+                            app:count="33"
+                            app:labelFontSize="8sp"
+                            app:lineColor="#212121"
+                            app:showLabels="true"
+                            app:showTicks="false" />
+
+                        <TextView
+                            android:id="@+id/level"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/height_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
+                        android:padding="20dp"
+                        android:text="@string/height"
+
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        android:id="@+id/height_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/activity_vertical_margin"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:visibility="gone">
+
+
+                        <me.bendik.simplerangeview.SimpleRangeView
+
+                            android:id="@+id/height_lebel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:activeLineColor="#FFAB00"
+                            app:activeThumbColor="#D50000"
+                            app:count="48"
+                            app:labelFontSize="12sp"
+                            app:lineColor="#212121"
+                            app:showLabels="true"
+                            app:showTicks="false" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/color_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
+                        android:padding="20dp"
+                        android:text="@string/body_color"
+
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        android:id="@+id/color_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/activity_vertical_margin"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:visibility="gone">
+
+
+                        <me.bendik.simplerangeview.SimpleRangeView
+                            android:id="@+id/color_lebel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:activeLineColor="#FFAB00"
+                            app:activeThumbColor="#D50000"
+                            app:count="4"
+                            app:labelFontSize="12sp"
+                            app:lineColor="#212121"
+                            app:showLabels="true"
+                            app:showTicks="false" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        android:id="@+id/body_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
+                        android:padding="20dp"
+                        android:text="@string/body"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        android:id="@+id/body_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/activity_vertical_margin"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:visibility="gone">
+
+
+                        <me.bendik.simplerangeview.SimpleRangeView
+                            android:id="@+id/health_lebel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:activeLineColor="#FFAB00"
+                            app:activeThumbColor="#D50000"
+                            app:count="3"
+                            app:labelFontSize="12sp"
+                            app:lineColor="#212121"
+                            app:showLabels="true"
+                            app:showTicks="false" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/education_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
+
+                        android:padding="20dp"
+                        android:paddingLeft="10dp"
+                        android:text="@string/education_male"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        android:id="@+id/education_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/activity_vertical_margin"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:visibility="gone">
+
+
+                        <me.bendik.simplerangeview.SimpleRangeView
+                            android:id="@+id/education_lebel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:activeLineColor="#FFAB00"
+                            app:activeThumbColor="#D50000"
+                            app:count="9"
+                            app:labelFontSize="12sp"
+                            app:lineColor="#212121"
+                            app:showLabels="true"
+                            app:showTicks="false" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/profession_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
+
+                        android:padding="20dp"
+                        android:paddingLeft="10dp"
+                        android:text="@string/profession_identity_male"
+                        android:textStyle="bold" />
+
+                    <com.nascenia.biyeta.view.MyGridView
+                        android:id="@+id/profession_grid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:numColumns="1"
+                        android:paddingBottom="@dimen/activity_vertical_margin"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:visibility="gone"
+
+                        />
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        android:id="@+id/occupation_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
+
+                        android:padding="20dp"
+                        android:paddingLeft="10dp"
+                        android:text="@string/profession_male"
+                        android:textStyle="bold" />
+
+                    <com.nascenia.biyeta.view.MyGridView
+                        android:id="@+id/occupation_grid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:numColumns="1"
+                        android:paddingBottom="@dimen/activity_vertical_margin"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:visibility="gone"
+
+                        />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/location_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
+
+                        android:padding="20dp"
+                        android:paddingLeft="10dp"
+                        android:text="@string/area"
+                        android:textStyle="bold" />
+
+                    <com.nascenia.biyeta.view.MyGridView
+                        android:id="@+id/location_grid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:numColumns="1"
+                        android:paddingBottom="@dimen/activity_vertical_margin"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:visibility="gone"
+
+                        />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/search"
+                android:textColor="#ffffff" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

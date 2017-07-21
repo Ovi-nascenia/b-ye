@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <RelativeLayout
+        android:id="@+id/rl_balance_reply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/balance_reply_backGround_color">
+
+        <TextView
+            android:id="@+id/balance_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/balance_message"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:textColor="@color/message_balance"
+            android:background="@drawable/balance_message_button"/>
+
+        <TextView
+            android:id="@+id/communication_rule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/balance_message"
+            android:text="@string/communication_rule"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/communication_rule"/>
+
+        <LinearLayout
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/communication_rule"
+            android:background="#FFFFFF">
+            
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_send_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/separator"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:background="@color/total_send_request">
+
+            <TextView
+                android:id="@+id/total_send_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_send_request"
+                android:textColor="@color/request_text"/>
+            <TextView
+                android:id="@+id/total_send_request_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:hint="@string/total_send_request_value"
+                android:textStyle="bold"
+                android:textColor="@color/request_text"/>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_successfull_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/ll_send_request"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/successfull_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/successfull_request"
+                android:textColor="@color/request_text"/>
+            <TextView
+                android:id="@+id/successfull_request_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:hint="@string/successfull_request_value"
+                android:textStyle="bold"
+                android:textColor="@color/request_text"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_pending_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/ll_successfull_request"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:background="@color/total_pending_request">
+
+            <TextView
+                android:id="@+id/pending_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pending_request_text"
+                android:textColor="@color/request_text"/>
+            <TextView
+                android:id="@+id/pending_request_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:hint="@string/pending_request_value"
+                android:textStyle="bold"
+                android:textColor="@color/request_text"/>
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/money_load_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_pending_request"
+            android:layout_centerHorizontal="true"
+            android:text="@string/money_load_button"
+            android:textColor="@color/money_load_button_text"
+            android:padding="10dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/roundshapebuttton"/>
+
+
+
+    </RelativeLayout>
+
+</ScrollView>

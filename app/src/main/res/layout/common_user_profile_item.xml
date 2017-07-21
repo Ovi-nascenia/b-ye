@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:orientation="vertical"
+    android:padding="@dimen/most_small_padding">
+
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:padding="10dp"                android:scaleType="fitXY"
+                android:src="@drawable/fake_image"
+                  />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3.5"
+                android:padding="3dp"
+
+                android:weightSum="5.8"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/small_padding"
+                android:paddingRight="@dimen/most_small_padding">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:weightSum="4"
+                    android:layout_weight="1.5"
+                    android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1.98"
+
+                    android:text="User Name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/medium_textsize" />
+                    <ImageView
+                        android:visibility="invisible"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+
+
+                        android:layout_height="match_parent"
+                        android:padding="0dp"
+                        android:layout_gravity="bottom"
+                        android:src="@drawable/smile"
+
+                        android:layout_toRightOf="@+id/user_name"/>
+                    <TextView
+                        android:id="@+id/date_time"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/medium_padding"
+                        android:layout_height="match_parent"
+                        android:textColor="#440b0a0a"
+                        android:text="7 fev '17"
+                        android:gravity="right"
+                        android:textSize="8sp"
+                        android:tint="@color/colorPrimaryDark"
+                        android:layout_toRightOf="@+id/user_name"/>
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/details"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:text="cccccccccccccccccccccccccc"
+                    android:textStyle="normal" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <Button
+                        android:id="@+id/phone"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:text="@string/make_call"
+                        android:layout_marginRight="1dp"
+                        android:background="@drawable/btn_border"
+                        android:textColor="@drawable/button_selector"/>
+                    <Button
+                        android:id="@+id/message"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:text="@string/make_message"
+                        android:layout_marginLeft="1dp"
+                        android:background="@drawable/btn_border"
+                        android:textColor="@drawable/button_selector"/>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
