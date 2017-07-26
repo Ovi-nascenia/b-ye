@@ -140,7 +140,7 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
 
 
                 setConnectionRequest(biodataProfile.get(position).getId(), position);
-                Toast.makeText(context,biodataProfile.get(position).getDisplayName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context,biodataProfile.get(position).getDisplayName(), Toast.LENGTH_SHORT).show();
                 holder.call.setEnabled(false);
             }
         });

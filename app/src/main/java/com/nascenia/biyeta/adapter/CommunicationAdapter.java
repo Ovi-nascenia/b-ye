@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.analytics.Tracker;
@@ -101,7 +103,18 @@ public abstract class CommunicationAdapter extends RecyclerView.Adapter<Communic
                     // for ActivityCompat#requestPermissions for more details.
                     return;
                 } else {
-                    holder.call.getContext().startActivity(callIntent);
+                    TelephonyManager telMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                    int simState = telMgr.getSimState();
+                    if(simState==TelephonyManager.SIM_STATE_ABSENT)
+                    {
+                        Toast.makeText(context,"সিম কার্ড নেই",Toast.LENGTH_LONG).show();
+                    }
+                    else if(simState==TelephonyManager.SIM_STATE_UNKNOWN)
+                    {
+                        Toast.makeText(context,"সিম কার্ড নেই",Toast.LENGTH_LONG).show();
+                    }
+                    else
+                        holder.call.getContext().startActivity(callIntent);
                 }
                 application.setEvent("Action", "Click", "Phone Called", mTracker);
 

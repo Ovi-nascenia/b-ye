@@ -140,7 +140,8 @@ public class Profession_Adapter extends BaseAdapter {
             Search_Filter.occupationGridItemCheckedCheckBoxPositionList.add(Search_Filter.occupationId.get(position));
             Log.i("listdata", "OCCUPATION  " + Search_Filter.occupationGridItemCheckedCheckBoxPositionList.size());
 
-        } else if (this.gridItemType.equals("PROFESSION") && aBoolean) {
+        }
+        else if (this.gridItemType.equals("PROFESSION") && aBoolean) {
 
             Search_Filter.professionGridItemCheckedCheckBoxPositionList.add(Search_Filter.professionId.get(position));
             Log.i("listdata", "PROFESSION  " + Search_Filter.professionGridItemCheckedCheckBoxPositionList.size());

@@ -1,38 +1,32 @@
 {
   "project_info": {
-    "project_number": "911170071927",
-    "firebase_url": "https://b-ye-biyeta.firebaseio.com",
-    "project_id": "b-ye-biyeta",
-    "storage_bucket": "b-ye-biyeta.appspot.com"
+    "project_number": "212375740438",
+    "project_id": "biyeta-android"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:911170071927:android:4259107476a087ca",
+        "mobilesdk_app_id": "1:212375740438:android:4259107476a087ca",
         "android_client_info": {
           "package_name": "com.nascenia.biyeta"
         }
       },
       "oauth_client": [
         {
-          "client_id": "911170071927-amst4r3pc29a7i41ba4418riocdia8d2.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "911170071927-p7gihftm384bn2365h905r77rl05jrqs.apps.googleusercontent.com",
+          "client_id": "212375740438-s8to4flvjqsv9i34d614ueu709sqokun.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBhfE_rxbFEhiWn7CpXMs_mcKIaUBRTBAg"
+          "current_key": "AIzaSyD1tEHIJl4KzxQxDW7GgZIuBzU2U5NVe3k"
         }
       ],
       "services": {
         "analytics_service": {
           "status": 2,
           "analytics_property": {
-            "tracking_id": "UA-99587937-4"
+            "tracking_id": "UA-60198618-2"
           }
         },
         "appinvite_service": {
@@ -40,7 +34,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 2
+          "status": 1
         }
       }
     }

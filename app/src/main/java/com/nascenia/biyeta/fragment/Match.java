@@ -370,7 +370,7 @@ public class Match extends Fragment implements View.OnClickListener {
                             profileArrayList = biodataResponse.getProfiles();
 
 
-                            biodataListAdapter = new BiodataProfileAdapter(getActivity(), profileArrayList, R.layout.biodata_layout_item, application, mTracker) {
+                            biodataListAdapter = new BiodataProfileAdapter(getActivity().getBaseContext(), profileArrayList, R.layout.biodata_layout_item, application, mTracker) {
                                 @Override
                                 public void setConnectionRequest(int id, int position) {
 

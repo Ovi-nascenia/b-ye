@@ -3,6 +3,7 @@ package com.nascenia.biyeta.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -20,6 +21,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -950,7 +952,17 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                 return;
             }
             application.setEvent("Action", "Click", "Phone Called", mTracker);
-            startActivity(intent);
+            TelephonyManager telMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+            int simState = telMgr.getSimState();
+            if(simState==TelephonyManager.SIM_STATE_ABSENT) {
+                Toast.makeText(this, "সিম কার্ড নেই", Toast.LENGTH_LONG).show();
+            }
+            else if(simState==TelephonyManager.SIM_STATE_UNKNOWN)
+            {
+                Toast.makeText(this,"সিম কার্ড নেই",Toast.LENGTH_LONG).show();
+            }
+            else
+                startActivity(intent);
         }
 
 

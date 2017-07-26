@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -368,7 +369,18 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                             // for ActivityCompat#requestPermissions for more details.
                             return;
                         } else {
-                            holder.call.getContext().startActivity(callIntent);
+                            TelephonyManager telMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                            int simState = telMgr.getSimState();
+                            if(simState==TelephonyManager.SIM_STATE_ABSENT)
+                            {
+                                Toast.makeText(context,"সিম কার্ড নেই",Toast.LENGTH_LONG).show();
+                            }
+                            else if(simState==TelephonyManager.SIM_STATE_UNKNOWN)
+                            {
+                                Toast.makeText(context,"সিম কার্ড নেই",Toast.LENGTH_LONG).show();
+                            }
+                            else
+                                holder.call.getContext().startActivity(callIntent);
                         }
                         application.setEvent("Action", "Click", "Phone Called", mTracker);
                     }
@@ -381,8 +393,8 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                         String currentUserSignedIn = sharePref.get_data("user_id");
                         Intent in = new Intent(holder.imageFav.getContext(), InboxSingleChat.class);
                         Bundle bundle = new Bundle();
-                        bundle.putInt("sender_id", Integer.parseInt(currentUserSignedIn));
-                        bundle.putInt("receiver_id", profile.getId());
+                        bundle.putInt("sender_id", profile.getRequestStatus().getSender());
+                        bundle.putInt("receiver_id", profile.getRequestStatus().getReceiver());
                         bundle.putInt("current_user", Integer.parseInt(currentUserSignedIn));
                         bundle.putString("userName", profile.getDisplayName());
                         in.putExtras(bundle);
@@ -439,7 +451,18 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                             // for ActivityCompat#requestPermissions for more details.
                             return;
                         } else {
-                            holder.call.getContext().startActivity(callIntent);
+                            TelephonyManager telMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                            int simState = telMgr.getSimState();
+                            if(simState==TelephonyManager.SIM_STATE_ABSENT)
+                            {
+                                Toast.makeText(context,"সিম কার্ড নেই",Toast.LENGTH_LONG).show();
+                            }
+                            else if(simState==TelephonyManager.SIM_STATE_UNKNOWN)
+                            {
+                                Toast.makeText(context,"সিম কার্ড নেই",Toast.LENGTH_LONG).show();
+                            }
+                            else
+                                holder.call.getContext().startActivity(callIntent);
                         }
                         application.setEvent("Action", "Click", "Phone Called", mTracker);
                     }
@@ -452,8 +475,8 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                         String currentUserSignedIn = sharePref.get_data("user_id");
                         Intent in = new Intent(holder.imageFav.getContext(), InboxSingleChat.class);
                         Bundle bundle = new Bundle();
-                        bundle.putInt("sender_id", Integer.parseInt(currentUserSignedIn));
-                        bundle.putInt("receiver_id", profile.getRequestStatus().getCommunicationRequestId());
+                        bundle.putInt("sender_id", profile.getRequestStatus().getSender());
+                        bundle.putInt("receiver_id", profile.getRequestStatus().getReceiver());
                         bundle.putInt("current_user", Integer.parseInt(currentUserSignedIn));
                         bundle.putString("userName", profile.getDisplayName());
                         in.putExtras(bundle);

@@ -128,13 +128,14 @@ public class InboxSingleChat extends CustomActionBarActivity {
         findViewById(R.id.btnSend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                messageText = editTextMesaageField.getText().toString();
+                messageText = editTextMesaageField.getText().toString().trim();
 
 
                 Log.e("InBoxText", editTextMesaageField.getText().toString());
                 TempMessage message = new TempMessage(editTextMesaageField.getText().toString(), "3-2-2017");
                 editTextMesaageField.setText("");
-                new SendMessage().execute();
+                if(!messageText.equalsIgnoreCase(""))
+                    new SendMessage().execute();
 
                 application.setEvent("Action", "Click", "Message sent to " + userName, mTracker);
 

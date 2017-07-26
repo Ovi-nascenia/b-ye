@@ -80,7 +80,7 @@ public class FavoriteActivity extends CustomActionBarActivity {
         .build());
 
 //        actionButton= (Button) findViewById(R.id.request_biodata_fav);
-        new LoadFavoriteDataConnection().execute("http://test.biyeta.com/api/v1/favorites");
+        new LoadFavoriteDataConnection().execute(Utils.Base_URL+"/api/v1/favorites");
 
     }
 

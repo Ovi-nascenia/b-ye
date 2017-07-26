@@ -110,7 +110,7 @@ public class Search extends Fragment {
 
                 if (comeFromSearch == 1) {
                     searchFilterPage++;
-                    if (searchFilterPage < totalFilterPage)
+                    if (searchFilterPage <= totalFilterPage)
                         if (Utils.isOnline(getContext())) {
                             snackbar = Snackbar
                                     .make(recyclerView, "Loading..", Snackbar.LENGTH_INDEFINITE);
@@ -128,6 +128,8 @@ public class Search extends Fragment {
                             progressBarLayout.setVisibility(View.GONE);
                             Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
                         }
+
+
                 }
                 flag++;
                 if (flag <= totalPageNumber && Search_Filter.reponse.equals("")) {
@@ -383,7 +385,7 @@ public class Search extends Fragment {
 
             if (comeFromSearch == 1) {
                 Log.e("ComeFromSearch", "ComefromSearch");
-                if (searchFilterPage < totalFilterPage) {
+                if (searchFilterPage <= totalFilterPage) {
                     Log.e("fuck", Utils.Base_URL + "/api/v1/search/filtered-results?page=" + searchFilterPage);
                     MediaType JSON
                             = MediaType.parse("application/json; charset=utf-8");

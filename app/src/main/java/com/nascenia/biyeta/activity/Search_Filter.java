@@ -627,6 +627,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
                 else {
                     Search.totalFilterPage=jsonObject.getInt("total_page");
                     Search.comeFromSearch=1;
+                    Search.searchFilterPage=1;
                     total_page=jsonObject.getInt("total_page");
                     Search.jsonObjects.add(jsonObject);
                     flag++;
@@ -890,7 +891,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
             for (int i = 0; i < new JSONArray(professional_group).length(); i++) {
 
                 int num = Integer.parseInt(String.valueOf(new JSONArray(professional_group).get(i)));
-                professionId.add(num);
+                //professionId.add(num);
                 professionSelected.add(num + "");
                 professionGridItemCheckedCheckBoxPositionList.add(num);
             }
