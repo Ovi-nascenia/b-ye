@@ -218,6 +218,15 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         finish();
     }
 
+    public void reload() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
+
     private void initView() {
 
         nestedScrollView = (NestedScrollView) findViewById(R.id.nested_scrollview);
@@ -900,6 +909,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     "",
                     "",
                     Utils.MESSAGE_CALL_BLOCK);
+
+            reload();
 
             application.setEvent("Action", "Click", "Communication Request Accepted", mTracker);
 

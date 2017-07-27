@@ -3,6 +3,8 @@ package com.nascenia.biyeta.activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import com.google.gson.Gson;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
+import com.nascenia.biyeta.adapter.ViewPagerAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.UserProfileChild;
@@ -110,6 +113,14 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
     private SharePref sharePref;
 
+
+    private ViewPager viewPager;
+    private PagerAdapter adapter;
+    int[] image;
+    String[] proPics = null;
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -193,6 +204,24 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
                         }
                     });
+                /*
+                    image = new int[] { R.drawable.accept_icon, R.drawable.accept_icon,
+                            R.drawable.accept_icon};
+
+                    viewPager = (ViewPager) findViewById(R.id.pager);
+
+                    if (userProfile.getProfile().getPersonalInformation().getImage().getOther() != null){
+                        userProfileImage.setVisibility(View.INVISIBLE);
+                        adapter = new ViewPagerAdapter(OwnUserProfileActivity.this,
+                                userProfile.getProfile().getPersonalInformation().getImage().getOther());
+                        viewPager.setAdapter(adapter);
+
+                    }
+                    else{
+                        userProfileImage.setVisibility(View.VISIBLE);
+                    }
+                */
+
                 } catch (Exception e) {
                     Log.i("errormsg", e.getMessage().toString() + " " + res);
                     e.printStackTrace();
