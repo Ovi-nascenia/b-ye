@@ -27,6 +27,9 @@ public class Profile {
     @SerializedName("display_name")
     @Expose
     private String displayName;
+    @SerializedName("real_name")
+    @Expose
+    private String realName;
     @SerializedName("occupation")
     @Expose
     private String occupation;
@@ -103,6 +106,14 @@ public class Profile {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getOccupation() {

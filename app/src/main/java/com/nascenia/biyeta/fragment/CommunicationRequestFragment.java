@@ -580,10 +580,12 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
             try {
                 JSONObject headObj = new JSONObject(s);
+                if(getActivity()!=null){
+                    Toast.makeText(getActivity(),
+                            headObj.getJSONArray("message").getJSONObject(0).getString("detail"),
+                            Toast.LENGTH_LONG).show();
+                }
 
-                Toast.makeText(getActivity(),
-                        headObj.getJSONArray("message").getJSONObject(0).getString("detail"),
-                        Toast.LENGTH_LONG).show();
 
 
             } catch (JSONException e) {

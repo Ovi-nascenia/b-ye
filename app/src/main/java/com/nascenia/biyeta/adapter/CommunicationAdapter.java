@@ -70,8 +70,11 @@ public abstract class CommunicationAdapter extends RecyclerView.Adapter<Communic
     public void onBindViewHolder(final CommunicationAdapter.ViewHolder holder, final int position) {
 
         final Profile profile = communicationProfile.get(position);
+        if(profile.getRealName()==null)
+            holder.userName.setText(profile.getDisplayName());
+        else
+            holder.userName.setText(profile.getRealName());
 
-        holder.userName.setText(profile.getDisplayName());
         holder.details.setText(Utils.convertEnglishDigittoBangla(profile.getAge()) + " বছর" + ", " +
                 Utils.convertEnglishDigittoBangla(profile.getHeightFt()) + "'" +
                 Utils.convertEnglishDigittoBangla(profile.getHeightInc()) + "''" + ", " + profile.getProfessionalGroup() + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());

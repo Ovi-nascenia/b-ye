@@ -1,17 +1,22 @@
 package com.nascenia.biyeta.activity;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,7 +28,6 @@ import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
 import com.nascenia.biyeta.adapter.ViewPagerAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
-import com.nascenia.biyeta.model.GeneralInformation;
 import com.nascenia.biyeta.model.UserProfileChild;
 import com.nascenia.biyeta.model.UserProfileParent;
 import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
@@ -45,7 +49,7 @@ import static com.nascenia.biyeta.view.SendRequestFragmentView.checkNullField;
  */
 
 public class OwnUserProfileActivity extends AppCompatActivity {
-
+    int page_position = 0;
     private Tracker mTracker;
     private AnalyticsApplication application;
 
@@ -58,6 +62,9 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     private RecyclerView childRecyclerView;
     private RecyclerView otherRelativeInfoRecyclerView;
     private RecyclerView otherInformationRecyclerView;
+    private LinearLayout sliderDotsPanel;
+    private  int dotscount;
+    private ImageView[] dots;
 
     private UserProfile userProfile;
 
@@ -187,6 +194,86 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             if (userProfile.getProfile().getPersonalInformation().getAboutYourself() != null) {
                                 userProfileDescriptionText.setText(userProfile.getProfile().
                                         getPersonalInformation().getAboutYourself());
+
+
+                                if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
+                                    if(userProfile.getProfile().getPersonalInformation().getImage().getOther().size() >1) {
+
+                                        dotscount = userProfile.getProfile().getPersonalInformation().getImage().getOther().size();
+                                        dots = new ImageView[dotscount];
+
+                                        for (int i = 0; i < dotscount; i++) {
+                                            dots[i] = new ImageView(getApplicationContext());
+                                            if (i == 0)
+                                                dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.selected_dot));
+                                            else
+                                                dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.default_dot));
+                                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                            params.setMargins(6, 4, 6, 4);
+                                            sliderDotsPanel.addView(dots[i], params);
+                                            dots[i].getLayoutParams().height = 16;
+                                            dots[i].getLayoutParams().width = 16;
+                                        }
+
+                                        if (viewPager != null){
+                                            viewPager.addOnPageChangeListener(
+                                                    new ViewPager.OnPageChangeListener() {
+                                                        private int fromPosition = 0, previousState = 0;
+
+                                                        @Override
+                                                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                                                            fromPosition = position;
+                                                        }
+
+                                                        @Override
+                                                        public void onPageSelected(int position) {
+                                                            for (int i = 0; i < dotscount; i++) {
+                                                                dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.default_dot));
+                                                            }
+                                                            dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.selected_dot));
+
+                                                        }
+
+                                                        @Override
+                                                        public void onPageScrollStateChanged(int state) {
+                                                            // if(fromPosition+1==dotscount && state == 1)
+                                                            // {
+                                                            //     viewPager.setCurrentItem(0,false);
+                                                            //}
+
+                                                        /*if (state == ViewPager.SCROLL_STATE_IDLE) {
+                                                            int pageCount = dotscount;
+
+                                                            if (fromPosition == 0){
+                                                                viewPager.setCurrentItem(pageCount-1,false);
+                                                            } else if (fromPosition == pageCount-1){
+                                                                viewPager.setCurrentItem(1,false);
+                                                            }
+                                                        }*/
+
+
+                                                            if (state == 0 && previousState != 2 && fromPosition == dotscount - 1) {
+                                                                viewPager.setCurrentItem(0, true);
+                                                                return;
+                                                            } else if (state == 0 && previousState != 2 && fromPosition == 0) {
+                                                                viewPager.setCurrentItem(dotscount - 1, true);
+                                                                return;
+                                                            }
+
+                                                            previousState = state;
+
+                                                        }
+
+                                                    }
+                                            );
+                                    }
+
+                                    }
+
+                                }
+
+
+
                             }
 
                             userNameTextView.setText(getIntent().getExtras().getString("user_name"));
@@ -204,13 +291,12 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
                         }
                     });
-                /*
+
                     image = new int[] { R.drawable.accept_icon, R.drawable.accept_icon,
                             R.drawable.accept_icon};
 
                     viewPager = (ViewPager) findViewById(R.id.pager);
-
-                    if (userProfile.getProfile().getPersonalInformation().getImage().getOther() != null){
+                    if (userProfile.getProfile().getPersonalInformation().getImage().getOther().size() > 1) {
                         userProfileImage.setVisibility(View.INVISIBLE);
                         adapter = new ViewPagerAdapter(OwnUserProfileActivity.this,
                                 userProfile.getProfile().getPersonalInformation().getImage().getOther());
@@ -220,7 +306,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     else{
                         userProfileImage.setVisibility(View.VISIBLE);
                     }
-                */
+
+
+
+
+
 
                 } catch (Exception e) {
                     Log.i("errormsg", e.getMessage().toString() + " " + res);
@@ -229,11 +319,18 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 }
 
 
+
+
             }
+
+
         }).start();
 
 
+
     }
+
+
 
     private void setUserOwnImage(UserProfile userProfile) {
         //Log.i("ownprofileimage", userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture().toString());
@@ -1022,6 +1119,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        sliderDotsPanel = (LinearLayout) findViewById(R.id.sliderDots);
 
 
        /* educationCardView = (CardView) findViewById(R.id.education_cardview);

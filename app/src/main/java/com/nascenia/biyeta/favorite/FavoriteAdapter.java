@@ -87,7 +87,10 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
         holder.connectoion.setVisibility(View.GONE);
         holder.status.setVisibility(View.GONE);
         Log.d("Fav", "onBindViewHolder " + position);
+
         holder.userNameFav.setText(profile.getDisplayName());
+        if(profile.getRealName()!=null)
+            holder.userNameFav.setText(profile.getRealName());
         holder.detailsFav.setText(profile.getAge() + " বছর" + ", " + profile.getHeightFt() + "'" +
                 profile.getHeightInc() + "''" + ", " + profile.getOccupation() + ", " + profile.getProfessionalGroup()
                 + ", " + profile.getSkinColor() + ", " + profile.getHealth() + ", " + profile.getLocation());

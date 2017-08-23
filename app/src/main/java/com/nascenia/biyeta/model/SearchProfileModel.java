@@ -8,21 +8,20 @@ public class SearchProfileModel {
 
     private String id;
     private String age;
-    String height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, image, health;
-    public SearchProfileModel(String id, String age, String height_ft, String height_inc, String display_name, String occupation, String professional_group, String skin_color, String location, String health, String image) {
+    String height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, image, health,real_name;
+    public SearchProfileModel(String id, String age, String height_ft, String height_inc, String display_name, String occupation, String professional_group, String skin_color, String location, String health, String image,String real_name) {
         this.id = id;
         this.age = age;
         this.height_ft = height_ft;
         this.height_inc = height_inc;
         this.display_name = display_name;
+        this.real_name = real_name;
         this.occupation = occupation;
         this.professional_group = professional_group;
         this.skin_color = skin_color;
         this.image = image;
         this.location = location;
         this.health = health;
-
-
     }
 
     public String getHealth() {
@@ -53,10 +52,16 @@ public class SearchProfileModel {
         return display_name;
     }
 
+    public String getReal_name() {
+        return real_name;
+    }
+
 
     public String getHeight_inc() {
         return height_inc;
     }
+
+
 
 
     public String getOccupation() {

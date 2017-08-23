@@ -362,41 +362,44 @@ public class InboxSingleChat extends CustomActionBarActivity {
 
             Gson gson = new Gson();
             try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.has("no_results")) {
+                if(s!=null) {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.has("no_results")) {
 
-                } else {
-                    try {
-
-
-                        InputStream is = new ByteArrayInputStream(s.getBytes());
-                        InputStreamReader isr = new InputStreamReader(is);
-                        response = gson.fromJson(isr, ChatHead.class);
-
-                        if (null == listMessage || listMessage.size() == 0) {
-                            new LoadMessageThread().execute();
+                    } else {
+                        try {
 
 
-                        }
+                            InputStream is = new ByteArrayInputStream(s.getBytes());
+                            InputStreamReader isr = new InputStreamReader(is);
+                            response = gson.fromJson(isr, ChatHead.class);
 
-                        for (int i = response.getMessages().size() - 1; i >= 0; i--) {
-                            if (!messageId.contains(response.getMessages().get(i).getId())) {
-                                messageId.add(response.getMessages().get(i).getId());
-                                Message message = response.getMessages().get(i);
-                                listMessage.add(message);
-                                inboxListAdapter.notifyDataSetChanged();
+                            if (null == listMessage || listMessage.size() == 0) {
+                                new LoadMessageThread().execute();
+
+
                             }
-                        }
-                    } catch (Exception e) {
+
+                            for (int i = response.getMessages().size() - 1; i >= 0; i--) {
+                                if (!messageId.contains(response.getMessages().get(i).getId())) {
+                                    messageId.add(response.getMessages().get(i).getId());
+                                    Message message = response.getMessages().get(i);
+                                    listMessage.add(message);
+                                    inboxListAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        } catch (Exception e) {
 
 
-                        if (null == listMessage || listMessage.size() == 0) {
-                            new LoadMessageThread().execute();
-                        }
-                        //   Toast.makeText(InboxSingleChat.this, "Server Disconnected", Toast.LENGTH_SHORT).show();
-                        //  countDownTimer.cancel();
+                            if (null == listMessage || listMessage.size() == 0) {
+                                new LoadMessageThread().execute();
+                            }
+                            //   Toast.makeText(InboxSingleChat.this, "Server Disconnected", Toast.LENGTH_SHORT).show();
+                            //  countDownTimer.cancel();
 //                        application.trackEception(e, "FetchMessage/onPostExecute", "InboxSingleChat", e.getMessage().toString(), mTracker);
+                        }
                     }
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

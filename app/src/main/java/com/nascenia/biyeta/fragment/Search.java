@@ -1,5 +1,7 @@
 package com.nascenia.biyeta.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
@@ -194,6 +197,7 @@ public class Search extends Fragment {
                         if (Utils.isOnline(getActivity())) {
                             Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
                             intent.putExtra("id", profileList.get(position).getId());
+
                             intent.putExtra("user_name",
                                     profileList.get(position).getDisplay_name());
                             intent.putExtra("PROFILE_EDIT_OPTION", false);
@@ -297,7 +301,8 @@ public class Search extends Fragment {
                     String health = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("health");
                     String location = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
                     String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
-                    SearchProfileModel profile = new SearchProfileModel(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image);
+                    String real_name = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("real_name");
+                    SearchProfileModel profile = new SearchProfileModel(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image,real_name);
 
                     profileList.add(profile);
                     mProfile_adapter.notifyDataSetChanged();
@@ -316,6 +321,9 @@ public class Search extends Fragment {
 
     }
 
+    SharePref sharePref = null;
+    String token;
+
     //fetch data from
     class GetData extends AsyncTask<String, String, String> {
         @Override
@@ -327,7 +335,8 @@ public class Search extends Fragment {
                 if (snackbar != null && snackbar.isShown()) {
                     snackbar.dismiss();
                 }
-                Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
+                if(getContext()!=null)
+                    Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
             } else {
 
                 Log.e("SearchResponse", res);
@@ -345,8 +354,6 @@ public class Search extends Fragment {
                         recyclerView.setVisibility(View.GONE);
                         emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
                     } else {
-
-
                         totalPageNumber = jsonObject.getInt("total_page");
                         loadDataFromResponse(jsonObject);
                     }
@@ -371,7 +378,6 @@ public class Search extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-
         }
 
         @Override
@@ -379,8 +385,10 @@ public class Search extends Fragment {
 
             //get data from url
             Response response;
-            SharePref sharePref = new SharePref(getContext());
-            String token = sharePref.get_data("token");
+            Context context = getContext();
+            sharePref = new SharePref(context);
+            if(context!=null)
+                token = sharePref.get_data("token");
             Request request = null;
 
             if (comeFromSearch == 1) {

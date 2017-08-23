@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,7 @@ import com.google.gson.Gson;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
 import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.adapter.ViewPagerAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.fragment.ProfileImageFirstFragment;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
@@ -68,9 +70,15 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     private Tracker mTracker;
     private AnalyticsApplication application;
     private Toolbar toolbar;
+    private ViewPager old;
     private ViewPager viewPager;
     public static String message;
+    private PagerAdapter adapter;
 
+
+    private LinearLayout sliderDotsPanel;
+    private  int dotscount;
+    private ImageView[] dots;
 
     private ImageView indicatorImage1, indicatorImage2, indicatorImage3, userProfileImage,
             cancelImageView, acceptImageView, emoIconImageView, favoriteImageView,
@@ -132,8 +140,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             editUserProfileImageView.setVisibility(View.VISIBLE);
         }*/
 
-        viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        old.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        old.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -203,14 +211,19 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     @Override
     public void finish() {
-        if (!userProfile.getProfile().isIsFavorite()) {
-            Intent intent = new Intent();
+        if(userProfile!=null)
+        {
+            if (!userProfile.getProfile().isIsFavorite()) {
+                Intent intent = new Intent();
 
-            intent.putExtra("returnId", favoriteId);
-            Log.d("fav_id", favoriteId + "");
-            setResult(Activity.RESULT_OK, intent);
+                intent.putExtra("returnId", favoriteId);
+                Log.d("fav_id", favoriteId + "");
+                setResult(Activity.RESULT_OK, intent);
 
+            }
         }
+
+
         super.finish();
     }
 
@@ -228,6 +241,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     }
 
     private void initView() {
+
+        sliderDotsPanel = (LinearLayout) findViewById(R.id.sliderDots);
 
         nestedScrollView = (NestedScrollView) findViewById(R.id.nested_scrollview);
 
@@ -324,6 +339,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                 } else {
 
+
+
                     NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(NewUserProfileActivity.this,
                             Utils.UNFAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
@@ -340,7 +357,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                    /* userProfile.getProfile().setIsFavorite(false);
                     favoriteImageView.setImageResource(R.drawable.favorite);*/
-
                     application.setEvent("Action", "Click", "Unfavorite Clicked", mTracker);
                 }
 
@@ -352,7 +368,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         fbCheckIconImageView = (ImageView) findViewById(R.id.fb_check_icon);
         mailCheckIconImageView = (ImageView) findViewById(R.id.mail_check_icon);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        old = (ViewPager) findViewById(R.id.viewpager);
         generalInfoRecyclerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
         generalInfoRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
         matchUserChoiceRecyclerView = (RecyclerView) findViewById(R.id.match_user_choice_recyclerView);
@@ -448,10 +464,73 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             }
 
-                            if (userProfile.getProfile().getPersonalInformation().getDisplayName() != null) {
+                            else if (userProfile.getProfile().getPersonalInformation().getDisplayName() != null) {
 
                                 //favoriteImageView.setEnabled(false);
-                                userNameTextView.setText(userProfile.getProfile().getPersonalInformation().getDisplayName());
+                                if(userProfile.getProfile().getPersonalInformation().getRealName()==null){
+
+                                    userNameTextView.setText(userProfile.getProfile().getPersonalInformation().getDisplayName());
+
+                                }
+
+                                else if(userProfile.getProfile().getPersonalInformation().getRealName()!=null)
+                                    userNameTextView.setText(userProfile.getProfile().getPersonalInformation().getRealName());
+                                if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
+                                    if (userProfile.getProfile().getPersonalInformation().getImage().getOther().size() > 1) {
+                                        dotscount = userProfile.getProfile().getPersonalInformation().getImage().getOther().size();
+                                        dots = new ImageView[dotscount];
+
+                                        for (int i = 0; i < dotscount; i++) {
+                                            dots[i] = new ImageView(getApplicationContext());
+                                            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.default_dot));
+                                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                            params.setMargins(6, 4, 6, 4);
+                                            sliderDotsPanel.addView(dots[i], params);
+                                            dots[i].getLayoutParams().height = 16;
+                                            dots[i].getLayoutParams().width = 16;
+                                        }
+
+                                        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.selected_dot));
+                                        if(viewPager!=null)
+                                        {
+                                            viewPager.addOnPageChangeListener(
+
+                                                    new ViewPager.OnPageChangeListener() {
+                                                        private int fromPosition = 0,previousState=0;
+                                                        @Override
+                                                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                                                            fromPosition = position;
+                                                        }
+
+                                                        @Override
+                                                        public void onPageSelected(int position) {
+                                                            for (int i = 0; i < dotscount; i++) {
+                                                                dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.default_dot));
+                                                            }
+                                                            dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.selected_dot));
+                                                        }
+
+                                                        @Override
+                                                        public void onPageScrollStateChanged(int state) {
+                                                            if(state==0 && previousState!=2&&fromPosition==dotscount-1)
+                                                            {
+                                                                viewPager.setCurrentItem(0,true);
+                                                                return;
+                                                            }
+                                                            else if(state==0 && previousState!=2&&fromPosition==0)
+                                                            {
+                                                                viewPager.setCurrentItem(dotscount-1,true);
+                                                                return;
+                                                            }
+
+                                                            previousState = state;
+                                                        }
+                                                    }
+                                            );
+                                        }
+
+                                    }
+                                }
 
                             }
 
@@ -476,7 +555,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
                             if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
-
+//
 
                                 Picasso.with(NewUserProfileActivity.this)
                                         .load(Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture())
@@ -842,6 +921,25 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     });
 
 
+
+
+                //added by masum
+                    viewPager = (ViewPager) findViewById(R.id.pager);
+
+                    if (userProfile.getProfile().getPersonalInformation().getImage().getOther().size()>1){
+                        userProfileImage.setVisibility(View.INVISIBLE);
+                        adapter = new ViewPagerAdapter(NewUserProfileActivity.this,
+                                userProfile.getProfile().getPersonalInformation().getImage().getOther());
+                        viewPager.setAdapter(adapter);
+
+                    }
+                    else{
+                        userProfileImage.setVisibility(View.VISIBLE);
+                    }
+
+                ////
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
 //                    application.trackEception(e, "fetchUserProfileDetails", "NewUserProfileActivity", e.getMessage().toString(), mTracker);
@@ -1054,9 +1152,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            if (progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
+
 
             try {
 
@@ -1082,6 +1178,12 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                             Toast.makeText(getApplicationContext(),
                                     jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"),
                                     Toast.LENGTH_LONG).show();
+
+                            if(jsonObject.getJSONArray("message").getJSONObject(0).getString("profile_request_already_rejected")!=null||jsonObject.getJSONArray("message").getJSONObject(0).getString("profile_request_already_accepted")!=null)
+                            {
+                                finish();
+                                startActivity(getIntent());
+                            }
 
                         }
 
@@ -1112,6 +1214,20 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             } catch (Exception e) {
                 e.printStackTrace();
 //                application.trackEception(e, "SendRequestTask/onPostExecute", "NewUserProfileActivity", e.getMessage().toString(), mTracker);
+            }
+
+
+
+            try {
+                if ((progressDialog != null) && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+            } catch (final IllegalArgumentException e) {
+                // Handle or log or ignore
+            } catch (final Exception e) {
+                // Handle or log or ignore
+            } finally {
+                progressDialog = null;
             }
 
         }

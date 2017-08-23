@@ -47,7 +47,7 @@ public class SplashScreen extends AppCompatActivity {
         client = new OkHttpClient();
         //firebase token sender code
 
-
+Utils.calculateHashKey(this,"com.nascenia.biyeta");
         /*Fabric.with(this, new Crashlytics());
 
         throw new NullPointerException();*/
@@ -69,9 +69,10 @@ public class SplashScreen extends AppCompatActivity {
                 //
                 SharePref sharePref = new SharePref(SplashScreen.this);
 
+                Log.e("Token : ", sharePref.get_data("token"));
                 /// login  && mobile  verification unsuccessful
                 ///or the first time appp open
-                if (sharePref.get_data("token").equals("key") ||(sharePref.get_data("mobile_verified").equals("false")||sharePref.get_data("mobile_verified").equals("key"))) {
+                if (sharePref.get_data("token").equals("key")||sharePref.get_data("token").equals(null) ||(sharePref.get_data("mobile_verified").equals("false")||sharePref.get_data("mobile_verified").equals("key"))) {
 
                    //
                     Intent loginIntent = new Intent(SplashScreen.this, Login.class);

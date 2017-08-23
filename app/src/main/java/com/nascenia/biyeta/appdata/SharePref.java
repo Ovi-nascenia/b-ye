@@ -1,5 +1,6 @@
 package com.nascenia.biyeta.appdata;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -7,15 +8,17 @@ import android.content.SharedPreferences;
  * Created by god father on 1/24/2017.
  */
 
-public class SharePref {
+public class SharePref extends Application {
 
 
     public static final String USER_PREFERENCE="user_preference";
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences = null;
 
     public SharePref(Context context)
     {
-        sharedPreferences  = context.getSharedPreferences(USER_PREFERENCE, Context.MODE_PRIVATE);
+        if(context!=null)
+            sharedPreferences  = context.getSharedPreferences(USER_PREFERENCE, Context.MODE_PRIVATE);
+
     }
 
 
@@ -29,7 +32,7 @@ public class SharePref {
 
    public String get_data(String key)
     {
-        return sharedPreferences.getString(key,"key");
+            return sharedPreferences.getString(key,"key");
 
     }
 }

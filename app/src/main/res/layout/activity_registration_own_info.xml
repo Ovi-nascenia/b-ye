@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e9ebed">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:clipToPadding="false"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="@color/white"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/small_padding">
+
+
+            <ImageView
+                android:id="@+id/backPreviousActivityImage"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="@dimen/small_image_size"
+                android:onClick="backBtnAction"
+                android:src="@drawable/red_back_arrow"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/own_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:lines="2"
+                android:text="@string/own_info"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/medium_textsize"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/likeImage"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/small_margin"
+                android:src="@drawable/grey_fav"
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <TextView
+            android:id="@+id/religion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ধর্ম"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            />
+        <LinearLayout
+            android:id="@+id/castReligion"
+            android:layout_below="@id/religion"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/religion_cast_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="ধর্ম ও বর্ণ"
+                android:textSize="18dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:id="@+id/down_arrow"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/textOwn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/castReligion"
+            android:text="আপনার নিজের সম্পর্কে কিছু লিখুন*"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            />
+
+        <EditText
+            android:id="@+id/edit_text_own"
+            android:layout_below="@id/textOwn"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="15dp"
+            android:background="@color/white"
+            android:hint="@string/own_info_edit_text"
+            android:gravity="top"/>
+        <TextView
+            android:id="@+id/label"
+            android:layout_below="@id/edit_text_own"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginRight="15dp"
+            android:text="সর্বনিম্ন ৫০ অক্ষর, সর্বোচ্চ ৪০০০ অক্ষরের ভিতর"
+            android:gravity="right"/>
+        <Button
+            android:id="@+id/next"
+            android:layout_below="@id/label"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            android:layout_margin="15dp"
+            android:text="পরবর্তী ধাপ"
+            android:textColor="@color/white"
+            android:textSize="25dp"/>
+
+    </RelativeLayout>
+
+
+
+
+
+
+</RelativeLayout>

@@ -21,6 +21,9 @@ public class LoginInformation_ {
     @SerializedName("display_name")
     @Expose
     private String displayName;
+    @SerializedName("real_name")
+    @Expose
+    private String realName;
     @SerializedName("mobile_verified")
     @Expose
     private Boolean mobileVerified;
@@ -76,6 +79,14 @@ public class LoginInformation_ {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String displayName) {
+        this.realName = realName;
     }
 
     public Boolean getMobileVerified() {

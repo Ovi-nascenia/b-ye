@@ -1,5 +1,6 @@
 package com.nascenia.biyeta.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -241,14 +242,16 @@ public class Match extends Fragment implements View.OnClickListener {
                         InputStreamReader isr = new InputStreamReader(is);
                         communicationProfileResponse = gson.fromJson(isr, CommunicationProfile.class);
                         responseCommunication.add(communicationProfileResponse);
-                        toalConnectionPage = communicationProfileResponse.getTotalPage();
+                        if(communicationProfileResponse.getTotalPage()!=null)
+                            toalConnectionPage = communicationProfileResponse.getTotalPage();
 
                         if (connectionPageTrack == 1) {
-                            toalConnectionPage = communicationProfileResponse.getTotalPage();
+                            if(communicationProfileResponse.getTotalPage()!=null)
+                                toalConnectionPage = communicationProfileResponse.getTotalPage();
                             profileCommunicationList = communicationProfileResponse.getProfiles();
 
-
-                            communicationAdapter = new CommunicationAdapter(getActivity(), profileCommunicationList, R.layout.common_user_profile_item, communicationProfileResponse.getCurrentUserSignedIn(),
+                            if(getActivity()!=null)
+                                communicationAdapter = new CommunicationAdapter(getActivity(), profileCommunicationList, R.layout.common_user_profile_item, communicationProfileResponse.getCurrentUserSignedIn(),
                                     application, mTracker) {
                                 @Override
                                 public void LoadData() {
@@ -304,8 +307,15 @@ public class Match extends Fragment implements View.OnClickListener {
         @Override
         protected String doInBackground(String... strings) {
             Response response;
-            SharePref sharePref = new SharePref(getContext());
-            String token = sharePref.get_data("token");
+            Context context = getContext();
+            SharePref sharePref;
+            String token = null;
+            if(context!=null)
+            {
+                sharePref = new SharePref(context);
+                token = sharePref.get_data("token");
+            }
+
             Request request = null;
 
             request = new Request.Builder()
@@ -333,7 +343,8 @@ public class Match extends Fragment implements View.OnClickListener {
             super.onPostExecute(s);
             progressBar.setVisibility(View.GONE);
             if (s == null) {
-                Utils.ShowInternetConnectionError(getContext());
+                if(getContext()!=null)
+                    Utils.ShowInternetConnectionError(getContext());
             } else {
                 Log.e("BiodataResponse", s);
 
@@ -354,8 +365,8 @@ public class Match extends Fragment implements View.OnClickListener {
                         InputStreamReader isr = new InputStreamReader(is);
                         biodataResponse = gson.fromJson(isr, BiodataProfile.class);
                         responseObject.add(biodataResponse);
-
-                        toalBiodataPage = biodataResponse.getTotalPage();
+                        if(biodataResponse.getTotalPage()!=null)
+                            toalBiodataPage = biodataResponse.getTotalPage();
 
                         if (biodataPageTrack > 1 && biodataPageTrack <= toalBiodataPage) {
                             snackbar.dismiss();
@@ -369,8 +380,8 @@ public class Match extends Fragment implements View.OnClickListener {
                         } else if (biodataPageTrack == 1) {
                             profileArrayList = biodataResponse.getProfiles();
 
-
-                            biodataListAdapter = new BiodataProfileAdapter(getActivity().getBaseContext(), profileArrayList, R.layout.biodata_layout_item, application, mTracker) {
+                            if(getActivity()!=null)
+                                biodataListAdapter = new BiodataProfileAdapter(getActivity().getBaseContext(), profileArrayList, R.layout.biodata_layout_item, application, mTracker) {
                                 @Override
                                 public void setConnectionRequest(int id, int position) {
 
@@ -424,8 +435,12 @@ public class Match extends Fragment implements View.OnClickListener {
         @Override
         protected String doInBackground(String... strings) {
             Response response;
-            SharePref sharePref = new SharePref(getContext());
-            String token = sharePref.get_data("token");
+            SharePref sharePref;
+            String token = null;
+            Context context = getContext();
+                sharePref = new SharePref(context);
+            if(context!=null)
+                token = sharePref.get_data("token");
             Request request = null;
 
             request = new Request.Builder()

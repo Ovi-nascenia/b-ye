@@ -132,7 +132,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     void set_id() {
 
-
         new_account = (LinearLayout) findViewById(R.id.new_accunt_test);
         new_account.setOnClickListener(this);
 
@@ -316,7 +315,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
             try {
                 JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.has("message")) {
+                if(Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_ban"))==true){
+                    buttonSubmit.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                    LoginManager.getInstance().logOut();
+                    Utils.ShowAlert(Login.this, getString(R.string.banned_profile_message));
+
+                }
+
+                else if (jsonObject.has("message")) {
                     Utils.ShowAlert(Login.this, jsonObject.getJSONObject("message").get("detail").toString());
                     LoginManager.getInstance().logOut();
                     buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
@@ -326,7 +333,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     InputStreamReader isr = new InputStreamReader(is);
                     LoginInformation response = gson.fromJson(isr, LoginInformation.class);
 
-                    if (response.getLoginInformation().getProfileComplete()) {
+                    if(response.getLoginInformation().getProfileComplete()==null)
+                    {
+                        Toast.makeText(Login.this,R.string.incomplete_profile_message,Toast.LENGTH_LONG).show();
+                        LoginManager.getInstance().logOut();
+                    }
+
+                    else if (response.getLoginInformation().getProfileComplete()) {
                         //insert the token in Sharepreference
 
                         try {
@@ -340,6 +353,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
                             sharePref.set_data("gender", response.getLoginInformation().getGender());
                             sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
+                            sharePref.set_data("real_name",response.getLoginInformation().getRealName());
                             sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
 
 
@@ -523,6 +537,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         progressBar.setVisibility(View.GONE);
                         Utils.ShowAlert(Login.this, getString(R.string.incomplete_profile_message));
                     }
+                    else if(Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_ban"))==true)
+                    {
+                        buttonSubmit.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        Utils.ShowAlert(Login.this, getString(R.string.banned_profile_message));
+                    }
 
                    else if (Boolean.parseBoolean(jsonObject.getJSONObject("login_information").
                             getString("is_complete")) == true) {
@@ -545,6 +565,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
                             sharePref.set_data("gender", response.getLoginInformation().getGender());
                             sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
+                            sharePref.set_data("real_name",response.getLoginInformation().getRealName());
                             sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
 
 

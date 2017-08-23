@@ -38,6 +38,7 @@ public class ParentItemViewHolder extends ParentViewHolder {
 
     public static Context holderContext;
 
+
     public ParentItemViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
 
@@ -63,6 +64,21 @@ public class ParentItemViewHolder extends ParentViewHolder {
             }
         });
 
+        parentItemTitleTextView.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                parentItemTitleTextView.getParent().requestChildFocus(parentItemTitleTextView,parentItemTitleTextView);
+                if (isExpanded()) {
+                    setExpandAction();
+                } else {
+                    setCollapseAction();
+                }
+            }
+        });
+
+
 
         editItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +96,7 @@ public class ParentItemViewHolder extends ParentViewHolder {
 
     }
 
-    private void setCollapseAction() {
+    public void setCollapseAction() {
         expandView();
         lnIndicator1.setVisibility(View.VISIBLE);
         lnIndicator1.setBackgroundColor(ContextCompat.getColor(holderContext, R.color.with_expand_color));
@@ -90,7 +106,7 @@ public class ParentItemViewHolder extends ParentViewHolder {
 
     }
 
-    private void setExpandAction() {
+    public void setExpandAction() {
         collapseView();
         lnIndicator1.setVisibility(View.GONE);
 //        lnIndicator2.setVisibility(View.VISIBLE);

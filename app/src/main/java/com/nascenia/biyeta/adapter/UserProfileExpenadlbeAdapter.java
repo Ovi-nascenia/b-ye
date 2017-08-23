@@ -61,7 +61,25 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     @Override
     public ParentItemViewHolder onCreateParentViewHolder(@NonNull ViewGroup parentViewGroup, int viewType) {
         View parentView = mInflater.inflate(R.layout.list_profile_details_parent_item, parentViewGroup, false);
-        return new ParentItemViewHolder(parentView, baseContext);
+        final ParentItemViewHolder parentItem = new ParentItemViewHolder(parentView, baseContext);
+        parentView.setOnClickListener(
+                new View.OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View v) {
+                        parentItem.parentItemTitleTextView.getParent().requestChildFocus(parentItem.parentItemTitleTextView,parentItem.parentItemTitleTextView);
+                        if (parentItem.isExpanded()) {
+                            parentItem.setExpandAction();
+                        } else {
+                            parentItem.setCollapseAction();
+                        }
+                    }
+                }
+        );
+
+        return parentItem;
+
     }
 
     @NonNull
@@ -88,6 +106,8 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
       /*  if (this.isProfileEditOptionEnable) {
             parentViewHolder.editItemBtn.setVisibility(View.VISIBLE);
         }*/
+
+
 
 
     }

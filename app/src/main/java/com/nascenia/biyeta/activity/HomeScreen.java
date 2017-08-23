@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -132,11 +133,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         fevImageView.setOnClickListener(this);
         inboxImageView.setOnClickListener(this);
         profileImageView.setOnClickListener(this);
-        Log.e("name", sharePref.get_data("display_name"));
+        Log.e("name", sharePref.get_data("real_name"));
 
         View header = navigationView.getHeaderView(0);
         TextView display_name = (TextView) header.findViewById(R.id.displayname);
-        display_name.setText(sharePref.get_data("display_name"));
+        display_name.setText(sharePref.get_data("real_name"));
         menuProfileImgView = (ImageView) header.findViewById(R.id.img_profile);
 
         //set profile image on drawer
@@ -186,79 +187,96 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
                     drawerLayout.closeDrawer(Gravity.RIGHT);
 
-                int id = menuItem.getItemId();
-                switch (id) {
-                    case R.id.nav_profile:
-                        startActivity(new Intent(HomeScreen.this, OwnUserProfileActivity.class).
-                                putExtra("id", sharePref.get_data("user_id")).
-                                putExtra("user_name", sharePref.get_data("display_name"))
-                                .putExtra("PROFILE_EDIT_OPTION", true)
-                        );
-                        break;
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run(){
+                    int id = menuItem.getItemId();
+                        switch (id) {
+                            case R.id.nav_profile:
+
+                                startActivity(new Intent(HomeScreen.this, OwnUserProfileActivity.class).
+                                        putExtra("id", sharePref.get_data("user_id")).
+                                        putExtra("user_name", sharePref.get_data("real_name"))
+                                        .putExtra("PROFILE_EDIT_OPTION", true)
+                                );
 
 
-                    case R.id.nav_balance:
-                        if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
-                            drawerLayout.closeDrawer(Gravity.RIGHT);
-                        startActivity(new Intent(HomeScreen.this, PaymentActivity.class));
-
-                        break;
-
-                    case R.id.nav_about_us:
-
-                        startActivity(new Intent(HomeScreen.this, AboutBiyeta.class));
-                        break;
-                    case R.id.nav_connection:
-                        startActivity(new Intent(HomeScreen.this, ContactUs.class));
+                                break;
 
 
-                        break;
+                            case R.id.nav_balance:
 
-                    case R.id.nav_policy:
-                        startActivity(new Intent(HomeScreen.this, PrivacyPolicy.class));
-                        break;
+                                     if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
+                                         drawerLayout.closeDrawer(Gravity.RIGHT);
+                                         startActivity(new Intent(HomeScreen.this, PaymentActivity.class));
 
 
-                    case R.id.nav_faq:
-                        startActivity(new Intent(HomeScreen.this, FAQActivity.class));
-                        break;
-                    case R.id.nav_termsofuse:
 
-                        startActivity(new Intent(HomeScreen.this, TermOfUse.class));
+                                break;
 
-                        break;
-                    case R.id.nav_logout:
-                        //SharePref sharePref = new SharePref(HomeScreen.this);
+                            case R.id.nav_about_us:
 
-                        try {
-                            LoginManager.getInstance().logOut();
-                        }catch (Exception ex)
-                        {
-                            ex.printStackTrace();
-//                            application.trackEception(ex, "setNavigationItemSelectedListener/logOut", "HomeScreen", ex.getMessage().toString(), mTracker);
+                                startActivity(new Intent(HomeScreen.this, AboutBiyeta.class));
+                                break;
+                            case R.id.nav_connection:
+                                startActivity(new Intent(HomeScreen.this, ContactUs.class));
+
+
+                                break;
+
+                            case R.id.nav_policy:
+                                startActivity(new Intent(HomeScreen.this, PrivacyPolicy.class));
+                                break;
+
+
+                            case R.id.nav_faq:
+                                startActivity(new Intent(HomeScreen.this, FAQActivity.class));
+                                break;
+                            case R.id.nav_termsofuse:
+
+                                startActivity(new Intent(HomeScreen.this, TermOfUse.class));
+
+                                break;
+                            case R.id.nav_logout:
+                                //SharePref sharePref = new SharePref(HomeScreen.this);
+
+                                try {
+                                    LoginManager.getInstance().logOut();
+                                }catch (Exception ex)
+                                {
+                                    ex.printStackTrace();
+        //                            application.trackEception(ex, "setNavigationItemSelectedListener/logOut", "HomeScreen", ex.getMessage().toString(), mTracker);
+                                }
+
+
+                                if (!Utils.isOnline(HomeScreen.this)) {
+                                    Utils.ShowAlert(HomeScreen.this, getString(R.string.no_internet_connection));
+                                } else
+                                {
+                                    new HomeScreen.LogoutRequest().execute();
+                                }
+
+
+
+
+
+                                break;
+
+                            default:
+                                break;
                         }
 
 
-                        if (!Utils.isOnline(HomeScreen.this)) {
-                            Utils.ShowAlert(HomeScreen.this, getString(R.string.no_internet_connection));
-                        } else
-                        {
-                            new HomeScreen.LogoutRequest().execute();
-                        }
+                    }
+                },200);
 
-
-
-
-
-                        break;
-
-                    default:
-                        break;
-                }
 
 
                 return true;
             }
+
+
         });
 
 

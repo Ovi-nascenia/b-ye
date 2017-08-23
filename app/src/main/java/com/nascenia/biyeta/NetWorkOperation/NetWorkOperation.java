@@ -388,7 +388,7 @@ public class NetWorkOperation {
                     } else if (this.caseIdentifierTagValue == Utils.UNFAVORITE_BUTTON_PRESS_TAG) {
                         Toast.makeText(context, context.getResources().getString(R.string.unfavorite_message), Toast.LENGTH_LONG).show();
                         this.userProfile.getProfile().setIsFavorite(false);
-                        this.favoriteImageView.setImageResource(R.drawable.favorite);
+                        this.favoriteImageView.setImageResource(R.drawable.grey_fav);
 
                     } else
                         Log.i("test", "no case match");

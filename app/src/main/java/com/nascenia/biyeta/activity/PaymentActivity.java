@@ -109,10 +109,7 @@ public class PaymentActivity extends CustomActionBarActivity {
                 Utils.ShowAlert(PaymentActivity.this, getString(R.string.no_internet_connection));
             }
 
-            if (progressBar.isShowing()) {
 
-                progressBar.dismiss();
-            }
 
 
             if (s == null) {
@@ -132,6 +129,13 @@ public class PaymentActivity extends CustomActionBarActivity {
 //                    application.trackEception(e, "LoadAccoutBalance/onPostExecute", "PaymentActivity", e.getMessage().toString(), mTracker);
                 }
             }
+
+
+            if (progressBar.isShowing()) {
+
+                progressBar.dismiss();
+            }
+
         }
 
         @Override

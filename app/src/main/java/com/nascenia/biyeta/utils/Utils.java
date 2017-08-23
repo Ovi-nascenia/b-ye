@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
@@ -31,6 +32,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * Created by user on 1/9/2017.
  */
@@ -40,7 +43,7 @@ public class Utils {
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
 //    public static final String Base_URL = "http://test.biyeta.com";
-//    public static final String Base_URL = "http://192.168.1.107:3000/";
+//    public static final String Base_URL = "http://192.168.1.130:3000/";
     public static final String Base_URL = "http://www.biyeta.com";
     public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
     public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
@@ -148,7 +151,14 @@ public class Utils {
     public static String deviceIMEI(Context context)
     {
         telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-        deviceImei = telephonyManager.getDeviceId();
+        if(telephonyManager.getDeviceId()!=null)
+        {
+            deviceImei = telephonyManager.getDeviceId();
+        }
+        else{
+            deviceImei = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        }
+
         return deviceImei;
 
     }

@@ -163,7 +163,11 @@ public class FavoriteActivity extends CustomActionBarActivity {
                         public void onClickProfile(int id, int position) {
                             Intent intent = new Intent(getBaseContext(), NewUserProfileActivity.class);
                             intent.putExtra("id", favoriteResponse.getProfiles().get(position).getId() + "");
-                            intent.putExtra("user_name", favoriteResponse.getProfiles().get(position).getDisplayName());
+                            if(favoriteResponse.getProfiles().get(position).getRealName()=="null")
+                                intent.putExtra("user_name", favoriteResponse.getProfiles().get(position).getDisplayName());
+
+                            else if(favoriteResponse.getProfiles().get(position).getRealName()!="null")
+                                intent.putExtra("user_name", favoriteResponse.getProfiles().get(position).getRealName());
                             intent.putExtra("PROFILE_EDIT_OPTION", false);
                             startActivityForResult(intent, REQUEST_CODE);
 //                            startActivity(intent);
