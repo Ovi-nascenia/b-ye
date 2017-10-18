@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -42,9 +43,9 @@ public class Utils {
 
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
-//    public static final String Base_URL = "http://test.biyeta.com";
-//    public static final String Base_URL = "http://192.168.1.130:3000/";
-    public static final String Base_URL = "http://www.biyeta.com";
+    public static final String Base_URL = "http://test.biyeta.com";
+//    public static final String Base_URL = "http://192.168.1.94:3000";
+//    public static final String Base_URL = "https://www.biyeta.com";
     public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
     public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
 
@@ -56,7 +57,14 @@ public class Utils {
     public static final String PROFILES_URL = Utils.Base_URL+"/api/v1/profiles/";
     public static final String APPUSER_OWN_PROFILE_VIEW_URL = Utils.Base_URL+"/api/v1/profiles/view";
     public static final String REQUEST_SENDER_IDS_URL = Utils.Base_URL+"/api/v1/requests/request_sender_ids";
-    public static final String REGISTRATION_TOKEN_SENDER_URL = Utils.Base_URL+"api/v1/fcm_service/login_notification";
+    public static final String REGISTRATION_TOKEN_SENDER_URL = Utils.Base_URL+"/api/v1/fcm_service/login_notification";
+    public static final String REGISTRATION_FIRST_PAGE_URL = Utils.Base_URL+"/api/v1/users";
+    public static final String VERIFICATION_CODE_SEND_URL = Utils.Base_URL+"/api/v1/mobile_verifications";
+    public static final String VERIFICATION_CODE_RESEND_URL = Utils.Base_URL+"/api/v1/mobile_verifications/resend_code";
+    public static final String VERIFICATION_CODE_VERIFY_URL = Utils.Base_URL+"/api/v1/mobile_verifications/verify_mobile";
+    public static final String STEP_CONSTANT_FETCH = Utils.Base_URL+"/api/v1/step_constants/fetch/";
+    public static final String SEND_INFO = Utils.Base_URL+"/api/v1/registrations";
+
 
 
 
@@ -445,5 +453,13 @@ public class Utils {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static boolean isValidEmailAddress(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
     }
 }

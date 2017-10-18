@@ -1,7 +1,10 @@
 package com.nascenia.biyeta.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,8 +78,16 @@ Utils.calculateHashKey(this,"com.nascenia.biyeta");
                 if (sharePref.get_data("token").equals("key")||sharePref.get_data("token").equals(null) ||(sharePref.get_data("mobile_verified").equals("false")||sharePref.get_data("mobile_verified").equals("key"))) {
 
                    //
+
+
+                    ///permission comment kora ache upore
+
                     Intent loginIntent = new Intent(SplashScreen.this, Login.class);
                     startActivity(loginIntent);
+
+
+                    //Intent mobileVerificationIntent = new Intent(SplashScreen.this, RegistrationFirstActivity.class);
+                    //startActivity(mobileVerificationIntent);
                     ///Kill the current activity
                     finish();
                 }

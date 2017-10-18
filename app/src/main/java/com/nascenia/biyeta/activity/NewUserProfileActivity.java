@@ -227,7 +227,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         super.finish();
     }
 
-    public void backBtnAction(View v) {
+    public void backBtnAction(View v){
         finish();
     }
 

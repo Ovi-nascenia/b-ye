@@ -2,18 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nascenia.biyeta">
 
+    <uses-feature android:name="android.hardware.camera2" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".IntigrationGoogleAnalytics.AnalyticsApplication"
         android:allowBackup="false"
         android:fullBackupContent="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -120,6 +126,9 @@
             android:name=".activity.OwnUserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.PopUpCastReligion"
+            android:theme="@style/AppTheme.NoActionBarPopUp" />
 
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
@@ -133,8 +142,42 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activity.MobileVarification" />
-        <activity android:name=".activity.RegistrationOwnInfo"></activity>
+        <activity
+            android:name=".activity.MobileVarification"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.RegistrationOwnInfo"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.RegistrationFirstActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.ImageChoose" />
+        <activity
+            android:name=".activity.RegistrationPersonalInformation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.PopUpPersonalInfo"
+            android:theme="@style/AppTheme.NoActionBarPopUp" />
+        <activity
+            android:name=".activity.RegistrationFamilyInfoFirstPage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.PopUpFamilyInfoFirstPage"
+            android:theme="@style/AppTheme.NoActionBarPopUp" />
+        <activity
+            android:name=".activity.RegistrationChoiceSelectionFirstPage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.SelectedImageActivity" />
+        <activity android:name=".activity.UploadImage" />
+        <activity
+            android:name=".activity.RegistrationChoiceSelectionThirdPage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.PopUpChoiceSelectionThirdPage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.RegistrationFamilyInfoSecondPage" />
+        <activity android:name=".activity.PopUpFamilyInfoSecondPage"></activity>
     </application>
 
 </manifest>

@@ -345,7 +345,7 @@ public class Match extends Fragment implements View.OnClickListener {
             if (s == null) {
                 if(getContext()!=null)
                     Utils.ShowInternetConnectionError(getContext());
-            } else {
+            }else {
                 Log.e("BiodataResponse", s);
 
                 JSONObject jsonObject = null;

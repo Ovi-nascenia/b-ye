@@ -77,6 +77,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     //get the password from Edit Text
     private String password=null;
     String imei = null;
+
+    public static int currentPageRegistration = 9;
     //icon image
     //big image load through glide
     ImageView icon;
@@ -118,6 +120,61 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Glide.with(this)
                 .load(R.drawable.icon_content)
                 .into(icon);
+
+
+        //PERMISSION STARTED
+
+         if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                     android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                 // Show an explanation to the user *asynchronously* -- don't block
+                 // this thread waiting for the user's response! After the user
+                 // sees the explanation, try again to request the permission.
+
+             } else {
+
+                 // No explanation needed, we can request the permission.
+
+                 ActivityCompat.requestPermissions(this,
+                         new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                         999);
+
+                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                 // app-defined int constant. The callback method gets the
+                 // result of the request.
+             }
+         }
+
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        1000);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+         //PERMISSION ENDS
 
 
         /*Google Analytics*/
@@ -185,8 +242,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 parameters.putString("fields", "id,name,email");
                 request.setParameters(parameters);
                 request.executeAsync();
-
-
             }
 
             @Override
@@ -245,11 +300,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.new_accunt_test:
                 //open a link in a brawer
-
+                /*
                 String url = "http://www.biyeta.com/";
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                 CustomTabsIntent customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(this, Uri.parse(url));
+                */
+
+//                Intent signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
+                new Login.FetchConstant().execute();
+
+
                 break;
 
         }
@@ -327,7 +388,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     Utils.ShowAlert(Login.this, jsonObject.getJSONObject("message").get("detail").toString());
                     LoginManager.getInstance().logOut();
                     buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
-                } else {
+                }
+                else{
                     Gson gson = new Gson();
                     InputStream is = new ByteArrayInputStream(s.getBytes());
                     InputStreamReader isr = new InputStreamReader(is);
@@ -459,6 +521,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             else{
                 imei=Utils.deviceIMEI(context);
                 new LoginRequest().execute(user_name, password);
+
+               // Intent loginIntent = new Intent(Login.this, ImageChoose.class);
+
+                //startActivity(loginIntent);
             }
 
     }
@@ -471,13 +537,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             String id = params[0];
             String password = params[1];
             String regtoken= FirebaseInstanceId.getInstance().getToken();
+
+
             Log.e("back", id + "---" + password + "---"+ regtoken);
 
-
-
-
             String s = String.valueOf(Build.VERSION.SDK_INT);
-
 
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("user_login[email]", id)///sent the team passcode
@@ -537,8 +601,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         progressBar.setVisibility(View.GONE);
                         Utils.ShowAlert(Login.this, getString(R.string.incomplete_profile_message));
                     }
-                    else if(Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_ban"))==true)
-                    {
+                    else if(Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_ban"))==true) {
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         Utils.ShowAlert(Login.this, getString(R.string.banned_profile_message));
@@ -655,6 +718,42 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected void onPreExecute() {
 
+        }
+    }
+
+
+
+    public class FetchConstant extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            Intent signupIntent = new Intent(Login.this, RegistrationFamilyInfoSecondPage.class);
+            signupIntent.putExtra("constant",s);
+            startActivity(signupIntent);
+        }
+
+        @Override
+        protected String doInBackground(String... parameters){
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + "9")
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
         }
     }
 

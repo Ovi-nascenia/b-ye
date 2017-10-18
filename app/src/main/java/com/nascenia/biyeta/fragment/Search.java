@@ -330,14 +330,14 @@ public class Search extends Fragment {
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
 
-            if (res == null) {
+            if(res == null){
 
                 if (snackbar != null && snackbar.isShown()) {
                     snackbar.dismiss();
                 }
                 if(getContext()!=null)
                     Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
-            } else {
+            }else{
 
                 Log.e("SearchResponse", res);
                 progressBarLayout.setVisibility(View.GONE);

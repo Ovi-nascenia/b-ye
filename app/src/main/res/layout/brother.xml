@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="reject"
+        android:layout_gravity="right"
+        android:id="@+id/reject"/>
+    <EditText
+        android:id="@+id/name_brother"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="  নাম*"
+        android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+        android:padding="10dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/white"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:singleLine="true"/>
+
+    <LinearLayout
+        android:id="@+id/age_brother"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/age_text_view_brother"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="বয়স*"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:id="@+id/down_arrow_age_brother"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/down_arrow"
+            />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/professonal_status_brother"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/profession_text_view_brother"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="পেশা*"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:id="@+id/down_arrow_profession_father"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/down_arrow"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/professonal_group_status_brother"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/profession_group_text_view_brother"
+            android:gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"/>
+        <ImageView
+            android:id="@+id/down_arrow_profession_group_brother"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/down_arrow"
+            />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/designation_brother"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="পদবী"
+        android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+        android:padding="10dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:singleLine="true"/>
+    <EditText
+        android:id="@+id/institution_brother"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="প্রতিষ্ঠান"
+        android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+        android:padding="10dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/white"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:singleLine="true"/>
+
+
+    <LinearLayout
+        android:id="@+id/marital_status_brother"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/marital_text_view_brother"
+            android:gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="বৈবাহিক অবস্থা"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"/>
+        <ImageView
+            android:id="@+id/down_arrow_marital_brother"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/down_arrow"
+            />
+
+    </LinearLayout>
+</LinearLayout>
