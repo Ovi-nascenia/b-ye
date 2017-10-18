@@ -32,10 +32,6 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
     LinearLayout maritalStatusBrother;
     LinearLayout ageBrother;
 
-    public EditText nameBrother;
-    public EditText designationBrother;
-    public EditText institutionBrother;
-
     public static TextView brotherOccupation;
     public static TextView brotherProfessionalGroup;
     public static TextView brotherMaritalStatus;
@@ -45,14 +41,21 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
     private List<Integer> brotherCount;
 
     private Context context;
-    public static int selectedPopUp = 0, brother = 0, age = 0;
-    public static String occupation="", professonalGroup="", maritalStatus="";
 
+    public static int selectedPopUp = 0, brother = 0;
     public static String responseBrother = "";
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView reject;
+        public EditText nameBrother;
+        public EditText designationBrother;
+        public EditText institutionBrother;
 
+        public int age = 0;
+
+        public String occupation="";
+        public String professonalGroup="";
+        public String maritalStatus="";
 
         public MyViewHolder(View view){
             super(view);

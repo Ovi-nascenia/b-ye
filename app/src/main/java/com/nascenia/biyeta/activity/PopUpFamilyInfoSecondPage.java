@@ -31,7 +31,9 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
 
     String[] numberOfBrotherSister = {"০", "১", "২", "৩", "৪", "৫", "৫+"};
 
-    int[] constantOfBrotherSister = {0,1,2,3,4,5,6,};
+    int[] constantOfBrotherSister = {0,1,2,3,4,5,6};
+
+    public static String value;
 
     String[] age;
 
@@ -284,47 +286,47 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
 
             if(BrotherViewAdapter.selectedPopUp == 1){
                 BrotherViewAdapter.brotherOccupation.setText(occupationName[newVal]);
-                BrotherViewAdapter.occupation = occupationConstantValue[newVal];
+                value = occupationConstantValue[newVal];
             }else if(BrotherViewAdapter.selectedPopUp == 2){
                 BrotherViewAdapter.brotherProfessionalGroup.setText(professonalGroupName[newVal]);
-                BrotherViewAdapter.professonalGroup = professonalGroupConstantValue[newVal];
+                value = professonalGroupConstantValue[newVal];
             }else if(BrotherViewAdapter.selectedPopUp == 3){
                 BrotherViewAdapter.brotherMaritalStatus.setText(maritalStatusName[newVal]);
-                BrotherViewAdapter.maritalStatus = maritalStatusConstantValue[newVal];
+                value = maritalStatusConstantValue[newVal];
             }else if(BrotherViewAdapter.selectedPopUp == 5){
                 BrotherViewAdapter.brotherAge.setText(age[newVal]);
-                BrotherViewAdapter.age = newVal;
+                value =""+newVal;
             }
 
             else if(SisterViewAdapter.selectedPopUp == 1){
                 SisterViewAdapter.sisterOccupation.setText(occupationName[newVal]);
-                SisterViewAdapter.occupation = occupationConstantValue[newVal];
+                value = occupationConstantValue[newVal];
             }else if(SisterViewAdapter.selectedPopUp == 2){
                 SisterViewAdapter.sisterProfessionalGroup.setText(professonalGroupName[newVal]);
-                SisterViewAdapter.professonalGroup = professonalGroupConstantValue[newVal];
+                value = professonalGroupConstantValue[newVal];
             }else if(SisterViewAdapter.selectedPopUp == 3){
                 SisterViewAdapter.sisterMaritalStatus.setText(maritalStatusName[newVal]);
-                SisterViewAdapter.maritalStatus = maritalStatusConstantValue[newVal];
+                value = maritalStatusConstantValue[newVal];
             }else if(SisterViewAdapter.selectedPopUp == 5){
                 SisterViewAdapter.sisterAge.setText(age[newVal]);
-                SisterViewAdapter.age = newVal;
+                value = ""+newVal;
             }
 
             else if(OtherViewAdapter.selectedPopUp == 1){
                 OtherViewAdapter.otherOccupation.setText(occupationName[newVal]);
-                OtherViewAdapter.occupation = occupationConstantValue[newVal];
+                value = occupationConstantValue[newVal];
             }else if(OtherViewAdapter.selectedPopUp == 2){
                 OtherViewAdapter.otherProfessionalGroup.setText(professonalGroupName[newVal]);
-                OtherViewAdapter.professonalGroup = professonalGroupConstantValue[newVal];
+                value = professonalGroupConstantValue[newVal];
             }else if(OtherViewAdapter.selectedPopUp == 3){
                 OtherViewAdapter.otherMaritalStatus.setText(maritalStatusName[newVal]);
-                OtherViewAdapter.maritalStatus = maritalStatusConstantValue[newVal];
+                value = maritalStatusConstantValue[newVal];
             }else if(OtherViewAdapter.selectedPopUp == 4){
                 OtherViewAdapter.otherRelationalStatus.setText(relationName[newVal]);
-                OtherViewAdapter.relation = relationConstantValue[newVal];
+                value = relationConstantValue[newVal];
             }else if(OtherViewAdapter.selectedPopUp == 5){
                 OtherViewAdapter.otherAge.setText(age[newVal]);
-                OtherViewAdapter.age = newVal;
+                value = ""+newVal;
             }
 
             else if(RegistrationFamilyInfoSecondPage.selectedPopUp == 1){
