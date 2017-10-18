@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/Level"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+
+            android:id="@+id/religion_name"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:text=""
+            android:textSize="18sp"
+            android:textColor="#626262"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:descendantFocusability="blocksDescendants"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/Level"
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center">
+        <NumberPicker
+            android:id="@+id/picker"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:descendantFocusability="blocksDescendants"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Button"
+        android:layout_below="@id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <Button
+            android:id="@+id/cancel"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:text="বাতিল করুন"
+            android:textColor="#626262"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:descendantFocusability="blocksDescendants"/>
+        <Button
+            android:id="@+id/accept"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:text="গ্রহন করুন"
+            android:textColor="#626262"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:descendantFocusability="blocksDescendants"/>
+    </LinearLayout>
+
+
+
+
+
+
+</RelativeLayout>
+

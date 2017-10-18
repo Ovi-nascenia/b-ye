@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#E9EBED">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:clipToPadding="false"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="@color/white"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/small_padding">
+
+
+            <ImageView
+                android:id="@+id/backPreviousActivityImage"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="@dimen/small_image_size"
+                android:onClick="backBtnAction"
+                android:src="@drawable/red_back_arrow"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+
+
+            <TextView
+                android:id="@+id/own_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:lines="2"
+                android:text="আপনার পছন্দ নির্বাচন করুন"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/medium_textsize"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/likeImage"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/small_margin"
+                android:src="@drawable/grey_fav"
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="মেয়ে কি বিয়ের পরে চাকরি করতে পারবে?"
+                android:textColor="@color/colorPrimary" />
+
+
+            <LinearLayout
+                android:id="@+id/job"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <TextView
+                    android:id="@+id/job_text_view"
+                    android:gravity="left"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="চাকরি"
+                    android:textSize="18dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"/>
+                <ImageView
+                    android:id="@+id/down_arrow_job"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/down_arrow"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="পাত্রীর বৈবাহিক অবস্থা"
+                android:textColor="@color/colorPrimary" />
+
+
+            <LinearLayout
+                android:id="@+id/marital"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <TextView
+                    android:id="@+id/marital_text_view"
+                    android:gravity="left"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="বৈবাহিক অবস্থা"
+                    android:textSize="18dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"/>
+                <ImageView
+                    android:id="@+id/down_arrow_marital"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/down_arrow"
+                    />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="ধর্ম"
+                android:textColor="@color/colorPrimary" />
+
+
+            <LinearLayout
+                android:id="@+id/religion"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <TextView
+                    android:id="@+id/religion_text_view"
+                    android:gravity="left"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ধর্ম"
+                    android:textSize="18dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"/>
+                <ImageView
+                    android:id="@+id/down_arrow_religion"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/down_arrow"
+                    />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="বর্ণ"
+                android:textColor="@color/colorPrimary" />
+
+            <LinearLayout
+                android:id="@+id/muslim_cast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:minHeight="50dp"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:paddingTop="10dp">
+                <CheckBox
+                    android:id="@+id/shia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="শিয়া"/>
+
+                <CheckBox
+                    android:id="@+id/sunni"
+                    android:layout_marginLeft="75dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="সুন্নি"/>
+
+                <CheckBox
+                    android:id="@+id/other"
+                    android:layout_marginLeft="75dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="অন্যান্য"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/hindu_cast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:minHeight="50dp"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:paddingTop="10dp">
+                <CheckBox
+                    android:id="@+id/brahman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ব্রাহ্মণ"/>
+
+                <CheckBox
+                    android:id="@+id/khattrio"
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ক্ষত্রিয়"/>
+
+                <CheckBox
+                    android:id="@+id/boisso"
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="বৈশ্য"/>
+
+                <CheckBox
+                    android:id="@+id/shuddro"
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="শূদ্র"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/christian_cast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:minHeight="50dp"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:paddingTop="10dp">
+                <CheckBox
+                    android:id="@+id/catholic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ক্যাথলিক"/>
+
+                <CheckBox
+                    android:id="@+id/protastant"
+                    android:layout_marginLeft="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="প্রোটেস্টেন্ট"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="নামাজ পড়বে?"
+                android:textColor="@color/colorPrimary"
+                android:layout_margin="10dp"/>
+            <LinearLayout
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white">
+
+                <me.bendik.simplerangeview.SimpleRangeView
+                    android:id="@+id/namaj"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:activeLineColor="#FFAB00"
+                    app:activeThumbColor="#D50000"
+                    app:count="4"
+                    app:labelFontSize="8sp"
+                    app:lineColor="#212121"
+                    app:showLabels="true"
+                    app:showTicks="false"
+                    android:background="@color/white" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="রোজা রাখবে?"
+                android:textColor="@color/colorPrimary"
+                android:layout_margin="10dp"/>
+
+
+            <LinearLayout
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white">
+                <me.bendik.simplerangeview.SimpleRangeView
+                    android:id="@+id/roja"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:activeLineColor="#FFAB00"
+                    app:activeThumbColor="#D50000"
+                    app:count="3"
+                    app:labelFontSize="8sp"
+                    app:lineColor="#212121"
+                    app:showLabels="true"
+                    app:showTicks="false"
+                    android:background="@color/white"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="পাত্রী কি হিজাব করবে?"
+                android:textColor="@color/colorPrimary"
+                android:layout_margin="10dp"/>
+
+            <LinearLayout
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white">
+
+                <me.bendik.simplerangeview.SimpleRangeView
+                    android:id="@+id/hajab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:activeLineColor="#FFAB00"
+                    app:activeThumbColor="#D50000"
+                    app:count="3"
+                    app:labelFontSize="8sp"
+                    app:lineColor="#212121"
+                    app:showLabels="true"
+                    app:showTicks="false"
+                    android:background="@color/white"/>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
+

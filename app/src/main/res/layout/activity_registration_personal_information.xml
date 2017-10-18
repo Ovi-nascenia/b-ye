@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e9ebed">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:clipToPadding="false"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="@color/white"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/small_padding">
+
+
+            <ImageView
+                android:id="@+id/backPreviousActivityImage"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="@dimen/small_image_size"
+                android:onClick="backBtnAction"
+                android:src="@drawable/red_back_arrow"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/own_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:lines="2"
+                android:text="@string/apnar_baktigoto_tottho"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/medium_textsize"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/likeImage"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/small_margin"
+                android:src="@drawable/grey_fav"
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Scroll"
+        android:layout_below="@id/toolbar">
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/toolbar">
+
+        <TextView
+            android:id="@+id/marital_status_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="বৈবাহিক অবস্থা"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/meritalStatus"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/merital_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="বৈবাহিক অবস্থা"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:id="@+id/down_arrow_merital"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/educational_status_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="শিক্ষাগত যোগ্যতা"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/educationalStatus"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/education_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="ডিগ্রীর নাম"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:id="@+id/down_arrow_education"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="বিষয়"
+            android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+            android:padding="10dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:singleLine="true"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="প্রতিষ্ঠান"
+            android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+            android:padding="10dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:singleLine="true"/>
+
+
+        <TextView
+            android:id="@+id/profession_status_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="পেশা"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/professonalalStatus"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/profession_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="পেশা"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:id="@+id/down_arrow_profession"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/professonalGroupStatus"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/profession_group_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:id="@+id/down_arrow_profession_group"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="পদবী"
+            android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+            android:padding="10dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:singleLine="true"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="প্রতিষ্ঠান"
+            android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+            android:padding="10dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/religion_status_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ধর্ম পালন"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/religiousStatus"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/religion_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="নামায"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:id="@+id/down_arrow_religion"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/roja_status_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="রোজা রাখেন"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/rojaStatus"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/roja_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="রোজা"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:id="@+id/down_arrow_roja"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/disable_status_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="কোন প্রতিবন্ধিকতা আছে?"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/disableStatus"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/disable_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="প্রতিবন্ধিকতা"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:id="@+id/down_arrow_disable"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/smoke_status_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ধূমপান করা হয়?"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/smokeStatus"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/smoke_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="ধূমপান"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:id="@+id/down_arrow_smoke"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="পরবর্তী ধাপ"
+            android:textSize="24sp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:layout_margin="10dp"
+            />
+
+    </LinearLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>

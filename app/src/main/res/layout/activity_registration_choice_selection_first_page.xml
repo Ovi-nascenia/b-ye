@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#E9EBED">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:clipToPadding="false"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="@color/white"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/small_padding">
+
+
+            <ImageView
+                android:id="@+id/backPreviousActivityImage"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="@dimen/small_image_size"
+                android:onClick="backBtnAction"
+                android:src="@drawable/red_back_arrow"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+
+
+            <TextView
+                android:id="@+id/own_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:lines="2"
+                android:text="আপনার পছন্দ নির্বাচন করুন"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/medium_textsize"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/likeImage"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/small_margin"
+                android:src="@drawable/grey_fav"
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="বয়স"
+                android:textColor="@color/colorPrimary"
+                android:layout_margin="10dp"/>
+            <LinearLayout
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white">
+
+                <me.bendik.simplerangeview.SimpleRangeView
+                    android:id="@+id/age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:activeLineColor="#FFAB00"
+                    app:activeThumbColor="#D50000"
+                    app:count="33"
+                    app:labelFontSize="8sp"
+                    app:lineColor="#212121"
+                    app:showLabels="true"
+                    app:showTicks="false"
+                    android:background="@color/white" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="উচ্চতা"
+                android:textColor="@color/colorPrimary"
+                android:layout_margin="10dp"/>
+
+
+            <LinearLayout
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white">
+                <me.bendik.simplerangeview.SimpleRangeView
+                    android:id="@+id/height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:activeLineColor="#FFAB00"
+                    app:activeThumbColor="#D50000"
+                    app:count="48"
+                    app:labelFontSize="8sp"
+                    app:lineColor="#212121"
+                    app:showLabels="true"
+                    app:showTicks="false"
+                    android:background="@color/white"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="গায়ের রং"
+                android:textColor="@color/colorPrimary"
+                android:layout_margin="10dp"/>
+
+            <LinearLayout
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white">
+
+                <me.bendik.simplerangeview.SimpleRangeView
+                    android:id="@+id/color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:activeLineColor="#FFAB00"
+                    app:activeThumbColor="#D50000"
+                    app:count="4"
+                    app:labelFontSize="8sp"
+                    app:lineColor="#212121"
+                    app:showLabels="true"
+                    app:showTicks="false"
+                    android:background="@color/white"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="গড়ন"
+                android:textColor="@color/colorPrimary"
+                android:layout_margin="10dp"/>
+
+            <LinearLayout
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white">
+                <me.bendik.simplerangeview.SimpleRangeView
+                    android:id="@+id/shape"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:activeLineColor="#FFAB00"
+                    app:activeThumbColor="#D50000"
+                    app:count="3"
+                    app:labelFontSize="8sp"
+                    app:lineColor="#212121"
+                    app:showLabels="true"
+                    app:showTicks="false"
+                    android:background="@color/white"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="শিক্ষাগত যোগ্যতা"
+                android:textColor="@color/colorPrimary"
+                android:layout_margin="10dp"/>
+
+            <LinearLayout
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white">
+                <me.bendik.simplerangeview.SimpleRangeView
+                    android:id="@+id/education"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:activeLineColor="#FFAB00"
+                    app:activeThumbColor="#D50000"
+                    app:count="9"
+                    app:labelFontSize="8sp"
+                    app:lineColor="#212121"
+                    app:showLabels="true"
+                    app:showTicks="false"
+                    android:background="@color/white"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="পরবর্তী ধাপ"
+                android:textSize="24sp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:layout_margin="10dp"
+                />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
