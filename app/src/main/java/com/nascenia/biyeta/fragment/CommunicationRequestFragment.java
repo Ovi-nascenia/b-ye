@@ -566,7 +566,7 @@ public class CommunicationRequestFragment extends Fragment implements MyCallback
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.i("asynctaskdata", e.getMessage());
+//                Log.i("asynctaskdata", e.getMessage());
 //                application.trackEception(e, "SendResponseTask/doInBackground", "CommunicationRequestFragment", e.getMessage().toString(), mTracker);
             }
 

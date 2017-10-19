@@ -45,7 +45,7 @@ public class ResourceProvider {
 
 
         Response response = okHttpClient.newCall(request).execute();
-        Log.i("responsedata", request.url().toString());
+//        Log.i("responsedata", request.url().toString());
         return response;
     }
 

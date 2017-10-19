@@ -168,7 +168,7 @@ public class MobileVerification extends CustomActionBarActivity {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.i("asynctaskdata", e.getMessage());
+//                Log.i("asynctaskdata", e.getMessage());
 //                application.trackEception(e, "verificationCodeRequest/doInBackground", "MobileVerification", e.getMessage().toString(), mTracker);
             }
 

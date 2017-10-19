@@ -182,7 +182,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
             fetchUserProfileDetails(Utils.PROFILES_URL +
                     getIntent().getExtras().getString("id"));
-            Log.i("profileId", getIntent().getExtras().getString("id"));
+//            Log.i("profileId", getIntent().getExtras().getString("id"));
 
         } else {
             Utils.ShowAlert(NewUserProfileActivity.this, getString(R.string.no_internet_connection));
@@ -438,7 +438,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                     Response response = new ResourceProvider(NewUserProfileActivity.this).fetchGetResponse(url);
                     ResponseBody responseBody = response.body();
                     final String responseValue = responseBody.string();
-                    Log.i("profileresponsevalue", responseValue);
+//                    Log.i("profileresponsevalue", responseValue);
                     responseBody.close();
                     userProfile = new Gson().fromJson(responseValue, UserProfile.class);
                     NewUserProfileActivity.this.runOnUiThread(new Runnable() {
@@ -1141,7 +1141,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.i("asynctaskdata", e.getMessage());
+//                Log.i("asynctaskdata", e.getMessage());
                 //application.trackEception(e, "SendRequestTask/doInBackground", "NewUserProfileActivity", e.getMessage().toString(), mTracker);
             }
 
@@ -1206,7 +1206,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                         }
 
                     } else {
-                        Log.i("casetest", "no case match");
+//                        Log.i("casetest", "no case match");
                     }
                 }
 

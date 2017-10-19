@@ -171,7 +171,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
         } else {
-            Log.i("image", "no image found");
+//            Log.i("image", "no image found");
         }
 
 

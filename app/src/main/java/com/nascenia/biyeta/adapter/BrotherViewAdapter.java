@@ -38,14 +38,17 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
     public static TextView brotherAge;
 
 
+
     private List<Integer> brotherCount;
 
     private Context context;
 
+    public static int adapterPosition = 0;
+
     public static int selectedPopUp = 0, brother = 0;
     public static String responseBrother = "";
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView reject;
         public EditText nameBrother;
         public EditText designationBrother;
@@ -88,6 +91,7 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
                     brother = 1;
                     Intent setIntent = new Intent(context,PopUpFamilyInfoSecondPage.class);
                     setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position",getAdapterPosition());
                     context.startActivity(setIntent);
                 }
             });
@@ -100,6 +104,7 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
                     brother = 1;
                     Intent setIntent = new Intent(context,PopUpFamilyInfoSecondPage.class);
                     setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position",getAdapterPosition());
                     context.startActivity(setIntent);
                 }
             });
@@ -112,6 +117,7 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
                     brother = 1;
                     Intent setIntent = new Intent(context,PopUpFamilyInfoSecondPage.class);
                     setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position",getAdapterPosition());
                     context.startActivity(setIntent);
                 }
             });
@@ -124,6 +130,7 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
                     brother = 1;
                     Intent setIntent = new Intent(context,PopUpFamilyInfoSecondPage.class);
                     setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position",getAdapterPosition());
                     context.startActivity(setIntent);
                 }
             });
@@ -215,6 +222,7 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
 
             responseBrother = responseBrother+ response;
         }
+
 
     }
 

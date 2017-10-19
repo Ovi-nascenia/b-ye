@@ -121,7 +121,7 @@ public class Search extends Fragment {
                             snack_view.addView(new ProgressBar(getContext()));
                             snackbar.show();
 
-                            Log.i("getdatacall", "top code");
+//                            Log.i("getdatacall", "top code");
                             //Toast.makeText(getContext(), "top code", Toast.LENGTH_LONG).show();
                             new GetData().execute();
                         } else {
@@ -145,7 +145,7 @@ public class Search extends Fragment {
 
                     if (Utils.isOnline(getContext())) {
                         //Toast.makeText(getContext(), "bottom code", Toast.LENGTH_LONG).show();
-                        Log.i("getdatacall", "bottom code");
+//                        Log.i("getdatacall", "bottom code");
                         new GetData().execute();
                     } else {
                         if (snackbar.isShown()) {
@@ -192,8 +192,7 @@ public class Search extends Fragment {
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Log.i("username", profileList.get(position).getDisplay_name() + " " +
-                                profileList.get(position).getId());
+//                        Log.i("username", profileList.get(position).getDisplay_name() + " " + profileList.get(position).getId());
                         if (Utils.isOnline(getActivity())) {
                             Intent intent = new Intent(getActivity(), NewUserProfileActivity.class);
                             intent.putExtra("id", profileList.get(position).getId());

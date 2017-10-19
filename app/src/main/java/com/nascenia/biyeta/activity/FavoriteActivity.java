@@ -156,7 +156,7 @@ public class FavoriteActivity extends CustomActionBarActivity {
                     InputStreamReader isr = new InputStreamReader(is);
                     favoriteResponse = gson.fromJson(isr, FavoriteProfile.class);
 
-                    Log.i("totalfavprofile", favoriteResponse.getProfiles().size() + "");
+//                    Log.i("totalfavprofile", favoriteResponse.getProfiles().size() + "");
 
                     favoriteAdapter = new FavoriteAdapter(FavoriteActivity.this, favoriteResponse, application, mTracker) {
                         @Override

@@ -161,7 +161,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         /*Google Analytics*/
         mTracker.setScreenName(getIntent().getExtras().getString("user_name")+ "'s Profile");
-        Log.i("user_name", getIntent().getExtras().getString("user_name")+ "'s Profile");
+//        Log.i("user_name", getIntent().getExtras().getString("user_name")+ "'s Profile");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
@@ -180,7 +180,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     ResponseBody responseBody = response.body();
                     final String responseValue = responseBody.string();
                     res = responseValue;
-                    Log.i("ownresponsevalue", responseValue);
+//                    Log.i("ownresponsevalue", responseValue);
                     responseBody.close();
                     userProfile = new Gson().fromJson(responseValue, UserProfile.class);
 
@@ -313,7 +313,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
 
                 } catch (Exception e) {
-                    Log.i("errormsg", e.getMessage().toString() + " " + res);
+                    //Log.i("errormsg", e.getMessage().toString() + " " + res);
                     e.printStackTrace();
 //                    application.trackEception(e, "fetchUserProfileInfo", "OwnUserProfileActivity", e.getMessage().toString(), mTracker);
                 }
@@ -336,7 +336,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         //Log.i("ownprofileimage", userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture().toString());
 
         if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
-            Log.i("ownprofileimage", Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture());
+//            Log.i("ownprofileimage", Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture());
 
             Picasso.with(OwnUserProfileActivity.this)
                     .load(Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture())
@@ -373,7 +373,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     userProfileImage.setImageResource(R.drawable.profile_icon_female);
                     userProfileImage.setImageResource(R.drawable.profile_icon_female);
                 } else {
-                    Log.i("image", "nothing found");
+//                    Log.i("image", "nothing found");
                 }
             }
         }
@@ -896,7 +896,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                     userProfile.getProfile().getFamilyMembers().getNumberOfChild())
                                     + " জন সন্তান, সাথে থাকে না"));
                 } else {
-                    Log.i("childstatus", "nothing found");
+//                    Log.i("childstatus", "nothing found");
                 }
 
 

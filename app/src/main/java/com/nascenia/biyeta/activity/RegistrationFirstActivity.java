@@ -245,7 +245,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
 
-                Log.i("error", error.getMessage().toString());
+//                Log.i("error", error.getMessage().toString());
 
             }
         });
@@ -351,7 +351,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     .url(Utils.REGISTRATION_FIRST_PAGE_URL)
                     .post(requestBody)
                     .build();
-            Log.i("regis", Utils.REGISTRATION_FIRST_PAGE_URL+" "+email+" "+password+" "+realName+" "+displayName);
+//            Log.i("regis", Utils.REGISTRATION_FIRST_PAGE_URL+" "+email+" "+password+" "+realName+" "+displayName);
 
             try {
                 Response response = client.newCall(request).execute();

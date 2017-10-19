@@ -77,6 +77,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(RegistrationFamilyInfoSecondPage.this,PopUpFamilyInfoSecondPage.occupationArrayBrother.get(0),Toast.LENGTH_LONG).show();
                 new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
             }
         });

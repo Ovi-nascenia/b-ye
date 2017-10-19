@@ -136,7 +136,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         /*Google Analytics*/
         mTracker.setScreenName(getIntent().getExtras().getString("user_name") + "'s Profile");
-        Log.i("user_name1", getIntent().getExtras().getString("user_name") + "'s Profile");
+//        Log.i("user_name1", getIntent().getExtras().getString("user_name") + "'s Profile");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
@@ -291,12 +291,12 @@ public class UserProfileActivity extends AppCompatActivity {
                 String childKey = iter.next();
 
                 childNodeValue += object.getString(childKey);
-                Log.i("jsonarraykey", childKey);
+//                Log.i("jsonarraykey", childKey);
             }
             childItemList.add(new UserProfileChild(childItemName, childNodeValue));
             childNodeValue = "";
 
-            Log.i("jsonarraykey", "-------------------------");
+//            Log.i("jsonarraykey", "-------------------------");
         }
 
         userProfilesListParent.add(new UserProfileParent(key, childItemList));

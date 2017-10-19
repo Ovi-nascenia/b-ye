@@ -172,7 +172,7 @@ public class NetWorkOperation {
             super.onPostExecute(s);
             if (s == null) Utils.ShowAlert(context, "ইন্টারনেট সংযোগ নেই");
             else {
-                Log.i("response", s);
+//                Log.i("response", s);
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
@@ -229,7 +229,7 @@ public class NetWorkOperation {
 
         @Override
         protected String doInBackground(String... strings) {
-            Log.i("profileresponse", strings[0]);
+//            Log.i("profileresponse", strings[0]);
             msg = strings[1];
 
             Response response;
@@ -260,7 +260,7 @@ public class NetWorkOperation {
             if (s == null)
                 Utils.ShowAlert(context, context.getResources().getString(R.string.no_internet_connection));
             else {
-                Log.i("response", s);
+//                Log.i("response", s);
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
@@ -390,15 +390,17 @@ public class NetWorkOperation {
                         this.userProfile.getProfile().setIsFavorite(false);
                         this.favoriteImageView.setImageResource(R.drawable.grey_fav);
 
-                    } else
-                        Log.i("test", "no case match");
+                    } else{
+                        //                        Log.i("test", "no case match");
+                    }
+
                 }
 
 
             } catch (Exception e) {
 
 //                application.trackEception(e, "PostTask/onPostExecute", "NetworkOperation", e.getMessage().toString(), mTracker);
-                Log.i("test", e.getMessage().toString());
+//                Log.i("test", e.getMessage().toString());
 
             }
 

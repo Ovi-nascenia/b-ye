@@ -107,7 +107,7 @@ public abstract class SendRequestFragmentView {
                                                 NestedScrollView nestedScrollView) {
 
         //Toast.makeText(context, "fetchmethod", Toast.LENGTH_LONG).show();
-        Log.i("btnreaction", "fetchmethod");
+//        Log.i("btnreaction", "fetchmethod");
         //generalInformationArrayList.clear();
         //  matchUserChoiceArrayList.clear();
         //  otherInformationArrayList.clear();
@@ -235,14 +235,14 @@ public abstract class SendRequestFragmentView {
                 Response response = new ResourceProvider((Activity) context).fetchGetResponse(url);
                 ResponseBody responseBody = response.body();
                 responseValue = responseBody.string();
-                Log.i("threaddata", "onmethod" + responseValue + " ");
+//                Log.i("threaddata", "onmethod" + responseValue + " ");
                 responseBody.close();
                 final UserProfile userProfile = new Gson().fromJson(responseValue, UserProfile.class);
 
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.i("taskon", "run");
+//                        Log.i("taskon", "run");
 
                         // coordinatorLayout.setVisibility(View.VISIBLE);
                         appBarLayout.setVisibility(View.VISIBLE);
@@ -278,14 +278,14 @@ public abstract class SendRequestFragmentView {
                             public void onClick(View v) {
 
                                 //Toast.makeText(context, "accept btn fetch", Toast.LENGTH_LONG).show();
-                                Log.i("btnreaction", "accept btn fetch");
+//                                Log.i("btnreaction", "accept btn fetch");
 
                                 if (viewRequestClassname == Utils.BIODATA_REQUEST_FRAGEMNT_CLASS) {
                                     loadNextProfile(1, userProfile.getProfile().getRequestStatus().getProfileRequestId());
                                 } else if (viewRequestClassname == Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS) {
                                     loadNextProfile(1, userProfile.getProfile().getRequestStatus().getCommunicationRequestId());
                                 } else {
-                                    Log.i("classdata", "No Data recived");
+//                                    Log.i("classdata", "No Data recived");
                                 }
                             }
                         });
@@ -301,7 +301,7 @@ public abstract class SendRequestFragmentView {
                                 } else if (viewRequestClassname == Utils.COMMUNICATION_REQUEST_FRAGEMNT_CLASS) {
                                     loadNextProfile(0, userProfile.getProfile().getRequestStatus().getCommunicationRequestId());
                                 } else {
-                                    Log.i("classdata", "No Data recived");
+//                                    Log.i("classdata", "No Data recived");
                                 }
                             }
                         });
@@ -330,7 +330,7 @@ public abstract class SendRequestFragmentView {
 
 
             } catch (Exception e) {
-                Log.i("threaddata", "problem " + e.getMessage());
+//                Log.i("threaddata", "problem " + e.getMessage());
                 e.printStackTrace();
                // application.trackEception(e, "ResponseThread/run", "SendRequestFragmentView", e.getMessage().toString(), mTracker);
             }

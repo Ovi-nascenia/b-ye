@@ -301,12 +301,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             case R.id.new_accunt_test:
                 //open a link in a brawer
                 /*
-                String url = "http://www.biyeta.com/";
+                String url = Utils.Base_URL;
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                 CustomTabsIntent customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(this, Uri.parse(url));
                 */
-
 //                Intent signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
                 new Login.FetchConstant().execute();
 

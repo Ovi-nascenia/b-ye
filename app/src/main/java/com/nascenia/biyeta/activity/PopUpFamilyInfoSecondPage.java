@@ -25,9 +25,27 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
+
+    public static Map<Integer,String> occupationArrayBrother=new HashMap<Integer,String>();
+    public static Map<Integer,String> professionalGroupArrayBrother = new HashMap<Integer,String>();
+    public static Map<Integer,String> maritalStatusArrayBrother = new HashMap<Integer,String>();
+    public static Map<Integer,String> ageArrayBrother = new HashMap<Integer,String>();
+
+    public static Map<Integer,String> occupationArraySister=new HashMap<Integer,String>();
+    public static Map<Integer,String> professionalGroupArraySister = new HashMap<Integer,String>();
+    public static Map<Integer,String> maritalStatusArraySister = new HashMap<Integer,String>();
+    public static Map<Integer,String> ageArraySister = new HashMap<Integer,String>();
+
+    public static Map<Integer,String> occupationArrayOther=new HashMap<Integer,String>();
+    public static Map<Integer,String> professionalGroupArrayOther = new HashMap<Integer,String>();
+    public static Map<Integer,String> maritalStatusArrayOther = new HashMap<Integer,String>();
+    public static Map<Integer,String> relationStatusArrayOther = new HashMap<Integer,String>();
+    public static Map<Integer,String> ageArrayOther = new HashMap<Integer,String>();
 
     String[] numberOfBrotherSister = {"০", "১", "২", "৩", "৪", "৫", "৫+"};
 
@@ -63,6 +81,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
     NumberPicker picker;
     String[] data = new String[]{};
     String constant;
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -72,6 +91,10 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
         if(extras.containsKey("constant")){
             String defaultValue = "";
             constant = extras.getString("constant", defaultValue);
+        }
+        if(extras.containsKey("position")){
+            int defaultValue = 0;
+            position = extras.getInt("position",defaultValue);
         }
 
         age = new String[100];
@@ -287,46 +310,59 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             if(BrotherViewAdapter.selectedPopUp == 1){
                 BrotherViewAdapter.brotherOccupation.setText(occupationName[newVal]);
                 value = occupationConstantValue[newVal];
+                occupationArrayBrother.put(position, value);
             }else if(BrotherViewAdapter.selectedPopUp == 2){
                 BrotherViewAdapter.brotherProfessionalGroup.setText(professonalGroupName[newVal]);
                 value = professonalGroupConstantValue[newVal];
+                professionalGroupArrayBrother.put(position, value);
             }else if(BrotherViewAdapter.selectedPopUp == 3){
                 BrotherViewAdapter.brotherMaritalStatus.setText(maritalStatusName[newVal]);
                 value = maritalStatusConstantValue[newVal];
+                maritalStatusArrayBrother.put(position, value);
             }else if(BrotherViewAdapter.selectedPopUp == 5){
                 BrotherViewAdapter.brotherAge.setText(age[newVal]);
                 value =""+newVal;
+                ageArrayBrother.put(position, value);
             }
 
             else if(SisterViewAdapter.selectedPopUp == 1){
                 SisterViewAdapter.sisterOccupation.setText(occupationName[newVal]);
                 value = occupationConstantValue[newVal];
+                occupationArraySister.put(position, value);
             }else if(SisterViewAdapter.selectedPopUp == 2){
                 SisterViewAdapter.sisterProfessionalGroup.setText(professonalGroupName[newVal]);
                 value = professonalGroupConstantValue[newVal];
+                professionalGroupArraySister.put(position, value);
             }else if(SisterViewAdapter.selectedPopUp == 3){
                 SisterViewAdapter.sisterMaritalStatus.setText(maritalStatusName[newVal]);
                 value = maritalStatusConstantValue[newVal];
+                maritalStatusArraySister.put(position, value);
             }else if(SisterViewAdapter.selectedPopUp == 5){
                 SisterViewAdapter.sisterAge.setText(age[newVal]);
                 value = ""+newVal;
+                ageArraySister.put(position, value);
             }
 
             else if(OtherViewAdapter.selectedPopUp == 1){
                 OtherViewAdapter.otherOccupation.setText(occupationName[newVal]);
                 value = occupationConstantValue[newVal];
+                occupationArrayOther.put(position,value);
             }else if(OtherViewAdapter.selectedPopUp == 2){
                 OtherViewAdapter.otherProfessionalGroup.setText(professonalGroupName[newVal]);
                 value = professonalGroupConstantValue[newVal];
+                professionalGroupArrayOther.put(position,value);
             }else if(OtherViewAdapter.selectedPopUp == 3){
                 OtherViewAdapter.otherMaritalStatus.setText(maritalStatusName[newVal]);
                 value = maritalStatusConstantValue[newVal];
+                maritalStatusArrayOther.put(position,value);
             }else if(OtherViewAdapter.selectedPopUp == 4){
                 OtherViewAdapter.otherRelationalStatus.setText(relationName[newVal]);
                 value = relationConstantValue[newVal];
+                relationStatusArrayOther.put(position,value);
             }else if(OtherViewAdapter.selectedPopUp == 5){
                 OtherViewAdapter.otherAge.setText(age[newVal]);
                 value = ""+newVal;
+                ageArrayOther.put(position,value);
             }
 
             else if(RegistrationFamilyInfoSecondPage.selectedPopUp == 1){
@@ -347,9 +383,9 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
         Character eng_number[]={'0','1','2','3','4','5','6','7','8','9'};
         String values = "";
         char[] character = string.toCharArray();
-        for (int i=0; i<character.length ; i++) {
+        for (int i=0; i<character.length ; i++){
             Character c = ' ';
-            for (int j = 0; j < eng_number.length; j++) {
+            for (int j = 0; j < eng_number.length; j++){
                 if(character[i]==eng_number[j])
                 {
                     c=bangla_number[j];

@@ -564,7 +564,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                         && profile.getRequestStatus().getReceiver()
                         == Integer.parseInt(sharePref.get_data("user_id"))) {
 
-                    Log.i("expired receiver", "got");
+//                    Log.i("expired receiver", "got");
                     holder.mRequest.setVisibility(View.VISIBLE);
                     holder.mRequest.setText(profile.getRequestStatus().getMessage());
                     holder.mRequest.setBackgroundColor(Color.parseColor("#F2F1F1"));
@@ -574,7 +574,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                         && profile.getRequestStatus().getSender()
                         == Integer.parseInt(sharePref.get_data("user_id"))) {
 
-                    Log.i("expired sender", "got");
+//                    Log.i("expired sender", "got");
                     holder.mRequest.setVisibility(View.VISIBLE);
                     holder.mRequest.setText(profile.getRequestStatus().getMessage());
                     holder.mRequest.setBackgroundColor(Color.parseColor("#F2F1F1"));
@@ -668,7 +668,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.i("asynctaskdata", e.getMessage());
+//                Log.i("asynctaskdata", e.getMessage());
 //                application.trackEception(e, "SendRequestTask/doInBackground", "FavoriteAdapter", e.getMessage().toString(), mTracker);
             }
 
@@ -726,7 +726,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                         }
 
                     } else {
-                        Log.i("casetest", "no case match");
+//                        Log.i("casetest", "no case match");
                     }
                 }
 

@@ -64,7 +64,7 @@ public class Profession_Adapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        Log.i("view", "called");
+//        Log.i("view", "called");
         if (convertView == null) {
 
             grid = new View(mContext);
@@ -132,19 +132,19 @@ public class Profession_Adapter extends BaseAdapter {
         if (this.gridItemType.equals("LOCATION") && aBoolean) {
 
             Search_Filter.locationGridItemCheckedCheckBoxPositionList.add(Search_Filter.locationId.get(position));
-            Log.i("listdata", "LOCATION  " + Search_Filter.locationGridItemCheckedCheckBoxPositionList.size());
+//            Log.i("listdata", "LOCATION  " + Search_Filter.locationGridItemCheckedCheckBoxPositionList.size());
 
 
         } else if (this.gridItemType.equals("OCCUPATION") && aBoolean) {
 
             Search_Filter.occupationGridItemCheckedCheckBoxPositionList.add(Search_Filter.occupationId.get(position));
-            Log.i("listdata", "OCCUPATION  " + Search_Filter.occupationGridItemCheckedCheckBoxPositionList.size());
+//            Log.i("listdata", "OCCUPATION  " + Search_Filter.occupationGridItemCheckedCheckBoxPositionList.size());
 
         }
         else if (this.gridItemType.equals("PROFESSION") && aBoolean) {
 
             Search_Filter.professionGridItemCheckedCheckBoxPositionList.add(Search_Filter.professionId.get(position));
-            Log.i("listdata", "PROFESSION  " + Search_Filter.professionGridItemCheckedCheckBoxPositionList.size());
+//            Log.i("listdata", "PROFESSION  " + Search_Filter.professionGridItemCheckedCheckBoxPositionList.size());
 
         } else if (this.gridItemType.equals("LOCATION") && !aBoolean) {
 
@@ -173,7 +173,7 @@ public class Profession_Adapter extends BaseAdapter {
 
             if (value == checkBoxPositionList.get(i)) {
                 checkBoxPositionList.remove(i);
-                Log.i("listdata", value + " " + this.gridItemType);
+//                Log.i("listdata", value + " " + this.gridItemType);
             }
 
         }

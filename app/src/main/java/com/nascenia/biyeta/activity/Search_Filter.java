@@ -705,7 +705,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
                 try {
                     JSONObject jsonObject=new JSONObject(res);
-                    Log.i("post", res + "  data");
+//                    Log.i("post", res + "  data");
                     //  Toast.makeText(getBaseContext(), res + "  data", Toast.LENGTH_LONG).show();
                     parse_data(res);
                 } catch (JSONException e) {
@@ -770,7 +770,7 @@ public class Search_Filter extends CustomActionBarActivity implements OnClickLis
 
     void parse_data(String result) {
         String id, age, height, skin, health, marital_status, education, occupation, professional_group, user_id, gender;
-        Log.i("json", result + " :data");
+//        Log.i("json", result + " :data");
         try {
             JSONObject jsonObject = new JSONObject(result);
             id = jsonObject.getJSONObject("preference").getString("id");

@@ -43,9 +43,9 @@ public class Utils {
 
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
-    public static final String Base_URL = "http://test.biyeta.com";
+//    public static final String Base_URL = "http://test.biyeta.com";
 //    public static final String Base_URL = "http://192.168.1.94:3000";
-//    public static final String Base_URL = "https://www.biyeta.com";
+    public static final String Base_URL = "https://www.biyeta.com";
     public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
     public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
 
@@ -116,16 +116,20 @@ public class Utils {
 
 
     public static void ShowInternetConnectionError(Context context) {
-        new AlertDialog.Builder(context)
+        if(context!=null)
+        {
+            new AlertDialog.Builder(context)
 //                .setTitle("ইন্টারনেট")
-                .setMessage("ইন্টারনেট সংযোগ নেই")
-                .setCancelable(false)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).show();
+                    .setMessage("ইন্টারনেট সংযোগ নেই")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+        }
+
     }
 
 
@@ -144,7 +148,7 @@ public class Utils {
         int firstDigit = itemvalue / 10;
         int lastdigit = itemvalue % 10;
 
-        Log.i("bangla", firstDigit + " " + lastdigit);
+//        Log.i("bangla", firstDigit + " " + lastdigit);
 
         if (firstDigit == 0) {
             return getBanglaDigit(lastdigit);
@@ -223,13 +227,13 @@ public class Utils {
 
 
     public static String formatString(String result) {
-        Log.i("finalresult", "enter method " + result.length());
+//        Log.i("finalresult", "enter method " + result.length());
 
 
         if (result.startsWith(",") | result.startsWith(" : ")) {
 
             result = removeChar(result, 0);
-            Log.i("finalresult", "enter first if  " + result + " " + result.length());
+//            Log.i("finalresult", "enter first if  " + result + " " + result.length());
         }
 
 
