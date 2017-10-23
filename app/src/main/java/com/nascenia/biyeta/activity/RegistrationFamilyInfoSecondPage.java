@@ -40,6 +40,9 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
 
     LinearLayout brotherCountLayout,sisterCountLayout;
 
+    String responseBrother = "";
+    String responseSister = "";
+    String responseOther = "";
     int brotherCount = 0, sisterCount = 0, otherCount = 0;
     private List<Integer> brotherList = new ArrayList<>();
     private List<Integer> sisterList = new ArrayList<>();
@@ -52,7 +55,8 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
 
     public static int numberOfBrother = 0, numberOfSister = 0;
 
-    Button buttonBrother, buttonSister, buttonOther, buttonNext;
+    LinearLayout buttonBrother, buttonSister, buttonOther;
+    Button buttonNext;
     BrotherViewAdapter brotherViewAdapter;
     SisterViewAdapter sisterViewAdapter;
     OtherViewAdapter otherViewAdapter;
@@ -74,10 +78,215 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
 
         buttonNext = (Button) findViewById(R.id.next);
 
-        buttonNext.setOnClickListener(new View.OnClickListener() {
+        buttonNext.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                Toast.makeText(RegistrationFamilyInfoSecondPage.this,PopUpFamilyInfoSecondPage.occupationArrayBrother.get(0),Toast.LENGTH_LONG).show();
+            public void onClick(View v){
+                if(recyclerViewBrother.getChildCount()>0)
+                {
+                    for(int i=0; i<recyclerViewBrother.getChildCount();i++)
+                    {
+                        if(recyclerViewBrother.findViewHolderForLayoutPosition(i) instanceof BrotherViewAdapter.MyViewHolder){
+                            BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder) recyclerViewBrother.findViewHolderForLayoutPosition(i);
+                            String response = new StringBuilder().append("{")
+                                    .append("\"sibling_type\":")
+                                    .append("\"")
+                                    .append(1)
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"name\":")
+                                    .append("\"")
+                                    .append(holder.nameBrother.getText().toString())
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"age\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.ageArrayBrother.get(i))
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"occupation\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.occupationArrayBrother.get(i))
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"professional_group\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArrayBrother.get(i))
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"designation\":")
+                                    .append("\"")
+                                    .append(holder.designationBrother.getText().toString())
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"institute\":")
+                                    .append("\"")
+                                    .append(holder.institutionBrother.getText().toString())
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"marital_status\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.maritalStatusArrayBrother.get(i))
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"spouse\":")
+                                    .append("\"")
+                                    .append("")
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"s_occupation\":")
+                                    .append("\"")
+                                    .append("")
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"s_professional_group\":")
+                                    .append("\"")
+                                    .append("")
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"s_designation\":")
+                                    .append("\"")
+                                    .append("")
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"s_institute\":")
+                                    .append("\"")
+                                    .append("")
+                                    .append("\"")
+                                    .append("}")
+                                    .append(",")
+                                    .toString();
+
+                            responseBrother = responseBrother+ response;
+                        }
+                    }
+                }
+
+                if(recyclerViewSister.getChildCount()>0)
+                {
+                    for(int i=0; i<recyclerViewSister.getChildCount();i++)
+                    {
+                        if(recyclerViewSister.findViewHolderForLayoutPosition(i) instanceof SisterViewAdapter.MyViewHolder){
+                            SisterViewAdapter.MyViewHolder holder = (SisterViewAdapter.MyViewHolder) recyclerViewSister.findViewHolderForLayoutPosition(i);
+                            String response = new StringBuilder().append("{")
+                                    .append("\"sibling_type\":")
+                                    .append("\"")
+                                    .append(2)
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"name\":")
+                                    .append("\"")
+                                    .append(holder.nameSister.getText().toString())
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"age\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.ageArraySister.get(i))
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"occupation\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.occupationArraySister.get(i))
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"professional_group\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArraySister.get(i))
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"designation\":")
+                                    .append("\"")
+                                    .append(holder.designationSister.getText().toString())
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"institute\":")
+                                    .append("\"")
+                                    .append(holder.institutionSister.getText().toString())
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"marital_status\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.maritalStatusArraySister.get(i))
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"spouse\":")
+                                    .append("\"")
+                                    .append("")
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"s_occupation\":")
+                                    .append("\"")
+                                    .append("")
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"s_professional_group\":")
+                                    .append("\"")
+                                    .append("")
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"s_designation\":")
+                                    .append("\"")
+                                    .append("")
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"s_institute\":")
+                                    .append("\"")
+                                    .append("")
+                                    .append("\"")
+                                    .append("}")
+                                    .append(",")
+                                    .toString();
+
+                            responseSister = responseSister+ response;
+                        }
+                    }
+                }
+
+
+                if(recyclerViewOther.getChildCount()>0)
+                {
+                    for(int i=0; i<recyclerViewOther.getChildCount();i++)
+                    {
+                        if(recyclerViewOther.findViewHolderForLayoutPosition(i) instanceof OtherViewAdapter.MyViewHolder){
+                            OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder) recyclerViewOther.findViewHolderForLayoutPosition(i);
+                            String response = new StringBuilder().append("{")
+                                    .append("\"name\":")
+                                    .append("\"")
+                                    .append(holder.nameOther)
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"age\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.ageArrayOther.get(i))
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"occupation\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.occupationArrayOther.get(i))
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"professional_group\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArrayOther.get(i))
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"designation\":")
+                                    .append("\"")
+                                    .append(holder.designationOther.getText().toString())
+                                    .append("\"")
+                                    .append(",")
+                                    .append("\"institute\":")
+                                    .append("\"")
+                                    .append(holder.institutionOther.getText().toString())
+                                    .append("\"")
+                                    .append("}")
+                                    .append(",")
+                                    .toString();
+
+                            responseOther = responseOther+ response;
+                        }
+                    }
+                }
+
                 new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
             }
         });
@@ -107,7 +316,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
 
         recyclerViewBrother = (RecyclerView) findViewById(R.id.recycler_view);
 
-        buttonBrother = (Button) findViewById(R.id.button);
+        buttonBrother = (LinearLayout) findViewById(R.id.button);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewBrother.setLayoutManager(mLayoutManager);
@@ -131,7 +340,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
 
         recyclerViewSister = (RecyclerView) findViewById(R.id.recycler_view_sister);
 
-        buttonSister = (Button) findViewById(R.id.button_sister);
+        buttonSister = (LinearLayout) findViewById(R.id.button_sister);
 
         RecyclerView.LayoutManager sisterLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewSister.setLayoutManager(sisterLayoutManager);
@@ -154,7 +363,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
 
         recyclerViewOther = (RecyclerView) findViewById(R.id.recycler_view_other);
 
-        buttonOther = (Button) findViewById(R.id.button_other);
+        buttonOther = (LinearLayout) findViewById(R.id.button_other);
 
         RecyclerView.LayoutManager otherLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewOther.setLayoutManager(otherLayoutManager);
@@ -168,6 +377,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
                 otherCount++;
             }
         });
+
 
         prepareOtherData();
 
@@ -198,10 +408,10 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
 
     public String JSONResponse(){
         String brotherSisterResponseInfo;
-        brotherSisterResponseInfo = BrotherViewAdapter.responseBrother + SisterViewAdapter.responseSister;
+        brotherSisterResponseInfo = responseBrother + responseSister;
         brotherSisterResponseInfo = brotherSisterResponseInfo.substring(0, brotherSisterResponseInfo.length() - 1);
 
-        String otherResponseInfo = OtherViewAdapter.responseOther;
+        String otherResponseInfo = responseOther;
         otherResponseInfo = otherResponseInfo.substring(0,otherResponseInfo.length() - 1);
         String response = new StringBuilder().append("{")
                 .append("\"total_brothers\":")
@@ -240,7 +450,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s){
             super.onPostExecute(s);
             try {
                 progress.cancel();
@@ -250,7 +460,8 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
                 {
                     Toast.makeText(RegistrationFamilyInfoSecondPage.this, "error", Toast.LENGTH_LONG).show();
                 }
-                else{
+                else
+                {
                     Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this,Login.class);
                     startActivity(intent);
                 }
@@ -264,7 +475,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
             SharePref sharePref = new SharePref(RegistrationFamilyInfoSecondPage.this);
             final String token = sharePref.get_data("registration_token");
 
-            Log.e("Ovi Test", JSONResponse());
+            Log.e("Test", JSONResponse());
 
             MediaType JSON
                     = MediaType.parse("application/json; charset=utf-8");

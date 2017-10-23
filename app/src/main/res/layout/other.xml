@@ -4,12 +4,26 @@
     android:orientation="vertical"
     android:layout_marginTop="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="reject"
-        android:layout_gravity="right"
-        android:id="@+id/reject"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:id="@+id/reject"
+        android:layout_marginRight="10dp"
+        >
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/remove"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="বাদ দিন"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/relational_status_other"

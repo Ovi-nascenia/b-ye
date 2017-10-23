@@ -33,10 +33,6 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
     public static TextView sisterMaritalStatus;
     public static TextView sisterAge;
 
-    public EditText nameSister;
-    public EditText designationSister;
-    public EditText institutionSister;
-
     private List<Integer> sisterCount;
 
     public static String responseSister = "";
@@ -46,11 +42,14 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
     public static String occupation="", professonalGroup="", maritalStatus="";
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView reject;
+        public LinearLayout reject;
+
+        public EditText nameSister;
+        public EditText designationSister;
+        public EditText institutionSister;
 
         public MyViewHolder(View view) {
             super(view);
-
             nameSister = (EditText) view.findViewById(R.id.name_sister);
             designationSister = (EditText) view.findViewById(R.id.designation_sister);
             institutionSister = (EditText) view.findViewById(R.id.institution_sister);
@@ -63,7 +62,7 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
             String siblingType, name, designation, institute, spouse, sOccupation,sProfessionalGroup, sDesignation, sInstitute;
 
 
-            reject = (TextView) view.findViewById(R.id.reject);
+            reject = (LinearLayout) view.findViewById(R.id.reject);
             reject.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
@@ -131,77 +130,6 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
             sProfessionalGroup = "";
             sDesignation = "";
             sInstitute = "";
-
-
-            String response = new StringBuilder().append("{")
-                    .append("\"sibling_type\":")
-                    .append("\"")
-                    .append(siblingType)
-                    .append("\"")
-                    .append(",")
-                    .append("\"name\":")
-                    .append("\"")
-                    .append(name)
-                    .append("\"")
-                    .append(",")
-                    .append("\"age\":")
-                    .append("\"")
-                    .append(age)
-                    .append("\"")
-                    .append(",")
-                    .append("\"occupation\":")
-                    .append("\"")
-                    .append(occupation)
-                    .append("\"")
-                    .append(",")
-                    .append("\"professional_group\":")
-                    .append("\"")
-                    .append(professonalGroup)
-                    .append("\"")
-                    .append(",")
-                    .append("\"designation\":")
-                    .append("\"")
-                    .append(designation)
-                    .append("\"")
-                    .append(",")
-                    .append("\"institute\":")
-                    .append("\"")
-                    .append(institute)
-                    .append("\"")
-                    .append(",")
-                    .append("\"marital_status\":")
-                    .append("\"")
-                    .append(maritalStatus)
-                    .append("\"")
-                    .append(",")
-                    .append("\"spouse\":")
-                    .append("\"")
-                    .append(spouse)
-                    .append("\"")
-                    .append(",")
-                    .append("\"s_occupation\":")
-                    .append("\"")
-                    .append(sOccupation)
-                    .append("\"")
-                    .append(",")
-                    .append("\"s_professional_group\":")
-                    .append("\"")
-                    .append(sProfessionalGroup)
-                    .append("\"")
-                    .append(",")
-                    .append("\"s_designation\":")
-                    .append("\"")
-                    .append(sDesignation)
-                    .append("\"")
-                    .append(",")
-                    .append("\"s_institute\":")
-                    .append("\"")
-                    .append(sInstitute)
-                    .append("\"")
-                    .append("}")
-                    .append(",")
-                    .toString();
-            responseSister = responseSister + response;
         }
 
     }

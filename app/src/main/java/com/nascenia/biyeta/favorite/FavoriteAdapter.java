@@ -593,7 +593,11 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
 
     @Override
     public int getItemCount() {
-        return favoriteProfile.getProfiles().size();
+        if(favoriteProfile.getProfiles()!=null)
+            return favoriteProfile.getProfiles().size();
+        else{
+            return 0;
+        }
     }
 
 

@@ -49,7 +49,7 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
     public static String responseBrother = "";
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView reject;
+        LinearLayout reject;
         public EditText nameBrother;
         public EditText designationBrother;
         public EditText institutionBrother;
@@ -69,7 +69,7 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
             brotherProfessionalGroup = (TextView) view.findViewById(R.id.profession_group_text_view_brother);
             brotherMaritalStatus = (TextView) view.findViewById(R.id.marital_text_view_brother);
             brotherAge = (TextView) view.findViewById(R.id.age_text_view_brother);
-            reject = (TextView) view.findViewById(R.id.reject);
+            reject = (LinearLayout) view.findViewById(R.id.reject);
 
 
 
@@ -151,76 +151,9 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
             sInstitute = "";
 
 
-            String response = new StringBuilder().append("{")
-                    .append("\"sibling_type\":")
-                    .append("\"")
-                    .append(siblingType)
-                    .append("\"")
-                    .append(",")
-                    .append("\"name\":")
-                    .append("\"")
-                    .append(name)
-                    .append("\"")
-                    .append(",")
-                    .append("\"age\":")
-                    .append("\"")
-                    .append(age)
-                    .append("\"")
-                    .append(",")
-                    .append("\"occupation\":")
-                    .append("\"")
-                    .append(occupation)
-                    .append("\"")
-                    .append(",")
-                    .append("\"professional_group\":")
-                    .append("\"")
-                    .append(professonalGroup)
-                    .append("\"")
-                    .append(",")
-                    .append("\"designation\":")
-                    .append("\"")
-                    .append(designation)
-                    .append("\"")
-                    .append(",")
-                    .append("\"institute\":")
-                    .append("\"")
-                    .append(institute)
-                    .append("\"")
-                    .append(",")
-                    .append("\"marital_status\":")
-                    .append("\"")
-                    .append(maritalStatus)
-                    .append("\"")
-                    .append(",")
-                    .append("\"spouse\":")
-                    .append("\"")
-                    .append(spouse)
-                    .append("\"")
-                    .append(",")
-                    .append("\"s_occupation\":")
-                    .append("\"")
-                    .append(sOccupation)
-                    .append("\"")
-                    .append(",")
-                    .append("\"s_professional_group\":")
-                    .append("\"")
-                    .append(sProfessionalGroup)
-                    .append("\"")
-                    .append(",")
-                    .append("\"s_designation\":")
-                    .append("\"")
-                    .append(sDesignation)
-                    .append("\"")
-                    .append(",")
-                    .append("\"s_institute\":")
-                    .append("\"")
-                    .append(sInstitute)
-                    .append("\"")
-                    .append("}")
-                    .append(",")
-                    .toString();
 
-            responseBrother = responseBrother+ response;
+
+
         }
 
 

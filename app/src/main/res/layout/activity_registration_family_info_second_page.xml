@@ -180,12 +180,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <Button
-                    android:id="@+id/button"
+                <LinearLayout
                     android:layout_below="@id/recycler_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="button"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:gravity="left"
+                    android:id="@+id/button"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    >
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/add"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="আরো যোগ করুন"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="10dp"
+                        />
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -210,12 +226,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <Button
-                    android:id="@+id/button_sister"
+                <LinearLayout
                     android:layout_below="@id/recycler_view_sister"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="button"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:gravity="left"
+                    android:id="@+id/button_sister"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    >
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/add"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="আরো যোগ করুন"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="10dp"
+                        />
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -238,12 +270,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <Button
-                    android:id="@+id/button_other"
+                <LinearLayout
                     android:layout_below="@id/recycler_view_other"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="button"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:gravity="left"
+                    android:id="@+id/button_other"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    >
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/add"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="আরো যোগ করুন"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="10dp"
+                        />
+                </LinearLayout>
 
             </RelativeLayout>
 

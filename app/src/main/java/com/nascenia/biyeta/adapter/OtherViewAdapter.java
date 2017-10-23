@@ -39,10 +39,6 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
     public static String responseOther = "";
 
 
-    public EditText nameOther;
-    public EditText designationOther;
-    public EditText institutionOther;
-
     private List<Integer> otherCount;
 
     private Context context;
@@ -50,7 +46,10 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
     public static String occupation="", professonalGroup="", maritalStatus="", relation="";
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView reject;
+        public LinearLayout reject;
+        public EditText nameOther;
+        public EditText designationOther;
+        public EditText institutionOther;
 
         String name="", designation="", institute="";
         public MyViewHolder(View view){
@@ -67,7 +66,7 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
             otherAge = (TextView) view.findViewById(R.id.age_text_view_other);
 
 
-            reject = (TextView) view.findViewById(R.id.reject);
+            reject = (LinearLayout) view.findViewById(R.id.reject);
             reject.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
@@ -179,45 +178,8 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
         holder.name = "";
         holder.designation = "";
         holder.institute = "";
-        holder.name = nameOther.getText().toString();
         Toast.makeText(context,holder.name,Toast.LENGTH_LONG).show();
-        holder.designation = designationOther.getText().toString();
-        holder.institute = institutionOther.getText().toString();
-        String response = new StringBuilder().append("{")
-                .append("\"name\":")
-                .append("\"")
-                .append(holder.name)
-                .append("\"")
-                .append(",")
-                .append("\"age\":")
-                .append("\"")
-                .append(age)
-                .append("\"")
-                .append(",")
-                .append("\"occupation\":")
-                .append("\"")
-                .append(occupation)
-                .append("\"")
-                .append(",")
-                .append("\"professional_group\":")
-                .append("\"")
-                .append(professonalGroup)
-                .append("\"")
-                .append(",")
-                .append("\"designation\":")
-                .append("\"")
-                .append(holder.designation)
-                .append("\"")
-                .append(",")
-                .append("\"institute\":")
-                .append("\"")
-                .append(holder.institute)
-                .append("\"")
-                .append("}")
-                .append(",")
-                .toString();
 
-        responseOther = responseOther+ response;
     }
 
     @Override
