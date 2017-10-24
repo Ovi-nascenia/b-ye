@@ -43,9 +43,9 @@ public class Utils {
 
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
-//    public static final String Base_URL = "http://test.biyeta.com";
+    public static final String Base_URL = "http://test.biyeta.com";
 //    public static final String Base_URL = "http://192.168.1.94:3000";
-    public static final String Base_URL = "https://www.biyeta.com";
+//    public static final String Base_URL = "https://www.biyeta.com";
     public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
     public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
 

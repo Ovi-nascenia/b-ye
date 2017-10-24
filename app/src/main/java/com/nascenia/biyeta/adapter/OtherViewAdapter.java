@@ -175,10 +175,9 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position){
-        holder.name = "";
-        holder.designation = "";
-        holder.institute = "";
-        Toast.makeText(context,holder.name,Toast.LENGTH_LONG).show();
+        if(position == 0){
+            holder.reject.setVisibility(View.GONE);
+        }
 
     }
 

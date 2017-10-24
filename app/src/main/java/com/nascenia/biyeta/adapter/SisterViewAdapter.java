@@ -60,8 +60,6 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
             sisterAge = (TextView) view.findViewById(R.id.age_text_view_sister);
 
             String siblingType, name, designation, institute, spouse, sOccupation,sProfessionalGroup, sDesignation, sInstitute;
-
-
             reject = (LinearLayout) view.findViewById(R.id.reject);
             reject.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -167,6 +165,9 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position){
         Integer Sister = sisterCount.get(position);
+        if(position == 0){
+            holder.reject.setVisibility(View.GONE);
+        }
     }
 
     @Override

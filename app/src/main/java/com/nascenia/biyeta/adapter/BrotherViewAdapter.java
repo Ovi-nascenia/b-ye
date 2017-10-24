@@ -31,11 +31,15 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
     LinearLayout occupationStatusBrother;
     LinearLayout maritalStatusBrother;
     LinearLayout ageBrother;
+    LinearLayout occupationStatusBrotherSpouse;
+    LinearLayout professonalStatusBrotherSpouse;
 
     public static TextView brotherOccupation;
     public static TextView brotherProfessionalGroup;
     public static TextView brotherMaritalStatus;
     public static TextView brotherAge;
+    public static TextView brotherOcupationSpouse;
+    public static TextView brotherProfessionalGroupSpouse;
 
 
 
@@ -53,6 +57,12 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
         public EditText nameBrother;
         public EditText designationBrother;
         public EditText institutionBrother;
+        public EditText nameBrotherSpouse;
+        public EditText designationBrotherSpouse;
+        public EditText institutionBrotherSpouse;
+
+        public LinearLayout spouse;
+        public LinearLayout rejectSpouse;
 
         public int age = 0;
 
@@ -69,9 +79,16 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
             brotherProfessionalGroup = (TextView) view.findViewById(R.id.profession_group_text_view_brother);
             brotherMaritalStatus = (TextView) view.findViewById(R.id.marital_text_view_brother);
             brotherAge = (TextView) view.findViewById(R.id.age_text_view_brother);
+            brotherOcupationSpouse = (TextView) view.findViewById(R.id.profession_text_view_brother_spouse);
+            brotherProfessionalGroupSpouse = (TextView) view.findViewById(R.id.profession_group_text_view_brother_spouse);
+
+            nameBrotherSpouse = (EditText) view.findViewById(R.id.name_brother_spouse);
+            designationBrotherSpouse =(EditText) view.findViewById(R.id.designation_brother_spouse);
+            institutionBrotherSpouse = (EditText) view.findViewById(R.id.institution_brother_spouse);
+
+
             reject = (LinearLayout) view.findViewById(R.id.reject);
-
-
+            spouse = (LinearLayout) view.findViewById(R.id.spouse);
 
             reject.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -79,7 +96,6 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
                     int position = getAdapterPosition();
                     brotherCount.remove(position);
                     notifyItemRemoved(position);
-
                 }
             });
 
@@ -135,6 +151,40 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
                 }
             });
 
+            occupationStatusBrotherSpouse = (LinearLayout) view.findViewById(R.id.professonal_status_brother_spouse);
+            occupationStatusBrotherSpouse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedPopUp = 6;
+                    brother = 1;
+                    Intent setIntent = new Intent(context,PopUpFamilyInfoSecondPage.class);
+                    setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position",getAdapterPosition());
+                    context.startActivity(setIntent);
+                }
+            });
+
+            professonalStatusBrotherSpouse = (LinearLayout) view.findViewById(R.id.professonal_group_status_brother_spouse);
+            professonalStatusBrotherSpouse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedPopUp = 7;
+                    brother = 1;
+                    Intent setIntent = new Intent(context,PopUpFamilyInfoSecondPage.class);
+                    setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position",getAdapterPosition());
+                    context.startActivity(setIntent);
+                }
+            });
+
+            rejectSpouse = (LinearLayout) view.findViewById(R.id.reject_spouse);
+            rejectSpouse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    spouse.setVisibility(View.GONE);
+                }
+            });
+
             String siblingType="", name="", designation="", institute="", spouse="", sOccupation="",sProfessionalGroup="", sDesignation="", sInstitute="";
 
             siblingType = "1";
@@ -149,11 +199,6 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
             sProfessionalGroup = "";
             sDesignation = "";
             sInstitute = "";
-
-
-
-
-
         }
 
 
@@ -161,7 +206,9 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position, List<Object> payloads) {
-        
+        if(position == 0){
+            holder.reject.setVisibility(View.GONE);
+        }
     }
 
     public int listSize()

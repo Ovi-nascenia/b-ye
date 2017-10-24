@@ -47,7 +47,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
     private List<Integer> brotherList = new ArrayList<>();
     private List<Integer> sisterList = new ArrayList<>();
     private List<Integer> otherList = new ArrayList<>();
-    private RecyclerView recyclerViewBrother,recyclerViewSister,recyclerViewOther;
+    public static RecyclerView recyclerViewBrother,recyclerViewSister,recyclerViewOther;
 
     public static String constant;
 
@@ -130,27 +130,27 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
                                     .append(",")
                                     .append("\"spouse\":")
                                     .append("\"")
-                                    .append("")
+                                    .append(holder.nameBrotherSpouse.getText().toString())
                                     .append("\"")
                                     .append(",")
                                     .append("\"s_occupation\":")
                                     .append("\"")
-                                    .append("")
+                                    .append(PopUpFamilyInfoSecondPage.occupationArrayBrotherSpouse.get(i))
                                     .append("\"")
                                     .append(",")
                                     .append("\"s_professional_group\":")
                                     .append("\"")
-                                    .append("")
+                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArrayBrotherSpouse.get(i))
                                     .append("\"")
                                     .append(",")
                                     .append("\"s_designation\":")
                                     .append("\"")
-                                    .append("")
+                                    .append(holder.designationBrotherSpouse.getText().toString())
                                     .append("\"")
                                     .append(",")
                                     .append("\"s_institute\":")
                                     .append("\"")
-                                    .append("")
+                                    .append(holder.institutionBrotherSpouse.getText().toString())
                                     .append("\"")
                                     .append("}")
                                     .append(",")
@@ -458,6 +458,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
                 Log.e("Response",s);
                 if(jsonObject.has("errors"))
                 {
+                    jsonObject.getJSONObject("errors").getString("detail");
                     Toast.makeText(RegistrationFamilyInfoSecondPage.this, "error", Toast.LENGTH_LONG).show();
                 }
                 else

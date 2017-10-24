@@ -35,6 +35,9 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
     public static Map<Integer,String> professionalGroupArrayBrother = new HashMap<Integer,String>();
     public static Map<Integer,String> maritalStatusArrayBrother = new HashMap<Integer,String>();
     public static Map<Integer,String> ageArrayBrother = new HashMap<Integer,String>();
+    public static Map<Integer,String> occupationArrayBrotherSpouse = new HashMap<Integer,String>();
+    public static Map<Integer,String> professionalGroupArrayBrotherSpouse = new HashMap<Integer,String>();
+
 
     public static Map<Integer,String> occupationArraySister=new HashMap<Integer,String>();
     public static Map<Integer,String> professionalGroupArraySister = new HashMap<Integer,String>();
@@ -169,6 +172,10 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             data = relationName;
         }else if(BrotherViewAdapter.selectedPopUp == 5){
             data = age;
+        }else if(BrotherViewAdapter.selectedPopUp == 6){
+            data = occupationName;
+        }else if(BrotherViewAdapter.selectedPopUp == 7){
+            data = professonalGroupName;
         }
 
         else if(SisterViewAdapter.selectedPopUp== 1){
@@ -319,10 +326,28 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
                 BrotherViewAdapter.brotherMaritalStatus.setText(maritalStatusName[newVal]);
                 value = maritalStatusConstantValue[newVal];
                 maritalStatusArrayBrother.put(position, value);
+                if(value.equals("4")){
+                    BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother.findViewHolderForLayoutPosition(position);
+                    holder.spouse.setVisibility(View.VISIBLE);
+                }
+                else{
+                    BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother.findViewHolderForLayoutPosition(position);
+                    holder.spouse.setVisibility(View.GONE);
+                }
             }else if(BrotherViewAdapter.selectedPopUp == 5){
                 BrotherViewAdapter.brotherAge.setText(age[newVal]);
                 value =""+newVal;
                 ageArrayBrother.put(position, value);
+            }
+            else if(BrotherViewAdapter.selectedPopUp == 6){
+                BrotherViewAdapter.brotherOcupationSpouse.setText(occupationName[newVal]);
+                value = occupationConstantValue[newVal];
+                occupationArrayBrotherSpouse.put(position,value);
+            }
+            else if(BrotherViewAdapter.selectedPopUp == 7){
+                BrotherViewAdapter.brotherProfessionalGroupSpouse.setText(professonalGroupName[newVal]);
+                value = professonalGroupConstantValue[newVal];
+                professionalGroupArrayBrotherSpouse.put(position,value);
             }
 
             else if(SisterViewAdapter.selectedPopUp == 1){
