@@ -211,7 +211,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
         buttonFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(final LoginResult loginResult) {
+            public void onSuccess(final LoginResult loginResult){
                 Log.e("LoginOvi", loginResult.getAccessToken().toString());
 
 
@@ -727,7 +727,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
-            Intent signupIntent = new Intent(Login.this, RegistrationFamilyInfoSecondPage.class);
+            Intent signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
             signupIntent.putExtra("constant",s);
             startActivity(signupIntent);
         }
@@ -735,7 +735,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected String doInBackground(String... parameters){
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + "9")
+                    .url(Utils.STEP_CONSTANT_FETCH + "6")
                     .build();
             try {
                 Response response = client.newCall(request).execute();

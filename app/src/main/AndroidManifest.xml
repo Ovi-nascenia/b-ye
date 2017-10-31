@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nascenia.biyeta">
 
-
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -176,8 +174,14 @@
         <activity
             android:name=".activity.PopUpChoiceSelectionThirdPage"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.RegistrationFamilyInfoSecondPage" />
-        <activity android:name=".activity.PopUpFamilyInfoSecondPage"></activity>
+        <activity
+            android:name=".activity.RegistrationFamilyInfoSecondPage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.PopUpFamilyInfoSecondPage"
+            android:theme="@style/AppTheme.NoActionBarPopUp"></activity>
+        <activity android:name=".activity.RegistrationChoiceSelectionSecondPage"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

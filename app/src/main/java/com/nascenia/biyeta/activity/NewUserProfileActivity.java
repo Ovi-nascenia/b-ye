@@ -463,8 +463,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                 favoriteImageView.setImageResource(R.drawable.red_favorite);
 
                             }
-
-                            else if (userProfile.getProfile().getPersonalInformation().getDisplayName() != null) {
+                            if (userProfile.getProfile().getPersonalInformation().getDisplayName() != null) {
 
                                 //favoriteImageView.setEnabled(false);
                                 if(userProfile.getProfile().getPersonalInformation().getRealName()==null){
@@ -641,13 +640,13 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                 // Toast.makeText(getBaseContext(), "No Match Found", Toast.LENGTH_LONG).show();
                                 finalResultButton.setTag(Utils.sendBiodataRequest);
 
-                            } else if (userProfile.getProfile().getRequestStatus().getName().
+                            }else if(userProfile.getProfile().getRequestStatus().getName().
                                     equals("profile request") &&
                                     (userProfile.getProfile().getRequestStatus().getSender() ==
                                             Integer.parseInt(sharePref.get_data("user_id"))) &&
                                     (!userProfile.getProfile().getRequestStatus().isAccepted()) &&
                                     (!userProfile.getProfile().getRequestStatus().isRejected())
-                                    ) {
+                                    ){
 
 
                                /* familyInfoTagTextView.setVisibility(View.VISIBLE);
@@ -659,13 +658,13 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                 finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
                                 finalResultButton.setEnabled(false);
 
-                            } else if (userProfile.getProfile().getRequestStatus().getName().
+                            } else if(userProfile.getProfile().getRequestStatus().getName().
                                     equals("profile request") &&
                                     (userProfile.getProfile().getRequestStatus().getSender() ==
                                             Integer.parseInt(sharePref.get_data("user_id"))) &&
                                     (!userProfile.getProfile().getRequestStatus().isAccepted()) &&
                                     (userProfile.getProfile().getRequestStatus().isRejected())
-                                    ) {
+                                    ){
 
 
                                 /*familyInfoTagTextView.setVisibility(View.VISIBLE);
@@ -914,7 +913,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
                             }
-                            if (progressDialog.isShowing()) {
+                            if (progressDialog.isShowing()){
                                 progressDialog.dismiss();
                             }
                         }
@@ -951,10 +950,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v){
 
 
-        if (v.getTag().equals(Utils.profileRequestAccept)) {
+        if (v.getTag().equals(Utils.profileRequestAccept)){
 
             new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
                             userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/accept",
@@ -975,7 +974,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
             application.setEvent("Action", "Click", userProfile.getProfile().getRequestStatus().getMessage(), mTracker);
 
-        } else if (v.getTag().equals(Utils.sendCommunicationRequest)) {
+        } else if (v.getTag().equals(Utils.sendCommunicationRequest)){
 
             NetWorkOperation.createCommunicationReqeust(NewUserProfileActivity.this,
                     Utils.COMMUNICATION_REQUEST_URL,
@@ -1073,8 +1072,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             else
                 startActivity(intent);
         }
-
-
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

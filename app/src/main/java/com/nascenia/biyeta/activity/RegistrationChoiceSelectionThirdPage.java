@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import com.nascenia.biyeta.R;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -26,10 +28,18 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
     public static int marriage = -1;
     public static int religion = -1;
     public static int selectedPopUp = 0;
+    int currentStep;
+    String constant;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        final Intent intent = getIntent();
+        constant = intent.getStringExtra("constant");
+
+        currentStep = 6;
+
         setContentView(R.layout.activity_registration_choice_selection_third_page);
         rangeView_namaj = (SimpleRangeView) findViewById(R.id.namaj);
         rangeView_roja = (SimpleRangeView) findViewById(R.id.roja);
@@ -60,7 +70,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
         jobLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 selectedPopUp = 1;
                 startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this, PopUpChoiceSelectionThirdPage.class ));
             }
