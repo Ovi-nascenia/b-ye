@@ -44,17 +44,13 @@ public class PopUpCastReligion extends AppCompatActivity {
     String[] christianCastName = new String[christianCast.size()];
     ArrayList<String> christianCastConstant = new ArrayList<String>();
 
-    String[] buddistCast = new String[]{};
-    String[] anotherCast = new String[]{};
-
-    String[][] allCast =new String[][]{{"শিয়া","সুন্নি","অন্যান্য"},{"ব্রাহ্মণ","ক্ষত্রিয়","বৈশ্য","শূদ্র"},{},{"ক্যাথলিক","প্রোটেস্টেন্ট"},{}};
     NumberPicker religionPicker;
     NumberPicker castPicker;
     EditText cast;
     EditText religion;
     Button accept,reject;
-    int religionValue;
-    int castValue;
+    int religionValue = 0;
+    int castValue = 0;
     String constant;
     JSONObject religionObject, muslimCastObject, hinduCastObject, christianCastObject;
 
@@ -63,14 +59,10 @@ public class PopUpCastReligion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
 
-        if(extras.containsKey("constants")){
-            String defaultValue = "";
-            constant = extras.getString("constants", defaultValue);
-        }
+        constant = extras.getString("constants");
 
         try {
             JSONObject jsonObject = new JSONObject(constant);
-            Toast.makeText(PopUpCastReligion.this,constant,Toast.LENGTH_LONG).show();
 
             religionObject = jsonObject.getJSONObject("religion_constant");
             muslimCastObject = jsonObject.getJSONObject("muslim_cast");
@@ -108,7 +100,7 @@ public class PopUpCastReligion extends AppCompatActivity {
 
             christianCastName = christianCast.toArray(christianCastName);
 
-        } catch (JSONException e) {
+        }catch (JSONException e){
             e.printStackTrace();
         }
 
@@ -148,50 +140,96 @@ public class PopUpCastReligion extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.8),(int)(height*.7));
 
-        accept.setOnClickListener(new View.OnClickListener() {
+        accept.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                if(religionValue == 0 && castValue == 2)
-                {
-                    RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", " + cast.getText());
-                    RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
-                    RegistrationOwnInfo.otherCast = cast.getText().toString();
-                }
-                else if(religionValue != 2 && religionValue != 4){
+            public void onClick(View v){
 
-                    if(religionValue ==0){
-                        RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", "+muslimCastName[castValue]);
-                        RegistrationOwnInfo.castValue = muslimCastConstant.get(castValue);
+                if(RegistrationOwnInfo.castReligionOwn ==1){
+                    if(religionValue == 0 && castValue == 2)
+                    {
+                        RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", " + cast.getText());
+                        RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
+                        RegistrationOwnInfo.otherCast = cast.getText().toString();
                     }
-                    else if(religionValue == 1){
-                        RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", "+hinduCastName[castValue]);
-                        RegistrationOwnInfo.castValue = hinduCastConstant.get(castValue);
+                    else if(religionValue != 2 && religionValue != 4){
+
+                        if(religionValue ==0){
+                            RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", "+muslimCastName[castValue]);
+                            RegistrationOwnInfo.castValue = muslimCastConstant.get(castValue);
+                        }
+                        else if(religionValue == 1){
+                            RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", "+hinduCastName[castValue]);
+                            RegistrationOwnInfo.castValue = hinduCastConstant.get(castValue);
+                        }
+                        else if(religionValue == 3){
+                            RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", "+christianCastName[castValue]);
+                            RegistrationOwnInfo.castValue = christianCastConstant.get(castValue);
+                        }
+
+                        RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
+
                     }
-                    else if(religionValue==3){
-                        RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", "+christianCastName[castValue]);
-                        RegistrationOwnInfo.castValue = christianCastConstant.get(castValue);
+                    else if(religionValue == 2){
+                        RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]);
+                        RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
                     }
-
-                    RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
-
-                }
-                else if(religionValue == 2)
-                {
-                    RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]);
-                    RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
-                }
-                else if(religionValue == 4){
-                    RegistrationOwnInfo.castReligionText.setText(religion.getText());
-                    RegistrationOwnInfo.otherReligion = religion.getText().toString();
+                    else if(religionValue == 4){
+                        RegistrationOwnInfo.castReligionText.setText(religion.getText());
+                        RegistrationOwnInfo.otherReligion = religion.getText().toString();
+                    }
                 }
 
+                if(RegistrationChoiceSelectionThirdPage.castReligionChoice == 1){
+                    if(religionValue == 0 && castValue == 2)
+                    {
+                        RegistrationChoiceSelectionThirdPage.castReligionText.setText(religionName[religionValue]+", " + cast.getText());
+                        RegistrationChoiceSelectionThirdPage.religionValue = dataConstant.get(religionValue);
+                        RegistrationChoiceSelectionThirdPage.otherCast = cast.getText().toString();
+                    }
+                    else if(religionValue != 2 && religionValue != 4){
+
+                        if(religionValue ==0){
+                            RegistrationChoiceSelectionThirdPage.castReligionText.setText(religionName[religionValue]+", "+muslimCastName[castValue]);
+                            RegistrationChoiceSelectionThirdPage.castValue = muslimCastConstant.get(castValue);
+                        }
+                        else if(religionValue == 1){
+                            RegistrationChoiceSelectionThirdPage.castReligionText.setText(religionName[religionValue]+", "+hinduCastName[castValue]);
+                            RegistrationChoiceSelectionThirdPage.castValue = hinduCastConstant.get(castValue);
+                        }
+                        else if(religionValue == 3){
+                            RegistrationChoiceSelectionThirdPage.castReligionText.setText(religionName[religionValue]+", "+christianCastName[castValue]);
+                            RegistrationChoiceSelectionThirdPage.castValue = christianCastConstant.get(castValue);
+                        }
+
+                        RegistrationChoiceSelectionThirdPage.religionValue = dataConstant.get(religionValue);
+
+                    }
+                    else if(religionValue == 2){
+                        RegistrationChoiceSelectionThirdPage.castReligionText.setText(religionName[religionValue]);
+                        RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
+                    }
+                    else if(religionValue == 4){
+                        RegistrationChoiceSelectionThirdPage.castReligionText.setText(religion.getText());
+                        RegistrationChoiceSelectionThirdPage.otherReligion = religion.getText().toString();
+                    }
+                }
+
+                if(religionValue == 0){
+                    RegistrationChoiceSelectionThirdPage.onlyForMuslimLayout.setVisibility(View.VISIBLE);
+                }
+
+                RegistrationOwnInfo.castReligionOwn = 0 ;
+                RegistrationChoiceSelectionThirdPage.castReligionChoice = 0;
                 finish();
             }
         });
 
-        reject.setOnClickListener(new View.OnClickListener() {
+        reject.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
+
+                RegistrationOwnInfo.castReligionOwn = 0 ;
+                RegistrationChoiceSelectionThirdPage.castReligionChoice = 0;
                 finish();
             }
         });
@@ -203,7 +241,7 @@ public class PopUpCastReligion extends AppCompatActivity {
 
     private class RligionListListener implements NumberPicker.OnValueChangeListener {
         @Override
-        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal){
             //get new value and convert it to String
             //if you want to use variable value elsewhere, declare it as a field
             //of your main function

@@ -1,5 +1,4 @@
 package com.nascenia.biyeta.activity;
-
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,6 +14,7 @@ import android.widget.NumberPicker;
 import com.nascenia.biyeta.R;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
 
@@ -34,13 +34,13 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
 
         if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 1 ){
             RegistrationChoiceSelectionThirdPage.job = 1;
-            data = RegistrationChoiceSelectionThirdPage.jobArray;
+            data = RegistrationChoiceSelectionThirdPage.jobArray.toArray(data);
         }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 2){
             RegistrationChoiceSelectionThirdPage.marriage = 1;
-            data = RegistrationChoiceSelectionThirdPage.marriageArray;
+            data = RegistrationChoiceSelectionThirdPage.marriageArray.toArray(data);
         }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
             RegistrationChoiceSelectionThirdPage.religion = 1;
-            data = RegistrationChoiceSelectionThirdPage.religionArray;
+            data = RegistrationChoiceSelectionThirdPage.religionArray.toArray(data);
         }
 
         picker.setMinValue(0);
@@ -59,7 +59,7 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.8),(int)(height*.6));
 
-        accept.setOnClickListener(new View.OnClickListener() {
+        accept.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 finish();

@@ -613,7 +613,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
         TextView status;
 
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView){
             super(itemView);
             imageFav = (ImageView) itemView.findViewById(R.id.profile_image_fav);
             userNameFav = (TextView) itemView.findViewById(R.id.user_name_fav);

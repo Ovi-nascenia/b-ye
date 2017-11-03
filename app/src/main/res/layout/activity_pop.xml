@@ -64,7 +64,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/text_edit"
+        android:id="@+id/cast_religion"
         android:layout_below="@id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
 
     <LinearLayout
         android:id="@+id/Button"
-        android:layout_below="@id/text_edit"
+        android:layout_below="@id/cast_religion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

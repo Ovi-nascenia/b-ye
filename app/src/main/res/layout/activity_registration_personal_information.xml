@@ -163,6 +163,7 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/subject_text"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="বিষয়"
@@ -176,6 +177,7 @@
             android:singleLine="true"/>
 
         <EditText
+            android:id="@+id/institution_text"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="প্রতিষ্ঠান"
@@ -264,6 +266,7 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/designation_text"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="পদবী"
@@ -276,6 +279,7 @@
             android:layout_marginBottom="10dp"
             android:singleLine="true"/>
         <EditText
+            android:id="@+id/occupation_institution_text"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="প্রতিষ্ঠান"

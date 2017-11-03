@@ -30,6 +30,8 @@ public class RegistrationOwnInfo extends AppCompatActivity {
     ImageView back;
     public static String castValue,religionValue,otherReligion,otherCast;
     public int flag=0;
+
+    public static int castReligionOwn = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,7 @@ public class RegistrationOwnInfo extends AppCompatActivity {
         castReligion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                castReligionOwn = 1;
                 Intent intent = new Intent(RegistrationOwnInfo.this, PopUpCastReligion.class );
                 intent.putExtra("constants",constants);
                 startActivity(intent);

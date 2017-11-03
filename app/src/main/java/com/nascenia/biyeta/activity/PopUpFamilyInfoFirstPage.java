@@ -33,16 +33,16 @@ public class PopUpFamilyInfoFirstPage extends AppCompatActivity {
 
         if(RegistrationFamilyInfoFirstPage.selectedPopUp == 1 ){
             RegistrationFamilyInfoFirstPage.professionFather = 1;
-            data = RegistrationFamilyInfoFirstPage.professionArray;
+            data = RegistrationFamilyInfoFirstPage.occupationName;
         }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 2){
             RegistrationFamilyInfoFirstPage.professionalGroupFather = 1;
-            data = RegistrationFamilyInfoFirstPage.professonalGroupArray;
+            data = RegistrationFamilyInfoFirstPage.professonalGroupName;
         }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 3){
             RegistrationFamilyInfoFirstPage.professionMother = 1;
-            data = RegistrationFamilyInfoFirstPage.professionArray;
+            data = RegistrationFamilyInfoFirstPage.occupationName;
         }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 4){
             RegistrationFamilyInfoFirstPage.professionalGroupMother = 1;
-            data = RegistrationFamilyInfoFirstPage.professonalGroupArray;
+            data = RegistrationFamilyInfoFirstPage.professonalGroupName;
         }
 
         picker.setMinValue(0);
@@ -64,14 +64,14 @@ public class PopUpFamilyInfoFirstPage extends AppCompatActivity {
 
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 finish();
             }
         });
 
-        reject.setOnClickListener(new View.OnClickListener() {
+        reject.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 if(RegistrationFamilyInfoFirstPage.selectedPopUp == 1 ){
                     RegistrationFamilyInfoFirstPage.professionFather = -1;
                 }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 2){

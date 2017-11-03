@@ -79,6 +79,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     String imei = null;
 
     public static int currentPageRegistration = 9;
+
+    public static String gender;
     //icon image
     //big image load through glide
     ImageView icon;
@@ -727,7 +729,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
-            Intent signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
+            gender = "male";
+            Intent signupIntent = new Intent(Login.this, RegistrationPersonalInformation.class);
             signupIntent.putExtra("constant",s);
             startActivity(signupIntent);
         }
@@ -735,7 +738,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected String doInBackground(String... parameters){
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + "6")
+                    .url(Utils.STEP_CONSTANT_FETCH + "7")
                     .build();
             try {
                 Response response = client.newCall(request).execute();

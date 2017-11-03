@@ -33,28 +33,28 @@ public class PopUpPersonalInfo extends AppCompatActivity {
 
         if(RegistrationPersonalInformation.selectedPopUp == 1 ){
             RegistrationPersonalInformation.marriage = 1;
-            data = RegistrationPersonalInformation.marriageArray;
+            data = RegistrationPersonalInformation.maritalStatusName;
         }else if(RegistrationPersonalInformation.selectedPopUp == 2){
             RegistrationPersonalInformation.education = 1;
-            data = RegistrationPersonalInformation.educationArray;
+            data = RegistrationPersonalInformation.educationName;
         }else if(RegistrationPersonalInformation.selectedPopUp == 3){
             RegistrationPersonalInformation.profession = 1;
-            data = RegistrationPersonalInformation.professionArray;
+            data = RegistrationPersonalInformation.occupationName;
         }else if(RegistrationPersonalInformation.selectedPopUp == 4){
             RegistrationPersonalInformation.religion = 1;
-            data = RegistrationPersonalInformation.religionArray;
+            data = RegistrationPersonalInformation.religionName;
         }else if(RegistrationPersonalInformation.selectedPopUp == 5){
             RegistrationPersonalInformation.roja =1;
-            data = RegistrationPersonalInformation.rojaArray;
+            data = RegistrationPersonalInformation.rojaName;
         }else if(RegistrationPersonalInformation.selectedPopUp == 6){
             RegistrationPersonalInformation.disable =1;
-            data = RegistrationPersonalInformation.disableArray;
+            data = RegistrationPersonalInformation.disableName;
         }else if(RegistrationPersonalInformation.selectedPopUp == 7){
             RegistrationPersonalInformation.smoke = 1;
-            data = RegistrationPersonalInformation.smokeArray;
+            data = RegistrationPersonalInformation.smokeName;
         }else if(RegistrationPersonalInformation.selectedPopUp == 8){
             RegistrationPersonalInformation.professonalGroup = 1;
-            data = RegistrationPersonalInformation.professonalGroupArray;
+            data = RegistrationPersonalInformation.professonalGroupName;
         }
 
         picker.setMinValue(0);

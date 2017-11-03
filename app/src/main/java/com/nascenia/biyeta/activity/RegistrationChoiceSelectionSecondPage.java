@@ -32,7 +32,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
+public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
     public String constant;
     public int currentStep;
     LinearLayout l1;
@@ -45,6 +45,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
     ArrayList<String> districtSelectedArray;
 
     Button next;
+
 
     int dhakaDivisionCheckboxColor = 0;
 
@@ -167,11 +168,13 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 
             currentStep = 5;
 
-        } catch (JSONException e){
+        } catch(JSONException e){
             e.printStackTrace();
         }
 
         setContentView(R.layout.activity_registration_choice_selection_second_page);
+
+
 
         LinearLayout linear1 = (LinearLayout) findViewById(R.id.l1);
 
