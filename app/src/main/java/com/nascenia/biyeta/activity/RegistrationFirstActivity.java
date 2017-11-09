@@ -1,5 +1,6 @@
 package com.nascenia.biyeta.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -35,6 +36,7 @@ import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.model.loginInfromation.LoginInformation;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -47,6 +49,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -62,15 +65,27 @@ public class RegistrationFirstActivity extends AppCompatActivity {
     EditText email_edit_text, password_edit_text, name_edit_text, display_name_edit_text;
     OkHttpClient client;
 
-    private String provider = "";
     private String signInProviderGivenUserId = "";
 
     private static int genderValue = -1;
 
 
+    private String email;
+    private String realName;
+    private String displayName;
+    private String searchingFor;
+    private String createdBy;
+    private String uid;
+    private String provider;
+    private String profilePic;
+    private String gender;
+    private String mobileNumber;
+
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_first);
         client = new OkHttpClient();
@@ -219,7 +234,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 try {
-                                    String uid = loginResult.getAccessToken().getUserId();
+                                    uid = loginResult.getAccessToken().getUserId();
                                     showFacebookSignInResultDataOnView(object);
 
 
@@ -234,7 +249,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                 request.executeAsync();
 
                 //isFacebookLoginComplete = true;
-                LoginManager.getInstance().logOut();
+                //LoginManager.getInstance().logOut();
             }
 
             @Override
@@ -261,22 +276,94 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         confirmPasswordTextInputLayout.setVisibility(View.GONE);*/
 
         if (object.has("email")) {
+            email = object.getString("email");
+        }
 
+        if (object.has("first_name")) {
+            realName = object.getString("first_name");
         }
         if (object.has("last_name")) {
-            Toast.makeText(this,"done",Toast.LENGTH_LONG).show();
-        }
-        if (object.has("first_name")) {
+            realName= realName+" "+object.getString("last_name");
+            displayName = object.getString("last_name");
 
         }
 
-        if (object.has("gender")) {
+        if(object.has("gender")){
+            gender = object.getString("gender");
+            if(gender.equals("male")){
+                searchingFor = "female";
+            }
+            else if(gender.equals("female")){
+                searchingFor = "male";
+            }
+        }
+
+        if(object.has("birthday")){
 
         }
-        if (object.has("birthday")) {
 
-        }
+        provider = "facebook";
+        profilePic = "";
+        createdBy = "own";
+        mobileNumber = "";
 
+        String fbSignUp = new StringBuilder().append("{")
+                .append("\"facebook_auth\":")
+                .append("{")
+                .append("\"email\":")
+                .append("\"")
+                .append(email)
+                .append("\"")
+                .append(",")
+                .append("\"real_name\":")
+                .append("\"")
+                .append(realName)
+                .append("\"")
+                .append(",")
+                .append("\"display_name\":")
+                .append("\"")
+                .append(displayName)
+                .append("\"")
+                .append(",")
+                .append("\"mobile_number\":")
+                .append("\"")
+                .append("")
+                .append("\"")
+                .append(",")
+                .append("\"searching_for\":")
+                .append("\"")
+                .append(searchingFor)
+                .append("\"")
+                .append(",")
+                .append("\"created_by\":")
+                .append("\"")
+                .append(createdBy)
+                .append("\"")
+                .append(",")
+                .append("\"uid\":")
+                .append("\"")
+                .append(uid)
+                .append("\"")
+                .append(",")
+                .append("\"provider\":")
+                .append("\"")
+                .append(provider)
+                .append("\"")
+                .append(",")
+                .append("\"profile_pic\":")
+                .append("\"")
+                .append("")
+                .append("\"")
+                .append(",")
+                .append("\"gender\":")
+                .append("\"")
+                .append(gender)
+                .append("\"")
+                .append("}")
+                .append("}").toString();
+
+        Toast.makeText(RegistrationFirstActivity.this,fbSignUp ,Toast.LENGTH_LONG).show();
+        new RegistrationFirstActivity.FbRegistration().execute(fbSignUp, Utils.FB_SIGNUP);
 
 
     }
@@ -299,7 +386,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
             //Log.e("LoginData", s);
-            if (s == null) {
+            if (s == null){
                 Utils.ShowAlert(RegistrationFirstActivity.this, getString(R.string.no_internet_connection));
             } else {
 
@@ -307,25 +394,25 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     //convert string to json object
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Token", s);
-                    if (jsonObject.has("errors")) {
+                    if (jsonObject.has("errors")){
                         Utils.ShowAlert(RegistrationFirstActivity.this, jsonObject.getJSONObject("errors").getString("detail"));
                         email_edit_text.requestFocus();
 
                     }
                     else{
-                        sharePref.set_data("registration_token",jsonObject.getString("auth_token") );
+                        sharePref.set_data("registration_token",jsonObject.getString("auth_token"));
                         Intent mobileVerification = new Intent(RegistrationFirstActivity.this, MobileVarification.class);
                         startActivity(mobileVerification);
                     }
 
-                } catch (Exception e){
+                }catch(Exception e){
 
                 }
             }
         }
 
         @Override
-        protected String doInBackground(String... parameters) {
+        protected String doInBackground(String... parameters){
             String email = parameters[0];
             String password = parameters[1];
             String realName = parameters[2];
@@ -375,6 +462,68 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
 
 
+    class FbRegistration extends AsyncTask<String, String, String> {
+        ProgressDialog progress = new ProgressDialog(RegistrationFirstActivity.this);;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.setMessage(getResources().getString(R.string.progress_dialog_message));
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setIndeterminate(true);
+            if ( !progress.isShowing() )
+                progress.show();
+        }
 
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            try {
+                progress.cancel();
+                JSONObject jsonObject=new JSONObject(s);
+                Log.e("Response",s);
+                if(jsonObject.has("errors"))
+                {
+                    jsonObject.getJSONObject("errors").getString("detail");
+                    Toast.makeText(RegistrationFirstActivity.this, jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Intent intent = new Intent(RegistrationFirstActivity.this,Login.class);
+                    startActivity(intent);
+                }
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... strings){
+            SharePref sharePref = new SharePref(RegistrationFirstActivity.this);
+            final String token = sharePref.get_data("registration_token");
+
+            Log.e("Test", strings[0]);
+
+            MediaType JSON
+                    = MediaType.parse("application/json; charset=utf-8");
+
+            OkHttpClient client = new OkHttpClient();
+
+            RequestBody body = RequestBody.create(JSON,strings[0]);
+            Request request = new Request.Builder()
+                    .url(strings[1])
+                    .post(body)
+                    .build();
+            Response response = null;
+            String responseString = null;
+            try {
+                response = client.newCall(request).execute();
+                responseString = response.body().string();
+            }catch (IOException e){
+                e.printStackTrace();
+//                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
+            }
+            return responseString;
+        }
+    }
 
 }

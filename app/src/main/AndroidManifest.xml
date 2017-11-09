@@ -187,7 +187,8 @@
         <activity
             android:name=".activity.RegistrationChoiceSelectionSecondPage"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ImageUpload"></activity>
+        <activity android:name=".activity.ImageUpload" />
+        <activity android:name=".activity.ImageCrop"></activity>
     </application>
 
 </manifest>

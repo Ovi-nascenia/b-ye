@@ -73,17 +73,17 @@ public class ImageChoose extends Activity {
 
         new MyTask().execute();
 
-        images.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        images.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> parent,
-                                    View v, int position, long id) {
+                                    View v, int position, long id){
                 if(position==0){
                     Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     File file = getFile();
-                    camera_intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(file));
+                    camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
                     startActivityForResult(camera_intent,CAMERA_REQUEST);
                 }
                 else{
-                    Intent i = new Intent(getApplicationContext(), SelectedImageActivity.class);
+                    Intent i = new Intent(getApplicationContext(), ImageCrop.class);
                     i.putExtra("image_url", imagesArray.get(position - 1));
                     startActivity(i);
                 }
@@ -97,25 +97,22 @@ public class ImageChoose extends Activity {
 
 
     private class MyTask extends AsyncTask<Void, Void, Boolean> {
-
-
-
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute(){
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
             images.setVisibility(View.GONE);
         }
 
         @Override
-        protected void onPostExecute(Boolean status) {
+        protected void onPostExecute(Boolean status){
             super.onPostExecute(status);
             progressBar.setVisibility(View.GONE);
             images.setVisibility(View.VISIBLE);
             images.setAdapter(new ImageAdapterGridView(ImageChoose.this));
         }
 
-        protected Boolean doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params){
             imagesArray = getFilePaths();
             bitmapArray = new Bitmap[imagesArray.size()+1];
             Bitmap icon= BitmapFactory.decodeResource(ImageChoose.this.getResources(),
@@ -165,7 +162,7 @@ public class ImageChoose extends Activity {
         String path = "sdcard/camera_app/cam_image.jpg";
 
         if(resultCode == RESULT_OK){
-            Intent i = new Intent(getApplicationContext(), SelectedImageActivity.class);
+            Intent i = new Intent(getApplicationContext(), ImageCrop.class);
             i.putExtra("image_url", path);
             startActivity(i);
         }

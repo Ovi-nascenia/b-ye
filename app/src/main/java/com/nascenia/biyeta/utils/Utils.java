@@ -64,6 +64,7 @@ public class Utils {
     public static final String VERIFICATION_CODE_VERIFY_URL = Utils.Base_URL+"/api/v1/mobile_verifications/verify_mobile";
     public static final String STEP_CONSTANT_FETCH = Utils.Base_URL+"/api/v1/step_constants/fetch/";
     public static final String SEND_INFO = Utils.Base_URL+"/api/v1/registrations";
+    public static final String FB_SIGNUP = Utils.Base_URL+"/api/v1/facebook_authorization/sign_up_with_fb";
 
 
 

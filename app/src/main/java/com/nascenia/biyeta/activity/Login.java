@@ -308,8 +308,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 CustomTabsIntent customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(this, Uri.parse(url));
                 */
-//                Intent signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
-                new Login.FetchConstant().execute();
+                Intent signupIntent = new Intent(Login.this, RegistrationFirstActivity.class);
+                //new Login.FetchConstant().execute();
+                startActivity(signupIntent);
 
 
                 break;
@@ -319,7 +320,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    void checkValidation() {
+    void checkValidation(){
 
         //get the user name from Edit text
         user_name = etUserName.getText().toString();
@@ -327,7 +328,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         password = etPassword.getText().toString();
 
         ///check the user_name and password is empty
-        if (user_name.trim().equals("") || password.trim().equals("")) {
+        if (user_name.trim().equals("") || password.trim().equals("")){
             //  Toast.makeText(Login.this,"Fill the both field",Toast.LENGTH_SHORT).show();
             Utils.ShowAlert(Login.this, "ইমেইল এবং পাসওয়ার্ড  পূরণ করুন");
 
@@ -534,7 +535,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private class LoginRequest extends AsyncTask<String, String, String> {
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String... params){
             String id = params[0];
             String password = params[1];
             String regtoken= FirebaseInstanceId.getInstance().getToken();
@@ -609,7 +610,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     }
 
                    else if (Boolean.parseBoolean(jsonObject.getJSONObject("login_information").
-                            getString("is_complete")) == true) {
+                            getString("is_complete")) == true){
 
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
@@ -619,9 +620,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                         //insert the token in Sharepreference
 
-                        try {
-
-
+                        try{
                             SharePref sharePref = new SharePref(Login.this);
 
                             sharePref.set_data("token", response.getLoginInformation().getAuthToken());
