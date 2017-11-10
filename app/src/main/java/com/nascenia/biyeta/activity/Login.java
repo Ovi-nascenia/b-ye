@@ -153,23 +153,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED){
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
 
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
 
-            } else {
+            }else{
 
                 // No explanation needed, we can request the permission.
 
                 ActivityCompat.requestPermissions(this,
                         new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         1000);
-
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
@@ -283,7 +282,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view){
 
         int id = view.getId();
         switch (id) {
@@ -308,20 +307,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 CustomTabsIntent customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(this, Uri.parse(url));
                 */
-                Intent signupIntent = new Intent(Login.this, RegistrationFirstActivity.class);
-                //new Login.FetchConstant().execute();
-                startActivity(signupIntent);
+                //Intent signupIntent = new Intent(Login.this, MobileVarification.class);
+                new Login.FetchConstant().execute();
+               // startActivity(signupIntent);
 
 
                 break;
 
         }
-
-
     }
 
     void checkValidation(){
-
         //get the user name from Edit text
         user_name = etUserName.getText().toString();
         //get the password from Edit Text
@@ -579,11 +575,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s){
             super.onPostExecute(s);
-
             //Log.e("LoginData", s);
-            if (s == null) {
+            if (s == null){
                 Utils.ShowAlert(Login.this, getString(R.string.no_internet_connection));
                 buttonSubmit.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
@@ -593,7 +588,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     //convert string to json object
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Token",s);
-                    if (jsonObject.has("errors")) {
+                    if (jsonObject.has("errors")){
                         Utils.ShowAlert(Login.this, jsonObject.getJSONArray("errors").getJSONObject(0).getString("detail"));
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
@@ -634,7 +629,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                             // check the mobile verify screen
 
-                            if (response.getLoginInformation().getMobileVerified()) {
+                            if (response.getLoginInformation().getMobileVerified()){
                                 startActivity(new Intent(Login.this, HomeScreen.class));
                                 finish();
                             } else {
@@ -642,14 +637,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 startActivity(new Intent(Login.this, MobileVerification.class));
                                 // finish();
                             }
-                        } catch (Exception e) {
+                        }catch(Exception e){
                             e.printStackTrace();
                             Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
                             buttonSubmit.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);
 //                            application.trackEception(e, "LoginRequest/onPostExecute", "Login", e.getMessage().toString(), mTracker);
                         }
-                    } else {
+                    }else{
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         Utils.ShowAlert(Login.this, getString(R.string.incomplete_profile_message));
@@ -669,7 +664,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute(){
             progressBar.setVisibility(View.VISIBLE);
             buttonSubmit.setVisibility(View.GONE);
 
@@ -683,7 +678,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private class RegistrationTokenSending extends AsyncTask<String, String, String> {
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String... params){
 
             String token= FirebaseInstanceId.getInstance().getToken();
             System.out.println("MainActivity.onCreate: " + token);
@@ -693,7 +688,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     .build();
 
             Request request = new Request.Builder()
-                    .url(Utils.REGISTRATION_TOKEN_SENDER_URL )
+                    .url(Utils.REGISTRATION_TOKEN_SENDER_URL)
                     .post(requestBody)
                     .build();
 
@@ -723,13 +718,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
 
-    public class FetchConstant extends AsyncTask<String, String, String> {
+    public class FetchConstant extends AsyncTask<String, String, String>{
 
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
             gender = "male";
-            Intent signupIntent = new Intent(Login.this, RegistrationPersonalInformation.class);
+            Intent signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
             signupIntent.putExtra("constant",s);
             startActivity(signupIntent);
         }
@@ -737,7 +732,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected String doInBackground(String... parameters){
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + "7")
+                    .url(Utils.STEP_CONSTANT_FETCH + "6")
                     .build();
             try {
                 Response response = client.newCall(request).execute();
@@ -745,7 +740,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
                 return responseString;
-            } catch (Exception e) {
+            } catch (Exception e){
                 e.printStackTrace();
 //                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
                 return null;

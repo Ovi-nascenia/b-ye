@@ -37,6 +37,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
     public static int castReligionChoice = 0;
 
     public static String religionValue, castValue, otherCast, otherReligion;
+    public static String jobAfterMarriage, maritalStatus;
 
     public static ArrayList<String> jobArray = new ArrayList<String>();
     public static ArrayList<String> jobConstant = new ArrayList<String>();
@@ -51,7 +52,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
     public static LinearLayout onlyForMuslimLayout;
 
 
-    TextView jobLabel, maritalStatusLabel, religionLabel, castLabel, namajLabel, rojaLabel, hijabLabel;
+    public static TextView jobLabel, maritalStatusLabel, religionLabel, castLabel, namajLabel, rojaLabel, hijabLabel;
     public static TextView castReligionText;
 
     SimpleRangeView rangeView_namaj, rangeView_roja, rangeView_hijab;
@@ -70,7 +71,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
         currentStep = 6;
 
-        try {
+        try{
             JSONObject jsonObject = new JSONObject(constant);
 
             JSONObject jobAfterMarriageObject = jsonObject.getJSONObject("job_after_marriage");
@@ -94,10 +95,6 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                 marriageArrayConstant.add(meritalStatusObject.names().getString(i));
                 marriageArray.add((String) meritalStatusObject.get(meritalStatusObject.names().getString(i)));
             }
-
-
-
-
 
             for(int i=0;i<prayerMaleObject.length();i++)
             {
@@ -221,14 +218,14 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         rangeView_roja.setFixedLabelColor(Color.TRANSPARENT);
         rangeView_roja.setOnTrackRangeListener(new SimpleRangeView.OnTrackRangeListener(){
             @Override
-            public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
+            public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i){
                 rangeView_roja.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_roja.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_roja.setLabelColor(Color.TRANSPARENT);
             }
 
             @Override
-            public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
+            public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i){
                 rangeView_roja.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_roja.setLabelColor(Color.TRANSPARENT);
             }
@@ -258,13 +255,13 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             }
 
             @Override
-            public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
+            public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i){
                 rangeView_hijab.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_hijab.setLabelColor(Color.TRANSPARENT);
             }
         });
 
-        rangeView_hijab.setOnRangeLabelsListener(new SimpleRangeView.OnRangeLabelsListener() {
+        rangeView_hijab.setOnRangeLabelsListener(new SimpleRangeView.OnRangeLabelsListener(){
             @org.jetbrains.annotations.Nullable
             @Override
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull SimpleRangeView.State state) {
@@ -301,7 +298,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String total = new StringBuilder().append("{")
+                String forFemale = new StringBuilder().append("{")
                         .append("\"job_permission\":")
                         .append("\"")
                        // .append()
@@ -369,5 +366,17 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                         .toString();
             }
         });
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(selectedPopUp == 1){
+            jobAfterMarriage = jobConstant.get(job - 1);
+            jobLabel.setText(jobArray.get(job-1));
+        }if(selectedPopUp == 2){
+            maritalStatus = marriageArrayConstant.get(marriage - 1);
+            maritalStatusLabel.setText(marriageArray.get(marriage - 1));
+        }
     }
 }

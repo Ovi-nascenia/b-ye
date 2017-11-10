@@ -55,7 +55,7 @@ public class MobileVerification extends CustomActionBarActivity {
     private long retry_time_diff;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mobile_verification);
         submitButton = (Button) findViewById(R.id.code_submit_button1);
@@ -64,7 +64,7 @@ public class MobileVerification extends CustomActionBarActivity {
         code_textView = (TextView) findViewById(R.id.message_code_textView2);
         resend_textView = (TextView) findViewById(R.id.again_varifycode_textView3);
         verification_code_editText = (EditText) findViewById(R.id.verifycode_editText);
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if(verification_code_editText.getVisibility() == View.VISIBLE)
@@ -75,7 +75,7 @@ public class MobileVerification extends CustomActionBarActivity {
         });
         resend_textView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 if(try_count<=3)
                     requestVerificationCode("resend");
                 else

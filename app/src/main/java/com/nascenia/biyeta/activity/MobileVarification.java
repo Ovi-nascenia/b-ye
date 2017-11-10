@@ -27,7 +27,7 @@ import net.rimoto.intlphoneinput.IntlPhoneInput;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MobileVarification extends AppCompatActivity {
+public class MobileVarification extends AppCompatActivity{
     ImageView back;
     private IntlPhoneInput phoneInputView;
     SharePref sharePref;
@@ -67,30 +67,30 @@ public class MobileVarification extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        new MobileVarification.VerifyCode().execute(verificationId,verificationCode.getText().toString(),phoneInputView.getText().toString());
+                        new MobileVarification.VerifyCode().execute(verificationId,verificationCode.getText().toString(),sharePref.get_data("mobile_number"));
                     }
                 }
         );
-        sendVerificationCode.setOnClickListener(new View.OnClickListener() {
+        sendVerificationCode.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 new MobileVarification.VerificationCodeSend().execute(phoneInputView.getText().toString());
             }
         });
 
-        resendCode.setOnClickListener(new View.OnClickListener() {
+        resendCode.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                new MobileVarification.VerificationCodeResend().execute().execute(phoneInputView.getText().toString(),verificationId);
+            public void onClick(View v){
+                new MobileVarification.VerificationCodeResend().execute(sharePref.get_data("mobile_number"),sharePref.get_data("verification_id"));
             }
         });
 
     }
 
 
-    public class VerificationCodeSend extends AsyncTask<String, String, String> {
+    public class VerificationCodeSend extends AsyncTask<String, String, String>{
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s){
             super.onPostExecute(s);
             Toast.makeText(MobileVarification.this,s,Toast.LENGTH_LONG).show();
 
@@ -98,12 +98,16 @@ public class MobileVarification extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(s);
                 jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number");
                 verificationId = jsonObject.getJSONObject("mobile_verification_information").getString("verification_id");
-                Toast.makeText(MobileVarification.this, jsonObject.getJSONObject("mobile_verification_information").getString("verification_id"), Toast.LENGTH_LONG).show();
+                sharePref.set_data("verification_id", jsonObject.getJSONObject("mobile_verification_information").getString("verification_id"));
+                sharePref.set_data("mobile_number",jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number"));
+                Toast.makeText(MobileVarification.this, s, Toast.LENGTH_LONG).show();
                 jsonObject.getJSONObject("mobile_verification_information").getString("server_time");
                 jsonObject.getJSONObject("mobile_verification_information").getString("again_retry_time");
                 jsonObject.getJSONObject("mobile_verification_information").getString("try_count");
                 jsonObject.getJSONObject("mobile_verification_information").getString("verification_code");
-            } catch (JSONException e) {
+                sendVerificationCode.setVisibility(View.GONE);
+
+            } catch(JSONException e){
                 e.printStackTrace();
             }
         }
@@ -118,18 +122,16 @@ public class MobileVarification extends AppCompatActivity {
 
             Request request = new Request.Builder()
                     .url(Utils.VERIFICATION_CODE_SEND_URL)
-                    .addHeader("Authorization", "Token token=" + token)
+                    .addHeader("Authorization", "Token token=" + "915af2c12b0d4c4a1c73ec6d16ec37d3")
                     .post(requestBody)
                     .build();
-
-
             try {
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();
                 Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
                 return responseString;
-            } catch (Exception e) {
+            } catch(Exception e){
                 e.printStackTrace();
 //                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
                 return null;
@@ -147,7 +149,7 @@ public class MobileVarification extends AppCompatActivity {
     public class VerificationCodeResend extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s){
             super.onPostExecute(s);
             Toast.makeText(MobileVarification.this,s,Toast.LENGTH_LONG).show();
 
@@ -156,11 +158,15 @@ public class MobileVarification extends AppCompatActivity {
                 jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number");
                 verificationId = jsonObject.getJSONObject("mobile_verification_information").getString("verification_id");
                 Toast.makeText(MobileVarification.this, jsonObject.getJSONObject("mobile_verification_information").getString("verification_id"), Toast.LENGTH_LONG).show();
-                jsonObject.getJSONObject("mobile_verification_information").getString("server_time");
-                jsonObject.getJSONObject("mobile_verification_information").getString("again_retry_time");
+                int serverTime = Integer.parseInt(jsonObject.getJSONObject("mobile_verification_information").getString("server_time"));
+                int againRetryTime =Integer.parseInt(jsonObject.getJSONObject("mobile_verification_information").getString("again_retry_time"));
+
+                if(againRetryTime > serverTime){
+                    Toast.makeText(MobileVarification.this,"cannot try now",Toast.LENGTH_LONG).show();
+                }
                 jsonObject.getJSONObject("mobile_verification_information").getString("try_count");
                 jsonObject.getJSONObject("mobile_verification_information").getString("verification_code");
-            } catch (JSONException e) {
+            }catch(JSONException e){
                 e.printStackTrace();
             }
         }
@@ -172,23 +178,23 @@ public class MobileVarification extends AppCompatActivity {
             String token = sharePref.get_data("registration_token");
 
             RequestBody requestBody = new FormEncodingBuilder()
-                    .add("mobile_number", phnNumber)
-                    .add("verification_id",verification_id)
+                    .add("mobile_number", sharePref.get_data("mobile_number"))
+                    .add("verification_id",sharePref.get_data("verification_id"))
                     .build();
 
             Request request = new Request.Builder()
                     .url(Utils.VERIFICATION_CODE_RESEND_URL)
-                    .addHeader("Authorization", "Token token=" + token)
+                    .addHeader("Authorization", "Token token=" + "915af2c12b0d4c4a1c73ec6d16ec37d3")
                     .post(requestBody)
                     .build();
 
-            try {
+            try{
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();
                 Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
                 return responseString;
-            } catch (Exception e) {
+            }catch(Exception e){
                 e.printStackTrace();
 //                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
                 return null;
@@ -205,7 +211,7 @@ public class MobileVarification extends AppCompatActivity {
     public class VerifyCode extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s){
             super.onPostExecute(s);
             Toast.makeText(MobileVarification.this,s,Toast.LENGTH_LONG).show();
             try {
@@ -215,7 +221,7 @@ public class MobileVarification extends AppCompatActivity {
                     new MobileVarification.FetchConstant().execute(jsonObject.getString("current_mobile_sign_up_step"));
                 }
 
-            }catch (JSONException e) {
+            }catch (JSONException e){
                 e.printStackTrace();
             }
         }
@@ -229,14 +235,14 @@ public class MobileVarification extends AppCompatActivity {
 
 
             RequestBody requestBody = new FormEncodingBuilder()
-                    .add("verification_id",verify_id)
                     .add("verification_code",verification_code)
-                    .add("mobile_number",mobile_number)
+                    .add("mobile_number", sharePref.get_data("mobile_number"))
+                    .add("verification_id",sharePref.get_data("verification_id"))
                     .build();
 
             Request request = new Request.Builder()
                     .url(Utils.VERIFICATION_CODE_VERIFY_URL)
-                    .addHeader("Authorization", "Token token=" + token)
+                    .addHeader("Authorization", "Token token=" + "915af2c12b0d4c4a1c73ec6d16ec37d3")
                     .post(requestBody)
                     .build();
 
@@ -279,7 +285,7 @@ public class MobileVarification extends AppCompatActivity {
                     .url(Utils.STEP_CONSTANT_FETCH + parameters[0])
                     .build();
 
-            try {
+            try{
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();
                 Log.e(Utils.LOGIN_DEBUG, responseString);
@@ -297,6 +303,4 @@ public class MobileVarification extends AppCompatActivity {
             super.onPreExecute();
         }
     }
-
-
 }

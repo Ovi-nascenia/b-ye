@@ -62,6 +62,7 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
                 finish();
             }
         });
@@ -134,17 +135,17 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
     }
 
 
-    private class ListListener implements NumberPicker.OnValueChangeListener {
+    private class ListListener implements NumberPicker.OnValueChangeListener{
         @Override
-        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-            if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 1 ){
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+            if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 1){
                 RegistrationChoiceSelectionThirdPage.job = newVal + 1;
+
             }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 2){
                 RegistrationChoiceSelectionThirdPage.marriage = newVal + 1;
             }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
                 RegistrationChoiceSelectionThirdPage.religion = newVal + 1;
             }
-
         }
     }
 

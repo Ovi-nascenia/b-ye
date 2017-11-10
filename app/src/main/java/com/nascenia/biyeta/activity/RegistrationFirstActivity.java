@@ -69,7 +69,6 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
     private static int genderValue = -1;
 
-
     private String email;
     private String realName;
     private String displayName;
@@ -220,25 +219,22 @@ public class RegistrationFirstActivity extends AppCompatActivity {
     }
 
 
-    private void onFbSignup() {
+    private void onFbSignup(){
         LoginManager.getInstance().logInWithReadPermissions(this,
                 Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
 
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(final LoginResult loginResult) {
-
+            public void onSuccess(final LoginResult loginResult){
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
+                        new GraphRequest.GraphJSONObjectCallback(){
                             @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                try {
+                            public void onCompleted(JSONObject object, GraphResponse response){
+                                try{
                                     uid = loginResult.getAccessToken().getUserId();
                                     showFacebookSignInResultDataOnView(object);
-
-
-                                } catch (Exception e) {
+                                }catch(Exception e){
                                     e.printStackTrace();
                                 }
                             }
@@ -364,23 +360,20 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
         Toast.makeText(RegistrationFirstActivity.this,fbSignUp ,Toast.LENGTH_LONG).show();
         new RegistrationFirstActivity.FbRegistration().execute(fbSignUp, Utils.FB_SIGNUP);
-
-
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 
 
-    public class RegistretionBasicInfoTask extends AsyncTask<String, String, String> {
+    public class RegistretionBasicInfoTask extends AsyncTask<String, String, String>{
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s){
             super.onPostExecute(s);
             Toast.makeText(RegistrationFirstActivity.this, s, Toast.LENGTH_LONG).show();
             super.onPostExecute(s);
@@ -488,6 +481,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    sharePref.set_data("registration_token",jsonObject.getString("auth_token"));
                     Intent intent = new Intent(RegistrationFirstActivity.this,Login.class);
                     startActivity(intent);
                 }

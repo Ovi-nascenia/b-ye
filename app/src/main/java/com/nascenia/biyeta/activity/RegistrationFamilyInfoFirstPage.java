@@ -275,7 +275,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
     class SendFamilyInfo extends AsyncTask<String, String, String> {
         ProgressDialog progress = new ProgressDialog(RegistrationFamilyInfoFirstPage.this);;
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute(){
             super.onPreExecute();
             progress.setMessage(getResources().getString(R.string.progress_dialog_message));
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -301,7 +301,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                     Intent intent = new Intent(RegistrationFamilyInfoFirstPage.this,Login.class);
                     startActivity(intent);
                 }
-            } catch (JSONException e){
+            }catch (JSONException e){
                 e.printStackTrace();
             }
         }
@@ -318,7 +318,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
             OkHttpClient client = new OkHttpClient();
 
-            RequestBody body = RequestBody.create(JSON,strings[0] );
+            RequestBody body = RequestBody.create(JSON,strings[0]);
             Request request = new Request.Builder()
                     .url(strings[1])
                     .addHeader("Authorization", "Token token=" + token)
@@ -329,7 +329,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             try {
                 response = client.newCall(request).execute();
                 responseString = response.body().string();
-            }catch (IOException e){
+            }catch(IOException e){
                 e.printStackTrace();
 //                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
             }
