@@ -36,6 +36,8 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
     public static int castReligionChoice = 0;
 
+    int namajStart, rojaStart, hijabStart, namajEnd, rojaEnd, hijabEnd;
+
     public static String religionValue, castValue, otherCast, otherReligion;
     public static String jobAfterMarriage, maritalStatus;
 
@@ -53,7 +55,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
 
     public static TextView jobLabel, maritalStatusLabel, religionLabel, castLabel, namajLabel, rojaLabel, hijabLabel;
-    public static TextView castReligionText;
+    public static TextView castReligionText,maritalText,jobText;
 
     SimpleRangeView rangeView_namaj, rangeView_roja, rangeView_hijab;
     public static int job = -1;
@@ -125,6 +127,9 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         rangeView_roja = (SimpleRangeView) findViewById(R.id.roja);
         rangeView_hijab = (SimpleRangeView) findViewById(R.id.hajab);
 
+        jobText = (TextView) findViewById(R.id.job_text_view);
+        maritalText = (TextView) findViewById(R.id.marital_text_view);
+
         onlyForMuslimLayout = (LinearLayout) findViewById(R.id.only_for_muslim);
         onlyForMuslimLayout.setVisibility(View.GONE);
 
@@ -186,12 +191,15 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                 rangeView_namaj.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_namaj.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_namaj.setLabelColor(Color.TRANSPARENT);
+                namajStart = rangeView_namaj.getStart();
             }
 
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i){
                 rangeView_namaj.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_namaj.setLabelColor(Color.TRANSPARENT);
+                namajEnd = rangeView_namaj.getEnd();
+
             }
         });
 
@@ -222,12 +230,15 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                 rangeView_roja.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_roja.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_roja.setLabelColor(Color.TRANSPARENT);
+                rojaStart = rangeView_roja.getStart();
             }
 
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i){
                 rangeView_roja.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_roja.setLabelColor(Color.TRANSPARENT);
+                rojaEnd = rangeView_roja.getEnd();
+
             }
         });
 
@@ -252,12 +263,14 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                 rangeView_hijab.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_hijab.setFixedThumbLabelColor(Color.TRANSPARENT);
                 rangeView_hijab.setLabelColor(Color.TRANSPARENT);
+                hijabStart = rangeView_hijab.getStart();
             }
 
             @Override
             public void onEndRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i){
                 rangeView_hijab.setActiveLabelColor(Color.TRANSPARENT);
                 rangeView_hijab.setLabelColor(Color.TRANSPARENT);
+                hijabEnd = rangeView_hijab.getEnd();
             }
         });
 
@@ -373,10 +386,10 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         super.onResume();
         if(selectedPopUp == 1){
             jobAfterMarriage = jobConstant.get(job - 1);
-            jobLabel.setText(jobArray.get(job-1));
+            jobText.setText(jobArray.get(job-1));
         }if(selectedPopUp == 2){
             maritalStatus = marriageArrayConstant.get(marriage - 1);
-            maritalStatusLabel.setText(marriageArray.get(marriage - 1));
+            maritalText.setText(marriageArray.get(marriage - 1));
         }
     }
 }

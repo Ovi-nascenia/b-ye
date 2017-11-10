@@ -25,7 +25,6 @@
             android:gravity="center"
             android:padding="@dimen/small_padding">
 
-
             <ImageView
                 android:id="@+id/backPreviousActivityImage"
                 android:layout_width="@dimen/small_image_size"
