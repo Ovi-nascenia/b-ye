@@ -29,6 +29,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class ImageUpload extends AppCompatActivity{
+    OkHttpClient client;
 
     int numberOfImage = 0;
 
@@ -37,7 +38,7 @@ public class ImageUpload extends AppCompatActivity{
 
     LinearLayout beforeProPicUpload, beforeBodyPicUpload, beforeOtherPicUpload, proPicChange, bodyPicChange, otherPicChange, permissionLayout;
     FrameLayout afterProPicUpload, afterBodyPicUpload, afterOtherPicUpload;
-    ImageView proPic, bodyPic, otherPic;
+    ImageView proPic, bodyPic, otherPic,back;
     public static Bitmap proPicBitmap, bodyPicBitmap, otherPicBitmap;
     Button yesButton, noButton;
 
@@ -47,7 +48,7 @@ public class ImageUpload extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_upload);
-
+        client = new OkHttpClient();
         beforeProPicUpload = (LinearLayout) findViewById(R.id.before_pro_pic_upload);
         beforeBodyPicUpload = (LinearLayout) findViewById(R.id.before_body_pic_upload);
         beforeOtherPicUpload = (LinearLayout) findViewById(R.id.before_other_pic_upload);
@@ -55,6 +56,15 @@ public class ImageUpload extends AppCompatActivity{
         proPicChange = (LinearLayout) findViewById(R.id.pro_pic_image_change);
         bodyPicChange = (LinearLayout) findViewById(R.id.body_pic_image_change);
         otherPicChange = (LinearLayout) findViewById(R.id.other_pic_image_change);
+
+        back = (ImageView) findViewById(R.id.backPreviousActivityImage);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Intent(ImageUpload.this,Login.class);
+                finish();
+            }
+        });
 
         beforeBodyPicUpload.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -124,9 +134,7 @@ public class ImageUpload extends AppCompatActivity{
                         .append("\"")
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append("\"")
                         .append(3)
-                        .append("\"")
                         .append(",")
                         .append("\"photo_type\":")
                         .append("\"")
@@ -146,9 +154,7 @@ public class ImageUpload extends AppCompatActivity{
                         .append("\"")
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append("\"")
                         .append(3)
-                        .append("\"")
                         .append(",")
                         .append("\"photo_type\":")
                         .append("\"")
@@ -168,9 +174,7 @@ public class ImageUpload extends AppCompatActivity{
                         .append("\"")
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append("\"")
                         .append(3)
-                        .append("\"")
                         .append(",")
                         .append("\"photo_type\":")
                         .append("\"")
@@ -184,14 +188,16 @@ public class ImageUpload extends AppCompatActivity{
                         .append("}").toString();
                 if(afterProPicUploadValue == 1){
                     new ImageUpload.SendPicture().execute(proPic, Utils.SEND_INFO);
+                    new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
+                    new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
                 }
 
                 if(afterBodyPicUploadValue == 1){
-                    new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
+
                 }
 
                 if(afterOtherPicUploadValue == 1){
-                    new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
+
                 }
 
 
@@ -210,9 +216,7 @@ public class ImageUpload extends AppCompatActivity{
                         .append("\"")
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append("\"")
                         .append(3)
-                        .append("\"")
                         .append(",")
                         .append("\"photo_type\":")
                         .append("\"")
@@ -232,9 +236,7 @@ public class ImageUpload extends AppCompatActivity{
                         .append("\"")
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append("\"")
                         .append(3)
-                        .append("\"")
                         .append(",")
                         .append("\"photo_type\":")
                         .append("\"")
@@ -254,9 +256,7 @@ public class ImageUpload extends AppCompatActivity{
                         .append("\"")
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append("\"")
                         .append(3)
-                        .append("\"")
                         .append(",")
                         .append("\"photo_type\":")
                         .append("\"")
@@ -271,14 +271,16 @@ public class ImageUpload extends AppCompatActivity{
 
                 if(afterProPicUploadValue == 1){
                     new ImageUpload.SendPicture().execute(proPic, Utils.SEND_INFO);
+                    new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
+                    new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
                 }
 
                 if(afterBodyPicUploadValue == 1){
-                    new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
+                   //
                 }
 
                 if(afterOtherPicUploadValue == 1){
-                    new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
+                    //
                 }
 
             }
@@ -318,6 +320,7 @@ public class ImageUpload extends AppCompatActivity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
             progress.setMessage(getResources().getString(R.string.progress_dialog_message));
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setIndeterminate(true);
@@ -328,37 +331,42 @@ public class ImageUpload extends AppCompatActivity{
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
-            try {
+            if(s == null){
                 progress.cancel();
-                JSONObject jsonObject=new JSONObject(s);
-                Log.e("Response",s);
-                if(jsonObject.has("errors"))
-                {
-                    jsonObject.getJSONObject("errors").getString("detail");
-                    Toast.makeText(ImageUpload.this, jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    numberOfImage++;
-                    if(numberOfImage==3){
-                        Intent intent = new Intent(ImageUpload.this,Login.class);
-                        startActivity(intent);
-                    }
-                }
-            } catch (JSONException e){
-                e.printStackTrace();
+                Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
             }
+            else{
+                try {
+                    progress.cancel();
+                    JSONObject jsonObject=new JSONObject(s);
+                    Log.e("Response",s);
+                    if(jsonObject.has("errors"))
+                    {
+                        jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(ImageUpload.this, jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        numberOfImage++;
+                        if(numberOfImage==3){
+                            new ImageUpload.FetchConstant().execute();
+                        }
+                    }
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+
         }
 
         @Override
         protected String doInBackground(String... strings){
             SharePref sharePref = new SharePref(ImageUpload.this);
-            final String token = sharePref.get_data("registration_token");
+            final String token = sharePref.get_data("token");
 
             Log.e("Test", strings[0]);
 
-            MediaType JSON
-                    = MediaType.parse("application/json; charset=utf-8");
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
             OkHttpClient client = new OkHttpClient();
 
@@ -378,6 +386,49 @@ public class ImageUpload extends AppCompatActivity{
 //                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
             }
             return responseString;
+        }
+    }
+
+
+
+    public class FetchConstant extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            if(s == null){
+                Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
+            }
+            else{
+                Intent signupIntent;
+                signupIntent = new Intent(ImageUpload.this, RegistrationChoiceSelectionFirstPage.class);
+                signupIntent.putExtra("constants",s);
+                startActivity(signupIntent);
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... parameters){
+            Login.currentMobileSignupStep+=1;
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e){
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
         }
     }
 }

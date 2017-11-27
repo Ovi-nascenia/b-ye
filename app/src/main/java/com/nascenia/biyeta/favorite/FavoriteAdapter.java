@@ -26,6 +26,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
 import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.activity.FavoriteActivity;
 import com.nascenia.biyeta.activity.InboxSingleChat;
 import com.nascenia.biyeta.activity.RequestSentFromMe;
 import com.nascenia.biyeta.adapter.CommunicationRequestFromMeAdapter;
@@ -64,6 +65,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
         sharePref = new SharePref(context);
         this.application = application;
         this.mTracker = mTracker;
+        this.progressDialog = new ProgressDialog(context);
     }
 
     public abstract void onClickProfile(int id, int position);
@@ -104,9 +106,9 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                 .into(holder.imageFav);
 
 
-        holder.imageFav.setOnClickListener(new View.OnClickListener() {
+        holder.imageFav.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 onClickProfile(profile.getId(), position);
             }
         });
@@ -129,16 +131,16 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                 && (profile.getRequestStatus().getAccepted() == false)
                 && (profile.getRequestStatus().getRejected() == false)
                 && (profile.getRequestStatus().getReceiver() == null)
-                && (profile.getRequestStatus().getSender() == null)) {
+                && (profile.getRequestStatus().getSender() == null)){
 
             Log.d("message 1 Profile_req", "biodata dekhun");
             holder.mRequest.setVisibility(View.VISIBLE);
             holder.mRequest.setText(profile.getRequestStatus().getMessage());
             holder.mRequest.setTag(Utils.sendBiodataRequest);
-            holder.mRequest.setOnClickListener(new View.OnClickListener() {
+            holder.mRequest.setOnClickListener(new View.OnClickListener(){
                 @Override
-                public void onClick(View v) {
-                    if (v.getTag().equals(Utils.sendBiodataRequest)) {
+                public void onClick(View v){
+                    if (v.getTag().equals(Utils.sendBiodataRequest)){
                         NetWorkOperation.createProfileReqeust(context, Utils.PROFILES_URL + profile.getId()
                                         + "/profile_request", holder.mRequest, context.getResources().getString(R.string.after_sending_biodata_request_text),
                                 application, mTracker);
@@ -147,11 +149,65 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                 }
             });
 
-        } else if (profile.getRequestStatus().getName().equals("profile request")
+        }
+
+        else if (profile.getRequestStatus().getName().equals("profile request")
+                && (profile.getRequestStatus().getReceiver()
+                == Integer.parseInt(sharePref.get_data("user_id")))
+                && (!profile.getRequestStatus().getAccepted())
+                && (!profile.getRequestStatus().getRejected())
+                && (profile.getRequestStatus().getCommunicationRequestId() == null)
+                && (profile.getRequestStatus().getExpired()==null)
+                && (profile.getRequestStatus().getReceiver()!=null)
+                && (profile.getRequestStatus().getSender()!=null)) {
+
+            Log.d("message 5 Profile_req", "biodata dekhun to you");
+            Toast.makeText(context, profile.getRequestStatus().getMessage(), Toast.LENGTH_LONG).show();
+            holder.mRequest.setVisibility(View.GONE);
+            holder.accept.setVisibility(View.VISIBLE);
+            holder.cancel.setVisibility(View.VISIBLE);
+// holder.accept.setText(profile.getRequestStatus().getMessage());
+// holder.cancel.setText(profile.getRequestStatus().getMessage());
+            holder.accept.setTag(Utils.profileRequestAccept);
+            holder.cancel.setTag(Utils.profileRequestCancel);
+            holder.accept.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    if (v.getTag().equals(Utils.profileRequestAccept)){
+
+                        new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
+                                        profile.getRequestStatus().getProfileRequestId() + "/accept",
+                                context.getResources().getString(R.string.send_communication_request_text),
+                                Utils.sendCommunicationRequest,
+                                Utils.profileRequestAccept);
+                    }
+                    application.setEvent("Action", "Click", profile.getRequestStatus().getMessage(), mTracker);
+                }
+            });
+            holder.cancel.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    if (v.getTag().equals(Utils.profileRequestCancel)){
+
+
+                        new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
+                                        profile.getRequestStatus().getProfileRequestId() + "/reject",
+                                context.getResources().getString(R.string.biodata_request_text),
+                                Utils.sendBiodataRequest,
+                                Utils.profileRequestCancel);
+
+                    }
+                    application.setEvent("Action", "Click", profile.getRequestStatus().getMessage(), mTracker);
+                }
+            });
+
+        }
+
+        else if (profile.getRequestStatus().getName().equals("profile request")
                 && (profile.getRequestStatus().getSender()
                 == Integer.parseInt(sharePref.get_data("user_id")))
                 && (!profile.getRequestStatus().getAccepted())
-                && (!profile.getRequestStatus().getRejected())) {
+                && (!profile.getRequestStatus().getRejected())){
 
             Log.d("message 2 Profile_req", "biodata dekhun from you");
             holder.mRequest.setVisibility(View.VISIBLE);
@@ -164,7 +220,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
         } else if ((profile.getRequestStatus().getName().equals("profile request"))
                 && (profile.getRequestStatus().getProfileRequestId() != null)
                 && (profile.getRequestStatus().getAccepted() == false)
-                && (profile.getRequestStatus().getRejected() == false)) {
+                && (profile.getRequestStatus().getRejected() == false)){
 
             Log.d("message 3 Profile_req", "biodata request has been sent");
             holder.mRequest.setVisibility(View.VISIBLE);
@@ -186,7 +242,9 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
             holder.mRequest.setTextColor(Color.parseColor("#716E6E"));
             holder.mRequest.setEnabled(false);
 
-        } else if (profile.getRequestStatus().getName().equals("profile request")
+        }
+
+        /*else if (profile.getRequestStatus().getName().equals("profile request")
                 && (profile.getRequestStatus().getReceiver()
                 == Integer.parseInt(sharePref.get_data("user_id")))
                 && (!profile.getRequestStatus().getAccepted())
@@ -215,10 +273,10 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                     application.setEvent("Action", "Click", profile.getRequestStatus().getMessage(), mTracker);
                 }
             });
-            holder.cancel.setOnClickListener(new View.OnClickListener() {
+            holder.cancel.setOnClickListener(new View.OnClickListener(){
                 @Override
-                public void onClick(View v) {
-                    if (v.getTag().equals(Utils.profileRequestCancel)) {
+                public void onClick(View v){
+                    if(v.getTag().equals(Utils.profileRequestCancel)){
 
 
                         new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
@@ -231,12 +289,12 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                     application.setEvent("Action", "Click", profile.getRequestStatus().getMessage(), mTracker);
                 }
             });
-
-        } else if (profile.getRequestStatus().getName().equals("profile request")
+     } */
+        else if (profile.getRequestStatus().getName().equals("profile request")
                 && (profile.getRequestStatus().getReceiver()
                 == Integer.parseInt(sharePref.get_data("user_id")))
                 && (!profile.getRequestStatus().getAccepted())
-                && (profile.getRequestStatus().getRejected())) {
+                && (profile.getRequestStatus().getRejected())){
 
             Log.d("message 6 Profile_req", "ami reject korsi");
             Toast.makeText(context, profile.getRequestStatus().getMessage(), Toast.LENGTH_LONG).show();
@@ -491,7 +549,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
             } else if (profile.getRequestStatus().getName().equals("communication request")
                     && (profile.getRequestStatus().getReceiver()
                     == Integer.parseInt(sharePref.get_data("user_id")))
-                    && (profile.getRequestStatus().getRejected())) {
+                    && (profile.getRequestStatus().getRejected())){
 
                 holder.mRequest.setEnabled(true);
                 holder.mRequest.setVisibility(View.VISIBLE);
@@ -499,8 +557,8 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                 holder.mRequest.setTag(Utils.sendCommunicationRequest);
                 holder.mRequest.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        if (v.getTag().equals(Utils.sendCommunicationRequest)) {
+                    public void onClick(View v){
+                        if (v.getTag().equals(Utils.sendCommunicationRequest)){
 
                             NetWorkOperation.createCommunicationReqeust(context,
                                     Utils.COMMUNICATION_REQUEST_URL,
@@ -613,7 +671,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
         TextView status;
 
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView) {
             super(itemView);
             imageFav = (ImageView) itemView.findViewById(R.id.profile_image_fav);
             userNameFav = (TextView) itemView.findViewById(R.id.user_name_fav);
@@ -633,24 +691,25 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
 
     private ProgressDialog progressDialog;
 
-    public class SendRequestTask extends AsyncTask<String, Void, String> {
+    public class SendRequestTask extends AsyncTask<String, Void, String>{
 
         String btnText;
         String btnTag;
         String userResponseCase;
-        View view;
+
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.favorite_item, null, false);
 
         ViewHolder viewHolder = new ViewHolder(view);
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute(){
             super.onPreExecute();
-
             progressDialog.show();
         }
 
         @Override
-        protected String doInBackground(String... urls) {
+        protected String doInBackground(String... urls){
             btnText = urls[1];
             btnTag = urls[2];
             userResponseCase = urls[3];
@@ -658,8 +717,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
             Response response;
             SharePref sharePref = new SharePref(context);
             String token = sharePref.get_data("token");
-            try {
-
+            try{
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
                         .url(urls[0])
@@ -670,7 +728,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
 
                 return response.body().string();
 
-            } catch (Exception e) {
+            } catch (Exception e){
                 e.printStackTrace();
 //                Log.i("asynctaskdata", e.getMessage());
 //                application.trackEception(e, "SendRequestTask/doInBackground", "FavoriteAdapter", e.getMessage().toString(), mTracker);
@@ -680,16 +738,16 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s){
             super.onPostExecute(s);
 
-            if (progressDialog.isShowing()) {
+            if (progressDialog.isShowing()){
                 progressDialog.dismiss();
             }
 
-            try {
+            try{
 
-                if (s == null) {
+                if(s == null){
                     Utils.ShowAlert(context, context.getResources().getString(R.string.no_internet_connection));
                 } else {
 
@@ -732,6 +790,9 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                     } else {
 //                        Log.i("casetest", "no case match");
                     }
+
+
+                    ((FavoriteActivity)context).callFavoriteAPI();
                 }
 
 
@@ -795,7 +856,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                 String jsonData = response.body().string();
                 return jsonData;
 
-            } catch (Exception e) {
+            } catch (Exception e){
 //                application.trackEception(e, "SendConnection/doInBackground", "FavoriteAdapter", e.getMessage().toString(), mTracker);
                 return null;
 

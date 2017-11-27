@@ -24,6 +24,8 @@ import java.net.URL;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class ImageCrop extends Activity{
+
+    public static int cropImage = 0;
     private static final float MIN_ZOOM = 1f, MAX_ZOOM = 1f;
     PhotoViewAttacher mAttacher;
 
@@ -56,10 +58,10 @@ public class ImageCrop extends Activity{
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream .toByteArray();
 
-            String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            String encoded = Base64.encodeToString(byteArray, Base64.NO_WRAP);
             Log.i("bitmap",encoded);
 
-            byte[] decodedString = Base64.decode(encoded, Base64.DEFAULT);
+            byte[] decodedString = Base64.decode(encoded, Base64.NO_WRAP);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
             if(ImageUpload.beforeProPicUploadValue == 1){
@@ -67,21 +69,21 @@ public class ImageCrop extends Activity{
                 ImageUpload.proPicBitmap = bitmap;
                 ImageUpload.beforeProPicUploadValue = 0;
 
-                ImageUpload.proPicBase64 = "data:image/jpeg;base64,"+decodedString;
+                ImageUpload.proPicBase64 = "data:image/jpeg;base64,"+encoded;
             }
             else if(ImageUpload.beforeBodyPicUploadValue == 1){
                 ImageUpload.afterBodyPicUploadValue = 1;
                 ImageUpload.bodyPicBitmap = bitmap;
                 ImageUpload.beforeBodyPicUploadValue = 0;
 
-                ImageUpload.bodyPicBase64 = "data:image/jpeg;base64,"+decodedString;
+                ImageUpload.bodyPicBase64 = "data:image/jpeg;base64,"+encoded;
             }
             else if(ImageUpload.beforeOtherPicUploadValue == 1){
                 ImageUpload.afterOtherPicUploadValue = 1;
                 ImageUpload.otherPicBitmap = bitmap;
                 ImageUpload.beforeOtherPicUploadValue = 0;
 
-                ImageUpload.otherPicBase64 = "data:image/jpeg;base64,"+decodedString;
+                ImageUpload.otherPicBase64 = "data:image/jpeg;base64,"+encoded;
             }
 
             view.setImageBitmap(decodedByte);
@@ -96,8 +98,11 @@ public class ImageCrop extends Activity{
                 view.setDrawingCacheEnabled(true);
                 Bitmap bmap = view.getDrawingCache();
                 Bitmap viewCapture = Bitmap.createBitmap(bmap,view.getLeft()+50, view.getTop(), view.getWidth()-100, view.getHeight());
-                view.setImageBitmap(viewCapture);
-                view.setBackgroundColor(Color.BLUE);
+                cropImage = 1;
+                finish();
+                //view.setImageBitmap(viewCapture);
+                //view.setBackgroundColor(Color.BLUE);
+
 
             }
         });

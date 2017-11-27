@@ -17,11 +17,11 @@ public class Example {
     @Expose
     private  int current_user_signed_in;
 
-    public List<Inbox> getInbox() {
+    public List<Inbox> getInbox(){
         return inbox;
     }
 
-    public void setInbox(List<Inbox> inbox) {
+    public void setInbox(List<Inbox> inbox){
         this.inbox = inbox;
     }
 

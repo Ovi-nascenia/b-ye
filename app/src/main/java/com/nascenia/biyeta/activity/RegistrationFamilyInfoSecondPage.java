@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,11 +63,12 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
     SisterViewAdapter sisterViewAdapter;
     OtherViewAdapter otherViewAdapter;
     public static int selectedPopUp = 0;
+    ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         final Intent intent = getIntent();
-        constant = intent.getStringExtra("constant");
+        constant = intent.getStringExtra("constants");
        // Toast.makeText(RegistrationFamilyInfoSecondPage.this,constant,Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_registration_family_info_second_page);
         client = new OkHttpClient();
@@ -75,6 +78,15 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
 
         sisterCountLayout = (LinearLayout) findViewById(R.id.count_sister);
         sisterNumber = (TextView) findViewById(R.id.count_text_view_sister);
+
+        back = (ImageView) findViewById(R.id.backPreviousActivityImage);
+        back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                new Intent(RegistrationFamilyInfoSecondPage.this,Login.class);
+                finish();
+            }
+        });
 
         buttonNext = (Button) findViewById(R.id.next);
 
@@ -452,7 +464,12 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
-            try {
+            if(s == null){
+                progress.cancel();
+                Utils.ShowAlert(RegistrationFamilyInfoSecondPage.this, getString(R.string.no_internet_connection));
+            }
+            else {
+                try {
                 progress.cancel();
                 JSONObject jsonObject=new JSONObject(s);
                 Log.e("Response",s);
@@ -469,12 +486,15 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
             } catch (JSONException e){
                 e.printStackTrace();
             }
+
+            }
+
         }
 
         @Override
         protected String doInBackground(String... strings){
             SharePref sharePref = new SharePref(RegistrationFamilyInfoSecondPage.this);
-            final String token = sharePref.get_data("registration_token");
+            final String token = sharePref.get_data("token");
 
             Log.e("Test", JSONResponse());
 

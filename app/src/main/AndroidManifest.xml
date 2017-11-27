@@ -26,7 +26,10 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+            android:value="@string/facebook_app_id"
+            />
+        <!--android:value="827631480631339"-->
+       <!--android:value="187871345122886"-->
 
         <activity
             android:name=".activity.SplashScreen"
@@ -130,6 +133,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.PopUpCastReligion"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarPopUp" />
 
         <service android:name=".fcm.MyFirebaseMessagingService">
@@ -146,6 +150,7 @@
 
         <activity
             android:name=".activity.MobileVarification"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.RegistrationOwnInfo"
@@ -153,42 +158,58 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.RegistrationFirstActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ImageChoose" />
+        <activity android:name=".activity.ImageChoose"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.RegistrationPersonalInformation"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.PopUpPersonalInfo"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarPopUp" />
         <activity
             android:name=".activity.RegistrationFamilyInfoFirstPage"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.PopUpFamilyInfoFirstPage"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarPopUp" />
         <activity
             android:name=".activity.RegistrationChoiceSelectionFirstPage"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.SelectedImageActivity" />
         <activity android:name=".activity.UploadImage" />
         <activity
             android:name=".activity.RegistrationChoiceSelectionThirdPage"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.PopUpChoiceSelectionThirdPage"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.RegistrationFamilyInfoSecondPage"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.PopUpFamilyInfoSecondPage"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarPopUp" />
         <activity
             android:name=".activity.RegistrationChoiceSelectionSecondPage"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ImageUpload" />
-        <activity android:name=".activity.ImageCrop"></activity>
+        <activity android:name=".activity.ImageUpload"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.ImageCrop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.text.ICUCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -285,6 +286,17 @@ public class ImageChoose extends Activity {
             for(int i=0; i < bitmapArray.length;i++)
                 mImageView.setImageBitmap(bitmapArray[position]);
             return mImageView;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(ImageCrop.cropImage==1)
+        {
+            ImageCrop.cropImage=0;
+            finish();
+
         }
     }
 }

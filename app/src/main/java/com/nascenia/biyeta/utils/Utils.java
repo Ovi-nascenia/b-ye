@@ -39,7 +39,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Created by user on 1/9/2017.
  */
 
-public class Utils {
+public class Utils{
 
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
@@ -177,12 +177,12 @@ public class Utils {
     }
 
 
-    public static String convertEnglishYearDigittoBangla(int itemvalue) {
+    public static String convertEnglishYearDigittoBangla(int itemvalue){
 
 
         String number = String.valueOf(itemvalue);
         String result = "";
-        for (int i = 0; i < number.length(); i++) {
+        for (int i = 0; i < number.length(); i++){
             result = result + getBanglaDigit(Character.digit(number.charAt(i), 10));
 
         }
@@ -333,7 +333,7 @@ public class Utils {
         view.setMaxHeight(scaledBitmap.getHeight());
     }
 
-    public static String getTime(String utcTime) {
+    public static String getTime(String utcTime){
         Calendar calendar = Calendar.getInstance(), systemCal = Calendar.getInstance();
         DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -341,12 +341,15 @@ public class Utils {
         Date date = null;
         try {
             date = utcFormat.parse(utcTime);
-        } catch (ParseException e) {
+        } catch (ParseException e){
             e.printStackTrace();
         }
 
         calendar.setTimeZone(TimeZone.getTimeZone(TimeZone.getDefault().getID()));
-        calendar.setTime(date);
+        if(date!=null){
+            calendar.setTime(date);
+        }
+
         long diffMillis = systemCal.getTimeInMillis() - calendar.getTimeInMillis();
         long diffSeconds = diffMillis / 1000;
         long diffMins = diffSeconds / 60;
@@ -358,13 +361,13 @@ public class Utils {
 
         String strTime = "";
         DateFormat dateFormat;
-        if (diffDays < 1) {
+        if (diffDays < 1){
             dateFormat = new SimpleDateFormat("hh:mm a");
             strTime = dateFormat.format(calendar.getTimeInMillis());
-        } else if (diffWeeks < 1) {
+        } else if (diffWeeks < 1){
             dateFormat = new SimpleDateFormat("E, hh:mm a");
             strTime = dateFormat.format(calendar.getTimeInMillis());
-        } else if (diffDays < 365) {
+        } else if (diffDays < 365){
             dateFormat = new SimpleDateFormat("dd MMM");
             strTime = dateFormat.format(calendar.getTimeInMillis());
         } else {

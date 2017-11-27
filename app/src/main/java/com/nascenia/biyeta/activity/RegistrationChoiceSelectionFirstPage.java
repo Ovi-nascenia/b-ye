@@ -34,6 +34,7 @@ import java.util.Map;
 import me.bendik.simplerangeview.SimpleRangeView;
 
 public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
+    OkHttpClient client;
 
     SimpleRangeView rangeView_age, rangeView_height, rangeView_color, rangeView_education, rangeView_health;
 
@@ -72,10 +73,10 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         final Intent intent = getIntent();
-        constant = intent.getStringExtra("constant");
+        constant = intent.getStringExtra("constants");
+        client = new OkHttpClient();
 
         currentStep = 4;
-
 
         try {
             JSONObject jsonObject = new JSONObject(constant);
@@ -109,21 +110,19 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         rangeView_health = (SimpleRangeView) findViewById(R.id.shape);
         rangeView_education = (SimpleRangeView) findViewById(R.id.education);
 
+
+        back = (ImageView) findViewById(R.id.backPreviousActivityImage);
+        back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                new Intent(RegistrationChoiceSelectionFirstPage.this,Login.class);
+                finish();
+            }
+        });
         age_lebel = new ArrayList<>();
         heightLebel = new ArrayList<>();
 
         next = (Button) findViewById(R.id.next);
-
-        back = (ImageView) findViewById(R.id.backPreviousActivityImage);
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-
 
         for (int i = 18; i <= 50; i++)
             age_lebel.add(i + "");
@@ -376,29 +375,35 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
-            try {
+            if(s == null){
                 progress.cancel();
-                JSONObject jsonObject=new JSONObject(s);
-                Log.e("Response",s);
-                if(jsonObject.has("errors"))
-                {
-                    jsonObject.getJSONObject("errors").getString("detail");
-                    Toast.makeText(RegistrationChoiceSelectionFirstPage.this, "error", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    Intent intent = new Intent(RegistrationChoiceSelectionFirstPage.this,Login.class);
-                    startActivity(intent);
-                }
-            } catch (JSONException e){
-                e.printStackTrace();
+                Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this, getString(R.string.no_internet_connection));
             }
+            else{
+                try {
+                    progress.cancel();
+                    JSONObject jsonObject=new JSONObject(s);
+                    Log.e("Response",s);
+                    if(jsonObject.has("errors"))
+                    {
+                        jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(RegistrationChoiceSelectionFirstPage.this, "error", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        new RegistrationChoiceSelectionFirstPage.FetchConstant().execute();
+                    }
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+
         }
 
         @Override
         protected String doInBackground(String... strings){
             SharePref sharePref = new SharePref(RegistrationChoiceSelectionFirstPage.this);
-            final String token = sharePref.get_data("registration_token");
+            final String token = sharePref.get_data("token");
 
             Log.e("Test", strings[0]);
 
@@ -424,6 +429,51 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
 //                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
             }
             return responseString;
+        }
+    }
+
+
+    public class FetchConstant extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            if(s == null){
+                Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this, getString(R.string.no_internet_connection));
+            }
+            else{
+                Intent signupIntent;
+                signupIntent = new Intent(RegistrationChoiceSelectionFirstPage.this, RegistrationChoiceSelectionSecondPage.class);
+                signupIntent.putExtra("constants",s);
+                startActivity(signupIntent);
+            }
+
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... parameters){
+            Login.currentMobileSignupStep+=1;
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e){
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
         }
     }
 }

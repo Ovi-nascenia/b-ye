@@ -76,8 +76,8 @@ public class FavoriteActivity extends CustomActionBarActivity {
         application = (AnalyticsApplication) AnalyticsApplication.getContext();
         mTracker = application.getDefaultTracker();
         mTracker.send(new HitBuilders.ScreenViewBuilder()
-        .setNewSession()
-        .build());
+                .setNewSession()
+                .build());
 
 //        actionButton= (Button) findViewById(R.id.request_biodata_fav);
         new LoadFavoriteDataConnection().execute(Utils.Base_URL+"/api/v1/favorites");
@@ -188,9 +188,8 @@ public class FavoriteActivity extends CustomActionBarActivity {
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume(){
         super.onResume();
-
         /*Google Analytics*/
         mTracker.setScreenName(getString(R.string.favorites));
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
@@ -199,8 +198,13 @@ public class FavoriteActivity extends CustomActionBarActivity {
 
 
     @Override
-    public void setUpToolBar(String title, Context context) {
+    public void setUpToolBar(String title, Context context){
         super.setUpToolBar(title, context);
+    }
+
+
+    public void callFavoriteAPI(){
+        new LoadFavoriteDataConnection().execute(Utils.Base_URL+"/api/v1/favorites");
     }
 
 

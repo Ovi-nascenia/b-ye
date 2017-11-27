@@ -243,6 +243,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new Intent(RegistrationPersonalInformation.this,Login.class);
                 finish();
             }
         });
@@ -519,23 +520,28 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
-            try {
+            if(s == null){
                 progress.cancel();
-                JSONObject jsonObject=new JSONObject(s);
-                Log.e("Response",s);
-                if(jsonObject.has("errors"))
-                {
-                    jsonObject.getJSONObject("errors").getString("detail");
-                    Toast.makeText(RegistrationPersonalInformation.this, "error", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    Intent intent = new Intent(RegistrationPersonalInformation.this,Login.class);
-                    startActivity(intent);
-                }
-            } catch (JSONException e){
-                e.printStackTrace();
+                Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
             }
+            else{
+                try {
+                    progress.cancel();
+                    JSONObject jsonObject=new JSONObject(s);
+                    Log.e("Response",s);
+                    if(jsonObject.has("errors")){
+                        jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(RegistrationPersonalInformation.this, "error", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Intent intent = new Intent(RegistrationPersonalInformation.this,Login.class);
+                        startActivity(intent);
+                    }
+                }catch(JSONException e){
+                    e.printStackTrace();
+                }
+            }
+
         }
 
         @Override

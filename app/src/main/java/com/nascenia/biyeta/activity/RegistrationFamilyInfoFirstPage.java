@@ -68,7 +68,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         final Intent intent = getIntent();
-        constant = intent.getStringExtra("constant");
+        constant = intent.getStringExtra("constants");
 
         try {
             JSONObject jsonObject = new JSONObject(constant);
@@ -239,6 +239,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new Intent(RegistrationFamilyInfoFirstPage.this,Login.class);
                 finish();
             }
         });
@@ -287,29 +288,37 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
-            try {
+            if(s == null){
                 progress.cancel();
-                JSONObject jsonObject=new JSONObject(s);
-                Log.e("Response",s);
-                if(jsonObject.has("errors"))
-                {
-                    jsonObject.getJSONObject("errors").getString("detail");
-                    Toast.makeText(RegistrationFamilyInfoFirstPage.this, "error", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    Intent intent = new Intent(RegistrationFamilyInfoFirstPage.this,Login.class);
-                    startActivity(intent);
-                }
-            }catch (JSONException e){
-                e.printStackTrace();
+                Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
             }
+            else {
+                try{
+                    progress.cancel();
+                    JSONObject jsonObject=new JSONObject(s);
+                    Log.e("Response",s);
+                    if(jsonObject.has("errors"))
+                    {
+                        jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(RegistrationFamilyInfoFirstPage.this, "error", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        //Intent intent = new Intent(RegistrationFamilyInfoFirstPage.this,Login.class);
+                        //startActivity(intent);
+                        new  RegistrationFamilyInfoFirstPage.FetchConstant().execute();
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+
         }
 
         @Override
         protected String doInBackground(String... strings){
             SharePref sharePref = new SharePref(RegistrationFamilyInfoFirstPage.this);
-            final String token = sharePref.get_data("registration_token");
+            final String token = sharePref.get_data("token");
 
             Log.e("Test", strings[0]);
 
@@ -336,5 +345,51 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             return responseString;
         }
     }
+
+    public class FetchConstant extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            if(s == null){
+                Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
+            }
+            else{
+                Intent signupIntent;
+                signupIntent = new Intent(RegistrationFamilyInfoFirstPage.this, RegistrationFamilyInfoSecondPage.class);
+                signupIntent.putExtra("constants",s);
+                startActivity(signupIntent);
+            }
+
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... parameters){
+            Login.currentMobileSignupStep+=1;
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
+                    .build();
+            try {
+                OkHttpClient client = new OkHttpClient();
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e){
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+        }
+    }
+
 
 }

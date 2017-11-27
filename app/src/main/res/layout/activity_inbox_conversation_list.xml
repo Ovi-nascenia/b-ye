@@ -78,5 +78,14 @@
             android:layout_gravity="bottom"
             android:tint="#203eea" />
     </LinearLayout>
+    <TextView
+        android:layout_marginBottom="30dp"
+        android:visibility="gone"
+        android:id="@+id/disable_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="বর্তমানে এই ব্যক্তির সাথে যোগাযোগ করা সম্ভব হচ্ছে না "
+        />
 
 </LinearLayout>

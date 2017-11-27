@@ -4,15 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="match_parent"
-        android:text="পুরাতন ব্যবহারকারী লগইন করুন"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"/>
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:facebook="http://schemas.android.com/tools"
-        android:layout_above="@id/login"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -113,7 +106,7 @@
                     android:layout_below="@id/password"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:hint="আপনার নাম"
+                    android:hint="নাম"
                     android:background="@color/white"
                     android:layout_margin="10dp"
                     android:paddingLeft="10sp"
@@ -130,10 +123,10 @@
                     android:layout_margin="10dp"
                     android:paddingLeft="10sp"
                     android:layout_weight=".8"
-                    android:singleLine="true"
-                    android:imeOptions="actionNext"/>
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"/>
 
-                <net.rimoto.intlphoneinput.IntlPhoneInput
+               <!-- <net.rimoto.intlphoneinput.IntlPhoneInput
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/numbervarifytextView1"
@@ -151,7 +144,7 @@
                     android:id="@+id/my_phone_input"
                     android:padding="5dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@id/numbervarifytextView1"/>
+                    android:layout_below="@id/numbervarifytextView1"/>-->
 
                 <Button
                     android:id="@+id/register_button"
@@ -185,6 +178,20 @@
                     android:paddingLeft="15dp"
                     android:textColor="@color/white"
                     android:layout_margin="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:height="1dp"
+                android:background="#A9A9A9"/>
+            <TextView
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:text="পুরাতন ব্যবহারকারী লগইন করুন"
+                android:layout_marginTop="20dp"
+                android:textAlignment="center"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"/>
 
 
         </LinearLayout>

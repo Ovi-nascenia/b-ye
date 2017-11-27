@@ -22,11 +22,15 @@ public class Inbox {
     @Expose
     private Integer unread;
 
-    public String getSenderName() {
+    @SerializedName("user_status")
+    @Expose
+    private Integer userStatus;
+
+    public String getSenderName(){
         return senderName;
     }
 
-    public void setSenderName(String senderName) {
+    public void setSenderName(String senderName){
         this.senderName = senderName;
     }
 
@@ -53,5 +57,15 @@ public class Inbox {
     public void setUnread(Integer unread) {
         this.unread = unread;
     }
+
+    public Integer getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(Integer userStatus) {
+        this.userStatus = userStatus;
+    }
+
+
 
 }

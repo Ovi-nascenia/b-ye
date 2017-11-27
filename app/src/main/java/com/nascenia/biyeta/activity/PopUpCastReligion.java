@@ -50,7 +50,7 @@ public class PopUpCastReligion extends AppCompatActivity {
     EditText religion;
     Button accept,reject;
     int religionValue = 0;
-    int castValue = 0;
+    static int castValue = 0;
     String constant;
     JSONObject religionObject, muslimCastObject, hinduCastObject, christianCastObject;
 
@@ -212,11 +212,14 @@ public class PopUpCastReligion extends AppCompatActivity {
                         RegistrationChoiceSelectionThirdPage.castReligionText.setText(religion.getText());
                         RegistrationChoiceSelectionThirdPage.otherReligion = religion.getText().toString();
                     }
+
+
+                    if(religionValue == 0){
+                        RegistrationChoiceSelectionThirdPage.onlyForMuslimLayout.setVisibility(View.VISIBLE);
+                    }
                 }
 
-                if(religionValue == 0){
-                    RegistrationChoiceSelectionThirdPage.onlyForMuslimLayout.setVisibility(View.VISIBLE);
-                }
+
 
                 RegistrationOwnInfo.castReligionOwn = 0 ;
                 RegistrationChoiceSelectionThirdPage.castReligionChoice = 0;
@@ -227,19 +230,16 @@ public class PopUpCastReligion extends AppCompatActivity {
         reject.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
                 RegistrationOwnInfo.castReligionOwn = 0 ;
                 RegistrationChoiceSelectionThirdPage.castReligionChoice = 0;
                 finish();
             }
         });
-
-
     }
 
 
 
-    private class RligionListListener implements NumberPicker.OnValueChangeListener {
+    private class RligionListListener implements NumberPicker.OnValueChangeListener{
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal){
             //get new value and convert it to String
@@ -311,9 +311,9 @@ public class PopUpCastReligion extends AppCompatActivity {
         }
     }
 
-    private class CastListListener implements NumberPicker.OnValueChangeListener {
+    private class CastListListener implements NumberPicker.OnValueChangeListener{
         @Override
-        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal){
             //get new value and convert it to String
             //if you want to use variable value elsewhere, declare it as a field
             //of your main function

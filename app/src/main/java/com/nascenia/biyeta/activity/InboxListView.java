@@ -110,19 +110,18 @@ public class InboxListView extends CustomActionBarActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            Log.e("test", s);
+//            Log.e("test", s);
             super.onPostExecute(s);
 
-            if (s == null) {
+            if(s == null){
                 emptyMessage.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
-            } else {
+            } else{
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.has("errors")) {
+                    if(jsonObject.has("errors")){
                         emptyMessage.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-
                     } else if (jsonObject.getJSONArray("inbox").length() == 0) {
                         emptyMessage.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);

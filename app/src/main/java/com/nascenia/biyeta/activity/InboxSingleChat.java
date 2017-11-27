@@ -73,13 +73,15 @@ public class InboxSingleChat extends CustomActionBarActivity {
     EditText editTextMesaageField;
     String userName;
     ChatHead response;
+    int userStatus;
     String messageText;
     CountDownTimer countDownTimer;
     SwipeRefreshLayout mSwipeRefreshLayout;
     ChatListAdapter inboxListAdapter;
+    TextView disableMessage;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.activity_inbox_conversation_list);
@@ -89,6 +91,7 @@ public class InboxSingleChat extends CustomActionBarActivity {
         recevier_id = intent.getIntExtra("receiver_id", 4);
         current_user_id = intent.getIntExtra("current_user", 4);
         userName = intent.getStringExtra("userName");
+        userStatus = intent.getIntExtra("userStatus",1);
         messageId = new ArrayList<>();
         setUpToolBar(userName, this);
 
@@ -122,15 +125,24 @@ public class InboxSingleChat extends CustomActionBarActivity {
             }
         };
         countDownTimer.start();
+
+
         editTextMesaageField = (EditText) findViewById(R.id.inputMsg);
+        disableMessage = (TextView) findViewById(R.id.disable_message);
+        if(userStatus==0){
+            editTextMesaageField.setVisibility(View.GONE);
+            disableMessage.setVisibility(View.VISIBLE);
+            findViewById(R.id.btnSend).setVisibility(View.GONE);
+        }
+        else{
+            editTextMesaageField.setVisibility(View.VISIBLE);
+            disableMessage.setVisibility(View.GONE);
+        }
 
-
-        findViewById(R.id.btnSend).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnSend).setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 messageText = editTextMesaageField.getText().toString().trim();
-
-
                 Log.e("InBoxText", editTextMesaageField.getText().toString());
                 TempMessage message = new TempMessage(editTextMesaageField.getText().toString(), "3-2-2017");
                 editTextMesaageField.setText("");

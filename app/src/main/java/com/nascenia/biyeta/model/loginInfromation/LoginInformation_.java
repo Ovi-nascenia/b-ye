@@ -33,6 +33,11 @@ public class LoginInformation_ {
     @Expose
     private Boolean isProfileComplete;
 
+
+    @SerializedName("current_mb_sign_up_step")
+    @Expose
+    private int currentMbSignUpStep;
+
     public Boolean getProfileComplete() {
         return isProfileComplete;
     }
@@ -95,6 +100,14 @@ public class LoginInformation_ {
 
     public void setMobileVerified(Boolean mobileVerified) {
         this.mobileVerified = mobileVerified;
+    }
+
+    public int getStep() {
+        return currentMbSignUpStep;
+    }
+
+    public void setStep(int step) {
+        this.currentMbSignUpStep = step;
     }
 
 }
