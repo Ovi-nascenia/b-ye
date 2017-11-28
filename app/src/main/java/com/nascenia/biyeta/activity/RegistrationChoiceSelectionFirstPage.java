@@ -446,6 +446,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                 signupIntent = new Intent(RegistrationChoiceSelectionFirstPage.this, RegistrationChoiceSelectionSecondPage.class);
                 signupIntent.putExtra("constants",s);
                 startActivity(signupIntent);
+                finish();
             }
 
 

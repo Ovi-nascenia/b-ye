@@ -350,6 +350,7 @@ public class ImageUpload extends AppCompatActivity{
                         numberOfImage++;
                         if(numberOfImage==3){
                             new ImageUpload.FetchConstant().execute();
+
                         }
                     }
                 } catch (JSONException e){
@@ -404,6 +405,7 @@ public class ImageUpload extends AppCompatActivity{
                 signupIntent = new Intent(ImageUpload.this, RegistrationChoiceSelectionFirstPage.class);
                 signupIntent.putExtra("constants",s);
                 startActivity(signupIntent);
+                finish();
             }
         }
 

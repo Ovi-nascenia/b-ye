@@ -115,15 +115,15 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         final Intent intent = getIntent();
-        constant = intent.getStringExtra("constant");
+        constant = intent.getStringExtra("constants");
 
         try {
             JSONObject jsonObject = new JSONObject(constant);
 
-            if(Login.gender == "female"){
+            if(Login.gender.equals("female")){
                 marriageObject = jsonObject.getJSONObject("marital_status_constant_for_male");
             }
-            else if(Login.gender == "male"){
+            else if(Login.gender.equals("male")){
                 marriageObject = jsonObject.getJSONObject("marital_status_constant_for_female");
             }
             educationObject = jsonObject.getJSONObject("education_constant");
@@ -534,8 +534,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                         Toast.makeText(RegistrationPersonalInformation.this, "error", Toast.LENGTH_LONG).show();
                     }
                     else{
-                        Intent intent = new Intent(RegistrationPersonalInformation.this,Login.class);
-                        startActivity(intent);
+                        new RegistrationPersonalInformation.FetchConstant().execute();
                     }
                 }catch(JSONException e){
                     e.printStackTrace();
@@ -572,6 +571,50 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 //                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
             }
             return responseString;
+        }
+    }
+
+
+    public class FetchConstant extends AsyncTask<String, String, String>{
+
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            if(s == null){
+                Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
+            }
+            else{
+                Intent signupIntent;
+                signupIntent = new Intent(RegistrationPersonalInformation.this, RegistrationFamilyInfoFirstPage.class);
+                signupIntent.putExtra("constants",s);
+                startActivity(signupIntent);
+                finish();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... parameters){
+            Login.currentMobileSignupStep+=1;
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
+                    .build();
+            try {
+                OkHttpClient client = new OkHttpClient();
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e){
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
         }
     }
 }

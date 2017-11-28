@@ -145,23 +145,23 @@ public class PopUpCastReligion extends AppCompatActivity {
             public void onClick(View v){
 
                 if(RegistrationOwnInfo.castReligionOwn ==1){
-                    if(religionValue == 0 && castValue == 2)
+                    if(dataConstant.get(religionValue).equals("1") && muslimCastConstant.get(castValue).equals("3"))
                     {
                         RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", " + cast.getText());
                         RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
                         RegistrationOwnInfo.otherCast = cast.getText().toString();
                     }
-                    else if(religionValue != 2 && religionValue != 4){
+                    else if(!dataConstant.get(religionValue).equals("4") && !dataConstant.get(religionValue).equals("5")){
 
-                        if(religionValue ==0){
+                        if(dataConstant.get(religionValue).equals("1")){
                             RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", "+muslimCastName[castValue]);
                             RegistrationOwnInfo.castValue = muslimCastConstant.get(castValue);
                         }
-                        else if(religionValue == 1){
+                        else if(dataConstant.get(religionValue).equals("2")){
                             RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", "+hinduCastName[castValue]);
                             RegistrationOwnInfo.castValue = hinduCastConstant.get(castValue);
                         }
-                        else if(religionValue == 3){
+                        else if(dataConstant.get(religionValue).equals("3")){
                             RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]+", "+christianCastName[castValue]);
                             RegistrationOwnInfo.castValue = christianCastConstant.get(castValue);
                         }
@@ -169,57 +169,15 @@ public class PopUpCastReligion extends AppCompatActivity {
                         RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
 
                     }
-                    else if(religionValue == 2){
+                    else if(dataConstant.get(religionValue).equals("4")){
                         RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]);
                         RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
                     }
-                    else if(religionValue == 4){
+                    else if(dataConstant.get(religionValue).equals("5")){
                         RegistrationOwnInfo.castReligionText.setText(religion.getText());
                         RegistrationOwnInfo.otherReligion = religion.getText().toString();
                     }
                 }
-
-                if(RegistrationChoiceSelectionThirdPage.castReligionChoice == 1){
-                    if(religionValue == 0 && castValue == 2)
-                    {
-                        RegistrationChoiceSelectionThirdPage.castReligionText.setText(religionName[religionValue]+", " + cast.getText());
-                        RegistrationChoiceSelectionThirdPage.religionValue = dataConstant.get(religionValue);
-                        RegistrationChoiceSelectionThirdPage.otherCast = cast.getText().toString();
-                    }
-                    else if(religionValue != 2 && religionValue != 4){
-
-                        if(religionValue ==0){
-                            RegistrationChoiceSelectionThirdPage.castReligionText.setText(religionName[religionValue]+", "+muslimCastName[castValue]);
-                            RegistrationChoiceSelectionThirdPage.castValue = muslimCastConstant.get(castValue);
-                        }
-                        else if(religionValue == 1){
-                            RegistrationChoiceSelectionThirdPage.castReligionText.setText(religionName[religionValue]+", "+hinduCastName[castValue]);
-                            RegistrationChoiceSelectionThirdPage.castValue = hinduCastConstant.get(castValue);
-                        }
-                        else if(religionValue == 3){
-                            RegistrationChoiceSelectionThirdPage.castReligionText.setText(religionName[religionValue]+", "+christianCastName[castValue]);
-                            RegistrationChoiceSelectionThirdPage.castValue = christianCastConstant.get(castValue);
-                        }
-
-                        RegistrationChoiceSelectionThirdPage.religionValue = dataConstant.get(religionValue);
-
-                    }
-                    else if(religionValue == 2){
-                        RegistrationChoiceSelectionThirdPage.castReligionText.setText(religionName[religionValue]);
-                        RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
-                    }
-                    else if(religionValue == 4){
-                        RegistrationChoiceSelectionThirdPage.castReligionText.setText(religion.getText());
-                        RegistrationChoiceSelectionThirdPage.otherReligion = religion.getText().toString();
-                    }
-
-
-                    if(religionValue == 0){
-                        RegistrationChoiceSelectionThirdPage.onlyForMuslimLayout.setVisibility(View.VISIBLE);
-                    }
-                }
-
-
 
                 RegistrationOwnInfo.castReligionOwn = 0 ;
                 RegistrationChoiceSelectionThirdPage.castReligionChoice = 0;

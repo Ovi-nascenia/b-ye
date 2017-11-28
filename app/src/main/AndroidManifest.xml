@@ -191,7 +191,7 @@
         <activity
             android:name=".activity.PopUpChoiceSelectionThirdPage"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBarPopUp" />
         <activity
             android:name=".activity.RegistrationFamilyInfoSecondPage"
             android:screenOrientation="portrait"

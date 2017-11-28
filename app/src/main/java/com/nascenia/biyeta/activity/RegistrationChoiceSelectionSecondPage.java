@@ -520,7 +520,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
             rangpurDivisionDistricts.setText(rangpurDivisionDistrict.get(i));
             rangpurDivisionDistricts.setId(Integer.parseInt(rangpurDivisionDistrictConstant.get(i)));
             final int index = i;
-            rangpurDivisionDistricts.setOnClickListener(new View.OnClickListener() {
+            rangpurDivisionDistricts.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
                     CheckBox checkBox = (CheckBox) findViewById(Integer.parseInt(rangpurDivisionDistrictConstant.get(index)));
@@ -552,9 +552,9 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
 
 
         next = (Button) findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener() {
+        next.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
 
 
 
@@ -735,7 +735,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
     }
 
 
-    public class FetchConstant extends AsyncTask<String, String, String> {
+    public class FetchConstant extends AsyncTask<String, String, String>{
 
         @Override
         protected void onPostExecute(String s){
@@ -748,6 +748,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
                 signupIntent = new Intent(RegistrationChoiceSelectionSecondPage.this, RegistrationChoiceSelectionThirdPage.class);
                 signupIntent.putExtra("constants",s);
                 startActivity(signupIntent);
+                finish();
             }
         }
 

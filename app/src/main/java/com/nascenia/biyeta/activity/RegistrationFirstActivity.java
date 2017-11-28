@@ -314,17 +314,16 @@ public class RegistrationFirstActivity extends AppCompatActivity{
                 request.setParameters(parameters);
                 request.executeAsync();
 
-                //isFacebookLoginComplete = true;
-                //LoginManager.getInstance().logOut();
+                LoginManager.getInstance().logOut();
             }
 
             @Override
-            public void onCancel() {
+            public void onCancel(){
 
             }
 
             @Override
-            public void onError(FacebookException error) {
+            public void onError(FacebookException error){
 
 //                Log.i("error", error.getMessage().toString());
 

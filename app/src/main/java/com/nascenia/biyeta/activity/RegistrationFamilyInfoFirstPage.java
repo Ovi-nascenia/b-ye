@@ -359,6 +359,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                 signupIntent = new Intent(RegistrationFamilyInfoFirstPage.this, RegistrationFamilyInfoSecondPage.class);
                 signupIntent.putExtra("constants",s);
                 startActivity(signupIntent);
+                finish();
             }
 
 

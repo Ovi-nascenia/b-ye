@@ -170,7 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="ধর্ম ও বর্ণ"
+                android:text="ধর্ম"
                 android:textColor="@color/colorPrimary" />/>
 
             <LinearLayout
@@ -191,7 +191,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="ধর্ম ও বর্ণ"
+                    android:text="ধর্ম"
                     android:textSize="18dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="15dp"/>
@@ -206,6 +206,39 @@
                     />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/cast_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="বর্ণ"
+                android:textColor="@color/colorPrimary" />/>
+
+
+            <LinearLayout
+                android:id="@+id/muslim_cast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:layout_margin="10dp"/>
+
+            <LinearLayout
+                android:id="@+id/hindu_cast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:layout_margin="10dp"/>
+
+            <LinearLayout
+                android:id="@+id/christian_cast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:layout_margin="10dp"/>
 
             <LinearLayout
                 android:id="@+id/only_for_muslim"

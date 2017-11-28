@@ -303,7 +303,8 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
             }
         });
 
-        brotherCountLayout.setOnClickListener(new View.OnClickListener() {
+        brotherCountLayout.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View v) {
                 selectedPopUp = 1;
@@ -482,6 +483,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
                 {
                     Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this,Login.class);
                     startActivity(intent);
+                    finish();
                 }
             } catch (JSONException e){
                 e.printStackTrace();

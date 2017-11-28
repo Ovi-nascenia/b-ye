@@ -32,7 +32,7 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
         reject = (Button)findViewById(R.id.cancel);
 
 
-        if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 1 ){
+        if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 1){
             RegistrationChoiceSelectionThirdPage.job = 1;
             data = RegistrationChoiceSelectionThirdPage.jobArray.toArray(data);
         }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 2){
@@ -140,10 +140,10 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
         public void onValueChange(NumberPicker picker, int oldVal, int newVal){
             if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 1){
                 RegistrationChoiceSelectionThirdPage.job = newVal + 1;
-
             }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 2){
                 RegistrationChoiceSelectionThirdPage.marriage = newVal + 1;
-            }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
+            }
+            else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
                 RegistrationChoiceSelectionThirdPage.religion = newVal + 1;
             }
         }
