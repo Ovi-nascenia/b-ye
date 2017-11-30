@@ -134,6 +134,7 @@
             android:layout_marginRight="15dp"
             android:background="@color/white"
             android:imeOptions="actionDone"
+            android:privateImeOptions="nm"
             android:gravity="top"/>
         <TextView
             android:id="@+id/label"

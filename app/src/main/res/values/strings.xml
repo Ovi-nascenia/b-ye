@@ -360,4 +360,7 @@
     <string name="own_info_edit_text">মোবাইল নাম্বার, ইমেইল বা ঠিকানা প্রদান করা থেকে বিরত থাকুন। অন্যথায় আপনার অ্যাকাউন্টটি বন্ধ করা হতে পারে।</string>
     <string name="apnar_baktigoto_tottho">আপনার ব্যক্তিগত তথ্য</string>
 
+    <string name="registration_cancel_btn_text">বাতিল করুন</string>
+    <string name="registration_accept_btn_text">সংরক্ষণ করুন</string>
+
 </resources>

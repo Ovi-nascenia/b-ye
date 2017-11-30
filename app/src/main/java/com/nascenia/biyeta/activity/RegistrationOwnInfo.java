@@ -63,6 +63,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+       Log.i("classnames",getClass().getSimpleName());
 
         setContentView(R.layout.activity_registration_own_info);
         castReligion = (LinearLayout) findViewById(R.id.castReligion);
