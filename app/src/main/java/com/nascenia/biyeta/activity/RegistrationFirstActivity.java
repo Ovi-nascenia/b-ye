@@ -16,10 +16,13 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,6 +88,7 @@ public class RegistrationFirstActivity extends AppCompatActivity{
     private String gender;
     private String mobileNumber;
 
+    private ScrollView parentScrollView;
 
 
 
@@ -92,10 +96,13 @@ public class RegistrationFirstActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_first);
+
         client = new OkHttpClient();
         male = (Button) findViewById(R.id.man);
         female = (Button) findViewById(R.id.woman);
         callbackManager = CallbackManager.Factory.create();
+
+        parentScrollView= (ScrollView) findViewById(R.id.scrollView);
 
         email_edit_text = (EditText) findViewById(R.id.email);
 
@@ -112,6 +119,20 @@ public class RegistrationFirstActivity extends AppCompatActivity{
         buttonLogin = (TextView) findViewById(R.id.login);
 
          sharePref= new SharePref(RegistrationFirstActivity.this);
+
+
+        display_name_edit_text.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                   // setScrollPosition(View.FOCUS_DOWN);
+                }else{
+                    //setScrollPosition(View.FOCUS_UP);
+                }
+
+
+            }
+        });
 
         male.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -286,6 +307,22 @@ public class RegistrationFirstActivity extends AppCompatActivity{
         });
 
 
+    }
+
+    private void setScrollPosition(final int focus) {
+
+        parentScrollView.getViewTreeObserver().
+                addOnGlobalLayoutListener(
+                        new ViewTreeObserver.OnGlobalLayoutListener() {
+                            @Override
+                            public void onGlobalLayout() {
+                                parentScrollView.post(new Runnable() {
+                                    public void run() {
+                                        parentScrollView.fullScroll(focus);
+                                    }
+                                });
+                            }
+                        });
     }
 
 
