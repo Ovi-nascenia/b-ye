@@ -121,19 +121,6 @@ public class RegistrationFirstActivity extends AppCompatActivity{
          sharePref= new SharePref(RegistrationFirstActivity.this);
 
 
-        display_name_edit_text.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                   // setScrollPosition(View.FOCUS_DOWN);
-                }else{
-                    //setScrollPosition(View.FOCUS_UP);
-                }
-
-
-            }
-        });
-
         male.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
