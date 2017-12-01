@@ -52,7 +52,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
     ImageView back;
 
-    String constant, occupationOfFather, occupationOfMother, professionOfFather, professionOfMother;
+    String constant, occupationOfFather="", occupationOfMother="", professionOfFather, professionOfMother;
 
     JSONObject professionalGroupObject, occupationObject;
 
@@ -62,6 +62,8 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
     public static int professionalGroupMother = -1;
 
     public static int selectedPopUp = 0;
+
+    TextView professionStatusLabelFather,professionStatusLabelMother;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -112,10 +114,14 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         designationMother = (EditText) findViewById(R.id.designation_mother);
         institutionMother = (EditText) findViewById(R.id.institution_mother);
 
+        professionStatusLabelFather = (TextView) findViewById(R.id.profession_status_label_father);
         professionFatherStatus = (LinearLayout)findViewById(R.id.professonalalStatusFather);
+
         professionMotherStatus = (LinearLayout)findViewById(R.id.professonalalStatusMother);
         professionalGroupFatherStatus = (LinearLayout) findViewById(R.id.professonalGroupStatusFather);
         professionalGroupMotherStatus = (LinearLayout) findViewById(R.id.professonalGroupStatusMother);
+        professionStatusLabelMother = (TextView) findViewById(R.id.profession_status_label_mother);
+
 
         professionFatherTV = (TextView) findViewById(R.id.profession_text_view_father);
         professionalGroupFatherTV = (TextView) findViewById(R.id.profession_group_text_view_father);
@@ -158,6 +164,30 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
+
+                if(nameFather.getText().toString().isEmpty()){
+                    Toast.makeText(getBaseContext(),"give your father name",Toast.LENGTH_LONG).show();
+                    professionStatusLabelFather.getParent().
+                            requestChildFocus(professionStatusLabelFather,professionStatusLabelFather);
+                    return;
+                }
+
+                if(occupationOfFather.isEmpty()){
+                    Toast.makeText(getBaseContext(),"give your father occupation",Toast.LENGTH_LONG).show();
+                    professionStatusLabelFather.getParent().
+                            requestChildFocus(professionStatusLabelFather,professionStatusLabelFather);
+                    return;
+                }
+
+
+                if(occupationOfMother.isEmpty()){
+                    Toast.makeText(getBaseContext(),"give your mother occupation",Toast.LENGTH_LONG).show();
+                    professionStatusLabelMother.getParent().
+                            requestChildFocus(professionStatusLabelMother,professionStatusLabelMother);
+                    return;
+                }
+
+
                 String response = new StringBuilder().append("{")
                         .append("\"family_members_mother_father\":")
                         .append("[")
@@ -230,7 +260,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                         .append("8")
                         .append("}")
                         .toString();
-                new RegistrationFamilyInfoFirstPage.SendFamilyInfo().execute(response,Utils.SEND_INFO);
+             new RegistrationFamilyInfoFirstPage.SendFamilyInfo().execute(response,Utils.SEND_INFO);
 
             }
         });

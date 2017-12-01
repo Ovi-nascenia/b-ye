@@ -32,10 +32,13 @@ import java.util.ArrayList;
 
 public class RegistrationPersonalInformation extends AppCompatActivity {
 
-    String maritalStatusValue, degreeValue, subjectValue, institutionValue, occupationValue, professionalGroupValue, designationValue, occupationInstitutionValue, religionValue, rojaValue, disableValue, smokeValue, hijabValue;
+    String maritalStatusValue = "", degreeValue = "", subjectValue = "", institutionValue,
+            occupationValue = "", professionalGroupValue = "",
+            designationValue, occupationInstitutionValue, religionValue="",
+            rojaValue="", disableValue, smokeValue, hijabValue;
     EditText subjectText, institutionText, designationText, occupationInstitutionText;
-    LinearLayout maritalStatus,educationalStatus,professonalalStatus,religiousStatus,rojaStatus,disableStatus,smokeStatus,professionalGroupStatus;
-    TextView marriageTV,educationTV,professonTV,religionTV,rojaTV,disableTV,smokeTV,professionalGroupTV;
+    LinearLayout maritalStatus, educationalStatus, professonalalStatus, religiousStatus, rojaStatus, disableStatus, smokeStatus, professionalGroupStatus;
+    TextView marriageTV, educationTV, professonTV, religionTV, rojaTV, disableTV, smokeTV, professionalGroupTV;
     Button next;
     ImageView back;
 
@@ -89,12 +92,11 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     public static String[] smokeConstantValue = new String[smokeArray.size()];
 
 
-
-   // public static String marriageArray[] = {"অবিবাহিত","বিপত্মীক","তালাকপ্রাপ্ত","বিবাহিত"};
+    // public static String marriageArray[] = {"অবিবাহিত","বিপত্মীক","তালাকপ্রাপ্ত","বিবাহিত"};
     //public static String educationArray[] = {"মাধ্যমিক", "উচ্চমাধ্যমিক পড়ছি", "উচ্চমাধ্যমিক/ডিপ্লোমা","বাচেলর পড়ছি", "বাচেলর", "মাস্টার্স পড়ছি","মাস্টার্স", "ডক্টরেট পড়ছি","ডক্টরেট"};
     //public static String professionArray[] = {"ব্যবসায়ী","অবসরপ্রাপ্ত","শিক্ষার্থী", "পেশায় জড়িত নাই", "সরকারী চাকরিজীবী","বেসরকারী চাকরিজীবী"};
-   // public static String religionArray[] = {"৫ ওয়াক্ত","৫ ওয়াক্তের কম","শুধু জুম্মা","শুধু ঈদের নামায","কখনো না"};
-   // public static String rojaArray[] = {"পুরো রমজান","রমজানে ৩০ টির কম","কখনো না"};
+    // public static String religionArray[] = {"৫ ওয়াক্ত","৫ ওয়াক্তের কম","শুধু জুম্মা","শুধু ঈদের নামায","কখনো না"};
+    // public static String rojaArray[] = {"পুরো রমজান","রমজানে ৩০ টির কম","কখনো না"};
 //    public static String disableArray[] = {"কোন প্রতিবন্ধকতা নেই","সামান্য শারীরিক প্রতিবন্ধকতা","প্রতিবন্ধকতা","অটিজম","মানসিক প্রতিবন্ধকতা"};
 //    public static String smokeArray[] = {"অধুমপায়ী","মাঝে মাঝে","প্রায়ই"};
     //public static String professonalGroupArray[] = {"ডাক্তার","ইঞ্জিনিয়ার","আইনজীবি","মেরিনার","কনসালটেন্ট","চার্টার একাউন্টেন্ট","সাংবাদিক","পুলিশ","শিক্ষক","পাইলট","ব্যাংকার","ডিফেন্স : আর্মি/ নেভী/ এয়ারফোর্স","অন্যান্য","প্রফেশনাল গ্রুপ প্রযোজ্য নয়"};
@@ -109,99 +111,95 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     public static int disable = -1;
     public static int smoke = -1;
     public static int professonalGroup = -1;
+    private SharePref sharePref;
+
+    TextView maritalStatusLabel,educationalStatusLabel,professionStatusLabel,religionStatusLabel,
+            rojaStatuLabel;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
+        sharePref = new SharePref(RegistrationPersonalInformation.this);
 
         try {
             JSONObject jsonObject = new JSONObject(constant);
 
-            if(Login.gender.equals("female")){
+            if (Login.gender.equals("female")) {
                 marriageObject = jsonObject.getJSONObject("marital_status_constant_for_male");
-            }
-            else if(Login.gender.equals("male")){
+            } else if (Login.gender.equals("male")) {
                 marriageObject = jsonObject.getJSONObject("marital_status_constant_for_female");
             }
             educationObject = jsonObject.getJSONObject("education_constant");
             occupationObject = jsonObject.getJSONObject("occupation_constant");
             professionalGroupObject = jsonObject.getJSONObject("professional_group_constant");
-            religionObject= jsonObject.getJSONObject("prayer_options_female");
+            religionObject = jsonObject.getJSONObject("prayer_options_female");
             rojaObject = jsonObject.getJSONObject("fasting");
             hijabObject = jsonObject.getJSONObject("hijab_options");
             disableObject = jsonObject.getJSONObject("physical_disability_options");
             smokeObject = jsonObject.getJSONObject("smoking_options");
 
 
-            for(int i=0;i<marriageObject.length();i++)
-            {
+            for (int i = 0; i < marriageObject.length(); i++) {
                 maritalStatusConstant.add(marriageObject.names().getString(i));
                 marriageArray.add((String) marriageObject.get(marriageObject.names().getString(i)));
             }
 
             maritalStatusName = marriageArray.toArray(maritalStatusName);
 
-            for(int i=0;i<educationObject.length();i++)
-            {
+            for (int i = 0; i < educationObject.length(); i++) {
                 educationConstant.add(educationObject.names().getString(i));
                 educationArray.add((String) educationObject.get(educationObject.names().getString(i)));
             }
 
             educationName = educationArray.toArray(educationName);
 
-            for(int i=0;i<occupationObject.length();i++)
-            {
+            for (int i = 0; i < occupationObject.length(); i++) {
                 occupationConstant.add(occupationObject.names().getString(i));
                 occupationArray.add((String) occupationObject.get(occupationObject.names().getString(i)));
             }
 
             occupationName = occupationArray.toArray(occupationName);
 
-            for(int i=0;i<professionalGroupObject.length();i++)
-            {
+            for (int i = 0; i < professionalGroupObject.length(); i++) {
                 professonalGroupConstant.add(professionalGroupObject.names().getString(i));
                 professonalGroupArray.add((String) professionalGroupObject.get(professionalGroupObject.names().getString(i)));
             }
 
             professonalGroupName = professonalGroupArray.toArray(professonalGroupName);
 
-            for(int i=0;i<religionObject.length();i++)
-            {
+            for (int i = 0; i < religionObject.length(); i++) {
                 religionConstant.add(religionObject.names().getString(i));
                 religionArray.add((String) religionObject.get(religionObject.names().getString(i)));
             }
 
             religionName = religionArray.toArray(religionName);
 
-            for(int i=0;i<rojaObject.length();i++)
-            {
+            for (int i = 0; i < rojaObject.length(); i++) {
                 rojaConstant.add(rojaObject.names().getString(i));
                 rojaArray.add((String) rojaObject.get(rojaObject.names().getString(i)));
             }
 
             rojaName = rojaArray.toArray(rojaName);
 
-            for(int i=0;i<hijabObject.length();i++)
-            {
+            for (int i = 0; i < hijabObject.length(); i++) {
                 hijabConstant.add(hijabObject.names().getString(i));
                 hijabArray.add((String) hijabObject.get(hijabObject.names().getString(i)));
             }
 
             hijabName = hijabArray.toArray(hijabName);
 
-            for(int i=0;i<disableObject.length();i++)
-            {
+            for (int i = 0; i < disableObject.length(); i++) {
                 disableConstant.add(disableObject.names().getString(i));
                 disableArray.add((String) disableObject.get(disableObject.names().getString(i)));
             }
 
             disableName = disableArray.toArray(disableName);
 
-            for(int i=0;i<smokeObject.length();i++)
-            {
+            for (int i = 0; i < smokeObject.length(); i++) {
                 smokeConstant.add(smokeObject.names().getString(i));
                 smokeArray.add((String) smokeObject.get(smokeObject.names().getString(i)));
             }
@@ -209,7 +207,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             smokeName = smokeArray.toArray(smokeName);
 
 
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -219,6 +217,12 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         institutionText = (EditText) findViewById(R.id.institution_text);
         designationText = (EditText) findViewById(R.id.designation_text);
         occupationInstitutionText = (EditText) findViewById(R.id.occupation_institution_text);
+
+        maritalStatusLabel = (TextView) findViewById(R.id.marital_status_label);
+        educationalStatusLabel = (TextView) findViewById(R.id.educational_status_label);
+        professionStatusLabel = (TextView) findViewById(R.id.profession_status_label);
+        religionStatusLabel = (TextView) findViewById(R.id.religion_status_label);
+        rojaStatuLabel = (TextView) findViewById(R.id.roja_status_label);
 
 
         maritalStatus = (LinearLayout) findViewById(R.id.meritalStatus);
@@ -243,21 +247,64 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Intent(RegistrationPersonalInformation.this,Login.class);
+                new Intent(RegistrationPersonalInformation.this, Login.class);
                 finish();
             }
         });
 
         next = (Button) findViewById(R.id.next);
 
-        next.setOnClickListener(new View.OnClickListener(){
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
 
                 designationValue = designationText.getText().toString();
                 occupationInstitutionValue = occupationInstitutionText.getText().toString();
                 institutionValue = institutionText.getText().toString();
                 subjectValue = subjectText.getText().toString();
+
+
+                if (maritalStatusValue.isEmpty()) {
+                    Toast.makeText(getBaseContext(), "choose marital status", Toast.LENGTH_LONG).show();
+                    maritalStatusLabel.getParent().requestChildFocus(maritalStatusLabel,maritalStatusLabel);
+                    return;
+                }
+
+                if (degreeValue.isEmpty()) {
+                    Toast.makeText(getBaseContext(), "choose degreeValue status", Toast.LENGTH_LONG).show();
+                    educationalStatusLabel.getParent().requestChildFocus(educationalStatusLabel,educationalStatusLabel);
+                    return;
+                }
+
+                if (subjectValue.isEmpty()) {
+                    Toast.makeText(getBaseContext(), "choose subjectValue status", Toast.LENGTH_LONG).show();
+                    educationalStatusLabel.getParent().requestChildFocus(educationalStatusLabel,educationalStatusLabel);
+                    return;
+                }
+
+                if (occupationValue.isEmpty()) {
+                    Toast.makeText(getBaseContext(), "choose occupationValue status", Toast.LENGTH_LONG).show();
+                    professionStatusLabel.getParent().requestChildFocus(professionStatusLabel,professionStatusLabel);
+                    return;
+                }
+
+                if (professionalGroupValue.isEmpty()) {
+                    Toast.makeText(getBaseContext(), "choose professionalGroupValue status", Toast.LENGTH_LONG).show();
+                    professionStatusLabel.getParent().requestChildFocus(professionStatusLabel,professionStatusLabel);
+                    return;
+                }
+
+                if(religionValue.isEmpty()){
+                    Toast.makeText(getBaseContext(), "choose religionvalue status", Toast.LENGTH_LONG).show();
+                    religionStatusLabel.getParent().requestChildFocus(religionStatusLabel,religionStatusLabel);
+                    return;
+                }
+
+                if(rojaValue.isEmpty()){
+                    Toast.makeText(getBaseContext(), "choose religionvalue status", Toast.LENGTH_LONG).show();
+                    rojaStatuLabel.getParent().requestChildFocus(rojaStatuLabel,rojaStatuLabel);
+                    return;
+                }
 
 
                 String response = new StringBuilder().append("{")
@@ -359,20 +406,20 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                         .append("}")
                         .toString();
 
-                Toast.makeText(RegistrationPersonalInformation.this,response,Toast.LENGTH_LONG).show();
+                // Toast.makeText(RegistrationPersonalInformation.this,response,Toast.LENGTH_LONG).show();
 
-                new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
+                //   new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
 
             }
         });
 
 
         maritalStatus.setOnClickListener(
-                new View.OnClickListener(){
+                new View.OnClickListener() {
                     @Override
-                    public void onClick(View v){
+                    public void onClick(View v) {
                         selectedPopUp = 1;
-                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class ));
+                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
                     }
                 }
         );
@@ -382,7 +429,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         selectedPopUp = 2;
-                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class ));
+                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
                     }
                 }
         );
@@ -392,7 +439,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         selectedPopUp = 3;
-                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class ));
+                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
                     }
                 }
         );
@@ -402,7 +449,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         selectedPopUp = 4;
-                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class ));
+                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
                     }
                 }
         );
@@ -412,7 +459,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         selectedPopUp = 5;
-                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class ));
+                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
                     }
                 }
         );
@@ -422,7 +469,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         selectedPopUp = 6;
-                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class ));
+                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
                     }
                 }
         );
@@ -432,7 +479,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         selectedPopUp = 7;
-                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class ));
+                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
                     }
                 }
         );
@@ -441,7 +488,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         selectedPopUp = 8;
-                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class ));
+                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
                     }
                 }
         );
@@ -452,91 +499,84 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(RegistrationPersonalInformation.selectedPopUp == 1 ){
-            if(marriage>0){
-                marriageTV.setText(maritalStatusName[marriage-1]);
-                maritalStatusValue = maritalStatusConstant.get(marriage-1);
+        if (RegistrationPersonalInformation.selectedPopUp == 1) {
+            if (marriage > 0) {
+                marriageTV.setText(maritalStatusName[marriage - 1]);
+                maritalStatusValue = maritalStatusConstant.get(marriage - 1);
             }
 
-        }else if(RegistrationPersonalInformation.selectedPopUp == 2){
-            if(education>0)
-            {
-                educationTV.setText(educationName[education-1]);
-                degreeValue = educationConstant.get(education-1);
+        } else if (RegistrationPersonalInformation.selectedPopUp == 2) {
+            if (education > 0) {
+                educationTV.setText(educationName[education - 1]);
+                degreeValue = educationConstant.get(education - 1);
             }
-        }else if(RegistrationPersonalInformation.selectedPopUp == 3){
-            if(profession>0)
-            {
-                professonTV.setText(occupationName[profession-1]);
-                occupationValue = occupationConstant.get(profession-1);
+        } else if (RegistrationPersonalInformation.selectedPopUp == 3) {
+            if (profession > 0) {
+                professonTV.setText(occupationName[profession - 1]);
+                occupationValue = occupationConstant.get(profession - 1);
             }
-        }else if(RegistrationPersonalInformation.selectedPopUp == 4){
-            if(religion>0)
-            {
-                religionTV.setText(religionName[religion-1]);
-                religionValue = religionConstant.get(religion-1);
+        } else if (RegistrationPersonalInformation.selectedPopUp == 4) {
+            if (religion > 0) {
+                religionTV.setText(religionName[religion - 1]);
+                religionValue = religionConstant.get(religion - 1);
             }
-        }else if(RegistrationPersonalInformation.selectedPopUp == 5){
-            if(roja>0)
-            {
-                rojaTV.setText(rojaName[roja-1]);
-                rojaValue = rojaConstant.get(roja-1);
+        } else if (RegistrationPersonalInformation.selectedPopUp == 5) {
+            if (roja > 0) {
+                rojaTV.setText(rojaName[roja - 1]);
+                rojaValue = rojaConstant.get(roja - 1);
             }
-        }else if(RegistrationPersonalInformation.selectedPopUp == 6){
-            if(disable>0)
-            {
-                disableTV.setText(disableName[disable-1]);
-                disableValue = disableConstant.get(disable-1);
+        } else if (RegistrationPersonalInformation.selectedPopUp == 6) {
+            if (disable > 0) {
+                disableTV.setText(disableName[disable - 1]);
+                disableValue = disableConstant.get(disable - 1);
             }
-        }else if(RegistrationPersonalInformation.selectedPopUp == 7){
-            if(smoke>0)
-            {
-                smokeTV.setText(smokeName[smoke-1]);
-                smokeValue = smokeConstant.get(smoke-1);
+        } else if (RegistrationPersonalInformation.selectedPopUp == 7) {
+            if (smoke > 0) {
+                smokeTV.setText(smokeName[smoke - 1]);
+                smokeValue = smokeConstant.get(smoke - 1);
             }
-        }
-        else if(RegistrationPersonalInformation.selectedPopUp == 8){
-            if(professonalGroup>0)
-            {
-                professionalGroupTV.setText(professonalGroupName[professonalGroup-1]);
-                professionalGroupValue = professonalGroupConstant.get(professonalGroup-1);
+        } else if (RegistrationPersonalInformation.selectedPopUp == 8) {
+            if (professonalGroup > 0) {
+                professionalGroupTV.setText(professonalGroupName[professonalGroup - 1]);
+                professionalGroupValue = professonalGroupConstant.get(professonalGroup - 1);
             }
         }
 
     }
 
     class SendPersonalInfo extends AsyncTask<String, String, String> {
-        ProgressDialog progress = new ProgressDialog(RegistrationPersonalInformation.this);;
+        ProgressDialog progress = new ProgressDialog(RegistrationPersonalInformation.this);
+        ;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progress.setMessage(getResources().getString(R.string.progress_dialog_message));
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setIndeterminate(true);
-            if ( !progress.isShowing() )
+            if (!progress.isShowing())
                 progress.show();
         }
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s == null){
+            if (s == null) {
                 progress.cancel();
                 Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
-            }
-            else{
+            } else {
                 try {
                     progress.cancel();
-                    JSONObject jsonObject=new JSONObject(s);
-                    Log.e("Response",s);
-                    if(jsonObject.has("errors")){
+                    JSONObject jsonObject = new JSONObject(s);
+                    Log.e("Response", s);
+                    if (jsonObject.has("errors")) {
                         jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(RegistrationPersonalInformation.this, "error", Toast.LENGTH_LONG).show();
-                    }
-                    else{
+                    } else {
+                        Toast.makeText(RegistrationPersonalInformation.this, "SendPersonalInfo else", Toast.LENGTH_LONG).show();
                         new RegistrationPersonalInformation.FetchConstant().execute();
                     }
-                }catch(JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -544,18 +584,20 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings){
-            SharePref sharePref = new SharePref(RegistrationPersonalInformation.this);
-            final String token = sharePref.get_data("registration_token");
+        protected String doInBackground(String... strings) {
 
-            Log.e("Test", strings[0]);
+            //final String token = sharePref.get_data("registration_token");
+            final String token = sharePref.get_data("token");
+
+            Log.e("Response", strings[0]);
+            Log.e("Response", "SendPersonalInfo url: " + strings[1] + " " + token);
 
             MediaType JSON
                     = MediaType.parse("application/json; charset=utf-8");
 
             OkHttpClient client = new OkHttpClient();
 
-            RequestBody body = RequestBody.create(JSON,strings[0] );
+            RequestBody body = RequestBody.create(JSON, strings[0]);
             Request request = new Request.Builder()
                     .url(strings[1])
                     .addHeader("Authorization", "Token token=" + token)
@@ -566,7 +608,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             try {
                 response = client.newCall(request).execute();
                 responseString = response.body().string();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
 //                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
             }
@@ -575,28 +617,28 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     }
 
 
-    public class FetchConstant extends AsyncTask<String, String, String>{
+    public class FetchConstant extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s == null){
+            if (s == null) {
                 Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
-            }
-            else{
+            } else {
+                Toast.makeText(getBaseContext(), "fetch constant else", Toast.LENGTH_LONG).show();
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationPersonalInformation.this, RegistrationFamilyInfoFirstPage.class);
-                signupIntent.putExtra("constants",s);
+                signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 finish();
             }
         }
 
         @Override
-        protected String doInBackground(String... parameters){
-            Login.currentMobileSignupStep+=1;
+        protected String doInBackground(String... parameters) {
+            Login.currentMobileSignupStep += 1;
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
+                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
                     .build();
             try {
                 OkHttpClient client = new OkHttpClient();
@@ -605,7 +647,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
                 return responseString;
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
 //                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
                 return null;
@@ -613,7 +655,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         }
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
         }
     }

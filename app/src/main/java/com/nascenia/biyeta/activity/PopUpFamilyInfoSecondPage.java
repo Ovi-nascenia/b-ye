@@ -90,6 +90,8 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pop_up_family_info_first_page);
+
         Bundle extras = getIntent().getExtras();
         if(extras.containsKey("constant")){
             String defaultValue = "";
@@ -156,7 +158,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        setContentView(R.layout.activity_pop_up_family_info_first_page);
+
         picker = (NumberPicker)findViewById(R.id.picker);
         accept = (Button)findViewById(R.id.accept);
         reject = (Button)findViewById(R.id.cancel);
