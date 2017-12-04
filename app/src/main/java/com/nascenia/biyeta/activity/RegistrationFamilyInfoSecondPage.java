@@ -5,22 +5,24 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
-import com.nascenia.biyeta.fragment.Search;
-import com.nascenia.biyeta.model.newuserprofile.Brother;
+import com.nascenia.biyeta.utils.RemoveBrotherItemCallBack;
+import com.nascenia.biyeta.utils.RemoveSisterItemCallBack;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -31,25 +33,26 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.nascenia.biyeta.adapter.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
+public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implements RemoveBrotherItemCallBack,
+        RemoveSisterItemCallBack{
     OkHttpClient client;
 
-    LinearLayout brotherCountLayout,sisterCountLayout;
+    LinearLayout brotherCountLayout, sisterCountLayout;
 
     String responseBrother = "";
     String responseSister = "";
     String responseOther = "";
-    int brotherCount = 0, sisterCount = 0, otherCount = 0;
+    int brotherCount, sisterCount = 0, otherCount = 0;
     private List<Integer> brotherList = new ArrayList<>();
     private List<Integer> sisterList = new ArrayList<>();
     private List<Integer> otherList = new ArrayList<>();
-    public static RecyclerView recyclerViewBrother,recyclerViewSister,recyclerViewOther;
+    public static RecyclerView recyclerViewBrother, recyclerViewSister, recyclerViewOther;
 
     public static String constant;
 
@@ -64,40 +67,82 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
     OtherViewAdapter otherViewAdapter;
     public static int selectedPopUp = 0;
     ImageView back;
+
+    private RelativeLayout brotherInfoDetailsLayout, sisterInfoDetailsLayout;
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
-       // Toast.makeText(RegistrationFamilyInfoSecondPage.this,constant,Toast.LENGTH_LONG).show();
+        // Toast.makeText(RegistrationFamilyInfoSecondPage.this,constant,Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_registration_family_info_second_page);
         client = new OkHttpClient();
 
         brotherCountLayout = (LinearLayout) findViewById(R.id.count_brother);
         brotherNumber = (TextView) findViewById(R.id.count_text_view_brother);
+        brotherInfoDetailsLayout = (RelativeLayout) findViewById(R.id.brother_info_details_layout);
+
+
+        brotherNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //Toast.makeText(getBaseContext(), "textchange", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                setBrotherRecylerView();
+            }
+        });
+
 
         sisterCountLayout = (LinearLayout) findViewById(R.id.count_sister);
         sisterNumber = (TextView) findViewById(R.id.count_text_view_sister);
+        sisterInfoDetailsLayout = (RelativeLayout) findViewById(R.id.sister_info_details_layout);
+
+        sisterNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                setSisterRecylerView();
+            }
+        });
 
         back = (ImageView) findViewById(R.id.backPreviousActivityImage);
-        back.setOnClickListener(new View.OnClickListener(){
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                new Intent(RegistrationFamilyInfoSecondPage.this,Login.class);
+            public void onClick(View v) {
+                new Intent(RegistrationFamilyInfoSecondPage.this, Login.class);
                 finish();
             }
         });
 
         buttonNext = (Button) findViewById(R.id.next);
 
-        buttonNext.setOnClickListener(new View.OnClickListener(){
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                if(recyclerViewBrother.getChildCount()>0)
-                {
-                    for(int i=0; i<recyclerViewBrother.getChildCount();i++)
-                    {
-                        if(recyclerViewBrother.findViewHolderForLayoutPosition(i) instanceof BrotherViewAdapter.MyViewHolder){
+            public void onClick(View v) {
+                if (recyclerViewBrother.getChildCount() > 0) {
+                    for (int i = 0; i < recyclerViewBrother.getChildCount(); i++) {
+                        if (recyclerViewBrother.findViewHolderForLayoutPosition(i) instanceof BrotherViewAdapter.MyViewHolder) {
                             BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder) recyclerViewBrother.findViewHolderForLayoutPosition(i);
                             String response = new StringBuilder().append("{")
                                     .append("\"sibling_type\":")
@@ -168,16 +213,14 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
                                     .append(",")
                                     .toString();
 
-                            responseBrother = responseBrother+ response;
+                            responseBrother = responseBrother + response;
                         }
                     }
                 }
 
-                if(recyclerViewSister.getChildCount()>0)
-                {
-                    for(int i=0; i<recyclerViewSister.getChildCount();i++)
-                    {
-                        if(recyclerViewSister.findViewHolderForLayoutPosition(i) instanceof SisterViewAdapter.MyViewHolder){
+                if (recyclerViewSister.getChildCount() > 0) {
+                    for (int i = 0; i < recyclerViewSister.getChildCount(); i++) {
+                        if (recyclerViewSister.findViewHolderForLayoutPosition(i) instanceof SisterViewAdapter.MyViewHolder) {
                             SisterViewAdapter.MyViewHolder holder = (SisterViewAdapter.MyViewHolder) recyclerViewSister.findViewHolderForLayoutPosition(i);
                             String response = new StringBuilder().append("{")
                                     .append("\"sibling_type\":")
@@ -248,17 +291,15 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
                                     .append(",")
                                     .toString();
 
-                            responseSister = responseSister+ response;
+                            responseSister = responseSister + response;
                         }
                     }
                 }
 
 
-                if(recyclerViewOther.getChildCount()>0)
-                {
-                    for(int i=0; i<recyclerViewOther.getChildCount();i++)
-                    {
-                        if(recyclerViewOther.findViewHolderForLayoutPosition(i) instanceof OtherViewAdapter.MyViewHolder){
+                if (recyclerViewOther.getChildCount() > 0) {
+                    for (int i = 0; i < recyclerViewOther.getChildCount(); i++) {
+                        if (recyclerViewOther.findViewHolderForLayoutPosition(i) instanceof OtherViewAdapter.MyViewHolder) {
                             OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder) recyclerViewOther.findViewHolderForLayoutPosition(i);
                             String response = new StringBuilder().append("{")
                                     .append("\"name\":")
@@ -294,22 +335,22 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
                                     .append(",")
                                     .toString();
 
-                            responseOther = responseOther+ response;
+                            responseOther = responseOther + response;
                         }
                     }
                 }
 
-                new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
+                //new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
             }
         });
 
-        brotherCountLayout.setOnClickListener(new View.OnClickListener(){
+        brotherCountLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 selectedPopUp = 1;
-                Intent setIntent = new Intent(RegistrationFamilyInfoSecondPage.this,PopUpFamilyInfoSecondPage.class);
-                setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                Intent setIntent = new Intent(RegistrationFamilyInfoSecondPage.this, PopUpFamilyInfoSecondPage.class);
+                setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
                 startActivity(setIntent);
             }
         });
@@ -318,16 +359,15 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selectedPopUp = 2;
-                Intent setIntent = new Intent(RegistrationFamilyInfoSecondPage.this,PopUpFamilyInfoSecondPage.class);
-                setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                Intent setIntent = new Intent(RegistrationFamilyInfoSecondPage.this, PopUpFamilyInfoSecondPage.class);
+                setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
                 startActivity(setIntent);
             }
         });
 
 
-        brotherViewAdapter = new BrotherViewAdapter(brotherList,RegistrationFamilyInfoSecondPage.this);
-
         recyclerViewBrother = (RecyclerView) findViewById(R.id.recycler_view);
+        brotherViewAdapter = new BrotherViewAdapter(brotherList, RegistrationFamilyInfoSecondPage.this, this);
 
         buttonBrother = (LinearLayout) findViewById(R.id.button);
 
@@ -339,21 +379,25 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
         buttonBrother.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                brotherViewAdapter.add(brotherCount,brotherViewAdapter.listSize());
+
                 brotherCount++;
+                brotherViewAdapter.add(brotherCount, brotherViewAdapter.listSize());
+
+                if (brotherCount == RegistrationFamilyInfoSecondPage.numberOfBrother) {
+                    buttonBrother.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
-        prepareBrotherData();
+        //prepareBrotherData();
 
 
-
-
-        sisterViewAdapter = new SisterViewAdapter(sisterList,RegistrationFamilyInfoSecondPage.this);
+        sisterViewAdapter = new SisterViewAdapter(sisterList, RegistrationFamilyInfoSecondPage.this,this);
 
         recyclerViewSister = (RecyclerView) findViewById(R.id.recycler_view_sister);
 
         buttonSister = (LinearLayout) findViewById(R.id.button_sister);
+
 
         RecyclerView.LayoutManager sisterLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewSister.setLayoutManager(sisterLayoutManager);
@@ -363,16 +407,19 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
         buttonSister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sisterViewAdapter.add(sisterCount,sisterViewAdapter.listSize());
                 sisterCount++;
+                sisterViewAdapter.add(sisterCount, sisterViewAdapter.listSize());
+
+                if (sisterCount == RegistrationFamilyInfoSecondPage.numberOfSister) {
+                    buttonSister.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
-        prepareSisterData();
+        //prepareSisterData();
 
 
-
-        otherViewAdapter = new OtherViewAdapter(otherList,RegistrationFamilyInfoSecondPage.this);
+        otherViewAdapter = new OtherViewAdapter(otherList, RegistrationFamilyInfoSecondPage.this);
 
         recyclerViewOther = (RecyclerView) findViewById(R.id.recycler_view_other);
 
@@ -386,7 +433,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
         buttonOther.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                otherViewAdapter.add(otherCount,otherViewAdapter.listSize());
+                otherViewAdapter.add(otherCount, otherViewAdapter.listSize());
                 otherCount++;
             }
         });
@@ -395,20 +442,62 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
         prepareOtherData();
 
 
+    }
 
+    private void setSisterRecylerView() {
+        sisterCount = 0;
+
+        sisterList.clear();
+        sisterViewAdapter.notifyDataSetChanged();
+
+        if (RegistrationFamilyInfoSecondPage.numberOfSister > 0) {
+
+            sisterInfoDetailsLayout.setVisibility(View.VISIBLE);
+            sisterCount = 1;
+            prepareSisterData();
+
+            if (RegistrationFamilyInfoSecondPage.numberOfSister > 1) {
+                buttonSister.setVisibility(View.VISIBLE);
+            }
+        } else {
+
+            sisterInfoDetailsLayout.setVisibility(View.GONE);
+        }
 
     }
 
+    private void setBrotherRecylerView() {
+
+        brotherCount = 0;
+
+        brotherList.clear();
+        brotherViewAdapter.notifyDataSetChanged();
+
+        if (RegistrationFamilyInfoSecondPage.numberOfBrother > 0) {
+
+            brotherInfoDetailsLayout.setVisibility(View.VISIBLE);
+            brotherCount = 1;
+            prepareBrotherData();
+
+            if (RegistrationFamilyInfoSecondPage.numberOfBrother > 1) {
+                buttonBrother.setVisibility(View.VISIBLE);
+            }
+        } else {
+
+            brotherInfoDetailsLayout.setVisibility(View.GONE);
+        }
+
+    }
 
     private void prepareBrotherData() {
         brotherList.add(brotherCount);
-        brotherCount++;
+        // brotherCount++;
         brotherViewAdapter.notifyDataSetChanged();
     }
 
     private void prepareSisterData() {
         sisterList.add(sisterCount);
-        sisterCount++;
+        // sisterCount++;
         sisterViewAdapter.notifyDataSetChanged();
     }
 
@@ -419,13 +508,13 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
     }
 
 
-    public String JSONResponse(){
+    public String JSONResponse() {
         String brotherSisterResponseInfo;
         brotherSisterResponseInfo = responseBrother + responseSister;
         brotherSisterResponseInfo = brotherSisterResponseInfo.substring(0, brotherSisterResponseInfo.length() - 1);
 
         String otherResponseInfo = responseOther;
-        otherResponseInfo = otherResponseInfo.substring(0,otherResponseInfo.length() - 1);
+        otherResponseInfo = otherResponseInfo.substring(0, otherResponseInfo.length() - 1);
         String response = new StringBuilder().append("{")
                 .append("\"total_brothers\":")
                 .append(numberOfBrother)
@@ -450,51 +539,66 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
         return response;
     }
 
-    class SendFamilyInfo extends AsyncTask<String, String, String>{
-        ProgressDialog progress = new ProgressDialog(RegistrationFamilyInfoSecondPage.this);;
+    @Override
+    public void removeBrotherItem() {
+        brotherCount--;
+        if (buttonBrother.getVisibility() == View.INVISIBLE) {
+            buttonBrother.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void removeSisterItem() {
+        sisterCount--;
+        if (buttonSister.getVisibility() == View.INVISIBLE) {
+            buttonSister.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    class SendFamilyInfo extends AsyncTask<String, String, String> {
+        ProgressDialog progress = new ProgressDialog(RegistrationFamilyInfoSecondPage.this);
+        ;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progress.setMessage(getResources().getString(R.string.progress_dialog_message));
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setIndeterminate(true);
-            if ( !progress.isShowing() )
+            if (!progress.isShowing())
                 progress.show();
         }
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s == null){
+            if (s == null) {
                 progress.cancel();
                 Utils.ShowAlert(RegistrationFamilyInfoSecondPage.this, getString(R.string.no_internet_connection));
-            }
-            else {
+            } else {
                 try {
-                progress.cancel();
-                JSONObject jsonObject=new JSONObject(s);
-                Log.e("Response",s);
-                if(jsonObject.has("errors"))
-                {
-                    jsonObject.getJSONObject("errors").getString("detail");
-                    Toast.makeText(RegistrationFamilyInfoSecondPage.this, "error", Toast.LENGTH_LONG).show();
+                    progress.cancel();
+                    JSONObject jsonObject = new JSONObject(s);
+                    Log.e("Response", s);
+                    if (jsonObject.has("errors")) {
+                        jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(RegistrationFamilyInfoSecondPage.this, "error", Toast.LENGTH_LONG).show();
+                    } else {
+                        Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this, Login.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                else
-                {
-                    Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this,Login.class);
-                    startActivity(intent);
-                    finish();
-                }
-            } catch (JSONException e){
-                e.printStackTrace();
-            }
 
             }
 
         }
 
         @Override
-        protected String doInBackground(String... strings){
+        protected String doInBackground(String... strings) {
             SharePref sharePref = new SharePref(RegistrationFamilyInfoSecondPage.this);
             final String token = sharePref.get_data("token");
 
@@ -517,15 +621,13 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity {
                 response = client.newCall(request).execute();
                 responseString = response.body().string();
 
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
 //                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
             }
             return responseString;
         }
     }
-
-
 
 
 }

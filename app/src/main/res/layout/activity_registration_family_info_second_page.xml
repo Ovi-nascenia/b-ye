@@ -4,16 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e9ebed">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/white"
         android:clipToPadding="false"
         app:layout_collapseMode="pin"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="@color/white"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 
         <RelativeLayout
@@ -27,21 +28,21 @@
                 android:id="@+id/backPreviousActivityImage"
                 android:layout_width="@dimen/small_image_size"
                 android:layout_height="@dimen/small_image_size"
-                android:onClick="backBtnAction"
-                android:src="@drawable/red_back_arrow"
-                android:layout_gravity="center"
+                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"/>
+                android:layout_gravity="center"
+                android:onClick="backBtnAction"
+                android:src="@drawable/red_back_arrow" />
 
             <TextView
                 android:id="@+id/own_info"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:lines="2"
-                android:text="আপনার পারিবারিক তথ্য"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
+                android:lines="2"
+                android:text="আপনার পারিবারিক তথ্য"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/medium_textsize"
                 android:textStyle="bold" />
@@ -52,10 +53,10 @@
                 android:layout_width="@dimen/small_image_size"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
+                android:layout_gravity="center"
                 android:layout_marginRight="@dimen/small_margin"
                 android:src="@drawable/grey_fav"
-                android:layout_gravity="center"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
 
         </RelativeLayout>
@@ -63,59 +64,56 @@
     </android.support.v7.widget.Toolbar>
 
     <ScrollView
+        android:id="@+id/Scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Scroll"
         android:layout_below="@id/toolbar">
-
-
-
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/toolbar">
+            android:layout_below="@id/toolbar"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/profession_status_label_brother_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ভাইয়ের সংখ্যা"
-                android:textColor="@color/colorPrimary"
                 android:layout_margin="10dp"
-                />
+                android:text="ভাইয়ের সংখ্যা"
+                android:textColor="@color/colorPrimary" />
 
             <LinearLayout
                 android:id="@+id/count_brother"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="0dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <TextView
                     android:id="@+id/count_text_view_brother"
-                    android:gravity="left"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="সংখ্যা"
-                    android:textSize="18dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="সংখ্যা"
+                    android:textSize="18dp" />
+
                 <ImageView
                     android:id="@+id/down_arrow_profession_brother"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="right"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/down_arrow"
-                    />
+                    android:layout_weight="1"
+                    android:src="@drawable/down_arrow" />
 
             </LinearLayout>
 
@@ -123,130 +121,149 @@
                 android:id="@+id/profession_status_label_sister_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="বোনের সংখ্যা"
-                android:textColor="@color/colorPrimary"
                 android:layout_margin="10dp"
-                />
+                android:text="বোনের সংখ্যা"
+                android:textColor="@color/colorPrimary" />
 
             <LinearLayout
                 android:id="@+id/count_sister"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="0dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <TextView
                     android:id="@+id/count_text_view_sister"
-                    android:gravity="left"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="সংখ্যা"
-                    android:textSize="18dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="সংখ্যা"
+                    android:textSize="18dp" />
+
                 <ImageView
                     android:id="@+id/down_arrow_count_sister"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="right"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/down_arrow"
-                    />
+                    android:layout_weight="1"
+                    android:src="@drawable/down_arrow" />
 
             </LinearLayout>
 
-
-            <TextView
-                android:id="@+id/profession_status_label_father"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ভাই"
-                android:textColor="@color/colorPrimary"
-                android:layout_margin="10dp"
-                />
-
+            <!--
+                           <TextView
+                               android:id="@+id/profession_status_label_father"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:text="ভাই"
+                               android:textColor="@color/colorPrimary"
+                               android:layout_margin="10dp"
+                               />-->
             <RelativeLayout
+                android:id="@+id/brother_info_details_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/profession_status_label_father"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="10dp"
+                    android:text="ভাই"
+                    android:textColor="@color/colorPrimary" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profession_status_label_father" />
 
                 <LinearLayout
-                    android:layout_below="@id/recycler_view"
+                    android:id="@+id/button"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:orientation="horizontal"
-                    android:gravity="left"
-                    android:id="@+id/button"
+                    android:layout_below="@id/recycler_view"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    >
+                    android:gravity="left"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/add"/>
+                        android:src="@drawable/add" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="আরো যোগ করুন"
                         android:layout_gravity="right"
                         android:layout_marginTop="10dp"
-                        />
+                        android:text="আরো যোগ করুন" />
                 </LinearLayout>
 
             </RelativeLayout>
 
 
+            <!-- <TextView
+                 android:id="@+id/profession_status_label_mother"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="10dp"
+                 android:text="বোন"
+                 android:textColor="@color/colorPrimary" />-->
 
-
-
-            <TextView
-                android:id="@+id/profession_status_label_mother"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="বোন"
-                android:textColor="@color/colorPrimary"
-                android:layout_margin="10dp"
-                />
             <RelativeLayout
+                android:id="@+id/sister_info_details_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/profession_status_label_mother"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="বোন"
+                    android:textColor="@color/colorPrimary" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_sister"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profession_status_label_mother" />
 
                 <LinearLayout
-                    android:layout_below="@id/recycler_view_sister"
+                    android:id="@+id/button_sister"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:orientation="horizontal"
-                    android:gravity="left"
-                    android:id="@+id/button_sister"
+                    android:layout_below="@id/recycler_view_sister"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    >
+                    android:gravity="left"
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/add"/>
+                        android:src="@drawable/add" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="আরো যোগ করুন"
                         android:layout_gravity="right"
                         android:layout_marginTop="10dp"
-                        />
+                        android:text="আরো যোগ করুন" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -256,10 +273,9 @@
                 android:id="@+id/profession_status_label_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="অন্যান্য"
-                android:textColor="@color/colorPrimary"
                 android:layout_margin="10dp"
-                />
+                android:text="অন্যান্য"
+                android:textColor="@color/colorPrimary" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -268,29 +284,29 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_other"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
-                    android:layout_below="@id/recycler_view_other"
+                    android:id="@+id/button_other"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:orientation="horizontal"
-                    android:gravity="left"
-                    android:id="@+id/button_other"
+                    android:layout_below="@id/recycler_view_other"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    >
+                    android:gravity="left"
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/add"/>
+                        android:src="@drawable/add" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="আরো যোগ করুন"
                         android:layout_gravity="right"
                         android:layout_marginTop="10dp"
-                        />
+                        android:text="আরো যোগ করুন" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -299,15 +315,13 @@
                 android:id="@+id/next"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="পরবর্তী ধাপ"
-                android:textSize="24sp"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/white"
                 android:layout_margin="10dp"
-                />
+                android:background="@color/colorPrimary"
+                android:text="পরবর্তী ধাপ"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
 
         </LinearLayout>
-
 
 
     </ScrollView>

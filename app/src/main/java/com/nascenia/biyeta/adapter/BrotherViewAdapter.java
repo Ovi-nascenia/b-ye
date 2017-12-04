@@ -7,7 +7,6 @@ package com.nascenia.biyeta.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,7 @@ import android.widget.Toast;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.PopUpFamilyInfoSecondPage;
 import com.nascenia.biyeta.activity.RegistrationFamilyInfoSecondPage;
-
-import org.w3c.dom.Text;
+import com.nascenia.biyeta.utils.RemoveBrotherItemCallBack;
 
 import java.util.List;
 
@@ -51,6 +49,15 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
 
     public static int selectedPopUp = 0, brother = 0;
     public static String responseBrother = "";
+
+    private RemoveBrotherItemCallBack removeBrotherItemCallBack;
+
+    public BrotherViewAdapter(List<Integer> brotherCount, Context context,
+                              RemoveBrotherItemCallBack removeBrotherItemCallBack){
+        this.brotherCount = brotherCount;
+        this.context = context;
+        this.removeBrotherItemCallBack=removeBrotherItemCallBack;
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         LinearLayout reject;
@@ -96,6 +103,7 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
                     int position = getAdapterPosition();
                     brotherCount.remove(position);
                     notifyItemRemoved(position);
+                    removeBrotherItemCallBack.removeBrotherItem();
                 }
             });
 
@@ -227,11 +235,6 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
         notifyItemRemoved(position);
     }
 
-
-    public BrotherViewAdapter(List<Integer> brotherCount, Context context){
-        this.brotherCount = brotherCount;
-        this.context = context;
-    }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){

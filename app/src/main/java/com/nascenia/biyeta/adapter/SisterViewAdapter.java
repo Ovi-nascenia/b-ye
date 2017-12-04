@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.PopUpFamilyInfoSecondPage;
 import com.nascenia.biyeta.activity.RegistrationFamilyInfoSecondPage;
+import com.nascenia.biyeta.utils.RemoveSisterItemCallBack;
 
 import java.util.List;
 
@@ -38,8 +39,9 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
     public static String responseSister = "";
 
     private Context context;
-    public static int selectedPopUp = 0, sister = 0,age = 0 ;
-    public static String occupation="", professonalGroup="", maritalStatus="";
+    public static int selectedPopUp = 0, sister = 0, age = 0;
+    public static String occupation = "", professonalGroup = "", maritalStatus = "";
+    private RemoveSisterItemCallBack removeSisterItemCallBack;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout reject;
@@ -59,11 +61,11 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
             sisterMaritalStatus = (TextView) view.findViewById(R.id.marital_text_view_sister);
             sisterAge = (TextView) view.findViewById(R.id.age_text_view_sister);
 
-            String siblingType, name, designation, institute, spouse, sOccupation,sProfessionalGroup, sDesignation, sInstitute;
+            String siblingType, name, designation, institute, spouse, sOccupation, sProfessionalGroup, sDesignation, sInstitute;
             reject = (LinearLayout) view.findViewById(R.id.reject);
             reject.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v){
+                public void onClick(View v) {
                     int position = getAdapterPosition();
                     sisterCount.remove(position);
                     notifyItemRemoved(position);
@@ -72,13 +74,13 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
             });
 
             occupationStatusSister = (LinearLayout) view.findViewById(R.id.professonal_status_sister);
-            occupationStatusSister.setOnClickListener(new View.OnClickListener(){
+            occupationStatusSister.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v){
+                public void onClick(View v) {
                     selectedPopUp = 1;
                     sister = 1;
-                    Intent setIntent = new Intent(context,PopUpFamilyInfoSecondPage.class);
-                    setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                    Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
+                    setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
                     context.startActivity(setIntent);
                 }
             });
@@ -89,8 +91,8 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
                 public void onClick(View v) {
                     selectedPopUp = 2;
                     sister = 1;
-                    Intent setIntent = new Intent(context,PopUpFamilyInfoSecondPage.class);
-                    setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                    Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
+                    setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
                     context.startActivity(setIntent);
                 }
             });
@@ -101,8 +103,8 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
                 public void onClick(View v) {
                     selectedPopUp = 3;
                     sister = 1;
-                    Intent setIntent = new Intent(context,PopUpFamilyInfoSecondPage.class);
-                    setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                    Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
+                    setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
                     context.startActivity(setIntent);
                 }
             });
@@ -113,8 +115,8 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
                 public void onClick(View v) {
                     selectedPopUp = 5;
                     sister = 1;
-                    Intent setIntent = new Intent(context,PopUpFamilyInfoSecondPage.class);
-                    setIntent.putExtra("constant",RegistrationFamilyInfoSecondPage.constant);
+                    Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
+                    setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
                     context.startActivity(setIntent);
                 }
             });
@@ -132,8 +134,7 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
 
     }
 
-    public int listSize()
-    {
+    public int listSize() {
         return sisterCount.size();
     }
 
@@ -146,16 +147,18 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
         int position = sisterCount.indexOf(item);
         sisterCount.remove(position);
         notifyItemRemoved(position);
+        this.removeSisterItemCallBack.removeSisterItem();
     }
 
 
-    public SisterViewAdapter(List<Integer> SisterCount, Context context){
+    public SisterViewAdapter(List<Integer> SisterCount, Context context, RemoveSisterItemCallBack removeSisterItemCallBack) {
         this.sisterCount = SisterCount;
         this.context = context;
+        this.removeSisterItemCallBack = removeSisterItemCallBack;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.sister, parent, false);
 
@@ -163,9 +166,9 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position){
+    public void onBindViewHolder(MyViewHolder holder, int position) {
         Integer Sister = sisterCount.get(position);
-        if(position == 0){
+        if (position == 0) {
             holder.reject.setVisibility(View.GONE);
         }
     }
