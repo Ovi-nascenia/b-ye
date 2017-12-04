@@ -220,22 +220,22 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BrotherViewAdapter.selectedPopUp = 0;
-                SisterViewAdapter.selectedPopUp = 0;
-                OtherViewAdapter.selectedPopUp = 0;
-                RegistrationFamilyInfoSecondPage.selectedPopUp = 0;
 
+           //     Toast.makeText(getBaseContext(),RegistrationFamilyInfoSecondPage.selectedPopUp +"",Toast.LENGTH_LONG).show();
                 if (RegistrationFamilyInfoSecondPage.selectedPopUp == 1) {
-                    Toast.makeText(getBaseContext(),"brother",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getBaseContext(),"brother",Toast.LENGTH_LONG).show();
                     RegistrationFamilyInfoSecondPage.numberOfBrother = constantOfBrotherSister[brotherPickerSelectedValue];
                     RegistrationFamilyInfoSecondPage.brotherNumber.setText(data[brotherPickerSelectedValue]);
                 } else if (RegistrationFamilyInfoSecondPage.selectedPopUp == 2) {
-                    Toast.makeText(getBaseContext(),"sister",Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(getBaseContext(),"sister",Toast.LENGTH_LONG).show();
                     RegistrationFamilyInfoSecondPage.numberOfSister = constantOfBrotherSister[sisterPickerSelectedValue];
                     RegistrationFamilyInfoSecondPage.sisterNumber.setText(data[sisterPickerSelectedValue]);
                 }
 
-
+                BrotherViewAdapter.selectedPopUp = 0;
+                SisterViewAdapter.selectedPopUp = 0;
+                OtherViewAdapter.selectedPopUp = 0;
+                RegistrationFamilyInfoSecondPage.selectedPopUp = 0;
                 finish();
             }
         });
