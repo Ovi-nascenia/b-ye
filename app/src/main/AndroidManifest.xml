@@ -198,7 +198,8 @@
         <activity
             android:name=".activity.RegistrationFamilyInfoSecondPage"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.PopUpFamilyInfoSecondPage"
             android:screenOrientation="portrait"

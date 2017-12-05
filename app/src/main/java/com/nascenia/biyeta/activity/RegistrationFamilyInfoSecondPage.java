@@ -40,7 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implements RemoveBrotherItemCallBack,
-        RemoveSisterItemCallBack{
+        RemoveSisterItemCallBack {
     OkHttpClient client;
 
     LinearLayout brotherCountLayout, sisterCountLayout;
@@ -69,7 +69,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
     ImageView back;
 
     private RelativeLayout brotherInfoDetailsLayout, sisterInfoDetailsLayout;
-
+    private TextView brotherNubmerTitleTextView,sisterNumberTitleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +80,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         setContentView(R.layout.activity_registration_family_info_second_page);
         client = new OkHttpClient();
 
+        brotherNubmerTitleTextView= (TextView) findViewById(R.id.profession_status_label_brother_count);
         brotherCountLayout = (LinearLayout) findViewById(R.id.count_brother);
         brotherNumber = (TextView) findViewById(R.id.count_text_view_brother);
         brotherInfoDetailsLayout = (RelativeLayout) findViewById(R.id.brother_info_details_layout);
@@ -104,7 +105,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
             }
         });
 
-
+        sisterNumberTitleTextView = (TextView) findViewById(R.id.profession_status_label_sister_count);
         sisterCountLayout = (LinearLayout) findViewById(R.id.count_sister);
         sisterNumber = (TextView) findViewById(R.id.count_text_view_sister);
         sisterInfoDetailsLayout = (RelativeLayout) findViewById(R.id.sister_info_details_layout);
@@ -214,8 +215,25 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                     .toString();
 
                             responseBrother = responseBrother + response;
+                            if(responseBrother.isEmpty()){
+                                Toast.makeText(getBaseContext(),
+                                        getString(R.string.one_brother_info_message),
+                                        Toast.LENGTH_LONG).show();
+                            }else if(responseBrother.isEmpty() && recyclerViewBrother.getChildCount() > 1){
+                                Toast.makeText(getBaseContext(),
+                                        getString(R.string.atleast_one_brother_info_message),
+                                        Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
+                } else if(brotherNumber.getText().toString().
+                        equalsIgnoreCase(getString(R.string.brother_sister_number_textview_hint))) {
+                    Toast.makeText(getBaseContext(),
+                            getString(R.string.brother_nubmer_choise_message),
+                            Toast.LENGTH_LONG).show();
+                    brotherNubmerTitleTextView.getParent()
+                            .requestChildFocus(brotherNubmerTitleTextView,brotherNubmerTitleTextView);
+                    return;
                 }
 
                 if (recyclerViewSister.getChildCount() > 0) {
@@ -294,6 +312,14 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                             responseSister = responseSister + response;
                         }
                     }
+                } else if(sisterNumber.getText().toString().
+                        equalsIgnoreCase(getString(R.string.brother_sister_number_textview_hint))) {
+                    Toast.makeText(getBaseContext(),
+                            getString(R.string.sister_nubmer_choise_message),
+                            Toast.LENGTH_LONG).show();
+                    sisterNumberTitleTextView.getParent()
+                            .requestChildFocus(sisterNumberTitleTextView,sisterNumberTitleTextView);
+                    return;
                 }
 
 
@@ -304,7 +330,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                             String response = new StringBuilder().append("{")
                                     .append("\"name\":")
                                     .append("\"")
-                                    .append(holder.nameOther)
+                                    .append(holder.nameOther.getText().toString())
                                     .append("\"")
                                     .append(",")
                                     .append("\"age\":")
@@ -340,7 +366,11 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                     }
                 }
 
-                //new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
+                Log.i("finalvalue: ", "brother-> " + responseBrother);
+                Log.i("finalvalue: ", "sister-> " + responseSister);
+                Log.i("finalvalue: ", "other-> " + responseOther);
+
+                // new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
             }
         });
 
@@ -392,7 +422,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         //prepareBrotherData();
 
 
-        sisterViewAdapter = new SisterViewAdapter(sisterList, RegistrationFamilyInfoSecondPage.this,this);
+        sisterViewAdapter = new SisterViewAdapter(sisterList, RegistrationFamilyInfoSecondPage.this, this);
 
         recyclerViewSister = (RecyclerView) findViewById(R.id.recycler_view_sister);
 

@@ -367,4 +367,13 @@
     <string name= "bride_religion_status_selction_message">পাত্রীর ধর্ম নির্বাচন করুন</string>
     <string name= "bride_job_status_selction_message">মেয়ে বিয়ের পরে চাকরি করতে পারবে কিনা নির্বাচন করুন</string>
 
+    <string name="brother_nubmer_choise_message">ভাইয়ের সংখ্যা নির্বাচন করুন</string>
+    <string name="sister_nubmer_choise_message">বোনের সংখ্যা নির্বাচন করুন</string>
+
+    <string name="brother_sister_number_textview_hint">সংখ্যা</string>
+
+    <string name="one_brother_info_message">আপনার ভাইয়ের তথ্য দিন</string>
+    <string name="atleast_one_brother_info_message">কমপক্ষে আপনার একজন ভাইয়ের তথ্য দিন</string>
+
+
 </resources>

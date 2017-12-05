@@ -103,7 +103,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="সংখ্যা"
+                    android:text="@string/brother_sister_number_textview_hint"
                     android:textSize="18dp" />
 
                 <ImageView
@@ -144,7 +144,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="সংখ্যা"
+                    android:text="@string/brother_sister_number_textview_hint"
                     android:textSize="18dp" />
 
                 <ImageView
