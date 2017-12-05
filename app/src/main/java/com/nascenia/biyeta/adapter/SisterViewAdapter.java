@@ -69,6 +69,7 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
                     int position = getAdapterPosition();
                     sisterCount.remove(position);
                     notifyItemRemoved(position);
+                    removeSisterItemCallBack.removeSisterItem();
 
                 }
             });
@@ -147,7 +148,7 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
         int position = sisterCount.indexOf(item);
         sisterCount.remove(position);
         notifyItemRemoved(position);
-        this.removeSisterItemCallBack.removeSisterItem();
+
     }
 
 
