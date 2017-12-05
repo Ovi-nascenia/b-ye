@@ -69,7 +69,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
     ImageView back;
 
     private RelativeLayout brotherInfoDetailsLayout, sisterInfoDetailsLayout;
-    private TextView brotherNubmerTitleTextView,sisterNumberTitleTextView;
+    private TextView brotherNubmerTitleTextView, sisterNumberTitleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         setContentView(R.layout.activity_registration_family_info_second_page);
         client = new OkHttpClient();
 
-        brotherNubmerTitleTextView= (TextView) findViewById(R.id.profession_status_label_brother_count);
+        brotherNubmerTitleTextView = (TextView) findViewById(R.id.profession_status_label_brother_count);
         brotherCountLayout = (LinearLayout) findViewById(R.id.count_brother);
         brotherNumber = (TextView) findViewById(R.id.count_text_view_brother);
         brotherInfoDetailsLayout = (RelativeLayout) findViewById(R.id.brother_info_details_layout);
@@ -141,10 +141,28 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("brothernumber", recyclerViewBrother.getChildCount() + "");
                 if (recyclerViewBrother.getChildCount() > 0) {
                     for (int i = 0; i < recyclerViewBrother.getChildCount(); i++) {
+
                         if (recyclerViewBrother.findViewHolderForLayoutPosition(i) instanceof BrotherViewAdapter.MyViewHolder) {
-                            BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder) recyclerViewBrother.findViewHolderForLayoutPosition(i);
+                            BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder)
+                                    recyclerViewBrother.findViewHolderForLayoutPosition(i);
+
+                            Log.i("brothernumberval", holder.nameBrother.getText().toString() + " " +
+                                    PopUpFamilyInfoSecondPage.ageArrayBrother.get(i) + " " +
+                                    PopUpFamilyInfoSecondPage.occupationArrayBrother.get(i) + "");
+
+                            if (!isUserFillAllSiblingMandatoryField("ভাইয়ের",
+                                    holder.nameBrother.getText().toString(),
+                                    PopUpFamilyInfoSecondPage.ageArrayBrother.get(i),
+                                    PopUpFamilyInfoSecondPage.occupationArrayBrother.get(i) ,
+                                    i)) {
+                                brotherNubmerTitleTextView.getParent()
+                                        .requestChildFocus(brotherNubmerTitleTextView, brotherNubmerTitleTextView);
+                                return;
+                            }
+
                             String response = new StringBuilder().append("{")
                                     .append("\"sibling_type\":")
                                     .append("\"")
@@ -215,31 +233,36 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                     .toString();
 
                             responseBrother = responseBrother + response;
-                            if(responseBrother.isEmpty()){
-                                Toast.makeText(getBaseContext(),
-                                        getString(R.string.one_brother_info_message),
-                                        Toast.LENGTH_LONG).show();
-                            }else if(responseBrother.isEmpty() && recyclerViewBrother.getChildCount() > 1){
-                                Toast.makeText(getBaseContext(),
-                                        getString(R.string.atleast_one_brother_info_message),
-                                        Toast.LENGTH_LONG).show();
-                            }
+
                         }
                     }
-                } else if(brotherNumber.getText().toString().
+
+                } else if (brotherNumber.getText().toString().
                         equalsIgnoreCase(getString(R.string.brother_sister_number_textview_hint))) {
                     Toast.makeText(getBaseContext(),
                             getString(R.string.brother_nubmer_choise_message),
                             Toast.LENGTH_LONG).show();
                     brotherNubmerTitleTextView.getParent()
-                            .requestChildFocus(brotherNubmerTitleTextView,brotherNubmerTitleTextView);
+                            .requestChildFocus(brotherNubmerTitleTextView, brotherNubmerTitleTextView);
                     return;
                 }
 
                 if (recyclerViewSister.getChildCount() > 0) {
                     for (int i = 0; i < recyclerViewSister.getChildCount(); i++) {
                         if (recyclerViewSister.findViewHolderForLayoutPosition(i) instanceof SisterViewAdapter.MyViewHolder) {
-                            SisterViewAdapter.MyViewHolder holder = (SisterViewAdapter.MyViewHolder) recyclerViewSister.findViewHolderForLayoutPosition(i);
+                            SisterViewAdapter.MyViewHolder holder = (SisterViewAdapter.MyViewHolder)
+                                    recyclerViewSister.findViewHolderForLayoutPosition(i);
+
+                            if (!isUserFillAllSiblingMandatoryField("বোনের",
+                                    holder.nameSister.getText().toString(),
+                                    PopUpFamilyInfoSecondPage.ageArraySister.get(i),
+                                    PopUpFamilyInfoSecondPage.occupationArraySister.get(i) ,
+                                    i)) {
+                                sisterNumberTitleTextView.getParent()
+                                        .requestChildFocus(sisterNumberTitleTextView, sisterNumberTitleTextView);
+                                return;
+                            }
+
                             String response = new StringBuilder().append("{")
                                     .append("\"sibling_type\":")
                                     .append("\"")
@@ -312,13 +335,13 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                             responseSister = responseSister + response;
                         }
                     }
-                } else if(sisterNumber.getText().toString().
+                } else if (sisterNumber.getText().toString().
                         equalsIgnoreCase(getString(R.string.brother_sister_number_textview_hint))) {
                     Toast.makeText(getBaseContext(),
                             getString(R.string.sister_nubmer_choise_message),
                             Toast.LENGTH_LONG).show();
                     sisterNumberTitleTextView.getParent()
-                            .requestChildFocus(sisterNumberTitleTextView,sisterNumberTitleTextView);
+                            .requestChildFocus(sisterNumberTitleTextView, sisterNumberTitleTextView);
                     return;
                 }
 
@@ -473,6 +496,47 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
 
 
     }
+
+    private boolean isUserFillAllSiblingMandatoryField(String siblingType,
+                                                       String siblingName,
+                                                       String siblingAge,
+                                                       String siblingOccupation,
+                                                       int siblingNumber) {
+
+        if (siblingName.isEmpty()) {
+            Toast.makeText(getBaseContext(),
+                    "আপনার " + Utils.englishToBanglaNumberConvertion(siblingNumber+1)
+                            + " " + siblingType + " নাম লিখুন",
+                    Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+
+
+        if (siblingAge == null) {
+            Toast.makeText(getBaseContext(),
+                    "আপনার " + Utils.englishToBanglaNumberConvertion(siblingNumber+1)
+                            + " " + siblingType + " বয়স নির্বাচন করুন",
+                    Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+
+
+        if (siblingOccupation == null) {
+            Toast.makeText(getBaseContext(),
+                    "আপনার " + Utils.englishToBanglaNumberConvertion(siblingNumber+1)
+                            + " " + siblingType + " পেশা নির্বাচন করুন",
+                    Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+
+
+        return true;
+
+    }
+
 
     private void setSisterRecylerView() {
         sisterCount = 0;

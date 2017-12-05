@@ -198,7 +198,7 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
             siblingType = "1";
             name = nameBrother.getText().toString();
 
-            Toast.makeText(view.getContext(),name,Toast.LENGTH_LONG).show();
+          //  Toast.makeText(view.getContext(),name,Toast.LENGTH_LONG).show();
 
             designation = designationBrother.getText().toString();
             institute = institutionBrother.getText().toString();

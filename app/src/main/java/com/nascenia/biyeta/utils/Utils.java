@@ -470,4 +470,35 @@ public class Utils{
         java.util.regex.Matcher m = p.matcher(email);
         return m.matches();
     }
+
+    public static String englishToBanglaNumberConvertion(int number){
+
+            String banglaNumber="";
+
+            switch (number){
+                case 1:
+                    banglaNumber="প্রথম";
+                    break;
+                case 2:
+                    banglaNumber="দ্বিতীয়";
+                    break;
+                case 3:
+                    banglaNumber="তৃতীয়";
+                    break;
+                case 4:
+                    banglaNumber="চতুর্থ";
+                    break;
+                case 5:
+                    banglaNumber="পঞ্চম";
+                    break;
+                case 6:
+                    banglaNumber="ষষ্ঠ";
+                    break;
+
+            }
+
+        return banglaNumber;
+
+    }
+
 }

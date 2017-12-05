@@ -175,7 +175,9 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             data = occupationName;
         } else if (BrotherViewAdapter.selectedPopUp == 7) {
             data = professonalGroupName;
-        } else if (SisterViewAdapter.selectedPopUp == 1) {
+        }
+
+        else if (SisterViewAdapter.selectedPopUp == 1) {
             data = occupationName;
         } else if (SisterViewAdapter.selectedPopUp == 2) {
             data = professonalGroupName;

@@ -39,9 +39,20 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
     public static String responseSister = "";
 
     private Context context;
+
+    public static int adapterPosition = 0;
+
     public static int selectedPopUp = 0, sister = 0, age = 0;
-    public static String occupation = "", professonalGroup = "", maritalStatus = "";
+    //public static String occupation = "", professonalGroup = "", maritalStatus = "";
+
     private RemoveSisterItemCallBack removeSisterItemCallBack;
+
+    public SisterViewAdapter(List<Integer> SisterCount, Context context,
+                             RemoveSisterItemCallBack removeSisterItemCallBack) {
+        this.sisterCount = SisterCount;
+        this.context = context;
+        this.removeSisterItemCallBack = removeSisterItemCallBack;
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout reject;
@@ -151,12 +162,6 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
 
     }
 
-
-    public SisterViewAdapter(List<Integer> SisterCount, Context context, RemoveSisterItemCallBack removeSisterItemCallBack) {
-        this.sisterCount = SisterCount;
-        this.context = context;
-        this.removeSisterItemCallBack = removeSisterItemCallBack;
-    }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
