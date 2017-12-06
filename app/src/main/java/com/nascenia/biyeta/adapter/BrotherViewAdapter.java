@@ -22,7 +22,7 @@ import com.nascenia.biyeta.utils.RemoveBrotherItemCallBack;
 import java.util.List;
 
 
-public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.MyViewHolder> implements RefreshBlockOverlay {
+public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.MyViewHolder>  {
 
     LinearLayout professonalStatusBrother;
     LinearLayout occupationStatusBrother;
@@ -258,10 +258,4 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
     public int getItemCount() {
         return brotherCount.size();
     }
-
-    @Override
-    public void refreshBlockOverlay(int position) {
-        notifyItemChanged(position);
-    }
-
 }

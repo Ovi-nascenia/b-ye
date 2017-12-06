@@ -60,6 +60,11 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
         public EditText nameSister;
         public EditText designationSister;
         public EditText institutionSister;
+        public  TextView sisterOccupation;
+        public  TextView sisterProfessionalGroup;
+        public  TextView sisterMaritalStatus;
+        public  TextView sisterAge;
+
 
         public MyViewHolder(View view) {
             super(view);
@@ -93,6 +98,7 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
                     sister = 1;
                     Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
                     setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position", getAdapterPosition());
                     context.startActivity(setIntent);
                 }
             });
@@ -105,6 +111,7 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
                     sister = 1;
                     Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
                     setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position", getAdapterPosition());
                     context.startActivity(setIntent);
                 }
             });
@@ -117,6 +124,7 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
                     sister = 1;
                     Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
                     setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position", getAdapterPosition());
                     context.startActivity(setIntent);
                 }
             });
@@ -129,6 +137,7 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
                     sister = 1;
                     Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
                     setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position", getAdapterPosition());
                     context.startActivity(setIntent);
                 }
             });
