@@ -316,34 +316,75 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             Log.i("brotherval: ", "listener");
             if (BrotherViewAdapter.selectedPopUp == 1) {
 
-                BrotherViewAdapter.brotherOccupation.setText(occupationName[newVal]);
+             //   BrotherViewAdapter.brotherOccupation.setText(occupationName[newVal]);
+
+                BrotherViewAdapter.MyViewHolder holder =
+                        (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
+                                .findViewHolderForLayoutPosition(position);
+                holder.brotherOccupation.setText(occupationName[newVal]);
+
                 value = occupationConstantValue[newVal];
                 occupationArrayBrother.put(position, value);
             } else if (BrotherViewAdapter.selectedPopUp == 2) {
-                BrotherViewAdapter.brotherProfessionalGroup.setText(professonalGroupName[newVal]);
+
+                //BrotherViewAdapter.brotherProfessionalGroup.setText(professonalGroupName[newVal]);
+
+                BrotherViewAdapter.MyViewHolder holder =
+                        (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
+                                .findViewHolderForLayoutPosition(position);
+                holder.brotherProfessionalGroup.setText(professonalGroupName[newVal]);
+
                 value = professonalGroupConstantValue[newVal];
                 professionalGroupArrayBrother.put(position, value);
             } else if (BrotherViewAdapter.selectedPopUp == 3) {
-                BrotherViewAdapter.brotherMaritalStatus.setText(maritalStatusName[newVal]);
+               // BrotherViewAdapter.brotherMaritalStatus.setText(maritalStatusName[newVal]);
+
+                BrotherViewAdapter.MyViewHolder holder =
+                        (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
+                                .findViewHolderForLayoutPosition(position);
+                holder.brotherMaritalStatus.setText(maritalStatusName[newVal]);
+
+
                 value = maritalStatusConstantValue[newVal];
                 maritalStatusArrayBrother.put(position, value);
+
                 if (value.equals("4")) {
-                    BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother.findViewHolderForLayoutPosition(position);
+                   /* BrotherViewAdapter.MyViewHolder holder =
+                            (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
+                                    .findViewHolderForLayoutPosition(position);*/
                     holder.spouse.setVisibility(View.VISIBLE);
                 } else {
-                    BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother.findViewHolderForLayoutPosition(position);
+                   /* BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder)
+                            RegistrationFamilyInfoSecondPage.recyclerViewBrother.findViewHolderForLayoutPosition(position);*/
                     holder.spouse.setVisibility(View.GONE);
                 }
             } else if (BrotherViewAdapter.selectedPopUp == 5) {
-                BrotherViewAdapter.brotherAge.setText(age[newVal]);
+                //BrotherViewAdapter.brotherAge.setText(age[newVal]);
+                BrotherViewAdapter.MyViewHolder holder =
+                        (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
+                                .findViewHolderForLayoutPosition(position);
+
+                holder.brotherAge.setText(age[newVal]);
+
                 value = "" + newVal;
                 ageArrayBrother.put(position, value);
             } else if (BrotherViewAdapter.selectedPopUp == 6) {
-                BrotherViewAdapter.brotherOcupationSpouse.setText(occupationName[newVal]);
+                //BrotherViewAdapter.brotherOcupationSpouse.setText(occupationName[newVal]);
+
+                BrotherViewAdapter.MyViewHolder holder =
+                        (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
+                                .findViewHolderForLayoutPosition(position);
+                holder.brotherOcupationSpouse.setText(occupationName[newVal]);
+
                 value = occupationConstantValue[newVal];
                 occupationArrayBrotherSpouse.put(position, value);
             } else if (BrotherViewAdapter.selectedPopUp == 7) {
-                BrotherViewAdapter.brotherProfessionalGroupSpouse.setText(professonalGroupName[newVal]);
+                //BrotherViewAdapter.brotherProfessionalGroupSpouse.setText(professonalGroupName[newVal]);
+
+                BrotherViewAdapter.MyViewHolder holder =
+                        (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
+                                .findViewHolderForLayoutPosition(position);
+                holder.brotherProfessionalGroupSpouse.setText(professonalGroupName[newVal]);
                 value = professonalGroupConstantValue[newVal];
                 professionalGroupArrayBrotherSpouse.put(position, value);
             } else if (SisterViewAdapter.selectedPopUp == 1) {

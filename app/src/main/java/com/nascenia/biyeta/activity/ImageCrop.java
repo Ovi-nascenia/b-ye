@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.nascenia.biyeta.R;
 
 import java.io.ByteArrayOutputStream;
@@ -21,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import uk.co.senab.photoview.PhotoViewAttacher;
+
 
 public class ImageCrop extends Activity{
 
