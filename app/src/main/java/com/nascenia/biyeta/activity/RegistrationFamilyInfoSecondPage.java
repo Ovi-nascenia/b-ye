@@ -404,8 +404,8 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                 Log.i("finalvalue: ", "other-> " + responseOther);
                 Log.i("finalvalue: ", "totalJson-> " +   JSONResponse());
 */
-                //JSONResponse();
-                 new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
+                JSONResponse();
+               //  new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
             }
         });
 
@@ -500,10 +500,11 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
             @Override
             public void onViewRecycled(RecyclerView.ViewHolder holder) {
 
-                OtherViewAdapter.MyViewHolder myViewHolder = (OtherViewAdapter.MyViewHolder) holder;
+                /*OtherViewAdapter.MyViewHolder myViewHolder = (OtherViewAdapter.MyViewHolder) holder;
 
-                InputMethodManager imm = (InputMethodManager) myViewHolder.nameOther.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(myViewHolder.nameOther.getWindowToken(), 0);
+                InputMethodManager imm = (InputMethodManager) myViewHolder.nameOther.getContext().
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(myViewHolder.nameOther.getWindowToken(), 0);*/
                 Log.e("decendent","methodcall");
 
             }
@@ -537,25 +538,28 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                 return;
                             } else if (holder.nameOther.getText().toString().isEmpty()) {
                                 Toast.makeText(getBaseContext(),
-                                        "আপনার "+holder.otherRelationalStatus.getText().toString()
+                                        "আপনার "+holder.otherRelationalStatus.getText().toString()+" "
                                                 +getString(R.string.write_name_message),
                                         Toast.LENGTH_SHORT).show();
                                 return;
                             }else if(PopUpFamilyInfoSecondPage.ageArrayOther.get(childPosition)==null){
                                 Toast.makeText(getBaseContext(),
-                                        "আপনার "+holder.otherRelationalStatus.getText().toString()
+                                        "আপনার "+holder.otherRelationalStatus.getText().toString()+" "
                                                 +getString(R.string.select_age_message),
                                         Toast.LENGTH_SHORT).show();
                                 return;
                             } else if(PopUpFamilyInfoSecondPage.occupationArrayOther.get(childPosition)==null){
                                 Toast.makeText(getBaseContext(),
-                                        "আপনার "+holder.otherRelationalStatus.getText().toString()
+                                        "আপনার "+holder.otherRelationalStatus.getText().toString()+" "
                                                 + getString(R.string.select_occupation_message),
                                         Toast.LENGTH_SHORT).show();
                                 return;
                             } else {
                                 otherCount++;
                                 otherViewAdapter.add(otherCount, otherViewAdapter.listSize());
+                                /*holder.nameOther.requestFocus();
+                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.showSoftInput(holder.nameOther, InputMethodManager.SHOW_IMPLICIT);*/
                                 Log.i("otherdata", "add: " + otherCount + "");
                             }
                         }
@@ -734,9 +738,13 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
     }
 
     @Override
-    public void removeOtherRelationItemCallBack() {
+    public void removeOtherRelationItemCallBack(int position) {
         otherCount--;
         Log.i("otherdata", "remove: " + otherCount + "");
+       /* OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder)
+                recyclerViewOther.findViewHolderForLayoutPosition(position);
+        holder.nameOther.getParent().clearChildFocus(holder.nameOther);*/
+
 
     }
 

@@ -4,6 +4,7 @@ package com.nascenia.biyeta.adapter;
  * Created by masum on 10/9/2017.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -107,8 +109,9 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
                     otherCount.remove(position);
                     notifyItemRemoved(position);
                     //nameOther.clearFocus();
-
-                    removeOtherRelationItemCallBack.removeOtherRelationItemCallBack();
+                  /*  ViewParent parent = nameOther.getParent();
+                    parent.clearChildFocus(nameOther);*/
+                    removeOtherRelationItemCallBack.removeOtherRelationItemCallBack(position);
 
                 }
             });
@@ -211,6 +214,7 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.other, parent, false);
+
 
         return new MyViewHolder(itemView);
     }

@@ -5,5 +5,5 @@ package com.nascenia.biyeta.utils;
  */
 
 public interface RemoveOtherRelationItemCallBack {
-    void removeOtherRelationItemCallBack();
+    void removeOtherRelationItemCallBack(int position);
 }
