@@ -265,43 +265,43 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
 
                 if (maritalStatusValue.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "choose marital status", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "আপনার বৈবাহিক অবস্থা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     maritalStatusLabel.getParent().requestChildFocus(maritalStatusLabel,maritalStatusLabel);
                     return;
                 }
 
                 if (degreeValue.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "choose degreeValue status", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "আপনার ডিগ্রীর নাম নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     educationalStatusLabel.getParent().requestChildFocus(educationalStatusLabel,educationalStatusLabel);
                     return;
                 }
 
                 if (subjectValue.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "choose subjectValue status", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "আপনার বিষয় লিখুন", Toast.LENGTH_LONG).show();
                     educationalStatusLabel.getParent().requestChildFocus(educationalStatusLabel,educationalStatusLabel);
                     return;
                 }
 
                 if (occupationValue.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "choose occupationValue status", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "আপনার পেশা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     professionStatusLabel.getParent().requestChildFocus(professionStatusLabel,professionStatusLabel);
                     return;
                 }
 
                 if (professionalGroupValue.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "choose professionalGroupValue status", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "আপনার প্রফেশনাল গ্রুপ নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     professionStatusLabel.getParent().requestChildFocus(professionStatusLabel,professionStatusLabel);
                     return;
                 }
 
                 if(religionValue.isEmpty()){
-                    Toast.makeText(getBaseContext(), "choose religionvalue status", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "আপনার ধর্ম পালন নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     religionStatusLabel.getParent().requestChildFocus(religionStatusLabel,religionStatusLabel);
                     return;
                 }
 
                 if(rojaValue.isEmpty()){
-                    Toast.makeText(getBaseContext(), "choose religionvalue status", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "আপনি রোজা রাখেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     rojaStatuLabel.getParent().requestChildFocus(rojaStatuLabel,rojaStatuLabel);
                     return;
                 }
@@ -408,7 +408,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
                 // Toast.makeText(RegistrationPersonalInformation.this,response,Toast.LENGTH_LONG).show();
 
-                //   new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
+                new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
 
             }
         });

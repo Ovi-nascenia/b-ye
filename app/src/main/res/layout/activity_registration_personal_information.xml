@@ -215,7 +215,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="পেশা"
+                android:text="পেশা*"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"/>
@@ -249,7 +249,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
+                android:text="প্রফেশনাল গ্রুপ*"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"/>

@@ -404,8 +404,8 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                 Log.i("finalvalue: ", "other-> " + responseOther);
                 Log.i("finalvalue: ", "totalJson-> " +   JSONResponse());
 */
-                JSONResponse();
-                // new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
+                //JSONResponse();
+                 new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
             }
         });
 
