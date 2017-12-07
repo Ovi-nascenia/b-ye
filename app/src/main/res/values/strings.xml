@@ -374,6 +374,13 @@
 
     <string name="one_brother_info_message">আপনার ভাইয়ের তথ্য দিন</string>
     <string name="atleast_one_brother_info_message">কমপক্ষে আপনার একজন ভাইয়ের তথ্য দিন</string>
+    <string name="relation_title_text">সম্পর্ক</string>
+
+    <string name="choose_realtion_message">আপনার সাথে সম্পর্ক নির্বাচন করুন</string>
+
+    <string name="write_name_message"> নাম লিখুন</string>
+    <string name="select_age_message"> বয়স নির্বাচন করুন</string>
+    <string name="select_occupation_message"> পেশা নির্বাচন করুন</string>
 
 
 </resources>

@@ -1,6 +1,7 @@
 package com.nascenia.biyeta.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.utils.RemoveBrotherItemCallBack;
+import com.nascenia.biyeta.utils.RemoveOtherRelationItemCallBack;
 import com.nascenia.biyeta.utils.RemoveSisterItemCallBack;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.MediaType;
@@ -40,7 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implements RemoveBrotherItemCallBack,
-        RemoveSisterItemCallBack {
+        RemoveSisterItemCallBack, RemoveOtherRelationItemCallBack {
     OkHttpClient client;
 
     LinearLayout brotherCountLayout, sisterCountLayout;
@@ -252,7 +255,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                     return;
                 }
 
-                if (RegistrationFamilyInfoSecondPage.numberOfSister> 0) {
+                if (RegistrationFamilyInfoSecondPage.numberOfSister > 0) {
                     for (int i = 0; i < RegistrationFamilyInfoSecondPage.numberOfSister; i++) {
                         if (recyclerViewSister.findViewHolderForLayoutPosition(i) instanceof SisterViewAdapter.MyViewHolder) {
                             SisterViewAdapter.MyViewHolder holder = (SisterViewAdapter.MyViewHolder)
@@ -481,7 +484,8 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         //prepareSisterData();
 
 
-        otherViewAdapter = new OtherViewAdapter(otherList, RegistrationFamilyInfoSecondPage.this);
+        otherViewAdapter = new OtherViewAdapter(otherList, RegistrationFamilyInfoSecondPage.this,
+                this);
 
         recyclerViewOther = (RecyclerView) findViewById(R.id.recycler_view_other);
 
@@ -492,16 +496,78 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         recyclerViewOther.setItemAnimator(new DefaultItemAnimator());
         recyclerViewOther.setAdapter(otherViewAdapter);
 
-        buttonOther.setOnClickListener(new View.OnClickListener() {
+        recyclerViewOther.setRecyclerListener(new RecyclerView.RecyclerListener() {
             @Override
-            public void onClick(View v) {
-                otherViewAdapter.add(otherCount, otherViewAdapter.listSize());
-                otherCount++;
+            public void onViewRecycled(RecyclerView.ViewHolder holder) {
+
+                OtherViewAdapter.MyViewHolder myViewHolder = (OtherViewAdapter.MyViewHolder) holder;
+
+                InputMethodManager imm = (InputMethodManager) myViewHolder.nameOther.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(myViewHolder.nameOther.getWindowToken(), 0);
+                Log.e("decendent","methodcall");
+
             }
         });
 
 
-     //   prepareOtherData();
+        buttonOther.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (otherCount == 0) {
+                    otherCount++;
+                    prepareOtherData();
+                    recyclerViewOther.setVisibility(View.VISIBLE);
+                    Log.i("otherdata", "add: " + otherCount + "");
+
+                } else {
+
+                    if (recyclerViewOther.getChildCount() > 0) {
+                        int childPosition =recyclerViewOther.getChildCount() - 1;
+
+                        if (recyclerViewOther.findViewHolderForLayoutPosition(childPosition)
+                                instanceof OtherViewAdapter.MyViewHolder) {
+
+                            OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder)
+                                    recyclerViewOther.findViewHolderForLayoutPosition(childPosition);
+
+                            if(holder.otherRelationalStatus.getText().toString().
+                                    equalsIgnoreCase(getString(R.string.relation_title_text))){
+                                Toast.makeText(getBaseContext(), getString(R.string.choose_realtion_message),
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            } else if (holder.nameOther.getText().toString().isEmpty()) {
+                                Toast.makeText(getBaseContext(),
+                                        "আপনার "+holder.otherRelationalStatus.getText().toString()
+                                                +getString(R.string.write_name_message),
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            }else if(PopUpFamilyInfoSecondPage.ageArrayOther.get(childPosition)==null){
+                                Toast.makeText(getBaseContext(),
+                                        "আপনার "+holder.otherRelationalStatus.getText().toString()
+                                                +getString(R.string.select_age_message),
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            } else if(PopUpFamilyInfoSecondPage.occupationArrayOther.get(childPosition)==null){
+                                Toast.makeText(getBaseContext(),
+                                        "আপনার "+holder.otherRelationalStatus.getText().toString()
+                                                + getString(R.string.select_occupation_message),
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            } else {
+                                otherCount++;
+                                otherViewAdapter.add(otherCount, otherViewAdapter.listSize());
+                                Log.i("otherdata", "add: " + otherCount + "");
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        });
+
+
+        //   prepareOtherData();
 
 
     }
@@ -515,7 +581,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         if (siblingName.isEmpty()) {
             Toast.makeText(getBaseContext(),
                     "আপনার " + Utils.englishToBanglaNumberConvertion(siblingNumber + 1)
-                            + " " + siblingType + " নাম লিখুন",
+                            + " " + siblingType + getString(R.string.write_name_message),
                     Toast.LENGTH_LONG).show();
 
             return false;
@@ -525,7 +591,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         if (siblingAge == null) {
             Toast.makeText(getBaseContext(),
                     "আপনার " + Utils.englishToBanglaNumberConvertion(siblingNumber + 1)
-                            + " " + siblingType + " বয়স নির্বাচন করুন",
+                            + " " + siblingType + getString(R.string.select_age_message),
                     Toast.LENGTH_LONG).show();
 
             return false;
@@ -535,7 +601,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         if (siblingOccupation == null) {
             Toast.makeText(getBaseContext(),
                     "আপনার " + Utils.englishToBanglaNumberConvertion(siblingNumber + 1)
-                            + " " + siblingType + " পেশা নির্বাচন করুন",
+                            + " " + siblingType +getString(R.string.select_occupation_message),
                     Toast.LENGTH_LONG).show();
 
             return false;
@@ -606,7 +672,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
 
     private void prepareOtherData() {
         otherList.add(otherCount);
-        otherCount++;
+        //otherCount++;
         otherViewAdapter.notifyDataSetChanged();
     }
 
@@ -664,6 +730,13 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         if (buttonSister.getVisibility() == View.INVISIBLE) {
             buttonSister.setVisibility(View.VISIBLE);
         }
+
+    }
+
+    @Override
+    public void removeOtherRelationItemCallBack() {
+        otherCount--;
+        Log.i("otherdata", "remove: " + otherCount + "");
 
     }
 
