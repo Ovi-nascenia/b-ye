@@ -350,7 +350,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                         .append("}")
                         .toString();
 
-                Toast.makeText(RegistrationChoiceSelectionFirstPage.this, total, Toast.LENGTH_LONG).show();
+               // Toast.makeText(RegistrationChoiceSelectionFirstPage.this, total, Toast.LENGTH_LONG).show();
                 new RegistrationChoiceSelectionFirstPage.SendChoiceInfo().execute(total);
             }
         });

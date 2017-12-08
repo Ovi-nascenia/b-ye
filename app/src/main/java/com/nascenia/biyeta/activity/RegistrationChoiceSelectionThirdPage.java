@@ -222,7 +222,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                     } else if (!checkBox.isChecked()) {
                         muslimCastSelectedArray.remove(muslimCastConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionThirdPage.this, "id  : " + muslimCastConstant.get(index), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(RegistrationChoiceSelectionThirdPage.this, "id  : " + muslimCastConstant.get(index), Toast.LENGTH_LONG).show();
                 }
             });
             muslimCastLayout.addView(muslimCheckBox);
@@ -244,7 +244,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                     } else if (!checkBox.isChecked()) {
                         hinduCastSelectedArray.remove(hinduCastConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionThirdPage.this, "id  : " + hinduCastConstant.get(index), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(RegistrationChoiceSelectionThirdPage.this, "id  : " + hinduCastConstant.get(index), Toast.LENGTH_LONG).show();
                 }
             });
             hinduCastLayout.addView(hinduCheckBox);
@@ -267,7 +267,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                     } else if (!checkBox.isChecked()) {
                         christianCastSelectedArray.remove(christianCastConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionThirdPage.this, "id  : " + christianCastConstant.get(index), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(RegistrationChoiceSelectionThirdPage.this, "id  : " + christianCastConstant.get(index), Toast.LENGTH_LONG).show();
                 }
             });
             christianCastLayout.addView(christianCheckBox);

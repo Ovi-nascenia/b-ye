@@ -166,14 +166,14 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             public void onClick(View v){
 
                 if(nameFather.getText().toString().isEmpty()){
-                    Toast.makeText(getBaseContext(),"give your father name",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(),getString(R.string.write_your_father_name),Toast.LENGTH_LONG).show();
                     professionStatusLabelFather.getParent().
                             requestChildFocus(professionStatusLabelFather,professionStatusLabelFather);
                     return;
                 }
 
                 if(occupationOfFather.isEmpty()){
-                    Toast.makeText(getBaseContext(),"give your father occupation",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(),getString(R.string.choose_your_father_occupation),Toast.LENGTH_LONG).show();
                     professionStatusLabelFather.getParent().
                             requestChildFocus(professionStatusLabelFather,professionStatusLabelFather);
                     return;
@@ -181,7 +181,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
 
                 if(occupationOfMother.isEmpty()){
-                    Toast.makeText(getBaseContext(),"give your mother occupation",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(),getString(R.string.choose_your_mother_occupation),Toast.LENGTH_LONG).show();
                     professionStatusLabelMother.getParent().
                             requestChildFocus(professionStatusLabelMother,professionStatusLabelMother);
                     return;

@@ -202,7 +202,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
                     else if(!checkBox.isChecked()){
                         occupationSelectedArray.remove(occupationConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ occupationConstant.get(index) ,Toast.LENGTH_LONG ).show();
+                  //  Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ occupationConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
             });
             linear1.addView(occupationCheckbox);
@@ -225,7 +225,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
                     else if(!checkBox.isChecked()){
                         professonalGroupSelectedArray.remove(professonalGroupConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ professonalGroupConstant.get(index) ,Toast.LENGTH_LONG ).show();
+                    //Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ professonalGroupConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
             });
             linear2.addView(professonalGroupCheckBox);
@@ -261,7 +261,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
                     else if(dhakaDivisionCheckboxColor==dhakaDivisionDistrict.size()){
 //                        dhakaDivision.setBackgroundColor(Color.WHITE);
                     }
-                    Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ dhakaDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
+                   // Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ dhakaDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
 
 
@@ -301,7 +301,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
                     else if(!checkBox.isChecked()){
                         districtSelectedArray.remove(mymensinghDivisionDistrictConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ mymensinghDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
+                   // Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ mymensinghDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
             });
             mymensing.addView(mymensingDivisionDistricts);
@@ -340,7 +340,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
                     else if(!checkBox.isChecked()){
                         districtSelectedArray.remove(chittagongDivisionDistrictConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ chittagongDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
+                  //  Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ chittagongDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
             });
             chittagong.addView(chittagongDivisionDistricts);
@@ -377,7 +377,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
                     else if(!checkBox.isChecked()){
                         districtSelectedArray.remove(khulnaDivisionDistrictConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ khulnaDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
+                   // Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ khulnaDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
             });
             khulna.addView(khulnaDivisionDistricts);
@@ -415,7 +415,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
                     else if(!checkBox.isChecked()){
                         districtSelectedArray.remove(rajshahiDivisionDistrictConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ rajshahiDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
+                   // Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ rajshahiDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
             });
             rajshahi.addView(rajshahiDivisionDistricts);
@@ -454,7 +454,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
                     else if(!checkBox.isChecked()){
                         districtSelectedArray.remove(barisalDivisionDistrictConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ barisalDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
+                    //Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ barisalDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
             });
             barisal.addView(barisalDivisionDistricts);
@@ -492,7 +492,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
                     else if(!checkBox.isChecked()){
                         districtSelectedArray.remove(sylhetDivisionDistrictConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ sylhetDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
+                    //Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ sylhetDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
             });
             sylhet.addView(sylhetDivisionDistricts);
@@ -531,7 +531,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity{
                     else if(!checkBox.isChecked()){
                         districtSelectedArray.remove(rajshahiDivisionDistrictConstant.get(index));
                     }
-                    Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ rangpurDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
+                    //Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ rangpurDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
             });
             rangpur.addView(rangpurDivisionDistricts);
