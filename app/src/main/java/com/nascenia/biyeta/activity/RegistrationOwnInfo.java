@@ -59,7 +59,8 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         final String constants = intent.getStringExtra("constants");
         try {
             JSONObject jsonObject = new JSONObject(constants);
-            Toast.makeText(RegistrationOwnInfo.this,constants,Toast.LENGTH_LONG).show();
+            //Toast.makeText(RegistrationOwnInfo.this,constants,Toast.LENGTH_LONG).show();
+            Log.i("constantdata: ",constants);
         } catch (JSONException e) {
             e.printStackTrace();
         }

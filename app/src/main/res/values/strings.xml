@@ -356,6 +356,8 @@
     <string name="verification_message1">আপনার মোবাইলে একটি মেসেজ পাঠানো হয়েছে।</string>
     <string name="verification_message2">মেসেজে থাকা কোডটি নিচের বাক্সে বসান।</string>
     <string name="verification_message3">পুনরায় ভেরিফিকেশন কোড পাঠান</string>
+    <string name="write_varification_code_message">ভেরিফিকেশন কোডটি লিখুন</string>
+
     <string name="own_info">আপনার সম্পর্কে তথ্য</string>
     <string name="own_info_edit_text">মোবাইল নাম্বার, ইমেইল বা ঠিকানা প্রদান করা থেকে বিরত থাকুন। অন্যথায় আপনার অ্যাকাউন্টটি বন্ধ করা হতে পারে।</string>
     <string name="apnar_baktigoto_tottho">আপনার ব্যক্তিগত তথ্য</string>

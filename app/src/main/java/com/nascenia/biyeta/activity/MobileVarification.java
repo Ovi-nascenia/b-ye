@@ -1,5 +1,6 @@
 package com.nascenia.biyeta.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -30,24 +31,30 @@ import net.rimoto.intlphoneinput.IntlPhoneInput;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MobileVarification extends AppCompatActivity{
+public class MobileVarification extends AppCompatActivity {
     ImageView back;
     private IntlPhoneInput phoneInputView;
-    int nextCounter  = 0;
+    int nextCounter = 0;
     SharePref sharePref;
     OkHttpClient client;
     Button sendVerificationCode, verify;
     String verificationId;
-    TextView resendCode,login;
+    TextView resendCode, login;
     EditText verificationCode;
     LinearLayout beforeSendingVerificationCode, afterSendingVerificationCode;
 
+    private ProgressDialog progressDialog;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile_varification);
         verify = (Button) findViewById(R.id.verify);
         back = (ImageView) findViewById(R.id.backPreviousActivityImage);
+
+        progressDialog = new ProgressDialog(MobileVarification.this);
+        progressDialog.setMessage(getResources().getString(R.string.progress_dialog_message));
+        progressDialog.setCancelable(false);
 
         resendCode = (TextView) findViewById(R.id.text3);
         verificationCode = (EditText) findViewById(R.id.verification_code);
@@ -55,13 +62,14 @@ public class MobileVarification extends AppCompatActivity{
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if(nextCounter ==5){
+                    if (nextCounter == 5) {
                         //Utils.ShowAlert(MobileVarification.this,"");
                         verificationCode.setEnabled(false);
-                    }
-                    else{
+                    } else {
                         nextCounter++;
-                        new MobileVarification.VerifyCode().execute(verificationId,verificationCode.getText().toString(),sharePref.get_data("mobile_number"));
+                        new VerifyCode().
+                                execute(verificationId, verificationCode.getText().toString(),
+                                        sharePref.get_data("mobile_number"));
                     }
                     return true;
                 }
@@ -81,58 +89,68 @@ public class MobileVarification extends AppCompatActivity{
         beforeSendingVerificationCode = (LinearLayout) findViewById(R.id.before_sending_varification_code);
         afterSendingVerificationCode = (LinearLayout) findViewById(R.id.after_sending_verification_code);
         login = (TextView) findViewById(R.id.login);
-        login.setOnClickListener(new View.OnClickListener(){
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                startActivity(new Intent(MobileVarification.this, Login.class ));
+            public void onClick(View v) {
+                startActivity(new Intent(MobileVarification.this, Login.class));
 
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener(){
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 finish();
             }
         });
 
         verify.setOnClickListener(
-                new View.OnClickListener(){
+                new View.OnClickListener() {
                     @Override
-                    public void onClick(View v){
-                        if(nextCounter ==5){
+                    public void onClick(View v) {
+                        if (nextCounter == 5) {
                             //Utils.ShowAlert(MobileVarification.this,"");
                             verificationCode.setEnabled(false);
-                        }
-                        else{
-                            nextCounter++;
-                            new MobileVarification.VerifyCode().execute(verificationId,verificationCode.getText().toString(),sharePref.get_data("mobile_number"));
+
+
+                        } else {
+                            if (!verificationCode.getText().toString().isEmpty()) {
+                                nextCounter++;
+                                new VerifyCode().
+                                        execute(verificationId, verificationCode.getText().toString(),
+                                                sharePref.get_data("mobile_number"));
+                            } else {
+                                Toast.makeText(getBaseContext(), getString(R.string.write_varification_code_message),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                     }
                 }
         );
-        sendVerificationCode.setOnClickListener(new View.OnClickListener(){
+        sendVerificationCode.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                if(phoneInputView.getText()==null){
+            public void onClick(View v) {
+                if (phoneInputView.getText() == null) {
                     phoneInputView.requestFocus();
-                    Utils.ShowAlert(MobileVarification.this,"মোবাইল নাম্বার দিন");
-                }
-                else if(!phoneInputView.isValid()){
+                    Utils.ShowAlert(MobileVarification.this, "মোবাইল নাম্বার দিন");
+                } else if (!phoneInputView.isValid()) {
                     phoneInputView.requestFocus();
-                    Utils.ShowAlert(MobileVarification.this,"মোবাইল নাম্বারটি সঠিক নয়");
-                }
-                else{
-                    new MobileVarification.VerificationCodeSend().execute(phoneInputView.getText().toString());
+                    Utils.ShowAlert(MobileVarification.this, "মোবাইল নাম্বারটি সঠিক নয়");
+                } else {
+                    new VerificationCodeSend().execute(phoneInputView.getText().toString());
                 }
 
             }
         });
 
-        resendCode.setOnClickListener(new View.OnClickListener(){
+        resendCode.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                new MobileVarification.VerificationCodeResend().execute(sharePref.get_data("mobile_number"),sharePref.get_data("verification_id"));
+            public void onClick(View v) {
+                //activate the editext
+
+                new VerificationCodeResend().
+                        execute(sharePref.get_data("mobile_number"), sharePref.get_data("verification_id"));
             }
         });
 
@@ -142,29 +160,37 @@ public class MobileVarification extends AppCompatActivity{
     }
 
 
-    public class VerificationCodeSend extends AsyncTask<String, String, String>{
+    public class VerificationCodeSend extends AsyncTask<String, String, String> {
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (s == null){
+            if (s == null) {
+                if (progressDialog.isShowing())
+                    progressDialog.dismiss();
                 Utils.ShowAlert(MobileVarification.this, getString(R.string.no_internet_connection));
-            }else{
+            } else {
+                if (progressDialog.isShowing())
+                    progressDialog.dismiss();
+
                 beforeSendingVerificationCode.setVisibility(View.GONE);
                 afterSendingVerificationCode.setVisibility(View.VISIBLE);
-                try{
+                try {
                     JSONObject jsonObject = new JSONObject(s);
                     jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number");
                     verificationId = jsonObject.getJSONObject("mobile_verification_information").getString("verification_id");
                     sharePref.set_data("verification_id", jsonObject.getJSONObject("mobile_verification_information").getString("verification_id"));
-                    sharePref.set_data("mobile_number",jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number"));
-                    Toast.makeText(MobileVarification.this, s, Toast.LENGTH_LONG).show();
+                    sharePref.set_data("mobile_number", jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number"));
+                    //  Toast.makeText(MobileVarification.this, s, Toast.LENGTH_LONG).show();
+                    Log.i("verificationdata", s);
+
                     jsonObject.getJSONObject("mobile_verification_information").getString("server_time");
                     jsonObject.getJSONObject("mobile_verification_information").getString("again_retry_time");
                     jsonObject.getJSONObject("mobile_verification_information").getString("try_count");
                     jsonObject.getJSONObject("mobile_verification_information").getString("verification_code");
                     sendVerificationCode.setVisibility(View.GONE);
 
-                }catch(JSONException e){
+
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -172,7 +198,7 @@ public class MobileVarification extends AppCompatActivity{
         }
 
         @Override
-        protected String doInBackground(String... parameters){
+        protected String doInBackground(String... parameters) {
             String phnNumber = parameters[0];
             String token = sharePref.get_data("registration_token");
             RequestBody requestBody = new FormEncodingBuilder()
@@ -190,7 +216,7 @@ public class MobileVarification extends AppCompatActivity{
                 Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
                 return responseString;
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
 //                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
                 return null;
@@ -200,66 +226,72 @@ public class MobileVarification extends AppCompatActivity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog.show();
         }
     }
-
 
 
     public class VerificationCodeResend extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            if (s == null){
+            if (s == null) {
+                if (progressDialog.isShowing())
+                    progressDialog.dismiss();
                 Utils.ShowAlert(MobileVarification.this, getString(R.string.no_internet_connection));
-            }
-            else{
+            } else {
                 try {
+
+                    if (progressDialog.isShowing())
+                        progressDialog.dismiss();
                     JSONObject jsonObject = new JSONObject(s);
                     jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number");
                     verificationId = jsonObject.getJSONObject("mobile_verification_information").getString("verification_id");
-                    Toast.makeText(MobileVarification.this, jsonObject.getJSONObject("mobile_verification_information").getString("verification_id"), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(MobileVarification.this, jsonObject.getJSONObject("mobile_verification_information").getString("verification_id"), Toast.LENGTH_LONG).show();
                     int serverTime = Integer.parseInt(jsonObject.getJSONObject("mobile_verification_information").getString("server_time"));
-                    int againRetryTime =Integer.parseInt(jsonObject.getJSONObject("mobile_verification_information").getString("again_retry_time"));
+                    int againRetryTime = Integer.parseInt(jsonObject.getJSONObject("mobile_verification_information").getString("again_retry_time"));
 
-                    if(againRetryTime > serverTime){
+                    if (againRetryTime > serverTime) {
                         int ms = againRetryTime - serverTime;
                         int SECOND = 1;
-                        String text="";
+                        String text = "";
                         int MINUTE = 60 * SECOND;
                         int HOUR = 60 * MINUTE;
                         if (ms > HOUR) {
-                            text += Utils.convertEnglishYearDigittoBangla(ms / HOUR)+" ঘণ্টা ";
+                            text += Utils.convertEnglishYearDigittoBangla(ms / HOUR) + " ঘণ্টা ";
                             ms %= HOUR;
                         }
                         if (ms > MINUTE) {
-                            text += Utils.convertEnglishYearDigittoBangla(ms / MINUTE)+" মিনিট ";
+                            text += Utils.convertEnglishYearDigittoBangla(ms / MINUTE) + " মিনিট ";
                             ms %= MINUTE;
                         }
                         Utils.ShowAlert(MobileVarification.this, text + "পর পুনরায় ভেরিফিকেশন কোড পাঠাতে পারবেন।");
-                    }
-                    else{
+                    } else {
+                        nextCounter = 0;
                         verificationCode.setEnabled(true);
                         Utils.ShowAlert(MobileVarification.this, "ভেরিফিকেশন কোড পাঠানো হয়েছে।");
                     }
                     jsonObject.getJSONObject("mobile_verification_information").getString("try_count");
                     jsonObject.getJSONObject("mobile_verification_information").getString("verification_code");
-                }catch(JSONException e){
+
+
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }
 
         @Override
-        protected String doInBackground(String... parameters){
+        protected String doInBackground(String... parameters) {
             String phnNumber = parameters[0];
             String verification_id = parameters[1];
             String token = sharePref.get_data("registration_token");
 
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("mobile_number", sharePref.get_data("mobile_number"))
-                    .add("verification_id",sharePref.get_data("verification_id"))
+                    .add("verification_id", sharePref.get_data("verification_id"))
                     .build();
 
             Request request = new Request.Builder()
@@ -268,13 +300,13 @@ public class MobileVarification extends AppCompatActivity{
                     .post(requestBody)
                     .build();
 
-            try{
+            try {
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();
                 Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
                 return responseString;
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
 //                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
                 return null;
@@ -284,6 +316,7 @@ public class MobileVarification extends AppCompatActivity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog.show();
         }
     }
 
@@ -291,29 +324,30 @@ public class MobileVarification extends AppCompatActivity{
     public class VerifyCode extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s == null){
+
+            if (progressDialog.isShowing())
+                progressDialog.dismiss();
+            if (s == null) {
                 Utils.ShowAlert(MobileVarification.this, getString(R.string.no_internet_connection));
-            }
-            else{
+            } else {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    if(jsonObject.has("message")){
+                    if (jsonObject.has("message")) {
                         jsonObject.getJSONObject("message").getString("detail");
-                        startActivity(new Intent(MobileVarification.this,Login.class));
+                        Toast.makeText(getBaseContext(), "all right", Toast.LENGTH_SHORT).show();
+                      /*  startActivity(new Intent(MobileVarification.this,Login.class));
                         finish();
-                        // new MobileVarification.FetchConstant().execute(jsonObject.getString("current_mobile_sign_up_step"));
-                    }
-
-                    else if(jsonObject.has("errors")){
+                      */  // new MobileVarification.FetchConstant().execute(jsonObject.getString("current_mobile_sign_up_step"));
+                    } else if (jsonObject.has("errors")) {
                         Utils.ShowAlert(MobileVarification.this, "কোডটি ভুল হয়েছে।\nসঠিক কোড প্রদান করুন।");
                         //if(jsonObject.getJSONObject("errors").getString("detail").equals("'verification code did not match")){
                         //}
 
                     }
 
-                }catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -321,7 +355,7 @@ public class MobileVarification extends AppCompatActivity{
         }
 
         @Override
-        protected String doInBackground(String... parameters){
+        protected String doInBackground(String... parameters) {
             String verify_id = parameters[0];
             String verification_code = parameters[1];
             String mobile_number = parameters[2];
@@ -329,9 +363,9 @@ public class MobileVarification extends AppCompatActivity{
 
 
             RequestBody requestBody = new FormEncodingBuilder()
-                    .add("verification_code",verification_code)
+                    .add("verification_code", verification_code)
                     .add("mobile_number", sharePref.get_data("mobile_number"))
-                    .add("verification_id",sharePref.get_data("verification_id"))
+                    .add("verification_id", sharePref.get_data("verification_id"))
                     .build();
 
             Request request = new Request.Builder()
@@ -357,6 +391,7 @@ public class MobileVarification extends AppCompatActivity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog.show();
         }
     }
 
@@ -368,18 +403,18 @@ public class MobileVarification extends AppCompatActivity{
             super.onPostExecute(s);
 
             Intent nextActivity = new Intent(MobileVarification.this, RegistrationOwnInfo.class);
-            nextActivity.putExtra("constants",s);
+            nextActivity.putExtra("constants", s);
             startActivity(nextActivity);
         }
 
         @Override
-        protected String doInBackground(String... parameters){
+        protected String doInBackground(String... parameters) {
 
             Request request = new Request.Builder()
                     .url(Utils.STEP_CONSTANT_FETCH + parameters[0])
                     .build();
 
-            try{
+            try {
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();
                 Log.e(Utils.LOGIN_DEBUG, responseString);

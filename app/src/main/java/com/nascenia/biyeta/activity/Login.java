@@ -78,9 +78,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private Tracker mTracker;
     private AnalyticsApplication application;
     private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 999;
-    private String user_name=null;
+    private String user_name = null;
     //get the password from Edit Text
-    private String password=null;
+    private String password = null;
     String imei = null;
 
     public static int currentPageRegistration = 9;
@@ -97,7 +97,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText etPassword, etUserName;
     private Button buttonSubmit;
     private ProgressBar progressBar;
-    private  Context context = this;
+    private Context context = this;
 
     ///sub url
     String SUB_URL = "sign-in";
@@ -105,7 +105,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //initialize the Okhttp
         client = new OkHttpClient();
@@ -117,7 +117,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
 //is off right now by masum
-       // new RegistrationTokenSending().execute();
+        // new RegistrationTokenSending().execute();
 
 
         //set all id//
@@ -131,43 +131,43 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         //PERMISSION STARTED
 
-         if(ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
-
-             if(ActivityCompat.shouldShowRequestPermissionRationale(this,
-                     android.Manifest.permission.READ_EXTERNAL_STORAGE)){
-
-                 // Show an explanation to the user *asynchronously* -- don't block
-                 // this thread waiting for the user's response! After the user
-                 // sees the explanation, try again to request the permission.
-
-             } else{
-
-                 // No explanation needed, we can request the permission.
-
-                 ActivityCompat.requestPermissions(this,
-                         new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                         999);
-
-                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                 // app-defined int constant. The callback method gets the
-                 // result of the request.
-             }
-         }
-
         if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
+                android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
 
-            }else{
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        999);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
 
                 // No explanation needed, we can request the permission.
 
@@ -180,7 +180,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
         }
 
-         //PERMISSION ENDS
+        //PERMISSION ENDS
 
 
         /*Google Analytics*/
@@ -217,7 +217,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
         buttonFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(final LoginResult loginResult){
+            public void onSuccess(final LoginResult loginResult) {
                 Log.e("LoginOvi", loginResult.getAccessToken().toString());
 
 
@@ -268,10 +268,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         icon = (ImageView) findViewById(R.id.icon_view);
 
-        etPassword.setOnEditorActionListener(new EditText.OnEditorActionListener(){
+        etPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
-                if (actionId != 0 || event.getAction() == KeyEvent.ACTION_DOWN){
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId != 0 || event.getAction() == KeyEvent.ACTION_DOWN) {
 
                     if (!etPassword.getText().toString().trim().equals(""))
                         checkValidation();
@@ -279,7 +279,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     InputMethodManager imm = (InputMethodManager) Login.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(Login.this.getCurrentFocus().getWindowToken(), 0);
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
@@ -287,7 +287,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view){
+    public void onClick(View view) {
 
         int id = view.getId();
         switch (id) {
@@ -319,14 +319,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    void checkValidation(){
+    void checkValidation() {
         //get the user name from Edit text
         user_name = etUserName.getText().toString();
         //get the password from Edit Text
         password = etPassword.getText().toString();
 
         ///check the user_name and password is empty
-        if (user_name.trim().equals("") || password.trim().equals("")){
+        if (user_name.trim().equals("") || password.trim().equals("")) {
             //  Toast.makeText(Login.this,"Fill the both field",Toast.LENGTH_SHORT).show();
             Utils.ShowAlert(Login.this, "ইমেইল এবং পাসওয়ার্ড  পূরণ করুন");
 
@@ -343,7 +343,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    public void loginWithFacebook(){
+    public void loginWithFacebook() {
 
 
     }
@@ -376,27 +376,26 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
             try {
                 JSONObject jsonObject = new JSONObject(s);
-                if(Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_ban"))==true){
+                if (Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_ban")) == true) {
                     buttonSubmit.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                     LoginManager.getInstance().logOut();
                     Utils.ShowAlert(Login.this, getString(R.string.banned_profile_message));
 
-                }
-                else if(Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_active"))==false){
+                } else if (Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_active")) == false) {
                     new AlertDialog.Builder(context)
 //                .setTitle("Error")
                             .setMessage("আপনার অ্যাকাউন্টটি ডিঅ্যাক্টিভেট ছিল। আপনি কি এখন অ্যাক্টিভেট করতে চান?")
                             .setCancelable(false)
-                            .setPositiveButton("হ্যা, অ্যাক্টিভেট করব", new DialogInterface.OnClickListener(){
+                            .setPositiveButton("হ্যা, অ্যাক্টিভেট করব", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialog, int which){
+                                public void onClick(DialogInterface dialog, int which) {
                                     new Login.LoginRequestForInactiveUser().execute();
                                     dialog.dismiss();
 
                                 }
                             })
-                            .setNegativeButton("না, সাইন আউট করব", new DialogInterface.OnClickListener(){
+                            .setNegativeButton("না, সাইন আউট করব", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     buttonSubmit.setVisibility(View.VISIBLE);
@@ -405,80 +404,74 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 }
                             })
                             .show();
-                }
-
-                else if (jsonObject.has("message")){
+                } else if (jsonObject.has("message")) {
                     Utils.ShowAlert(Login.this, jsonObject.getJSONObject("message").get("detail").toString());
                     LoginManager.getInstance().logOut();
                     buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
-                }
-                else{
+                } else {
                     Gson gson = new Gson();
                     InputStream is = new ByteArrayInputStream(s.getBytes());
                     InputStreamReader isr = new InputStreamReader(is);
                     LoginInformation response = gson.fromJson(isr, LoginInformation.class);
 
 
-                        //Toast.makeText(Login.this,R.string.incomplete_profile_message,Toast.LENGTH_LONG).show();
-                       // LoginManager.getInstance().logOut();
+                    //Toast.makeText(Login.this,R.string.incomplete_profile_message,Toast.LENGTH_LONG).show();
+                    // LoginManager.getInstance().logOut();
 
 
+                    try {
 
 
-                        try {
+                        SharePref sharePref = new SharePref(Login.this);
 
+                        sharePref.set_data("token", response.getLoginInformation().getAuthToken());
+                        sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
+                        sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
+                        sharePref.set_data("gender", response.getLoginInformation().getGender());
+                        sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
+                        sharePref.set_data("real_name", response.getLoginInformation().getRealName());
+                        sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
 
-                            SharePref sharePref = new SharePref(Login.this);
+                        gender = response.getLoginInformation().getGender();
+                        currentMobileSignupStep = response.getLoginInformation().getStep();
 
-                            sharePref.set_data("token", response.getLoginInformation().getAuthToken());
-                            sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
-                            sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
-                            sharePref.set_data("gender", response.getLoginInformation().getGender());
-                            sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
-                            sharePref.set_data("real_name",response.getLoginInformation().getRealName());
-                            sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
+                        //check display name
 
-                            gender = response.getLoginInformation().getGender();
-                            currentMobileSignupStep = response.getLoginInformation().getStep();
+                        // check the mobile verify screen
 
-                            //check display name
+                        if (response.getLoginInformation().getMobileVerified()) {
+                            if (currentMobileSignupStep == 10)
+                                startActivity(new Intent(Login.this, HomeScreen.class));
+                            else
+                                new Login.FetchConstant().execute();
+                            finish();
+                        } else {
 
-                            // check the mobile verify screen
-
-                            if (response.getLoginInformation().getMobileVerified()) {
-                                if(currentMobileSignupStep==10)
-                                    startActivity(new Intent(Login.this, HomeScreen.class));
-                                else
-                                    new Login.FetchConstant().execute();
-                                finish();
-                            }
-                            else {
-
-                                startActivity(new Intent(Login.this, MobileVarification.class));
-                                // finish();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
-                            buttonSubmit.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.GONE);
-//                            application.trackEception(e, "LoginByFacebook/onPostExecute", "Login", e.getMessage().toString(), mTracker);
+                            startActivity(new Intent(Login.this, MobileVarification.class));
+                            // finish();
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
+                        buttonSubmit.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+//                            application.trackEception(e, "LoginByFacebook/onPostExecute", "Login", e.getMessage().toString(), mTracker);
                     }
+                }
                     /*else{
                         Utils.ShowAlert(Login.this, getString(R.string.incomplete_profile_message));
                         LoginManager.getInstance().logOut();
                         buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
                     }*/
 
-            }catch(JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
 //                application.trackEception(e, "LoginByFacebook/onPostExecute", "Login", e.getMessage().toString(), mTracker);
             }
         }
 
         @Override
-        protected String doInBackground(String... parameters){
+        protected String doInBackground(String... parameters) {
 
 
             RequestBody requestBody = new FormEncodingBuilder()
@@ -514,7 +507,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    imei=Utils.deviceIMEI(context);
+                    imei = Utils.deviceIMEI(context);
                     new LoginRequest().execute(user_name, password);
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
@@ -532,46 +525,44 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    public  void checkConnection()
-    {
+    public void checkConnection() {
 //        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
 //        {
-            Log.e("version", String.valueOf(Build.VERSION.SDK_INT));
+        Log.e("version", String.valueOf(Build.VERSION.SDK_INT));
 
-            if (ContextCompat.checkSelfPermission(Login.this, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(Login.this,
-                        new String[]{android.Manifest.permission.READ_PHONE_STATE}, PERMISSIONS_REQUEST_READ_PHONE_STATE);
-            }
-            else{
-                imei=Utils.deviceIMEI(context);
-                new LoginRequest().execute(user_name, password);
+        if (ContextCompat.checkSelfPermission(Login.this, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(Login.this,
+                    new String[]{android.Manifest.permission.READ_PHONE_STATE}, PERMISSIONS_REQUEST_READ_PHONE_STATE);
+        } else {
+            imei = Utils.deviceIMEI(context);
+            new LoginRequest().execute(user_name, password);
 
-               // Intent loginIntent = new Intent(Login.this, ImageChoose.class);
+            // Intent loginIntent = new Intent(Login.this, ImageChoose.class);
 
-                //startActivity(loginIntent);
-            }
+            //startActivity(loginIntent);
+        }
 
     }
 
     //
-    private class LoginRequest extends AsyncTask<String, String, String>{
+    private class LoginRequest extends AsyncTask<String, String, String> {
 
         @Override
-        protected String doInBackground(String... params){
+        protected String doInBackground(String... params) {
             String id = params[0];
             String password = params[1];
-            String regtoken= FirebaseInstanceId.getInstance().getToken();
+            String regtoken = FirebaseInstanceId.getInstance().getToken();
 
 
-            Log.e("back", id + "---" + password + "---"+ regtoken);
+            Log.e("back", id + "---" + password + "---" + regtoken);
 
             String s = String.valueOf(Build.VERSION.SDK_INT);
 
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("user_login[email]", id)///sent the team passcode
                     .add("user_login[password]", password)
-                    .add("user_login[registration_token]",regtoken) //FCM token
-                    .add("user_login[imei]",imei)
+                    .add("user_login[registration_token]", regtoken) //FCM token
+                    .add("user_login[imei]", imei)
                     .build();
 
             //   //imei of device
@@ -599,12 +590,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
 
-
         @Override
-        protected void onPostExecute(final String s){
+        protected void onPostExecute(final String s) {
             super.onPostExecute(s);
             //Log.e("LoginData", s);
-            if(s == null){
+            if (s == null) {
                 Utils.ShowAlert(Login.this, getString(R.string.no_internet_connection));
                 buttonSubmit.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
@@ -613,8 +603,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 try {
                     //convert string to json object
                     JSONObject jsonObject = new JSONObject(s);
-                    Log.e("Token",s);
-                    if (jsonObject.has("errors")){
+                    Log.e("Token", s);
+                    if (jsonObject.has("errors")) {
                         Utils.ShowAlert(Login.this, jsonObject.getJSONArray("errors").getJSONObject(0).getString("detail"));
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
@@ -623,8 +613,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         Utils.ShowAlert(Login.this, getString(R.string.incomplete_profile_message));
-                    }*/
-                    else if(Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_ban"))==true){
+                    }*/ else if (Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_ban")) == true) {
                         buttonSubmit.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         Utils.ShowAlert(Login.this, getString(R.string.banned_profile_message));
@@ -654,7 +643,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 .show();
                     }*/
 
-                   else{
+                    else {
 
                         Gson gson = new Gson();
                         InputStream is = new ByteArrayInputStream(s.getBytes());
@@ -664,7 +653,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                         //insert the token in Sharepreference
 
-                        try{
+                        try {
                             SharePref sharePref = new SharePref(Login.this);
 
                             sharePref.set_data("token", response.getLoginInformation().getAuthToken());
@@ -672,7 +661,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
                             sharePref.set_data("gender", response.getLoginInformation().getGender());
                             sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
-                            sharePref.set_data("real_name",response.getLoginInformation().getRealName());
+                            sharePref.set_data("real_name", response.getLoginInformation().getRealName());
                             sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
 
                             gender = response.getLoginInformation().getGender();
@@ -680,20 +669,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                             //check the mobile verify screen
 
-                            if (response.getLoginInformation().getMobileVerified()){
-                                if(currentMobileSignupStep < 10 && currentMobileSignupStep>1)
+                            if (response.getLoginInformation().getMobileVerified()) {
+                                if (currentMobileSignupStep < 10 && currentMobileSignupStep > 1)
                                     new Login.FetchConstant().execute();
-                                else
+                                else {
                                     startActivity(new Intent(Login.this, HomeScreen.class));
-                                finish();
-                            }
-                            else{
+                                    finish();
+                                }
+
+                            } else {
 
                                 startActivity(new Intent(Login.this, MobileVarification.class));
-                                // finish();
+                                finish();
                             }
-                        }catch(Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
+                            Log.i("errormsg", e.getMessage().toString());
                             Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
                             buttonSubmit.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);
@@ -708,7 +699,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     }*/
 
 
-                } catch (JSONException e){
+                } catch (JSONException e) {
                     Log.e("error", "JSON error");
                     e.printStackTrace();
                     Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
@@ -721,7 +712,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
             buttonSubmit.setVisibility(View.GONE);
 
@@ -729,15 +720,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-
-
-
     private class RegistrationTokenSending extends AsyncTask<String, String, String> {
 
         @Override
-        protected String doInBackground(String... params){
+        protected String doInBackground(String... params) {
 
-            String token= FirebaseInstanceId.getInstance().getToken();
+            String token = FirebaseInstanceId.getInstance().getToken();
             System.out.println("MainActivity.onCreate: " + token);
 
             RequestBody requestBody = new FormEncodingBuilder()
@@ -763,75 +751,67 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
 
         }
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
 
         }
     }
 
 
-
-    public class FetchConstant extends AsyncTask<String, String, String>{
+    public class FetchConstant extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            if(s == null){
+            if (s == null) {
                 Utils.ShowAlert(Login.this, getString(R.string.no_internet_connection));
                 buttonSubmit.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
-            }else{
+            } else {
                 Intent signupIntent;
-                if(currentMobileSignupStep == 2){
+                if (currentMobileSignupStep == 2) {
                     signupIntent = new Intent(Login.this, RegistrationOwnInfo.class);
-                    signupIntent.putExtra("constants",s);
+                    signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                }
-                else if(currentMobileSignupStep == 3){
+                } else if (currentMobileSignupStep == 3) {
                     signupIntent = new Intent(Login.this, ImageUpload.class);
-                    signupIntent.putExtra("constants",s);
+                    signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                }
-                else if(currentMobileSignupStep == 4){
+                } else if (currentMobileSignupStep == 4) {
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionFirstPage.class);
-                    signupIntent.putExtra("constants",s);
+                    signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                }
-                else if(currentMobileSignupStep == 5){
+                } else if (currentMobileSignupStep == 5) {
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionSecondPage.class);
-                    signupIntent.putExtra("constants",s);
+                    signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                }
-                else if(currentMobileSignupStep == 6){
+                } else if (currentMobileSignupStep == 6) {
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
-                    signupIntent.putExtra("constants",s);
+                    signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                }
-                else if(currentMobileSignupStep == 7){
+                } else if (currentMobileSignupStep == 7) {
                     signupIntent = new Intent(Login.this, RegistrationPersonalInformation.class);
-                    signupIntent.putExtra("constants",s);
+                    signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                }
-                else if(currentMobileSignupStep == 8){
+                } else if (currentMobileSignupStep == 8) {
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoFirstPage.class);
-                    signupIntent.putExtra("constants",s);
+                    signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                }
-                else if(currentMobileSignupStep == 9){
+                } else if (currentMobileSignupStep == 9) {
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoSecondPage.class);
-                    signupIntent.putExtra("constants",s);
+                    signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                 }
             }
         }
 
         @Override
-        protected String doInBackground(String... parameters){
+        protected String doInBackground(String... parameters) {
             Request request = new Request.Builder()
                     .url(Utils.STEP_CONSTANT_FETCH + currentMobileSignupStep)
                     .build();
@@ -841,7 +821,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
                 return responseString;
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
 //                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
                 return null;
@@ -849,30 +829,28 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
         }
     }
 
 
-
-    private class LoginRequestForInactiveUser extends AsyncTask<String, String, String>{
+    private class LoginRequestForInactiveUser extends AsyncTask<String, String, String> {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s==null){
+            if (s == null) {
                 Utils.ShowAlert(Login.this, getString(R.string.no_internet_connection));
                 buttonSubmit.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
-            }
-            else{
+            } else {
                 Gson gson = new Gson();
                 InputStream is = new ByteArrayInputStream(s.getBytes());
                 InputStreamReader isr = new InputStreamReader(is);
                 LoginInformation response = gson.fromJson(isr, LoginInformation.class);
 
 
-                try{
+                try {
                     SharePref sharePref = new SharePref(Login.this);
 
                     sharePref.set_data("token", response.getLoginInformation().getAuthToken());
@@ -880,12 +858,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
                     sharePref.set_data("gender", response.getLoginInformation().getGender());
                     sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
-                    sharePref.set_data("real_name",response.getLoginInformation().getRealName());
+                    sharePref.set_data("real_name", response.getLoginInformation().getRealName());
                     sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
                     buttonSubmit.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                     startActivity(new Intent(Login.this, HomeScreen.class));
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
                     buttonSubmit.setVisibility(View.VISIBLE);
@@ -896,20 +874,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
         @Override
-        protected String doInBackground(String... params){
+        protected String doInBackground(String... params) {
             String id = user_name;
             String pass = password;
-            String regtoken= FirebaseInstanceId.getInstance().getToken();
+            String regtoken = FirebaseInstanceId.getInstance().getToken();
 
 
-            Log.e("back", id + "---" + password + "---"+ regtoken);
+            Log.e("back", id + "---" + password + "---" + regtoken);
 
             String s = String.valueOf(Build.VERSION.SDK_INT);
 
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("user_login[email]", id)///sent the team passcode
                     .add("user_login[password]", pass)
-                    .add("user_login[activate_user]","true")
+                    .add("user_login[activate_user]", "true")
                     .build();
 
             //   //imei of device

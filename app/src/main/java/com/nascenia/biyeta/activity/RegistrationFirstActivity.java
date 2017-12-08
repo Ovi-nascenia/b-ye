@@ -90,7 +90,7 @@ public class RegistrationFirstActivity extends AppCompatActivity{
 
     private ScrollView parentScrollView;
 
-
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -101,6 +101,10 @@ public class RegistrationFirstActivity extends AppCompatActivity{
         male = (Button) findViewById(R.id.man);
         female = (Button) findViewById(R.id.woman);
         callbackManager = CallbackManager.Factory.create();
+
+        progressDialog = new ProgressDialog(RegistrationFirstActivity.this);
+        progressDialog.setMessage(getResources().getString(R.string.progress_dialog_message));
+        progressDialog.setCancelable(false);
 
         parentScrollView= (ScrollView) findViewById(R.id.scrollView);
 
@@ -473,10 +477,14 @@ public class RegistrationFirstActivity extends AppCompatActivity{
 
             //Log.e("LoginData", s);
             if (s == null){
+                if(progressDialog.isShowing())
+                    progressDialog.dismiss();
                 Utils.ShowAlert(RegistrationFirstActivity.this, getString(R.string.no_internet_connection));
             } else {
 
                 try{
+                    if(progressDialog.isShowing())
+                        progressDialog.dismiss();
                     //convert string to json object
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Token", s);
@@ -543,6 +551,7 @@ public class RegistrationFirstActivity extends AppCompatActivity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog.show();
         }
     }
 
@@ -566,6 +575,7 @@ public class RegistrationFirstActivity extends AppCompatActivity{
             super.onPostExecute(s);
 
             if (s == null){
+                progress.cancel();
                 Utils.ShowAlert(RegistrationFirstActivity.this, getString(R.string.no_internet_connection));
             }
             else{

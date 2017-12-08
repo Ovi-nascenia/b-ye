@@ -26,10 +26,9 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"
-            />
+            android:value="@string/facebook_app_id" />
         <!--android:value="827631480631339"-->
-       <!--android:value="187871345122886"-->
+        <!--android:value="187871345122886"-->
 
         <activity
             android:name=".activity.SplashScreen"
@@ -50,7 +49,7 @@
             android:name=".activity.Login"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.Search_Filter"
             android:screenOrientation="portrait"
@@ -117,9 +116,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.MobileVerification"
+            android:name=".activity.MobileVarification"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.AboutBiyeta"
             android:screenOrientation="portrait"
@@ -150,10 +149,6 @@
         </service>
 
         <activity
-            android:name=".activity.MobileVarification"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activity.RegistrationOwnInfo"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -161,11 +156,12 @@
             android:name=".activity.RegistrationFirstActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
-        <activity android:name=".activity.ImageChoose"
+        <activity
+            android:name=".activity.ImageChoose"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.RegistrationPersonalInformation"
             android:screenOrientation="portrait"
@@ -208,12 +204,14 @@
             android:name=".activity.RegistrationChoiceSelectionSecondPage"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ImageUpload"
+        <activity
+            android:name=".activity.ImageUpload"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ImageCrop"
+        <activity
+            android:name=".activity.ImageCrop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

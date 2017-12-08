@@ -528,7 +528,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                         if (recyclerViewOther.findViewHolderForLayoutPosition(childPosition)
                                 instanceof OtherViewAdapter.MyViewHolder) {
 
-                            OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder)
+                             OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder)
                                     recyclerViewOther.findViewHolderForLayoutPosition(childPosition);
 
                             if(holder.otherRelationalStatus.getText().toString().
@@ -557,12 +557,26 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                             } else {
                                 otherCount++;
                                 otherViewAdapter.add(otherCount, otherViewAdapter.listSize());
-                                /*holder.nameOther.requestFocus();
-                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                imm.showSoftInput(holder.nameOther, InputMethodManager.SHOW_IMPLICIT);*/
                                 Log.i("otherdata", "add: " + otherCount + "");
                             }
+
+                           /*holder.nameOther.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                               @Override
+                               public void onFocusChange(View view, boolean hasFocus) {
+
+                                   if(hasFocus){
+                                       holder.nameOther.setFocusableInTouchMode(true);
+                                       holder.nameOther.requestFocus();
+                                       InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                       imm.showSoftInput(holder.nameOther, InputMethodManager.SHOW_IMPLICIT);
+                                   }else{
+                                       holder.nameOther.getParent().clearChildFocus(holder.nameOther);
+                                   }
+                               }
+                           });*/
+
                         }
+
                     }
 
                 }
@@ -741,7 +755,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
     public void removeOtherRelationItemCallBack(int position) {
         otherCount--;
         Log.i("otherdata", "remove: " + otherCount + "");
-       /* OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder)
+        /*OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder)
                 recyclerViewOther.findViewHolderForLayoutPosition(position);
         holder.nameOther.getParent().clearChildFocus(holder.nameOther);*/
 
