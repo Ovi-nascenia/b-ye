@@ -9,12 +9,12 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/white"
         android:clipToPadding="false"
         app:layout_collapseMode="pin"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="@color/white"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 
         <RelativeLayout
@@ -28,21 +28,21 @@
                 android:id="@+id/backPreviousActivityImage"
                 android:layout_width="@dimen/small_image_size"
                 android:layout_height="@dimen/small_image_size"
-                android:onClick="backBtnAction"
-                android:src="@drawable/red_back_arrow"
-                android:layout_gravity="center"
+                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"/>
+                android:layout_gravity="center"
+                android:onClick="backBtnAction"
+                android:src="@drawable/red_back_arrow" />
 
             <TextView
                 android:id="@+id/own_info"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:lines="2"
-                android:text="@string/own_info"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
+                android:lines="2"
+                android:text="@string/own_info"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/medium_textsize"
                 android:textStyle="bold" />
@@ -53,10 +53,10 @@
                 android:layout_width="@dimen/small_image_size"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
+                android:layout_gravity="center"
                 android:layout_marginRight="@dimen/small_margin"
                 android:src="@drawable/grey_fav"
-                android:layout_gravity="center"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
 
         </RelativeLayout>
@@ -72,43 +72,43 @@
             android:id="@+id/religion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ধর্ম"
-            android:textSize="18sp"
-            android:textColor="@color/colorPrimary"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
-            />
+            android:text="ধর্ম"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
         <LinearLayout
             android:id="@+id/castReligion"
-            android:layout_below="@id/religion"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_below="@id/religion"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="0dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="0dp"
             android:background="@color/white"
             android:orientation="horizontal"
             android:weightSum="2">
 
             <TextView
                 android:id="@+id/religion_cast_text_view"
-                android:gravity="left"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="ধর্ম ও বর্ণ"
-                android:textSize="18dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="@string/religion_pick_textview_title"
+                android:textSize="18dp" />
+
             <ImageView
                 android:id="@+id/down_arrow"
-                android:layout_gravity="right"
-                android:layout_weight="1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_gravity="right"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/down_arrow"
-                />
+                android:layout_weight="1"
+                android:src="@drawable/down_arrow" />
 
         </LinearLayout>
 
@@ -118,55 +118,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/castReligion"
-            android:text="আপনার নিজের সম্পর্কে কিছু লিখুন*"
-            android:textSize="18sp"
-            android:textColor="@color/colorPrimary"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            />
+            android:text="আপনার নিজের সম্পর্কে কিছু লিখুন*"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/edit_text_own"
-            android:layout_below="@id/textOwn"
             android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:layout_below="@id/textOwn"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@color/white"
+            android:gravity="top"
             android:imeOptions="actionDone"
-            android:privateImeOptions="nm"
-            android:gravity="top"/>
+            android:privateImeOptions="nm" />
+
         <TextView
             android:id="@+id/label"
-            android:layout_below="@id/edit_text_own"
             android:layout_width="match_parent"
             android:layout_height="20dp"
+            android:layout_below="@id/edit_text_own"
             android:layout_marginRight="15dp"
+            android:gravity="right"
             android:text="সর্বনিম্ন ৫০ অক্ষর, সর্বোচ্চ ৪০০০ অক্ষরের ভিতর"
-            android:textSize="10sp"
-            android:gravity="right"/>
+            android:textSize="10sp" />
+
         <Button
             android:id="@+id/next"
-            android:layout_below="@id/label"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/colorPrimary"
+            android:layout_below="@id/label"
             android:layout_margin="15dp"
+            android:background="@color/colorPrimary"
             android:text="পরবর্তী ধাপ"
             android:textColor="@color/white"
             android:textSize="25dp"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
+
         <TextView
-            android:layout_marginTop="15dp"
             android:id="@+id/no_number_email"
-            android:layout_below="@id/label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/label"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
             android:text="মোবাইল নাম্বার, ইমেইল বা যোগাযোগের ঠিকানা প্রদান করা থেকে বিরত থাকুন।"
-            android:textSize="10sp"
-            android:visibility="invisible"
             android:textColor="@color/colorPrimary"
-            android:gravity="center"/>
+            android:textSize="10sp"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 

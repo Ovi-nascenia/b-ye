@@ -47,6 +47,8 @@ public class RegistrationOwnInfo extends AppCompatActivity{
     OkHttpClient client;
 
     public static int castReligionOwn = 0;
+    private ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -54,6 +56,12 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         religionValue = "";
         otherReligion = "";
         otherCast = "";
+
+        progress = new ProgressDialog(RegistrationOwnInfo.this);
+        progress.setMessage(getResources().getString(R.string.progress_dialog_message));
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(false);
+
         final Intent intent = getIntent();
         client = new OkHttpClient();
         final String constants = intent.getStringExtra("constants");
@@ -104,7 +112,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
 
         castReligionText = (TextView) findViewById(R.id.religion_cast_text_view);
 
-        details.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+       /* details.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -139,11 +147,26 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                 }
                 return false;
             }
-        });
+        });*/
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Log.i("values ",religionValue+" "+castValue+" "+otherCast+" "+otherReligion);
+
+                if(castReligionText.getText().toString().equalsIgnoreCase(getString(R.string.religion_pick_textview_title)))
+                {
+                    Toast.makeText(getBaseContext(),getString(R.string.religion_pick_message),Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(castReligionText.getText().toString().isEmpty())
+                {
+                    Toast.makeText(getBaseContext(),getString(R.string.religion_pick_message),Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 String response = new StringBuilder().append("{")
                         .append("\"current_mobile_sign_up_step\":")
                         .append(Login.currentMobileSignupStep)
@@ -228,61 +251,11 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         }
     };
 
-
-
-    public class FetchConstant extends AsyncTask<String, String, String> {
-
-        @Override
-        protected void onPostExecute(String s){
-            super.onPostExecute(s);
-            if(s == null){
-                Utils.ShowAlert(RegistrationOwnInfo.this, getString(R.string.no_internet_connection));
-            }
-            else
-            {
-                Intent signupIntent;
-                signupIntent = new Intent(RegistrationOwnInfo.this, ImageUpload.class);
-                signupIntent.putExtra("constant",s);
-                startActivity(signupIntent);
-            }
-        }
-
-        @Override
-        protected String doInBackground(String... parameters){
-            Login.currentMobileSignupStep+=1;
-            Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                String responseString = response.body().string();
-                Log.e(Utils.LOGIN_DEBUG, responseString);
-                response.body().close();
-                return responseString;
-            } catch (Exception e){
-                e.printStackTrace();
-//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPreExecute(){
-            super.onPreExecute();
-        }
-    }
-
-
-
     class SendOwnInfo extends AsyncTask<String, String, String> {
-        ProgressDialog progress = new ProgressDialog(RegistrationOwnInfo.this);;
+
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            progress.setMessage(getResources().getString(R.string.progress_dialog_message));
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setIndeterminate(true);
-            if ( !progress.isShowing() )
                 progress.show();
         }
 
@@ -290,18 +263,23 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         protected void onPostExecute(String s){
             super.onPostExecute(s);
             if(s == null){
-                progress.cancel();
+                if(progress.isShowing())
+                    progress.dismiss();
                 Utils.ShowAlert(RegistrationOwnInfo.this, getString(R.string.no_internet_connection));
             }
             else{
                 try {
-                    progress.cancel();
+                   // progress.cancel();
                     JSONObject jsonObject=new JSONObject(s);
                     Log.e("Response",s);
+
                     if(jsonObject.has("errors"))
                     {
-                        jsonObject.getJSONObject("errors").getString("detail");
-                        Toast.makeText(RegistrationOwnInfo.this, "error", Toast.LENGTH_LONG).show();
+                        if(progress.isShowing())
+                            progress.dismiss();
+
+                        Toast.makeText(RegistrationOwnInfo.this,
+                                jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
                     }
                     else
                     {
@@ -347,4 +325,49 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         }
     }
 
+    public class FetchConstant extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            if(s == null){
+                if(progress.isShowing())
+                    progress.dismiss();
+                Utils.ShowAlert(RegistrationOwnInfo.this, getString(R.string.no_internet_connection));
+            }
+            else
+            {
+                if(progress.isShowing())
+                    progress.dismiss();
+                Intent signupIntent;
+                signupIntent = new Intent(RegistrationOwnInfo.this, ImageUpload.class);
+                signupIntent.putExtra("constant",s);
+                startActivity(signupIntent);
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... parameters){
+            Login.currentMobileSignupStep+=1;
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e){
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+        }
+    }
 }
