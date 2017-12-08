@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -20,6 +21,7 @@ import android.support.v4.text.ICUCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -34,9 +36,13 @@ import android.widget.Toast;
 
 import com.nascenia.biyeta.Manifest;
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.utils.Utils;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -52,6 +58,9 @@ public class ImageChoose extends Activity {
 
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
+
+    private int REQUEST_CAMERA = 0;
+    private Uri fileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +87,16 @@ public class ImageChoose extends Activity {
             public void onItemClick(AdapterView<?> parent,
                                     View v, int position, long id){
                 if(position==0){
-                    Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                    boolean result = Utils.checkExternalStoragePermission(ImageChoose.this);
+                    if (result)
+                        cameraIntent();
+
+
+                    /*Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     File file = getFile();
                     camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                    startActivityForResult(camera_intent,CAMERA_REQUEST);
+                    startActivityForResult(camera_intent,CAMERA_REQUEST);*/
                 }
                 else{
                     Intent i = new Intent(getApplicationContext(), ImageCrop.class);
@@ -95,6 +110,17 @@ public class ImageChoose extends Activity {
 
     }
 
+    private void cameraIntent() {
+        /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_CAMERA);
+        */
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        fileUri = getOutputMediaFileUri();
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(intent, REQUEST_CAMERA);
+    }
 
 
     private class MyTask extends AsyncTask<Void, Void, Boolean> {
@@ -125,21 +151,25 @@ public class ImageChoose extends Activity {
                 if(imgFile.exists()){
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     Bitmap bitmap;
-                    int width = myBitmap.getWidth();
-                    int height = myBitmap.getHeight();
-
-                    DisplayMetrics metrics = new DisplayMetrics();
-                    getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                    int screenWidth = metrics.widthPixels;
-                    if(width >= height)
+                    if(myBitmap!=null)
                     {
-                        bitmap = Bitmap.createScaledBitmap(myBitmap,(screenWidth*5)/16,((height*((screenWidth*5)/16))/width),true);
-                    }
-                    else{
-                        bitmap = Bitmap.createScaledBitmap(myBitmap,((width*((screenWidth*5)/16))/height),(screenWidth*5)/16,true);
+                        int width = myBitmap.getWidth();
+                        int height = myBitmap.getHeight();
+
+                        DisplayMetrics metrics = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                        int screenWidth = metrics.widthPixels;
+                        if(width >= height)
+                        {
+                            bitmap = Bitmap.createScaledBitmap(myBitmap,(screenWidth*5)/16,((height*((screenWidth*5)/16))/width),true);
+                        }
+                        else{
+                            bitmap = Bitmap.createScaledBitmap(myBitmap,((width*((screenWidth*5)/16))/height),(screenWidth*5)/16,true);
+                        }
+
+                        bitmapArray[position+1] = bitmap;
                     }
 
-                    bitmapArray[position+1] = bitmap;
                 }
             }
             return true;
@@ -158,14 +188,77 @@ public class ImageChoose extends Activity {
         return image_file;
     }
 
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // save file url in bundle as it will be null on scren orientation
+        // changes
+        outState.putParcelable("file_uri", fileUri);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // get the file url
+        fileUri = savedInstanceState.getParcelable("file_uri");
+    }
+
+    public Uri getOutputMediaFileUri() {
+        return Uri.fromFile(getOutputMediaFile());
+    }
+
+    private File getOutputMediaFile() {
+        File mediaFile = null;
+        try {
+            // Create a media file name
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                    Locale.getDefault()).format(new Date());
+
+            mediaFile = new File(Environment.getExternalStorageDirectory() + File.separator
+                    + "IMG_" + timeStamp + ".jpg");
+
+        } catch (Exception e) {
+        }
+        return mediaFile;
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         String path = "sdcard/camera_app/cam_image.jpg";
 
-        if(resultCode == RESULT_OK){
-            Intent i = new Intent(getApplicationContext(), ImageCrop.class);
-            i.putExtra("image_url", path);
-            startActivity(i);
+        if(resultCode == Activity.RESULT_OK){
+
+            try{
+                if (requestCode == REQUEST_CAMERA) {
+
+                    // bimatp factory
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+
+                    // downsizing image as it throws OutOfMemory Exception for larger
+                    // images
+                    options.inSampleSize = 8;
+
+                    /*selectedImageBitmap = BitmapFactory.decodeFile(fileUri.getPath(),
+                            options);
+                    userPhotoImageview.setImageBitmap(selectedImageBitmap);
+                    */
+
+
+                    Intent i = new Intent(getApplicationContext(), ImageCrop.class);
+                    i.putExtra("image_url", fileUri.getPath());
+                    startActivity(i);
+                }
+
+            }catch (Exception e){}
+
+
         }
     }
 
@@ -224,9 +317,6 @@ public class ImageChoose extends Activity {
                             || imagePath.getName().contains(".bmp") || imagePath.getName().contains(".BMP")
                             )
                     {
-
-
-
                         String path= imagePath.getAbsolutePath();
                         resultIAV.add(path);
 
@@ -250,10 +340,6 @@ public class ImageChoose extends Activity {
 
         public ImageAdapterGridView(Context c) {
             mContext = c;
-
-
-
-
         }
 
         public int getCount() {

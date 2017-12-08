@@ -299,7 +299,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
             SharePref sharePref = new SharePref(RegistrationOwnInfo.this);
             final String token = sharePref.get_data("token");
 
-            Log.e("Test", strings[0]);
+            Log.e("Test", strings[0]+" "+strings[1]);
 
             MediaType JSON
                     = MediaType.parse("application/json; charset=utf-8");

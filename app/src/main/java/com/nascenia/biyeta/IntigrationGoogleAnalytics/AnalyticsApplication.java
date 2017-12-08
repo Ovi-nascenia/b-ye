@@ -2,6 +2,7 @@ package com.nascenia.biyeta.IntigrationGoogleAnalytics;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -23,6 +24,8 @@ public class AnalyticsApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
     }
 
     /**

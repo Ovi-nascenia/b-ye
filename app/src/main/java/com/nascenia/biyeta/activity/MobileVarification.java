@@ -111,8 +111,6 @@ public class MobileVarification extends AppCompatActivity {
                         if (nextCounter == 5) {
                             //Utils.ShowAlert(MobileVarification.this,"");
                             verificationCode.setEnabled(false);
-
-
                         } else {
                             if (!verificationCode.getText().toString().isEmpty()) {
                                 nextCounter++;
@@ -336,10 +334,10 @@ public class MobileVarification extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.has("message")) {
                         jsonObject.getJSONObject("message").getString("detail");
-                        Toast.makeText(getBaseContext(), "all right", Toast.LENGTH_SHORT).show();
-                      /*  startActivity(new Intent(MobileVarification.this,Login.class));
+                      //  Toast.makeText(getBaseContext(), "all right", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MobileVarification.this,Login.class));
                         finish();
-                      */  // new MobileVarification.FetchConstant().execute(jsonObject.getString("current_mobile_sign_up_step"));
+                        // new MobileVarification.FetchConstant().execute(jsonObject.getString("current_mobile_sign_up_step"));
                     } else if (jsonObject.has("errors")) {
                         Utils.ShowAlert(MobileVarification.this, "কোডটি ভুল হয়েছে।\nসঠিক কোড প্রদান করুন।");
                         //if(jsonObject.getJSONObject("errors").getString("detail").equals("'verification code did not match")){

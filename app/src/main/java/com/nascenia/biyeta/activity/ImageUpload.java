@@ -190,6 +190,8 @@ public class ImageUpload extends AppCompatActivity{
                     new ImageUpload.SendPicture().execute(proPic, Utils.SEND_INFO);
                     new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
                     new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
+                }else{
+                    Toast.makeText(getBaseContext(),"please select your profile pic",Toast.LENGTH_SHORT).show();
                 }
 
                 if(afterBodyPicUploadValue == 1){
@@ -273,6 +275,8 @@ public class ImageUpload extends AppCompatActivity{
                     new ImageUpload.SendPicture().execute(proPic, Utils.SEND_INFO);
                     new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
                     new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
+                }else{
+                    Toast.makeText(getBaseContext(),"please select your profile pic",Toast.LENGTH_SHORT).show();
                 }
 
                 if(afterBodyPicUploadValue == 1){
