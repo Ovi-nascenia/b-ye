@@ -68,7 +68,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_registration_family_info_first_page);
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
 
@@ -102,8 +102,6 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         }catch (JSONException e){
             e.printStackTrace();
         }
-
-        setContentView(R.layout.activity_registration_family_info_first_page);
 
 
         nameFather = (EditText) findViewById(R.id.name_father);

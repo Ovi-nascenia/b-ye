@@ -393,4 +393,11 @@
     <string name="write_your_mother_name">আপনার মায়ের নাম লিখুন</string>
     <string name="choose_your_mother_occupation">আপনার মায়ের পেশা নির্বাচন করুন</string>
 
+    <string name="select_image_message">আপনার প্রোফাইল ছবি নির্বাচন করুন</string>
+
+    <string name="select_your_choice_occupation_message">আপনার পছন্দের পেশা নির্বাচন করুন</string>
+    <string name="select_your_choice_professional_group_message">আপনার পছন্দের প্রফেশনাল গ্রুপ নির্বাচন করুন</string>
+    <string name="select_your_choice_home_location_message">আপনার পছন্দের বাড়ি কোথায় হবে নির্বাচন করুন</string>
+
+
 </resources>

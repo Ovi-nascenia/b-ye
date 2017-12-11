@@ -277,7 +277,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 }
 
                 if (subjectValue.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "আপনার বিষয় লিখুন", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "আপনার শিক্ষার বিষয় লিখুন", Toast.LENGTH_LONG).show();
                     educationalStatusLabel.getParent().requestChildFocus(educationalStatusLabel,educationalStatusLabel);
                     return;
                 }
@@ -573,7 +573,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                         jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(RegistrationPersonalInformation.this, "error", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(RegistrationPersonalInformation.this, "SendPersonalInfo else", Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(RegistrationPersonalInformation.this, "SendPersonalInfo else", Toast.LENGTH_LONG).show();
                         new RegistrationPersonalInformation.FetchConstant().execute();
                     }
                 } catch (JSONException e) {
@@ -625,7 +625,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             if (s == null) {
                 Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
             } else {
-                Toast.makeText(getBaseContext(), "fetch constant else", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), "fetch constant else", Toast.LENGTH_LONG).show();
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationPersonalInformation.this, RegistrationFamilyInfoFirstPage.class);
                 signupIntent.putExtra("constants", s);
