@@ -480,7 +480,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                         .append("}")
                         .toString();
                 Log.i("result", total);
-                // new RegistrationChoiceSelectionSecondPage.SendChoiceInfo().execute(total);
+              new RegistrationChoiceSelectionSecondPage.SendChoiceInfo().execute(total);
 
             }
         });
