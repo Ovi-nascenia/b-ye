@@ -52,6 +52,8 @@ public class RegistrationOwnInfo extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registration_own_info);
+
         castValue = "";
         religionValue = "";
         otherReligion = "";
@@ -74,7 +76,6 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         }
        Log.i("classnames",getClass().getSimpleName());
 
-        setContentView(R.layout.activity_registration_own_info);
         castReligion = (LinearLayout) findViewById(R.id.castReligion);
         details = (EditText) findViewById(R.id.edit_text_own);
         if(Login.gender.equals("male")){
