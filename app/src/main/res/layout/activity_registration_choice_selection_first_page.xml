@@ -81,7 +81,8 @@
                 android:textColor="@color/colorPrimary"
                 android:layout_margin="10dp"/>
             <LinearLayout
-                android:padding="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
@@ -111,7 +112,8 @@
 
 
             <LinearLayout
-                android:padding="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
@@ -139,7 +141,8 @@
                 android:layout_margin="10dp"/>
 
             <LinearLayout
-                android:padding="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
@@ -168,7 +171,8 @@
                 android:layout_margin="10dp"/>
 
             <LinearLayout
-                android:padding="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
@@ -196,7 +200,8 @@
                 android:layout_margin="10dp"/>
 
             <LinearLayout
-                android:padding="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"

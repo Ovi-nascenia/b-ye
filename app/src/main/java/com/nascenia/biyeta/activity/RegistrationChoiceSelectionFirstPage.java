@@ -69,12 +69,21 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
 
     int currentStep;
 
+    private ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registration_choice_selection_first_page);
+
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
         client = new OkHttpClient();
+
+        progress = new ProgressDialog(RegistrationChoiceSelectionFirstPage.this);
+        progress.setMessage(getResources().getString(R.string.progress_dialog_message));
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(false);
 
         currentStep = 4;
 
@@ -103,7 +112,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        setContentView(R.layout.activity_registration_choice_selection_first_page);
+
         rangeView_age = (SimpleRangeView) findViewById(R.id.age);
         rangeView_height = (SimpleRangeView) findViewById(R.id.height);
         rangeView_color = (SimpleRangeView) findViewById(R.id.color);
@@ -349,7 +358,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                         .append(currentStep)
                         .append("}")
                         .toString();
-
+                    Log.i("prefresponse",total);
                // Toast.makeText(RegistrationChoiceSelectionFirstPage.this, total, Toast.LENGTH_LONG).show();
                 new RegistrationChoiceSelectionFirstPage.SendChoiceInfo().execute(total);
             }
@@ -359,16 +368,11 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
 
 
     class SendChoiceInfo extends AsyncTask<String, String, String> {
-        ProgressDialog progress = new ProgressDialog(RegistrationChoiceSelectionFirstPage.this);
+
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            progress.setMessage(getResources().getString(R.string.progress_dialog_message));
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setIndeterminate(true);
-            if ( !progress.isShowing() ){
-
-            }
+            progress.show();
             // progress.show();
         }
 
@@ -376,18 +380,23 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         protected void onPostExecute(String s){
             super.onPostExecute(s);
             if(s == null){
-                progress.cancel();
+               if(progress.isShowing())
+                   progress.dismiss();
                 Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this, getString(R.string.no_internet_connection));
             }
             else{
                 try {
-                    progress.cancel();
+                   // progress.cancel();
                     JSONObject jsonObject=new JSONObject(s);
                     Log.e("Response",s);
                     if(jsonObject.has("errors"))
                     {
-                        jsonObject.getJSONObject("errors").getString("detail");
-                        Toast.makeText(RegistrationChoiceSelectionFirstPage.this, "error", Toast.LENGTH_LONG).show();
+                        if(progress.isShowing())
+                            progress.dismiss();
+
+                        String error=jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(RegistrationChoiceSelectionFirstPage.this,
+                                error+" ", Toast.LENGTH_LONG).show();
                     }
                     else
                     {
@@ -439,11 +448,16 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         protected void onPostExecute(String s){
             super.onPostExecute(s);
             if(s == null){
+                if(progress.isShowing())
+                    progress.dismiss();
                 Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this, getString(R.string.no_internet_connection));
             }
             else{
+                if(progress.isShowing())
+                    progress.dismiss();
                 Intent signupIntent;
-                signupIntent = new Intent(RegistrationChoiceSelectionFirstPage.this, RegistrationChoiceSelectionSecondPage.class);
+                signupIntent = new Intent(RegistrationChoiceSelectionFirstPage.this,
+                        RegistrationChoiceSelectionSecondPage.class);
                 signupIntent.putExtra("constants",s);
                 startActivity(signupIntent);
                 finish();

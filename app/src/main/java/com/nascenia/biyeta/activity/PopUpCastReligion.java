@@ -59,6 +59,8 @@ public class PopUpCastReligion extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pop);
+
         Bundle extras = getIntent().getExtras();
         Log.i("classnames", getClass().getSimpleName());
 
@@ -128,8 +130,6 @@ public class PopUpCastReligion extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-        setContentView(R.layout.activity_pop);
 
         cast = (EditText) findViewById(R.id.cast);
         religion = (EditText) findViewById(R.id.religion);
