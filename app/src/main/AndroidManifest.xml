@@ -154,6 +154,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".activity.PopUpCastReligion"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBarPopUp" />
+
+        <activity
             android:name=".activity.ImageChoose"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
