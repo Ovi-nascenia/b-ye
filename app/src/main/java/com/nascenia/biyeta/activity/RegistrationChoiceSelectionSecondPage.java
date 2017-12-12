@@ -77,10 +77,17 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
     ArrayList<String> rangpurDivisionDistrict = new ArrayList<String>();
     final ArrayList<String> rangpurDivisionDistrictConstant = new ArrayList<String>();
 
+    ProgressDialog progress ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_choice_selection_second_page);
+
+        progress = new ProgressDialog(RegistrationChoiceSelectionSecondPage.this);
+        progress.setMessage(getResources().getString(R.string.progress_dialog_message));
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(false);
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
@@ -784,34 +791,33 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 
 
     class SendChoiceInfo extends AsyncTask<String, String, String> {
-        ProgressDialog progress = new ProgressDialog(RegistrationChoiceSelectionSecondPage.this);
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress.setMessage(getResources().getString(R.string.progress_dialog_message));
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setIndeterminate(true);
-            if (!progress.isShowing()) {
-
-            }
-            // progress.show();
+             progress.show();
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s == null) {
-                progress.cancel();
+                if(progress.isShowing())
+                    progress.dismiss();
+
                 Utils.ShowAlert(RegistrationChoiceSelectionSecondPage.this, getString(R.string.no_internet_connection));
             } else {
                 try {
-                    progress.cancel();
+                    //progress.cancel();
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
                     if (jsonObject.has("errors")) {
-                        jsonObject.getJSONObject("errors").getString("detail");
-                        Toast.makeText(RegistrationChoiceSelectionSecondPage.this, "error", Toast.LENGTH_LONG).show();
+                        if(progress.isShowing())
+                            progress.dismiss();
+
+                       String error= jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(RegistrationChoiceSelectionSecondPage.this,
+                                error, Toast.LENGTH_LONG).show();
                     } else {
                         new RegistrationChoiceSelectionSecondPage.FetchConstant().execute();
                     }
@@ -861,8 +867,12 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s == null) {
+                if(progress.isShowing())
+                    progress.dismiss();
                 Utils.ShowAlert(RegistrationChoiceSelectionSecondPage.this, getString(R.string.no_internet_connection));
             } else {
+                if(progress.isShowing())
+                    progress.dismiss();
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationChoiceSelectionSecondPage.this, RegistrationChoiceSelectionThirdPage.class);
                 signupIntent.putExtra("constants", s);

@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="মেয়ে কি বিয়ের পরে চাকরি করতে পারবে?"
+                android:text="পাত্রী কি বিয়ের পরে চাকরি করতে পারবে?"
                 android:textColor="@color/colorPrimary" />
 
 

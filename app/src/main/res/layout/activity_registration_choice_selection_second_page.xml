@@ -76,6 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="পেশা"
+                android:layout_marginLeft="@dimen/medium_margin"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
             <LinearLayout
@@ -91,6 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="প্রফেশনাল গ্রুপ"
+                android:layout_marginLeft="@dimen/medium_margin"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
 
@@ -107,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="বাড়ি কোথায় হবে?"
+                android:layout_marginLeft="@dimen/medium_margin"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
             <LinearLayout

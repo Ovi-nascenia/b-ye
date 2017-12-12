@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -98,14 +99,23 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
     public static int selectedPopUp = 0;
     int currentStep;
     String constant;
-
+    ProgressDialog progress;
+    ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registration_choice_selection_third_page);
+
+        progress = new ProgressDialog(RegistrationChoiceSelectionThirdPage.this);
+        progress.setMessage(getResources().getString(R.string.progress_dialog_message));
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(false);
+
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
 
         currentStep = 6;
+        Log.i("gender", Login.gender);
 
         try {
             JSONObject jsonObject = new JSONObject(constant);
@@ -169,7 +179,6 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        setContentView(R.layout.activity_registration_choice_selection_third_page);
         rangeView_namaj = (SimpleRangeView) findViewById(R.id.namaj);
         rangeView_roja = (SimpleRangeView) findViewById(R.id.roja);
         rangeView_hijab = (SimpleRangeView) findViewById(R.id.hajab);
@@ -413,7 +422,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         rangeView_hijab.setEnd(2);
 
 
-        if (Login.gender == "female") {
+        if (Login.gender.equalsIgnoreCase("female")) {
             jobLabel.setVisibility(View.GONE);
             jobLayout.setVisibility(View.GONE);
 
@@ -424,7 +433,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             hijabLabel.setVisibility(View.GONE);
 
             hijabLayout.setVisibility(View.GONE);
-        } else if (Login.gender == "male") {
+        } else if (Login.gender.equalsIgnoreCase("male")) {
 
             maritalStatusLabel.setText("পাত্রীর বৈবাহিক অবস্থা");
 
@@ -437,23 +446,32 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (jobAfterMarriage.isEmpty()) {
+                if (Login.gender.equalsIgnoreCase("male") &&
+                        jobAfterMarriage.isEmpty()) {
+
                     Toast.makeText(getBaseContext(),
                             getResources().getString(R.string.bride_job_status_selction_message),
                             Toast.LENGTH_LONG).show();
+                    jobLabel.getParent().
+                            requestChildFocus(jobLabel, jobLabel);
                     return;
                 }
 
                 if (maritalStatus.isEmpty()) {
                     Toast.makeText(getBaseContext(),
-                            getResources().getString(R.string.bride_maritial_status_selction_message),
+                            getResources().getString(R.string.choose_maritial_status_selction_message),
                             Toast.LENGTH_LONG).show();
+                    maritalStatusLabel.getParent().
+                            requestChildFocus(maritalStatusLabel, maritalStatusLabel);
                     return;
                 }
 
                 if (religionStatus.isEmpty()) {
-                    Toast.makeText(getBaseContext(), getResources().getString(R.string.bride_religion_status_selction_message),
+                    Toast.makeText(getBaseContext(), getResources().
+                                    getString(R.string.choose_religion_status_selction_message),
                             Toast.LENGTH_LONG).show();
+                    religionLabel.getParent().
+                            requestChildFocus(religionLabel, religionLabel);
                     return;
                 }
 
@@ -466,12 +484,28 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                             castStatus += ",";
                         }
                     }
+
+                    if(castStatus.isEmpty()){
+                        Toast.makeText(getBaseContext(),getString(R.string.choose_cast_name__selction_message),
+                                Toast.LENGTH_SHORT).show();
+                        castLabel.getParent().
+                                requestChildFocus(castLabel, castLabel);
+                        return;
+                    }
                 } else if (religionStatus.equals("2")) {
                     for (int i = 0; i < hinduCastSelectedArray.size(); i++) {
                         castStatus += "\"" + hinduCastSelectedArray.get(i) + "\"";
                         if (i != hinduCastSelectedArray.size() - 1) {
                             castStatus += ",";
                         }
+                    }
+
+                    if(castStatus.isEmpty()){
+                        Toast.makeText(getBaseContext(),getString(R.string.choose_cast_name__selction_message),
+                                Toast.LENGTH_SHORT).show();
+                        castLabel.getParent().
+                                requestChildFocus(castLabel, castLabel);
+                        return;
                     }
                 } else if (religionStatus.equals("3")) {
                     for (int i = 0; i < christianCastSelectedArray.size(); i++) {
@@ -480,8 +514,15 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                             castStatus += ",";
                         }
                     }
-                }
 
+                    if(castStatus.isEmpty()){
+                        Toast.makeText(getBaseContext(),getString(R.string.choose_cast_name__selction_message),
+                                Toast.LENGTH_SHORT).show();
+                        castLabel.getParent().
+                                requestChildFocus(castLabel, castLabel);
+                        return;
+                    }
+                }
 
                 String data = new StringBuilder().append("{")
                         .append("\"job_permission\":")
@@ -564,24 +605,21 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
 
     class SendChoiceThird extends AsyncTask<String, String, String> {
-        ProgressDialog progress = new ProgressDialog(RegistrationChoiceSelectionThirdPage.this);
-        ;
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress.setMessage(getResources().getString(R.string.progress_dialog_message));
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setIndeterminate(true);
-            if (!progress.isShowing())
-                progress.show();
+           progress.show();
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s == null) {
-                progress.cancel();
+                if(progress.isShowing())
+                    progress.dismiss();
+
                 Utils.ShowAlert(RegistrationChoiceSelectionThirdPage.this, getString(R.string.no_internet_connection));
             } else {
                 try {
@@ -589,8 +627,12 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
                     if (jsonObject.has("errors")) {
-                        jsonObject.getJSONObject("errors").getString("detail");
-                        Toast.makeText(RegistrationChoiceSelectionThirdPage.this, "error", Toast.LENGTH_LONG).show();
+                        if(progress.isShowing())
+                            progress.dismiss();
+
+                      String error=  jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(RegistrationChoiceSelectionThirdPage.this, error,
+                                Toast.LENGTH_LONG).show();
                     } else {
                         new RegistrationChoiceSelectionThirdPage.FetchConstant().execute();
                     }
@@ -639,8 +681,12 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s == null) {
+                if(progress.isShowing())
+                    progress.dismiss();
                 Utils.ShowAlert(RegistrationChoiceSelectionThirdPage.this, getString(R.string.no_internet_connection));
             } else {
+                if(progress.isShowing())
+                    progress.dismiss();
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationChoiceSelectionThirdPage.this, RegistrationPersonalInformation.class);
                 signupIntent.putExtra("constants", s);

@@ -365,9 +365,10 @@
     <string name="registration_cancel_btn_text">বাতিল করুন</string>
     <string name="registration_accept_btn_text">সংরক্ষণ করুন</string>
 
-    <string name= "bride_maritial_status_selction_message">পাত্রীর বৈবাহিক অবস্থা নির্বাচন করুন</string>
-    <string name= "bride_religion_status_selction_message">পাত্রীর ধর্ম নির্বাচন করুন</string>
-    <string name= "bride_job_status_selction_message">মেয়ে বিয়ের পরে চাকরি করতে পারবে কিনা নির্বাচন করুন</string>
+    <string name= "choose_maritial_status_selction_message">বৈবাহিক অবস্থা নির্বাচন করুন</string>
+    <string name= "choose_religion_status_selction_message">ধর্ম নির্বাচন করুন</string>
+    <string name="choose_cast_name__selction_message">বর্ণ নির্বাচন করুন</string>
+    <string name= "bride_job_status_selction_message">পাত্রী বিয়ের পরে চাকরি করতে পারবে কিনা নির্বাচন করুন</string>
 
     <string name="brother_nubmer_choise_message">ভাইয়ের সংখ্যা নির্বাচন করুন</string>
     <string name="sister_nubmer_choise_message">বোনের সংখ্যা নির্বাচন করুন</string>
