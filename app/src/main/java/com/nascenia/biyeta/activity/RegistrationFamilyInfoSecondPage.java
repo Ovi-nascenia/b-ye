@@ -788,15 +788,15 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                     progress.cancel();
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
-                    Toast.makeText(RegistrationFamilyInfoSecondPage.this,"cyclecom "+s, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(RegistrationFamilyInfoSecondPage.this,"cyclecom "+s, Toast.LENGTH_LONG).show();
                     if (jsonObject.has("errors")) {
                        String error = jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(RegistrationFamilyInfoSecondPage.this,error, Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(RegistrationFamilyInfoSecondPage.this,"allfine", Toast.LENGTH_LONG).show();
-                       /* Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this, Login.class);
+                        //Toast.makeText(RegistrationFamilyInfoSecondPage.this,"allfine", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this, Login.class);
                         startActivity(intent);
-                        finish();*/
+                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -278,7 +278,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="অন্যান্য"
+                android:text="অন্যান্য পারিবারিক পরিচয় (ঐচ্ছিক)"
                 android:textColor="@color/colorPrimary" />
 
             <RelativeLayout
