@@ -778,34 +778,42 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     signupIntent = new Intent(Login.this, RegistrationOwnInfo.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
+                    finish();
                 } else if (currentMobileSignupStep == 3) {
                     signupIntent = new Intent(Login.this, ImageUpload.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
+                    finish();
                 } else if (currentMobileSignupStep == 4) {
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionFirstPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
+                    finish();
                 } else if (currentMobileSignupStep == 5) {
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionSecondPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
+                    finish();
                 } else if (currentMobileSignupStep == 6) {
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
+                    finish();
                 } else if (currentMobileSignupStep == 7) {
                     signupIntent = new Intent(Login.this, RegistrationPersonalInformation.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
+                    finish();
                 } else if (currentMobileSignupStep == 8) {
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoFirstPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
+                    finish();
                 } else if (currentMobileSignupStep == 9) {
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoSecondPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
+                    finish();
                 }
             }
         }
