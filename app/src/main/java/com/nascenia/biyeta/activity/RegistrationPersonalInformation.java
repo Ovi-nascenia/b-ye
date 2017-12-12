@@ -35,7 +35,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     String maritalStatusValue = "", degreeValue = "", subjectValue = "", institutionValue,
             occupationValue = "", professionalGroupValue = "",
             designationValue, occupationInstitutionValue, religionValue="",
-            rojaValue="", disableValue, smokeValue, hijabValue;
+            rojaValue="", disableValue="", smokeValue="", hijabValue ="";
     EditText subjectText, institutionText, designationText, occupationInstitutionText;
     LinearLayout maritalStatus, educationalStatus, professonalalStatus, religiousStatus, rojaStatus, disableStatus, smokeStatus, professionalGroupStatus;
     TextView marriageTV, educationTV, professonTV, religionTV, rojaTV, disableTV, smokeTV, professionalGroupTV;
@@ -116,10 +116,17 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     TextView maritalStatusLabel,educationalStatusLabel,professionStatusLabel,religionStatusLabel,
             rojaStatuLabel;
 
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registration_personal_information);
+
+        progress = new ProgressDialog(RegistrationPersonalInformation.this);
+        progress.setMessage(getResources().getString(R.string.progress_dialog_message));
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(false);
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
@@ -210,8 +217,6 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        setContentView(R.layout.activity_registration_personal_information);
 
         subjectText = (EditText) findViewById(R.id.subject_text);
         institutionText = (EditText) findViewById(R.id.institution_text);
@@ -306,6 +311,15 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     return;
                 }
 
+                if(disableValue.isEmpty()){
+                    Toast.makeText(getBaseContext(), "আপনার কোন প্রতিবন্ধিকতা আছে কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(smokeValue.isEmpty()){
+                    Toast.makeText(getBaseContext(), "আপনি ধূমপান করেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 String response = new StringBuilder().append("{")
                         .append("\"marital_status\":")
@@ -408,7 +422,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
                 // Toast.makeText(RegistrationPersonalInformation.this,response,Toast.LENGTH_LONG).show();
 
-                new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
+               new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
 
             }
         });
@@ -545,24 +559,22 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     }
 
     class SendPersonalInfo extends AsyncTask<String, String, String> {
-        ProgressDialog progress = new ProgressDialog(RegistrationPersonalInformation.this);
-        ;
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress.setMessage(getResources().getString(R.string.progress_dialog_message));
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setIndeterminate(true);
-            if (!progress.isShowing())
-                progress.show();
+            progress.show();
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s == null) {
-                progress.cancel();
+                //progress.cancel();
+                if (progress.isShowing())
+                    progress.dismiss();
+
                 Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
             } else {
                 try {
@@ -570,8 +582,10 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
                     if (jsonObject.has("errors")) {
-                        jsonObject.getJSONObject("errors").getString("detail");
-                        Toast.makeText(RegistrationPersonalInformation.this, "error", Toast.LENGTH_LONG).show();
+                        if (progress.isShowing())
+                            progress.dismiss();
+                      String error= jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(RegistrationPersonalInformation.this, error, Toast.LENGTH_LONG).show();
                     } else {
                       //  Toast.makeText(RegistrationPersonalInformation.this, "SendPersonalInfo else", Toast.LENGTH_LONG).show();
                         new RegistrationPersonalInformation.FetchConstant().execute();
@@ -623,8 +637,12 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s == null) {
+                if (progress.isShowing())
+                    progress.dismiss();
                 Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
             } else {
+                if (progress.isShowing())
+                    progress.dismiss();
                 //Toast.makeText(getBaseContext(), "fetch constant else", Toast.LENGTH_LONG).show();
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationPersonalInformation.this, RegistrationFamilyInfoFirstPage.class);

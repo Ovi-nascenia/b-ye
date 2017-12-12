@@ -33,7 +33,7 @@ public class PopUpFamilyInfoFirstPage extends AppCompatActivity {
 
         if(RegistrationFamilyInfoFirstPage.selectedPopUp == 1 ){
             RegistrationFamilyInfoFirstPage.professionFather = 1;
-            data = RegistrationFamilyInfoFirstPage.occupationName;
+            data = RegistrationFamilyInfoFirstPage.fatherOccupationName;
         }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 2){
             RegistrationFamilyInfoFirstPage.professionalGroupFather = 1;
             data = RegistrationFamilyInfoFirstPage.professonalGroupName;

@@ -404,7 +404,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                 Log.i("finalvalue: ", "other-> " + responseOther);
                 Log.i("finalvalue: ", "totalJson-> " +   JSONResponse());
 */
-                //JSONResponse();
+               // JSONResponse();
                 new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
             }
         });
@@ -779,6 +779,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Log.i("val",s+"");
             if (s == null) {
                 progress.cancel();
                 Utils.ShowAlert(RegistrationFamilyInfoSecondPage.this, getString(R.string.no_internet_connection));
@@ -787,13 +788,15 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                     progress.cancel();
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
+                    Toast.makeText(RegistrationFamilyInfoSecondPage.this,"cyclecom "+s, Toast.LENGTH_LONG).show();
                     if (jsonObject.has("errors")) {
-                        jsonObject.getJSONObject("errors").getString("detail");
-                        Toast.makeText(RegistrationFamilyInfoSecondPage.this, "error", Toast.LENGTH_LONG).show();
+                       String error = jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(RegistrationFamilyInfoSecondPage.this,error, Toast.LENGTH_LONG).show();
                     } else {
-                        Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this, Login.class);
+                        Toast.makeText(RegistrationFamilyInfoSecondPage.this,"allfine", Toast.LENGTH_LONG).show();
+                       /* Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this, Login.class);
                         startActivity(intent);
-                        finish();
+                        finish();*/
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

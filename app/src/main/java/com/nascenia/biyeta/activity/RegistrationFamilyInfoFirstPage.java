@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
@@ -65,10 +66,24 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
     TextView professionStatusLabelFather,professionStatusLabelMother;
 
+    public static ArrayList<String> fatherOccupationArray = new ArrayList<String>();
+    public static String[] fatherOccupationName = new String[occupationArray.size()];
+    public static ArrayList<String> fatherOccupationConstant = new ArrayList<String>();
+
+    ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_family_info_first_page);
+
+
+        progress = new ProgressDialog(RegistrationFamilyInfoFirstPage.this);
+        progress.setMessage(getResources().getString(R.string.progress_dialog_message));
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(false);
+
+
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
 
@@ -79,7 +94,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             occupationObject = jsonObject.getJSONObject("occupation_constant");
             professionalGroupObject = jsonObject.getJSONObject("professional_group_constant");
 
-
+            Log.i("occupation",occupationObject.toString());
 
             for(int i=0;i<occupationObject.length();i++)
             {
@@ -88,6 +103,20 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             }
 
             occupationName = occupationArray.toArray(occupationName);
+
+            Log.i("occupation","const: "+ Arrays.toString(occupationConstant.toArray()));
+            Log.i("occupation","arry: "+ Arrays.toString(occupationArray.toArray()));
+            Log.i("occupation","name: "+ Arrays.toString(occupationName));
+
+            for(int i=0;i<occupationObject.length()-1;i++)
+            {
+                fatherOccupationConstant.add(occupationObject.names().getString(i));
+                fatherOccupationArray.add((String) occupationObject.get(occupationObject.names().getString(i)));
+            }
+
+            fatherOccupationName = fatherOccupationArray.toArray(fatherOccupationName);
+
+
 
             for(int i=0;i<professionalGroupObject.length();i++)
             {
@@ -258,6 +287,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                         .append("8")
                         .append("}")
                         .toString();
+                Log.i("response: ",response);
              new RegistrationFamilyInfoFirstPage.SendFamilyInfo().execute(response,Utils.SEND_INFO);
 
             }
@@ -278,8 +308,8 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         super.onResume();
         if(RegistrationFamilyInfoFirstPage.selectedPopUp == 1 ){
             if(professionFather>0){
-                professionFatherTV.setText(occupationName[professionFather-1]);
-                occupationOfFather = occupationConstant.get(professionFather-1);
+                professionFatherTV.setText(fatherOccupationName[professionFather-1]);
+                occupationOfFather = fatherOccupationConstant.get(professionFather-1);
             }
 
         }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 2){
@@ -302,33 +332,34 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
 
     class SendFamilyInfo extends AsyncTask<String, String, String> {
-        ProgressDialog progress = new ProgressDialog(RegistrationFamilyInfoFirstPage.this);;
+
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            progress.setMessage(getResources().getString(R.string.progress_dialog_message));
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setIndeterminate(true);
-            if ( !progress.isShowing() )
-                progress.show();
+            progress.show();
         }
 
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
             if(s == null){
-                progress.cancel();
+                if(progress.isShowing())
+                    progress.dismiss();
+
                 Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
             }
             else {
                 try{
-                    progress.cancel();
+
                     JSONObject jsonObject=new JSONObject(s);
                     Log.e("Response",s);
                     if(jsonObject.has("errors"))
                     {
-                        jsonObject.getJSONObject("errors").getString("detail");
-                        Toast.makeText(RegistrationFamilyInfoFirstPage.this, "error", Toast.LENGTH_LONG).show();
+                        if(progress.isShowing())
+                            progress.dismiss();
+
+                     String error =  jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(RegistrationFamilyInfoFirstPage.this, error, Toast.LENGTH_LONG).show();
                     }
                     else
                     {
@@ -380,9 +411,15 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         protected void onPostExecute(String s){
             super.onPostExecute(s);
             if(s == null){
+                if(progress.isShowing())
+                    progress.dismiss();
+
                 Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
             }
             else{
+                if(progress.isShowing())
+                    progress.dismiss();
+
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationFamilyInfoFirstPage.this, RegistrationFamilyInfoSecondPage.class);
                 signupIntent.putExtra("constants",s);
