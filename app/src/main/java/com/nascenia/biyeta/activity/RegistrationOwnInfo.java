@@ -103,6 +103,9 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         castReligion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
+
+
+
                 castReligionOwn = 1;
                 Intent intent = new Intent(RegistrationOwnInfo.this, PopUpCastReligion.class );
                 intent.putExtra("constants",constants);
@@ -153,7 +156,11 @@ public class RegistrationOwnInfo extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                Log.i("values ",religionValue+" "+castValue+" "+otherCast+" "+otherReligion);
+                Log.i("values ","religionValue: "+religionValue);
+                Log.i("values ","castValue: "+castValue);
+                Log.i("values ","otherCast: "+otherCast);
+                Log.i("values ","otherReligion: "+otherReligion);
+
 
                 if(castReligionText.getText().toString().equalsIgnoreCase(getString(R.string.religion_pick_textview_title)))
                 {
@@ -193,7 +200,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                         .append("\"")
                         .append("}")
                         .toString();
-                new RegistrationOwnInfo.SendOwnInfo().execute(response,Utils.SEND_INFO);
+               new SendOwnInfo().execute(response,Utils.SEND_INFO);
             }
         });
     }
@@ -285,7 +292,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                     {
                         //Intent intent = new Intent(RegistrationFamilyInfoFirstPage.this,Login.class);
                         //startActivity(intent);
-                        new  RegistrationOwnInfo.FetchConstant().execute();
+                        new  FetchConstant().execute();
                     }
                 }catch (JSONException e){
                     e.printStackTrace();

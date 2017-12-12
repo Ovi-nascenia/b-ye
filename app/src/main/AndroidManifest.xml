@@ -131,10 +131,6 @@
             android:name=".activity.OwnUserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.PopUpCastReligion"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBarPopUp" />
 
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
@@ -148,10 +144,6 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".activity.RegistrationOwnInfo"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.RegistrationFirstActivity"
             android:screenOrientation="portrait"

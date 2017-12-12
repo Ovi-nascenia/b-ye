@@ -399,5 +399,8 @@
     <string name="select_your_choice_professional_group_message">আপনার পছন্দের প্রফেশনাল গ্রুপ নির্বাচন করুন</string>
     <string name="select_your_choice_home_location_message">আপনার পছন্দের বাড়ি কোথায় হবে নির্বাচন করুন</string>
 
+    <string name="write_muslim_cast_name">আপনার বর্ণ লিখুন</string>
+    <string name="write_other_religion_name_message">আপনার ধর্মের নাম লিখুন</string>
+
 
 </resources>
