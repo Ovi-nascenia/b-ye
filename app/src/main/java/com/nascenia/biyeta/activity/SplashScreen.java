@@ -24,6 +24,7 @@ import com.nascenia.biyeta.appdata.FAQData;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.service.OnClearFromRecentService;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -48,9 +49,11 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = new OkHttpClient();
+        startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+
         //firebase token sender code
 
-Utils.calculateHashKey(this,"com.nascenia.biyeta");
+        Utils.calculateHashKey(this,"com.nascenia.biyeta");
         /*Fabric.with(this, new Crashlytics());
 
         throw new NullPointerException();*/
@@ -73,9 +76,13 @@ Utils.calculateHashKey(this,"com.nascenia.biyeta");
                 SharePref sharePref = new SharePref(SplashScreen.this);
 
                 Log.e("Token : ", sharePref.get_data("token"));
+
                 /// login  && mobile  verification unsuccessful
                 ///or the first time appp open
-                if (sharePref.get_data("token").equals("key")||sharePref.get_data("token").equals(null) ||(sharePref.get_data("mobile_verified").equals("false")||sharePref.get_data("mobile_verified").equals("key"))) {
+                if (sharePref.get_data("token").equals("key")||
+                        sharePref.get_data("token").equals(null) ||
+                        (sharePref.get_data("mobile_verified").equals("false")||
+                                sharePref.get_data("mobile_verified").equals("key"))) {
 
                    //
 
@@ -93,7 +100,8 @@ Utils.calculateHashKey(this,"com.nascenia.biyeta");
                 }
 
                 /// login  successfull and  mobile  verification unsuccessful
-                else if ( !sharePref.get_data("token").equals("key") && sharePref.get_data("mobile_verified").equals("false") ){
+                else if ( !sharePref.get_data("token").equals("key") &&
+                        sharePref.get_data("mobile_verified").equals("false") ){
                     Intent mobileVerificationIntent = new Intent(SplashScreen.this, MobileVerification.class);
                     startActivity(mobileVerificationIntent);
                     finish();

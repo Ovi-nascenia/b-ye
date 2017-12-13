@@ -74,6 +74,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
     private RelativeLayout brotherInfoDetailsLayout, sisterInfoDetailsLayout;
     private TextView brotherNubmerTitleTextView, sisterNumberTitleTextView;
 
+    ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +83,12 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         // Toast.makeText(RegistrationFamilyInfoSecondPage.this,constant,Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_registration_family_info_second_page);
         client = new OkHttpClient();
+
+        progress = new ProgressDialog(RegistrationFamilyInfoSecondPage.this);
+        progress.setMessage(getResources().getString(R.string.progress_dialog_message));
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(false);
+
 
         brotherNubmerTitleTextView = (TextView) findViewById(R.id.profession_status_label_brother_count);
         brotherCountLayout = (LinearLayout) findViewById(R.id.count_brother);
@@ -134,8 +141,10 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Intent(RegistrationFamilyInfoSecondPage.this, Login.class);
-                finish();
+               /* new Intent(RegistrationFamilyInfoSecondPage.this, Login.class);
+                finish();*/
+
+                new GetPreviousStepFetchConstant().execute();
             }
         });
 
@@ -838,5 +847,61 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        new GetPreviousStepFetchConstant().execute();
+    }
 
+
+    public class GetPreviousStepFetchConstant extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + 8)
+                    .build();
+
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 8);
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.i("urldata", s + "");
+            if (s == null) {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                Utils.ShowAlert(RegistrationFamilyInfoSecondPage.this, getString(R.string.no_internet_connection));
+            } else {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                startActivity(new Intent(RegistrationFamilyInfoSecondPage.this,
+                        RegistrationFamilyInfoFirstPage.class).
+                        putExtra("constants", s));
+                finish();
+            }
+        }
+    }
 }

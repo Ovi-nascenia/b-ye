@@ -174,6 +174,7 @@ public class MobileVarification extends AppCompatActivity {
                 afterSendingVerificationCode.setVisibility(View.VISIBLE);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
+                    Log.i("mobilersp",jsonObject.toString());
                     jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number");
                     verificationId = jsonObject.getJSONObject("mobile_verification_information").getString("verification_id");
                     sharePref.set_data("verification_id", jsonObject.getJSONObject("mobile_verification_information").getString("verification_id"));
@@ -332,9 +333,10 @@ public class MobileVarification extends AppCompatActivity {
             } else {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
+                    Log.i("mobilersp: ",jsonObject.toString());
                     if (jsonObject.has("message")) {
-                        jsonObject.getJSONObject("message").getString("detail");
-                      //  Toast.makeText(getBaseContext(), "all right", Toast.LENGTH_SHORT).show();
+                        String details = jsonObject.getJSONObject("message").getString("detail");
+                       Toast.makeText(getBaseContext(), details, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MobileVarification.this,Login.class));
                         finish();
                         // new MobileVarification.FetchConstant().execute(jsonObject.getString("current_mobile_sign_up_step"));

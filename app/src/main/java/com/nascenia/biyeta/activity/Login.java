@@ -110,7 +110,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //initialize the Okhttp
         client = new OkHttpClient();
         setContentView(R.layout.login);
-
+       // Toast.makeText(getBaseContext(),"oncre",Toast.LENGTH_SHORT).show();
 
         //hide action bar
         getSupportActionBar().hide();
@@ -666,7 +666,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                             gender = response.getLoginInformation().getGender();
                             currentMobileSignupStep = response.getLoginInformation().getStep();
-
+                            Log.i("currentmoblesignupsetp",currentMobileSignupStep+"");
                             //check the mobile verify screen
 
                             if (response.getLoginInformation().getMobileVerified()) {
@@ -680,7 +680,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             } else {
 
                                 startActivity(new Intent(Login.this, MobileVarification.class));
-                                finish();
+                               //finish();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -778,8 +778,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     signupIntent = new Intent(Login.this, RegistrationOwnInfo.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                    finish();
+                   finish();
                 } else if (currentMobileSignupStep == 3) {
+                    Log.i("constanstdata",s);
                     signupIntent = new Intent(Login.this, ImageUpload.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
@@ -808,18 +809,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoFirstPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                    finish();
+                    //finish();
                 } else if (currentMobileSignupStep == 9) {
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoSecondPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                    finish();
+                   // finish();
                 }
             }
         }
 
         @Override
         protected String doInBackground(String... parameters) {
+            Log.i("constanturl",Utils.STEP_CONSTANT_FETCH + currentMobileSignupStep);
+
             Request request = new Request.Builder()
                     .url(Utils.STEP_CONSTANT_FETCH + currentMobileSignupStep)
                     .build();

@@ -48,11 +48,12 @@ public class RegistrationOwnInfo extends AppCompatActivity{
 
     public static int castReligionOwn = 0;
     private ProgressDialog progress;
-
+    private SharePref sharePref;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_own_info);
+        sharePref = new SharePref(RegistrationOwnInfo.this);
 
         castValue = "";
         religionValue = "";
@@ -91,7 +92,8 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Intent(RegistrationOwnInfo.this,Login.class);
+                sharePref.set_data("token", "key");
+                startActivity(new Intent(RegistrationOwnInfo.this,Login.class));
                 finish();
             }
         });
@@ -377,5 +379,14 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         protected void onPreExecute(){
             super.onPreExecute();
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        sharePref.set_data("token", "key");
+        startActivity(new Intent(RegistrationOwnInfo.this,Login.class));
+        finish();
     }
 }

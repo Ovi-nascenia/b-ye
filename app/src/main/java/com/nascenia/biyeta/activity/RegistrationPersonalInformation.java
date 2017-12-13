@@ -118,6 +118,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
     ProgressDialog progress;
 
+    OkHttpClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,9 +129,11 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setCancelable(false);
 
+        client = new OkHttpClient();
+        sharePref = new SharePref(RegistrationPersonalInformation.this);
+
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
-        sharePref = new SharePref(RegistrationPersonalInformation.this);
 
         try {
             JSONObject jsonObject = new JSONObject(constant);
@@ -252,8 +255,9 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Intent(RegistrationPersonalInformation.this, Login.class);
-                finish();
+                /*new Intent(RegistrationPersonalInformation.this, Login.class);
+                finish();*/
+                new GetPreviousStepFetchConstant().execute();
             }
         });
 
@@ -645,7 +649,8 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     progress.dismiss();
                 //Toast.makeText(getBaseContext(), "fetch constant else", Toast.LENGTH_LONG).show();
                 Intent signupIntent;
-                signupIntent = new Intent(RegistrationPersonalInformation.this, RegistrationFamilyInfoFirstPage.class);
+                signupIntent = new Intent(RegistrationPersonalInformation.this,
+                        RegistrationFamilyInfoFirstPage.class);
                 signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 finish();
@@ -675,6 +680,65 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        new GetPreviousStepFetchConstant().execute();
+    }
+
+
+    public class GetPreviousStepFetchConstant extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + 6)
+                    .build();
+
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 6);
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.i("urldata", s + "");
+            if (s == null) {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
+            } else {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                startActivity(new Intent(RegistrationPersonalInformation.this,
+                        RegistrationChoiceSelectionThirdPage.class).
+                        putExtra("constants", s));
+                finish();
+            }
         }
     }
 }

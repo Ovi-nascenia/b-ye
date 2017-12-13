@@ -124,8 +124,9 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                new Intent(RegistrationChoiceSelectionFirstPage.this,Login.class);
-                finish();
+               /* new Intent(RegistrationChoiceSelectionFirstPage.this,Login.class);
+                finish();*/
+                new GetPreviousStepFetchConstant().execute();
             }
         });
         age_lebel = new ArrayList<>();
@@ -366,6 +367,11 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        new GetPreviousStepFetchConstant().execute();
+    }
 
     class SendChoiceInfo extends AsyncTask<String, String, String> {
 
@@ -489,6 +495,59 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
+        }
+    }
+
+    public class GetPreviousStepFetchConstant extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + 3)
+                    .build();
+
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 3);
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.i("urldata", s + "");
+            if (s == null) {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this,
+                        getString(R.string.no_internet_connection));
+            } else {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+
+                startActivity(new Intent(RegistrationChoiceSelectionFirstPage.this, ImageUpload.class).
+                        putExtra("constants", s));
+                finish();
+            }
         }
     }
 }

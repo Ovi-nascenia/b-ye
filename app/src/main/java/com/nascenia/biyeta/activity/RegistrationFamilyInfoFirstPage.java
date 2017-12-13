@@ -71,7 +71,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
     public static ArrayList<String> fatherOccupationConstant = new ArrayList<String>();
 
     ProgressDialog progress;
-
+    OkHttpClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -83,6 +83,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setCancelable(false);
 
+        client = new OkHttpClient();
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
@@ -297,8 +298,9 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Intent(RegistrationFamilyInfoFirstPage.this,Login.class);
-                finish();
+                /*new Intent(RegistrationFamilyInfoFirstPage.this,Login.class);
+                finish();*/
+                new GetPreviousStepFetchConstant().execute();
             }
         });
     }
@@ -421,7 +423,8 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                     progress.dismiss();
 
                 Intent signupIntent;
-                signupIntent = new Intent(RegistrationFamilyInfoFirstPage.this, RegistrationFamilyInfoSecondPage.class);
+                signupIntent = new Intent(RegistrationFamilyInfoFirstPage.this,
+                        RegistrationFamilyInfoSecondPage.class);
                 signupIntent.putExtra("constants",s);
                 startActivity(signupIntent);
                 finish();
@@ -457,5 +460,61 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        new GetPreviousStepFetchConstant().execute();
+    }
 
+
+    public class GetPreviousStepFetchConstant extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + 7)
+                    .build();
+
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 7);
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.i("urldata", s + "");
+            if (s == null) {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
+            } else {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                startActivity(new Intent(RegistrationFamilyInfoFirstPage.this,
+                        RegistrationPersonalInformation.class).
+                        putExtra("constants", s));
+                finish();
+            }
+        }
+    }
 }

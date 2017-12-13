@@ -144,6 +144,7 @@
             </intent-filter>
         </service>
 
+        <service android:name=".service.OnClearFromRecentService" android:stopWithTask="false" />
         <activity
             android:name=".activity.RegistrationFirstActivity"
             android:screenOrientation="portrait"

@@ -78,6 +78,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
     final ArrayList<String> rangpurDivisionDistrictConstant = new ArrayList<String>();
 
     ProgressDialog progress ;
+    OkHttpClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
+        client = new OkHttpClient();
 
         occupationSelectedArray = new ArrayList<String>();
         professonalGroupSelectedArray = new ArrayList<String>();
@@ -182,8 +184,9 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Intent(RegistrationChoiceSelectionSecondPage.this, Login.class);
-                finish();
+                /*new Intent(RegistrationChoiceSelectionSecondPage.this, Login.class);
+                finish();*/
+                new GetPreviousStepFetchConstant().execute();
             }
         });
 
@@ -904,6 +907,64 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        new GetPreviousStepFetchConstant().execute();
+    }
+
+
+    public class GetPreviousStepFetchConstant extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + 4)
+                    .build();
+
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 4);
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.i("urldata", s + "");
+            if (s == null) {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                Utils.ShowAlert(RegistrationChoiceSelectionSecondPage.this, getString(R.string.no_internet_connection));
+            } else {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                startActivity(new Intent(RegistrationChoiceSelectionSecondPage.this,
+                        RegistrationChoiceSelectionFirstPage.class).
+                        putExtra("constants", s));
+                finish();
+            }
         }
     }
 }

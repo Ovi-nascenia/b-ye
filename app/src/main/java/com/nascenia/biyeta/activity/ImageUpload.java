@@ -28,7 +28,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class ImageUpload extends AppCompatActivity{
+public class ImageUpload extends AppCompatActivity {
     OkHttpClient client;
 
     int numberOfImage = 0;
@@ -38,16 +38,25 @@ public class ImageUpload extends AppCompatActivity{
 
     LinearLayout beforeProPicUpload, beforeBodyPicUpload, beforeOtherPicUpload, proPicChange, bodyPicChange, otherPicChange, permissionLayout;
     FrameLayout afterProPicUpload, afterBodyPicUpload, afterOtherPicUpload;
-    ImageView proPic, bodyPic, otherPic,back;
+    ImageView proPic, bodyPic, otherPic, back;
     public static Bitmap proPicBitmap, bodyPicBitmap, otherPicBitmap;
     Button yesButton, noButton;
 
     public static String proPicBase64, bodyPicBase64, otherPicBase64;
 
+    private ProgressDialog progress;
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_upload);
+
+        progress = new ProgressDialog(ImageUpload.this);
+        progress.setMessage(getResources().getString(R.string.progress_dialog_message));
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(false);
+
         client = new OkHttpClient();
         beforeProPicUpload = (LinearLayout) findViewById(R.id.before_pro_pic_upload);
         beforeBodyPicUpload = (LinearLayout) findViewById(R.id.before_body_pic_upload);
@@ -57,57 +66,62 @@ public class ImageUpload extends AppCompatActivity{
         bodyPicChange = (LinearLayout) findViewById(R.id.body_pic_image_change);
         otherPicChange = (LinearLayout) findViewById(R.id.other_pic_image_change);
 
+
         back = (ImageView) findViewById(R.id.backPreviousActivityImage);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Intent(ImageUpload.this,Login.class);
-                finish();
+               /* new Intent(ImageUpload.this,Login.class);
+                finish();*/
+                new GetPreviousStepFetchConstant().execute();
+
+                /*startActivity(new Intent(ImageUpload.this,RegistrationOwnInfo.class));
+                finish();*/
             }
         });
 
-        beforeBodyPicUpload.setOnClickListener(new View.OnClickListener(){
+        beforeBodyPicUpload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 beforeBodyPicUploadValue = 1;
                 startActivity(new Intent(ImageUpload.this, ImageChoose.class));
             }
         });
 
-        beforeProPicUpload.setOnClickListener(new View.OnClickListener(){
+        beforeProPicUpload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 beforeProPicUploadValue = 1;
                 startActivity(new Intent(ImageUpload.this, ImageChoose.class));
             }
         });
 
-        beforeOtherPicUpload.setOnClickListener(new View.OnClickListener(){
+        beforeOtherPicUpload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 beforeOtherPicUploadValue = 1;
                 startActivity(new Intent(ImageUpload.this, ImageChoose.class));
             }
         });
 
 
-        bodyPicChange.setOnClickListener(new View.OnClickListener(){
+        bodyPicChange.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 beforeBodyPicUploadValue = 1;
                 startActivity(new Intent(ImageUpload.this, ImageChoose.class));
             }
         });
-        proPicChange.setOnClickListener(new View.OnClickListener(){
+        proPicChange.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 beforeProPicUploadValue = 1;
                 startActivity(new Intent(ImageUpload.this, ImageChoose.class));
             }
         });
-        otherPicChange.setOnClickListener(new View.OnClickListener(){
+        otherPicChange.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 beforeOtherPicUploadValue = 1;
                 startActivity(new Intent(ImageUpload.this, ImageChoose.class));
             }
@@ -124,9 +138,9 @@ public class ImageUpload extends AppCompatActivity{
         permissionLayout = (LinearLayout) findViewById(R.id.permission);
 
         yesButton = (Button) findViewById(R.id.yes);
-        yesButton.setOnClickListener(new View.OnClickListener(){
+        yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 String proPic = new StringBuilder().append("{")
                         .append("\"image\":")
                         .append("\"")
@@ -186,19 +200,21 @@ public class ImageUpload extends AppCompatActivity{
                         .append(1)
                         .append("\"")
                         .append("}").toString();
-                if(afterProPicUploadValue == 1){
+                Log.i("picdata",proPic);
+
+                if (afterProPicUploadValue == 1) {
                     new ImageUpload.SendPicture().execute(proPic, Utils.SEND_INFO);
                     new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
                     new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
-                }else{
-                    Toast.makeText(getBaseContext(),getString(R.string.select_image_message),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getBaseContext(), getString(R.string.select_image_message), Toast.LENGTH_SHORT).show();
                 }
 
-                if(afterBodyPicUploadValue == 1){
+                if (afterBodyPicUploadValue == 1) {
 
                 }
 
-                if(afterOtherPicUploadValue == 1){
+                if (afterOtherPicUploadValue == 1) {
 
                 }
 
@@ -210,7 +226,7 @@ public class ImageUpload extends AppCompatActivity{
 
         noButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 String proPic = new StringBuilder().append("{")
                         .append("\"image\":")
                         .append("\"")
@@ -271,19 +287,19 @@ public class ImageUpload extends AppCompatActivity{
                         .append("\"")
                         .append("}").toString();
 
-                if(afterProPicUploadValue == 1){
+                if (afterProPicUploadValue == 1) {
                     new ImageUpload.SendPicture().execute(proPic, Utils.SEND_INFO);
                     new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
                     new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
-                }else{
-                    Toast.makeText(getBaseContext(),getString(R.string.select_image_message),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getBaseContext(), getString(R.string.select_image_message), Toast.LENGTH_SHORT).show();
                 }
 
-                if(afterBodyPicUploadValue == 1){
-                   //
+                if (afterBodyPicUploadValue == 1) {
+                    //
                 }
 
-                if(afterOtherPicUploadValue == 1){
+                if (afterOtherPicUploadValue == 1) {
                     //
                 }
 
@@ -299,19 +315,19 @@ public class ImageUpload extends AppCompatActivity{
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        if(afterProPicUploadValue == 1){
+        if (afterProPicUploadValue == 1) {
             proPic.setImageBitmap(proPicBitmap);
             beforeProPicUpload.setVisibility(View.GONE);
             afterProPicUpload.setVisibility(View.VISIBLE);
         }
-        if(afterBodyPicUploadValue == 1){
+        if (afterBodyPicUploadValue == 1) {
             bodyPic.setImageBitmap(bodyPicBitmap);
             beforeBodyPicUpload.setVisibility(View.GONE);
             afterBodyPicUpload.setVisibility(View.VISIBLE);
         }
-        if(afterOtherPicUploadValue == 1){
+        if (afterOtherPicUploadValue == 1) {
             otherPic.setImageBitmap(otherPicBitmap);
             beforeOtherPicUpload.setVisibility(View.GONE);
             afterOtherPicUpload.setVisibility(View.VISIBLE);
@@ -320,7 +336,9 @@ public class ImageUpload extends AppCompatActivity{
 
 
     class SendPicture extends AsyncTask<String, String, String> {
-        ProgressDialog progress = new ProgressDialog(ImageUpload.this);;
+        ProgressDialog progress = new ProgressDialog(ImageUpload.this);
+        ;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -328,36 +346,33 @@ public class ImageUpload extends AppCompatActivity{
             progress.setMessage(getResources().getString(R.string.progress_dialog_message));
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setIndeterminate(true);
-            if ( !progress.isShowing() )
+            if (!progress.isShowing())
                 progress.show();
         }
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s == null){
+            if (s == null) {
                 progress.cancel();
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
-            }
-            else{
+            } else {
                 try {
                     progress.cancel();
-                    JSONObject jsonObject=new JSONObject(s);
-                    Log.e("Response",s);
-                    if(jsonObject.has("errors"))
-                    {
+                    JSONObject jsonObject = new JSONObject(s);
+                    Log.e("Response", s);
+                    if (jsonObject.has("errors")) {
                         jsonObject.getJSONObject("errors").getString("detail");
-                        Toast.makeText(ImageUpload.this, jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
+                        Toast.makeText(ImageUpload.this,
+                                jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
+                    } else {
                         numberOfImage++;
-                        if(numberOfImage==3){
+                        if (numberOfImage == 3) {
                             new ImageUpload.FetchConstant().execute();
 
                         }
                     }
-                } catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -365,7 +380,7 @@ public class ImageUpload extends AppCompatActivity{
         }
 
         @Override
-        protected String doInBackground(String... strings){
+        protected String doInBackground(String... strings) {
             SharePref sharePref = new SharePref(ImageUpload.this);
             final String token = sharePref.get_data("token");
 
@@ -375,7 +390,7 @@ public class ImageUpload extends AppCompatActivity{
 
             OkHttpClient client = new OkHttpClient();
 
-            RequestBody body = RequestBody.create(JSON,strings[0]);
+            RequestBody body = RequestBody.create(JSON, strings[0]);
             Request request = new Request.Builder()
                     .url(strings[1])
                     .addHeader("Authorization", "Token token=" + token)
@@ -386,7 +401,7 @@ public class ImageUpload extends AppCompatActivity{
             try {
                 response = client.newCall(request).execute();
                 responseString = response.body().string();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
 //                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
             }
@@ -395,27 +410,25 @@ public class ImageUpload extends AppCompatActivity{
     }
 
 
-
     public class FetchConstant extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s == null){
+            if (s == null) {
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
-            }
-            else{
+            } else {
                 Intent signupIntent;
                 signupIntent = new Intent(ImageUpload.this, RegistrationChoiceSelectionFirstPage.class);
-                signupIntent.putExtra("constants",s);
+                signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 finish();
             }
         }
 
         @Override
-        protected String doInBackground(String... parameters){
-            Login.currentMobileSignupStep+=1;
+        protected String doInBackground(String... parameters) {
+            Login.currentMobileSignupStep += 1;
             Request request = new Request.Builder()
                     .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
                     .build();
@@ -425,7 +438,7 @@ public class ImageUpload extends AppCompatActivity{
                 Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
                 return responseString;
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
 //                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
                 return null;
@@ -433,8 +446,67 @@ public class ImageUpload extends AppCompatActivity{
         }
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        new GetPreviousStepFetchConstant().execute();
+    }
+
+
+    public class GetPreviousStepFetchConstant extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + 2)
+                    .build();
+
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 2);
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.i("urldata", s + "");
+            if (s == null) {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
+            } else {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                startActivity(new Intent(ImageUpload.this, RegistrationOwnInfo.class).
+                        putExtra("constants", s));
+                finish();
+            }
         }
     }
 }
