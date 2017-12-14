@@ -110,7 +110,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //initialize the Okhttp
         client = new OkHttpClient();
         setContentView(R.layout.login);
-       // Toast.makeText(getBaseContext(),"oncre",Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getBaseContext(),"oncre",Toast.LENGTH_SHORT).show();
 
         //hide action bar
         getSupportActionBar().hide();
@@ -439,7 +439,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                         // check the mobile verify screen
 
-                        if (response.getLoginInformation().getMobileVerified()) {
+                        //legacy code
+                        /*if (response.getLoginInformation().getMobileVerified()) {
                             if (currentMobileSignupStep == 10)
                                 startActivity(new Intent(Login.this, HomeScreen.class));
                             else
@@ -449,7 +450,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                             startActivity(new Intent(Login.this, MobileVarification.class));
                             // finish();
+                        }*/
+
+                        //present code
+                        if (response.getLoginInformation().getMobileVerified()) {
+                            if (currentMobileSignupStep == 10) {
+                                startActivity(new Intent(Login.this, HomeScreen.class));
+                                finish();
+                            } else
+                                new Login.FetchConstant(response.getLoginInformation().getAuthToken()).execute();
+                            //finish();
+                        } else {
+                            startActivity(new Intent(Login.this, MobileVarification.class));
+                            // finish();
                         }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
@@ -666,7 +681,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                             gender = response.getLoginInformation().getGender();
                             currentMobileSignupStep = response.getLoginInformation().getStep();
-                            Log.i("currentmoblesignupsetp",currentMobileSignupStep+"");
+                            Log.i("currentmoblesignupsetp", currentMobileSignupStep + "");
                             //check the mobile verify screen
 
                             if (response.getLoginInformation().getMobileVerified()) {
@@ -680,7 +695,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             } else {
 
                                 startActivity(new Intent(Login.this, MobileVarification.class));
-                               //finish();
+                                //finish();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -763,10 +778,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
     public class FetchConstant extends AsyncTask<String, String, String> {
-        private String token="";
+        private String token = "";
 
-        FetchConstant(String token){
-            this.token=token;
+        FetchConstant(String token) {
+            this.token = token;
         }
 
         @Override
@@ -780,60 +795,60 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             } else {
                 Intent signupIntent;
                 if (currentMobileSignupStep == 2) {
-                    Log.i("constantval","Login-RegistrationOwnInfo  "+s);
+                    Log.i("constantval", "Login-RegistrationOwnInfo  " + s);
                     signupIntent = new Intent(Login.this, RegistrationOwnInfo.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                   finish();
+                    finish();
                 } else if (currentMobileSignupStep == 3) {
-                    Log.i("constantval","Login-Imageupload  "+s);
+                    Log.i("constantval", "Login-Imageupload  " + s);
                     signupIntent = new Intent(Login.this, ImageUpload.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
                 } else if (currentMobileSignupStep == 4) {
-                    Log.i("constantval","Login-RegistrationChoiceSelectionFirstPage  "+s);
+                    Log.i("constantval", "Login-RegistrationChoiceSelectionFirstPage  " + s);
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionFirstPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
                 } else if (currentMobileSignupStep == 5) {
-                    Log.i("constantval","Login-RegistrationChoiceSelectionSecondPage  "+s);
+                    Log.i("constantval", "Login-RegistrationChoiceSelectionSecondPage  " + s);
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionSecondPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
                 } else if (currentMobileSignupStep == 6) {
-                    Log.i("constantval","Login-RegistrationChoiceSelectionThirdPage  "+s);
+                    Log.i("constantval", "Login-RegistrationChoiceSelectionThirdPage  " + s);
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
                 } else if (currentMobileSignupStep == 7) {
-                    Log.i("constantval","Login-RegistrationPersonalInformation  "+s);
+                    Log.i("constantval", "Login-RegistrationPersonalInformation  " + s);
                     signupIntent = new Intent(Login.this, RegistrationPersonalInformation.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
                 } else if (currentMobileSignupStep == 8) {
-                    Log.i("constantval","Login-RegistrationFamilyInfoFirstPage  "+s);
+                    Log.i("constantval", "Login-RegistrationFamilyInfoFirstPage  " + s);
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoFirstPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     //finish();
                 } else if (currentMobileSignupStep == 9) {
-                    Log.i("constantval","Login-RegistrationFamilyInfoSecondPage  "+s);
+                    Log.i("constantval", "Login-RegistrationFamilyInfoSecondPage  " + s);
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoSecondPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                   // finish();
+                    // finish();
                 }
             }
         }
 
         @Override
         protected String doInBackground(String... parameters) {
-            Log.i("constanturl",Utils.STEP_CONSTANT_FETCH + currentMobileSignupStep);
+            Log.i("constanturl", Utils.STEP_CONSTANT_FETCH + currentMobileSignupStep);
 
             Request request = new Request.Builder()
                     .url(Utils.STEP_CONSTANT_FETCH + currentMobileSignupStep)
