@@ -854,8 +854,8 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .addHeader("Authorization", "Token token=" + token)
                     .url(Utils.STEP_CONSTANT_FETCH + 5)
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
 
             Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 5);

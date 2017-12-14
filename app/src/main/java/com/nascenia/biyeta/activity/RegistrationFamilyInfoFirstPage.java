@@ -72,12 +72,14 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
     ProgressDialog progress;
     OkHttpClient client;
+    private SharePref sharePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_family_info_first_page);
 
+        sharePref = new SharePref(RegistrationFamilyInfoFirstPage.this);
 
         progress = new ProgressDialog(RegistrationFamilyInfoFirstPage.this);
         progress.setMessage(getResources().getString(R.string.progress_dialog_message));
@@ -428,9 +430,11 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         @Override
         protected String doInBackground(String... parameters) {
             //  Login.currentMobileSignupStep+=1;
+            final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
                     .url(Utils.STEP_CONSTANT_FETCH + 9)
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
                 OkHttpClient client = new OkHttpClient();
@@ -469,8 +473,10 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     .url(Utils.STEP_CONSTANT_FETCH + 7)
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
 
             Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 7);

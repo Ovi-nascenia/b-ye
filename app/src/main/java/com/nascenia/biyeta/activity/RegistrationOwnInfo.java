@@ -361,9 +361,11 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         @Override
         protected String doInBackground(String... parameters){
           //  Login.currentMobileSignupStep+=1;
+            final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
                     .url(Utils.STEP_CONSTANT_FETCH + 3)
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
                 Response response = client.newCall(request).execute();

@@ -45,12 +45,14 @@ public class ImageUpload extends AppCompatActivity {
     public static String proPicBase64, bodyPicBase64, otherPicBase64;
 
     private ProgressDialog progress;
-
+    private SharePref sharePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_upload);
+
+        sharePref = new SharePref(ImageUpload.this);
 
         progress = new ProgressDialog(ImageUpload.this);
         progress.setMessage(getResources().getString(R.string.progress_dialog_message));
@@ -430,9 +432,11 @@ public class ImageUpload extends AppCompatActivity {
         @Override
         protected String doInBackground(String... parameters) {
            // Login.currentMobileSignupStep += 1;
+            final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
                     .url(Utils.STEP_CONSTANT_FETCH + 4)
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
                 Response response = client.newCall(request).execute();
@@ -472,8 +476,10 @@ public class ImageUpload extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     .url(Utils.STEP_CONSTANT_FETCH + 2)
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
 
             Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 2);

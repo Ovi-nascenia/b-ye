@@ -75,14 +75,18 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
     private TextView brotherNubmerTitleTextView, sisterNumberTitleTextView;
 
     ProgressDialog progress;
+    private SharePref sharePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registration_family_info_second_page);
+
+        sharePref = new SharePref(RegistrationFamilyInfoSecondPage.this);
+
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
         // Toast.makeText(RegistrationFamilyInfoSecondPage.this,constant,Toast.LENGTH_LONG).show();
-        setContentView(R.layout.activity_registration_family_info_second_page);
         client = new OkHttpClient();
 
         progress = new ProgressDialog(RegistrationFamilyInfoSecondPage.this);
@@ -866,8 +870,10 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
 
         @Override
         protected String doInBackground(String... strings) {
+            final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     .url(Utils.STEP_CONSTANT_FETCH + 8)
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
 
             Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 8);

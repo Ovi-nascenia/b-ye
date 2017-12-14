@@ -71,10 +71,14 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
 
     private ProgressDialog progress;
 
+    private SharePref sharePref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_choice_selection_first_page);
+
+        sharePref = new SharePref(RegistrationChoiceSelectionFirstPage.this);
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
@@ -477,9 +481,11 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         @Override
         protected String doInBackground(String... parameters){
             //Login.currentMobileSignupStep+=1;
+            final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
                     .url(Utils.STEP_CONSTANT_FETCH + 5 )
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
                 Response response = client.newCall(request).execute();
@@ -511,8 +517,10 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     .url(Utils.STEP_CONSTANT_FETCH + 3)
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
 
             Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 3);
