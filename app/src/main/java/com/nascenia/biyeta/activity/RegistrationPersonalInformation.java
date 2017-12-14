@@ -36,15 +36,18 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     String maritalStatusValue = "", degreeValue = "", subjectValue = "", institutionValue,
             occupationValue = "", professionalGroupValue = "",
             designationValue, occupationInstitutionValue, religionValue = "",
-            rojaValue = "", disableValue = "", smokeValue = "", hijabValue = "";
+            rojaValue = "", disableValue = "", smokeValue = "", hijabValue = "",houseValue="";
     EditText subjectText, institutionText, designationText, occupationInstitutionText;
-    LinearLayout maritalStatus, educationalStatus, professonalalStatus, religiousStatus, rojaStatus, disableStatus, smokeStatus, professionalGroupStatus;
-    TextView marriageTV, educationTV, professonTV, religionTV, rojaTV, disableTV, smokeTV, professionalGroupTV;
+    LinearLayout maritalStatus, educationalStatus, professonalalStatus, religiousStatus,
+            rojaStatus, disableStatus, smokeStatus, professionalGroupStatus,houseLinearLayout,hijabStatus;
+    TextView marriageTV, educationTV, professonTV, religionTV, rojaTV, disableTV, smokeTV,
+            professionalGroupTV,houseTV,hijabTV;
     Button next;
     ImageView back;
 
     String constant;
-    JSONObject marriageObject, educationObject, occupationObject, professionalGroupObject, religionObject, rojaObject, hijabObject, disableObject, smokeObject;
+    JSONObject marriageObject, educationObject, occupationObject, professionalGroupObject,
+            religionObject, rojaObject, hijabObject, disableObject, smokeObject,houseObject;
 
 
     public static ArrayList<String> professonalGroupArray = new ArrayList<String>();
@@ -92,6 +95,11 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     public static ArrayList<String> smokeConstant = new ArrayList<String>();
     public static String[] smokeConstantValue = new String[smokeArray.size()];
 
+    public static ArrayList<String> houseArray = new ArrayList<String>();
+    public static String[] houseName = new String[houseArray.size()];
+    public static ArrayList<String> houseConstant = new ArrayList<String>();
+    public static String[] houseConstantValue = new String[houseArray.size()];
+
 
     // public static String marriageArray[] = {"অবিবাহিত","বিপত্মীক","তালাকপ্রাপ্ত","বিবাহিত"};
     //public static String educationArray[] = {"মাধ্যমিক", "উচ্চমাধ্যমিক পড়ছি", "উচ্চমাধ্যমিক/ডিপ্লোমা","বাচেলর পড়ছি", "বাচেলর", "মাস্টার্স পড়ছি","মাস্টার্স", "ডক্টরেট পড়ছি","ডক্টরেট"};
@@ -112,14 +120,19 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     public static int disable = -1;
     public static int smoke = -1;
     public static int professonalGroup = -1;
+    public static int house = -1;
+    public static int hijab = -1;
+
     private SharePref sharePref;
 
     TextView maritalStatusLabel, educationalStatusLabel, professionStatusLabel, religionStatusLabel,
-            rojaStatuLabel;
+            rojaStatuLabel,smokeStatusLabel,houseStatusLabel,hijabStatuLabel;
 
     ProgressDialog progress;
 
     OkHttpClient client;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,18 +154,20 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(constant);
 
             if (Login.gender.equals("female")) {
-                marriageObject = jsonObject.getJSONObject("marital_status_constant_for_male");
-            } else if (Login.gender.equals("male")) {
                 marriageObject = jsonObject.getJSONObject("marital_status_constant_for_female");
+            } else if (Login.gender.equals("male")) {
+                marriageObject = jsonObject.getJSONObject("marital_status_constant_for_male");
             }
             educationObject = jsonObject.getJSONObject("education_constant");
             occupationObject = jsonObject.getJSONObject("occupation_constant");
             professionalGroupObject = jsonObject.getJSONObject("professional_group_constant");
-            religionObject = jsonObject.getJSONObject("prayer_options_female");
+            //religionObject = jsonObject.getJSONObject("prayer_options_female");
+            religionObject = jsonObject.getJSONObject("prayer_options");
             rojaObject = jsonObject.getJSONObject("fasting");
             hijabObject = jsonObject.getJSONObject("hijab_options");
             disableObject = jsonObject.getJSONObject("physical_disability_options");
             smokeObject = jsonObject.getJSONObject("smoking_options");
+            houseObject= jsonObject.getJSONObject("house_options");
 
 
             for (int i = 0; i < marriageObject.length(); i++) {
@@ -218,11 +233,19 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
             smokeName = smokeArray.toArray(smokeName);
 
+            for (int i = 0; i < houseObject.length(); i++) {
+                houseConstant.add(houseObject.names().getString(i));
+                houseArray.add((String) houseObject.get(houseObject.names().getString(i)));
+            }
+
+            houseName = houseArray.toArray(houseName);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        Log.i("gender",Login.gender);
         subjectText = (EditText) findViewById(R.id.subject_text);
         institutionText = (EditText) findViewById(R.id.institution_text);
         designationText = (EditText) findViewById(R.id.designation_text);
@@ -233,6 +256,10 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         professionStatusLabel = (TextView) findViewById(R.id.profession_status_label);
         religionStatusLabel = (TextView) findViewById(R.id.religion_status_label);
         rojaStatuLabel = (TextView) findViewById(R.id.roja_status_label);
+        hijabStatuLabel = (TextView) findViewById(R.id.hijab_status_label);
+        smokeStatusLabel = (TextView) findViewById(R.id.smoke_status_label);
+        houseStatusLabel = (TextView) findViewById(R.id.house_status_label);
+
 
 
         maritalStatus = (LinearLayout) findViewById(R.id.meritalStatus);
@@ -240,18 +267,25 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         professonalalStatus = (LinearLayout) findViewById(R.id.professonalalStatus);
         religiousStatus = (LinearLayout) findViewById(R.id.religiousStatus);
         rojaStatus = (LinearLayout) findViewById(R.id.rojaStatus);
+        hijabStatus = (LinearLayout) findViewById(R.id.hijabStatus);
         disableStatus = (LinearLayout) findViewById(R.id.disableStatus);
         smokeStatus = (LinearLayout) findViewById(R.id.smokeStatus);
         professionalGroupStatus = (LinearLayout) findViewById(R.id.professonalGroupStatus);
+        houseLinearLayout = (LinearLayout) findViewById(R.id.house_linearLayout);
 
         marriageTV = (TextView) findViewById(R.id.merital_text_view);
         educationTV = (TextView) findViewById(R.id.education_text_view);
         professonTV = (TextView) findViewById(R.id.profession_text_view);
         religionTV = (TextView) findViewById(R.id.religion_text_view);
         rojaTV = (TextView) findViewById(R.id.roja_text_view);
+        hijabTV = (TextView) findViewById(R.id.hijab_text_view);
         disableTV = (TextView) findViewById(R.id.disable_text_view);
         smokeTV = (TextView) findViewById(R.id.smoke_text_view);
         professionalGroupTV = (TextView) findViewById(R.id.profession_group_text_view);
+        houseTV = (TextView) findViewById(R.id.house_text_view);
+
+
+
 
         back = (ImageView) findViewById(R.id.backPreviousActivityImage);
         back.setOnClickListener(new View.OnClickListener() {
@@ -317,12 +351,17 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     return;
                 }
 
+                if ( Login.gender.equalsIgnoreCase("male") && houseValue.isEmpty()) {
+                    Toast.makeText(getBaseContext(), "Choose your house", Toast.LENGTH_LONG).show();
+                    houseStatusLabel.getParent().requestChildFocus(houseStatusLabel, houseStatusLabel);
+                    return;
+                }
                 if (disableValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার কোন প্রতিবন্ধিকতা আছে কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                if (smokeValue.isEmpty()) {
+                if ( Login.gender.equalsIgnoreCase("male") && smokeValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনি ধূমপান করেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -399,7 +438,6 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                         .append("\"educations_information\":")
                         .append("[")
                         .append("{")
-
                         .append("\"name\":")
                         .append(degreeValue)
                         .append(",")
@@ -417,7 +455,6 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                         .append("\"")
                         .append("")
                         .append("\"")
-
                         .append("}")
                         .append("]")
                         .append(",")
@@ -427,6 +464,8 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                         .toString();
 
                 // Toast.makeText(RegistrationPersonalInformation.this,response,Toast.LENGTH_LONG).show();
+
+                Log.i("response",response);
 
                 new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
 
@@ -513,12 +552,40 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 }
         );
 
+        houseLinearLayout.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectedPopUp = 9;
+                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
+                    }
+                }
+        );
+
+        hijabStatus.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectedPopUp = 10;
+                        startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
+                    }
+                }
+        );
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        if(Login.gender.equalsIgnoreCase("female")){
+            smokeStatusLabel.setVisibility(View.GONE);
+            smokeStatus.setVisibility(View.GONE);
+
+            houseStatusLabel.setVisibility(View.GONE);
+            houseLinearLayout.setVisibility(View.GONE);
+        }
+
         if (RegistrationPersonalInformation.selectedPopUp == 1) {
             if (marriage > 0) {
                 marriageTV.setText(maritalStatusName[marriage - 1]);
@@ -559,6 +626,16 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             if (professonalGroup > 0) {
                 professionalGroupTV.setText(professonalGroupName[professonalGroup - 1]);
                 professionalGroupValue = professonalGroupConstant.get(professonalGroup - 1);
+            }
+        }else if (RegistrationPersonalInformation.selectedPopUp == 9) {
+            if (house > 0) {
+                houseTV.setText(houseName[house - 1]);
+                houseValue = houseConstant.get(house - 1);
+            }
+        }else if (RegistrationPersonalInformation.selectedPopUp == 10) {
+            if (hijab > 0) {
+                hijabTV.setText(hijabName[hijab - 1]);
+                hijabValue = hijabConstant.get(hijab - 1);
             }
         }
 
@@ -664,9 +741,11 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         @Override
         protected String doInBackground(String... parameters) {
             // Login.currentMobileSignupStep += 1;
+            final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
                     .url(Utils.STEP_CONSTANT_FETCH + 8)
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
                 OkHttpClient client = new OkHttpClient();
@@ -706,8 +785,10 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     .url(Utils.STEP_CONSTANT_FETCH + 6)
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
 
             Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 6);
@@ -735,9 +816,9 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
                 Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
             } else {
-                if (progress.isShowing()) {
+                /*if (progress.isShowing()) {
                     progress.dismiss();
-                }
+                }*/
                 clearStaticData();
                 Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
                 startActivity(new Intent(RegistrationPersonalInformation.this,
@@ -795,6 +876,12 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         smokeConstant.clear();
         Arrays.fill(smokeConstantValue, null);
 
+        houseArray.clear();
+        Arrays.fill(houseName, null);
+        houseConstant.clear();
+        Arrays.fill(houseConstantValue, null);
+
+
         selectedPopUp = 0;
 
         marriage = -1;
@@ -805,6 +892,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         disable = -1;
         smoke = -1;
         professonalGroup = -1;
+        house=-1;
 
     }
 }

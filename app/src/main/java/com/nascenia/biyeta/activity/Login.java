@@ -443,7 +443,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             if (currentMobileSignupStep == 10)
                                 startActivity(new Intent(Login.this, HomeScreen.class));
                             else
-                                new Login.FetchConstant().execute();
+                                new Login.FetchConstant(response.getLoginInformation().getAuthToken()).execute();
                             finish();
                         } else {
 
@@ -671,7 +671,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                             if (response.getLoginInformation().getMobileVerified()) {
                                 if (currentMobileSignupStep < 10 && currentMobileSignupStep > 1)
-                                    new Login.FetchConstant().execute();
+                                    new Login.FetchConstant(response.getLoginInformation().getAuthToken()).execute();
                                 else {
                                     startActivity(new Intent(Login.this, HomeScreen.class));
                                     finish();
@@ -763,6 +763,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
     public class FetchConstant extends AsyncTask<String, String, String> {
+        private String token="";
+
+        FetchConstant(String token){
+            this.token=token;
+        }
 
         @Override
         protected void onPostExecute(String s) {
@@ -832,6 +837,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
             Request request = new Request.Builder()
                     .url(Utils.STEP_CONSTANT_FETCH + currentMobileSignupStep)
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
                 Response response = client.newCall(request).execute();

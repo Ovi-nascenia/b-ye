@@ -55,6 +55,12 @@ public class PopUpPersonalInfo extends AppCompatActivity {
         }else if(RegistrationPersonalInformation.selectedPopUp == 8){
             RegistrationPersonalInformation.professonalGroup = 1;
             data = RegistrationPersonalInformation.professonalGroupName;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 9){
+            RegistrationPersonalInformation.house = 1;
+            data = RegistrationPersonalInformation.houseName;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 10){
+            RegistrationPersonalInformation.hijab = 1;
+            data = RegistrationPersonalInformation.hijabName;
         }
 
         picker.setMinValue(0);
@@ -100,6 +106,10 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                     RegistrationPersonalInformation.smoke = -1;
                 }else if(RegistrationPersonalInformation.selectedPopUp == 8){
                     RegistrationPersonalInformation.professonalGroup = -1;
+                }else if(RegistrationPersonalInformation.selectedPopUp == 9){
+                    RegistrationPersonalInformation.house = -1;
+                }else if(RegistrationPersonalInformation.selectedPopUp == 10){
+                    RegistrationPersonalInformation.hijab = -1;
                 }
                 finish();
             }
@@ -178,6 +188,10 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 RegistrationPersonalInformation.smoke = newVal + 1;
             }else if(RegistrationPersonalInformation.selectedPopUp == 8){
                 RegistrationPersonalInformation.professonalGroup = newVal + 1;
+            }else if(RegistrationPersonalInformation.selectedPopUp == 9){
+                RegistrationPersonalInformation.house = newVal + 1;
+            }else if(RegistrationPersonalInformation.selectedPopUp == 10){
+                RegistrationPersonalInformation.hijab = newVal + 1;
             }
 
         }

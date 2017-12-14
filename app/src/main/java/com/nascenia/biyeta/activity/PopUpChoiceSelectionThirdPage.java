@@ -41,6 +41,9 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
         }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
             RegistrationChoiceSelectionThirdPage.religion = 1;
             data = RegistrationChoiceSelectionThirdPage.religionArray.toArray(data);
+        }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 4){
+            RegistrationChoiceSelectionThirdPage.house = 1;
+            data = RegistrationChoiceSelectionThirdPage.houseArray.toArray(data);
         }
 
         picker.setMinValue(0);
@@ -76,7 +79,10 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
                     RegistrationChoiceSelectionThirdPage.marriage = -1;
                 }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
                     RegistrationChoiceSelectionThirdPage.religion = -1;
+                }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 4){
+                    RegistrationChoiceSelectionThirdPage.house = -1;
                 }
+
                 finish();
             }
         });
@@ -142,9 +148,10 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
                 RegistrationChoiceSelectionThirdPage.job = newVal + 1;
             }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 2){
                 RegistrationChoiceSelectionThirdPage.marriage = newVal + 1;
-            }
-            else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
+            } else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
                 RegistrationChoiceSelectionThirdPage.religion = newVal + 1;
+            }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 4){
+                RegistrationChoiceSelectionThirdPage.house = newVal + 1;
             }
         }
     }

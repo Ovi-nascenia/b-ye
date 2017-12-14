@@ -337,8 +337,52 @@
                         android:background="@color/white"/>
                 </LinearLayout>
 
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/house_status_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="house title"
+                android:textColor="@color/colorPrimary" />
+
+
+            <LinearLayout
+                android:id="@+id/house_linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <TextView
+                    android:id="@+id/house_text_view"
+                    android:gravity="left"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="house status"
+                    android:textSize="18dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"/>
+                <ImageView
+                    android:id="@+id/down_arrow_house"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/down_arrow"
+                    />
 
             </LinearLayout>
+
 
             <Button
                 android:id="@+id/next"
