@@ -418,6 +418,7 @@ public class ImageUpload extends AppCompatActivity {
             if (s == null) {
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
             } else {
+                Log.i("constantval","ImageUploadNextfetchval: "+s);
                 Intent signupIntent;
                 signupIntent = new Intent(ImageUpload.this, RegistrationChoiceSelectionFirstPage.class);
                 signupIntent.putExtra("constants", s);
@@ -428,9 +429,10 @@ public class ImageUpload extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... parameters) {
-            Login.currentMobileSignupStep += 1;
+           // Login.currentMobileSignupStep += 1;
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                    //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                    .url(Utils.STEP_CONSTANT_FETCH + 4)
                     .build();
             try {
                 Response response = client.newCall(request).execute();
@@ -502,7 +504,7 @@ public class ImageUpload extends AppCompatActivity {
                 if (progress.isShowing()) {
                     progress.dismiss();
                 }
-
+                Log.i("constantval","ImageUpdloadBackfetchval: "+s);
                 startActivity(new Intent(ImageUpload.this, RegistrationOwnInfo.class).
                         putExtra("constants", s));
                 finish();

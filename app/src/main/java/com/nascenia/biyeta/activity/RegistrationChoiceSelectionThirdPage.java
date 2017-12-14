@@ -691,8 +691,11 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             } else {
                 if(progress.isShowing())
                     progress.dismiss();
+                clearStaticData();
+                Log.i("constantval",this.getClass().getSimpleName()+"_nextfetchval: "+s);
                 Intent signupIntent;
-                signupIntent = new Intent(RegistrationChoiceSelectionThirdPage.this, RegistrationPersonalInformation.class);
+                signupIntent = new Intent(RegistrationChoiceSelectionThirdPage.this,
+                        RegistrationPersonalInformation.class);
                 signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 finish();
@@ -701,9 +704,10 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... parameters) {
-            Login.currentMobileSignupStep += 1;
+           // Login.currentMobileSignupStep += 1;
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                   // .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                    .url(Utils.STEP_CONSTANT_FETCH +7 )
                     .build();
             try {
                 OkHttpClient client = new OkHttpClient();
@@ -818,12 +822,42 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                 if (progress.isShowing()) {
                     progress.dismiss();
                 }
-
+                clearStaticData();
+                Log.i("constantval",this.getClass().getSimpleName()+"_backfetchval: "+s);
                 startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this,
                         RegistrationChoiceSelectionSecondPage.class).
                         putExtra("constants", s));
                 finish();
             }
         }
+    }
+
+    private void clearStaticData(){
+        jobArray.clear();
+        jobConstant.clear();
+        marriageArray.clear();
+        marriageArrayConstant.clear();
+        religionArray.clear();
+        religionArrayConstant.clear();
+        muslimCast.clear();
+        muslimCastConstant.clear();
+        hinduCast.clear();
+        hinduCastConstant.clear();
+        christianCast.clear();
+        christianCastConstant.clear();
+
+        castReligionChoice = 0;
+        religionValue="";
+        castValue="";
+        otherCast = "";
+        otherReligion = "";
+        jobAfterMarriage = "";
+        maritalStatus = "";
+        religionStatus = "";
+
+        job = -1;
+        marriage = -1;
+        religion = -1;
+        selectedPopUp = 0;
     }
 }

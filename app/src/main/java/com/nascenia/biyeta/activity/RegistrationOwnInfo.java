@@ -349,6 +349,8 @@ public class RegistrationOwnInfo extends AppCompatActivity{
             {
                 if(progress.isShowing())
                     progress.dismiss();
+                Log.i("constantval","Regisowninfofetchval: "+s);
+
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationOwnInfo.this, ImageUpload.class);
                 signupIntent.putExtra("constant",s);
@@ -358,9 +360,10 @@ public class RegistrationOwnInfo extends AppCompatActivity{
 
         @Override
         protected String doInBackground(String... parameters){
-            Login.currentMobileSignupStep+=1;
+          //  Login.currentMobileSignupStep+=1;
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                    //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                    .url(Utils.STEP_CONSTANT_FETCH + 3)
                     .build();
             try {
                 Response response = client.newCall(request).execute();

@@ -461,6 +461,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
             else{
                 if(progress.isShowing())
                     progress.dismiss();
+                Log.i("constantval",this.getClass().getSimpleName()+"_nextfetchval: "+s);
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationChoiceSelectionFirstPage.this,
                         RegistrationChoiceSelectionSecondPage.class);
@@ -475,9 +476,10 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... parameters){
-            Login.currentMobileSignupStep+=1;
+            //Login.currentMobileSignupStep+=1;
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
+                    //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
+                    .url(Utils.STEP_CONSTANT_FETCH + 5 )
                     .build();
             try {
                 Response response = client.newCall(request).execute();
@@ -542,7 +544,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                 if (progress.isShowing()) {
                     progress.dismiss();
                 }
-
+                Log.i("constantval",this.getClass().getSimpleName()+"_backfetchval: "+s);
 
                 startActivity(new Intent(RegistrationChoiceSelectionFirstPage.this, ImageUpload.class).
                         putExtra("constants", s));

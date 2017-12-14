@@ -775,42 +775,49 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             } else {
                 Intent signupIntent;
                 if (currentMobileSignupStep == 2) {
+                    Log.i("constantval","Login-RegistrationOwnInfo  "+s);
                     signupIntent = new Intent(Login.this, RegistrationOwnInfo.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                    finish();
                 } else if (currentMobileSignupStep == 3) {
-                    Log.i("constanstdata",s);
+                    Log.i("constantval","Login-Imageupload  "+s);
                     signupIntent = new Intent(Login.this, ImageUpload.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
                 } else if (currentMobileSignupStep == 4) {
+                    Log.i("constantval","Login-RegistrationChoiceSelectionFirstPage  "+s);
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionFirstPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
                 } else if (currentMobileSignupStep == 5) {
+                    Log.i("constantval","Login-RegistrationChoiceSelectionSecondPage  "+s);
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionSecondPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
                 } else if (currentMobileSignupStep == 6) {
+                    Log.i("constantval","Login-RegistrationChoiceSelectionThirdPage  "+s);
                     signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
                 } else if (currentMobileSignupStep == 7) {
+                    Log.i("constantval","Login-RegistrationPersonalInformation  "+s);
                     signupIntent = new Intent(Login.this, RegistrationPersonalInformation.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
                 } else if (currentMobileSignupStep == 8) {
+                    Log.i("constantval","Login-RegistrationFamilyInfoFirstPage  "+s);
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoFirstPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     //finish();
                 } else if (currentMobileSignupStep == 9) {
+                    Log.i("constantval","Login-RegistrationFamilyInfoSecondPage  "+s);
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoSecondPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);

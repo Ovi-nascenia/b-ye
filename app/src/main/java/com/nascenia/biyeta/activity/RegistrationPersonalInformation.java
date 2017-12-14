@@ -29,13 +29,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RegistrationPersonalInformation extends AppCompatActivity {
 
     String maritalStatusValue = "", degreeValue = "", subjectValue = "", institutionValue,
             occupationValue = "", professionalGroupValue = "",
-            designationValue, occupationInstitutionValue, religionValue="",
-            rojaValue="", disableValue="", smokeValue="", hijabValue ="";
+            designationValue, occupationInstitutionValue, religionValue = "",
+            rojaValue = "", disableValue = "", smokeValue = "", hijabValue = "";
     EditText subjectText, institutionText, designationText, occupationInstitutionText;
     LinearLayout maritalStatus, educationalStatus, professonalalStatus, religiousStatus, rojaStatus, disableStatus, smokeStatus, professionalGroupStatus;
     TextView marriageTV, educationTV, professonTV, religionTV, rojaTV, disableTV, smokeTV, professionalGroupTV;
@@ -113,12 +114,13 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     public static int professonalGroup = -1;
     private SharePref sharePref;
 
-    TextView maritalStatusLabel,educationalStatusLabel,professionStatusLabel,religionStatusLabel,
+    TextView maritalStatusLabel, educationalStatusLabel, professionStatusLabel, religionStatusLabel,
             rojaStatuLabel;
 
     ProgressDialog progress;
 
     OkHttpClient client;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -275,52 +277,52 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
                 if (maritalStatusValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার বৈবাহিক অবস্থা নির্বাচন করুন", Toast.LENGTH_LONG).show();
-                    maritalStatusLabel.getParent().requestChildFocus(maritalStatusLabel,maritalStatusLabel);
+                    maritalStatusLabel.getParent().requestChildFocus(maritalStatusLabel, maritalStatusLabel);
                     return;
                 }
 
                 if (degreeValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার ডিগ্রীর নাম নির্বাচন করুন", Toast.LENGTH_LONG).show();
-                    educationalStatusLabel.getParent().requestChildFocus(educationalStatusLabel,educationalStatusLabel);
+                    educationalStatusLabel.getParent().requestChildFocus(educationalStatusLabel, educationalStatusLabel);
                     return;
                 }
 
                 if (subjectValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার শিক্ষার বিষয় লিখুন", Toast.LENGTH_LONG).show();
-                    educationalStatusLabel.getParent().requestChildFocus(educationalStatusLabel,educationalStatusLabel);
+                    educationalStatusLabel.getParent().requestChildFocus(educationalStatusLabel, educationalStatusLabel);
                     return;
                 }
 
                 if (occupationValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার পেশা নির্বাচন করুন", Toast.LENGTH_LONG).show();
-                    professionStatusLabel.getParent().requestChildFocus(professionStatusLabel,professionStatusLabel);
+                    professionStatusLabel.getParent().requestChildFocus(professionStatusLabel, professionStatusLabel);
                     return;
                 }
 
                 if (professionalGroupValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার প্রফেশনাল গ্রুপ নির্বাচন করুন", Toast.LENGTH_LONG).show();
-                    professionStatusLabel.getParent().requestChildFocus(professionStatusLabel,professionStatusLabel);
+                    professionStatusLabel.getParent().requestChildFocus(professionStatusLabel, professionStatusLabel);
                     return;
                 }
 
-                if(religionValue.isEmpty()){
+                if (religionValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার ধর্ম পালন নির্বাচন করুন", Toast.LENGTH_LONG).show();
-                    religionStatusLabel.getParent().requestChildFocus(religionStatusLabel,religionStatusLabel);
+                    religionStatusLabel.getParent().requestChildFocus(religionStatusLabel, religionStatusLabel);
                     return;
                 }
 
-                if(rojaValue.isEmpty()){
+                if (rojaValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনি রোজা রাখেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
-                    rojaStatuLabel.getParent().requestChildFocus(rojaStatuLabel,rojaStatuLabel);
+                    rojaStatuLabel.getParent().requestChildFocus(rojaStatuLabel, rojaStatuLabel);
                     return;
                 }
 
-                if(disableValue.isEmpty()){
+                if (disableValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার কোন প্রতিবন্ধিকতা আছে কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                if(smokeValue.isEmpty()){
+                if (smokeValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনি ধূমপান করেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -426,7 +428,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
                 // Toast.makeText(RegistrationPersonalInformation.this,response,Toast.LENGTH_LONG).show();
 
-               new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
+                new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
 
             }
         });
@@ -588,10 +590,10 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     if (jsonObject.has("errors")) {
                         if (progress.isShowing())
                             progress.dismiss();
-                      String error= jsonObject.getJSONObject("errors").getString("detail");
+                        String error = jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(RegistrationPersonalInformation.this, error, Toast.LENGTH_LONG).show();
                     } else {
-                      //  Toast.makeText(RegistrationPersonalInformation.this, "SendPersonalInfo else", Toast.LENGTH_LONG).show();
+                        //  Toast.makeText(RegistrationPersonalInformation.this, "SendPersonalInfo else", Toast.LENGTH_LONG).show();
                         new RegistrationPersonalInformation.FetchConstant().execute();
                     }
                 } catch (JSONException e) {
@@ -647,7 +649,9 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             } else {
                 if (progress.isShowing())
                     progress.dismiss();
+                clearStaticData();
                 //Toast.makeText(getBaseContext(), "fetch constant else", Toast.LENGTH_LONG).show();
+                Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationPersonalInformation.this,
                         RegistrationFamilyInfoFirstPage.class);
@@ -659,9 +663,10 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... parameters) {
-            Login.currentMobileSignupStep += 1;
+            // Login.currentMobileSignupStep += 1;
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                    //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                    .url(Utils.STEP_CONSTANT_FETCH + 8)
                     .build();
             try {
                 OkHttpClient client = new OkHttpClient();
@@ -733,12 +738,73 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 if (progress.isShowing()) {
                     progress.dismiss();
                 }
-
+                clearStaticData();
+                Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
                 startActivity(new Intent(RegistrationPersonalInformation.this,
                         RegistrationChoiceSelectionThirdPage.class).
                         putExtra("constants", s));
                 finish();
             }
         }
+    }
+
+
+    private void clearStaticData() {
+        professonalGroupArray.clear();
+        Arrays.fill(professonalGroupName, null);
+        professonalGroupConstant.clear();
+        Arrays.fill(professonalGroupConstantValue, null);
+
+        occupationArray.clear();
+        Arrays.fill(occupationName, null);
+        occupationConstant.clear();
+        Arrays.fill(occupationConstantValue, null);
+
+        marriageArray.clear();
+        Arrays.fill(maritalStatusName, null);
+        maritalStatusConstant.clear();
+        Arrays.fill(maritalStatusConstantValue, null);
+
+        religionArray.clear();
+        Arrays.fill(religionName, null);
+        religionConstant.clear();
+        Arrays.fill(religionConstantValue, null);
+
+        educationArray.clear();
+        Arrays.fill(educationName, null);
+        educationConstant.clear();
+        Arrays.fill(educationConstantValue, null);
+
+        rojaArray.clear();
+        Arrays.fill(rojaName, null);
+        rojaConstant.clear();
+        Arrays.fill(rojaConstantValue, null);
+
+        hijabArray.clear();
+        Arrays.fill(hijabName, null);
+        hijabConstant.clear();
+        Arrays.fill(hijabConstantValue, null);
+
+        disableArray.clear();
+        Arrays.fill(disableName, null);
+        disableConstant.clear();
+        Arrays.fill(disableConstantValue, null);
+
+        smokeArray.clear();
+        Arrays.fill(smokeName, null);
+        smokeConstant.clear();
+        Arrays.fill(smokeConstantValue, null);
+
+        selectedPopUp = 0;
+
+        marriage = -1;
+        education = -1;
+        profession = -1;
+        religion = -1;
+        roja = -1;
+        disable = -1;
+        smoke = -1;
+        professonalGroup = -1;
+
     }
 }

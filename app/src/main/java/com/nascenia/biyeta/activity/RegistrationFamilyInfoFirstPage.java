@@ -43,7 +43,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
     public static String[] occupationConstantValue = new String[occupationArray.size()];
     LinearLayout professionFatherStatus, professionMotherStatus, professionalGroupFatherStatus, professionalGroupMotherStatus;
 
-    TextView professionFatherTV,professionMotherTV,professionalGroupFatherTV,professionalGroupMotherTV;
+    TextView professionFatherTV, professionMotherTV, professionalGroupFatherTV, professionalGroupMotherTV;
 
     EditText nameFather, designationFather, institutionFather;
 
@@ -53,7 +53,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
     ImageView back;
 
-    String constant, occupationOfFather="", occupationOfMother="", professionOfFather, professionOfMother;
+    String constant, occupationOfFather = "", occupationOfMother = "", professionOfFather, professionOfMother;
 
     JSONObject professionalGroupObject, occupationObject;
 
@@ -64,7 +64,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
     public static int selectedPopUp = 0;
 
-    TextView professionStatusLabelFather,professionStatusLabelMother;
+    TextView professionStatusLabelFather, professionStatusLabelMother;
 
     public static ArrayList<String> fatherOccupationArray = new ArrayList<String>();
     public static String[] fatherOccupationName = new String[occupationArray.size()];
@@ -72,8 +72,9 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
     ProgressDialog progress;
     OkHttpClient client;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_family_info_first_page);
 
@@ -95,22 +96,20 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             occupationObject = jsonObject.getJSONObject("occupation_constant");
             professionalGroupObject = jsonObject.getJSONObject("professional_group_constant");
 
-            Log.i("occupation",occupationObject.toString());
+            Log.i("occupation", occupationObject.toString());
 
-            for(int i=0;i<occupationObject.length();i++)
-            {
+            for (int i = 0; i < occupationObject.length(); i++) {
                 occupationConstant.add(occupationObject.names().getString(i));
                 occupationArray.add((String) occupationObject.get(occupationObject.names().getString(i)));
             }
 
             occupationName = occupationArray.toArray(occupationName);
 
-            Log.i("occupation","const: "+ Arrays.toString(occupationConstant.toArray()));
-            Log.i("occupation","arry: "+ Arrays.toString(occupationArray.toArray()));
-            Log.i("occupation","name: "+ Arrays.toString(occupationName));
+            Log.i("occupation", "const: " + Arrays.toString(occupationConstant.toArray()));
+            Log.i("occupation", "arry: " + Arrays.toString(occupationArray.toArray()));
+            Log.i("occupation", "name: " + Arrays.toString(occupationName));
 
-            for(int i=0;i<occupationObject.length()-1;i++)
-            {
+            for (int i = 0; i < occupationObject.length() - 1; i++) {
                 fatherOccupationConstant.add(occupationObject.names().getString(i));
                 fatherOccupationArray.add((String) occupationObject.get(occupationObject.names().getString(i)));
             }
@@ -118,9 +117,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             fatherOccupationName = fatherOccupationArray.toArray(fatherOccupationName);
 
 
-
-            for(int i=0;i<professionalGroupObject.length();i++)
-            {
+            for (int i = 0; i < professionalGroupObject.length(); i++) {
                 professonalGroupConstant.add(professionalGroupObject.names().getString(i));
                 professonalGroupArray.add((String) professionalGroupObject.get(professionalGroupObject.names().getString(i)));
             }
@@ -128,8 +125,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             professonalGroupName = professonalGroupArray.toArray(professonalGroupName);
 
 
-
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -143,9 +139,9 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         institutionMother = (EditText) findViewById(R.id.institution_mother);
 
         professionStatusLabelFather = (TextView) findViewById(R.id.profession_status_label_father);
-        professionFatherStatus = (LinearLayout)findViewById(R.id.professonalalStatusFather);
+        professionFatherStatus = (LinearLayout) findViewById(R.id.professonalalStatusFather);
 
-        professionMotherStatus = (LinearLayout)findViewById(R.id.professonalalStatusMother);
+        professionMotherStatus = (LinearLayout) findViewById(R.id.professonalalStatusMother);
         professionalGroupFatherStatus = (LinearLayout) findViewById(R.id.professonalGroupStatusFather);
         professionalGroupMotherStatus = (LinearLayout) findViewById(R.id.professonalGroupStatusMother);
         professionStatusLabelMother = (TextView) findViewById(R.id.profession_status_label_mother);
@@ -162,7 +158,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selectedPopUp = 1;
-                startActivity(new Intent(RegistrationFamilyInfoFirstPage.this, PopUpFamilyInfoFirstPage.class ));
+                startActivity(new Intent(RegistrationFamilyInfoFirstPage.this, PopUpFamilyInfoFirstPage.class));
             }
         });
 
@@ -170,7 +166,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selectedPopUp = 2;
-                startActivity(new Intent(RegistrationFamilyInfoFirstPage.this, PopUpFamilyInfoFirstPage.class ));
+                startActivity(new Intent(RegistrationFamilyInfoFirstPage.this, PopUpFamilyInfoFirstPage.class));
             }
         });
 
@@ -178,40 +174,40 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selectedPopUp = 3;
-                startActivity(new Intent(RegistrationFamilyInfoFirstPage.this, PopUpFamilyInfoFirstPage.class ));
+                startActivity(new Intent(RegistrationFamilyInfoFirstPage.this, PopUpFamilyInfoFirstPage.class));
             }
         });
         professionalGroupMotherStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectedPopUp = 4;
-                startActivity(new Intent(RegistrationFamilyInfoFirstPage.this, PopUpFamilyInfoFirstPage.class ));
+                startActivity(new Intent(RegistrationFamilyInfoFirstPage.this, PopUpFamilyInfoFirstPage.class));
             }
         });
         next = (Button) findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
 
-                if(nameFather.getText().toString().isEmpty()){
-                    Toast.makeText(getBaseContext(),getString(R.string.write_your_father_name),Toast.LENGTH_LONG).show();
+                if (nameFather.getText().toString().isEmpty()) {
+                    Toast.makeText(getBaseContext(), getString(R.string.write_your_father_name), Toast.LENGTH_LONG).show();
                     professionStatusLabelFather.getParent().
-                            requestChildFocus(professionStatusLabelFather,professionStatusLabelFather);
+                            requestChildFocus(professionStatusLabelFather, professionStatusLabelFather);
                     return;
                 }
 
-                if(occupationOfFather.isEmpty()){
-                    Toast.makeText(getBaseContext(),getString(R.string.choose_your_father_occupation),Toast.LENGTH_LONG).show();
+                if (occupationOfFather.isEmpty()) {
+                    Toast.makeText(getBaseContext(), getString(R.string.choose_your_father_occupation), Toast.LENGTH_LONG).show();
                     professionStatusLabelFather.getParent().
-                            requestChildFocus(professionStatusLabelFather,professionStatusLabelFather);
+                            requestChildFocus(professionStatusLabelFather, professionStatusLabelFather);
                     return;
                 }
 
 
-                if(occupationOfMother.isEmpty()){
-                    Toast.makeText(getBaseContext(),getString(R.string.choose_your_mother_occupation),Toast.LENGTH_LONG).show();
+                if (occupationOfMother.isEmpty()) {
+                    Toast.makeText(getBaseContext(), getString(R.string.choose_your_mother_occupation), Toast.LENGTH_LONG).show();
                     professionStatusLabelMother.getParent().
-                            requestChildFocus(professionStatusLabelMother,professionStatusLabelMother);
+                            requestChildFocus(professionStatusLabelMother, professionStatusLabelMother);
                     return;
                 }
 
@@ -288,8 +284,8 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                         .append("8")
                         .append("}")
                         .toString();
-                Log.i("response: ",response);
-             new RegistrationFamilyInfoFirstPage.SendFamilyInfo().execute(response,Utils.SEND_INFO);
+                Log.i("response: ", response);
+                new RegistrationFamilyInfoFirstPage.SendFamilyInfo().execute(response, Utils.SEND_INFO);
 
             }
         });
@@ -308,26 +304,26 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(RegistrationFamilyInfoFirstPage.selectedPopUp == 1 ){
-            if(professionFather>0){
-                professionFatherTV.setText(fatherOccupationName[professionFather-1]);
-                occupationOfFather = fatherOccupationConstant.get(professionFather-1);
+        if (RegistrationFamilyInfoFirstPage.selectedPopUp == 1) {
+            if (professionFather > 0) {
+                professionFatherTV.setText(fatherOccupationName[professionFather - 1]);
+                occupationOfFather = fatherOccupationConstant.get(professionFather - 1);
             }
 
-        }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 2){
-            if(professionalGroupFather>0){
-                professionalGroupFatherTV.setText(professonalGroupName[professionalGroupFather-1]);
-                professionOfFather = professonalGroupConstant.get(professionalGroupFather -1 );
+        } else if (RegistrationFamilyInfoFirstPage.selectedPopUp == 2) {
+            if (professionalGroupFather > 0) {
+                professionalGroupFatherTV.setText(professonalGroupName[professionalGroupFather - 1]);
+                professionOfFather = professonalGroupConstant.get(professionalGroupFather - 1);
             }
-        }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 3){
-            if(professionMother>0){
-                professionMotherTV.setText(occupationName[professionMother-1]);
-                occupationOfMother = occupationConstant.get(professionMother-1);
+        } else if (RegistrationFamilyInfoFirstPage.selectedPopUp == 3) {
+            if (professionMother > 0) {
+                professionMotherTV.setText(occupationName[professionMother - 1]);
+                occupationOfMother = occupationConstant.get(professionMother - 1);
             }
-        }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 4){
-            if(professionalGroupMother>0){
-                professionalGroupMotherTV.setText(professonalGroupName[professionalGroupMother-1]);
-                professionOfMother = professonalGroupConstant.get(professionalGroupMother -1);
+        } else if (RegistrationFamilyInfoFirstPage.selectedPopUp == 4) {
+            if (professionalGroupMother > 0) {
+                professionalGroupMotherTV.setText(professonalGroupName[professionalGroupMother - 1]);
+                professionOfMother = professonalGroupConstant.get(professionalGroupMother - 1);
             }
         }
     }
@@ -336,40 +332,36 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
     class SendFamilyInfo extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
             progress.show();
         }
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s == null){
-                if(progress.isShowing())
+            if (s == null) {
+                if (progress.isShowing())
                     progress.dismiss();
 
                 Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
-            }
-            else {
-                try{
+            } else {
+                try {
 
-                    JSONObject jsonObject=new JSONObject(s);
-                    Log.e("Response",s);
-                    if(jsonObject.has("errors"))
-                    {
-                        if(progress.isShowing())
+                    JSONObject jsonObject = new JSONObject(s);
+                    Log.e("Response", s);
+                    if (jsonObject.has("errors")) {
+                        if (progress.isShowing())
                             progress.dismiss();
 
-                     String error =  jsonObject.getJSONObject("errors").getString("detail");
+                        String error = jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(RegistrationFamilyInfoFirstPage.this, error, Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
+                    } else {
                         //Intent intent = new Intent(RegistrationFamilyInfoFirstPage.this,Login.class);
                         //startActivity(intent);
-                        new  RegistrationFamilyInfoFirstPage.FetchConstant().execute();
+                        new RegistrationFamilyInfoFirstPage.FetchConstant().execute();
                     }
-                }catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -377,7 +369,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings){
+        protected String doInBackground(String... strings) {
             SharePref sharePref = new SharePref(RegistrationFamilyInfoFirstPage.this);
             final String token = sharePref.get_data("token");
 
@@ -388,7 +380,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
             OkHttpClient client = new OkHttpClient();
 
-            RequestBody body = RequestBody.create(JSON,strings[0]);
+            RequestBody body = RequestBody.create(JSON, strings[0]);
             Request request = new Request.Builder()
                     .url(strings[1])
                     .addHeader("Authorization", "Token token=" + token)
@@ -399,7 +391,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             try {
                 response = client.newCall(request).execute();
                 responseString = response.body().string();
-            }catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
 //                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
             }
@@ -410,35 +402,35 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
     public class FetchConstant extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s == null){
-                if(progress.isShowing())
+            if (s == null) {
+                if (progress.isShowing())
                     progress.dismiss();
 
                 Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
-            }
-            else{
-                if(progress.isShowing())
+            } else {
+                if (progress.isShowing())
                     progress.dismiss();
-
+                clearStaticData();
+                Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationFamilyInfoFirstPage.this,
                         RegistrationFamilyInfoSecondPage.class);
-                signupIntent.putExtra("constants",s);
+                signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 finish();
             }
 
 
-
         }
 
         @Override
-        protected String doInBackground(String... parameters){
-            Login.currentMobileSignupStep+=1;
+        protected String doInBackground(String... parameters) {
+            //  Login.currentMobileSignupStep+=1;
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
+                    //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
+                    .url(Utils.STEP_CONSTANT_FETCH + 9)
                     .build();
             try {
                 OkHttpClient client = new OkHttpClient();
@@ -447,7 +439,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                 Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
                 return responseString;
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
 //                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
                 return null;
@@ -455,7 +447,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         }
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
         }
     }
@@ -509,12 +501,40 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                 if (progress.isShowing()) {
                     progress.dismiss();
                 }
-
+                clearStaticData();
+                Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                 startActivity(new Intent(RegistrationFamilyInfoFirstPage.this,
                         RegistrationPersonalInformation.class).
                         putExtra("constants", s));
                 finish();
             }
         }
+    }
+
+
+    private void clearStaticData() {
+
+        professonalGroupArray.clear();
+        Arrays.fill(professonalGroupName, null);
+        professonalGroupConstant.clear();
+        Arrays.fill(professonalGroupConstantValue, null);
+
+        occupationArray.clear();
+        Arrays.fill(occupationName, null);
+        occupationConstant.clear();
+        Arrays.fill(occupationConstantValue, null);
+
+
+        professionFather = -1;
+        professionMother = -1;
+        professionalGroupFather = -1;
+        professionalGroupMother = -1;
+
+        selectedPopUp = 0;
+        fatherOccupationArray.clear();
+        Arrays.fill(fatherOccupationName, null);
+        fatherOccupationConstant.clear();
+
+
     }
 }

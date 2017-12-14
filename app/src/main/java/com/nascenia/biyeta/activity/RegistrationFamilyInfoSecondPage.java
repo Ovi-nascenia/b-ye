@@ -75,6 +75,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
     private TextView brotherNubmerTitleTextView, sisterNumberTitleTextView;
 
     ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -413,7 +414,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                 Log.i("finalvalue: ", "other-> " + responseOther);
                 Log.i("finalvalue: ", "totalJson-> " +   JSONResponse());
 */
-               // JSONResponse();
+                // JSONResponse();
                 new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
             }
         });
@@ -514,7 +515,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                 InputMethodManager imm = (InputMethodManager) myViewHolder.nameOther.getContext().
                         getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(myViewHolder.nameOther.getWindowToken(), 0);*/
-                Log.e("decendent","methodcall");
+                Log.e("decendent", "methodcall");
 
             }
         });
@@ -532,34 +533,34 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                 } else {
 
                     if (recyclerViewOther.getChildCount() > 0) {
-                        int childPosition =recyclerViewOther.getChildCount() - 1;
+                        int childPosition = recyclerViewOther.getChildCount() - 1;
 
                         if (recyclerViewOther.findViewHolderForLayoutPosition(childPosition)
                                 instanceof OtherViewAdapter.MyViewHolder) {
 
-                             OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder)
+                            OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder)
                                     recyclerViewOther.findViewHolderForLayoutPosition(childPosition);
 
-                            if(holder.otherRelationalStatus.getText().toString().
-                                    equalsIgnoreCase(getString(R.string.relation_title_text))){
+                            if (holder.otherRelationalStatus.getText().toString().
+                                    equalsIgnoreCase(getString(R.string.relation_title_text))) {
                                 Toast.makeText(getBaseContext(), getString(R.string.choose_realtion_message),
                                         Toast.LENGTH_SHORT).show();
                                 return;
                             } else if (holder.nameOther.getText().toString().isEmpty()) {
                                 Toast.makeText(getBaseContext(),
-                                        "আপনার "+holder.otherRelationalStatus.getText().toString()+" "
-                                                +getString(R.string.write_name_message),
+                                        "আপনার " + holder.otherRelationalStatus.getText().toString() + " "
+                                                + getString(R.string.write_name_message),
                                         Toast.LENGTH_SHORT).show();
                                 return;
-                            }else if(PopUpFamilyInfoSecondPage.ageArrayOther.get(childPosition)==null){
+                            } else if (PopUpFamilyInfoSecondPage.ageArrayOther.get(childPosition) == null) {
                                 Toast.makeText(getBaseContext(),
-                                        "আপনার "+holder.otherRelationalStatus.getText().toString()+" "
-                                                +getString(R.string.select_age_message),
+                                        "আপনার " + holder.otherRelationalStatus.getText().toString() + " "
+                                                + getString(R.string.select_age_message),
                                         Toast.LENGTH_SHORT).show();
                                 return;
-                            } else if(PopUpFamilyInfoSecondPage.occupationArrayOther.get(childPosition)==null){
+                            } else if (PopUpFamilyInfoSecondPage.occupationArrayOther.get(childPosition) == null) {
                                 Toast.makeText(getBaseContext(),
-                                        "আপনার "+holder.otherRelationalStatus.getText().toString()+" "
+                                        "আপনার " + holder.otherRelationalStatus.getText().toString() + " "
                                                 + getString(R.string.select_occupation_message),
                                         Toast.LENGTH_SHORT).show();
                                 return;
@@ -628,7 +629,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         if (siblingOccupation == null) {
             Toast.makeText(getBaseContext(),
                     "আপনার " + Utils.englishToBanglaNumberConvertion(siblingNumber + 1)
-                            + " " + siblingType +getString(R.string.select_occupation_message),
+                            + " " + siblingType + getString(R.string.select_occupation_message),
                     Toast.LENGTH_LONG).show();
 
             return false;
@@ -772,37 +773,38 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
     }
 
     class SendFamilyInfo extends AsyncTask<String, String, String> {
-        ProgressDialog progress = new ProgressDialog(RegistrationFamilyInfoSecondPage.this);
-        ;
+        // ProgressDialog progress = new ProgressDialog(RegistrationFamilyInfoSecondPage.this);
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress.setMessage(getResources().getString(R.string.progress_dialog_message));
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setIndeterminate(true);
-            if (!progress.isShowing())
-                progress.show();
+            progress.show();
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.i("val",s+"");
+            Log.i("val", s + "");
             if (s == null) {
-                progress.cancel();
+                if (progress.isShowing())
+                    progress.dismiss();
                 Utils.ShowAlert(RegistrationFamilyInfoSecondPage.this, getString(R.string.no_internet_connection));
             } else {
                 try {
-                    progress.cancel();
+                    if (progress.isShowing())
+                        progress.dismiss();
+
+                    clearStaticData();
+
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
                     //Toast.makeText(RegistrationFamilyInfoSecondPage.this,"cyclecom "+s, Toast.LENGTH_LONG).show();
                     if (jsonObject.has("errors")) {
-                       String error = jsonObject.getJSONObject("errors").getString("detail");
-                        Toast.makeText(RegistrationFamilyInfoSecondPage.this,error, Toast.LENGTH_LONG).show();
+                        String error = jsonObject.getJSONObject("errors").getString("detail");
+                        Toast.makeText(RegistrationFamilyInfoSecondPage.this, error, Toast.LENGTH_LONG).show();
                     } else {
                         //Toast.makeText(RegistrationFamilyInfoSecondPage.this,"allfine", Toast.LENGTH_LONG).show();
+                        Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                         Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this, Login.class);
                         startActivity(intent);
                         finish();
@@ -896,12 +898,19 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                 if (progress.isShowing()) {
                     progress.dismiss();
                 }
-
+                clearStaticData();
+                Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
                 startActivity(new Intent(RegistrationFamilyInfoSecondPage.this,
                         RegistrationFamilyInfoFirstPage.class).
                         putExtra("constants", s));
                 finish();
             }
         }
+    }
+
+    private void clearStaticData() {
+        numberOfBrother = 0;
+        numberOfSister = 0;
+        selectedPopUp = 0;
     }
 }

@@ -876,8 +876,10 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
             } else {
                 if(progress.isShowing())
                     progress.dismiss();
+                Log.i("constantval",this.getClass().getSimpleName()+"_nextfetchval: "+s);
                 Intent signupIntent;
-                signupIntent = new Intent(RegistrationChoiceSelectionSecondPage.this, RegistrationChoiceSelectionThirdPage.class);
+                signupIntent = new Intent(RegistrationChoiceSelectionSecondPage.this,
+                        RegistrationChoiceSelectionThirdPage.class);
                 signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 finish();
@@ -886,9 +888,10 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... parameters) {
-            Login.currentMobileSignupStep += 1;
+           // Login.currentMobileSignupStep += 1;
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                    //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+                    .url(Utils.STEP_CONSTANT_FETCH + 6)
                     .build();
             try {
                 OkHttpClient client = new OkHttpClient();
@@ -959,7 +962,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                 if (progress.isShowing()) {
                     progress.dismiss();
                 }
-
+                Log.i("constantval",this.getClass().getSimpleName()+"_backfetchval: "+s);
                 startActivity(new Intent(RegistrationChoiceSelectionSecondPage.this,
                         RegistrationChoiceSelectionFirstPage.class).
                         putExtra("constants", s));
