@@ -4,16 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e9ebed">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/white"
         android:clipToPadding="false"
         app:layout_collapseMode="pin"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="@color/white"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 
         <RelativeLayout
@@ -27,21 +28,21 @@
                 android:id="@+id/backPreviousActivityImage"
                 android:layout_width="@dimen/small_image_size"
                 android:layout_height="@dimen/small_image_size"
-                android:onClick="backBtnAction"
-                android:src="@drawable/red_back_arrow"
-                android:layout_gravity="center"
+                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"/>
+                android:layout_gravity="center"
+                android:onClick="backBtnAction"
+                android:src="@drawable/red_back_arrow" />
 
             <TextView
                 android:id="@+id/own_info"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:lines="2"
-                android:text="আপনার পারিবারিক তথ্য"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
+                android:lines="2"
+                android:text="আপনার পারিবারিক তথ্য"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/medium_textsize"
                 android:textStyle="bold" />
@@ -52,10 +53,10 @@
                 android:layout_width="@dimen/small_image_size"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
+                android:layout_gravity="center"
                 android:layout_marginRight="@dimen/small_margin"
                 android:src="@drawable/grey_fav"
-                android:layout_gravity="center"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
 
         </RelativeLayout>
@@ -63,74 +64,71 @@
     </android.support.v7.widget.Toolbar>
 
     <ScrollView
+        android:id="@+id/Scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Scroll"
         android:layout_below="@id/toolbar">
-
-
-
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/toolbar">
+            android:layout_below="@id/toolbar"
+            android:orientation="vertical">
 
 
             <TextView
                 android:id="@+id/profession_status_label_father"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="বাবা"
-                android:textColor="@color/colorPrimary"
                 android:layout_margin="10dp"
-                />
+                android:text="বাবা"
+                android:textColor="@color/colorPrimary" />
 
             <EditText
                 android:id="@+id/name_father"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="বাবার নাম*"
-                android:textColor="@color/com_facebook_button_background_color_focused_disabled"
-                android:padding="10dp"
-                android:layout_marginLeft="15dp"
-                android:background="@color/white"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:singleLine="true"/>
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:hint="বাবার নাম*"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/lblFromName"
+                android:textColorHint="@color/lblFromName" />
 
             <LinearLayout
                 android:id="@+id/professonalalStatusFather"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="0dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <TextView
                     android:id="@+id/profession_text_view_father"
-                    android:gravity="left"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="পেশা*"
-                    android:textSize="18dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="পেশা*"
+                    android:textSize="18dp" />
+
                 <ImageView
                     android:id="@+id/down_arrow_profession_father"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="right"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/down_arrow"
-                    />
+                    android:layout_weight="1"
+                    android:src="@drawable/down_arrow" />
 
             </LinearLayout>
 
@@ -140,31 +138,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <TextView
                     android:id="@+id/profession_group_text_view_father"
-                    android:gravity="left"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
-                    android:textSize="18dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
+                    android:textSize="18dp" />
+
                 <ImageView
                     android:id="@+id/down_arrow_profession_group_father"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="right"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/down_arrow"
-                    />
+                    android:layout_weight="1"
+                    android:src="@drawable/down_arrow" />
 
             </LinearLayout>
 
@@ -172,86 +170,83 @@
                 android:id="@+id/designation_father"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="পদবী"
-                android:textColor="@color/com_facebook_button_background_color_focused_disabled"
-                android:padding="10dp"
-                android:layout_marginLeft="15dp"
-                android:background="@color/white"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:singleLine="true"/>
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:hint="পদবী"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/lblFromName"
+                android:textColorHint="@color/lblFromName" />
+
             <EditText
                 android:id="@+id/institution_father"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="প্রতিষ্ঠান"
-                android:textColor="@color/com_facebook_button_background_color_focused_disabled"
-                android:padding="10dp"
-                android:layout_marginLeft="15dp"
-                android:background="@color/white"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:singleLine="true"/>
-
-
-
-
-
-
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:hint="প্রতিষ্ঠান"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/lblFromName"
+                android:textColorHint="@color/lblFromName" />
 
             <TextView
                 android:id="@+id/profession_status_label_mother"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="মা"
-                android:textColor="@color/colorPrimary"
                 android:layout_margin="10dp"
-                />
+                android:text="মা"
+                android:textColor="@color/colorPrimary" />
 
             <EditText
                 android:id="@+id/name_mother"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="মায়ের নাম"
-                android:textColor="@color/com_facebook_button_background_color_focused_disabled"
-                android:padding="10dp"
-                android:layout_marginLeft="15dp"
-                android:background="@color/white"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:singleLine="true"/>
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:hint="মায়ের নাম"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/lblFromName"
+                android:textColorHint="@color/lblFromName" />
 
             <LinearLayout
                 android:id="@+id/professonalalStatusMother"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="0dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <TextView
                     android:id="@+id/profession_text_view_mother"
-                    android:gravity="left"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="পেশা*"
-                    android:textSize="18dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="পেশা*"
+                    android:textSize="18dp" />
+
                 <ImageView
                     android:id="@+id/down_arrow_profession_mother"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="right"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/down_arrow"
-                    />
+                    android:layout_weight="1"
+                    android:src="@drawable/down_arrow" />
 
             </LinearLayout>
 
@@ -261,31 +256,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <TextView
                     android:id="@+id/profession_group_text_view_mother"
-                    android:gravity="left"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
-                    android:textSize="18dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
+                    android:textSize="18dp" />
+
                 <ImageView
                     android:id="@+id/down_arrow_profession_group_mother"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="right"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/down_arrow"
-                    />
+                    android:layout_weight="1"
+                    android:src="@drawable/down_arrow" />
 
             </LinearLayout>
 
@@ -293,41 +288,42 @@
                 android:id="@+id/designation_mother"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="পদবী"
-                android:textColor="@color/com_facebook_button_background_color_focused_disabled"
-                android:padding="10dp"
-                android:layout_marginLeft="15dp"
-                android:background="@color/white"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:singleLine="true"/>
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:hint="পদবী"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/lblFromName"
+                android:textColorHint="@color/lblFromName" />
+
             <EditText
                 android:id="@+id/institution_mother"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="প্রতিষ্ঠান"
-                android:textColor="@color/com_facebook_button_background_color_focused_disabled"
-                android:padding="10dp"
-                android:layout_marginLeft="15dp"
-                android:background="@color/white"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:singleLine="true"/>
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:hint="প্রতিষ্ঠান"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/lblFromName"
+                android:textColorHint="@color/lblFromName" />
 
             <Button
                 android:id="@+id/next"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="পরবর্তী ধাপ"
-                android:textSize="24sp"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/white"
                 android:layout_margin="10dp"
-                />
+                android:background="@color/colorPrimary"
+                android:text="পরবর্তী ধাপ"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
 
         </LinearLayout>
-
 
 
     </ScrollView>

@@ -69,6 +69,11 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
     ArrayList<String> occupationConstant = new ArrayList<String>();
     String[] occupationConstantValue = new String[occupation.size()];
 
+    ArrayList<String> brotherOccupation = new ArrayList<String>();
+    String[] brotherOccupationName = new String[brotherOccupation.size()];
+    ArrayList<String> brotherOccupationConstant = new ArrayList<String>();
+    String[] brotherOccupationConstantValue = new String[brotherOccupation.size()];
+
     ArrayList<String> relation = new ArrayList<String>();
     String[] relationName = new String[relation.size()];
     ArrayList<String> relationConstant = new ArrayList<String>();
@@ -119,9 +124,20 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             JSONObject occupationObject = jsonObject.getJSONObject("occupation_constant");
             JSONObject relationObject = jsonObject.getJSONObject("relation_constant");
             JSONObject maritalStatusObject = jsonObject.getJSONObject("marital_status_constant");
+
+            Log.i("occupation",occupationObject.toString());
+
             for (int i = 0; i < professonalGroupObject.length(); i++) {
                 professonalGroupConstant.add(professonalGroupObject.names().getString(i));
                 professonalGroup.add((String) professonalGroupObject.get(professonalGroupObject.names().getString(i)));
+            }
+
+            for (int i = 0; i < occupationObject.length(); i++) {
+                String occupationName=(String) occupationObject.get(occupationObject.names().getString(i));
+                if(!occupationName.equalsIgnoreCase("গৃহিণী")){
+                    brotherOccupationConstant.add(occupationObject.names().getString(i));
+                    brotherOccupation.add((String) occupationObject.get(occupationObject.names().getString(i)));
+                }
             }
 
             for (int i = 0; i < occupationObject.length(); i++) {
@@ -146,6 +162,9 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             occupationName = occupation.toArray(occupationName);
             occupationConstantValue = occupationConstant.toArray(occupationConstantValue);
 
+            brotherOccupationName = brotherOccupation.toArray(brotherOccupationName);
+            brotherOccupationConstantValue = brotherOccupationConstant.toArray(brotherOccupationConstantValue);
+
             relationName = relation.toArray(relationName);
             relationConstantValue = relationConstant.toArray(relationConstantValue);
 
@@ -163,7 +182,8 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
 
 
         if (BrotherViewAdapter.selectedPopUp == 1) {
-            data = occupationName;
+            // brother himself
+            data = brotherOccupationName;
         } else if (BrotherViewAdapter.selectedPopUp == 2) {
             data = professonalGroupName;
         } else if (BrotherViewAdapter.selectedPopUp == 3) {
@@ -173,6 +193,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
         } else if (BrotherViewAdapter.selectedPopUp == 5) {
             data = age;
         } else if (BrotherViewAdapter.selectedPopUp == 6) {
+            //brother spouse
             data = occupationName;
         } else if (BrotherViewAdapter.selectedPopUp == 7) {
             data = professonalGroupName;
@@ -241,9 +262,9 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
                     BrotherViewAdapter.MyViewHolder holder =
                             (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
                                     .findViewHolderForLayoutPosition(position);
-                    holder.brotherOccupation.setText(occupationName[newValue]);
+                    holder.brotherOccupation.setText(brotherOccupationName[newValue]);
 
-                    value = occupationConstantValue[newValue];
+                    value = brotherOccupationConstantValue[newValue];
                     occupationArrayBrother.put(position, value);
                 } else if (BrotherViewAdapter.selectedPopUp == 2){
 

@@ -94,7 +94,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(constant);
 
-
+            Log.i("occupation", occupationObject.toString());
             occupationObject = jsonObject.getJSONObject("occupation_constant");
             professionalGroupObject = jsonObject.getJSONObject("professional_group_constant");
 
@@ -107,9 +107,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
             occupationName = occupationArray.toArray(occupationName);
 
-            Log.i("occupation", "const: " + Arrays.toString(occupationConstant.toArray()));
-            Log.i("occupation", "arry: " + Arrays.toString(occupationArray.toArray()));
-            Log.i("occupation", "name: " + Arrays.toString(occupationName));
+
 
             for (int i = 0; i < occupationObject.length() - 1; i++) {
                 fatherOccupationConstant.add(occupationObject.names().getString(i));
@@ -214,7 +212,8 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                 }
 
 
-                String response = new StringBuilder().append("{")
+                String response = new StringBuilder()
+                        .append("{")
                         .append("\"family_members_mother_father\":")
                         .append("[")
                         .append("{")

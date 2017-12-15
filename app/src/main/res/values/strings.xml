@@ -381,8 +381,8 @@
 
     <string name="choose_realtion_message">আপনার সাথে সম্পর্ক নির্বাচন করুন</string>
 
-    <string name="write_name_message"> নাম লিখুন</string>
-    <string name="select_age_message"> বয়স নির্বাচন করুন</string>
+    <string name="write_name_message">নাম লিখুন</string>
+    <string name="select_age_message">বয়স নির্বাচন করুন</string>
     <string name="select_occupation_message"> পেশা নির্বাচন করুন</string>
 
     <string name="religion_pick_textview_title">ধর্ম ও বর্ণ</string>

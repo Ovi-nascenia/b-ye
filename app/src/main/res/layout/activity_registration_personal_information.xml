@@ -167,13 +167,14 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="বিষয়*"
-            android:textColor="@color/com_facebook_button_background_color_focused_disabled"
             android:padding="10dp"
             android:layout_marginLeft="15dp"
             android:background="@color/white"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            android:textColorHint="@color/lblFromName"
+            android:textColor="@color/lblFromName"
             android:singleLine="true"/>
 
         <EditText
@@ -181,13 +182,14 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="প্রতিষ্ঠান"
-            android:textColor="@color/com_facebook_button_background_color_focused_disabled"
             android:padding="10dp"
             android:layout_marginLeft="15dp"
             android:background="@color/white"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColorHint="@color/lblFromName"
+            android:textColor="@color/lblFromName"/>
 
 
         <TextView
@@ -270,26 +272,28 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="পদবী"
-            android:textColor="@color/com_facebook_button_background_color_focused_disabled"
             android:padding="10dp"
             android:layout_marginLeft="15dp"
             android:background="@color/white"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColorHint="@color/lblFromName"
+            android:textColor="@color/lblFromName"/>
         <EditText
             android:id="@+id/occupation_institution_text"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="প্রতিষ্ঠান"
-            android:textColor="@color/com_facebook_button_background_color_focused_disabled"
             android:padding="10dp"
             android:layout_marginLeft="15dp"
             android:background="@color/white"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColorHint="@color/lblFromName"
+            android:textColor="@color/lblFromName"/>
 
         <TextView
             android:id="@+id/religion_status_label"
@@ -383,7 +387,7 @@
             android:id="@+id/hijab_status_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="হিজাব পড়েন?*"
+            android:text="হিজাব করেন?*"
             android:textColor="@color/colorPrimary"
             android:layout_margin="10dp"
             android:visibility="gone"

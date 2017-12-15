@@ -331,6 +331,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 institutionValue = institutionText.getText().toString();
                 subjectValue = subjectText.getText().toString();
 
+                Log.i("response",institutionValue+" kjfadsj");
 
                 if (maritalStatusValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার বৈবাহিক অবস্থা নির্বাচন করুন", Toast.LENGTH_LONG).show();
@@ -377,7 +378,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 if(loginUserReligion.equalsIgnoreCase(Utils.MUSLIM_TAG) && Login.gender.equalsIgnoreCase("female")
                         && hijabValue.isEmpty()){
 
-                    Toast.makeText(getBaseContext(), "আপনি হিজাব পড়েন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "আপনি হিজাব করেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     hijabStatuLabel.getParent().requestChildFocus( hijabStatuLabel,  hijabStatuLabel);
                     return;
                 }
@@ -465,7 +466,14 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                         .append("\"")
                         .append(",")
                         .append("\"is_smoking\":")
+                        .append("\"")
                         .append(smokeValue)
+                        .append("\"")
+                        .append(",")
+                        .append("\"house_in_dhaka\":")
+                        .append("\"")
+                        .append(houseValue)
+                        .append("\"")
                         .append(",")
                         .append("\"educations_information\":")
                         .append("[")
@@ -499,7 +507,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
                 Log.i("response", response);
 
-              //  new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
+              new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
 
             }
         });
@@ -677,6 +685,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Log.e("Response","postexe: "+ s);
             if (s == null) {
                 //progress.cancel();
                 if (progress.isShowing())
@@ -687,7 +696,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 try {
                     progress.cancel();
                     JSONObject jsonObject = new JSONObject(s);
-                    Log.e("Response", s);
+
                     if (jsonObject.has("errors")) {
                         if (progress.isShowing())
                             progress.dismiss();
@@ -751,6 +760,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 if (progress.isShowing())
                     progress.dismiss();
                 clearStaticData();
+                Log.i("constantval",s+"");
                 //Toast.makeText(getBaseContext(), "fetch constant else", Toast.LENGTH_LONG).show();
                 Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                 Intent signupIntent;

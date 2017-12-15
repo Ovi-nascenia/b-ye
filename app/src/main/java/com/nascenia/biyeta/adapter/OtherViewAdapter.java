@@ -65,6 +65,7 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
         public  TextView otherRelationalStatus;
         public  TextView otherAge;
 
+
         String name = "", designation = "", institute = "";
 
         public MyViewHolder(View view) {
@@ -81,6 +82,7 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
             otherAge = (TextView) view.findViewById(R.id.age_text_view_other);
             detailsInfoFieldsRootLayout = (LinearLayout) view.findViewById(R.id.details_info_fields_root_layout);
             reject = (LinearLayout) view.findViewById(R.id.reject);
+
 
             otherRelationalStatus.addTextChangedListener(new TextWatcher() {
                 @Override

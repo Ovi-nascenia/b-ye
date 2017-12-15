@@ -185,7 +185,8 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                 return;
                             }
 
-                            String response = new StringBuilder().append("{")
+                            String response = new StringBuilder()
+                                    .append("{")
                                     .append("\"sibling_type\":")
                                     .append("\"")
                                     .append(1)
@@ -380,6 +381,11 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                     .append(holder.nameOther.getText().toString())
                                     .append("\"")
                                     .append(",")
+                                    .append("\"relation\":")
+                                    .append("\"")
+                                    .append(PopUpFamilyInfoSecondPage.relationStatusArrayOther.get(i))
+                                    .append("\"")
+                                    .append(",")
                                     .append("\"age\":")
                                     .append("\"")
                                     .append(PopUpFamilyInfoSecondPage.ageArrayOther.get(i))
@@ -418,7 +424,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                 Log.i("finalvalue: ", "other-> " + responseOther);
                 Log.i("finalvalue: ", "totalJson-> " +   JSONResponse());
 */
-                // JSONResponse();
+               //  JSONResponse();
                 new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
             }
         });
@@ -613,7 +619,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         if (siblingName.isEmpty()) {
             Toast.makeText(getBaseContext(),
                     "আপনার " + Utils.englishToBanglaNumberConvertion(siblingNumber + 1)
-                            + " " + siblingType + getString(R.string.write_name_message),
+                            + " " + siblingType +" "+ getString(R.string.write_name_message),
                     Toast.LENGTH_LONG).show();
 
             return false;
@@ -623,7 +629,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         if (siblingAge == null) {
             Toast.makeText(getBaseContext(),
                     "আপনার " + Utils.englishToBanglaNumberConvertion(siblingNumber + 1)
-                            + " " + siblingType + getString(R.string.select_age_message),
+                            + " " + siblingType + " "+ getString(R.string.select_age_message),
                     Toast.LENGTH_LONG).show();
 
             return false;
@@ -633,7 +639,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         if (siblingOccupation == null) {
             Toast.makeText(getBaseContext(),
                     "আপনার " + Utils.englishToBanglaNumberConvertion(siblingNumber + 1)
-                            + " " + siblingType + getString(R.string.select_occupation_message),
+                            + " " + siblingType+ " " + getString(R.string.select_occupation_message),
                     Toast.LENGTH_LONG).show();
 
             return false;
