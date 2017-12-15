@@ -36,18 +36,18 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     String maritalStatusValue = "", degreeValue = "", subjectValue = "", institutionValue,
             occupationValue = "", professionalGroupValue = "",
             designationValue, occupationInstitutionValue, religionValue = "",
-            rojaValue = "", disableValue = "", smokeValue = "", hijabValue = "",houseValue="";
+            rojaValue = "", disableValue = "", smokeValue = "", hijabValue = "", houseValue = "";
     EditText subjectText, institutionText, designationText, occupationInstitutionText;
     LinearLayout maritalStatus, educationalStatus, professonalalStatus, religiousStatus,
-            rojaStatus, disableStatus, smokeStatus, professionalGroupStatus,houseLinearLayout,hijabStatus;
+            rojaStatus, disableStatus, smokeStatus, professionalGroupStatus, houseLinearLayout, hijabStatus;
     TextView marriageTV, educationTV, professonTV, religionTV, rojaTV, disableTV, smokeTV,
-            professionalGroupTV,houseTV,hijabTV;
+            professionalGroupTV, houseTV, hijabTV;
     Button next;
     ImageView back;
 
     String constant;
     JSONObject marriageObject, educationObject, occupationObject, professionalGroupObject,
-            religionObject, rojaObject, hijabObject, disableObject, smokeObject,houseObject;
+            religionObject, rojaObject, hijabObject, disableObject, smokeObject, houseObject;
 
 
     public static ArrayList<String> professonalGroupArray = new ArrayList<String>();
@@ -126,12 +126,12 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     private SharePref sharePref;
 
     TextView maritalStatusLabel, educationalStatusLabel, professionStatusLabel, religionStatusLabel,
-            rojaStatuLabel,smokeStatusLabel,houseStatusLabel,hijabStatuLabel;
+            rojaStatuLabel, smokeStatusLabel, houseStatusLabel, hijabStatuLabel;
 
     ProgressDialog progress;
 
     OkHttpClient client;
-
+    private String loginUserReligion;
 
 
     @Override
@@ -167,7 +167,10 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             hijabObject = jsonObject.getJSONObject("hijab_options");
             disableObject = jsonObject.getJSONObject("physical_disability_options");
             smokeObject = jsonObject.getJSONObject("smoking_options");
-            houseObject= jsonObject.getJSONObject("house_options");
+            houseObject = jsonObject.getJSONObject("house_options");
+
+            loginUserReligion = jsonObject.getString("login_user_religion");
+            Log.i("login_user_religion", loginUserReligion);
 
 
             for (int i = 0; i < marriageObject.length(); i++) {
@@ -245,7 +248,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Log.i("gender",Login.gender);
+        Log.i("gender", Login.gender);
         subjectText = (EditText) findViewById(R.id.subject_text);
         institutionText = (EditText) findViewById(R.id.institution_text);
         designationText = (EditText) findViewById(R.id.designation_text);
@@ -259,7 +262,6 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         hijabStatuLabel = (TextView) findViewById(R.id.hijab_status_label);
         smokeStatusLabel = (TextView) findViewById(R.id.smoke_status_label);
         houseStatusLabel = (TextView) findViewById(R.id.house_status_label);
-
 
 
         maritalStatus = (LinearLayout) findViewById(R.id.meritalStatus);
@@ -285,6 +287,27 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         houseTV = (TextView) findViewById(R.id.house_text_view);
 
 
+        if (Login.gender.equalsIgnoreCase("female")) {
+            smokeStatusLabel.setVisibility(View.GONE);
+            smokeStatus.setVisibility(View.GONE);
+
+            houseStatusLabel.setVisibility(View.GONE);
+            houseLinearLayout.setVisibility(View.GONE);
+
+            if(loginUserReligion.equalsIgnoreCase("muslim")){
+                hijabStatuLabel.setVisibility(View.VISIBLE);
+                hijabStatus.setVisibility(View.VISIBLE);
+            }
+        }
+
+        if (!loginUserReligion.equalsIgnoreCase("muslim")) {
+            religionStatusLabel.setVisibility(View.GONE);
+            religiousStatus.setVisibility(View.GONE);
+
+            rojaStatuLabel.setVisibility(View.GONE);
+            rojaStatus.setVisibility(View.GONE);
+
+        }
 
 
         back = (ImageView) findViewById(R.id.backPreviousActivityImage);
@@ -339,20 +362,28 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     return;
                 }
 
-                if (religionValue.isEmpty()) {
+                if (loginUserReligion.equalsIgnoreCase(Utils.MUSLIM_TAG) && religionValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার ধর্ম পালন নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     religionStatusLabel.getParent().requestChildFocus(religionStatusLabel, religionStatusLabel);
                     return;
                 }
 
-                if (rojaValue.isEmpty()) {
+                if (loginUserReligion.equalsIgnoreCase(Utils.MUSLIM_TAG) && rojaValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনি রোজা রাখেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     rojaStatuLabel.getParent().requestChildFocus(rojaStatuLabel, rojaStatuLabel);
                     return;
                 }
 
-                if ( Login.gender.equalsIgnoreCase("male") && houseValue.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "Choose your house", Toast.LENGTH_LONG).show();
+                if(loginUserReligion.equalsIgnoreCase(Utils.MUSLIM_TAG) && Login.gender.equalsIgnoreCase("female")
+                        && hijabValue.isEmpty()){
+
+                    Toast.makeText(getBaseContext(), "আপনি হিজাব পড়েন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                    hijabStatuLabel.getParent().requestChildFocus( hijabStatuLabel,  hijabStatuLabel);
+                    return;
+                }
+
+                if (Login.gender.equalsIgnoreCase("male") && houseValue.isEmpty()) {
+                    Toast.makeText(getBaseContext(), "আপনার আবসস্থল আছে কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     houseStatusLabel.getParent().requestChildFocus(houseStatusLabel, houseStatusLabel);
                     return;
                 }
@@ -361,10 +392,11 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     return;
                 }
 
-                if ( Login.gender.equalsIgnoreCase("male") && smokeValue.isEmpty()) {
+                if (Login.gender.equalsIgnoreCase("male") && smokeValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনি ধূমপান করেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     return;
                 }
+
 
                 String response = new StringBuilder().append("{")
                         .append("\"marital_status\":")
@@ -465,9 +497,9 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
                 // Toast.makeText(RegistrationPersonalInformation.this,response,Toast.LENGTH_LONG).show();
 
-                Log.i("response",response);
+                Log.i("response", response);
 
-                new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
+              //  new RegistrationPersonalInformation.SendPersonalInfo().execute(response, Utils.SEND_INFO);
 
             }
         });
@@ -578,14 +610,6 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(Login.gender.equalsIgnoreCase("female")){
-            smokeStatusLabel.setVisibility(View.GONE);
-            smokeStatus.setVisibility(View.GONE);
-
-            houseStatusLabel.setVisibility(View.GONE);
-            houseLinearLayout.setVisibility(View.GONE);
-        }
-
         if (RegistrationPersonalInformation.selectedPopUp == 1) {
             if (marriage > 0) {
                 marriageTV.setText(maritalStatusName[marriage - 1]);
@@ -627,12 +651,12 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 professionalGroupTV.setText(professonalGroupName[professonalGroup - 1]);
                 professionalGroupValue = professonalGroupConstant.get(professonalGroup - 1);
             }
-        }else if (RegistrationPersonalInformation.selectedPopUp == 9) {
+        } else if (RegistrationPersonalInformation.selectedPopUp == 9) {
             if (house > 0) {
                 houseTV.setText(houseName[house - 1]);
                 houseValue = houseConstant.get(house - 1);
             }
-        }else if (RegistrationPersonalInformation.selectedPopUp == 10) {
+        } else if (RegistrationPersonalInformation.selectedPopUp == 10) {
             if (hijab > 0) {
                 hijabTV.setText(hijabName[hijab - 1]);
                 hijabValue = hijabConstant.get(hijab - 1);
@@ -892,7 +916,8 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         disable = -1;
         smoke = -1;
         professonalGroup = -1;
-        house=-1;
+        house = -1;
+        hijab = -1;
 
     }
 }

@@ -469,18 +469,18 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             jobLabel.setVisibility(View.GONE);
             jobLayout.setVisibility(View.GONE);
 
-            maritalStatusLabel.setText("পাত্রের বৈবাহিক অবস্থা");
+            maritalStatusLabel.setText("পাত্রের বৈবাহিক অবস্থা*");
 
-            religionLabel.setText("পাত্রের ধর্ম ও বর্ণ");
+            religionLabel.setText("পাত্রের ধর্ম ও বর্ণ*");
 
             hijabLabel.setVisibility(View.GONE);
 
             hijabLayout.setVisibility(View.GONE);
         } else if (Login.gender.equalsIgnoreCase("male")) {
 
-            maritalStatusLabel.setText("পাত্রীর বৈবাহিক অবস্থা");
+            maritalStatusLabel.setText("পাত্রীর বৈবাহিক অবস্থা*");
 
-            religionLabel.setText("পাত্রীর ধর্ম ও বর্ণ");
+            religionLabel.setText("পাত্রীর ধর্ম ও বর্ণ*");
         }
 
 
@@ -569,7 +569,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
 
                 if (Login.gender.equalsIgnoreCase("female") && houseStatus.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "choose house", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), getString(R.string.select_house_option_message), Toast.LENGTH_LONG).show();
                     houseStatusLabel.getParent().
                             requestChildFocus(houseStatusLabel, houseStatusLabel);
                     return;

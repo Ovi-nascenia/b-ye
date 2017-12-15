@@ -71,7 +71,7 @@ public class Utils{
     public static final String SEND_INFO = Utils.Base_URL+"/api/v1/registrations";
     public static final String FB_SIGNUP = Utils.Base_URL+"/api/v1/facebook_authorization/sign_up_with_fb";
 
-
+    public static final String MUSLIM_TAG="muslim";
 
 
     public static final int BIODATA_REQUEST_FRAGEMNT_CLASS = 000;

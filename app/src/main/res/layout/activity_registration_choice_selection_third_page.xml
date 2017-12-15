@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="পাত্রী কি বিয়ের পরে চাকরি করতে পারবে?"
+                android:text="পাত্রী কি বিয়ের পরে চাকরি করতে পারবে?*"
                 android:textColor="@color/colorPrimary" />
 
 
@@ -126,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="পাত্রীর বৈবাহিক অবস্থা"
+                android:text="পাত্রীর বৈবাহিক অবস্থা*"
                 android:textColor="@color/colorPrimary" />
 
 
@@ -170,7 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="ধর্ম"
+                android:text="ধর্ম*"
                 android:textColor="@color/colorPrimary" />/>
 
             <LinearLayout
@@ -179,7 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginRight="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
@@ -212,7 +212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="বর্ণ"
+                android:text="বর্ণ*"
                 android:textColor="@color/colorPrimary" />/>
 
 
@@ -222,7 +222,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@color/white"
-                android:layout_margin="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="10dp"/>
 
             <LinearLayout
                 android:id="@+id/hindu_cast"
@@ -249,9 +251,10 @@
                     android:id="@+id/namaj_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="নামাজ পড়বে?"
+                    android:text="নামাজ পড়বে?*"
                     android:textColor="@color/colorPrimary"
                     android:layout_margin="10dp"/>
+
                 <LinearLayout
                     android:id="@+id/namaj_layout"
                     android:padding="10dp"
@@ -279,7 +282,7 @@
                     android:id="@+id/roja_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="রোজা রাখবে?"
+                    android:text="রোজা রাখবে?*"
                     android:textColor="@color/colorPrimary"
                     android:layout_margin="10dp"/>
 
@@ -310,7 +313,7 @@
                     android:id="@+id/hijab_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="পাত্রী কি হিজাব করবে?"
+                    android:text="পাত্রী কি হিজাব করবে?*"
                     android:textColor="@color/colorPrimary"
                     android:layout_margin="10dp"/>
 
@@ -345,7 +348,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="house title"
+                android:text="পাত্রের আবসস্থল আছে কিনা?*"
                 android:textColor="@color/colorPrimary" />
 
 
@@ -367,10 +370,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="house status"
+                    android:text="আবসস্থল"
                     android:textSize="18dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="15dp"/>
+
                 <ImageView
                     android:id="@+id/down_arrow_house"
                     android:layout_gravity="right"

@@ -75,7 +75,7 @@
                 android:id="@+id/occupation_Text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="পেশা"
+                android:text="পেশা*"
                 android:layout_marginLeft="@dimen/medium_margin"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
@@ -91,7 +91,7 @@
                 android:id="@+id/professional_group_Text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="প্রফেশনাল গ্রুপ"
+                android:text="প্রফেশনাল গ্রুপ*"
                 android:layout_marginLeft="@dimen/medium_margin"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
@@ -108,7 +108,7 @@
                 android:id="@+id/home_town_Text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="বাড়ি কোথায় হবে?"
+                android:text="বাড়ি কোথায় হবে?*"
                 android:layout_marginLeft="@dimen/medium_margin"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
