@@ -19,14 +19,14 @@
             android:visibility="gone" />
 
         <TextView
+            android:id="@+id/empty_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/empty_list"
             android:gravity="center"
-            android:textSize="14sp"
-            android:visibility="gone"
+            android:text="No List Available"
             android:textColor="@color/colorPrimaryDark"
-            android:text="No List Available"/>
+            android:textSize="14sp"
+            android:visibility="gone" />
 
 
         <RelativeLayout
@@ -43,13 +43,13 @@
                 android:layout_centerInParent="true" />
 
             <!--<ImageButton-->
-                <!--android:layout_width="40dp"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:layout_centerInParent="true"-->
-                <!--android:background="@android:color/transparent"-->
-                <!--android:scaleType="fitXY"-->
-                <!--android:src="@mipmap/ic_launcher"-->
-               <!--/>-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:src="@mipmap/ic_launcher"-->
+            <!--/>-->
 
 
         </RelativeLayout>
@@ -73,5 +73,31 @@
 
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/no_internet_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/message_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/no_internet_message" />
+
+        <Button
+            android:id="@+id/retry_internet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/retry_btn_text"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
 
 </RelativeLayout>

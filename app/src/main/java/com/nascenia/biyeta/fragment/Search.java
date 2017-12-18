@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -77,7 +78,7 @@ public class Search extends Fragment {
     private int flag = 1;
     private TextView emptyText;
     private Snackbar snackbar;
-    private Button searchButton;
+    private Button searchButton,retryInternetBtn;
     private Profile_Adapter mProfile_adapter;
     private List<SearchProfileModel> profileList = new ArrayList<>();
 
@@ -85,6 +86,10 @@ public class Search extends Fragment {
     private AnalyticsApplication application;
 
     private View v;
+
+    private LinearLayout noInternetLayout;
+
+    private Fragment thisFragment ;
 
     public Search() {
 
@@ -108,10 +113,23 @@ public class Search extends Fragment {
 
         //inflate a view
         v = inflater.inflate(R.layout.search, container, false);
+        thisFragment =this;
+
         recyclerView = (RecyclerView) v.findViewById(R.id.profile_list);
         searchButton = (Button) v.findViewById(R.id.search_btn);
         emptyText = (TextView) v.findViewById(R.id.empty_list);
+
+        noInternetLayout = v.findViewById(R.id.no_internet_layout);
+        retryInternetBtn= v.findViewById(R.id.retry_internet);
+
         comeFromSearch = 0;
+
+        retryInternetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction().detach(thisFragment).attach(thisFragment).commit();
+            }
+        });
 
 
         mProfile_adapter = new Profile_Adapter(profileList) {
@@ -195,6 +213,7 @@ public class Search extends Fragment {
 
             progressBarLayout.setVisibility(View.GONE);
             Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
+            noInternetLayout.setVisibility(View.VISIBLE);
         }
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
@@ -309,7 +328,7 @@ public class Search extends Fragment {
                     String location = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
                     String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
                     String real_name = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("real_name");
-                    SearchProfileModel profile = new SearchProfileModel(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image,real_name);
+                    SearchProfileModel profile = new SearchProfileModel(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image, real_name);
 
                     profileList.add(profile);
                     mProfile_adapter.notifyDataSetChanged();
@@ -320,7 +339,7 @@ public class Search extends Fragment {
         } catch (JSONException e) {
             Utils.ShowInternetConnectionError(getContext());
 
-           // application.trackEception(e, "loadDataFromResponse", "Search", e.getMessage().toString(), mTracker);
+            // application.trackEception(e, "loadDataFromResponse", "Search", e.getMessage().toString(), mTracker);
 
             emptyText.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
@@ -337,14 +356,17 @@ public class Search extends Fragment {
         protected void onPostExecute(String res) {
             super.onPostExecute(res);
 
-            if(res == null){
+            if (res == null) {
 
                 if (snackbar != null && snackbar.isShown()) {
                     snackbar.dismiss();
                 }
-                if(getContext()!=null)
+                if (getContext() != null) {
                     Utils.ShowAlert(getContext(), getString(R.string.no_internet_connection));
-            }else{
+
+                    noInternetLayout.setVisibility(View.VISIBLE);
+                }
+            } else {
 
                 Log.e("SearchResponse", res);
                 progressBarLayout.setVisibility(View.GONE);
@@ -353,8 +375,8 @@ public class Search extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(res);
 
-                    if(jsonObject.has("is_profile_complete") &&
-                            jsonObject.getBoolean("is_profile_complete")){
+                    if (jsonObject.has("is_profile_complete") &&
+                            jsonObject.getBoolean("is_profile_complete")) {
 
                         if (jsonObject.has("no_results")) {
                             emptyText.setVisibility(View.VISIBLE);
@@ -368,15 +390,15 @@ public class Search extends Fragment {
                             totalPageNumber = jsonObject.getInt("total_page");
                             loadDataFromResponse(jsonObject);
                         }
-                    }else if(jsonObject.has("is_profile_complete")  &&
-                            !jsonObject.getBoolean("is_profile_complete")){
+                    } else if (jsonObject.has("is_profile_complete") &&
+                            !jsonObject.getBoolean("is_profile_complete")) {
                         //login user profile is incomplete
 
-                        if(jsonObject.getInt("current_mobile_step")==1){
+                        if (jsonObject.getInt("current_mobile_step") == 1) {
                             startActivity(new Intent(getActivity(), MobileVarification.class));
                             getActivity().finish();
-                        }else{
-                            sendUserToInCompleteRegistrationpage(res,jsonObject.getInt("current_mobile_step"));
+                        } else {
+                            sendUserToInCompleteRegistrationpage(res, jsonObject.getInt("current_mobile_step"));
                         }
                     }
 
@@ -409,7 +431,7 @@ public class Search extends Fragment {
             Response response;
             Context context = getContext();
             sharePref = new SharePref(context);
-            if(context!=null)
+            if (context != null)
                 token = sharePref.get_data("token");
             Request request = null;
 
@@ -454,16 +476,16 @@ public class Search extends Fragment {
 //                application.trackEception(e, "GetData/doInBackground", "Search", e.getMessage().toString(), mTracker);
             } catch (JSONException e) {
                 e.printStackTrace();
-               // application.trackEception(e, "GetData/doInBackground", "Search", e.getMessage().toString(), mTracker);
+                // application.trackEception(e, "GetData/doInBackground", "Search", e.getMessage().toString(), mTracker);
             }
 
             return null;
         }
     }
 
-    private void sendUserToInCompleteRegistrationpage(String s,int currentMobileStep) {
+    private void sendUserToInCompleteRegistrationpage(String s, int currentMobileStep) {
         Intent signupIntent;
-        switch (currentMobileStep){
+        switch (currentMobileStep) {
             case 2:
                 Log.i("constantval", "Login-RegistrationOwnInfo  " + s);
                 signupIntent = new Intent(getActivity(), RegistrationOwnInfo.class);

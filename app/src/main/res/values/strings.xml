@@ -403,6 +403,10 @@
     <string name="write_muslim_cast_name">আপনার বর্ণ লিখুন</string>
     <string name="write_other_religion_name_message">আপনার ধর্মের নাম লিখুন</string>
     <string name="select_house_option_message">পাত্রের আবাসস্থল আছে কিনা নির্বাচন করুন</string>
+    <string name="retry_btn_text">Retry</string>
+    <string name="no_internet_message">
+        No internet connection.Make sure Wi-Fi or Cellular data is turned on,then try again</string>
+
 
 
 
