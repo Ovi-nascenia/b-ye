@@ -375,8 +375,8 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     return;
                 }
 
-                if(loginUserReligion.equalsIgnoreCase(Utils.MUSLIM_TAG) && sharePref.get_data("gender").equalsIgnoreCase("female")
-                        && hijabValue.isEmpty()){
+                if(loginUserReligion.equalsIgnoreCase(Utils.MUSLIM_TAG) && sharePref.get_data("gender")
+                        .equalsIgnoreCase("female") && hijabValue.isEmpty()){
 
                     Toast.makeText(getBaseContext(), "আপনি হিজাব করেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     hijabStatuLabel.getParent().requestChildFocus( hijabStatuLabel,  hijabStatuLabel);
@@ -384,7 +384,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 }
 
                 if (sharePref.get_data("gender").equalsIgnoreCase("male") && houseValue.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "আপনার আবসস্থল আছে কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "আপনার আবাসস্থল আছে কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     houseStatusLabel.getParent().requestChildFocus(houseStatusLabel, houseStatusLabel);
                     return;
                 }

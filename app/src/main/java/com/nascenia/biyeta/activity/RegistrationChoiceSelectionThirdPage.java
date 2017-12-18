@@ -391,9 +391,9 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull SimpleRangeView.State state) {
 
                 if (sharePref.get_data("gender").equalsIgnoreCase("female"))
-                    return prayerMale.get(i);
-                else {
                     return prayerFemale.get(i);
+                else {
+                    return prayerMale.get(i);
                 }
             }
         });
