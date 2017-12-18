@@ -523,7 +523,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 
-            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 3);
+
             try {
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();

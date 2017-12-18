@@ -153,9 +153,9 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(constant);
 
-            if (Login.gender.equals("female")) {
+            if (sharePref.get_data("gender").equalsIgnoreCase("female")) {
                 marriageObject = jsonObject.getJSONObject("marital_status_constant_for_female");
-            } else if (Login.gender.equals("male")) {
+            } else if (sharePref.get_data("gender").equalsIgnoreCase("male")) {
                 marriageObject = jsonObject.getJSONObject("marital_status_constant_for_male");
             }
             educationObject = jsonObject.getJSONObject("education_constant");
@@ -248,7 +248,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Log.i("gender", Login.gender);
+        Log.i("gender",sharePref.get_data("gender"));
         subjectText = (EditText) findViewById(R.id.subject_text);
         institutionText = (EditText) findViewById(R.id.institution_text);
         designationText = (EditText) findViewById(R.id.designation_text);
@@ -287,7 +287,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         houseTV = (TextView) findViewById(R.id.house_text_view);
 
 
-        if (Login.gender.equalsIgnoreCase("female")) {
+        if (sharePref.get_data("gender").equalsIgnoreCase("female")) {
             smokeStatusLabel.setVisibility(View.GONE);
             smokeStatus.setVisibility(View.GONE);
 
@@ -375,7 +375,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     return;
                 }
 
-                if(loginUserReligion.equalsIgnoreCase(Utils.MUSLIM_TAG) && Login.gender.equalsIgnoreCase("female")
+                if(loginUserReligion.equalsIgnoreCase(Utils.MUSLIM_TAG) && sharePref.get_data("gender").equalsIgnoreCase("female")
                         && hijabValue.isEmpty()){
 
                     Toast.makeText(getBaseContext(), "আপনি হিজাব করেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
@@ -383,7 +383,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     return;
                 }
 
-                if (Login.gender.equalsIgnoreCase("male") && houseValue.isEmpty()) {
+                if (sharePref.get_data("gender").equalsIgnoreCase("male") && houseValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার আবসস্থল আছে কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     houseStatusLabel.getParent().requestChildFocus(houseStatusLabel, houseStatusLabel);
                     return;
@@ -393,7 +393,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     return;
                 }
 
-                if (Login.gender.equalsIgnoreCase("male") && smokeValue.isEmpty()) {
+                if (sharePref.get_data("gender").equalsIgnoreCase("male") && smokeValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনি ধূমপান করেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     return;
                 }

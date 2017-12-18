@@ -835,13 +835,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoFirstPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                    //finish();
+                    finish();
                 } else if (currentMobileSignupStep == 9) {
                     Log.i("constantval", "Login-RegistrationFamilyInfoSecondPage  " + s);
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoSecondPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                    // finish();
+                     finish();
                 }
             }
         }

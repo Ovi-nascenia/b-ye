@@ -24,7 +24,17 @@ import com.facebook.FacebookActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
+import com.nascenia.biyeta.activity.ImageUpload;
+import com.nascenia.biyeta.activity.Login;
+import com.nascenia.biyeta.activity.MobileVarification;
 import com.nascenia.biyeta.activity.NewUserProfileActivity;
+import com.nascenia.biyeta.activity.RegistrationChoiceSelectionFirstPage;
+import com.nascenia.biyeta.activity.RegistrationChoiceSelectionSecondPage;
+import com.nascenia.biyeta.activity.RegistrationChoiceSelectionThirdPage;
+import com.nascenia.biyeta.activity.RegistrationFamilyInfoFirstPage;
+import com.nascenia.biyeta.activity.RegistrationFamilyInfoSecondPage;
+import com.nascenia.biyeta.activity.RegistrationOwnInfo;
+import com.nascenia.biyeta.activity.RegistrationPersonalInformation;
 import com.nascenia.biyeta.activity.UserProfileActivity;
 import com.nascenia.biyeta.model.SearchProfileModel;
 import com.nascenia.biyeta.utils.Utils;
@@ -342,17 +352,32 @@ public class Search extends Fragment {
                 if (flag != 1) snackbar.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject(res);
-                    if (jsonObject.has("no_results")) {
-                        emptyText.setVisibility(View.VISIBLE);
-                        recyclerView.setVisibility(View.GONE);
-                        emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
-                    } else if (jsonObject.has("total_page") && !jsonObject.has("profiles")) {
-                        emptyText.setVisibility(View.VISIBLE);
-                        recyclerView.setVisibility(View.GONE);
-                        emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
-                    } else {
-                        totalPageNumber = jsonObject.getInt("total_page");
-                        loadDataFromResponse(jsonObject);
+
+                    if(jsonObject.has("is_profile_complete") &&
+                            jsonObject.getBoolean("is_profile_complete")){
+
+                        if (jsonObject.has("no_results")) {
+                            emptyText.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.GONE);
+                            emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
+                        } else if (jsonObject.has("total_page") && !jsonObject.has("profiles")) {
+                            emptyText.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.GONE);
+                            emptyText.setText(jsonObject.getJSONArray("no_results").getJSONObject(0).getString("detail"));
+                        } else {
+                            totalPageNumber = jsonObject.getInt("total_page");
+                            loadDataFromResponse(jsonObject);
+                        }
+                    }else if(jsonObject.has("is_profile_complete")  &&
+                            !jsonObject.getBoolean("is_profile_complete")){
+                        //login user profile is incomplete
+
+                        if(jsonObject.getInt("current_mobile_step")==1){
+                            startActivity(new Intent(getActivity(), MobileVarification.class));
+                            getActivity().finish();
+                        }else{
+                            sendUserToInCompleteRegistrationpage(res,jsonObject.getInt("current_mobile_step"));
+                        }
                     }
 
 
@@ -434,6 +459,70 @@ public class Search extends Fragment {
 
             return null;
         }
+    }
+
+    private void sendUserToInCompleteRegistrationpage(String s,int currentMobileStep) {
+        Intent signupIntent;
+        switch (currentMobileStep){
+            case 2:
+                Log.i("constantval", "Login-RegistrationOwnInfo  " + s);
+                signupIntent = new Intent(getActivity(), RegistrationOwnInfo.class);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+            case 3:
+                Log.i("constantval", "Login-Imageupload  " + s);
+                signupIntent = new Intent(getActivity(), ImageUpload.class);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+            case 4:
+                Log.i("constantval", "Login-RegistrationChoiceSelectionFirstPage  " + s);
+                signupIntent = new Intent(getActivity(), RegistrationChoiceSelectionFirstPage.class);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+            case 5:
+                Log.i("constantval", "Login-RegistrationChoiceSelectionSecondPage  " + s);
+                signupIntent = new Intent(getActivity(), RegistrationChoiceSelectionSecondPage.class);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+            case 6:
+                Log.i("constantval", "Login-RegistrationChoiceSelectionThirdPage  " + s);
+                signupIntent = new Intent(getActivity(), RegistrationChoiceSelectionThirdPage.class);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+            case 7:
+                Log.i("constantval", "Login-RegistrationPersonalInformation  " + s);
+                signupIntent = new Intent(getActivity(), RegistrationPersonalInformation.class);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+            case 8:
+                Log.i("constantval", "Login-RegistrationFamilyInfoFirstPage  " + s);
+                signupIntent = new Intent(getActivity(), RegistrationFamilyInfoFirstPage.class);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+            case 9:
+                Log.i("constantval", "Login-RegistrationFamilyInfoSecondPage  " + s);
+                signupIntent = new Intent(getActivity(), RegistrationFamilyInfoSecondPage.class);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+        }
+
+
     }
 
 

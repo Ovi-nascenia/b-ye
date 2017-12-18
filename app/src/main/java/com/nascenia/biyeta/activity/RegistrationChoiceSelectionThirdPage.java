@@ -130,7 +130,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         client = new OkHttpClient();
 
         currentStep = 6;
-        Log.i("gender", Login.gender);
+        Log.i("gender", sharePref.get_data("gender"));
 
         try {
             JSONObject jsonObject = new JSONObject(constant);
@@ -358,7 +358,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         rangeView_namaj.setFixedLabelColor(Color.TRANSPARENT);
 
         rangeView_namaj.setStart(0);
-        if (Login.gender.equalsIgnoreCase("female")) {
+        if (sharePref.get_data("gender").equalsIgnoreCase("female")) {
             rangeView_namaj.setCount(5);
             rangeView_namaj.setEnd(4);
         } else {
@@ -390,7 +390,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             @Override
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull SimpleRangeView.State state) {
 
-                if (Login.gender.equalsIgnoreCase("female"))
+                if (sharePref.get_data("gender").equalsIgnoreCase("female"))
                     return prayerMale.get(i);
                 else {
                     return prayerFemale.get(i);
@@ -465,7 +465,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         rangeView_hijab.setEnd(2);
 
 
-        if (Login.gender.equalsIgnoreCase("female")) {
+        if (sharePref.get_data("gender").equalsIgnoreCase("female")) {
             jobLabel.setVisibility(View.GONE);
             jobLayout.setVisibility(View.GONE);
 
@@ -476,7 +476,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             hijabLabel.setVisibility(View.GONE);
 
             hijabLayout.setVisibility(View.GONE);
-        } else if (Login.gender.equalsIgnoreCase("male")) {
+        } else if (sharePref.get_data("gender").equalsIgnoreCase("male")) {
 
             maritalStatusLabel.setText("পাত্রীর বৈবাহিক অবস্থা*");
 
@@ -489,7 +489,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (Login.gender.equalsIgnoreCase("male") &&
+                if (sharePref.get_data("gender").equalsIgnoreCase("male") &&
                         jobAfterMarriage.isEmpty()) {
 
                     Toast.makeText(getBaseContext(),
@@ -568,7 +568,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                 }
 
 
-                if (Login.gender.equalsIgnoreCase("female") && houseStatus.isEmpty()) {
+                if (sharePref.get_data("gender").equalsIgnoreCase("female") && houseStatus.isEmpty()) {
                     Toast.makeText(getBaseContext(), getString(R.string.select_house_option_message), Toast.LENGTH_LONG).show();
                     houseStatusLabel.getParent().
                             requestChildFocus(houseStatusLabel, houseStatusLabel);
@@ -784,7 +784,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (Login.gender.equalsIgnoreCase("male")) {
+        if (sharePref.get_data("gender").equalsIgnoreCase("male")) {
             houseStatusLabel.setVisibility(View.GONE);
             houseLinearLayout.setVisibility(View.GONE);
         }

@@ -79,10 +79,10 @@ public class RegistrationOwnInfo extends AppCompatActivity{
 
         castReligion = (LinearLayout) findViewById(R.id.castReligion);
         details = (EditText) findViewById(R.id.edit_text_own);
-        if(Login.gender.equals("male")){
+        if(sharePref.get_data("gender").equals("male")){
             details.setHint("আপনার সম্পর্কে বিস্তারিত লিখুন যাতে পাত্রী-পক্ষ আগ্রহী হয়।");
         }
-        else if(Login.gender.equals("female")){
+        else if(sharePref.get_data("gender").equals("female")){
             details.setHint("আপনার সম্পর্কে বিস্তারিত লিখুন যাতে পাত্র-পক্ষ আগ্রহী হয়।");
         }
 

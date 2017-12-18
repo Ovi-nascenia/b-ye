@@ -94,7 +94,6 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(constant);
 
-            Log.i("occupation", occupationObject.toString());
             occupationObject = jsonObject.getJSONObject("occupation_constant");
             professionalGroupObject = jsonObject.getJSONObject("professional_group_constant");
 
