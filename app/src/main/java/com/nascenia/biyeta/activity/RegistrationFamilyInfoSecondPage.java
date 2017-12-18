@@ -907,9 +907,9 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
 
                 Utils.ShowAlert(RegistrationFamilyInfoSecondPage.this, getString(R.string.no_internet_connection));
             } else {
-                if (progress.isShowing()) {
+              /*  if (progress.isShowing()) {
                     progress.dismiss();
-                }
+                }*/
                 clearStaticData();
                 Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
                 startActivity(new Intent(RegistrationFamilyInfoSecondPage.this,

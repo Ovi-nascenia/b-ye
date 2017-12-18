@@ -463,8 +463,8 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                 Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this, getString(R.string.no_internet_connection));
             }
             else{
-                if(progress.isShowing())
-                    progress.dismiss();
+                /*if(progress.isShowing())
+                    progress.dismiss();*/
                 Log.i("constantval",this.getClass().getSimpleName()+"_nextfetchval: "+s);
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationChoiceSelectionFirstPage.this,
@@ -549,9 +549,9 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                 Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this,
                         getString(R.string.no_internet_connection));
             } else {
-                if (progress.isShowing()) {
+                /*if (progress.isShowing()) {
                     progress.dismiss();
-                }
+                }*/
                 Log.i("constantval",this.getClass().getSimpleName()+"_backfetchval: "+s);
 
                 startActivity(new Intent(RegistrationChoiceSelectionFirstPage.this, ImageUpload.class).

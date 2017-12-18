@@ -347,8 +347,8 @@ public class RegistrationOwnInfo extends AppCompatActivity{
             }
             else
             {
-                if(progress.isShowing())
-                    progress.dismiss();
+                /*if(progress.isShowing())
+                    progress.dismiss();*/
                 Log.i("constantval","Regisowninfofetchval: "+s);
 
                 Intent signupIntent;
@@ -385,7 +385,6 @@ public class RegistrationOwnInfo extends AppCompatActivity{
             super.onPreExecute();
         }
     }
-
 
     @Override
     public void onBackPressed() {

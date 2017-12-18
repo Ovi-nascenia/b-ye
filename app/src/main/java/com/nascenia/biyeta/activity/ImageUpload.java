@@ -360,10 +360,11 @@ public class ImageUpload extends AppCompatActivity {
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
             } else {
                 try {
-                    progress.cancel();
+
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
                     if (jsonObject.has("errors")) {
+                        progress.cancel();
                         jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(ImageUpload.this,
                                 jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
@@ -418,6 +419,7 @@ public class ImageUpload extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s == null) {
+                progress.cancel();
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
             } else {
                 Log.i("constantval","ImageUploadNextfetchval: "+s);
@@ -504,12 +506,11 @@ public class ImageUpload extends AppCompatActivity {
                 if (progress.isShowing()) {
                     progress.dismiss();
                 }
-
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
             } else {
-                if (progress.isShowing()) {
+                /*if (progress.isShowing()) {
                     progress.dismiss();
-                }
+                }*/
                 Log.i("constantval","ImageUpdloadBackfetchval: "+s);
                 startActivity(new Intent(ImageUpload.this, RegistrationOwnInfo.class).
                         putExtra("constants", s));

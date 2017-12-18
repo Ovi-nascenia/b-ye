@@ -80,7 +80,6 @@ public class Search extends Fragment {
 
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +91,6 @@ public class Search extends Fragment {
                 .setNewSession()
                 .build());
     }
-
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -393,7 +391,7 @@ public class Search extends Fragment {
             if (comeFromSearch == 1) {
                 Log.e("ComeFromSearch", "ComefromSearch");
                 if (searchFilterPage <= totalFilterPage) {
-                    Log.e("fuck", Utils.Base_URL + "/api/v1/search/filtered-results?page=" + searchFilterPage);
+                    Log.e("test", Utils.Base_URL + "/api/v1/search/filtered-results?page=" + searchFilterPage);
                     MediaType JSON
                             = MediaType.parse("application/json; charset=utf-8");
 

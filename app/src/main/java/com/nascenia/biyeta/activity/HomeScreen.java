@@ -396,8 +396,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     }
 
-
-
     private class LogoutRequest extends AsyncTask<String, String, String> {
 
         @Override

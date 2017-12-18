@@ -49,7 +49,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = new OkHttpClient();
-        startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+       // startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
 
         //firebase token sender code
 

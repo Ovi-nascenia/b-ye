@@ -878,8 +878,8 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                     progress.dismiss();
                 Utils.ShowAlert(RegistrationChoiceSelectionSecondPage.this, getString(R.string.no_internet_connection));
             } else {
-                if(progress.isShowing())
-                    progress.dismiss();
+               /* if(progress.isShowing())
+                    progress.dismiss();*/
                 Log.i("constantval",this.getClass().getSimpleName()+"_nextfetchval: "+s);
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationChoiceSelectionSecondPage.this,
@@ -967,9 +967,9 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 
                 Utils.ShowAlert(RegistrationChoiceSelectionSecondPage.this, getString(R.string.no_internet_connection));
             } else {
-                if (progress.isShowing()) {
+               /* if (progress.isShowing()) {
                     progress.dismiss();
-                }
+                }*/
                 Log.i("constantval",this.getClass().getSimpleName()+"_backfetchval: "+s);
                 startActivity(new Intent(RegistrationChoiceSelectionSecondPage.this,
                         RegistrationChoiceSelectionFirstPage.class).

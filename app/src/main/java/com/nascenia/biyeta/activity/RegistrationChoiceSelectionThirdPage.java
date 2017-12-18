@@ -737,8 +737,8 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                     progress.dismiss();
                 Utils.ShowAlert(RegistrationChoiceSelectionThirdPage.this, getString(R.string.no_internet_connection));
             } else {
-                if (progress.isShowing())
-                    progress.dismiss();
+               /* if (progress.isShowing())
+                    progress.dismiss();*/
                 clearStaticData();
                 Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                 Intent signupIntent;
@@ -883,9 +883,9 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
                 Utils.ShowAlert(RegistrationChoiceSelectionThirdPage.this, getString(R.string.no_internet_connection));
             } else {
-                if (progress.isShowing()) {
+               /* if (progress.isShowing()) {
                     progress.dismiss();
-                }
+                }*/
                 clearStaticData();
                 Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
                 startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this,

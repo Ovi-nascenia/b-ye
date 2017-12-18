@@ -757,8 +757,8 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     progress.dismiss();
                 Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
             } else {
-                if (progress.isShowing())
-                    progress.dismiss();
+               /* if (progress.isShowing())
+                    progress.dismiss();*/
                 clearStaticData();
                 Log.i("constantval",s+"");
                 //Toast.makeText(getBaseContext(), "fetch constant else", Toast.LENGTH_LONG).show();

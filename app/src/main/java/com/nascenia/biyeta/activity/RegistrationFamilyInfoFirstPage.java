@@ -411,8 +411,8 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
                 Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
             } else {
-                if (progress.isShowing())
-                    progress.dismiss();
+               /* if (progress.isShowing())
+                    progress.dismiss();*/
                 clearStaticData();
                 Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                 Intent signupIntent;
@@ -503,9 +503,9 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
                 Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
             } else {
-                if (progress.isShowing()) {
+                /*if (progress.isShowing()) {
                     progress.dismiss();
-                }
+                }*/
                 clearStaticData();
                 Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                 startActivity(new Intent(RegistrationFamilyInfoFirstPage.this,
