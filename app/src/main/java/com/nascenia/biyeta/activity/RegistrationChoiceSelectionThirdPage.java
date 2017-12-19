@@ -314,7 +314,12 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         hinduCastLayout.setVisibility(View.GONE);
 
 
-        namajEnd = prayerFemale.size() - 1;
+        if (sharePref.get_data("gender").equalsIgnoreCase("female")) {
+            namajEnd = prayerMale.size() - 1;
+        } else {
+            namajEnd = prayerFemale.size() - 1;
+        }
+
         rojaEnd = fasting.size() - 1;
         hijabEnd = hijab.size() - 1;
 
@@ -391,9 +396,9 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull SimpleRangeView.State state) {
 
                 if (sharePref.get_data("gender").equalsIgnoreCase("female"))
-                    return prayerFemale.get(i);
-                else {
                     return prayerMale.get(i);
+                else {
+                    return prayerFemale.get(i);
                 }
             }
         });
