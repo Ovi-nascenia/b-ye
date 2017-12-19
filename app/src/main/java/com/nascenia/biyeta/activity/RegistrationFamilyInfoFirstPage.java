@@ -281,7 +281,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                         .append("]")
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append("8")
+                        .append(8)
                         .append("}")
                         .toString();
                 Log.i("response: ", response);

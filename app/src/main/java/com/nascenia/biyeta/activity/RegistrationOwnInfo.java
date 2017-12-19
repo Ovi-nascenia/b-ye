@@ -179,7 +179,8 @@ public class RegistrationOwnInfo extends AppCompatActivity{
 
                 String response = new StringBuilder().append("{")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append(Login.currentMobileSignupStep)
+                        //.append(Login.currentMobileSignupStep)
+                        .append(2)
                         .append(",")
                         .append("\"religion\":")
                         .append(religionValue)
@@ -309,7 +310,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
             SharePref sharePref = new SharePref(RegistrationOwnInfo.this);
             final String token = sharePref.get_data("token");
 
-            Log.e("Test", strings[0]+" "+strings[1]);
+            Log.e("Test", strings[0]+" "+strings[1]+" "+token);
 
             MediaType JSON
                     = MediaType.parse("application/json; charset=utf-8");
