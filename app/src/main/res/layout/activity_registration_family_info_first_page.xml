@@ -83,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="বাবা"
+                android:textSize="18sp"
                 android:textColor="@color/colorPrimary" />
 
             <EditText
@@ -201,6 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="মা"
+                android:textSize="18sp"
                 android:textColor="@color/colorPrimary" />
 
             <EditText
