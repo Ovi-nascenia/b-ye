@@ -199,7 +199,8 @@ public class MobileVarification extends AppCompatActivity {
         @Override
         protected String doInBackground(String... parameters) {
             String phnNumber = parameters[0];
-            String token = sharePref.get_data("registration_token");
+           // String token = sharePref.get_data("registration_token");
+            String token = sharePref.get_data("token");
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("mobile_number", phnNumber)///sent the team passcode
                     .build();
@@ -286,7 +287,8 @@ public class MobileVarification extends AppCompatActivity {
         protected String doInBackground(String... parameters) {
             String phnNumber = parameters[0];
             String verification_id = parameters[1];
-            String token = sharePref.get_data("registration_token");
+            //String token = sharePref.get_data("registration_token");
+            String token = sharePref.get_data("token");
 
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("mobile_number", sharePref.get_data("mobile_number"))
@@ -359,7 +361,8 @@ public class MobileVarification extends AppCompatActivity {
             String verify_id = parameters[0];
             String verification_code = parameters[1];
             String mobile_number = parameters[2];
-            String token = sharePref.get_data("registration_token");
+            //String token = sharePref.get_data("registration_token");
+            String token = sharePref.get_data("token");
 
 
             RequestBody requestBody = new FormEncodingBuilder()

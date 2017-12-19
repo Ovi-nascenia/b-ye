@@ -493,7 +493,8 @@ public class RegistrationFirstActivity extends AppCompatActivity{
                         email_edit_text.requestFocus();
                     }
                     else{
-                        sharePref.set_data("registration_token",jsonObject.getString("auth_token"));
+                        //sharePref.set_data("registration_token",jsonObject.getString("auth_token"));
+                        sharePref.set_data("token",jsonObject.getString("auth_token"));
                         Intent mobileVerification = new Intent(RegistrationFirstActivity.this, MobileVarification.class);
                         startActivity(mobileVerification);
                         finish();
