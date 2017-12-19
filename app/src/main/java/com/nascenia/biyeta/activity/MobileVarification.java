@@ -170,23 +170,36 @@ public class MobileVarification extends AppCompatActivity {
                 if (progressDialog.isShowing())
                     progressDialog.dismiss();
 
-                beforeSendingVerificationCode.setVisibility(View.GONE);
-                afterSendingVerificationCode.setVisibility(View.VISIBLE);
+
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    Log.i("mobilersp",jsonObject.toString());
-                    jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number");
-                    verificationId = jsonObject.getJSONObject("mobile_verification_information").getString("verification_id");
-                    sharePref.set_data("verification_id", jsonObject.getJSONObject("mobile_verification_information").getString("verification_id"));
-                    sharePref.set_data("mobile_number", jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number"));
-                    //  Toast.makeText(MobileVarification.this, s, Toast.LENGTH_LONG).show();
-                    Log.i("verificationdata", s);
 
-                    jsonObject.getJSONObject("mobile_verification_information").getString("server_time");
-                    jsonObject.getJSONObject("mobile_verification_information").getString("again_retry_time");
-                    jsonObject.getJSONObject("mobile_verification_information").getString("try_count");
-                    jsonObject.getJSONObject("mobile_verification_information").getString("verification_code");
-                    sendVerificationCode.setVisibility(View.GONE);
+                    if(jsonObject.has("error") || jsonObject.has("errors")){
+                        Toast.makeText(getBaseContext(),jsonObject.getString("detail"),Toast.LENGTH_LONG).show();
+                    }else if(jsonObject.has("message")){
+                        Toast.makeText(getBaseContext(),jsonObject.getString("detail"),Toast.LENGTH_LONG).show();
+                    }else{
+                        beforeSendingVerificationCode.setVisibility(View.GONE);
+                        afterSendingVerificationCode.setVisibility(View.VISIBLE);
+
+                        verificationId = jsonObject.getJSONObject("mobile_verification_information")
+                                .getString("verification_id");
+
+                        sharePref.set_data("verification_id", jsonObject.getJSONObject("mobile_verification_information")
+                                .getString("verification_id"));
+                        sharePref.set_data("mobile_number", jsonObject.getJSONObject("mobile_verification_information")
+                                .getString("mobile_number"));
+                        //  Toast.makeText(MobileVarification.this, s, Toast.LENGTH_LONG).show();
+                        Log.i("verificationdata", s);
+
+                        /*jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number");
+                        jsonObject.getJSONObject("mobile_verification_information").getString("server_time");
+                        jsonObject.getJSONObject("mobile_verification_information").getString("again_retry_time");
+                        jsonObject.getJSONObject("mobile_verification_information").getString("try_count");
+                        jsonObject.getJSONObject("mobile_verification_information").getString("verification_code");*/
+
+                        sendVerificationCode.setVisibility(View.GONE);
+                    }
 
 
                 } catch (JSONException e) {
@@ -246,36 +259,42 @@ public class MobileVarification extends AppCompatActivity {
 
                     if (progressDialog.isShowing())
                         progressDialog.dismiss();
+
                     JSONObject jsonObject = new JSONObject(s);
-                    jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number");
-                    verificationId = jsonObject.getJSONObject("mobile_verification_information").getString("verification_id");
-                    //Toast.makeText(MobileVarification.this, jsonObject.getJSONObject("mobile_verification_information").getString("verification_id"), Toast.LENGTH_LONG).show();
-                    int serverTime = Integer.parseInt(jsonObject.getJSONObject("mobile_verification_information").getString("server_time"));
-                    int againRetryTime = Integer.parseInt(jsonObject.getJSONObject("mobile_verification_information").getString("again_retry_time"));
 
-                    if (againRetryTime > serverTime) {
-                        int ms = againRetryTime - serverTime;
-                        int SECOND = 1;
-                        String text = "";
-                        int MINUTE = 60 * SECOND;
-                        int HOUR = 60 * MINUTE;
-                        if (ms > HOUR) {
-                            text += Utils.convertEnglishYearDigittoBangla(ms / HOUR) + " ঘণ্টা ";
-                            ms %= HOUR;
+                    if(jsonObject.has("error") || jsonObject.has("errors")){
+                        Toast.makeText(getBaseContext(),jsonObject.getString("detail"),Toast.LENGTH_LONG).show();
+                    }else{
+
+                       /* jsonObject.getJSONObject("mobile_verification_information").getString("mobile_number");*/
+                        verificationId = jsonObject.getJSONObject("mobile_verification_information").getString("verification_id");
+                        //Toast.makeText(MobileVarification.this, jsonObject.getJSONObject("mobile_verification_information").getString("verification_id"), Toast.LENGTH_LONG).show();
+                        int serverTime = Integer.parseInt(jsonObject.getJSONObject("mobile_verification_information").getString("server_time"));
+                        int againRetryTime = Integer.parseInt(jsonObject.getJSONObject("mobile_verification_information").getString("again_retry_time"));
+
+                        if (againRetryTime > serverTime) {
+                            int ms = againRetryTime - serverTime;
+                            int SECOND = 1;
+                            String text = "";
+                            int MINUTE = 60 * SECOND;
+                            int HOUR = 60 * MINUTE;
+                            if (ms > HOUR) {
+                                text += Utils.convertEnglishYearDigittoBangla(ms / HOUR) + " ঘণ্টা ";
+                                ms %= HOUR;
+                            }
+                            if (ms > MINUTE) {
+                                text += Utils.convertEnglishYearDigittoBangla(ms / MINUTE) + " মিনিট ";
+                                ms %= MINUTE;
+                            }
+                            Utils.ShowAlert(MobileVarification.this, text + "পর পুনরায় ভেরিফিকেশন কোড পাঠাতে পারবেন।");
+                        } else {
+                            nextCounter = 0;
+                            verificationCode.setEnabled(true);
+                            Utils.ShowAlert(MobileVarification.this, "ভেরিফিকেশন কোড পাঠানো হয়েছে।");
                         }
-                        if (ms > MINUTE) {
-                            text += Utils.convertEnglishYearDigittoBangla(ms / MINUTE) + " মিনিট ";
-                            ms %= MINUTE;
-                        }
-                        Utils.ShowAlert(MobileVarification.this, text + "পর পুনরায় ভেরিফিকেশন কোড পাঠাতে পারবেন।");
-                    } else {
-                        nextCounter = 0;
-                        verificationCode.setEnabled(true);
-                        Utils.ShowAlert(MobileVarification.this, "ভেরিফিকেশন কোড পাঠানো হয়েছে।");
+                     /*   jsonObject.getJSONObject("mobile_verification_information").getString("try_count");
+                        jsonObject.getJSONObject("mobile_verification_information").getString("verification_code");*/
                     }
-                    jsonObject.getJSONObject("mobile_verification_information").getString("try_count");
-                    jsonObject.getJSONObject("mobile_verification_information").getString("verification_code");
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -336,6 +355,7 @@ public class MobileVarification extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     Log.i("mobilersp: ",jsonObject.toString());
+
                     if (jsonObject.has("message")) {
                         String details = jsonObject.getJSONObject("message").getString("detail");
                        Toast.makeText(getBaseContext(), details, Toast.LENGTH_SHORT).show();
@@ -343,7 +363,8 @@ public class MobileVarification extends AppCompatActivity {
                         finish();
                         // new MobileVarification.FetchConstant().execute(jsonObject.getString("current_mobile_sign_up_step"));
                     } else if (jsonObject.has("errors")) {
-                        Utils.ShowAlert(MobileVarification.this, "কোডটি ভুল হয়েছে।\nসঠিক কোড প্রদান করুন।");
+                        //Utils.ShowAlert(MobileVarification.this, "কোডটি ভুল হয়েছে।\nসঠিক কোড প্রদান করুন।");
+                        Toast.makeText(getBaseContext(),jsonObject.getString("detail"),Toast.LENGTH_LONG).show();
                         //if(jsonObject.getJSONObject("errors").getString("detail").equals("'verification code did not match")){
                         //}
 
