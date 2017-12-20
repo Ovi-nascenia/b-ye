@@ -348,7 +348,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="পাত্রের আবাসস্থল আছে কিনা?*"
+                android:text="পাত্রের নিজেদের বাড়ি থাকতে হবে?*"
                 android:textColor="@color/colorPrimary" />
 
 
@@ -370,7 +370,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="আবসস্থল"
+                    android:text="আবাসস্থল"
                     android:textSize="18dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="15dp"/>

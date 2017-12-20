@@ -133,6 +133,7 @@
             android:layout_marginRight="15dp"
             android:background="@color/white"
             android:gravity="top"
+            android:paddingLeft="@dimen/small_padding"
             android:imeOptions="actionDone"
             android:privateImeOptions="nm" />
 
