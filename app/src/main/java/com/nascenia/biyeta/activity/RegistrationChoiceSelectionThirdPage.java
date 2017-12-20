@@ -32,6 +32,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -174,6 +175,8 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                 christianCast.add((String) christianCastObject.get(christianCastObject.names().getString(i)));
             }
 
+            Log.i("val","cons: "+Arrays.toString(hinduCastConstant.toArray()));
+            Log.i("val","name: "+Arrays.toString(hinduCast.toArray()));
 
             for (int i = 0; i < prayerMaleObject.length(); i++) {
                 prayerMale.put(Integer.parseInt(prayerMaleObject.names().getString(i)), (String) prayerMaleObject.get(prayerMaleObject.names().getString(i)));
@@ -266,18 +269,23 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         hinduCastLayout = (LinearLayout) findViewById(R.id.hindu_cast);
 
         for (int i = 0; i < hinduCastConstant.size(); i++) {
+            Log.i("checkbox:","data: "+hinduCast.get(i)+" "+hinduCastConstant.get(i));
             hinduCheckBox = new CheckBox(this);
             hinduCheckBox.setText(hinduCast.get(i));
-            hinduCheckBox.setId(Integer.parseInt(hinduCastConstant.get(i)));
+            hinduCheckBox.setId(Integer.parseInt("100"+hinduCastConstant.get(i)));// here 100 added for making unique hinducast checkbox
             final int index = i;
             hinduCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CheckBox checkBox = (CheckBox) findViewById(Integer.parseInt(hinduCastConstant.get(index)));
+                    CheckBox checkBox = (CheckBox) findViewById(Integer.parseInt("100"+hinduCastConstant.get(index)));// here 100 added for making unique hinducast checkbox
                     if (checkBox.isChecked()) {
                         hinduCastSelectedArray.add(hinduCastConstant.get(index));
+                        Log.i("checkbox:","onclick: "+index+" "+hinduCastConstant.get(index)
+                                +" " +Arrays.toString(hinduCastSelectedArray.toArray()));
                     } else if (!checkBox.isChecked()) {
                         hinduCastSelectedArray.remove(hinduCastConstant.get(index));
+                        Log.i("checkbox:","onclick: "+index+" "+hinduCastConstant.get(index)
+                                +" " +Arrays.toString(hinduCastSelectedArray.toArray()));
                     }
                     //Toast.makeText(RegistrationChoiceSelectionThirdPage.this, "id  : " + hinduCastConstant.get(index), Toast.LENGTH_LONG).show();
                 }
@@ -493,6 +501,8 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("checkbox", Arrays.toString(hinduCastSelectedArray.toArray()));
+                //Log.i("checkbox", Arrays.toString(muslimCastSelectedArray.toArray()));
 
                 if (sharePref.get_data("gender").equalsIgnoreCase("male") &&
                         jobAfterMarriage.isEmpty()) {
@@ -643,9 +653,9 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                         .append(6)
                         .append("}")
                         .toString();
-                Log.e("data", data);
+                Log.e("response","finaldata: "+ data);
 
-                new RegistrationChoiceSelectionThirdPage.SendChoiceThird().execute(data, Utils.SEND_INFO);
+               // new RegistrationChoiceSelectionThirdPage.SendChoiceThird().execute(data, Utils.SEND_INFO);
             }
         });
 
