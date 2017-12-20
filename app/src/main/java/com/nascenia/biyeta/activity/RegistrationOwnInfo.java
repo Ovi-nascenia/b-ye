@@ -1,8 +1,12 @@
 package com.nascenia.biyeta.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,8 +24,10 @@ import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.model.newuserprofile.Image;
 import com.nascenia.biyeta.utils.Utils;
+import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -49,11 +55,19 @@ public class RegistrationOwnInfo extends AppCompatActivity{
     public static int castReligionOwn = 0;
     private ProgressDialog progress;
     private SharePref sharePref;
+    private Context context;
+
+    private String SUB_URL = "sign-out";
+    private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 999;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_own_info);
+
         sharePref = new SharePref(RegistrationOwnInfo.this);
+
+        context=this;
 
         castValue = "";
         religionValue = "";
@@ -92,9 +106,10 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharePref.set_data("token", "key");
+                /*sharePref.set_data("token", "key");
                 startActivity(new Intent(RegistrationOwnInfo.this,Login.class));
-                finish();
+                finish();*/
+                new LogoutRequest().execute();
             }
         });
 
@@ -388,8 +403,71 @@ public class RegistrationOwnInfo extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        sharePref.set_data("token", "key");
+        /*sharePref.set_data("token", "key");
         startActivity(new Intent(RegistrationOwnInfo.this,Login.class));
-        finish();
+        finish();*/
+
+        new LogoutRequest().execute();
+    }
+
+
+    private class LogoutRequest extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String token = sharePref.get_data("token");
+            String imei = null;
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (checkSelfPermission(android.Manifest.permission.READ_PHONE_STATE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(RegistrationOwnInfo.this,
+                            new String[]{android.Manifest.permission.READ_PHONE_STATE}, PERMISSIONS_REQUEST_READ_PHONE_STATE);
+                } else {
+                    imei = Utils.deviceIMEI(context);
+                }
+            }
+            else{
+                imei = Utils.deviceIMEI(context);
+            }
+
+            RequestBody requestBody = new FormEncodingBuilder()
+                    .add("user_login[imei]",imei)
+                    .build();
+
+            //   //imei of device
+
+
+            Request request = new Request.Builder()
+                    .url(Constant.BASE_URL + SUB_URL)
+                    .delete(requestBody)
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e("Logout", responseString);
+                response.body().close();
+
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            sharePref.set_data("token", "key");
+            startActivity(new Intent(RegistrationOwnInfo.this, Login.class));
+            finish();
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
     }
 }

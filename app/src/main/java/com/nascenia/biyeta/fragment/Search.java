@@ -2,11 +2,16 @@ package com.nascenia.biyeta.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +30,7 @@ import com.facebook.FacebookActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
+import com.nascenia.biyeta.activity.HomeScreen;
 import com.nascenia.biyeta.activity.ImageUpload;
 import com.nascenia.biyeta.activity.Login;
 import com.nascenia.biyeta.activity.MobileVarification;
@@ -37,8 +43,10 @@ import com.nascenia.biyeta.activity.RegistrationFamilyInfoSecondPage;
 import com.nascenia.biyeta.activity.RegistrationOwnInfo;
 import com.nascenia.biyeta.activity.RegistrationPersonalInformation;
 import com.nascenia.biyeta.activity.UserProfileActivity;
+import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.model.SearchProfileModel;
 import com.nascenia.biyeta.utils.Utils;
+import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -78,7 +86,7 @@ public class Search extends Fragment {
     private int flag = 1;
     private TextView emptyText;
     private Snackbar snackbar;
-    private Button searchButton,retryInternetBtn;
+    private Button searchButton, retryInternetBtn;
     private Profile_Adapter mProfile_adapter;
     private List<SearchProfileModel> profileList = new ArrayList<>();
 
@@ -89,11 +97,17 @@ public class Search extends Fragment {
 
     private LinearLayout noInternetLayout;
 
-    private Fragment thisFragment ;
+    private Fragment thisFragment;
 
     public Search() {
 
     }
+
+    private AlertDialog.Builder builder;
+
+    private String SUB_URL = "sign-out";
+
+    private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 999;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,14 +127,16 @@ public class Search extends Fragment {
 
         //inflate a view
         v = inflater.inflate(R.layout.search, container, false);
-        thisFragment =this;
+        thisFragment = this;
+
+        builder = new AlertDialog.Builder(getActivity());
 
         recyclerView = (RecyclerView) v.findViewById(R.id.profile_list);
         searchButton = (Button) v.findViewById(R.id.search_btn);
         emptyText = (TextView) v.findViewById(R.id.empty_list);
 
         noInternetLayout = v.findViewById(R.id.no_internet_layout);
-        retryInternetBtn= v.findViewById(R.id.retry_internet);
+        retryInternetBtn = v.findViewById(R.id.retry_internet);
 
         comeFromSearch = 0;
 
@@ -353,7 +369,7 @@ public class Search extends Fragment {
     //fetch data from
     class GetData extends AsyncTask<String, String, String> {
         @Override
-        protected void onPostExecute(String res) {
+        protected void onPostExecute(final String res) {
             super.onPostExecute(res);
 
             if (res == null) {
@@ -373,7 +389,7 @@ public class Search extends Fragment {
                 recyclerView.setVisibility(View.VISIBLE);
                 if (flag != 1) snackbar.dismiss();
                 try {
-                    JSONObject jsonObject = new JSONObject(res);
+                    final JSONObject jsonObject = new JSONObject(res);
 
                     if (jsonObject.has("is_profile_complete") &&
                             jsonObject.getBoolean("is_profile_complete")) {
@@ -393,13 +409,32 @@ public class Search extends Fragment {
                     } else if (jsonObject.has("is_profile_complete") &&
                             !jsonObject.getBoolean("is_profile_complete")) {
                         //login user profile is incomplete
+                        builder.setMessage(getString(R.string.incomplete_account_dialog_message))
+                                .setPositiveButton("হ্যাঁ", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                        if (jsonObject.getInt("current_mobile_step") == 1) {
-                            startActivity(new Intent(getActivity(), MobileVarification.class));
-                            getActivity().finish();
-                        } else {
-                            sendUserToInCompleteRegistrationpage(res, jsonObject.getInt("current_mobile_step"));
-                        }
+                                        try {
+                                            if (jsonObject.getInt("current_mobile_step") == 1) {
+                                                startActivity(new Intent(getActivity(), MobileVarification.class));
+                                                getActivity().finish();
+                                            } else {
+                                                sendUserToInCompleteRegistrationpage(res,
+                                                        jsonObject.getInt("current_mobile_step"));
+                                            }
+                                        } catch (JSONException e) {
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                       /* startActivity(new Intent(getActivity(), Login.class));
+                                        getActivity().finish();*/
+                                        new LogoutRequest().execute();
+                                    }
+                                })
+                                .show();
+
                     }
 
 
@@ -547,5 +582,68 @@ public class Search extends Fragment {
 
     }
 
+
+    private class LogoutRequest extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String token = sharePref.get_data("token");
+            String imei = null;
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (getActivity().checkSelfPermission(android.Manifest.permission.READ_PHONE_STATE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{android.Manifest.permission.READ_PHONE_STATE}, PERMISSIONS_REQUEST_READ_PHONE_STATE);
+                } else {
+                    imei = Utils.deviceIMEI(getActivity());
+                }
+            }
+            else{
+                imei = Utils.deviceIMEI(getActivity());
+            }
+
+
+
+
+            RequestBody requestBody = new FormEncodingBuilder()
+                    .add("user_login[imei]",imei)
+                    .build();
+
+            //   //imei of device
+
+
+            Request request = new Request.Builder()
+                    .url(Constant.BASE_URL + SUB_URL)
+                    .delete(requestBody)
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e("Logout", responseString);
+                response.body().close();
+
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            sharePref.set_data("token", "key");
+            startActivity(new Intent(getActivity(), Login.class));
+            getActivity().finish();
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+    }
 
 }
