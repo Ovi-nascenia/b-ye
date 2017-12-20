@@ -1,9 +1,16 @@
 package com.nascenia.biyeta.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.facebook.internal.Utility;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.utils.Utils;
@@ -26,7 +34,11 @@ import com.squareup.okhttp.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ImageUpload extends AppCompatActivity {
     OkHttpClient client;
@@ -36,7 +48,8 @@ public class ImageUpload extends AppCompatActivity {
     public static int beforeProPicUploadValue = 0, beforeBodyPicUploadValue = 0, beforeOtherPicUploadValue = 0;
     public static int afterProPicUploadValue = 0, afterBodyPicUploadValue = 0, afterOtherPicUploadValue = 0;
 
-    LinearLayout beforeProPicUpload, beforeBodyPicUpload, beforeOtherPicUpload, proPicChange, bodyPicChange, otherPicChange, permissionLayout;
+    LinearLayout beforeProPicUpload, beforeBodyPicUpload, beforeOtherPicUpload, proPicChange,
+            bodyPicChange, otherPicChange, permissionLayout;
     FrameLayout afterProPicUpload, afterBodyPicUpload, afterOtherPicUpload;
     ImageView proPic, bodyPic, otherPic, back;
     public static Bitmap proPicBitmap, bodyPicBitmap, otherPicBitmap;
@@ -46,6 +59,11 @@ public class ImageUpload extends AppCompatActivity {
 
     private ProgressDialog progress;
     private SharePref sharePref;
+
+    private static final int CAMERA_REQUEST = 1888;
+    private int REQUEST_CAMERA = 0,SELECT_FILE = 1;
+    private Uri fileUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,18 +100,19 @@ public class ImageUpload extends AppCompatActivity {
             }
         });
 
-        beforeBodyPicUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                beforeBodyPicUploadValue = 1;
-                startActivity(new Intent(ImageUpload.this, ImageChoose.class));
-            }
-        });
-
         beforeProPicUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 beforeProPicUploadValue = 1;
+              //  startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                selectImage();
+            }
+        });
+
+        beforeBodyPicUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                beforeBodyPicUploadValue = 1;
                 startActivity(new Intent(ImageUpload.this, ImageChoose.class));
             }
         });
@@ -111,7 +130,8 @@ public class ImageUpload extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 beforeBodyPicUploadValue = 1;
-                startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+              //  startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                selectImage();
             }
         });
         proPicChange.setOnClickListener(new View.OnClickListener() {
@@ -537,5 +557,126 @@ public class ImageUpload extends AppCompatActivity {
          proPicBase64="";
          bodyPicBase64="";
          otherPicBase64="";
+    }
+
+    private void selectImage() {
+
+        final CharSequence[] items = {"Take Photo", "Choose from Gallary",
+                "Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ImageUpload.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result = Utils.checkExternalStoragePermission(ImageUpload.this);
+
+                if (items[item].equals("Take Photo")) {
+                    if (result)
+                        cameraIntent();
+
+                } else if (items[item].equals("Choose from Gallary")) {
+                    if (result)
+                        galleryIntent();
+
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+
+
+    }
+
+    private void galleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+    }
+
+    private void cameraIntent() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        fileUri = getOutputMediaFileUri();
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(intent, REQUEST_CAMERA);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // save file url in bundle as it will be null on scren orientation
+        // changes
+        outState.putParcelable("file_uri", fileUri);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // get the file url
+        fileUri = savedInstanceState.getParcelable("file_uri");
+    }
+
+    public Uri getOutputMediaFileUri() {
+        return Uri.fromFile(getOutputMediaFile());
+    }
+
+    private File getOutputMediaFile() {
+        File mediaFile = null;
+        try {
+            // Create a media file name
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                    Locale.getDefault()).format(new Date());
+
+            mediaFile = new File(Environment.getExternalStorageDirectory() + File.separator
+                    + "IMG_" + timeStamp + ".jpg");
+
+        } catch (Exception e) {
+        }
+        return mediaFile;
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        String path = "sdcard/camera_app/cam_image.jpg";
+
+        if(resultCode == Activity.RESULT_OK){
+
+            try{
+                if (requestCode == REQUEST_CAMERA) {
+
+                    // bimatp factory
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+
+                    // downsizing image as it throws OutOfMemory Exception for larger
+                    // images
+                    options.inSampleSize = 8;
+
+                    /*selectedImageBitmap = BitmapFactory.decodeFile(fileUri.getPath(),
+                            options);
+                    userPhotoImageview.setImageBitmap(selectedImageBitmap);
+                    */
+
+
+                    Intent i = new Intent(getApplicationContext(), ImageCrop.class);
+                    i.putExtra("image_url", fileUri.getPath());
+                    startActivity(i);
+                }else if (requestCode == SELECT_FILE) {
+                    Intent i = new Intent(getApplicationContext(), ImageCrop.class);
+                    i.putExtra("image_url", fileUri.getPath());
+                    startActivity(i);
+                }
+
+            }catch (Exception e){}
+
+
+        }
     }
 }

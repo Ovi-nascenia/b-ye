@@ -98,7 +98,8 @@ public class ImageCrop extends Activity{
             public void onClick(View v){
                 view.setDrawingCacheEnabled(true);
                 Bitmap bmap = view.getDrawingCache();
-                Bitmap viewCapture = Bitmap.createBitmap(bmap,view.getLeft()+50, view.getTop(), view.getWidth()-100, view.getHeight());
+                Bitmap viewCapture = Bitmap.createBitmap(bmap,view.getLeft()+50, view.getTop(),
+                        view.getWidth()-100, view.getHeight());
                 cropImage = 1;
                 finish();
                 //view.setImageBitmap(viewCapture);

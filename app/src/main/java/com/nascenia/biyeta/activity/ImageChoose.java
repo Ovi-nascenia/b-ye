@@ -49,16 +49,16 @@ import java.util.TreeSet;
 public class ImageChoose extends Activity {
     GridView images;
     ArrayList<String> imagesArray;
-    private static final int CAMERA_REQUEST = 1888;
     public Bitmap[] bitmapArray;
     FrameLayout progressBarHolder;
     ProgressBar progressBar;
-
     ImageView back;
 
     AlphaAnimation inAnimation;
+
     AlphaAnimation outAnimation;
 
+    private static final int CAMERA_REQUEST = 1888;
     private int REQUEST_CAMERA = 0;
     private Uri fileUri;
 
@@ -187,8 +187,6 @@ public class ImageChoose extends Activity {
         File image_file = new File(folder,"cam_image.jpg");
         return image_file;
     }
-
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
