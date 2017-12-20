@@ -501,7 +501,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("checkbox", Arrays.toString(hinduCastSelectedArray.toArray()));
+               // Log.i("checkbox", Arrays.toString(hinduCastSelectedArray.toArray()));
                 //Log.i("checkbox", Arrays.toString(muslimCastSelectedArray.toArray()));
 
                 if (sharePref.get_data("gender").equalsIgnoreCase("male") &&
@@ -655,7 +655,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                         .toString();
                 Log.e("response","finaldata: "+ data);
 
-               // new RegistrationChoiceSelectionThirdPage.SendChoiceThird().execute(data, Utils.SEND_INFO);
+                new RegistrationChoiceSelectionThirdPage.SendChoiceThird().execute(data, Utils.SEND_INFO);
             }
         });
 
