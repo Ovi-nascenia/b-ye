@@ -171,6 +171,7 @@ public class PopUpCastReligion extends AppCompatActivity {
                         if (cast.getText().toString().isEmpty())
                             Toast.makeText(getBaseContext(), getString(R.string.write_muslim_cast_name), Toast.LENGTH_LONG).show();
                         else {
+
                             RegistrationOwnInfo.castReligionText.setText(religionName[religionValue] + ", " +
                                     cast.getText().toString());
                             RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
@@ -180,21 +181,27 @@ public class PopUpCastReligion extends AppCompatActivity {
 
                             onFinishPopUpCastReligionTask();
                         }
-
+                        PopUpCastReligion.castValue=0;
                     } else if (!dataConstant.get(religionValue).equals("4") && !dataConstant.get(religionValue).equals("5")) {
 
                         if (dataConstant.get(religionValue).equals("1")) {
                             RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]
                                     + ", " + muslimCastName[castValue]);
                             RegistrationOwnInfo.castValue = muslimCastConstant.get(castValue);
+
+                            Log.i("religiondata",  RegistrationOwnInfo.castReligionText.getText().toString()+" "+castValue);
+                            PopUpCastReligion.castValue=0;
                         } else if (dataConstant.get(religionValue).equals("2")) {
                             RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]
                                     + ", " + hinduCastName[castValue]);
                             RegistrationOwnInfo.castValue = hinduCastConstant.get(castValue);
+                            PopUpCastReligion.castValue=0;
+
                         } else if (dataConstant.get(religionValue).equals("3")) {
                             RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]
                                     + ", " + christianCastName[castValue]);
                             RegistrationOwnInfo.castValue = christianCastConstant.get(castValue);
+                            PopUpCastReligion.castValue=0;
                         }
 
                         RegistrationOwnInfo.religionValue = dataConstant.get(religionValue);
@@ -210,6 +217,8 @@ public class PopUpCastReligion extends AppCompatActivity {
                         RegistrationOwnInfo.otherCast="";
                         RegistrationOwnInfo.otherReligion="";
 
+                        PopUpCastReligion.castValue=0;
+
                         onFinishPopUpCastReligionTask();
                     } else if (dataConstant.get(religionValue).equals("5")) {
                         if(religion.getText().toString().isEmpty())
@@ -224,6 +233,8 @@ public class PopUpCastReligion extends AppCompatActivity {
 
                             onFinishPopUpCastReligionTask();
                         }
+
+                        PopUpCastReligion.castValue=0;
                     }
                 }
 
@@ -321,6 +332,7 @@ public class PopUpCastReligion extends AppCompatActivity {
             //of your main function
             String value = "" + newVal;
             castValue = newVal;
+            Log.i("religiondata",  "listener "+castValue);
             if (religionValue == 0 && newVal == 2) {
                 cast.setVisibility(View.VISIBLE);
                 cast.setHint("আপনার বর্ণ");

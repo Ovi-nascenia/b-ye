@@ -107,8 +107,6 @@ public class RegistrationOwnInfo extends AppCompatActivity{
             @Override
             public void onClick(View v){
 
-
-
                 castReligionOwn = 1;
                 Intent intent = new Intent(RegistrationOwnInfo.this, PopUpCastReligion.class );
                 intent.putExtra("constants",constants);
