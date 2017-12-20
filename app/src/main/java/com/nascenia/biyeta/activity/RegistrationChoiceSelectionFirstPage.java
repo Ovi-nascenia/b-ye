@@ -50,7 +50,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
     private int maxSkinColorRangePos = 3;
 
     private int minHealthPos = 0;
-    private int maxHealthPos = 1;
+    private int maxHealthPos = 2;
 
     private int minEducationPos = 2;
     private int maxEducationPos = 6;
@@ -74,7 +74,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
     private SharePref sharePref;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_choice_selection_first_page);
 
@@ -98,21 +98,18 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
             JSONObject healthObject = jsonObject.getJSONObject("health_constant");
             JSONObject educationObject = jsonObject.getJSONObject("education_constant");
 
-            for(int i=0;i<skinColorObject.length();i++)
-            {
-                skinColor.put(Integer.parseInt(skinColorObject.names().getString(i)),(String) skinColorObject.get(skinColorObject.names().getString(i)));
+            for (int i = 0; i < skinColorObject.length(); i++) {
+                skinColor.put(Integer.parseInt(skinColorObject.names().getString(i)), (String) skinColorObject.get(skinColorObject.names().getString(i)));
             }
 
-            for(int i=0;i<healthObject.length();i++)
-            {
-                health.put(Integer.parseInt(healthObject.names().getString(i)),(String) healthObject.get(healthObject.names().getString(i)));
+            for (int i = 0; i < healthObject.length(); i++) {
+                health.put(Integer.parseInt(healthObject.names().getString(i)), (String) healthObject.get(healthObject.names().getString(i)));
             }
 
-            for(int i=0;i<educationObject.length();i++)
-            {
-                education.put(Integer.parseInt(educationObject.names().getString(i)),(String) educationObject.get(educationObject.names().getString(i)));
+            for (int i = 0; i < educationObject.length(); i++) {
+                education.put(Integer.parseInt(educationObject.names().getString(i)), (String) educationObject.get(educationObject.names().getString(i)));
             }
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -125,9 +122,9 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
 
 
         back = (ImageView) findViewById(R.id.backPreviousActivityImage);
-        back.setOnClickListener(new View.OnClickListener(){
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                /* new Intent(RegistrationChoiceSelectionFirstPage.this,Login.class);
                 finish();*/
                 new GetPreviousStepFetchConstant().execute();
@@ -142,8 +139,8 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
             age_lebel.add(i + "");
 
 
-        for (int i = 4; i <= 7; i++){
-            for (int j = 0; j < 12; j++){
+        for (int i = 4; i <= 7; i++) {
+            for (int j = 0; j < 12; j++) {
                 heightLebel.add(i + "'" + j + "\"");
             }
         }
@@ -153,6 +150,48 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         rangeView_age.setLabelColor(Color.TRANSPARENT);
 
         rangeView_age.setFixedLabelColor(Color.TRANSPARENT);
+
+        /*rangeView_age.setStart(0);
+        rangeView_age.setEnd(12);
+*/
+
+        if (sharePref.get_data("gender").equalsIgnoreCase("female")) {
+
+            minAgeRangePos = 4;
+            maxAgeRangePos = 12;
+            rangeView_age.setStart(minAgeRangePos);
+            rangeView_age.setEnd(maxAgeRangePos);
+
+            minHeightRangePos = 15;
+            maxHeightRangePos = 20;
+            rangeView_height.setStart(minHeightRangePos);
+            rangeView_height.setEnd(maxHeightRangePos);
+
+            minEducationPos=4;
+            maxEducationPos=8;
+            rangeView_education.setStart(minEducationPos);
+            rangeView_education.setEnd(maxEducationPos);
+
+        } else {
+
+            minAgeRangePos = 4;
+            maxAgeRangePos = 12;
+            rangeView_age.setStart(minAgeRangePos);
+            rangeView_age.setEnd(maxAgeRangePos);
+
+            minHeightRangePos = 10;
+            maxHeightRangePos = 15;
+            rangeView_height.setStart(minHeightRangePos);
+            rangeView_height.setEnd(maxHeightRangePos);
+
+            minEducationPos=2;
+            maxEducationPos=4;
+            rangeView_education.setStart(minEducationPos);
+            rangeView_education.setEnd(maxEducationPos);
+
+
+        }
+
         rangeView_age.setOnTrackRangeListener(new SimpleRangeView.OnTrackRangeListener() {
             @Override
             public void onStartRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i) {
@@ -178,9 +217,9 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
             }
         });
 
-        rangeView_age.setStart(0);
-        rangeView_age.setEnd(7);
-
+       /* rangeView_age.setStart(0);
+       // rangeView_age.setEnd(7);
+        rangeView_age.setEnd(12);*/
 
 
         rangeView_color.setActiveLabelColor(Color.TRANSPARENT);
@@ -216,7 +255,6 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         rangeView_color.setEnd(3);
 
 
-
         rangeView_height.setActiveLabelColor(Color.TRANSPARENT);
         rangeView_height.setFixedThumbLabelColor(Color.TRANSPARENT);
         rangeView_height.setLabelColor(Color.TRANSPARENT);
@@ -246,9 +284,8 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                 return heightLebel.get(i);
             }
         });
-        rangeView_height.setStart(10);
-        rangeView_height.setEnd(19);
-
+        /*rangeView_height.setStart(10);
+        rangeView_height.setEnd(19);*/
 
 
         rangeView_health.setActiveLabelColor(Color.TRANSPARENT);
@@ -282,8 +319,8 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         });
 
         rangeView_health.setStart(0);
-        rangeView_health.setEnd(1);
-
+        //rangeView_health.setEnd(1);
+        rangeView_health.setEnd(2);
 
 
         rangeView_education.setActiveLabelColor(Color.TRANSPARENT);
@@ -315,8 +352,8 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                 return education.get(i);
             }
         });
-        rangeView_education.setStart(2);
-        rangeView_education.setEnd(6);
+      /*  rangeView_education.setStart(2);
+        rangeView_education.setEnd(4);*/
 
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -363,8 +400,8 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                         .append(currentStep)
                         .append("}")
                         .toString();
-                    Log.i("prefresponse",total);
-               // Toast.makeText(RegistrationChoiceSelectionFirstPage.this, total, Toast.LENGTH_LONG).show();
+                Log.i("prefresponse", total);
+                // Toast.makeText(RegistrationChoiceSelectionFirstPage.this, total, Toast.LENGTH_LONG).show();
                 new RegistrationChoiceSelectionFirstPage.SendChoiceInfo().execute(total);
             }
         });
@@ -380,39 +417,35 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
     class SendChoiceInfo extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
             progress.show();
             // progress.show();
         }
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s == null){
-               if(progress.isShowing())
-                   progress.dismiss();
+            if (s == null) {
+                if (progress.isShowing())
+                    progress.dismiss();
                 Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this, getString(R.string.no_internet_connection));
-            }
-            else{
+            } else {
                 try {
-                   // progress.cancel();
-                    JSONObject jsonObject=new JSONObject(s);
-                    Log.e("Response",s);
-                    if(jsonObject.has("errors"))
-                    {
-                        if(progress.isShowing())
+                    // progress.cancel();
+                    JSONObject jsonObject = new JSONObject(s);
+                    Log.e("Response", s);
+                    if (jsonObject.has("errors")) {
+                        if (progress.isShowing())
                             progress.dismiss();
 
-                        String error=jsonObject.getJSONObject("errors").getString("detail");
+                        String error = jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(RegistrationChoiceSelectionFirstPage.this,
-                                error+" ", Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
+                                error + " ", Toast.LENGTH_LONG).show();
+                    } else {
                         new RegistrationChoiceSelectionFirstPage.FetchConstant().execute();
                     }
-                } catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -420,7 +453,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings){
+        protected String doInBackground(String... strings) {
             SharePref sharePref = new SharePref(RegistrationChoiceSelectionFirstPage.this);
             final String token = sharePref.get_data("token");
 
@@ -431,7 +464,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
 
             OkHttpClient client = new OkHttpClient();
 
-            RequestBody body = RequestBody.create(JSON,strings[0]);
+            RequestBody body = RequestBody.create(JSON, strings[0]);
             Request request = new Request.Builder()
                     .url(Utils.SEND_INFO)
                     .addHeader("Authorization", "Token token=" + token)
@@ -443,7 +476,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                 response = client.newCall(request).execute();
                 responseString = response.body().string();
 
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
 //                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
             }
@@ -455,36 +488,34 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
     public class FetchConstant extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s == null){
-                if(progress.isShowing())
+            if (s == null) {
+                if (progress.isShowing())
                     progress.dismiss();
                 Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this, getString(R.string.no_internet_connection));
-            }
-            else{
+            } else {
                 /*if(progress.isShowing())
                     progress.dismiss();*/
-                Log.i("constantval",this.getClass().getSimpleName()+"_nextfetchval: "+s);
+                Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationChoiceSelectionFirstPage.this,
                         RegistrationChoiceSelectionSecondPage.class);
-                signupIntent.putExtra("constants",s);
+                signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 finish();
             }
 
 
-
         }
 
         @Override
-        protected String doInBackground(String... parameters){
+        protected String doInBackground(String... parameters) {
             //Login.currentMobileSignupStep+=1;
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
-                    .url(Utils.STEP_CONSTANT_FETCH + 5 )
+                    .url(Utils.STEP_CONSTANT_FETCH + 5)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
@@ -493,7 +524,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                 Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
                 return responseString;
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
 //                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
                 return null;
@@ -501,7 +532,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         }
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
         }
     }
@@ -552,7 +583,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                 /*if (progress.isShowing()) {
                     progress.dismiss();
                 }*/
-                Log.i("constantval",this.getClass().getSimpleName()+"_backfetchval: "+s);
+                Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
 
                 startActivity(new Intent(RegistrationChoiceSelectionFirstPage.this, ImageUpload.class).
                         putExtra("constants", s));
