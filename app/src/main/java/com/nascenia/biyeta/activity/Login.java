@@ -110,6 +110,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //initialize the Okhttp
         client = new OkHttpClient();
         setContentView(R.layout.login);
+
+        //Remove ImageUpload class data
+        ImageUpload.clearImageUploadClassStaticData();
+
         // Toast.makeText(getBaseContext(),"oncre",Toast.LENGTH_SHORT).show();
 
         //hide action bar

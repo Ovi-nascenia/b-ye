@@ -202,7 +202,7 @@ public class ImageUpload extends AppCompatActivity {
                         .append(1)
                         .append("\"")
                         .append("}").toString();
-                Log.i("picdata",proPic);
+                Log.i("picdata", proPic);
 
                 if (afterProPicUploadValue == 1) {
                     new ImageUpload.SendPicture().execute(proPic, Utils.SEND_INFO);
@@ -422,7 +422,8 @@ public class ImageUpload extends AppCompatActivity {
                 progress.cancel();
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
             } else {
-                Log.i("constantval","ImageUploadNextfetchval: "+s);
+                //clearBitmapData();
+                Log.i("constantval", "ImageUploadNextfetchval: " + s);
                 Intent signupIntent;
                 signupIntent = new Intent(ImageUpload.this, RegistrationChoiceSelectionFirstPage.class);
                 signupIntent.putExtra("constants", s);
@@ -433,7 +434,7 @@ public class ImageUpload extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... parameters) {
-           // Login.currentMobileSignupStep += 1;
+            // Login.currentMobileSignupStep += 1;
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
@@ -511,11 +512,30 @@ public class ImageUpload extends AppCompatActivity {
                 /*if (progress.isShowing()) {
                     progress.dismiss();
                 }*/
-                Log.i("constantval","ImageUpdloadBackfetchval: "+s);
+                //clearBitmapData();
+                Log.i("constantval", "ImageUpdloadBackfetchval: " + s);
                 startActivity(new Intent(ImageUpload.this, RegistrationOwnInfo.class).
                         putExtra("constants", s));
                 finish();
             }
         }
+    }
+
+    public static void clearImageUploadClassStaticData() {
+
+        beforeProPicUploadValue = 0;
+        beforeBodyPicUploadValue = 0;
+        beforeOtherPicUploadValue = 0;
+        afterProPicUploadValue = 0;
+        afterBodyPicUploadValue = 0;
+        afterOtherPicUploadValue = 0;
+
+        proPicBitmap = null;
+        bodyPicBitmap = null;
+        otherPicBitmap = null;
+
+         proPicBase64="";
+         bodyPicBase64="";
+         otherPicBase64="";
     }
 }
