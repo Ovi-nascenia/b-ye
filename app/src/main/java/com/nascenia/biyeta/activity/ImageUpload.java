@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -21,9 +22,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.facebook.internal.Utility;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.utils.ImagePicker;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -36,6 +37,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -61,9 +63,8 @@ public class ImageUpload extends AppCompatActivity {
     private SharePref sharePref;
 
     private static final int CAMERA_REQUEST = 1888;
-    private int REQUEST_CAMERA = 0,SELECT_FILE = 1;
+    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private Uri fileUri;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,16 @@ public class ImageUpload extends AppCompatActivity {
         bodyPicChange = (LinearLayout) findViewById(R.id.body_pic_image_change);
         otherPicChange = (LinearLayout) findViewById(R.id.other_pic_image_change);
 
+        afterProPicUpload = (FrameLayout) findViewById(R.id.after_pro_pic_upload);
+        afterBodyPicUpload = (FrameLayout) findViewById(R.id.after_body_pic_upload);
+        afterOtherPicUpload = (FrameLayout) findViewById(R.id.after_other_pic_upload);
+
+        proPic = (ImageView) findViewById(R.id.pro_pic);
+        bodyPic = (ImageView) findViewById(R.id.body_pic);
+        otherPic = (ImageView) findViewById(R.id.other_pic);
+
+        permissionLayout = (LinearLayout) findViewById(R.id.permission);
+
 
         back = (ImageView) findViewById(R.id.backPreviousActivityImage);
         back.setOnClickListener(new View.OnClickListener() {
@@ -104,8 +115,10 @@ public class ImageUpload extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 beforeProPicUploadValue = 1;
-              //  startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                //  startActivity(new Intent(ImageUpload.this, ImageChoose.class));
                 selectImage();
+
+                //ImagePicker.pickImage(ImageUpload.this);
             }
         });
 
@@ -113,7 +126,8 @@ public class ImageUpload extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 beforeBodyPicUploadValue = 1;
-                startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                //startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                selectImage();
             }
         });
 
@@ -121,43 +135,45 @@ public class ImageUpload extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 beforeOtherPicUploadValue = 1;
-                startActivity(new Intent(ImageUpload.this, ImageChoose.class));
-            }
-        });
-
-
-        bodyPicChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                beforeBodyPicUploadValue = 1;
-              //  startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                //startActivity(new Intent(ImageUpload.this, ImageChoose.class));
                 selectImage();
             }
         });
-        proPicChange.setOnClickListener(new View.OnClickListener() {
+
+
+
+      //  proPicChange.setOnClickListener(new View.OnClickListener() {
+        proPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 beforeProPicUploadValue = 1;
-                startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                //startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+               selectImage();
+               // ImagePicker.pickImage(ImageUpload.this);
             }
         });
-        otherPicChange.setOnClickListener(new View.OnClickListener() {
+       // bodyPicChange.setOnClickListener(new View.OnClickListener() {
+        bodyPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                beforeBodyPicUploadValue = 1;
+                //startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                selectImage();
+
+            }
+        });
+
+      //  otherPicChange.setOnClickListener(new View.OnClickListener() {
+        otherPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 beforeOtherPicUploadValue = 1;
-                startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                //startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                selectImage();
             }
         });
 
-        afterProPicUpload = (FrameLayout) findViewById(R.id.after_pro_pic_upload);
-        afterBodyPicUpload = (FrameLayout) findViewById(R.id.after_body_pic_upload);
-        afterOtherPicUpload = (FrameLayout) findViewById(R.id.after_other_pic_upload);
 
-        proPic = (ImageView) findViewById(R.id.pro_pic);
-        bodyPic = (ImageView) findViewById(R.id.body_pic);
-        otherPic = (ImageView) findViewById(R.id.other_pic);
-
-        permissionLayout = (LinearLayout) findViewById(R.id.permission);
 
         yesButton = (Button) findViewById(R.id.yes);
         yesButton.setOnClickListener(new View.OnClickListener() {
@@ -339,21 +355,27 @@ public class ImageUpload extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (afterProPicUploadValue == 1) {
-            proPic.setImageBitmap(proPicBitmap);
-            beforeProPicUpload.setVisibility(View.GONE);
-            afterProPicUpload.setVisibility(View.VISIBLE);
+        if (ImageCrop.cropImage == 1) {
+            ImageCrop.cropImage = 0;
+            //finish();
+
+            if (afterProPicUploadValue == 1) {
+                proPic.setImageBitmap(proPicBitmap);
+                beforeProPicUpload.setVisibility(View.GONE);
+                afterProPicUpload.setVisibility(View.VISIBLE);
+            }
+            if (afterBodyPicUploadValue == 1) {
+                bodyPic.setImageBitmap(bodyPicBitmap);
+                beforeBodyPicUpload.setVisibility(View.GONE);
+                afterBodyPicUpload.setVisibility(View.VISIBLE);
+            }
+            if (afterOtherPicUploadValue == 1) {
+                otherPic.setImageBitmap(otherPicBitmap);
+                beforeOtherPicUpload.setVisibility(View.GONE);
+                afterOtherPicUpload.setVisibility(View.VISIBLE);
+            }
         }
-        if (afterBodyPicUploadValue == 1) {
-            bodyPic.setImageBitmap(bodyPicBitmap);
-            beforeBodyPicUpload.setVisibility(View.GONE);
-            afterBodyPicUpload.setVisibility(View.VISIBLE);
-        }
-        if (afterOtherPicUploadValue == 1) {
-            otherPic.setImageBitmap(otherPicBitmap);
-            beforeOtherPicUpload.setVisibility(View.GONE);
-            afterOtherPicUpload.setVisibility(View.VISIBLE);
-        }
+
     }
 
 
@@ -554,9 +576,11 @@ public class ImageUpload extends AppCompatActivity {
         bodyPicBitmap = null;
         otherPicBitmap = null;
 
-         proPicBase64="";
-         bodyPicBase64="";
-         otherPicBase64="";
+        proPicBase64 = "";
+        bodyPicBase64 = "";
+        otherPicBase64 = "";
+
+        ImageCrop.cropImage=0;
     }
 
     private void selectImage() {
@@ -590,13 +614,18 @@ public class ImageUpload extends AppCompatActivity {
     }
 
     private void galleryIntent() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
+        /*Intent intent = new Intent();
+        intent.setType("image*//*");
         intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);*/
+        Intent i = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, SELECT_FILE);
     }
 
     private void cameraIntent() {
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         fileUri = getOutputMediaFileUri();
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
@@ -636,6 +665,7 @@ public class ImageUpload extends AppCompatActivity {
                     + "IMG_" + timeStamp + ".jpg");
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return mediaFile;
 
@@ -645,38 +675,74 @@ public class ImageUpload extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String path = "sdcard/camera_app/cam_image.jpg";
 
-        if(resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
+            Log.i("imageurl", " onActivityResult");
 
-            try{
+            try {
                 if (requestCode == REQUEST_CAMERA) {
+                    Log.i("imageurl", " REQUEST_CAMERA");
 
                     // bimatp factory
                     BitmapFactory.Options options = new BitmapFactory.Options();
-
                     // downsizing image as it throws OutOfMemory Exception for larger
                     // images
                     options.inSampleSize = 8;
 
-                    /*selectedImageBitmap = BitmapFactory.decodeFile(fileUri.getPath(),
-                            options);
-                    userPhotoImageview.setImageBitmap(selectedImageBitmap);
-                    */
 
-
-                    Intent i = new Intent(getApplicationContext(), ImageCrop.class);
+                    Log.i("imageurl", fileUri.getPath().toString());
+                    Intent i = new Intent(ImageUpload.this, ImageCrop.class);
                     i.putExtra("image_url", fileUri.getPath());
                     startActivity(i);
-                }else if (requestCode == SELECT_FILE) {
-                    Intent i = new Intent(getApplicationContext(), ImageCrop.class);
-                    i.putExtra("image_url", fileUri.getPath());
+                } else if (requestCode == SELECT_FILE) {
+                    Log.i("imageurl", "SELECT_FILE");
+
+                    //imageStream = getContentResolver().openInputStream(data.getData());
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                    Cursor cursor = getContentResolver().query(selectedImage,
+                            filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String picturePath = cursor.getString(columnIndex);
+                    cursor.close();
+
+                    Log.i("imageurl", picturePath);
+
+                    Intent i = new Intent(ImageUpload.this, ImageCrop.class);
+                    i.putExtra("image_url", picturePath);
                     startActivity(i);
+
                 }
 
-            }catch (Exception e){}
+            } catch (Exception e) {
+                e.printStackTrace();
 
-
+                Log.i("imageurl", "error " + e.getMessage());
+            }
+        } else {
+            Log.i("imageurl", "can't complete");
         }
     }
+
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_PICK) {
+            ImagePicker.beginCrop(this, resultCode, data);
+        } else if (requestCode == ImagePicker.REQUEST_CROP) {
+            Bitmap bitmap = ImagePicker.getImageCropped(this, resultCode, data,
+                    ImagePicker.ResizeType.FIXED_SIZE, 100);
+            Log.d("bitmap", "bitmap picked: " + bitmap);
+
+            proPic.setImageBitmap(bitmap);
+            beforeProPicUpload.setVisibility(View.GONE);
+            afterProPicUpload.setVisibility(View.VISIBLE);
+
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }*/
+
 }
