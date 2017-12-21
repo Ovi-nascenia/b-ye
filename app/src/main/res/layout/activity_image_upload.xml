@@ -110,6 +110,7 @@
                     android:layout_height="148dp">
                     <ImageView
                         android:id="@+id/pro_pic"
+                        android:scaleType="fitXY"
                         android:layout_width="148dp"
                         android:layout_height="148dp" />
 
@@ -182,6 +183,7 @@
                         android:layout_height="148dp">
                         <ImageView
                             android:id="@+id/body_pic"
+                            android:scaleType="fitXY"
                             android:layout_width="148dp"
                             android:layout_height="148dp" />
 
@@ -249,6 +251,7 @@
                         android:layout_height="148dp">
                         <ImageView
                             android:id="@+id/other_pic"
+                            android:scaleType="fitXY"
                             android:layout_width="148dp"
                             android:layout_height="148dp" />
 
