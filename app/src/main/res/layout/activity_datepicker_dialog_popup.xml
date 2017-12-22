@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/Level"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/date_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants"
+            android:gravity="center"
+            android:text="Date"
+            android:textColor="#626262"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/month_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants"
+            android:gravity="center"
+            android:text="Month"
+            android:textColor="#626262"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+
+            android:id="@+id/year_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants"
+            android:gravity="center"
+            android:text="Year"
+            android:textColor="#626262"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Level"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <NumberPicker
+            android:id="@+id/date_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants" />
+
+        <NumberPicker
+            android:id="@+id/month_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants" />
+
+        <NumberPicker
+            android:id="@+id/year_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scroll"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants"
+            android:text="@string/registration_cancel_btn_text"
+            android:textColor="#626262" />
+
+        <Button
+            android:id="@+id/accept_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorPrimary"
+            android:descendantFocusability="blocksDescendants"
+            android:text="@string/registration_accept_btn_text"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+
+</RelativeLayout>

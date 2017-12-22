@@ -62,10 +62,10 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-public class RegistrationFirstActivity extends AppCompatActivity{
+public class RegistrationFirstActivity extends AppCompatActivity {
 
     SharePref sharePref;
-    private Button male,female;
+    private Button male, female;
     //private IntlPhoneInput phoneInputView;
     Button buttonRegistration, buttonFacebookLogin;
     TextView buttonLogin;
@@ -92,8 +92,10 @@ public class RegistrationFirstActivity extends AppCompatActivity{
 
     private ProgressDialog progressDialog;
 
+    private Button pickdate;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_first);
 
@@ -106,7 +108,7 @@ public class RegistrationFirstActivity extends AppCompatActivity{
         progressDialog.setMessage(getResources().getString(R.string.progress_dialog_message));
         progressDialog.setCancelable(false);
 
-        parentScrollView= (ScrollView) findViewById(R.id.scrollView);
+        parentScrollView = (ScrollView) findViewById(R.id.scrollView);
 
         email_edit_text = (EditText) findViewById(R.id.email);
 
@@ -122,12 +124,22 @@ public class RegistrationFirstActivity extends AppCompatActivity{
 
         buttonLogin = (TextView) findViewById(R.id.login);
 
-         sharePref= new SharePref(RegistrationFirstActivity.this);
+        sharePref = new SharePref(RegistrationFirstActivity.this);
 
-
-        male.setOnClickListener(new View.OnClickListener(){
+        pickdate = findViewById(R.id.pickdate);
+        pickdate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View view) {
+                startActivityForResult(
+                        new Intent(RegistrationFirstActivity.this, BirthDatePickerPopUpActivity.class),
+                        2);
+            }
+        });
+
+
+        male.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 //male.setHeight(35);
                 //female.setHeight(35);
                 male.setBackgroundColor(getResources().getColor(R.color.back_varify_text_view_1));
@@ -138,9 +150,9 @@ public class RegistrationFirstActivity extends AppCompatActivity{
             }
         });
 
-        female.setOnClickListener(new View.OnClickListener(){
+        female.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 // male.setHeight(35);
                 female.setHeight(35);
                 female.setBackgroundColor(getResources().getColor(R.color.back_varify_text_view_1));
@@ -153,7 +165,7 @@ public class RegistrationFirstActivity extends AppCompatActivity{
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegistrationFirstActivity.this, Login.class ));
+                startActivity(new Intent(RegistrationFirstActivity.this, Login.class));
 
             }
         });
@@ -164,49 +176,38 @@ public class RegistrationFirstActivity extends AppCompatActivity{
             public void onClick(View v) {
 
                 String gender = null;
-                if(genderValue==0){
+                if (genderValue == 0) {
                     gender = "male";
-                }
-                else if(genderValue==1){
+                } else if (genderValue == 1) {
                     gender = "female";
                 }
 //                Toast.makeText(RegistrationFirstActivity.this, gender,Toast.LENGTH_LONG).show();
 
-                if(gender == null)
-                {
-                    Utils.ShowAlert(RegistrationFirstActivity.this,"পাত্র/পাত্রী নির্বাচন করুন");
-                }
-                else if(email_edit_text.getText().length()==0){
+                if (gender == null) {
+                    Utils.ShowAlert(RegistrationFirstActivity.this, "পাত্র/পাত্রী নির্বাচন করুন");
+                } else if (email_edit_text.getText().length() == 0) {
                     email_edit_text.requestFocus();
                     email_edit_text.setSelection(0);
-                    Utils.ShowAlert(RegistrationFirstActivity.this,"ইমেইল অ্যাড্রেস পূরণ করুন");
-                }
-                else if(!Utils.isValidEmailAddress(email_edit_text.getText().toString())){
+                    Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল অ্যাড্রেস পূরণ করুন");
+                } else if (!Utils.isValidEmailAddress(email_edit_text.getText().toString())) {
                     email_edit_text.requestFocus();
                     email_edit_text.setSelection(0);
-                    Utils.ShowAlert(RegistrationFirstActivity.this,"ইমেইল টি সঠিক নয়");
-                }
-
-                else if(password_edit_text.getText().length()==0){
+                    Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল টি সঠিক নয়");
+                } else if (password_edit_text.getText().length() == 0) {
                     password_edit_text.requestFocus();
                     password_edit_text.setSelection(0);
-                    Utils.ShowAlert(RegistrationFirstActivity.this,"পাসওয়ার্ড পূরণ করুন");
-                }
-                else if(password_edit_text.getText().length()<8)
-                {
+                    Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড পূরণ করুন");
+                } else if (password_edit_text.getText().length() < 8) {
                     password_edit_text.requestFocus();
                     password_edit_text.setSelection(password_edit_text.getText().length());
-                    Utils.ShowAlert(RegistrationFirstActivity.this,"পাসওয়ার্ড ন্যূনতম ৮ অক্ষর এর হতে হবে");
-                }
-
-                else if(name_edit_text.getText().length()==0){
+                    Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড ন্যূনতম ৮ অক্ষর এর হতে হবে");
+                } else if (name_edit_text.getText().length() == 0) {
                     name_edit_text.requestFocus();
                     name_edit_text.setSelection(0);
-                    Utils.ShowAlert(RegistrationFirstActivity.this,"নাম পূরণ করুন");
-                }
-                else if(display_name_edit_text.getText().length()==0){
+                    Utils.ShowAlert(RegistrationFirstActivity.this, "নাম পূরণ করুন");
+                } else if (display_name_edit_text.getText().length() == 0) {
                     display_name_edit_text.requestFocus();
-                    Utils.ShowAlert(RegistrationFirstActivity.this,"ডিসপ্লে নাম পূরণ করুন");
+                    Utils.ShowAlert(RegistrationFirstActivity.this, "ডিসপ্লে নাম পূরণ করুন");
                     display_name_edit_text.setSelection(0);
                 }
                 /*
@@ -219,8 +220,8 @@ public class RegistrationFirstActivity extends AppCompatActivity{
                     phoneInputView.requestFocus();
                     Utils.ShowAlert(RegistrationFirstActivity.this,"মোবাইল নাম্বারটি সঠিক নয়");
                 }*/
-                else{
-                    new RegistrationFirstActivity.RegistretionBasicInfoTask().execute(email_edit_text.getText().toString(), password_edit_text.getText().toString(),name_edit_text.getText().toString(),display_name_edit_text.getText().toString(),"",gender,"own");
+                else {
+                    new RegistrationFirstActivity.RegistretionBasicInfoTask().execute(email_edit_text.getText().toString(), password_edit_text.getText().toString(), name_edit_text.getText().toString(), display_name_edit_text.getText().toString(), "", gender, "own");
                 }
 
             }
@@ -231,11 +232,10 @@ public class RegistrationFirstActivity extends AppCompatActivity{
         buttonFacebookLogin.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         buttonFacebookLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 onFbSignup();
             }
         });
-
 
 
         display_name_edit_text.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -243,53 +243,41 @@ public class RegistrationFirstActivity extends AppCompatActivity{
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     String gender = null;
-                    if(genderValue==0){
+                    if (genderValue == 0) {
                         gender = "male";
-                    }
-                    else if(genderValue==1){
+                    } else if (genderValue == 1) {
                         gender = "female";
                     }
 //                Toast.makeText(RegistrationFirstActivity.this, gender,Toast.LENGTH_LONG).show();
 
-                    if(gender == null)
-                    {
-                        Utils.ShowAlert(RegistrationFirstActivity.this,"পাত্র/পাত্রী নির্বাচন করুন");
-                    }
-                    else if(email_edit_text.getText().length()==0){
+                    if (gender == null) {
+                        Utils.ShowAlert(RegistrationFirstActivity.this, "পাত্র/পাত্রী নির্বাচন করুন");
+                    } else if (email_edit_text.getText().length() == 0) {
                         email_edit_text.requestFocus();
                         email_edit_text.setSelection(0);
-                        Utils.ShowAlert(RegistrationFirstActivity.this,"ইমেইল অ্যাড্রেস পূরণ করুন");
-                    }
-                    else if(!Utils.isValidEmailAddress(email_edit_text.getText().toString())){
+                        Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল অ্যাড্রেস পূরণ করুন");
+                    } else if (!Utils.isValidEmailAddress(email_edit_text.getText().toString())) {
                         email_edit_text.requestFocus();
                         email_edit_text.setSelection(0);
-                        Utils.ShowAlert(RegistrationFirstActivity.this,"ইমেইল টি সঠিক নয়");
-                    }
-
-                    else if(password_edit_text.getText().length()==0){
+                        Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল টি সঠিক নয়");
+                    } else if (password_edit_text.getText().length() == 0) {
                         password_edit_text.requestFocus();
                         password_edit_text.setSelection(0);
-                        Utils.ShowAlert(RegistrationFirstActivity.this,"পাসওয়ার্ড পূরণ করুন");
-                    }
-                    else if(password_edit_text.getText().length()<8)
-                    {
+                        Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড পূরণ করুন");
+                    } else if (password_edit_text.getText().length() < 8) {
                         password_edit_text.requestFocus();
                         password_edit_text.setSelection(password_edit_text.getText().length());
-                        Utils.ShowAlert(RegistrationFirstActivity.this,"পাসওয়ার্ড ন্যূনতম ৮ অক্ষর এর হতে হবে");
-                    }
-
-                    else if(name_edit_text.getText().length()==0){
+                        Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড ন্যূনতম ৮ অক্ষর এর হতে হবে");
+                    } else if (name_edit_text.getText().length() == 0) {
                         name_edit_text.requestFocus();
                         name_edit_text.setSelection(0);
-                        Utils.ShowAlert(RegistrationFirstActivity.this,"নাম পূরণ করুন");
-                    }
-                    else if(display_name_edit_text.getText().length()==0){
+                        Utils.ShowAlert(RegistrationFirstActivity.this, "নাম পূরণ করুন");
+                    } else if (display_name_edit_text.getText().length() == 0) {
                         display_name_edit_text.requestFocus();
-                        Utils.ShowAlert(RegistrationFirstActivity.this,"ডিসপ্লে নাম পূরণ করুন");
+                        Utils.ShowAlert(RegistrationFirstActivity.this, "ডিসপ্লে নাম পূরণ করুন");
                         display_name_edit_text.setSelection(0);
-                    }
-                    else{
-                        new RegistrationFirstActivity.RegistretionBasicInfoTask().execute(email_edit_text.getText().toString(), password_edit_text.getText().toString(),name_edit_text.getText().toString(),display_name_edit_text.getText().toString(),"",gender,"own");
+                    } else {
+                        new RegistrationFirstActivity.RegistretionBasicInfoTask().execute(email_edit_text.getText().toString(), password_edit_text.getText().toString(), name_edit_text.getText().toString(), display_name_edit_text.getText().toString(), "", gender, "own");
                     }
                     return true;
                 }
@@ -317,22 +305,22 @@ public class RegistrationFirstActivity extends AppCompatActivity{
     }
 
 
-    private void onFbSignup(){
+    private void onFbSignup() {
         LoginManager.getInstance().logInWithReadPermissions(this,
                 Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
 
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(final LoginResult loginResult){
+            public void onSuccess(final LoginResult loginResult) {
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback(){
+                        new GraphRequest.GraphJSONObjectCallback() {
                             @Override
-                            public void onCompleted(JSONObject object, GraphResponse response){
-                                try{
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                try {
                                     uid = loginResult.getAccessToken().getUserId();
                                     showFacebookSignInResultDataOnView(object);
-                                }catch(Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -346,12 +334,12 @@ public class RegistrationFirstActivity extends AppCompatActivity{
             }
 
             @Override
-            public void onCancel(){
+            public void onCancel() {
 
             }
 
             @Override
-            public void onError(FacebookException error){
+            public void onError(FacebookException error) {
 
 //                Log.i("error", error.getMessage().toString());
 
@@ -376,22 +364,21 @@ public class RegistrationFirstActivity extends AppCompatActivity{
             realName = object.getString("first_name");
         }
         if (object.has("last_name")) {
-            realName= realName+" "+object.getString("last_name");
+            realName = realName + " " + object.getString("last_name");
             displayName = object.getString("last_name");
 
         }
 
-        if(object.has("gender")){
+        if (object.has("gender")) {
             gender = object.getString("gender");
-            if(gender.equals("male")){
+            if (gender.equals("male")) {
                 searchingFor = "female";
-            }
-            else if(gender.equals("female")){
+            } else if (gender.equals("female")) {
                 searchingFor = "male";
             }
         }
 
-        if(object.has("birthday")){
+        if (object.has("birthday")) {
 
         }
 
@@ -460,55 +447,58 @@ public class RegistrationFirstActivity extends AppCompatActivity{
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 2) {
+            String message = data.getStringExtra("MESSAGE");
+            //Toast.makeText(getBaseContext(), message + "", Toast.LENGTH_LONG).show();
+            Log.i("resultdata: ",message+"");
+        }
     }
 
-
-
-    public class RegistretionBasicInfoTask extends AsyncTask<String, String, String>{
+    public class RegistretionBasicInfoTask extends AsyncTask<String, String, String> {
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
 //            Toast.makeText(RegistrationFirstActivity.this, s, Toast.LENGTH_LONG).show();
             super.onPostExecute(s);
 
             //Log.e("LoginData", s);
-            if (s == null){
-                if(progressDialog.isShowing())
+            if (s == null) {
+                if (progressDialog.isShowing())
                     progressDialog.dismiss();
                 Utils.ShowAlert(RegistrationFirstActivity.this, getString(R.string.no_internet_connection));
             } else {
 
-                try{
-                    if(progressDialog.isShowing())
+                try {
+                    if (progressDialog.isShowing())
                         progressDialog.dismiss();
                     //convert string to json object
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Token", s);
-                    if(jsonObject.has("errors")){
+                    if (jsonObject.has("errors")) {
                         Utils.ShowAlert(RegistrationFirstActivity.this, jsonObject.getJSONObject("errors").getString("detail"));
                         email_edit_text.requestFocus();
-                    }
-                    else{
+                    } else {
                         //sharePref.set_data("registration_token",jsonObject.getString("auth_token"));
-                        sharePref.set_data("token",jsonObject.getString("auth_token"));
+                        sharePref.set_data("token", jsonObject.getString("auth_token"));
                         Intent mobileVerification = new Intent(RegistrationFirstActivity.this, MobileVarification.class);
                         startActivity(mobileVerification);
                         finish();
                     }
 
 
-                }catch(Exception e){
+                } catch (Exception e) {
 
                 }
             }
         }
 
         @Override
-        protected String doInBackground(String... parameters){
+        protected String doInBackground(String... parameters) {
             String email = parameters[0];
             String password = parameters[1];
             String realName = parameters[2];
@@ -521,13 +511,12 @@ public class RegistrationFirstActivity extends AppCompatActivity{
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("email", email)///sent the team passcode
                     .add("password", password)
-                    .add("real_name",realName) //FCM token
-                    .add("display_name",displayName)
-                    .add("mobile_number",mobileNumber)
-                    .add("searching_for",searchingFor)
-                    .add("created_by",createdBy)
+                    .add("real_name", realName) //FCM token
+                    .add("display_name", displayName)
+                    .add("mobile_number", mobileNumber)
+                    .add("searching_for", searchingFor)
+                    .add("created_by", createdBy)
                     .build();
-
 
 
             Request request = new Request.Builder()
@@ -542,7 +531,7 @@ public class RegistrationFirstActivity extends AppCompatActivity{
                 Log.e(Utils.LOGIN_DEBUG, responseString);
                 response.body().close();
                 return responseString;
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
 //                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
                 return null;
@@ -557,53 +546,49 @@ public class RegistrationFirstActivity extends AppCompatActivity{
     }
 
 
+    class FbRegistration extends AsyncTask<String, String, String> {
+        ProgressDialog progress = new ProgressDialog(RegistrationFirstActivity.this);
+        ;
 
-
-    class FbRegistration extends AsyncTask<String, String, String>{
-        ProgressDialog progress = new ProgressDialog(RegistrationFirstActivity.this);;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progress.setMessage(getResources().getString(R.string.progress_dialog_message));
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setIndeterminate(true);
-            if ( !progress.isShowing() )
+            if (!progress.isShowing())
                 progress.show();
         }
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            if (s == null){
+            if (s == null) {
                 progress.cancel();
                 Utils.ShowAlert(RegistrationFirstActivity.this, getString(R.string.no_internet_connection));
-            }
-            else{
+            } else {
                 try {
                     progress.cancel();
-                    JSONObject jsonObject=new JSONObject(s);
-                    Log.e("Response",s);
-                    if(jsonObject.has("errors"))
-                    {
+                    JSONObject jsonObject = new JSONObject(s);
+                    Log.e("Response", s);
+                    if (jsonObject.has("errors")) {
                         jsonObject.getJSONObject("errors").getString("detail");
-                       // Toast.makeText(RegistrationFirstActivity.this, jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-                        sharePref.set_data("registration_token",jsonObject.getString("auth_token"));
-                        Intent intent = new Intent(RegistrationFirstActivity.this,MobileVarification.class);
+                        // Toast.makeText(RegistrationFirstActivity.this, jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
+                    } else {
+                        sharePref.set_data("registration_token", jsonObject.getString("auth_token"));
+                        Intent intent = new Intent(RegistrationFirstActivity.this, MobileVarification.class);
                         startActivity(intent);
                         finish();
                     }
-                }catch(JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }
 
         @Override
-        protected String doInBackground(String... strings){
+        protected String doInBackground(String... strings) {
             SharePref sharePref = new SharePref(RegistrationFirstActivity.this);
             final String token = sharePref.get_data("registration_token");
 
@@ -614,7 +599,7 @@ public class RegistrationFirstActivity extends AppCompatActivity{
 
             OkHttpClient client = new OkHttpClient();
 
-            RequestBody body = RequestBody.create(JSON,strings[0]);
+            RequestBody body = RequestBody.create(JSON, strings[0]);
             Request request = new Request.Builder()
                     .url(strings[1])
                     .post(body)
@@ -624,12 +609,13 @@ public class RegistrationFirstActivity extends AppCompatActivity{
             try {
                 response = client.newCall(request).execute();
                 responseString = response.body().string();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
 //                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
             }
             return responseString;
         }
     }
+
 
 }

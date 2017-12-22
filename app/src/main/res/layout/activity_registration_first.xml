@@ -137,6 +137,13 @@
                 android:privateImeOptions="nm"
                 android:singleLine="true" />
 
+            <Button
+                android:id="@+id/pickdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="pick date"
+                />
+
             <!-- <net.rimoto.intlphoneinput.IntlPhoneInput
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
