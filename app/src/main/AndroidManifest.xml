@@ -27,18 +27,18 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-        <!--android:value="827631480631339"-->
-        <!--android:value="187871345122886"-->
+        <!-- android:value="827631480631339" -->
+        <!-- android:value="187871345122886" -->
 
         <activity
             android:name=".activity.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait">
-            <intent-filter>
+          <!--  <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.HomeScreen"
@@ -143,8 +143,10 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+        <service
+            android:name=".service.OnClearFromRecentService"
+            android:stopWithTask="false" />
 
-        <service android:name=".service.OnClearFromRecentService" android:stopWithTask="false" />
         <activity
             android:name=".activity.RegistrationFirstActivity"
             android:screenOrientation="portrait"
@@ -162,7 +164,6 @@
             android:name=".activity.PopUpCastReligion"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarPopUp" />
-
         <activity
             android:name=".activity.ImageChoose"
             android:screenOrientation="portrait"
@@ -171,7 +172,7 @@
             android:name=".activity.RegistrationPersonalInformation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.PopUpPersonalInfo"
             android:screenOrientation="portrait"
@@ -217,9 +218,18 @@
         <activity
             android:name=".activity.ImageCrop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+        <activity
+            android:name=".activity.RegistrationUserAddressInformation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
