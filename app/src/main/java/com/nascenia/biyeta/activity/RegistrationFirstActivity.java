@@ -535,8 +535,8 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             String convertedEglishYearFromBanglaYear = Integer.parseInt(
                     CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfBirth[2])) + "";
 
-            Log.i("resultdata: ",  convertedEnglishDateFromBanglaDate + "/" +
-                    convertedEnglishMonthFromBanglaMonth + "/" +convertedEglishYearFromBanglaYear);
+            Log.i("resultdata: ", convertedEglishYearFromBanglaYear + "/" +
+                    convertedEnglishMonthFromBanglaMonth + "/" +  convertedEnglishDateFromBanglaDate);
 
 
             RequestBody requestBody = new FormEncodingBuilder()
@@ -547,8 +547,8 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     .add("mobile_number", mobileNumber)
                     .add("searching_for", searchingFor)
                     .add("created_by", createdBy)
-                    .add("dateofbirth", convertedEnglishDateFromBanglaDate + "/" +
-                            convertedEnglishMonthFromBanglaMonth + "/" + convertedEglishYearFromBanglaYear)
+                    .add("dateofbirth", convertedEglishYearFromBanglaYear + "/" +
+                            convertedEnglishMonthFromBanglaMonth + "/" + convertedEnglishDateFromBanglaDate)
                     .build();
 
 
