@@ -235,14 +235,14 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         if (email_edit_text.getText().length() == 0) {
             email_edit_text.requestFocus();
             email_edit_text.setSelection(0);
-            Toast.makeText(getBaseContext(), "ইমেইল অ্যাড্রেস পূরণ করুন", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "আপনার ইমেইল অ্যাড্রেসটি পূরণ করুন", Toast.LENGTH_LONG).show();
             //  Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল অ্যাড্রেস পূরণ করুন");
             return;
         }
         if (!Utils.isValidEmailAddress(email_edit_text.getText().toString())) {
             email_edit_text.requestFocus();
             email_edit_text.setSelection(0);
-            Toast.makeText(getBaseContext(), "ইমেইল টি সঠিক নয়", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "আপনার ইমেইলটি সঠিক নয়", Toast.LENGTH_LONG).show();
             // Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল টি সঠিক নয়");
             return;
         }
@@ -263,14 +263,14 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         if (name_edit_text.getText().length() == 0) {
             name_edit_text.requestFocus();
             name_edit_text.setSelection(0);
-            Toast.makeText(getBaseContext(), "নাম পূরণ করুন", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "আপনার নাম পূরণ করুন", Toast.LENGTH_LONG).show();
             // Utils.ShowAlert(RegistrationFirstActivity.this, "নাম পূরণ করুন");
             return;
         }
         if (display_name_edit_text.getText().length() == 0) {
             display_name_edit_text.requestFocus();
             display_name_edit_text.setSelection(0);
-            Toast.makeText(getBaseContext(), "ডিসপ্লে নাম পূরণ করুন", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "আপনার ডিসপ্লে নাম পূরণ করুন", Toast.LENGTH_LONG).show();
             // Utils.ShowAlert(RegistrationFirstActivity.this, "ডিসপ্লে নাম পূরণ করুন");
             return;
         }
@@ -278,7 +278,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         if (dateOfBirthEditext.getText().length() == 0) {
             dateOfBirthEditext.requestFocus();
             dateOfBirthEditext.setSelection(0);
-            Toast.makeText(getBaseContext(), "give date of birth", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "আপনার জন্ম তারিখ নির্বাচন করুন", Toast.LENGTH_LONG).show();
             // Utils.ShowAlert(RegistrationFirstActivity.this, "ডিসপ্লে নাম পূরণ করুন");
             return;
         }
@@ -461,19 +461,17 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 2) {
-            String message = data.getStringExtra("DATE_OF_BIRTH");
-            //Toast.makeText(getBaseContext(), message + "", Toast.LENGTH_LONG).show();
-
-            String[] dateOfbirth = message.split("/");
-            String date = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfbirth[0])) + "";
-            String month = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfbirth[1])) + "";
-            String year = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfbirth[2])) + "";
-
-            Log.i("resultdata: ", message + " " + date + " " + month + " "+ year);
-
+            //String message = data.getStringExtra("DATE_OF_BIRTH");
 
             if (!data.getStringExtra("DATE_OF_BIRTH").equalsIgnoreCase("reject")) {
                 dateOfBirthEditext.setText(data.getStringExtra("DATE_OF_BIRTH"));
+
+                /*String[] dateOfbirth = message.split("/");
+                String date = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfbirth[0])) + "";
+                String month = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfbirth[1])) + "";
+                String year = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfbirth[2])) + "";
+
+                Log.i("resultdata: ", message + " " + date + "/" + month + "/"+ year);*/
             }
         }
     }
@@ -528,11 +526,17 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             String createdBy = parameters[6];
             String dateOfBirth[] = parameters[7].split("/");
 
-            String englishDate = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfBirth[0])) + "";
-            String englishMonth = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfBirth[1])) + "";
-            String englishYear = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfBirth[2])) + "";
+            String convertedEnglishDateFromBanglaDate = Integer.parseInt(
+                    CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfBirth[0])) + "";
 
-            Log.i("resultdata: ",  englishDate + "/" + englishMonth + "/" +englishYear);
+            String convertedEnglishMonthFromBanglaMonth = Integer.parseInt(
+                    CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfBirth[1])) + "";
+
+            String convertedEglishYearFromBanglaYear = Integer.parseInt(
+                    CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfBirth[2])) + "";
+
+            Log.i("resultdata: ",  convertedEnglishDateFromBanglaDate + "/" +
+                    convertedEnglishMonthFromBanglaMonth + "/" +convertedEglishYearFromBanglaYear);
 
 
             RequestBody requestBody = new FormEncodingBuilder()
@@ -543,7 +547,8 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     .add("mobile_number", mobileNumber)
                     .add("searching_for", searchingFor)
                     .add("created_by", createdBy)
-                    .add("dateofbirth", englishDate + "/" + englishMonth + "/" + englishYear)
+                    .add("dateofbirth", convertedEnglishDateFromBanglaDate + "/" +
+                            convertedEnglishMonthFromBanglaMonth + "/" + convertedEglishYearFromBanglaYear)
                     .build();
 
 
