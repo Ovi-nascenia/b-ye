@@ -40,8 +40,10 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
     private String[] monthArray = new String[monthArrayList.size()];
 
     private NumberPicker yearPicker, monthPicker, datePicker;
-    Button acceptBtn, rejectBtn;
-    int yearValue=0, monthValue=0, dateValue=0;
+    private Button acceptBtn, rejectBtn;
+    private int yearValue = 0, monthValue = 0, dateValue = 0;
+
+    private int startingYear = 1967;
 
     private static Calendar calendar;//=new GregorianCalendar(1967, Calendar.JANUARY, 1);;
 
@@ -50,7 +52,7 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_datepicker_dialog_popup);
 
-        for (int i = 1967; i <= 3000; i++) {
+        for (int i = startingYear; i <= 3000; i++) {
             String number = String.valueOf(i);
             String banglaYear = "";
             for (int j = 0; j < 4; j++) {
@@ -93,15 +95,15 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
         datePicker = findViewById(R.id.date_picker);
 
         //set default date
-        calendar = new GregorianCalendar(1967, Calendar.JANUARY, 1);
+        calendar = new GregorianCalendar(startingYear, Calendar.JANUARY, 1);
         int initialMonthDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         Log.i("totalday", initialMonthDay + "");
 
         prepareDateList(initialMonthDay);
 
-        datePicker.setMinValue(0);
-       // datePicker.setMaxValue(dateArray.length - 1);
-       // datePicker.setDisplayedValues(dateArray);
+        // datePicker.setMinValue(0);
+        // datePicker.setMaxValue(dateArray.length - 1);
+        // datePicker.setDisplayedValues(dateArray);
         datePicker.setOnValueChangedListener(new DateListListener());
         setDividerColor(datePicker, Color.parseColor("#626262"));
         setNumberPickerTextColor(datePicker, Color.parseColor("#626262"));
@@ -110,10 +112,27 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
         acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String convertedBanglaMonthValue = String.valueOf(monthValue + 1);
+
+                if (convertedBanglaMonthValue.length() == 2) {
+
+                    convertedBanglaMonthValue = CalenderBanglaInfo.getBanglaDigit(
+                            Integer.parseInt(convertedBanglaMonthValue) / 10)
+                            +
+                            CalenderBanglaInfo.getBanglaDigit(
+                                    Integer.parseInt(convertedBanglaMonthValue) % 10);
+
+                } else {
+
+                    convertedBanglaMonthValue = "০" + CalenderBanglaInfo.getBanglaDigit(
+                            Integer.parseInt(convertedBanglaMonthValue));
+                }
+
                 Intent intent = new Intent();
-                intent.putExtra("MESSAGE", yearArray[yearValue]+"/"+
-                        monthArray[monthValue]+"/"+
-                        dateArray[dateValue]);
+                intent.putExtra("DATE_OF_BIRTH", dateArray[dateValue] + "/" +
+                        convertedBanglaMonthValue + "/" +
+                        yearArray[yearValue]);
                 setResult(2, intent);
                 finish();//finishing activity
             }
@@ -123,7 +142,7 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.putExtra("MESSAGE", "reject");
+                intent.putExtra("DATE_OF_BIRTH", "reject");
                 setResult(2, intent);
                 finish();//finishing activity
             }
@@ -140,16 +159,21 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
                 dateArrayList.add(CalenderBanglaInfo.getBanglaDigit(i / 10) +
                         CalenderBanglaInfo.getBanglaDigit(i % 10));
             } else {
-                dateArrayList.add(CalenderBanglaInfo.getBanglaDigit(i));
+                dateArrayList.add("০" + CalenderBanglaInfo.getBanglaDigit(i));
             }
         }
+
+        // Prevent ArrayOutOfBoundExceptions by setting
+        // values array to null so its not checked
+        datePicker.setDisplayedValues(null);
+
+        datePicker.setMinValue(0);
         dateArray = new String[dateArrayList.size()];
-        Log.i("totalday", "before: "+dateArrayList.size()+" "+dateArray.length);
+        Log.i("totalday", "before: " + dateArrayList.size() + " " + dateArray.length);
         dateArray = dateArrayList.toArray(dateArray);
-        int min = dateArray.length-1;
-        Log.i("totalday", " "+min);
-        //datePicker.setMaxValue(dateArray.length - 1);
-        datePicker.setMaxValue(min);
+        /*int min = dateArray.length-1;
+        Log.i("totalday", " "+min);*/
+        datePicker.setMaxValue(dateArray.length - 1);
         datePicker.setDisplayedValues(dateArray);
 
     }
@@ -178,14 +202,15 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
             yearValue = newValue;
 
             calendar.set(Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(yearArray[yearValue])),
-                    monthValue,1);
-            Log.i("totalday",Integer.
-                    parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(yearArray[yearValue]))+" "
-                    +monthValue+" "+
+                    monthValue, 1);
+
+            Log.i("totalday", Integer.
+                    parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(yearArray[yearValue])) + " "
+                    + monthValue + " " +
                     calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
 
 
-            prepareDateList( calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+            prepareDateList(calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         }
     }
 
@@ -195,14 +220,14 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
         public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
             monthValue = newValue;
             calendar.set(Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(yearArray[yearValue])),
-                    monthValue,1);
-            Log.i("totalday",Integer.
-                    parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(yearArray[yearValue]))+" "
-                    +monthValue+" "+
+                    monthValue, 1);
+            Log.i("totalday", Integer.
+                    parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(yearArray[yearValue])) + " "
+                    + monthValue + " " +
                     calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
 
 
-            prepareDateList( calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+            prepareDateList(calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         }
     }
 
@@ -210,10 +235,9 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
 
         @Override
         public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
-                dateValue=newValue;
+            dateValue = newValue;
         }
     }
-
 
     private void setDividerColor(NumberPicker picker, int color) {
 

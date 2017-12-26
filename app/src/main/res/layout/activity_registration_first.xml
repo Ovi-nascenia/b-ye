@@ -131,17 +131,25 @@
                 android:layout_weight=".8"
                 android:background="@color/white"
                 android:hint="ডিসপ্লে নাম"
-                android:imeOptions="actionDone"
                 android:inputType="text"
                 android:paddingLeft="10sp"
                 android:privateImeOptions="nm"
                 android:singleLine="true" />
 
-            <Button
-                android:id="@+id/pickdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="pick date"
+            <EditText
+                android:id="@+id/date_Of_birth_editext"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/display_name"
+                android:layout_margin="10dp"
+                android:layout_weight=".8"
+                android:background="@color/white"
+                android:hint="জন্ম তারিখ"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:paddingLeft="10sp"
+                android:privateImeOptions="nm"
+                android:singleLine="true"
                 />
 
             <!-- <net.rimoto.intlphoneinput.IntlPhoneInput
@@ -168,7 +176,7 @@
                 android:id="@+id/register_button"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_below="@id/my_phone_input"
+                android:layout_below="@id/date_Of_birth_editext"
                 android:layout_margin="10dp"
                 android:layout_weight=".8"
                 android:background="@color/colorPrimary"

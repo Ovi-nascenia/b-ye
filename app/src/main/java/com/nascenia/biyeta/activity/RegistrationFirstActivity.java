@@ -41,6 +41,7 @@ import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.model.loginInfromation.LoginInformation;
+import com.nascenia.biyeta.utils.CalenderBanglaInfo;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MediaType;
@@ -92,7 +93,9 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    private Button pickdate;
+    private EditText dateOfBirthEditext;
+
+    private final int DATE_OF_BIRTH_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,20 +125,33 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         //phoneInputView = (IntlPhoneInput) findViewById(R.id.my_phone_input);
         //phoneInputView.setEmptyDefault("BD");
 
-        buttonLogin = (TextView) findViewById(R.id.login);
+        dateOfBirthEditext = findViewById(R.id.date_Of_birth_editext);
+        dateOfBirthEditext.setKeyListener(null);
 
-        sharePref = new SharePref(RegistrationFirstActivity.this);
-
-        pickdate = findViewById(R.id.pickdate);
-        pickdate.setOnClickListener(new View.OnClickListener() {
+        dateOfBirthEditext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(
                         new Intent(RegistrationFirstActivity.this, BirthDatePickerPopUpActivity.class),
-                        2);
+                        DATE_OF_BIRTH_REQUEST_CODE);
             }
         });
 
+        dateOfBirthEditext.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    startActivityForResult(
+                            new Intent(RegistrationFirstActivity.this, BirthDatePickerPopUpActivity.class),
+                            DATE_OF_BIRTH_REQUEST_CODE);
+                }
+            }
+        });
+
+
+        buttonLogin = (TextView) findViewById(R.id.login);
+
+        sharePref = new SharePref(RegistrationFirstActivity.this);
 
         male.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,56 +190,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         buttonRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String gender = null;
-                if (genderValue == 0) {
-                    gender = "male";
-                } else if (genderValue == 1) {
-                    gender = "female";
-                }
-//                Toast.makeText(RegistrationFirstActivity.this, gender,Toast.LENGTH_LONG).show();
-
-                if (gender == null) {
-                    Utils.ShowAlert(RegistrationFirstActivity.this, "পাত্র/পাত্রী নির্বাচন করুন");
-                } else if (email_edit_text.getText().length() == 0) {
-                    email_edit_text.requestFocus();
-                    email_edit_text.setSelection(0);
-                    Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল অ্যাড্রেস পূরণ করুন");
-                } else if (!Utils.isValidEmailAddress(email_edit_text.getText().toString())) {
-                    email_edit_text.requestFocus();
-                    email_edit_text.setSelection(0);
-                    Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল টি সঠিক নয়");
-                } else if (password_edit_text.getText().length() == 0) {
-                    password_edit_text.requestFocus();
-                    password_edit_text.setSelection(0);
-                    Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড পূরণ করুন");
-                } else if (password_edit_text.getText().length() < 8) {
-                    password_edit_text.requestFocus();
-                    password_edit_text.setSelection(password_edit_text.getText().length());
-                    Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড ন্যূনতম ৮ অক্ষর এর হতে হবে");
-                } else if (name_edit_text.getText().length() == 0) {
-                    name_edit_text.requestFocus();
-                    name_edit_text.setSelection(0);
-                    Utils.ShowAlert(RegistrationFirstActivity.this, "নাম পূরণ করুন");
-                } else if (display_name_edit_text.getText().length() == 0) {
-                    display_name_edit_text.requestFocus();
-                    Utils.ShowAlert(RegistrationFirstActivity.this, "ডিসপ্লে নাম পূরণ করুন");
-                    display_name_edit_text.setSelection(0);
-                }
-                /*
-                else if(phoneInputView.getText()==null){
-                    phoneInputView.requestFocus();
-                    Utils.ShowAlert(RegistrationFirstActivity.this,"মোবাইল নাম্বার দিন");
-                }
-
-                else if(!phoneInputView.isValid()){
-                    phoneInputView.requestFocus();
-                    Utils.ShowAlert(RegistrationFirstActivity.this,"মোবাইল নাম্বারটি সঠিক নয়");
-                }*/
-                else {
-                    new RegistrationFirstActivity.RegistretionBasicInfoTask().execute(email_edit_text.getText().toString(), password_edit_text.getText().toString(), name_edit_text.getText().toString(), display_name_edit_text.getText().toString(), "", gender, "own");
-                }
-
+                createAccount();
             }
         });
 
@@ -238,52 +205,94 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         });
 
 
-        display_name_edit_text.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+        dateOfBirthEditext.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    String gender = null;
-                    if (genderValue == 0) {
-                        gender = "male";
-                    } else if (genderValue == 1) {
-                        gender = "female";
-                    }
-//                Toast.makeText(RegistrationFirstActivity.this, gender,Toast.LENGTH_LONG).show();
-
-                    if (gender == null) {
-                        Utils.ShowAlert(RegistrationFirstActivity.this, "পাত্র/পাত্রী নির্বাচন করুন");
-                    } else if (email_edit_text.getText().length() == 0) {
-                        email_edit_text.requestFocus();
-                        email_edit_text.setSelection(0);
-                        Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল অ্যাড্রেস পূরণ করুন");
-                    } else if (!Utils.isValidEmailAddress(email_edit_text.getText().toString())) {
-                        email_edit_text.requestFocus();
-                        email_edit_text.setSelection(0);
-                        Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল টি সঠিক নয়");
-                    } else if (password_edit_text.getText().length() == 0) {
-                        password_edit_text.requestFocus();
-                        password_edit_text.setSelection(0);
-                        Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড পূরণ করুন");
-                    } else if (password_edit_text.getText().length() < 8) {
-                        password_edit_text.requestFocus();
-                        password_edit_text.setSelection(password_edit_text.getText().length());
-                        Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড ন্যূনতম ৮ অক্ষর এর হতে হবে");
-                    } else if (name_edit_text.getText().length() == 0) {
-                        name_edit_text.requestFocus();
-                        name_edit_text.setSelection(0);
-                        Utils.ShowAlert(RegistrationFirstActivity.this, "নাম পূরণ করুন");
-                    } else if (display_name_edit_text.getText().length() == 0) {
-                        display_name_edit_text.requestFocus();
-                        Utils.ShowAlert(RegistrationFirstActivity.this, "ডিসপ্লে নাম পূরণ করুন");
-                        display_name_edit_text.setSelection(0);
-                    } else {
-                        new RegistrationFirstActivity.RegistretionBasicInfoTask().execute(email_edit_text.getText().toString(), password_edit_text.getText().toString(), name_edit_text.getText().toString(), display_name_edit_text.getText().toString(), "", gender, "own");
-                    }
+                    createAccount();
                     return true;
                 }
                 return false;
             }
         });
+    }
+
+    private void createAccount() {
+
+        String gender = null;
+        if (genderValue == 0) {
+            gender = "male";
+        } else if (genderValue == 1) {
+            gender = "female";
+        }
+
+        if (gender == null) {
+            //Utils.ShowAlert(RegistrationFirstActivity.this, "পাত্র/পাত্রী নির্বাচন করুন");
+            Toast.makeText(getBaseContext(), "পাত্র/পাত্রী নির্বাচন করুন", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (email_edit_text.getText().length() == 0) {
+            email_edit_text.requestFocus();
+            email_edit_text.setSelection(0);
+            Toast.makeText(getBaseContext(), "ইমেইল অ্যাড্রেস পূরণ করুন", Toast.LENGTH_LONG).show();
+            //  Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল অ্যাড্রেস পূরণ করুন");
+            return;
+        }
+        if (!Utils.isValidEmailAddress(email_edit_text.getText().toString())) {
+            email_edit_text.requestFocus();
+            email_edit_text.setSelection(0);
+            Toast.makeText(getBaseContext(), "ইমেইল টি সঠিক নয়", Toast.LENGTH_LONG).show();
+            // Utils.ShowAlert(RegistrationFirstActivity.this, "ইমেইল টি সঠিক নয়");
+            return;
+        }
+        if (password_edit_text.getText().length() == 0) {
+            password_edit_text.requestFocus();
+            password_edit_text.setSelection(0);
+            Toast.makeText(getBaseContext(), "পাসওয়ার্ড পূরণ করুন", Toast.LENGTH_LONG).show();
+            //  Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড পূরণ করুন");
+            return;
+        }
+        if (password_edit_text.getText().length() < 8) {
+            password_edit_text.requestFocus();
+            password_edit_text.setSelection(password_edit_text.getText().length());
+            Toast.makeText(getBaseContext(), "পাসওয়ার্ড ন্যূনতম ৮ অক্ষর এর হতে হবে", Toast.LENGTH_LONG).show();
+            // Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড ন্যূনতম ৮ অক্ষর এর হতে হবে");
+            return;
+        }
+        if (name_edit_text.getText().length() == 0) {
+            name_edit_text.requestFocus();
+            name_edit_text.setSelection(0);
+            Toast.makeText(getBaseContext(), "নাম পূরণ করুন", Toast.LENGTH_LONG).show();
+            // Utils.ShowAlert(RegistrationFirstActivity.this, "নাম পূরণ করুন");
+            return;
+        }
+        if (display_name_edit_text.getText().length() == 0) {
+            display_name_edit_text.requestFocus();
+            display_name_edit_text.setSelection(0);
+            Toast.makeText(getBaseContext(), "ডিসপ্লে নাম পূরণ করুন", Toast.LENGTH_LONG).show();
+            // Utils.ShowAlert(RegistrationFirstActivity.this, "ডিসপ্লে নাম পূরণ করুন");
+            return;
+        }
+
+        if (dateOfBirthEditext.getText().length() == 0) {
+            dateOfBirthEditext.requestFocus();
+            dateOfBirthEditext.setSelection(0);
+            Toast.makeText(getBaseContext(), "give date of birth", Toast.LENGTH_LONG).show();
+            // Utils.ShowAlert(RegistrationFirstActivity.this, "ডিসপ্লে নাম পূরণ করুন");
+            return;
+        }
+
+
+        new RegistrationFirstActivity.RegistretionBasicInfoTask()
+                .execute(email_edit_text.getText().toString(),
+                        password_edit_text.getText().toString(),
+                        name_edit_text.getText().toString(),
+                        display_name_edit_text.getText().toString(),
+                        "",
+                        gender,
+                        "own",
+                        dateOfBirthEditext.getText().toString());
 
 
     }
@@ -452,9 +461,20 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 2) {
-            String message = data.getStringExtra("MESSAGE");
+            String message = data.getStringExtra("DATE_OF_BIRTH");
             //Toast.makeText(getBaseContext(), message + "", Toast.LENGTH_LONG).show();
-            Log.i("resultdata: ",message+"");
+
+            String[] dateOfbirth = message.split("/");
+            String date = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfbirth[0])) + "";
+            String month = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfbirth[1])) + "";
+            String year = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfbirth[2])) + "";
+
+            Log.i("resultdata: ", message + " " + date + " " + month + " "+ year);
+
+
+            if (!data.getStringExtra("DATE_OF_BIRTH").equalsIgnoreCase("reject")) {
+                dateOfBirthEditext.setText(data.getStringExtra("DATE_OF_BIRTH"));
+            }
         }
     }
 
@@ -506,6 +526,13 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             String mobileNumber = parameters[4];
             String searchingFor = parameters[5];
             String createdBy = parameters[6];
+            String dateOfBirth[] = parameters[7].split("/");
+
+            String englishDate = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfBirth[0])) + "";
+            String englishMonth = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfBirth[1])) + "";
+            String englishYear = Integer.parseInt(CalenderBanglaInfo.getDigitEnglishFromBangla(dateOfBirth[2])) + "";
+
+            Log.i("resultdata: ",  englishDate + "/" + englishMonth + "/" +englishYear);
 
 
             RequestBody requestBody = new FormEncodingBuilder()
@@ -516,6 +543,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     .add("mobile_number", mobileNumber)
                     .add("searching_for", searchingFor)
                     .add("created_by", createdBy)
+                    .add("dateofbirth", englishDate + "/" + englishMonth + "/" + englishYear)
                     .build();
 
 
