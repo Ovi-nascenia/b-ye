@@ -34,11 +34,11 @@
             android:name=".activity.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait">
-          <!--  <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--  <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+                  <category android:name="android.intent.category.LAUNCHER" />
+              </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.HomeScreen"
@@ -220,16 +220,24 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+
         <activity
             android:name=".activity.RegistrationUserAddressInformation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.AbroadOptionPickerPopUpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBarPopUp" />
+
     </application>
 
 </manifest>

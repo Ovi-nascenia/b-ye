@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +18,6 @@ import com.nascenia.biyeta.utils.CalenderBanglaInfo;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -50,7 +47,7 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_datepicker_dialog_popup);
+        setContentView(R.layout.activity_popup_datepicker_dialog);
 
         for (int i = startingYear; i <= 3000; i++) {
             String number = String.valueOf(i);
