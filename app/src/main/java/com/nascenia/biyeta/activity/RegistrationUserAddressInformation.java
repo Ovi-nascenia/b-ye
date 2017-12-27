@@ -42,7 +42,6 @@ public class RegistrationUserAddressInformation extends AppCompatActivity {
 
                 villageHouseDistrictListDialog.create();
                 villageHouseDistrictListDialog.show();
-
             }
         });
 
@@ -55,7 +54,6 @@ public class RegistrationUserAddressInformation extends AppCompatActivity {
         districtList = new String[disLinkedHashMap.size()];
 
         for (Map.Entry m : disLinkedHashMap.entrySet()) {
-            System.out.println(m.getKey() + " " + m.getValue());
             Log.i("hashmapval", districtCounter + " " + m.getKey() + " " + m.getValue());
             districtList[districtCounter] = (String) m.getValue();
             districtCounter++;
