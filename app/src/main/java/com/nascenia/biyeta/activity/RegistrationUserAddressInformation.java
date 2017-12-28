@@ -360,7 +360,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
     private void addressBangldeshCheckboxAction() {
 
         if (addressBangldeshCheckbox.isChecked()) {
-            currentLivingLocationStatus = "bd";
+            currentLivingLocationStatus = "BD";
             addressAbroadCheckbox.setChecked(false);
             abroadTypeStatusTitleTextView.setVisibility(View.GONE);
             abroadTypeLayout.setVisibility(View.GONE);
@@ -374,7 +374,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
     private void addressAbroadCheckboxAction() {
 
         if (addressAbroadCheckbox.isChecked()) {
-            currentLivingLocationStatus = "ab";
+            currentLivingLocationStatus = "AB";
             addressBangldeshCheckbox.setChecked(false);
             abroadTypeStatusTitleTextView.setVisibility(View.VISIBLE);
             abroadTypeLayout.setVisibility(View.VISIBLE);
