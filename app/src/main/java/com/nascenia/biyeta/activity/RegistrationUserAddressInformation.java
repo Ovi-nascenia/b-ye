@@ -331,20 +331,20 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
 
         if (presentAddressEditext.getText().toString().isEmpty()) {
-            Toast.makeText(getBaseContext(), "আপনার বর্তমান ঠিকানা", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "আপনার বর্তমান ঠিকানা লিখুন", Toast.LENGTH_LONG).show();
             return;
         }
 
 
         if (presentCountryCode.isEmpty()) {
-            Toast.makeText(getBaseContext(), "আপনার  বর্তমানে  দেশ  নির্বাচন করুন", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "আপনার  বর্তমানে অবস্থানরত দেশ নির্বাচন করুন", Toast.LENGTH_LONG).show();
             return;
         }
 
         if (!permanentAddressCheckbox.isChecked()) {
 
             if (permanentAddressEditext.getText().toString().isEmpty()) {
-                Toast.makeText(getBaseContext(), "আপনার স্থায়ী ঠিকানা", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "আপনার স্থায়ী ঠিকানা লিখুন", Toast.LENGTH_LONG).show();
                 return;
             }
             if (permanentCountryCode.isEmpty()) {
@@ -360,7 +360,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
     private void addressBangldeshCheckboxAction() {
 
         if (addressBangldeshCheckbox.isChecked()) {
-            currentLivingLocationStatus = "ban";
+            currentLivingLocationStatus = "bd";
             addressAbroadCheckbox.setChecked(false);
             abroadTypeStatusTitleTextView.setVisibility(View.GONE);
             abroadTypeLayout.setVisibility(View.GONE);
