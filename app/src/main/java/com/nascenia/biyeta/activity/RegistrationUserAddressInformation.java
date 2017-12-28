@@ -27,18 +27,18 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
     private LinearLayout villageHouseLayout, presentCountryLayout, permanentCountryLayout,
             abroadTypeLayout;
-    private AlertDialog.Builder villageHouseDistrictListDialog,presentCountryListDialog,
-    permanentCountryListDialog,countryListDialog;
+    private AlertDialog.Builder villageHouseDistrictListDialog, presentCountryListDialog,
+            permanentCountryListDialog, countryListDialog;
 
     private TextView villageDistrictNameTextView, presentCountryTextView, permanentCountryTextView,
-            abroadTypeTextView,abroadTypeStatusTitleTextView;
+            abroadTypeTextView, abroadTypeStatusTitleTextView;
 
     private LinkedHashMap<Integer, String> disLinkedHashMap = new LinkedHashMap<Integer, String>();
     private String[] districtList;
-    private int districtCounter = 0,countryCounter=0;
-    private Integer districtKey = null,selectedAbroadTypeNumber=null,
-            presentCountryKey=null,
-            permanentCountryKey=null;
+    private int districtCounter = 0, countryCounter = 0;
+    private Integer districtKey = null, selectedAbroadTypeNumber = null,
+            presentCountryKey = null,
+            permanentCountryKey = null;
 
     private EditText presentAddressEditext, permanentAddressEditext;
     private CheckBox permanentAddressCheckbox, addressBangldeshCheckbox, addressAbroadCheckbox;
@@ -50,6 +50,8 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
     private LinkedHashMap<Integer, String> countryLinkedHashMap = new LinkedHashMap<Integer, String>();
     private String[] countryNameArray;
 
+    private int countryIndicator;
+    private String presentCountryCode = "", permanentCountryCode = "";
 
 
     @Override
@@ -74,17 +76,17 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
     }
 
     private void prepareCountryListDialog() {
-        countryNameArray =new String[Locale.getISOCountries().length];
+        countryNameArray = new String[Locale.getISOCountries().length];
 
-       // String[] locales = Locale.getISOCountries();
+        // String[] locales = Locale.getISOCountries();
 
         for (String countryCode : Locale.getISOCountries()) {
 
             Locale obj = new Locale("", countryCode);
-            countryNameArray[countryCounter]=obj.getDisplayCountry();
+            countryNameArray[countryCounter] = obj.getDisplayCountry();
 
             countryCounter++;
-            Log.i("countrylist","Country Code = " + obj.getCountry()
+            Log.i("countrylist", "Country Code = " + obj.getCountry()
                     + ", Country Name = " + obj.getDisplayCountry());
 
         }
@@ -96,7 +98,16 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
                         // user checked an item
                         ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(Locale.getISOCountries()));
                         Locale obj = new Locale("", arrayList.get(selectItemPosition));
-                        Toast.makeText(getBaseContext(),obj.getCountry()+" "+obj.getDisplayCountry(),Toast.LENGTH_LONG).show();
+                        // Toast.makeText(getBaseContext(), obj.getCountry() + " " + obj.getDisplayCountry(), Toast.LENGTH_LONG).show();
+
+                        if (countryIndicator == 0) {
+                            presentCountryTextView.setText(obj.getDisplayCountry());
+                            presentCountryCode = obj.getCountry();
+                        } else {
+                            permanentCountryTextView.setText(obj.getDisplayCountry());
+                            permanentCountryCode = obj.getCountry();
+                        }
+
                     }
                 });
     }
@@ -227,7 +238,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
                 Builder(contextThemeWrapper);
         permanentCountryListDialog = new AlertDialog.
                 Builder(contextThemeWrapper);*/
-        countryListDialog= new AlertDialog.
+        countryListDialog = new AlertDialog.
                 Builder(contextThemeWrapper);
 
         presentAddressEditext = findViewById(R.id.present_address_editext);
@@ -283,14 +294,16 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
                         2);
                 break;
             case R.id.next:
-                Log.i("resultdata",currentLivingLocationStatus);
+                Log.i("resultdata", currentLivingLocationStatus);
                 sendDataToServer();
                 break;
             case R.id.present_country_layout:
+                countryIndicator = 0;
                 countryListDialog.create();
                 countryListDialog.show();
                 break;
             case R.id.permanent_country_layout:
+                countryIndicator = 1;
                 countryListDialog.create();
                 countryListDialog.show();
                 break;
@@ -300,39 +313,78 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
     private void sendDataToServer() {
 
-        if(villageDistrictNameTextView.getText().toString().equalsIgnoreCase("")){
+        if (villageDistrictNameTextView.getText().toString().equalsIgnoreCase("দেশের বাড়ি")) {
+            Toast.makeText(getBaseContext(), "আপনার দেশের বাড়ি কোথায় নির্বাচন করুন", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (currentLivingLocationStatus.isEmpty()) {
+            Toast.makeText(getBaseContext(), "আপনার বর্তমান অবস্থান কোথায় নির্বাচন করুন", Toast.LENGTH_LONG).show();
+            return;
+        } else {
+            if (currentLivingLocationStatus.equalsIgnoreCase("ab") &&
+                    abroadTypeTextView.getText().toString().equalsIgnoreCase("বিদেশে অবস্থানের ধরন")) {
+                Toast.makeText(getBaseContext(), "আপনার বিদেশে অবস্থানের ধরন নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+
+
+        if (presentAddressEditext.getText().toString().isEmpty()) {
+            Toast.makeText(getBaseContext(), "আপনার বর্তমান ঠিকানা", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+        if (presentCountryCode.isEmpty()) {
+            Toast.makeText(getBaseContext(), "আপনার  বর্তমানে  দেশ  নির্বাচন করুন", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (!permanentAddressCheckbox.isChecked()) {
+
+            if (permanentAddressEditext.getText().toString().isEmpty()) {
+                Toast.makeText(getBaseContext(), "আপনার স্থায়ী ঠিকানা", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (permanentCountryCode.isEmpty()) {
+                Toast.makeText(getBaseContext(), "আপনার  স্থায়ী  দেশ  নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                return;
+            }
 
         }
+
+
     }
 
     private void addressBangldeshCheckboxAction() {
 
-        if(addressBangldeshCheckbox.isChecked()){
+        if (addressBangldeshCheckbox.isChecked()) {
             currentLivingLocationStatus = "ban";
             addressAbroadCheckbox.setChecked(false);
             abroadTypeStatusTitleTextView.setVisibility(View.GONE);
             abroadTypeLayout.setVisibility(View.GONE);
             abroadTypeTextView.setText(null);
-            selectedAbroadTypeNumber=null;
-        }else{
+            selectedAbroadTypeNumber = null;
+        } else {
             currentLivingLocationStatus = "";
         }
     }
 
     private void addressAbroadCheckboxAction() {
 
-        if(addressAbroadCheckbox.isChecked()){
+        if (addressAbroadCheckbox.isChecked()) {
             currentLivingLocationStatus = "ab";
             addressBangldeshCheckbox.setChecked(false);
             abroadTypeStatusTitleTextView.setVisibility(View.VISIBLE);
             abroadTypeLayout.setVisibility(View.VISIBLE);
             abroadTypeTextView.setText("বিদেশে অবস্থানের ধরন");
-        }else{
+        } else {
             currentLivingLocationStatus = "";
             abroadTypeStatusTitleTextView.setVisibility(View.GONE);
             abroadTypeLayout.setVisibility(View.GONE);
             abroadTypeTextView.setText(null);
-            selectedAbroadTypeNumber=null;
+            selectedAbroadTypeNumber = null;
         }
 
     }
@@ -345,9 +397,9 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
             if (!data.getStringExtra("ABROAD_STATUS_TYPE").equalsIgnoreCase("reject")) {
                 abroadTypeTextView.setText(data.getStringExtra("ABROAD_STATUS_TYPE"));
-                selectedAbroadTypeNumber=data.getIntExtra("ABROAD_STATUS_TYPE_SELECTOR_NUMBER",
+                selectedAbroadTypeNumber = data.getIntExtra("ABROAD_STATUS_TYPE_SELECTOR_NUMBER",
                         0);
-                Log.i("resultdata",selectedAbroadTypeNumber+"");
+                Log.i("resultdata", selectedAbroadTypeNumber + "");
             }
         }
     }
