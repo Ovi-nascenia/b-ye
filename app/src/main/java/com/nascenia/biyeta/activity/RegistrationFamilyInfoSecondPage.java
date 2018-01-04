@@ -814,8 +814,12 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                         Toast.makeText(RegistrationFamilyInfoSecondPage.this, error, Toast.LENGTH_LONG).show();
                     } else {
                         //Toast.makeText(RegistrationFamilyInfoSecondPage.this,"allfine", Toast.LENGTH_LONG).show();
-                        Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
+                        /*Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                         Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this, Login.class);
+                        startActivity(intent);
+                        finish();*/
+
+                        Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this, RegistrationUserAddressInformation.class);
                         startActivity(intent);
                         finish();
                     }

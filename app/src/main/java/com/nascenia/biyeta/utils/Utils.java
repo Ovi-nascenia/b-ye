@@ -158,16 +158,20 @@ public class Utils{
 
         //int day = Integer.parseInt(itemvalue);
         int firstDigit = itemvalue / 10;
-        int lastdigit = itemvalue % 10;
+        int secondDigit = itemvalue % 10;
+        int thirdDigit = 0;
+        if(itemvalue > 99)
+            thirdDigit = itemvalue / 100;
 
 //        Log.i("bangla", firstDigit + " " + lastdigit);
 
-        if (firstDigit == 0) {
-            return getBanglaDigit(lastdigit);
-        } else {
-            return getBanglaDigit(firstDigit) + getBanglaDigit(lastdigit);
-
+       if (firstDigit == 0 && thirdDigit == 0) {
+            return getBanglaDigit(secondDigit);
+        } else if (thirdDigit == 0){
+            return getBanglaDigit(firstDigit) + getBanglaDigit(secondDigit);
         }
+        else
+           return getBanglaDigit(firstDigit) + getBanglaDigit(firstDigit) + getBanglaDigit(secondDigit);
 
     }
 

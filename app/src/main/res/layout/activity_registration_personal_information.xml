@@ -79,6 +79,166 @@
         android:layout_below="@id/toolbar">
 
         <TextView
+            android:id="@+id/height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="উচ্চতা*"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/ln_height"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/height_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="উচ্চতা"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/skin_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="গায়ের রং"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/ln_skin_color"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/skin_color_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="গায়ের রং"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ওজন*"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/ln_weight"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/weight_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="ওজন"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/blood_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" ব্লাড গ্রুপ"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/ln_blood_group"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/blood_group_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text=" ব্লাড গ্রুপ"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
+            <ImageView
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+        <TextView
             android:id="@+id/marital_status_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -474,7 +634,7 @@
             android:id="@+id/disable_status_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="কোন প্রতিবন্ধিকতা আছে?"
+            android:text="কোন প্রতিবন্ধকতা আছে?"
             android:textColor="@color/colorPrimary"
             android:layout_margin="10dp"
             />
@@ -495,7 +655,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="প্রতিবন্ধিকতা"
+                android:text="প্রতিবন্ধকতা"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"/>

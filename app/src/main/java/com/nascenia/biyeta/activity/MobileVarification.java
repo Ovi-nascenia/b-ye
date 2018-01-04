@@ -93,7 +93,7 @@ public class MobileVarification extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MobileVarification.this, Login.class));
-
+//                finish();
             }
         });
 
@@ -358,10 +358,10 @@ public class MobileVarification extends AppCompatActivity {
 
                     if (jsonObject.has("message")) {
                         String details = jsonObject.getJSONObject("message").getString("detail");
-                       Toast.makeText(getBaseContext(), details, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), details, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MobileVarification.this,Login.class));
                         finish();
-                        // new MobileVarification.FetchConstant().execute(jsonObject.getString("current_mobile_sign_up_step"));
+                         new MobileVarification.FetchConstant().execute(jsonObject.getString("current_mobile_sign_up_step"));
                     } else if (jsonObject.has("errors")) {
                         //Utils.ShowAlert(MobileVarification.this, "কোডটি ভুল হয়েছে।\nসঠিক কোড প্রদান করুন।");
                         Toast.makeText(getBaseContext(),jsonObject.getString("detail"),Toast.LENGTH_LONG).show();
@@ -434,8 +434,10 @@ public class MobileVarification extends AppCompatActivity {
         @Override
         protected String doInBackground(String... parameters) {
 
+            final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + parameters[0])
+                    .url(Utils.STEP_CONSTANT_FETCH + "2")//parameters[0])
+                    .addHeader("Authorization", "Token token=" + token)
                     .build();
 
             try {

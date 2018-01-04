@@ -62,6 +62,24 @@ public class PopUpPersonalInfo extends AppCompatActivity {
             RegistrationPersonalInformation.hijab = 1;
             data = RegistrationPersonalInformation.hijabName;
         }
+        ////////////////////////////////////////////////////////////
+        else if(RegistrationPersonalInformation.selectedPopUp == 11){
+            RegistrationPersonalInformation.height = 1;
+            data = RegistrationPersonalInformation.heightName;
+        }
+        else if(RegistrationPersonalInformation.selectedPopUp == 12){
+            RegistrationPersonalInformation.weight = 1;
+            data = RegistrationPersonalInformation.weightName;
+        }
+        else if(RegistrationPersonalInformation.selectedPopUp == 13){
+            RegistrationPersonalInformation.blood_group = 1;
+            data = RegistrationPersonalInformation.bloodGroupName;
+        }
+        else if(RegistrationPersonalInformation.selectedPopUp == 14){
+            RegistrationPersonalInformation.skin_color = 1;
+            data = RegistrationPersonalInformation.skinColorName;
+        }
+        /////////////////////////////////////////////////////////////
 
         picker.setMinValue(0);
         picker.setMaxValue(data.length-1);
@@ -110,6 +128,19 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                     RegistrationPersonalInformation.house = -1;
                 }else if(RegistrationPersonalInformation.selectedPopUp == 10){
                     RegistrationPersonalInformation.hijab = -1;
+                }
+                /////////////////////////////////////////////////////////////
+                else if(RegistrationPersonalInformation.selectedPopUp == 11){
+                    RegistrationPersonalInformation.height = -1;
+                }
+                else if(RegistrationPersonalInformation.selectedPopUp == 12){
+                    RegistrationPersonalInformation.weight = -1;
+                }
+                else if(RegistrationPersonalInformation.selectedPopUp == 13){
+                    RegistrationPersonalInformation.blood_group = -1;
+                }
+                else if(RegistrationPersonalInformation.selectedPopUp == 14){
+                    RegistrationPersonalInformation.skin_color = -1;
                 }
                 finish();
             }
@@ -193,6 +224,17 @@ public class PopUpPersonalInfo extends AppCompatActivity {
             }else if(RegistrationPersonalInformation.selectedPopUp == 10){
                 RegistrationPersonalInformation.hijab = newVal + 1;
             }
+            /////////////////////////////////////////////
+            else if(RegistrationPersonalInformation.selectedPopUp == 11){
+                RegistrationPersonalInformation.height = newVal + 1;
+            }else if(RegistrationPersonalInformation.selectedPopUp == 12){
+                RegistrationPersonalInformation.weight = newVal + 1;
+            }else if(RegistrationPersonalInformation.selectedPopUp == 13){
+                RegistrationPersonalInformation.blood_group = newVal + 1;
+            }else if(RegistrationPersonalInformation.selectedPopUp == 14){
+                RegistrationPersonalInformation.skin_color = newVal + 1;
+            }
+            ////////////////////////////////////////////
 
         }
     }

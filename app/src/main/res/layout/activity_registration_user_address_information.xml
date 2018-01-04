@@ -174,7 +174,6 @@
                     android:textSize="18dp" />
 
                 <ImageView
-                    android:id="@+id/down_arrow_merital"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
@@ -237,6 +236,45 @@
 
             </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ln_district_present"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/present_address_district"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="জেলা"
+                    android:textSize="18dp" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/down_arrow" />
+
+            </LinearLayout>
+        </LinearLayout>
+
             <CheckBox
                 android:id="@+id/permanent_address_checkbox"
                 android:layout_width="wrap_content"
@@ -244,6 +282,12 @@
                 android:layout_margin="10dp"
                 android:checked="false"
                 android:text="এটাই স্থায়ী ঠিকানা" />
+
+            <LinearLayout
+                android:id="@+id/ln_permanent_address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -295,6 +339,45 @@
                     android:layout_weight="1"
                     android:src="@drawable/down_arrow" />
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ln_district_permanent"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/permanent_address_district"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="জেলা"
+                        android:textSize="18dp" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/down_arrow" />
+
+                </LinearLayout>
+            </LinearLayout>
             </LinearLayout>
 
             <TextView
