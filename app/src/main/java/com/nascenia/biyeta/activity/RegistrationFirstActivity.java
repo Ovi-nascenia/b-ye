@@ -98,6 +98,8 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
     private final int DATE_OF_BIRTH_REQUEST_CODE = 2;
 
+    private static final int facebook_request_code = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -394,77 +396,90 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             birthday = object.getString("birthday");
         }
 
-//        if(email.length()<=0 || realName.length()<=0 || displayName.length() <=0 || !object.has("birthday") || !object.has("gender"))
-//            setRegistrationDataWithFacebook(object);
+        if(email==null || email.length() <=0 || realName==null || realName.length() <=0 || displayName==null || displayName.length()<=0 || birthday == null || birthday.length() <= 0) {
 
-        provider = "facebook";
-        profilePic = "";
-        createdBy = "own";
-        mobileNumber = "";
+            Intent intent = new Intent(RegistrationFirstActivity.this,
+                    FacebookRegistrationDataInput.class);
+            intent.putExtra("email", email);
+            intent.putExtra("first_name", realName);
+            intent.putExtra("display_name", displayName);
+            intent.putExtra("birthday", birthday);
+            intent.putExtra("created_by", createdBy);
+            intent.putExtra("uid", uid);
+            intent.putExtra("provider", provider);
+            startActivityForResult(intent, facebook_request_code);
+        }else {
+            provider = "facebook";
+            profilePic = "";
+            createdBy = "own";
+            mobileNumber = "";
 
-        String fbSignUp = new StringBuilder().append("{")
-                .append("\"facebook_auth\":")
-                .append("{")
-                .append("\"email\":")
-                .append("\"")
-                .append(email)
-                .append("\"")
-                .append(",")
-                .append("\"real_name\":")
-                .append("\"")
-                .append(realName)
-                .append("\"")
-                .append(",")
-                .append("\"display_name\":")
-                .append("\"")
-                .append(displayName)
-                .append("\"")
-                .append(",")
-                .append("\"mobile_number\":")
-                .append("\"")
-                .append("")
-                .append("\"")
-                .append(",")
-                .append("\"searching_for\":")
-                .append("\"")
-                .append(searchingFor)
-                .append("\"")
-                .append(",")
-                .append("\"created_by\":")
-                .append("\"")
-                .append(createdBy)
-                .append("\"")
-                .append(",")
-                .append("\"uid\":")
-                .append("\"")
-                .append(uid)
-                .append("\"")
-                .append(",")
-                .append("\"provider\":")
-                .append("\"")
-                .append(provider)
-                .append("\"")
-                .append(",")
-                .append("\"profile_pic\":")
-                .append("\"")
-                .append("")
-                .append("\"")
-                .append(",")
-                .append("\"dateofbirth\":")
-                .append("\"")
-                .append(object.has("birthday")?object.getString("birthday"):"")
-                .append("\"")
-                .append(",")
-                .append("\"gender\":")
-                .append("\"")
-                .append(gender)
-                .append("\"")
-                .append("}")
-                .append("}").toString();
+            String fbSignUp = new StringBuilder().append("{")
+                    .append("\"facebook_auth\":")
+                    .append("{")
+                    .append("\"email\":")
+                    .append("\"")
+                    .append(email)
+                    .append("\"")
+                    .append(",")
+                    .append("\"real_name\":")
+                    .append("\"")
+                    .append(realName)
+                    .append("\"")
+                    .append(",")
+                    .append("\"display_name\":")
+                    .append("\"")
+                    .append(displayName)
+                    .append("\"")
+                    .append(",")
+                    .append("\"mobile_number\":")
+                    .append("\"")
+                    .append("")
+                    .append("\"")
+                    .append(",")
+                    .append("\"searching_for\":")
+                    .append("\"")
+                    .append(searchingFor)
+                    .append("\"")
+                    .append(",")
+                    .append("\"created_by\":")
+                    .append("\"")
+                    .append(createdBy)
+                    .append("\"")
+                    .append(",")
+                    .append("\"uid\":")
+                    .append("\"")
+                    .append(uid)
+                    .append("\"")
+                    .append(",")
+                    .append("\"provider\":")
+                    .append("\"")
+                    .append(provider)
+                    .append("\"")
+                    .append(",")
+                    .append("\"profile_pic\":")
+                    .append("\"")
+                    .append("")
+                    .append("\"")
+                    .append(",")
+                    .append("\"dateofbirth\":")
+                    .append("\"")
+                    .append(object.has("birthday") ? object.getString("birthday") : "")
+                    .append("\"")
+                    .append(",")
+                    .append("\"gender\":")
+                    .append("\"")
+                    .append(gender)
+                    .append("\"")
+                    .append("}")
+                    .append("}").toString();
 
 //        Toast.makeText(RegistrationFirstActivity.this,fbSignUp ,Toast.LENGTH_LONG).show();
-        new RegistrationFirstActivity.FbRegistration().execute(fbSignUp, Utils.FB_SIGNUP);
+            new RegistrationFirstActivity.FbRegistration().execute(fbSignUp, Utils.FB_SIGNUP);
+        }
     }
+
+
 
 //    private void setRegistrationDataWithFacebook(JSONObject object) {
 //        try{
