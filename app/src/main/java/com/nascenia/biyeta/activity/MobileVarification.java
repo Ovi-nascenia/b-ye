@@ -213,7 +213,7 @@ public class MobileVarification extends AppCompatActivity {
         protected String doInBackground(String... parameters) {
             String phnNumber = parameters[0];
            // String token = sharePref.get_data("registration_token");
-            String token = sharePref.get_data("token");
+            String token = sharePref.get_data("token");//.equalsIgnoreCase("key")?sharePref.get_data("registration_token"):sharePref.get_data("token"));
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("mobile_number", phnNumber)///sent the team passcode
                     .build();

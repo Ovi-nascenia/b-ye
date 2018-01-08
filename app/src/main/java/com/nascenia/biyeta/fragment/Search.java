@@ -42,6 +42,7 @@ import com.nascenia.biyeta.activity.RegistrationFamilyInfoFirstPage;
 import com.nascenia.biyeta.activity.RegistrationFamilyInfoSecondPage;
 import com.nascenia.biyeta.activity.RegistrationOwnInfo;
 import com.nascenia.biyeta.activity.RegistrationPersonalInformation;
+import com.nascenia.biyeta.activity.RegistrationUserAddressInformation;
 import com.nascenia.biyeta.activity.UserProfileActivity;
 import com.nascenia.biyeta.constant.Constant;
 import com.nascenia.biyeta.model.SearchProfileModel;
@@ -574,6 +575,13 @@ public class Search extends Fragment {
                 Log.i("constantval", "Login-RegistrationFamilyInfoSecondPage  " + s);
                 signupIntent = new Intent(getActivity(), RegistrationFamilyInfoSecondPage.class);
                 signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+            case 10:
+                Log.i("constantval", "Login-RegistrationUserAddressInformation  " + s);
+                signupIntent = new Intent(getActivity(), RegistrationUserAddressInformation.class);
+//                signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 getActivity().finish();
                 break;

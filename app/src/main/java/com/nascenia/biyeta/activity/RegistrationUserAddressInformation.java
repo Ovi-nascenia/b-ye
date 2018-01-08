@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +66,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
     private int countryIndicator, distIndicator;
     private String presentCountryCode = "", permanentCountryCode = "";
+    ImageView back;
 
     private ProgressDialog progress;
 
@@ -305,6 +307,16 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
         abroadTypeTextView = findViewById(R.id.abroad_type_text_view);
         abroadTypeStatusTitleTextView = findViewById(R.id.abroad_type_status_title);
         abroadTypeStatusTitleTextView.setVisibility(View.GONE);
+
+        back = (ImageView) findViewById(R.id.backPreviousActivityImage);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*new Intent(RegistrationPersonalInformation.this, Login.class);
+                finish();*/
+                new GetPreviousStepFetchConstant().execute();
+            }
+        });
 
         nextBtn = findViewById(R.id.next);
         nextBtn.setOnClickListener(this);
@@ -635,6 +647,61 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
                 selectedAbroadTypeNumber = data.getIntExtra("ABROAD_STATUS_TYPE_SELECTOR_NUMBER",
                         0) + "";
                 Log.i("resultdata", selectedAbroadTypeNumber + "");
+            }
+        }
+    }
+
+    public class GetPreviousStepFetchConstant extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            SharePref sharePref = new SharePref(RegistrationUserAddressInformation.this);
+            final String token = sharePref.get_data("token");
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + 9)
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
+
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 9);
+            OkHttpClient client = new OkHttpClient();
+            try {
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.i("urldata", s + "");
+            if (s == null) {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
+                Utils.ShowAlert(RegistrationUserAddressInformation.this, getString(R.string.no_internet_connection));
+            } else {
+               /* if (progress.isShowing()) {
+                    progress.dismiss();
+                }*/
+                Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
+                startActivity(new Intent(RegistrationUserAddressInformation.this,
+                        RegistrationFamilyInfoSecondPage.class).
+                        putExtra("constants", s));
+                finish();
             }
         }
     }

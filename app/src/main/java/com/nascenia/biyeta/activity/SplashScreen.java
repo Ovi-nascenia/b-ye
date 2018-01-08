@@ -74,15 +74,16 @@ public class SplashScreen extends AppCompatActivity {
                 // Start your app main activity
                 //
                 SharePref sharePref = new SharePref(SplashScreen.this);
-
+                ///////////remove, for test purpose
+//                sharePref.set_data("gender", "female");
                 Log.e("Token : ", sharePref.get_data("token"));
 
                 /// login  && mobile  verification unsuccessful
                 ///or the first time appp open
                 if (sharePref.get_data("token").equals("key")||
                         sharePref.get_data("token").equals(null) ||
-                        (sharePref.get_data("mobile_verified").equals("false")||
-                                sharePref.get_data("mobile_verified").equals("key"))) {
+                        (sharePref.get_data("mobile_verified").equals("false")/*||
+                                sharePref.get_data("mobile_verified").equals("key")*/)) {
 
                    //
 

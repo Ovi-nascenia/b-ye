@@ -53,9 +53,9 @@ public class Utils{
 
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
-    public static final String Base_URL = "http://test.biyeta.com";
+//    public static final String Base_URL = "http://test.biyeta.com";
 //    public static final String Base_URL = "http://192.168.1.94:3000";
-//    public static final String Base_URL = "https://www.biyeta.com";
+    public static final String Base_URL = "https://www.biyeta.com";
     public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
     public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
 
@@ -155,9 +155,9 @@ public class Utils{
 
     public static String convertEnglishDigittoBangla(int itemvalue) {
 
-
+        String[] strItemValue = (itemvalue+"").split("");
         //int day = Integer.parseInt(itemvalue);
-        int firstDigit = itemvalue / 10;
+        /*int firstDigit = itemvalue / 10;
         int secondDigit = itemvalue % 10;
         int thirdDigit = 0;
         if(itemvalue > 99)
@@ -172,6 +172,16 @@ public class Utils{
         }
         else
            return getBanglaDigit(firstDigit) + getBanglaDigit(firstDigit) + getBanglaDigit(secondDigit);
+           */
+
+        String number = "";
+        for(int i = 0; i<strItemValue.length; i++)
+        {
+            if(strItemValue[i].length()>0)
+                number+=getBanglaDigit(Integer.parseInt(strItemValue[i]));
+        }
+
+        return number.length()>0?number:"0";
 
     }
 

@@ -580,7 +580,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("user_login[email]", id)///sent the team passcode
                     .add("user_login[password]", password)
-                    .add("user_login[registration_token]", regtoken) //FCM token
+                    .add("user_login[registration_token]", regtoken!=null?regtoken:"") //FCM token
                     .add("user_login[imei]", imei)
                     .build();
 
@@ -748,7 +748,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             System.out.println("MainActivity.onCreate: " + token);
 
             RequestBody requestBody = new FormEncodingBuilder()
-                    .add("registration_token", token)///sent the team passcode
+                    .add("registration", token)///sent the team passcode
                     .build();
 
             Request request = new Request.Builder()
@@ -845,7 +845,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoSecondPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
-                     finish();
+                    finish();
+                } else if (currentMobileSignupStep == 10) {
+                    Log.i("constantval", "Login-RegistrationUserAddressInformation  " + s);
+                    signupIntent = new Intent(Login.this, RegistrationUserAddressInformation.class);
+                    signupIntent.putExtra("constants", s);
+                    startActivity(signupIntent);
+                    finish();
                 }
             }
         }

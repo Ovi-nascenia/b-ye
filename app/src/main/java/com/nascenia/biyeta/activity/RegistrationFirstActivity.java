@@ -87,6 +87,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
     private String provider;
     private String profilePic;
     private String gender;
+    private String birthday;
     private String mobileNumber;
 
     private ScrollView parentScrollView;
@@ -382,14 +383,19 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             gender = object.getString("gender");
             if (gender.equals("male")) {
                 searchingFor = "female";
+                sharePref.set_data("gender", "male");
             } else if (gender.equals("female")) {
                 searchingFor = "male";
+                sharePref.set_data("gender", "female");
             }
         }
 
         if (object.has("birthday")) {
-
+            birthday = object.getString("birthday");
         }
+
+//        if(email.length()<=0 || realName.length()<=0 || displayName.length() <=0 || !object.has("birthday") || !object.has("gender"))
+//            setRegistrationDataWithFacebook(object);
 
         provider = "facebook";
         profilePic = "";
@@ -444,6 +450,11 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                 .append("")
                 .append("\"")
                 .append(",")
+                .append("\"dateofbirth\":")
+                .append("\"")
+                .append(object.has("birthday")?object.getString("birthday"):"")
+                .append("\"")
+                .append(",")
                 .append("\"gender\":")
                 .append("\"")
                 .append(gender)
@@ -454,6 +465,27 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 //        Toast.makeText(RegistrationFirstActivity.this,fbSignUp ,Toast.LENGTH_LONG).show();
         new RegistrationFirstActivity.FbRegistration().execute(fbSignUp, Utils.FB_SIGNUP);
     }
+
+//    private void setRegistrationDataWithFacebook(JSONObject object) {
+//        try{
+//        if(object.has("email")) {
+//            email_edit_text.setText(object.getString("email"));
+//            email_edit_text.setEnabled(false);
+//        }
+//        else
+//            email_edit_text.setEnabled(true);
+//
+//        if(object.has("email")) {
+//            email_edit_text.setText(object.getString("email"));
+//            email_edit_text.setEnabled(false);
+//        }
+//        else
+//            email_edit_text.setEnabled(true);
+//            password_edit_text, name_edit_text, display_name_edit_text
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -503,6 +535,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     } else {
                         //sharePref.set_data("registration_token",jsonObject.getString("auth_token"));
                         sharePref.set_data("token", jsonObject.getString("auth_token"));
+                        sharePref.set_data("gender", gender);
                         Intent mobileVerification = new Intent(RegistrationFirstActivity.this, MobileVarification.class);
                         startActivity(mobileVerification);
                         finish();
@@ -606,10 +639,11 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
                     if (jsonObject.has("errors")) {
-                        jsonObject.getJSONObject("errors").getString("detail");
+//                        jsonObject.getJSONObject("errors").getString("detail");
                         // Toast.makeText(RegistrationFirstActivity.this, jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
+                        Utils.ShowAlert(RegistrationFirstActivity.this, jsonObject.getJSONObject("errors").getString("detail"));
                     } else {
-                        sharePref.set_data("registration_token", jsonObject.getString("auth_token"));
+                        sharePref.set_data("token", jsonObject.getString("auth_token"));
                         Intent intent = new Intent(RegistrationFirstActivity.this, MobileVarification.class);
                         startActivity(intent);
                         finish();
@@ -623,7 +657,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             SharePref sharePref = new SharePref(RegistrationFirstActivity.this);
-            final String token = sharePref.get_data("registration_token");
+            final String token = sharePref.get_data("token");
 
             Log.e("Test", strings[0]);
 

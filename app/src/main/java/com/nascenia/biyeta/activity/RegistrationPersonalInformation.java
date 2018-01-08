@@ -37,7 +37,8 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             occupationValue = "", professionalGroupValue = "",
             designationValue, occupationInstitutionValue, religionValue = "",
             rojaValue = "", disableValue = "", smokeValue = "", hijabValue = "", houseValue = "",
-            heightValue = "", weightValue = "", skinValue = "", bloodValue = "";
+            heightValue = "", weightValue = "", skinValue = "", bloodValue = "",
+            feetValue = "", inchValue = "";
     EditText subjectText, institutionText, designationText, occupationInstitutionText;
     LinearLayout maritalStatus, educationalStatus, professonalalStatus, religiousStatus,
             rojaStatus, disableStatus, smokeStatus, professionalGroupStatus, houseLinearLayout, hijabStatus,
@@ -151,7 +152,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     private SharePref sharePref;
 
     TextView maritalStatusLabel, educationalStatusLabel, professionStatusLabel, religionStatusLabel,
-            rojaStatuLabel, smokeStatusLabel, houseStatusLabel, hijabStatuLabel;
+            rojaStatuLabel, smokeStatusLabel, houseStatusLabel, hijabStatuLabel, heightLabel, weightLabel, skinLabel;
 
     ProgressDialog progress;
 
@@ -203,24 +204,24 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 //            weightObject = new JSONObject("{\"30\":\"30\",\"31\":\"31\","
 //                    + "\"6\":\"শিক্ষার্থী\",\"7\":\"পেশায় জড়িত নাই\",\"1\":\"সরকারি চাকরিজীবী\","
 //                    + "\"2\":\"বেসরকারি চাকরিজীবী\"}");
-//            skinColorObject = jsonObject.getJSONObject("skin_color_options");
-            skinColorObject = new JSONObject(" {\n"
-                    + "\"0\": \"শ্যামলা\",\n"
-                    + "\"1\": \"উজ্জ্বল শ্যামলা\",\n"
-                    + "\"2\": \"ফর্সা\",\n"
-                    + "\"3\": \"অনেক ফর্সা\"\n"
-                    + "}");
-//            bloodObject = jsonObject.getJSONObject("blood_group_options");
-            bloodObject = new JSONObject("{\n"
-                    + "\"a_positive\": \"এ+\",\n"
-                    + "\"a_negative\": \"এ-\",\n"
-                    + "\"b_positive\": \"বি+\",\n"
-                    + "\"b_negative\": \"বি-\",\n"
-                    + "\"ab_positive\": \"এবি+\",\n"
-                    + "\"ab_negative\": \"এবি-\",\n"
-                    + "\"o_positive\": \"ও+\",\n"
-                    + "\"o_negative\": \"ও-\"\n"
-                    + "}");
+            skinColorObject = jsonObject.getJSONObject("skin_color_options");
+//            skinColorObject = new JSONObject(" {\n"
+//                    + "\"0\": \"শ্যামলা\",\n"
+//                    + "\"1\": \"উজ্জ্বল শ্যামলা\",\n"
+//                    + "\"2\": \"ফর্সা\",\n"
+//                    + "\"3\": \"অনেক ফর্সা\"\n"
+//                    + "}");
+            bloodObject = jsonObject.getJSONObject("blood_group_options");
+//            bloodObject = new JSONObject("{\n"
+//                    + "\"a_positive\": \"এ+\",\n"
+//                    + "\"a_negative\": \"এ-\",\n"
+//                    + "\"b_positive\": \"বি+\",\n"
+//                    + "\"b_negative\": \"বি-\",\n"
+//                    + "\"ab_positive\": \"এবি+\",\n"
+//                    + "\"ab_negative\": \"এবি-\",\n"
+//                    + "\"o_positive\": \"ও+\",\n"
+//                    + "\"o_negative\": \"ও-\"\n"
+//                    + "}");
             ////////////////////////////////
 
             loginUserReligion = jsonObject.getString("login_user_religion");
@@ -298,14 +299,15 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             houseName = houseArray.toArray(houseName);
 
             ///////////////////////////////////////////////////////////
-            for (int i = 0; i < heightObject.length(); i++) {
-                heightConstant.add(heightObject.names().getString(i));
-                heightArray.add((String) heightObject.get(heightObject.names().getString(i)));
+            for (int i = 4; i < 8; i++) {           //height from 4ft to 7ft 11inch
+//                heightConstant.add(heightObject.names().getString(i));
+                for(int j = 0; j < 12; j++)
+                    heightArray.add(Utils.convertEnglishDigittoBangla(i) + " ফিট " + Utils.convertEnglishDigittoBangla(j) +" ইঞ্চি");
             }
 
             heightName = heightArray.toArray(heightName);
 
-            for (int i = 30; i <= 200; i++) {
+            for (int i = 30; i <= 200; i++) {         //weight from 30kg to 200kg
                 weightConstant.add(i+"");
                 weightArray.add(Utils.convertEnglishDigittoBangla(i)+" কেজি ");
             }
@@ -345,7 +347,11 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         hijabStatuLabel = (TextView) findViewById(R.id.hijab_status_label);
         smokeStatusLabel = (TextView) findViewById(R.id.smoke_status_label);
         houseStatusLabel = (TextView) findViewById(R.id.house_status_label);
+        heightLabel = (TextView) findViewById(R.id.height);
+        weightLabel = (TextView) findViewById(R.id.weight);
+        skinLabel = (TextView) findViewById(R.id.skin_color);
 
+        heightLabel.getParent().requestChildFocus(heightLabel, heightLabel);
 
         maritalStatus = (LinearLayout) findViewById(R.id.meritalStatus);
         educationalStatus = (LinearLayout) findViewById(R.id.educationalStatus);
@@ -428,6 +434,28 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
                 Log.i("response",institutionValue+" kjfadsj");
 
+                ///////////////////////////////////////////////
+                if (heightTV.getText().toString().equalsIgnoreCase("উচ্চতা")) {
+                    Toast.makeText(getBaseContext(), "আপনার উচ্চতা নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                    heightLabel.getParent().requestChildFocus(heightLabel, heightLabel);
+                    return;
+                }
+
+                if (skinValue.isEmpty()) {
+                    Toast.makeText(getBaseContext(), "আপনার গায়ের রং নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                    skinLabel.getParent().requestChildFocus(skinLabel, skinLabel);
+                    return;
+                }
+
+                if (weightTV.getText().toString().equalsIgnoreCase("ওজন")) {
+                    Toast.makeText(getBaseContext(), "আপনার ওজন নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                    weightLabel.getParent().requestChildFocus(weightLabel, weightLabel);
+                    return;
+                }
+
+
+                ////////////////////////////////////////////////
+
                 if (maritalStatusValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার বৈবাহিক অবস্থা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     maritalStatusLabel.getParent().requestChildFocus(maritalStatusLabel, maritalStatusLabel);
@@ -492,17 +520,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "আপনি ধূমপান করেন কিনা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     return;
                 }
-                ///////////////////////////////////////////////
-                if (heightValue.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "আপনার উচ্চতা নির্বাচন করুন", Toast.LENGTH_LONG).show();
-                    return;
-                }
 
-                if (weightValue.isEmpty()) {
-                    Toast.makeText(getBaseContext(), "আপনার ওজন নির্বাচন করুন", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                ////////////////////////////////////////////////
 
 
                 String response = new StringBuilder().append("{")
@@ -575,6 +593,25 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                         .append("\"")
                         .append(smokeValue)
                         .append("\"")
+                        .append(",")
+                        .append("\"height_ft\":")
+                        .append(feetValue)
+                        .append(",")
+                        .append("\"height_inc\":")
+                        .append(inchValue)
+                        .append(",")
+                        .append("\"skin_color\":")
+                        .append("\"")
+                        .append(skinValue)
+                        .append("\"")
+                        .append(",")
+                        .append("\"blood_group\":")
+                        .append("\"")
+                        .append(bloodValue)
+                        .append("\"")
+                        .append(",")
+                        .append("\"weight\":")
+                        .append(weightValue)
                         .append(",")
                         .append("\"house_in_dhaka\":")
                         .append("\"")
@@ -818,7 +855,10 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         else if (RegistrationPersonalInformation.selectedPopUp == 11) {
             if (height > 0) {
                 heightTV.setText(heightName[height - 1]);
-                heightValue = heightConstant.get(height - 1);
+//                heightValue = heightConstant.get(height - 1);
+                feetValue = ((height-1)/12 + 4) + "";
+                inchValue = ((height-1) % 12) + "";
+//                Log.e("height", feetValue + " feet " + inchValue + " inch");
             }
         }
         else if (RegistrationPersonalInformation.selectedPopUp == 12) {
@@ -1085,6 +1125,25 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         houseConstant.clear();
         Arrays.fill(houseConstantValue, null);
 
+        heightArray.clear();
+        Arrays.fill(heightName, null);
+        heightConstant.clear();
+        Arrays.fill(heightConstantValue, null);
+
+        weightArray.clear();
+        Arrays.fill(weightName, null);
+        weightConstant.clear();
+        Arrays.fill(weightConstantValue, null);
+
+        bloodGroupArray.clear();
+        Arrays.fill(bloodGroupName, null);
+        bloodGroupConstant.clear();
+        Arrays.fill(bloodGroupConstantValue, null);
+
+        skinColorArray.clear();
+        Arrays.fill(skinColorName, null);
+        skinColorConstant.clear();
+        Arrays.fill(skinColorConstantValue, null);
 
         selectedPopUp = 0;
 
@@ -1098,6 +1157,10 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         professonalGroup = -1;
         house = -1;
         hijab = -1;
+        height = -1;
+        weight = -1;
+        blood_group = -1;
+        skin_color = -1;
 
     }
 }

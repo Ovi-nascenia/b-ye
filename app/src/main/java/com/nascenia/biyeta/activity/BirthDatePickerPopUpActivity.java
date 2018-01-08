@@ -49,7 +49,10 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup_datepicker_dialog);
 
-        for (int i = startingYear; i <= 3000; i++) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -18);
+
+        for (int i = cal.get(Calendar.YEAR); i > cal.get(Calendar.YEAR) - 50; i--) {
             String number = String.valueOf(i);
             String banglaYear = "";
             for (int j = 0; j < 4; j++) {

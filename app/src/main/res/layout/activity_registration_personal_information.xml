@@ -84,8 +84,7 @@
             android:layout_height="wrap_content"
             android:text="উচ্চতা*"
             android:textColor="@color/colorPrimary"
-            android:layout_margin="10dp"
-            />
+            android:layout_margin="10dp"/>
         <LinearLayout
             android:id="@+id/ln_height"
             android:layout_width="match_parent"
@@ -122,7 +121,7 @@
             android:id="@+id/skin_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="গায়ের রং"
+            android:text="গায়ের রং*"
             android:textColor="@color/colorPrimary"
             android:layout_margin="10dp"
             />
@@ -634,7 +633,7 @@
             android:id="@+id/disable_status_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="কোন প্রতিবন্ধকতা আছে?"
+            android:text="কোন প্রতিবন্ধকতা আছে?*"
             android:textColor="@color/colorPrimary"
             android:layout_margin="10dp"
             />
@@ -676,7 +675,7 @@
             android:id="@+id/smoke_status_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ধূমপান করা হয়?"
+            android:text="ধূমপান করা হয়?*"
             android:textColor="@color/colorPrimary"
             android:layout_margin="10dp"
             />
