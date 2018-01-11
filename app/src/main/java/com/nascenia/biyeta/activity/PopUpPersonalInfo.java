@@ -84,11 +84,17 @@ public class PopUpPersonalInfo extends AppCompatActivity {
         picker.setMinValue(0);
         picker.setMaxValue(data.length-1);
         picker.setDisplayedValues(data);
+        if(RegistrationPersonalInformation.selectedPopUp==12)
+        {
+            picker.setValue(30);                             // default 60 kg
+        }
+        if(RegistrationPersonalInformation.selectedPopUp==11)
+        {
+            picker.setValue(17);                             // default 5 feet 5 inch
+        }
         picker.setOnValueChangedListener(new PopUpPersonalInfo.ListListener());
         setDividerColor(picker, Color.parseColor("#626262"));
         setNumberPickerTextColor(picker, Color.parseColor("#626262"));
-
-
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -101,6 +107,12 @@ public class PopUpPersonalInfo extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(RegistrationPersonalInformation.selectedPopUp == 11){
+                    RegistrationPersonalInformation.height = picker.getValue() + 1;
+                }else if(RegistrationPersonalInformation.selectedPopUp == 12){
+                    RegistrationPersonalInformation.weight = picker.getValue() + 1;
+                }
                 finish();
             }
         });
@@ -108,43 +120,47 @@ public class PopUpPersonalInfo extends AppCompatActivity {
         reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(RegistrationPersonalInformation.selectedPopUp == 1 ){
-                    RegistrationPersonalInformation.marriage = -1;
-                }else if(RegistrationPersonalInformation.selectedPopUp == 2){
-                    RegistrationPersonalInformation.education = -1;
-                }else if(RegistrationPersonalInformation.selectedPopUp == 3){
-                    RegistrationPersonalInformation.profession = -1;
-                }else if(RegistrationPersonalInformation.selectedPopUp == 4){
-                    RegistrationPersonalInformation.religion = -1;
-                }else if(RegistrationPersonalInformation.selectedPopUp == 5){
-                    RegistrationPersonalInformation.roja = -1;
-                }else if(RegistrationPersonalInformation.selectedPopUp == 6){
-                    RegistrationPersonalInformation.disable = -1;
-                }else if(RegistrationPersonalInformation.selectedPopUp == 7){
-                    RegistrationPersonalInformation.smoke = -1;
-                }else if(RegistrationPersonalInformation.selectedPopUp == 8){
-                    RegistrationPersonalInformation.professonalGroup = -1;
-                }else if(RegistrationPersonalInformation.selectedPopUp == 9){
-                    RegistrationPersonalInformation.house = -1;
-                }else if(RegistrationPersonalInformation.selectedPopUp == 10){
-                    RegistrationPersonalInformation.hijab = -1;
-                }
-                /////////////////////////////////////////////////////////////
-                else if(RegistrationPersonalInformation.selectedPopUp == 11){
-                    RegistrationPersonalInformation.height = -1;
-                }
-                else if(RegistrationPersonalInformation.selectedPopUp == 12){
-                    RegistrationPersonalInformation.weight = -1;
-                }
-                else if(RegistrationPersonalInformation.selectedPopUp == 13){
-                    RegistrationPersonalInformation.blood_group = -1;
-                }
-                else if(RegistrationPersonalInformation.selectedPopUp == 14){
-                    RegistrationPersonalInformation.skin_color = -1;
-                }
-                finish();
+                setDefaultValue();
             }
         });
+    }
+
+    private void setDefaultValue() {
+        if(RegistrationPersonalInformation.selectedPopUp == 1 ){
+            RegistrationPersonalInformation.marriage = -1;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 2){
+            RegistrationPersonalInformation.education = -1;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 3){
+            RegistrationPersonalInformation.profession = -1;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 4){
+            RegistrationPersonalInformation.religion = -1;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 5){
+            RegistrationPersonalInformation.roja = -1;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 6){
+            RegistrationPersonalInformation.disable = -1;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 7){
+            RegistrationPersonalInformation.smoke = -1;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 8){
+            RegistrationPersonalInformation.professonalGroup = -1;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 9){
+            RegistrationPersonalInformation.house = -1;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 10){
+            RegistrationPersonalInformation.hijab = -1;
+        }
+        /////////////////////////////////////////////////////////////
+        else if(RegistrationPersonalInformation.selectedPopUp == 11){
+            RegistrationPersonalInformation.height = -1;
+        }
+        else if(RegistrationPersonalInformation.selectedPopUp == 12){
+            RegistrationPersonalInformation.weight = -1;
+        }
+        else if(RegistrationPersonalInformation.selectedPopUp == 13){
+            RegistrationPersonalInformation.blood_group = -1;
+        }
+        else if(RegistrationPersonalInformation.selectedPopUp == 14){
+            RegistrationPersonalInformation.skin_color = -1;
+        }
+        finish();
     }
 
 
@@ -237,6 +253,12 @@ public class PopUpPersonalInfo extends AppCompatActivity {
             ////////////////////////////////////////////
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setDefaultValue();
     }
 
 }

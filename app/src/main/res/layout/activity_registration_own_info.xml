@@ -134,8 +134,12 @@
             android:background="@color/white"
             android:gravity="top"
             android:paddingLeft="@dimen/small_padding"
+            android:maxLength="4000"
             android:imeOptions="actionDone"
-            android:privateImeOptions="nm" />
+            android:privateImeOptions="nm"
+            android:lines="10"
+            android:scrollHorizontally="false"
+            android:inputType="textMultiLine"/>
 
         <TextView
             android:id="@+id/label"

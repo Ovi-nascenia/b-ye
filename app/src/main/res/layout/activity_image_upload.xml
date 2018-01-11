@@ -147,7 +147,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="148dp"
                 android:layout_margin="10dp"
-                >
+                android:visibility="gone">
 
                 <FrameLayout
                     android:layout_width="148dp"
@@ -300,17 +300,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <Button
-                        android:id="@+id/yes"
-                        android:text="হ্যাঁ"
-                        android:layout_width="148dp"
-                        android:layout_height="wrap_content"/>
+
                     <Button
                         android:id="@+id/no"
                         android:text="না"
-                        android:layout_width="148dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"/>
+                        android:layout_width="130dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="15dp"
+                        android:background="#D6D7D7"/>
+                    <Button
+                        android:id="@+id/yes"
+                        android:text="হ্যাঁ"
+                        android:layout_width="130dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="15dp"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/white"
+                        android:background="@color/colorPrimary"/>
 
                 </RelativeLayout>
                 <TextView

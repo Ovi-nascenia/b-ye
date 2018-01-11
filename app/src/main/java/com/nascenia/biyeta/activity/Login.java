@@ -128,9 +128,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         set_id();
 
         ///load large icon with glide
-        Glide.with(this)
-                .load(R.drawable.icon_content)
-                .into(icon);
+//        Glide.with(this)
+//                .load(R.drawable.icon_content)
+//                .into(icon);
 
 
         //PERMISSION STARTED
@@ -638,7 +638,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         Utils.ShowAlert(Login.this, getString(R.string.banned_profile_message));
                     }
 
-                   /* else if(Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_active"))==false){
+                    else if(Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_active"))==false){
                         new AlertDialog.Builder(context)
 //                .setTitle("Error")
                                 .setMessage("আপনার অ্যাকাউন্টটি ডিঅ্যাক্টিভেট ছিল। আপনি কি এখন অ্যাক্টিভেট করতে চান?")
@@ -660,7 +660,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                     }
                                 })
                                 .show();
-                    }*/
+                    }
 
                     else {
 
@@ -912,6 +912,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     buttonSubmit.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                     startActivity(new Intent(Login.this, HomeScreen.class));
+                    finish();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");

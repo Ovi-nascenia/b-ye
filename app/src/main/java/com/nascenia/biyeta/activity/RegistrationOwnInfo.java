@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.renderscript.ScriptGroup;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -213,7 +215,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                         .append(",")
                         .append("\"about_yourself\":")
                         .append("\"")
-                        .append(details.getText().toString())
+                        .append(details.getText().toString().trim())
                         .append("\"")
                         .append("}")
                         .toString();
@@ -232,6 +234,9 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                 next.setVisibility(View.VISIBLE);
                 noNumberEmail.setVisibility(View.INVISIBLE);
                 details.setImeOptions(EditorInfo.IME_ACTION_DONE);
+//                details.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
+//                details.setSingleLine(false);
+//                details.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
                 if(flag==1)
                 {
                     noNumberEmail.setVisibility(View.VISIBLE);

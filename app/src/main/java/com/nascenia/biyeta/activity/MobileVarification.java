@@ -429,6 +429,7 @@ public class MobileVarification extends AppCompatActivity {
             Intent nextActivity = new Intent(MobileVarification.this, RegistrationOwnInfo.class);
             nextActivity.putExtra("constants", s);
             startActivity(nextActivity);
+            finish();
         }
 
         @Override

@@ -224,10 +224,11 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
         String gender = null;
         if (genderValue == 0) {
-            gender = "male";
-        } else if (genderValue == 1) {
             gender = "female";
+        } else if (genderValue == 1) {
+            gender = "male";
         }
+        sharePref.set_data("gender", gender);
 
         if (gender == null) {
             //Utils.ShowAlert(RegistrationFirstActivity.this, "পাত্র/পাত্রী নির্বাচন করুন");
@@ -256,10 +257,10 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             //  Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড পূরণ করুন");
             return;
         }
-        if (password_edit_text.getText().length() < 8) {
+        if (password_edit_text.getText().length() < 4) {
             password_edit_text.requestFocus();
             password_edit_text.setSelection(password_edit_text.getText().length());
-            Toast.makeText(getBaseContext(), "পাসওয়ার্ড ন্যূনতম ৮ অক্ষর এর হতে হবে", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "পাসওয়ার্ড ন্যূনতম ৪ অক্ষর এর হতে হবে", Toast.LENGTH_LONG).show();
             // Utils.ShowAlert(RegistrationFirstActivity.this, "পাসওয়ার্ড ন্যূনতম ৮ অক্ষর এর হতে হবে");
             return;
         }
@@ -293,7 +294,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                         name_edit_text.getText().toString(),
                         display_name_edit_text.getText().toString(),
                         "",
-                        gender,
+                        gender.equalsIgnoreCase("male")?"female":"male",
                         "own",
                         dateOfBirthEditext.getText().toString());
 
@@ -373,13 +374,13 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         }
 
         if (object.has("first_name")) {
-            realName = object.getString("first_name");
+            realName = object.getString("name");
         }
-        if (object.has("last_name")) {
-            realName = realName + " " + object.getString("last_name");
-            displayName = object.getString("last_name");
-
-        }
+//        if (object.has("last_name")) {
+//            realName = realName + " " + object.getString("last_name");
+////            displayName = object.getString("last_name");
+//
+//        }
 
         if (object.has("gender")) {
             gender = object.getString("gender");
@@ -396,7 +397,8 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             birthday = object.getString("birthday");
         }
 
-        if(email==null || email.length() <=0 || realName==null || realName.length() <=0 || displayName==null || displayName.length()<=0 || birthday == null || birthday.length() <= 0) {
+        if(email==null || email.length() <=0 || realName==null || realName.length() <=0 || displayName==null
+                || displayName.length()<=0 || birthday == null || birthday.length() <= 0) {
 
             Intent intent = new Intent(RegistrationFirstActivity.this,
                     FacebookRegistrationDataInput.class);
@@ -409,76 +411,79 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             intent.putExtra("provider", provider);
             startActivityForResult(intent, facebook_request_code);
         }else {
-            provider = "facebook";
-            profilePic = "";
-            createdBy = "own";
-            mobileNumber = "";
+            callFacebookAccountCreate();
 
-            String fbSignUp = new StringBuilder().append("{")
-                    .append("\"facebook_auth\":")
-                    .append("{")
-                    .append("\"email\":")
-                    .append("\"")
-                    .append(email)
-                    .append("\"")
-                    .append(",")
-                    .append("\"real_name\":")
-                    .append("\"")
-                    .append(realName)
-                    .append("\"")
-                    .append(",")
-                    .append("\"display_name\":")
-                    .append("\"")
-                    .append(displayName)
-                    .append("\"")
-                    .append(",")
-                    .append("\"mobile_number\":")
-                    .append("\"")
-                    .append("")
-                    .append("\"")
-                    .append(",")
-                    .append("\"searching_for\":")
-                    .append("\"")
-                    .append(searchingFor)
-                    .append("\"")
-                    .append(",")
-                    .append("\"created_by\":")
-                    .append("\"")
-                    .append(createdBy)
-                    .append("\"")
-                    .append(",")
-                    .append("\"uid\":")
-                    .append("\"")
-                    .append(uid)
-                    .append("\"")
-                    .append(",")
-                    .append("\"provider\":")
-                    .append("\"")
-                    .append(provider)
-                    .append("\"")
-                    .append(",")
-                    .append("\"profile_pic\":")
-                    .append("\"")
-                    .append("")
-                    .append("\"")
-                    .append(",")
-                    .append("\"dateofbirth\":")
-                    .append("\"")
-                    .append(object.has("birthday") ? object.getString("birthday") : "")
-                    .append("\"")
-                    .append(",")
-                    .append("\"gender\":")
-                    .append("\"")
-                    .append(gender)
-                    .append("\"")
-                    .append("}")
-                    .append("}").toString();
-
-//        Toast.makeText(RegistrationFirstActivity.this,fbSignUp ,Toast.LENGTH_LONG).show();
-            new RegistrationFirstActivity.FbRegistration().execute(fbSignUp, Utils.FB_SIGNUP);
         }
     }
 
+    private void callFacebookAccountCreate() {
+        provider = "facebook";
+        profilePic = "";
+        createdBy = "own";
+        mobileNumber = "";
+
+        String fbSignUp = new StringBuilder().append("{")
+                .append("\"facebook_auth\":")
+                .append("{")
+                .append("\"email\":")
+                .append("\"")
+                .append(email)
+                .append("\"")
+                .append(",")
+                .append("\"real_name\":")
+                .append("\"")
+                .append(realName)
+                .append("\"")
+                .append(",")
+                .append("\"display_name\":")
+                .append("\"")
+                .append(displayName)
+                .append("\"")
+                .append(",")
+                .append("\"mobile_number\":")
+                .append("\"")
+                .append("")
+                .append("\"")
+                .append(",")
+                .append("\"searching_for\":")
+                .append("\"")
+                .append(searchingFor)
+                .append("\"")
+                .append(",")
+                .append("\"created_by\":")
+                .append("\"")
+                .append(createdBy)
+                .append("\"")
+                .append(",")
+                .append("\"uid\":")
+                .append("\"")
+                .append(uid)
+                .append("\"")
+                .append(",")
+                .append("\"provider\":")
+                .append("\"")
+                .append(provider)
+                .append("\"")
+                .append(",")
+                .append("\"profile_pic\":")
+                .append("\"")
+                .append("")
+                .append("\"")
+                .append(",")
+                .append("\"dateofbirth\":")
+                .append("\"")
+                .append(birthday)
+                .append("\"")
+                .append(",")
+                .append("\"gender\":")
+                .append("\"")
+                .append(gender.equalsIgnoreCase("female")?"male":"female")
+                .append("\"")
+                .append("}")
+                .append("}").toString();
+        Log.e("json", fbSignUp);
+        new RegistrationFirstActivity.FbRegistration().execute(fbSignUp, Utils.FB_SIGNUP);
+    }
 
 
 //    private void setRegistrationDataWithFacebook(JSONObject object) {
@@ -520,6 +525,16 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
                 Log.i("resultdata: ", message + " " + date + "/" + month + "/"+ year);*/
             }
+        } else if(requestCode == facebook_request_code)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                email = data.getStringExtra("email");
+                realName = data.getStringExtra("first_name");
+                displayName = data.getStringExtra("display_name");
+                birthday = data.getStringExtra("birthday");
+                callFacebookAccountCreate();
+            }
         }
     }
 
@@ -550,7 +565,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     } else {
                         //sharePref.set_data("registration_token",jsonObject.getString("auth_token"));
                         sharePref.set_data("token", jsonObject.getString("auth_token"));
-                        sharePref.set_data("gender", gender);
+//                        sharePref.set_data("gender", gender);
                         Intent mobileVerification = new Intent(RegistrationFirstActivity.this, MobileVarification.class);
                         startActivity(mobileVerification);
                         finish();
@@ -698,6 +713,4 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             return responseString;
         }
     }
-
-
 }

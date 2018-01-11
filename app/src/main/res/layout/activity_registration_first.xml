@@ -102,7 +102,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight=".7"
                 android:background="@color/white"
-                android:hint="পাসওয়ার্ড (ন্যূনতম ৮ অক্ষর)"
+                android:hint="পাসওয়ার্ড (ন্যূনতম ৪ অক্ষর)"
                 android:textColor="@color/lblFromName"
                 android:textColorHint="@color/lblFromName"
                 android:imeOptions="actionNext"

@@ -34,14 +34,10 @@
 
             <ImageView
                 android:id="@+id/icon_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:padding="2dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:scaleType="fitXY" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icon_content"/>
 
 
         </LinearLayout>

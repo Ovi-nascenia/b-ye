@@ -63,6 +63,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
     private LinkedHashMap<Integer, String> countryLinkedHashMap = new LinkedHashMap<Integer, String>();
     private String[] countryNameArray;
+    private int bdIndex;
 
     private int countryIndicator, distIndicator;
     private String presentCountryCode = "", permanentCountryCode = "";
@@ -105,7 +106,8 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
             Locale obj = new Locale("", countryCode);
             countryNameArray[countryCounter] = obj.getDisplayCountry();
-
+            if(countryCode.equalsIgnoreCase("bd"))
+                bdIndex = countryCounter;
             countryCounter++;
             Log.i("countrylist", "Country Code = " + obj.getCountry()
                     + ", Country Name = " + obj.getDisplayCountry());
@@ -466,7 +468,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
                 .append("[{")
                 .append("\"address\":")
                 .append("\"")
-                .append(presentAddressEditext.getText().toString())
+                .append(presentAddressEditext.getText().toString().trim())
                 .append("\"")
                 .append(",")
                 .append("\"address_type\":")
@@ -484,7 +486,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
                 .append("},{")
                 .append("\"address\":")
                 .append("\"")
-                .append(permanentAddressCheckbox.isChecked()?presentAddressEditext.getText().toString():permanentAddressEditext.getText().toString())
+                .append(permanentAddressCheckbox.isChecked()?presentAddressEditext.getText().toString().trim():permanentAddressEditext.getText().toString().trim())
                 .append("\"")
                 .append(",")
                 .append("\"address_type\":")

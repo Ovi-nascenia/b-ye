@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
@@ -53,6 +54,7 @@ public class ImageUpload extends AppCompatActivity {
     LinearLayout beforeProPicUpload, beforeBodyPicUpload, beforeOtherPicUpload, proPicChange,
             bodyPicChange, otherPicChange, permissionLayout;
     FrameLayout afterProPicUpload, afterBodyPicUpload, afterOtherPicUpload;
+    RelativeLayout otherImages;
     ImageView proPic, bodyPic, otherPic, back;
     public static Bitmap proPicBitmap, bodyPicBitmap, otherPicBitmap;
     Button yesButton, noButton;
@@ -90,6 +92,8 @@ public class ImageUpload extends AppCompatActivity {
         afterProPicUpload = (FrameLayout) findViewById(R.id.after_pro_pic_upload);
         afterBodyPicUpload = (FrameLayout) findViewById(R.id.after_body_pic_upload);
         afterOtherPicUpload = (FrameLayout) findViewById(R.id.after_other_pic_upload);
+
+        otherImages = findViewById(R.id.other_images);
 
         proPic = (ImageView) findViewById(R.id.pro_pic);
         bodyPic = (ImageView) findViewById(R.id.body_pic);
@@ -361,18 +365,24 @@ public class ImageUpload extends AppCompatActivity {
 
             if (afterProPicUploadValue == 1) {
                 proPic.setImageBitmap(proPicBitmap);
-                beforeProPicUpload.setVisibility(View.GONE);
-                afterProPicUpload.setVisibility(View.VISIBLE);
+                if(proPicBitmap!=null) {
+                    beforeProPicUpload.setVisibility(View.GONE);
+                    afterProPicUpload.setVisibility(View.VISIBLE);
+                }
             }
             if (afterBodyPicUploadValue == 1) {
                 bodyPic.setImageBitmap(bodyPicBitmap);
-                beforeBodyPicUpload.setVisibility(View.GONE);
-                afterBodyPicUpload.setVisibility(View.VISIBLE);
+                if(bodyPicBitmap!=null) {
+                    beforeBodyPicUpload.setVisibility(View.GONE);
+                    afterBodyPicUpload.setVisibility(View.VISIBLE);
+                }
             }
             if (afterOtherPicUploadValue == 1) {
                 otherPic.setImageBitmap(otherPicBitmap);
-                beforeOtherPicUpload.setVisibility(View.GONE);
-                afterOtherPicUpload.setVisibility(View.VISIBLE);
+                if(otherPicBitmap!=null) {
+                    beforeOtherPicUpload.setVisibility(View.GONE);
+                    afterOtherPicUpload.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -694,6 +704,7 @@ public class ImageUpload extends AppCompatActivity {
                     Intent i = new Intent(ImageUpload.this, ImageCrop.class);
                     i.putExtra("image_url", fileUri.getPath());
                     startActivity(i);
+
                 } else if (requestCode == SELECT_FILE) {
                     Log.i("imageurl", "SELECT_FILE");
 
@@ -716,6 +727,7 @@ public class ImageUpload extends AppCompatActivity {
                     startActivity(i);
 
                 }
+                otherImages.setVisibility(View.VISIBLE);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -725,6 +737,14 @@ public class ImageUpload extends AppCompatActivity {
         } else {
             Log.i("imageurl", "can't complete");
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        proPicBitmap = null;
+        bodyPicBitmap = null;
+        otherPicBitmap = null;
     }
 
     /*@Override

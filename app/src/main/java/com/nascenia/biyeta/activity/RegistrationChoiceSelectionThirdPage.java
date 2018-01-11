@@ -248,8 +248,9 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
         for (int i = 0; i < muslimCastConstant.size(); i++) {
             muslimCheckBox = new CheckBox(this);
-            muslimCheckBox.setText(muslimCast.get(i));
+            muslimCheckBox.setText(muslimCast.get(i) + "   ");
             muslimCheckBox.setId(Integer.parseInt(muslimCastConstant.get(i)));
+            muslimCheckBox.setPadding(0, 0, 5, 0);
             final int index = i;
             muslimCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -271,7 +272,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         for (int i = 0; i < hinduCastConstant.size(); i++) {
             Log.i("checkbox:","data: "+hinduCast.get(i)+" "+hinduCastConstant.get(i));
             hinduCheckBox = new CheckBox(this);
-            hinduCheckBox.setText(hinduCast.get(i));
+            hinduCheckBox.setText(hinduCast.get(i) + "   ");
             hinduCheckBox.setId(Integer.parseInt("100"+hinduCastConstant.get(i)));// here 100 added for making unique hinducast checkbox
             final int index = i;
             hinduCheckBox.setOnClickListener(new View.OnClickListener() {
@@ -298,7 +299,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
         for (int i = 0; i < christianCastConstant.size(); i++) {
             christianCheckBox = new CheckBox(this);
-            christianCheckBox.setText(christianCast.get(i));
+            christianCheckBox.setText(christianCast.get(i) + "   ");
             christianCheckBox.setId(Integer.parseInt(christianCastConstant.get(i)));
             final int index = i;
             christianCheckBox.setOnClickListener(new View.OnClickListener() {
@@ -544,7 +545,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                     }
 
                     if (castStatus.isEmpty()) {
-                        Toast.makeText(getBaseContext(), getString(R.string.choose_cast_name__selction_message),
+                        Toast.makeText(getBaseContext(), getString(R.string.choose_muslim_cast_name__selction_message),
                                 Toast.LENGTH_SHORT).show();
                         castLabel.getParent().
                                 requestChildFocus(castLabel, castLabel);
@@ -816,18 +817,21 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             religionStatus = religionArrayConstant.get(religion - 1);
             religionText.setText(religionArray.get(religion - 1));
             if (religionStatus.equals("1")) {
+                castLabel.setText("সম্প্রদায়*");
                 castLabel.setVisibility(View.VISIBLE);
                 muslimCastLayout.setVisibility(View.VISIBLE);
                 hinduCastLayout.setVisibility(View.GONE);
                 christianCastLayout.setVisibility(View.GONE);
                 onlyForMuslimLayout.setVisibility(View.VISIBLE);
             } else if (religionStatus.equals("2")) {
+                castLabel.setText("বর্ণ*");
                 castLabel.setVisibility(View.VISIBLE);
                 hinduCastLayout.setVisibility(View.VISIBLE);
                 muslimCastLayout.setVisibility(View.GONE);
                 christianCastLayout.setVisibility(View.GONE);
                 onlyForMuslimLayout.setVisibility(View.GONE);
             } else if (religionStatus.equals("3")) {
+                castLabel.setText("বর্ণ*");
                 castLabel.setVisibility(View.VISIBLE);
                 christianCastLayout.setVisibility(View.VISIBLE);
                 muslimCastLayout.setVisibility(View.GONE);

@@ -73,7 +73,7 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
         Glide.
                 with(holder.profile_image.getContext()).
                 load(Utils.Base_URL + prfile.getImage()).
-                placeholder(gender.equalsIgnoreCase("female") ? R.drawable.profile_icon_male : R.drawable.profile_icon_female).
+                placeholder(gender.equalsIgnoreCase("male") ? R.drawable.profile_icon_female : R.drawable.profile_icon_male).
                 into(holder.profile_image);
     }
 
