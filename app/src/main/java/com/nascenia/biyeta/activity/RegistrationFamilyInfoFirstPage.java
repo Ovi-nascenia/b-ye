@@ -53,7 +53,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
     ImageView back;
 
-    String constant, occupationOfFather = "", occupationOfMother = "", professionOfFather, professionOfMother;
+    String constant, occupationOfFather = "", occupationOfMother = "", professionOfFather = "", professionOfMother = "";
 
     JSONObject professionalGroupObject, occupationObject;
 

@@ -97,8 +97,8 @@
                 android:hint="বাবার নাম*"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/lblFromName"
-                android:textColorHint="@color/lblFromName" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
 
             <LinearLayout
                 android:id="@+id/professonalalStatusFather"
@@ -119,8 +119,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="পেশা*"
-                    android:textSize="18dp" />
+                    android:hint="পেশা*"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:id="@+id/down_arrow_profession_father"
@@ -153,8 +155,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
-                    android:textSize="18dp" />
+                    android:hint="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:id="@+id/down_arrow_profession_group_father"
@@ -179,8 +183,8 @@
                 android:hint="পদবী"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/lblFromName"
-                android:textColorHint="@color/lblFromName" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
 
             <EditText
                 android:id="@+id/institution_father"
@@ -193,8 +197,8 @@
                 android:hint="প্রতিষ্ঠান"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/lblFromName"
-                android:textColorHint="@color/lblFromName" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
 
             <TextView
                 android:id="@+id/profession_status_label_mother"
@@ -216,8 +220,8 @@
                 android:hint="মায়ের নাম"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/lblFromName"
-                android:textColorHint="@color/lblFromName" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
 
             <LinearLayout
                 android:id="@+id/professonalalStatusMother"
@@ -238,8 +242,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="পেশা*"
-                    android:textSize="18dp" />
+                    android:hint="পেশা*"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:id="@+id/down_arrow_profession_mother"
@@ -272,8 +278,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
-                    android:textSize="18dp" />
+                    android:hint="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:id="@+id/down_arrow_profession_group_mother"
@@ -298,8 +306,8 @@
                 android:hint="পদবী"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/lblFromName"
-                android:textColorHint="@color/lblFromName" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
 
             <EditText
                 android:id="@+id/institution_mother"
@@ -312,8 +320,8 @@
                 android:hint="প্রতিষ্ঠান"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/lblFromName"
-                android:textColorHint="@color/lblFromName" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
 
             <Button
                 android:id="@+id/next"

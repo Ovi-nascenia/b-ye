@@ -102,10 +102,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="উচ্চতা"
+                android:hint="উচ্চতা"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:layout_gravity="right"
                 android:layout_weight="1"
@@ -142,10 +144,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="গায়ের রং"
+                android:hint="গায়ের রং"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:layout_gravity="right"
                 android:layout_weight="1"
@@ -182,10 +186,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="ওজন"
+                android:hint="ওজন"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:layout_gravity="right"
                 android:layout_weight="1"
@@ -222,10 +228,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text=" ব্লাড গ্রুপ"
+                android:hint=" ব্লাড গ্রুপ"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:layout_gravity="right"
                 android:layout_weight="1"
@@ -262,10 +270,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="বৈবাহিক অবস্থা"
+                android:hint="বৈবাহিক অবস্থা"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:id="@+id/down_arrow_merital"
                 android:layout_gravity="right"
@@ -305,10 +315,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="ডিগ্রীর নাম*"
+                android:hint="ডিগ্রীর নাম*"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:id="@+id/down_arrow_education"
                 android:layout_gravity="right"
@@ -332,8 +344,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
             android:textColorHint="@color/lblFromName"
-            android:textColor="@color/lblFromName"
             android:singleLine="true"/>
 
         <EditText
@@ -347,8 +359,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:singleLine="true"
-            android:textColorHint="@color/lblFromName"
-            android:textColor="@color/lblFromName"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
 
 
         <TextView
@@ -376,10 +388,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="পেশা*"
+                android:hint="পেশা*"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:id="@+id/down_arrow_profession"
                 android:layout_gravity="right"
@@ -410,10 +424,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="প্রফেশনাল গ্রুপ*"
+                android:hint="প্রফেশনাল গ্রুপ*"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:id="@+id/down_arrow_profession_group"
                 android:layout_gravity="right"
@@ -438,8 +454,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:singleLine="true"
-            android:textColorHint="@color/lblFromName"
-            android:textColor="@color/lblFromName"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
         <EditText
             android:id="@+id/occupation_institution_text"
             android:layout_width="match_parent"
@@ -451,8 +467,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:singleLine="true"
-            android:textColorHint="@color/lblFromName"
-            android:textColor="@color/lblFromName"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
 
         <TextView
             android:id="@+id/religion_status_label"
@@ -481,10 +497,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="নামায"
+                android:hint="নামায"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:id="@+id/down_arrow_religion"
                 android:layout_gravity="right"
@@ -525,10 +543,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="রোজা"
+                android:hint="রোজা"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:id="@+id/down_arrow_roja"
                 android:layout_gravity="right"
@@ -569,10 +589,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="হিজাব"
+                android:hint="হিজাব"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:id="@+id/hiajb_arrow_roja"
                 android:layout_gravity="right"
@@ -599,7 +621,7 @@
             android:id="@+id/house_linearLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="0dp"
             android:layout_marginRight="10dp"
             android:background="@color/white"
@@ -613,10 +635,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="আবাসস্থল"
+                android:hint="আবাসস্থল"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:id="@+id/down_arrow_house"
                 android:layout_gravity="right"
@@ -654,10 +678,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="প্রতিবন্ধকতা"
+                android:hint="প্রতিবন্ধকতা"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:id="@+id/down_arrow_disable"
                 android:layout_gravity="right"
@@ -696,10 +722,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="ধূমপান"
+                android:hint="ধূমপান"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:id="@+id/down_arrow_smoke"
                 android:layout_gravity="right"

@@ -98,7 +98,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="@string/religion_pick_textview_title"
+                android:hint="@string/religion_pick_textview_title"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"
                 android:textSize="18dp" />
 
             <ImageView
@@ -139,7 +141,9 @@
             android:privateImeOptions="nm"
             android:lines="10"
             android:scrollHorizontally="false"
-            android:inputType="textMultiLine"/>
+            android:inputType="textMultiLine"
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
 
         <TextView
             android:id="@+id/label"

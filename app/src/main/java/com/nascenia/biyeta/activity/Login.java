@@ -458,7 +458,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                         //present code
                         if (response.getLoginInformation().getMobileVerified()) {
-                            if (currentMobileSignupStep == 10) {
+                            if (currentMobileSignupStep >= 10 || currentMobileSignupStep <=1) {
                                 startActivity(new Intent(Login.this, HomeScreen.class));
                                 finish();
                             } else

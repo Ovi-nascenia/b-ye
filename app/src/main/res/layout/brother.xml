@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="  নাম*"
-        android:textColor="@color/lblFromName"
+        android:textColor="@color/black"
         android:textColorHint="@color/lblFromName"
         android:padding="10dp"
         android:layout_marginLeft="15dp"
@@ -59,8 +59,10 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:gravity="left"
-            android:text="বয়স*"
-            android:textSize="18dp" />
+            android:hint="বয়স*"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
 
         <ImageView
             android:id="@+id/down_arrow_age_brother"
@@ -95,8 +97,10 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:gravity="left"
-            android:text="পেশা*"
-            android:textSize="18dp" />
+            android:hint="পেশা*"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
 
         <ImageView
             android:id="@+id/down_arrow_profession_father"
@@ -128,10 +132,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
+            android:hint="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
             android:textSize="18dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
         <ImageView
             android:id="@+id/down_arrow_profession_group_brother"
             android:layout_gravity="right"
@@ -149,8 +155,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="পদবী"
-        android:textColor="@color/lblFromName"
-        android:textColorHint="@color/lblFromName" android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/lblFromName"
+        android:padding="10dp"
         android:layout_marginLeft="15dp"
         android:background="@color/white"
         android:layout_marginTop="10dp"
@@ -162,8 +169,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="প্রতিষ্ঠান"
-        android:textColor="@color/lblFromName"
-        android:textColorHint="@color/lblFromName" android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/lblFromName"
+        android:padding="10dp"
         android:layout_marginLeft="15dp"
         android:background="@color/white"
         android:layout_marginRight="10dp"
@@ -188,10 +196,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="বৈবাহিক অবস্থা"
+            android:hint="বৈবাহিক অবস্থা"
             android:textSize="18dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
         <ImageView
             android:id="@+id/down_arrow_marital_brother"
             android:layout_gravity="right"
@@ -245,7 +255,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="  ভাইয়ের স্ত্রীর নাম*"
-            android:textColor="@color/lblFromName"
+            android:textColor="@color/black"
             android:textColorHint="@color/lblFromName"
             android:padding="10dp"
             android:layout_marginLeft="15dp"
@@ -275,8 +285,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="পেশা*"
-                android:textSize="18dp" />
+                android:hint="পেশা*"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
 
             <ImageView
                 android:id="@+id/down_arrow_profession_brother_spouse"
@@ -308,10 +320,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
+                android:hint="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
             <ImageView
                 android:id="@+id/down_arrow_profession_group_brother_spouse"
                 android:layout_gravity="right"
@@ -329,7 +343,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="পদবী"
-            android:textColor="@color/lblFromName"
+            android:textColor="@color/black"
             android:textColorHint="@color/lblFromName"
             android:padding="10dp"
             android:layout_marginLeft="15dp"
@@ -343,7 +357,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="প্রতিষ্ঠান"
-            android:textColor="@color/lblFromName"
+            android:textColor="@color/black"
             android:textColorHint="@color/lblFromName"
             android:padding="10dp"
             android:layout_marginLeft="15dp"
@@ -353,9 +367,4 @@
             android:singleLine="true"/>
 
     </LinearLayout>
-
-
-
-
-
 </LinearLayout>

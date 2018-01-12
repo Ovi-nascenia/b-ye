@@ -48,8 +48,10 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:gravity="left"
-            android:text="@string/relation_title_text"
-            android:textSize="18dp" />
+            android:hint="@string/relation_title_text"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
 
         <ImageView
             android:id="@+id/down_arrow_relation_other"
@@ -81,8 +83,8 @@
             android:hint="  নাম*"
             android:padding="10dp"
             android:singleLine="true"
-            android:textColor="@color/lblFromName"
-            android:textColorHint="@color/lblFromName" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
 
         <LinearLayout
             android:id="@+id/age_other"
@@ -103,8 +105,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="বয়স*"
-                android:textSize="18dp" />
+                android:hint="বয়স*"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
 
             <ImageView
                 android:id="@+id/down_arrow_age_other"
@@ -136,8 +140,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="পেশা*"
-                android:textSize="18dp" />
+                android:hint="পেশা*"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
 
             <ImageView
                 android:id="@+id/down_arrow_profession_father"
@@ -169,8 +175,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
-                android:textSize="18dp" />
+                android:hint="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
 
             <ImageView
                 android:id="@+id/down_arrow_profession_group_other"
@@ -195,8 +203,8 @@
             android:hint="পদবী"
             android:padding="10dp"
             android:singleLine="true"
-            android:textColor="@color/lblFromName"
-            android:textColorHint="@color/lblFromName" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
 
         <EditText
             android:id="@+id/institution_other"
@@ -209,10 +217,10 @@
             android:hint="প্রতিষ্ঠান"
             android:padding="10dp"
             android:singleLine="true"
-            android:textColor="@color/lblFromName"
-            android:textColorHint="@color/lblFromName" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
 
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/marital_status_other"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -244,5 +252,6 @@
                 android:src="@drawable/down_arrow" />
 
         </LinearLayout>
+        -->
     </LinearLayout>
 </LinearLayout>

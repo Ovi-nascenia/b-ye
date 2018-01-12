@@ -105,10 +105,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="চাকরি"
+                    android:hint="চাকরি"
                     android:textSize="18dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
                 <ImageView
                     android:id="@+id/down_arrow_job"
                     android:layout_gravity="right"
@@ -148,10 +150,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="বৈবাহিক অবস্থা"
+                    android:hint="বৈবাহিক অবস্থা"
                     android:textSize="18dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
                 <ImageView
                     android:id="@+id/down_arrow_marital"
                     android:layout_gravity="right"
@@ -191,10 +195,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="ধর্ম"
+                    android:hint="ধর্ম"
                     android:textSize="18dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
                 <ImageView
                     android:id="@+id/down_arrow"
                     android:layout_gravity="right"

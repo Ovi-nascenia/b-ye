@@ -209,7 +209,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                     .append(",")
                                     .append("\"professional_group\":")
                                     .append("\"")
-                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArrayBrother.get(i))
+                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArrayBrother.get(i)!=null?PopUpFamilyInfoSecondPage.professionalGroupArrayBrother.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"designation\":")
@@ -224,7 +224,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                     .append(",")
                                     .append("\"marital_status\":")
                                     .append("\"")
-                                    .append(PopUpFamilyInfoSecondPage.maritalStatusArrayBrother.get(i))
+                                    .append(PopUpFamilyInfoSecondPage.maritalStatusArrayBrother.get(i)!=null?PopUpFamilyInfoSecondPage.maritalStatusArrayBrother.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"spouse\":")
@@ -234,12 +234,12 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                     .append(",")
                                     .append("\"s_occupation\":")
                                     .append("\"")
-                                    .append(PopUpFamilyInfoSecondPage.occupationArrayBrotherSpouse.get(i))
+                                    .append(PopUpFamilyInfoSecondPage.occupationArrayBrotherSpouse.get(i)!=null?PopUpFamilyInfoSecondPage.occupationArrayBrotherSpouse.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"s_professional_group\":")
                                     .append("\"")
-                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArrayBrotherSpouse.get(i))
+                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArrayBrotherSpouse.get(i)!=null?PopUpFamilyInfoSecondPage.professionalGroupArrayBrotherSpouse.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"s_designation\":")
@@ -304,12 +304,12 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                     .append(",")
                                     .append("\"occupation\":")
                                     .append("\"")
-                                    .append(PopUpFamilyInfoSecondPage.occupationArraySister.get(i))
+                                    .append(PopUpFamilyInfoSecondPage.occupationArraySister.get(i)!=null?PopUpFamilyInfoSecondPage.occupationArraySister.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"professional_group\":")
                                     .append("\"")
-                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArraySister.get(i))
+                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArraySister.get(i)!=null?PopUpFamilyInfoSecondPage.professionalGroupArraySister.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"designation\":")
@@ -324,7 +324,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                     .append(",")
                                     .append("\"marital_status\":")
                                     .append("\"")
-                                    .append(PopUpFamilyInfoSecondPage.maritalStatusArraySister.get(i))
+                                    .append(PopUpFamilyInfoSecondPage.maritalStatusArraySister.get(i)!=null?PopUpFamilyInfoSecondPage.maritalStatusArraySister.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"spouse\":")
@@ -388,17 +388,17 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                     .append(",")
                                     .append("\"age\":")
                                     .append("\"")
-                                    .append(PopUpFamilyInfoSecondPage.ageArrayOther.get(i))
+                                    .append(PopUpFamilyInfoSecondPage.ageArrayOther.get(i)!=null?PopUpFamilyInfoSecondPage.ageArrayOther.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"occupation\":")
                                     .append("\"")
-                                    .append(PopUpFamilyInfoSecondPage.occupationArrayOther.get(i))
+                                    .append(PopUpFamilyInfoSecondPage.occupationArrayOther.get(i)!=null?PopUpFamilyInfoSecondPage.occupationArrayOther.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"professional_group\":")
                                     .append("\"")
-                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArrayOther.get(i))
+                                    .append(PopUpFamilyInfoSecondPage.professionalGroupArrayOther.get(i)!=null?PopUpFamilyInfoSecondPage.professionalGroupArrayOther.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"designation\":")
@@ -419,11 +419,11 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                     }
                 }
 
-               /* Log.i("finalvalue: ", "brother-> " + responseBrother);
+                Log.i("finalvalue: ", "brother-> " + responseBrother);
                 Log.i("finalvalue: ", "sister-> " + responseSister);
                 Log.i("finalvalue: ", "other-> " + responseOther);
-                Log.i("finalvalue: ", "totalJson-> " +   JSONResponse());
-*/
+//                Log.i("finalvalue: ", "totalJson-> " +   JSONResponse());
+
                //  JSONResponse();
                 new RegistrationFamilyInfoSecondPage.SendFamilyInfo().execute(Utils.SEND_INFO);
             }

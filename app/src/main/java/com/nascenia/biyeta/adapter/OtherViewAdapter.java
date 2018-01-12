@@ -32,7 +32,7 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
 
     LinearLayout professonalStatusOther;
     LinearLayout occupationStatusOther;
-    LinearLayout maritalStatusOther;
+//    LinearLayout maritalStatusOther;
     LinearLayout relationalStatusOther;
     LinearLayout ageOther;
 
@@ -77,7 +77,7 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
 
             otherOccupation = (TextView) view.findViewById(R.id.profession_text_view_other);
             otherProfessionalGroup = (TextView) view.findViewById(R.id.profession_group_text_view_other);
-            otherMaritalStatus = (TextView) view.findViewById(R.id.marital_text_view_other);
+//            otherMaritalStatus = (TextView) view.findViewById(R.id.marital_text_view_other);
             otherRelationalStatus = (TextView) view.findViewById(R.id.relation_text_view_other);
             otherAge = (TextView) view.findViewById(R.id.age_text_view_other);
             detailsInfoFieldsRootLayout = (LinearLayout) view.findViewById(R.id.details_info_fields_root_layout);
@@ -144,18 +144,18 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
                 }
             });
 
-            maritalStatusOther = (LinearLayout) view.findViewById(R.id.marital_status_other);
-            maritalStatusOther.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectedPopUp = 3;
-                    other = 1;
-                    Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
-                    setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
-                    setIntent.putExtra("position", getAdapterPosition());
-                    context.startActivity(setIntent);
-                }
-            });
+//            maritalStatusOther = (LinearLayout) view.findViewById(R.id.marital_status_other);
+//            maritalStatusOther.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    selectedPopUp = 3;
+//                    other = 1;
+//                    Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
+//                    setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
+//                    setIntent.putExtra("position", getAdapterPosition());
+//                    context.startActivity(setIntent);
+//                }
+//            });
 
             relationalStatusOther = (LinearLayout) view.findViewById(R.id.relational_status_other);
             relationalStatusOther.setOnClickListener(new View.OnClickListener() {

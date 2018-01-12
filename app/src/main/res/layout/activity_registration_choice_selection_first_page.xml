@@ -100,7 +100,7 @@
                     app:lineColor="#212121"
                     app:showLabels="true"
                     app:showTicks="false"
-                    android:background="@color/white" />
+                    android:background="@color/white"/>
             </LinearLayout>
 
             <TextView

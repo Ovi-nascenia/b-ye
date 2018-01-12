@@ -78,6 +78,8 @@
             android:layout_marginLeft="@dimen/small_margin"
             android:layout_marginRight="@dimen/small_margin"
             android:backgroundTint="#626262"
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"
             />
 
         <EditText
@@ -88,7 +90,9 @@
             android:visibility="gone"
             android:layout_marginLeft="@dimen/small_margin"
             android:layout_marginRight="@dimen/small_margin"
-            android:backgroundTint="#626262"/>
+            android:backgroundTint="#626262"
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"/>
     </LinearLayout>
 
 

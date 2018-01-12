@@ -381,7 +381,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
     private void sendDataToServer() {
 
-        if (villageDistrictNameTextView.getText().toString().equalsIgnoreCase("দেশের বাড়ি")) {
+        if (villageDistrictNameTextView.getText().toString().equalsIgnoreCase("")) {
             Toast.makeText(getBaseContext(), "আপনার দেশের বাড়ি কোথায় নির্বাচন করুন", Toast.LENGTH_LONG).show();
             return;
         }
@@ -391,18 +391,16 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             return;
         } else {
             if (currentLivingLocationStatus.equalsIgnoreCase("ab") &&
-                    abroadTypeTextView.getText().toString().equalsIgnoreCase("বিদেশে অবস্থানের ধরন")) {
+                    abroadTypeTextView.getText().toString().equalsIgnoreCase("")) {
                 Toast.makeText(getBaseContext(), "আপনার বিদেশে অবস্থানের ধরন নির্বাচন করুন", Toast.LENGTH_LONG).show();
                 return;
             }
         }
 
-
         if (presentAddressEditext.getText().toString().isEmpty()) {
             Toast.makeText(getBaseContext(), "আপনার বর্তমান ঠিকানা লিখুন", Toast.LENGTH_LONG).show();
             return;
         }
-
 
         if (presentCountryCode.isEmpty()) {
             Toast.makeText(getBaseContext(), "আপনার  বর্তমানে অবস্থানরত দেশ নির্বাচন করুন", Toast.LENGTH_LONG).show();
@@ -419,7 +417,9 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             return;
         }
 
-        if((presentDistrictLayout.getVisibility() == View.VISIBLE) && presentDistrictTextView.getText().toString().equalsIgnoreCase("জেলা"))
+
+
+        if((presentDistrictLayout.getVisibility() == View.VISIBLE) && presentDistrictTextView.getText().toString().equalsIgnoreCase(""))
         {
             Toast.makeText(getBaseContext(), "আপনার বর্তমান জেলা নির্বাচন করুন", Toast.LENGTH_LONG).show();
             return;
@@ -436,7 +436,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
                 return;
             }
 
-            if((permanentDistrictLayout.getVisibility() == View.VISIBLE) && permanentDistrictTextView.getText().toString().equalsIgnoreCase("জেলা"))
+            if((permanentDistrictLayout.getVisibility() == View.VISIBLE) && permanentDistrictTextView.getText().toString().equalsIgnoreCase(""))
             {
                 Toast.makeText(getBaseContext(), "আপনার স্থায়ী জেলা নির্বাচন করুন", Toast.LENGTH_LONG).show();
                 return;
@@ -612,7 +612,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             permanentDistrictLayout.setVisibility(View.VISIBLE);
         } else {
             currentLivingLocationStatus = "";
-            presentCountryTextView.setText("দেশ");
+            presentCountryTextView.setHint("দেশ");
         }
     }
 
@@ -623,9 +623,10 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             addressBangldeshCheckbox.setChecked(false);
             abroadTypeStatusTitleTextView.setVisibility(View.VISIBLE);
             abroadTypeLayout.setVisibility(View.VISIBLE);
-            abroadTypeTextView.setText("বিদেশে অবস্থানের ধরন");
+            abroadTypeTextView.setHint("বিদেশে অবস্থানের ধরন");
             presentDistrictLayout.setVisibility(View.GONE);
-            presentCountryTextView.setText("দেশ");
+            presentCountryTextView.setText(null);
+            presentCountryTextView.setHint("দেশ");
         } else {
             currentLivingLocationStatus = "";
             abroadTypeStatusTitleTextView.setVisibility(View.GONE);

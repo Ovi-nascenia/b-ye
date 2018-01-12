@@ -103,8 +103,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="@string/brother_sister_number_textview_hint"
-                    android:textSize="18dp" />
+                    android:hint="@string/brother_sister_number_textview_hint"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:id="@+id/down_arrow_profession_brother"
@@ -193,8 +195,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="@string/brother_sister_number_textview_hint"
-                    android:textSize="18dp" />
+                    android:hint="@string/brother_sister_number_textview_hint"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:id="@+id/down_arrow_count_sister"

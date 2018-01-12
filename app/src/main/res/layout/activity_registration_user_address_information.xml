@@ -89,8 +89,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="দেশের বাড়ি"
-                    android:textSize="18dp" />
+                    android:hint="দেশের বাড়ি"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:id="@+id/down_arrow_merital"
@@ -170,8 +172,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="abroad type"
-                    android:textSize="18dp" />
+                    android:hint="abroad type"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:layout_width="50dp"
@@ -201,7 +205,9 @@
                 android:gravity="top"
                 android:hint="বর্তমান ঠিকানা"
                 android:paddingLeft="@dimen/small_padding"
-                android:privateImeOptions="nm" />
+                android:privateImeOptions="nm"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
 
             <LinearLayout
                 android:id="@+id/present_country_layout"
@@ -222,8 +228,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="দেশ"
-                    android:textSize="18dp" />
+                    android:hint="দেশ"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:id="@+id/present_country_merital"
@@ -261,8 +269,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="জেলা"
-                    android:textSize="18dp" />
+                    android:hint="জেলা"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:layout_width="50dp"
@@ -306,8 +316,10 @@
                 android:gravity="top"
                 android:hint="স্থায়ী ঠিকানা"
                 android:paddingLeft="@dimen/small_padding"
-                android:privateImeOptions="nm" />
-
+                android:privateImeOptions="nm"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
+s
             <LinearLayout
                 android:id="@+id/permanent_country_layout"
                 android:layout_width="match_parent"
@@ -327,8 +339,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="দেশ"
-                    android:textSize="18dp" />
+                    android:hint="দেশ"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:id="@+id/permanent_country_merital"
@@ -365,8 +379,10 @@
                         android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:gravity="left"
-                        android:text="জেলা"
-                        android:textSize="18dp" />
+                        android:hint="জেলা"
+                        android:textSize="18dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/lblFromName"/>
 
                     <ImageView
                         android:layout_width="50dp"

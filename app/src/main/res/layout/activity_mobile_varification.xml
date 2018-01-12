@@ -88,7 +88,6 @@
                     android:background="@color/back_verifycode_edittext1"
                     android:layout_marginTop="15dp"
                     app:textSize="14sp"
-                    app:textColor="#000000"
                     app:flagPaddingEnd="4dp"
                     app:flagPaddingStart="4dp"
                     app:flagPaddingTop="4dp"
@@ -98,7 +97,9 @@
                     android:id="@+id/my_phone_input"
                     android:padding="5dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@id/numbervarifytextView1"/>
+                    android:layout_below="@id/numbervarifytextView1"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <Button
                     android:id="@+id/sendVerificationCode"
@@ -154,7 +155,9 @@
                     android:layout_margin="10dp"
                     android:imeOptions="actionDone"
                     android:singleLine="true"
-                    android:padding="10dp"/>
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
                 <Button
                     android:id="@+id/verify"
                     android:layout_width="match_parent"

@@ -515,7 +515,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         if (requestCode == 2) {
             //String message = data.getStringExtra("DATE_OF_BIRTH");
 
-            if (!data.getStringExtra("DATE_OF_BIRTH").equalsIgnoreCase("reject")) {
+            if (data != null && !data.getStringExtra("DATE_OF_BIRTH").equalsIgnoreCase("reject")) {
                 dateOfBirthEditext.setText(data.getStringExtra("DATE_OF_BIRTH"));
 
                 /*String[] dateOfbirth = message.split("/");
@@ -527,7 +527,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             }
         } else if(requestCode == facebook_request_code)
         {
-            if (resultCode == RESULT_OK)
+            if (resultCode == RESULT_OK && data != null)
             {
                 email = data.getStringExtra("email");
                 realName = data.getStringExtra("first_name");
