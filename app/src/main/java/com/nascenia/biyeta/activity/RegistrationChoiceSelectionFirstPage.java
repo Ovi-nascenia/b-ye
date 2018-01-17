@@ -154,7 +154,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         /*rangeView_age.setStart(0);
         rangeView_age.setEnd(12);
 */
-
+        /*
         if (sharePref.get_data("gender").equalsIgnoreCase("female")) {
 
             minAgeRangePos = 4;
@@ -190,7 +190,14 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
             rangeView_education.setEnd(maxEducationPos);
 
 
-        }
+        }*/
+
+        rangeView_age.setStart(0);
+        rangeView_age.setEnd(age_lebel.size());
+        rangeView_height.setStart(0);
+        rangeView_height.setEnd(heightLebel.size());
+        rangeView_education.setStart(0);
+        rangeView_education.setEnd(education.size());
 
         rangeView_age.setOnTrackRangeListener(new SimpleRangeView.OnTrackRangeListener() {
             @Override

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.nascenia.biyeta.R;
 
@@ -20,6 +21,7 @@ public class PopUpPersonalInfo extends AppCompatActivity {
     Button accept,reject;
     NumberPicker picker;
     String[] data = new String[]{};
+    TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,55 +31,70 @@ public class PopUpPersonalInfo extends AppCompatActivity {
         picker = (NumberPicker)findViewById(R.id.picker);
         accept = (Button)findViewById(R.id.accept);
         reject = (Button)findViewById(R.id.cancel);
+        mTextView = (TextView) findViewById(R.id.title);
 
 
         if(RegistrationPersonalInformation.selectedPopUp == 1 ){
             RegistrationPersonalInformation.marriage = 1;
             data = RegistrationPersonalInformation.maritalStatusName;
+            mTextView.setText("বৈবাহিক অবস্থা");
         }else if(RegistrationPersonalInformation.selectedPopUp == 2){
             RegistrationPersonalInformation.education = 1;
             data = RegistrationPersonalInformation.educationName;
+            mTextView.setText("ডিগ্রীর নাম");
         }else if(RegistrationPersonalInformation.selectedPopUp == 3){
             RegistrationPersonalInformation.profession = 1;
             data = RegistrationPersonalInformation.occupationName;
+            mTextView.setText("পেশা");
         }else if(RegistrationPersonalInformation.selectedPopUp == 4){
             RegistrationPersonalInformation.religion = 1;
             data = RegistrationPersonalInformation.religionName;
+            mTextView.setText("নামায");
         }else if(RegistrationPersonalInformation.selectedPopUp == 5){
             RegistrationPersonalInformation.roja =1;
             data = RegistrationPersonalInformation.rojaName;
+            mTextView.setText("রোজা");
         }else if(RegistrationPersonalInformation.selectedPopUp == 6){
             RegistrationPersonalInformation.disable =1;
             data = RegistrationPersonalInformation.disableName;
+            mTextView.setText("প্রতিবন্ধকতা");
         }else if(RegistrationPersonalInformation.selectedPopUp == 7){
             RegistrationPersonalInformation.smoke = 1;
             data = RegistrationPersonalInformation.smokeName;
+            mTextView.setText("ধূমপান");
         }else if(RegistrationPersonalInformation.selectedPopUp == 8){
             RegistrationPersonalInformation.professonalGroup = 1;
             data = RegistrationPersonalInformation.professonalGroupName;
+            mTextView.setText("প্রফেশনাল গ্রুপ");
         }else if(RegistrationPersonalInformation.selectedPopUp == 9){
             RegistrationPersonalInformation.house = 1;
             data = RegistrationPersonalInformation.houseName;
+            mTextView.setText("আবাসস্থল");
         }else if(RegistrationPersonalInformation.selectedPopUp == 10){
             RegistrationPersonalInformation.hijab = 1;
             data = RegistrationPersonalInformation.hijabName;
+            mTextView.setText("হিজাব");
         }
         ////////////////////////////////////////////////////////////
         else if(RegistrationPersonalInformation.selectedPopUp == 11){
             RegistrationPersonalInformation.height = 1;
             data = RegistrationPersonalInformation.heightName;
+            mTextView.setText("উচ্চতা");
         }
         else if(RegistrationPersonalInformation.selectedPopUp == 12){
             RegistrationPersonalInformation.weight = 1;
             data = RegistrationPersonalInformation.weightName;
+            mTextView.setText("ওজন");
         }
         else if(RegistrationPersonalInformation.selectedPopUp == 13){
             RegistrationPersonalInformation.blood_group = 1;
             data = RegistrationPersonalInformation.bloodGroupName;
+            mTextView.setText(" ব্লাড গ্রুপ");
         }
         else if(RegistrationPersonalInformation.selectedPopUp == 14){
             RegistrationPersonalInformation.skin_color = 1;
             data = RegistrationPersonalInformation.skinColorName;
+            mTextView.setText("গায়ের রং");
         }
         /////////////////////////////////////////////////////////////
 

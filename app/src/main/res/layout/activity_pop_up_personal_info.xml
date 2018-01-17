@@ -12,7 +12,7 @@
 
         <TextView
 
-            android:id="@+id/religion_name"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_margin="10dp"

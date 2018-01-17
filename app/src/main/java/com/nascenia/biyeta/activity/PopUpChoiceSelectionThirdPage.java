@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.nascenia.biyeta.R;
 
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
 
     Button accept,reject;
+    TextView tv_title;
     NumberPicker picker;
     String[] data = new String[]{};
 
@@ -30,20 +32,25 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
         picker = (NumberPicker)findViewById(R.id.picker);
         accept = (Button)findViewById(R.id.accept);
         reject = (Button)findViewById(R.id.cancel);
+        tv_title = (TextView) findViewById(R.id.title);
 
 
         if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 1){
             RegistrationChoiceSelectionThirdPage.job = 1;
             data = RegistrationChoiceSelectionThirdPage.jobArray.toArray(data);
+            tv_title.setText("বিয়ের পরে কি চাকরি করতে পারবে?");
         }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 2){
             RegistrationChoiceSelectionThirdPage.marriage = 1;
             data = RegistrationChoiceSelectionThirdPage.marriageArray.toArray(data);
+            tv_title.setText("বৈবাহিক অবস্থা");
         }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
             RegistrationChoiceSelectionThirdPage.religion = 1;
             data = RegistrationChoiceSelectionThirdPage.religionArray.toArray(data);
+            tv_title.setText("ধর্ম");
         }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 4){
             RegistrationChoiceSelectionThirdPage.house = 1;
             data = RegistrationChoiceSelectionThirdPage.houseArray.toArray(data);
+            tv_title.setText("বাড়ি");
         }
 
         picker.setMinValue(0);

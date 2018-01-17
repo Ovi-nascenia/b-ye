@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.nascenia.biyeta.R;
 
@@ -20,6 +21,7 @@ public class PopUpFamilyInfoFirstPage extends AppCompatActivity {
     Button accept,reject;
     NumberPicker picker;
     String[] data = new String[]{};
+    TextView mTextViewTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,20 +31,25 @@ public class PopUpFamilyInfoFirstPage extends AppCompatActivity {
         picker = (NumberPicker)findViewById(R.id.picker);
         accept = (Button)findViewById(R.id.accept);
         reject = (Button)findViewById(R.id.cancel);
+        mTextViewTitle = (TextView) findViewById(R.id.title);
 
 
         if(RegistrationFamilyInfoFirstPage.selectedPopUp == 1 ){
             RegistrationFamilyInfoFirstPage.professionFather = 1;
             data = RegistrationFamilyInfoFirstPage.fatherOccupationName;
+            mTextViewTitle.setText("পেশা");
         }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 2){
             RegistrationFamilyInfoFirstPage.professionalGroupFather = 1;
             data = RegistrationFamilyInfoFirstPage.professonalGroupName;
+            mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
         }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 3){
             RegistrationFamilyInfoFirstPage.professionMother = 1;
             data = RegistrationFamilyInfoFirstPage.occupationName;
+            mTextViewTitle.setText("পেশা");
         }else if(RegistrationFamilyInfoFirstPage.selectedPopUp == 4){
             RegistrationFamilyInfoFirstPage.professionalGroupMother = 1;
             data = RegistrationFamilyInfoFirstPage.professonalGroupName;
+            mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
         }
 
         picker.setMinValue(0);

@@ -39,7 +39,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             rojaValue = "", disableValue = "", smokeValue = "", hijabValue = "", houseValue = "",
             heightValue = "", weightValue = "", skinValue = "", bloodValue = "",
             feetValue = "", inchValue = "";
-    EditText subjectText, institutionText, designationText, occupationInstitutionText;
+    EditText subjectText, institutionText, designationText, occupationInstitutionText, disableDescEdit;
     LinearLayout maritalStatus, educationalStatus, professonalalStatus, religiousStatus,
             rojaStatus, disableStatus, smokeStatus, professionalGroupStatus, houseLinearLayout, hijabStatus,
             heightStatus, skinColorStatus, weightStatus, bloodGroupStatus;
@@ -338,6 +338,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         institutionText = (EditText) findViewById(R.id.institution_text);
         designationText = (EditText) findViewById(R.id.designation_text);
         occupationInstitutionText = (EditText) findViewById(R.id.occupation_institution_text);
+        disableDescEdit = (EditText) findViewById(R.id.disable_desc);
 
         maritalStatusLabel = (TextView) findViewById(R.id.marital_status_label);
         educationalStatusLabel = (TextView) findViewById(R.id.educational_status_label);
@@ -586,7 +587,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                         .append(",")
                         .append("\"physical_disability_description\":")
                         .append("\"")
-                        .append("")
+                        .append((disableDescEdit.getVisibility()==View.VISIBLE)?disableDescEdit.getText().toString().trim():"")
                         .append("\"")
                         .append(",")
                         .append("\"is_smoking\":")
@@ -830,6 +831,10 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             if (disable > 0) {
                 disableTV.setText(disableName[disable - 1]);
                 disableValue = disableConstant.get(disable - 1);
+                if(disable > 1)
+                    disableDescEdit.setVisibility(View.VISIBLE);
+                else
+                    disableDescEdit.setVisibility(View.GONE);
             }
         } else if (RegistrationPersonalInformation.selectedPopUp == 7) {
             if (smoke > 0) {

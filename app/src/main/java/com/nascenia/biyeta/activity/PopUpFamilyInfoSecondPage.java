@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
@@ -93,6 +94,8 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
 
     private int brotherPickerSelectedValue = 0;
     private int sisterPickerSelectedValue = 0;
+
+    TextView mTextViewTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,48 +182,68 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
         picker = (NumberPicker) findViewById(R.id.picker);
         accept = (Button) findViewById(R.id.accept);
         reject = (Button) findViewById(R.id.cancel);
+        mTextViewTitle = (TextView) findViewById(R.id.title);
 
 
         if (BrotherViewAdapter.selectedPopUp == 1) {
             // brother himself
             data = brotherOccupationName;
+            mTextViewTitle.setText("পেশা");
         } else if (BrotherViewAdapter.selectedPopUp == 2) {
             data = professonalGroupName;
+            mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
         } else if (BrotherViewAdapter.selectedPopUp == 3) {
             data = maritalStatusName;
+            mTextViewTitle.setText("বৈবাহিক অবস্থা");
         } else if (BrotherViewAdapter.selectedPopUp == 4) {
             data = relationName;
+            mTextViewTitle.setText("");
         } else if (BrotherViewAdapter.selectedPopUp == 5) {
             data = age;
+            mTextViewTitle.setText("বয়স");
         } else if (BrotherViewAdapter.selectedPopUp == 6) {
             //brother spouse
             data = occupationName;
+            mTextViewTitle.setText("পেশা");
         } else if (BrotherViewAdapter.selectedPopUp == 7) {
             data = professonalGroupName;
+            mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
         } else if (SisterViewAdapter.selectedPopUp == 1) {
             data = occupationName;
+            mTextViewTitle.setText("পেশা");
         } else if (SisterViewAdapter.selectedPopUp == 2) {
             data = professonalGroupName;
+            mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
         } else if (SisterViewAdapter.selectedPopUp == 3) {
             data = maritalStatusName;
+            mTextViewTitle.setText("বৈবাহিক অবস্থা");
         } else if (SisterViewAdapter.selectedPopUp == 4) {
             data = relationName;
+            mTextViewTitle.setText("");
         } else if (SisterViewAdapter.selectedPopUp == 5) {
             data = age;
+            mTextViewTitle.setText("বয়স");
         } else if (OtherViewAdapter.selectedPopUp == 1) {
             data = occupationName;
+            mTextViewTitle.setText("পেশা");
         } else if (OtherViewAdapter.selectedPopUp == 2) {
             data = professonalGroupName;
+            mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
         } else if (OtherViewAdapter.selectedPopUp == 3) {
             data = maritalStatusName;
+            mTextViewTitle.setText("বৈবাহিক অবস্থা");
         } else if (OtherViewAdapter.selectedPopUp == 4) {
             data = relationName;
+            mTextViewTitle.setText("সম্পর্ক");
         } else if (OtherViewAdapter.selectedPopUp == 5) {
             data = age;
+            mTextViewTitle.setText("বয়স");
         } else if (RegistrationFamilyInfoSecondPage.selectedPopUp == 1) {
             data = numberOfBrotherSister;
+            mTextViewTitle.setText("ভাইয়ের সংখ্যা");
         } else if (RegistrationFamilyInfoSecondPage.selectedPopUp == 2) {
             data = numberOfBrotherSister;
+            mTextViewTitle.setText("বোনের সংখ্যা");
         }
 
         picker.setMinValue(0);

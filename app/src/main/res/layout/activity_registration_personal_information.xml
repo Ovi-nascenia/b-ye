@@ -696,6 +696,31 @@
 
         </LinearLayout>
 
+        <EditText
+            android:id="@+id/disable_desc"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:hint="প্রতিবন্ধকতা সম্পর্কে কিছু বলুন(ঐচ্ছিক)"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName"
+            android:maxLines="5"
+            android:gravity="top"
+            android:maxLength="300"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/limit_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="সর্বনিম্ন: ০, সর্বোচ্চ: ৩০০"
+            android:textSize="12sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:gravity="right"/>
 
         <TextView
             android:id="@+id/smoke_status_label"

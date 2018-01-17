@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.nascenia.biyeta.R;
 
@@ -27,6 +28,7 @@ public class AbroadOptionPickerPopUpActivity extends AppCompatActivity {
     private NumberPicker abroadStatusPicker;
     private Button acceptBtn, rejectBtn;
     private int statusNumber = 0;
+    TextView mTextViewTitle;
 
 
     @Override
@@ -38,6 +40,7 @@ public class AbroadOptionPickerPopUpActivity extends AppCompatActivity {
         abroadStatusPicker = findViewById(R.id.picker);
         acceptBtn = findViewById(R.id.accept);
         rejectBtn = findViewById(R.id.cancel);
+        mTextViewTitle = findViewById(R.id.title);
 
         abroadStatusPicker.setMinValue(0);
         abroadStatusPicker.setMaxValue(abroadStatusTypeArray.length - 1);

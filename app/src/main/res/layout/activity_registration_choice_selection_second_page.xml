@@ -119,13 +119,23 @@
                 android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_margin="10dp">
-
-                <CheckBox
-                    android:id="@+id/dhaka"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ঢাকা বিভাগ"
-                    android:textColor="@color/colorPrimary"/>
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/dhaka"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/colorPrimary"/>
+                    <TextView
+                        android:id="@+id/dhaka_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ঢাকা বিভাগ"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/dhaka_districts"
@@ -135,13 +145,23 @@
                     android:background="@color/white"
                     android:layout_margin="10dp"
                     android:visibility="gone"/>
-
-                <CheckBox
-                    android:id="@+id/rajshahi"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="রাজশাহী বিভাগ"
-                    android:textColor="@color/colorPrimary"/>
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/rajshahi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/colorPrimary"/>
+                    <TextView
+                        android:id="@+id/rajshahi_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="রাজশাহী বিভাগ"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/rajshahi_districts"
@@ -151,13 +171,24 @@
                     android:background="@color/white"
                     android:visibility="gone"
                     android:layout_margin="10dp"/>
-
-                <CheckBox
-                    android:id="@+id/mymensing"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ময়মনসিংহ বিভাগ"
-                    android:textColor="@color/colorPrimary"/>
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/mymensing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/colorPrimary"/>
+                    <TextView
+                        android:id="@+id/mymensing_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ময়মনসিংহ বিভাগ"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/mymensing_districts"
                     android:layout_width="match_parent"
@@ -167,12 +198,24 @@
                     android:visibility="gone"
                     android:layout_margin="10dp"/>
 
-                <CheckBox
-                    android:id="@+id/barisal"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="বরিশাল বিভাগ"
-                    android:textColor="@color/colorPrimary"/>
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/barisal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/colorPrimary"/>
+                    <TextView
+                        android:id="@+id/barisal_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="বরিশাল বিভাগ"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/barisal_districts"
                     android:layout_width="match_parent"
@@ -182,12 +225,23 @@
                     android:visibility="gone"
                     android:layout_margin="10dp"/>
 
-                <CheckBox
-                    android:id="@+id/chittagong"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="চট্টগ্রাম বিভাগ"
-                    android:textColor="@color/colorPrimary"/>
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/chittagong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/colorPrimary"/>
+                    <TextView
+                        android:id="@+id/chittagong_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="চট্টগ্রাম বিভাগ"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/chittagong_districts"
@@ -198,12 +252,24 @@
                     android:visibility="gone"
                     android:layout_margin="10dp"/>
 
-                <CheckBox
-                    android:id="@+id/khulna"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="খুলনা বিভাগ"
-                    android:textColor="@color/colorPrimary"/>
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/khulna"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/colorPrimary"/>
+                    <TextView
+                        android:id="@+id/khulna_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="খুলনা বিভাগ"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/khulna_districts"
                     android:layout_width="match_parent"
@@ -212,13 +278,24 @@
                     android:background="@color/white"
                     android:visibility="gone"
                     android:layout_margin="10dp"/>
-
-                <CheckBox
-                    android:id="@+id/sylhet"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="সিলেট বিভাগ"
-                    android:textColor="@color/colorPrimary"/>
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/sylhet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/colorPrimary"/>
+                    <TextView
+                        android:id="@+id/sylhet_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="সিলেট বিভাগ"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/sylhet_districts"
@@ -229,12 +306,24 @@
                     android:visibility="gone"
                     android:layout_margin="10dp"/>
 
-                <CheckBox
-                    android:id="@+id/rangpur"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="রংপুর বিভাগ"
-                    android:textColor="@color/colorPrimary"/>
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/rangpur"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/colorPrimary"/>
+                    <TextView
+                        android:id="@+id/rangpur_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="রংপুর বিভাগ"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/rangpur_districts"
                     android:layout_width="match_parent"

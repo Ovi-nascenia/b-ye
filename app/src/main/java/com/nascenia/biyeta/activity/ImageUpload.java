@@ -424,7 +424,12 @@ public class ImageUpload extends AppCompatActivity {
                         numberOfImage++;
                         if (numberOfImage == 3) {
                             new ImageUpload.FetchConstant().execute();
-
+                            beforeProPicUploadValue = 0;
+                            beforeBodyPicUploadValue = 0;
+                            beforeOtherPicUploadValue = 0;
+                            afterProPicUploadValue = 0;
+                            afterBodyPicUploadValue = 0;
+                            afterOtherPicUploadValue = 0;
                         }
                     }
                 } catch (JSONException e) {
