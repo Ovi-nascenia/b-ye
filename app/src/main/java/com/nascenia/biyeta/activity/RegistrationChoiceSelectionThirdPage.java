@@ -44,7 +44,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
     Button next;
 
-    ImageView back;
+    ImageView back, down_arrow_religion;
 
     ArrayList<String> muslimCastSelectedArray = new ArrayList<String>();
     ArrayList<String> hinduCastSelectedArray = new ArrayList<String>();
@@ -113,6 +113,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
     private LinearLayout houseLinearLayout;
     SharePref sharePref;
+    String religionName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +121,9 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         setContentView(R.layout.activity_registration_choice_selection_third_page);
 
         sharePref = new SharePref(RegistrationChoiceSelectionThirdPage.this);
-
+//        sharePref.set_data("religion", "মুসলিম");
+//        "1":"মুসলিম","2":"হিন্দু","3":"খ্রীষ্টান","4":"বৌদ্ধ","5":"অন্যান্য "        for testing
+        religionName = sharePref.get_data("religion").trim();
         progress = new ProgressDialog(RegistrationChoiceSelectionThirdPage.this);
         progress.setMessage(getResources().getString(R.string.progress_dialog_message));
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -235,7 +238,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         rojaLabel = (TextView) findViewById(R.id.roja_label);
         hijabLabel = (TextView) findViewById(R.id.hijab_label);
         castLabel = (TextView) findViewById(R.id.cast_label);
-
+        down_arrow_religion = findViewById(R.id.down_arrow_religion);
         castLabel.setVisibility(View.GONE);
 
 
@@ -346,16 +349,24 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                 startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this, PopUpChoiceSelectionThirdPage.class));
             }
         });
-        religionLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPopUp = 3;
-                //castReligionChoice = 1;
-                Intent intent = new Intent(RegistrationChoiceSelectionThirdPage.this, PopUpChoiceSelectionThirdPage.class);
-                intent.putExtra("constants", constant);
-                startActivity(intent);
-            }
-        });
+
+        religion = religionArray.indexOf(religionName) + 1;
+        if(religion > 0) {
+            setReligionView();
+            down_arrow_religion.setVisibility(View.GONE);
+        }else{
+            down_arrow_religion.setVisibility(View.VISIBLE);
+            religionLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedPopUp = 3;
+                    //castReligionChoice = 1;
+                    Intent intent = new Intent(RegistrationChoiceSelectionThirdPage.this, PopUpChoiceSelectionThirdPage.class);
+                    intent.putExtra("constants", constant);
+                    startActivity(intent);
+                }
+            });
+        }
 
         houseLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -852,6 +863,43 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             houseStatusTextView.setText(houseArray.get(house - 1));
         }
 
+    }
+
+    private void setReligionView()
+    {
+        if (religion != -1) {
+            religionStatus = religionArrayConstant.get(religion - 1);
+            religionText.setText(religionArray.get(religion - 1));
+            if (religionStatus.equals("1")) {
+                castLabel.setText("সম্প্রদায়*");
+                castLabel.setVisibility(View.VISIBLE);
+                muslimCastLayout.setVisibility(View.VISIBLE);
+                hinduCastLayout.setVisibility(View.GONE);
+                christianCastLayout.setVisibility(View.GONE);
+                onlyForMuslimLayout.setVisibility(View.VISIBLE);
+            } else if (religionStatus.equals("2")) {
+                castLabel.setText("বর্ণ*");
+                castLabel.setVisibility(View.VISIBLE);
+                hinduCastLayout.setVisibility(View.VISIBLE);
+                muslimCastLayout.setVisibility(View.GONE);
+                christianCastLayout.setVisibility(View.GONE);
+                onlyForMuslimLayout.setVisibility(View.GONE);
+            } else if (religionStatus.equals("3")) {
+                castLabel.setText("বর্ণ*");
+                castLabel.setVisibility(View.VISIBLE);
+                christianCastLayout.setVisibility(View.VISIBLE);
+                muslimCastLayout.setVisibility(View.GONE);
+                hinduCastLayout.setVisibility(View.GONE);
+                onlyForMuslimLayout.setVisibility(View.GONE);
+            } else {
+                castLabel.setVisibility(View.GONE);
+                christianCastLayout.setVisibility(View.GONE);
+                muslimCastLayout.setVisibility(View.GONE);
+                hinduCastLayout.setVisibility(View.GONE);
+
+                onlyForMuslimLayout.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override

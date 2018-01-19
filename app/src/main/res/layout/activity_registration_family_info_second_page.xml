@@ -125,20 +125,20 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/profession_status_label_father"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="10dp"
-                    android:text="ভাই"
-                    android:textColor="@color/colorPrimary" />
+                <!--<TextView-->
+                    <!--android:id="@+id/profession_status_label_father"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:text="ভাই"-->
+                    <!--android:textColor="@color/colorPrimary" />-->
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/profession_status_label_father" />
+                    android:layout_height="wrap_content"/>
+                    <!--android:layout_below="@+id/profession_status_label_father" />-->
 
                 <LinearLayout
                     android:id="@+id/button"
@@ -237,13 +237,13 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/profession_status_label_mother"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="বোন"
-                    android:textColor="@color/colorPrimary" />
+                <!--<TextView-->
+                    <!--android:id="@+id/profession_status_label_mother"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:text="বোন"-->
+                    <!--android:textColor="@color/colorPrimary" />-->
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_sister"

@@ -720,7 +720,8 @@
             android:textSize="12sp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
-            android:gravity="right"/>
+            android:gravity="right"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/smoke_status_label"

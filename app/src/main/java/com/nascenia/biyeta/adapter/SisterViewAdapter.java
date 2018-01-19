@@ -18,6 +18,7 @@ import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.PopUpFamilyInfoSecondPage;
 import com.nascenia.biyeta.activity.RegistrationFamilyInfoSecondPage;
 import com.nascenia.biyeta.utils.RemoveSisterItemCallBack;
+import com.nascenia.biyeta.utils.Utils;
 
 import java.util.List;
 
@@ -60,10 +61,12 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
         public EditText nameSister;
         public EditText designationSister;
         public EditText institutionSister;
-        public  TextView sisterOccupation;
-        public  TextView sisterProfessionalGroup;
-        public  TextView sisterMaritalStatus;
-        public  TextView sisterAge;
+        public TextView sisterOccupation;
+        public TextView sisterProfessionalGroup;
+        public TextView sisterMaritalStatus;
+        public TextView sisterAge;
+        public TextView tv_sister;
+
 
 
         public MyViewHolder(View view) {
@@ -76,6 +79,7 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
             sisterProfessionalGroup = (TextView) view.findViewById(R.id.profession_group_text_view_sister);
             sisterMaritalStatus = (TextView) view.findViewById(R.id.marital_text_view_sister);
             sisterAge = (TextView) view.findViewById(R.id.age_text_view_sister);
+            tv_sister = (TextView) view.findViewById(R.id.tv_sister);
 
             String siblingType, name, designation, institute, spouse, sOccupation, sProfessionalGroup, sDesignation, sInstitute;
             reject = (LinearLayout) view.findViewById(R.id.reject);
@@ -186,6 +190,7 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
         if (position == 0) {
             holder.reject.setVisibility(View.GONE);
         }
+        holder.tv_sister.setText("বোন " + Utils.convertEnglishDigittoBangla(position + 1));
     }
 
     @Override

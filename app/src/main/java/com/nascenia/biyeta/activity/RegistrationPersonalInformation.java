@@ -44,7 +44,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             rojaStatus, disableStatus, smokeStatus, professionalGroupStatus, houseLinearLayout, hijabStatus,
             heightStatus, skinColorStatus, weightStatus, bloodGroupStatus;
     TextView marriageTV, educationTV, professonTV, religionTV, rojaTV, disableTV, smokeTV,
-            professionalGroupTV, houseTV, hijabTV, heightTV, weightTV, bloodTV, skinTV;
+            professionalGroupTV, houseTV, hijabTV, heightTV, weightTV, bloodTV, skinTV, limitTV;
     Button next;
     ImageView back;
 
@@ -339,6 +339,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         designationText = (EditText) findViewById(R.id.designation_text);
         occupationInstitutionText = (EditText) findViewById(R.id.occupation_institution_text);
         disableDescEdit = (EditText) findViewById(R.id.disable_desc);
+        limitTV = findViewById(R.id.limit_label);
 
         maritalStatusLabel = (TextView) findViewById(R.id.marital_status_label);
         educationalStatusLabel = (TextView) findViewById(R.id.educational_status_label);
@@ -831,10 +832,14 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             if (disable > 0) {
                 disableTV.setText(disableName[disable - 1]);
                 disableValue = disableConstant.get(disable - 1);
-                if(disable > 1)
+                if(disable > 1) {
                     disableDescEdit.setVisibility(View.VISIBLE);
-                else
+                    limitTV.setVisibility(View.VISIBLE);
+                }
+                else {
                     disableDescEdit.setVisibility(View.GONE);
+                    limitTV.setVisibility(View.GONE);
+                }
             }
         } else if (RegistrationPersonalInformation.selectedPopUp == 7) {
             if (smoke > 0) {

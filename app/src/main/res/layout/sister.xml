@@ -6,25 +6,39 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/reject"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginRight="10dp"
-        android:gravity="right"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginRight="@dimen/small_margin"
-            android:src="@drawable/remove" />
-
         <TextView
+            android:id="@+id/tv_sister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:text="বাদ দিন" />
+            android:layout_margin="10dp"
+            android:text="বোন"
+            android:gravity="left"
+            android:textColor="@color/colorPrimary" />
+
+        <LinearLayout
+            android:id="@+id/reject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="@dimen/small_margin"
+                android:src="@drawable/remove" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="বাদ দিন" />
+        </LinearLayout>
     </LinearLayout>
 
     <EditText
@@ -39,7 +53,7 @@
         android:padding="10dp"
         android:singleLine="true"
         android:textColor="@color/black"
-        android:textColorHint="@color/lblFromName"/>
+        android:textColorHint="@color/lblFromName" />
 
     <LinearLayout
         android:id="@+id/age_sister"
@@ -61,9 +75,9 @@
             android:layout_weight="1"
             android:gravity="left"
             android:hint="বয়স*"
-            android:textSize="18dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/lblFromName"/>
+            android:textColorHint="@color/lblFromName"
+            android:textSize="18dp" />
 
         <ImageView
             android:id="@+id/down_arrow_age_sister"
@@ -97,9 +111,9 @@
             android:layout_weight="1"
             android:gravity="left"
             android:hint="পেশা*"
-            android:textSize="18dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/lblFromName"/>
+            android:textColorHint="@color/lblFromName"
+            android:textSize="18dp" />
 
         <ImageView
             android:id="@+id/down_arrow_profession_father"
@@ -133,9 +147,9 @@
             android:layout_weight="1"
             android:gravity="left"
             android:hint="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
-            android:textSize="18dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/lblFromName"/>
+            android:textColorHint="@color/lblFromName"
+            android:textSize="18dp" />
 
         <ImageView
             android:id="@+id/down_arrow_profession_group_sister"
@@ -161,7 +175,7 @@
         android:padding="10dp"
         android:singleLine="true"
         android:textColor="@color/black"
-        android:textColorHint="@color/lblFromName"/>
+        android:textColorHint="@color/lblFromName" />
 
     <EditText
         android:id="@+id/institution_sister"
@@ -175,7 +189,7 @@
         android:padding="10dp"
         android:singleLine="true"
         android:textColor="@color/black"
-        android:textColorHint="@color/lblFromName"/>
+        android:textColorHint="@color/lblFromName" />
 
 
     <LinearLayout
@@ -198,9 +212,9 @@
             android:layout_weight="1"
             android:gravity="left"
             android:hint="বৈবাহিক অবস্থা"
-            android:textSize="18dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/lblFromName"/>
+            android:textColorHint="@color/lblFromName"
+            android:textSize="18dp" />
 
         <ImageView
             android:id="@+id/down_arrow_marital_sister"

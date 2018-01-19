@@ -18,6 +18,7 @@ import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.PopUpFamilyInfoSecondPage;
 import com.nascenia.biyeta.activity.RegistrationFamilyInfoSecondPage;
 import com.nascenia.biyeta.utils.RemoveBrotherItemCallBack;
+import com.nascenia.biyeta.utils.Utils;
 
 import java.util.List;
 
@@ -70,11 +71,12 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
         public LinearLayout rejectSpouse;
 
         public TextView brotherAge;
-        public  TextView brotherOccupation;
-        public  TextView brotherProfessionalGroup;
-        public  TextView brotherMaritalStatus;
-        public  TextView brotherOcupationSpouse;
+        public TextView brotherOccupation;
+        public TextView brotherProfessionalGroup;
+        public TextView brotherMaritalStatus;
+        public TextView brotherOcupationSpouse;
         public TextView brotherProfessionalGroupSpouse;
+        public TextView tv_bhai;
 
         public int age = 0;
 
@@ -90,6 +92,7 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
             brotherOccupation = (TextView) view.findViewById(R.id.profession_text_view_brother);
             brotherProfessionalGroup = (TextView) view.findViewById(R.id.profession_group_text_view_brother);
             brotherMaritalStatus = (TextView) view.findViewById(R.id.marital_text_view_brother);
+            tv_bhai = view.findViewById(R.id.tv_bhai);
            // brotherAge = (TextView) view.findViewById(R.id.age_text_view_brother);
             brotherAge = (TextView) view.findViewById(R.id.age_text_view_brother);
             brotherOcupationSpouse = (TextView) view.findViewById(R.id.profession_text_view_brother_spouse);
@@ -223,6 +226,7 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
         if (position == 0) {
             holder.reject.setVisibility(View.GONE);
         }
+        holder.tv_bhai.setText("ভাই " + Utils.convertEnglishDigittoBangla(position+1));
     }
 
     public int listSize() {

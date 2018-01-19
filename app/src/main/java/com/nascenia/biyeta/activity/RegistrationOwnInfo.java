@@ -185,6 +185,8 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                     Toast.makeText(getBaseContext(),getString(R.string.religion_pick_message),Toast.LENGTH_LONG).show();
                     return;
                 }
+                else
+                    sharePref.set_data("religion", castReligionText.getText().toString());
 
                 if(castReligionText.getText().toString().isEmpty())
                 {
@@ -325,7 +327,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
 
         @Override
         protected String doInBackground(String... strings){
-            SharePref sharePref = new SharePref(RegistrationOwnInfo.this);
+
             final String token = sharePref.get_data("token");
 
             Log.e("Test", strings[0]+" "+strings[1]+" "+token);
