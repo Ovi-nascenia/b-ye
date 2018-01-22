@@ -38,6 +38,10 @@ public class LoginInformation_ {
     @Expose
     private int currentMbSignUpStep;
 
+    @SerializedName("religion")
+    @Expose
+    private int religion;
+
     public Boolean getProfileComplete() {
         return isProfileComplete;
     }
@@ -108,6 +112,14 @@ public class LoginInformation_ {
 
     public void setStep(int step) {
         this.currentMbSignUpStep = step;
+    }
+
+    public int getReligion() {
+        return religion;
+    }
+
+    public void setReligion(int religion) {
+        this.religion = religion;
     }
 
 }

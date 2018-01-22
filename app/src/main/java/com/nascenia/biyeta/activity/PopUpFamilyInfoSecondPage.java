@@ -44,6 +44,8 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
     public static Map<Integer, String> professionalGroupArraySister = new HashMap<Integer, String>();
     public static Map<Integer, String> maritalStatusArraySister = new HashMap<Integer, String>();
     public static Map<Integer, String> ageArraySister = new HashMap<Integer, String>();
+    public static Map<Integer, String> occupationArraySisterSpouse = new HashMap<Integer, String>();
+    public static Map<Integer, String> professionalGroupArraySisterSpouse = new HashMap<Integer, String>();
 
     public static Map<Integer, String> occupationArrayOther = new HashMap<Integer, String>();
     public static Map<Integer, String> professionalGroupArrayOther = new HashMap<Integer, String>();
@@ -80,10 +82,15 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
     ArrayList<String> relationConstant = new ArrayList<String>();
     String[] relationConstantValue = new String[relation.size()];
 
-    ArrayList<String> maritalStatus = new ArrayList<String>();
-    String[] maritalStatusName = new String[maritalStatus.size()];
-    ArrayList<String> maritalStatusConstant = new ArrayList<String>();
-    String[] maritalStatusConstantValue = new String[maritalStatus.size()];
+    ArrayList<String> maritalStatusMale = new ArrayList<String>();
+    String[] maritalStatusNameMale = new String[maritalStatusMale.size()];
+    ArrayList<String> maritalStatusConstantMale = new ArrayList<String>();
+    String[] maritalStatusConstantValueMale = new String[maritalStatusMale.size()];
+
+    ArrayList<String> maritalStatusFemale = new ArrayList<String>();
+    String[] maritalStatusNameFemale = new String[maritalStatusFemale.size()];
+    ArrayList<String> maritalStatusConstantFemale = new ArrayList<String>();
+    String[] maritalStatusConstantValueFemale = new String[maritalStatusFemale.size()];
 
 
     Button accept, reject;
@@ -126,7 +133,8 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             JSONObject professonalGroupObject = jsonObject.getJSONObject("professional_group_constant");
             JSONObject occupationObject = jsonObject.getJSONObject("occupation_constant");
             JSONObject relationObject = jsonObject.getJSONObject("relation_constant");
-            JSONObject maritalStatusObject = jsonObject.getJSONObject("marital_status_constant");
+            JSONObject maritalStatusObjectMale = jsonObject.getJSONObject("marital_status_constant_male");
+            JSONObject maritalStatusObjectFemale = jsonObject.getJSONObject("marital_status_constant_female");
 
             Log.i("occupation",occupationObject.toString());
 
@@ -154,9 +162,14 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
                 relation.add((String) relationObject.get(relationObject.names().getString(i)));
             }
 
-            for (int i = 0; i < maritalStatusObject.length(); i++) {
-                maritalStatusConstant.add(maritalStatusObject.names().getString(i));
-                maritalStatus.add((String) maritalStatusObject.get(maritalStatusObject.names().getString(i)));
+            for (int i = 0; i < maritalStatusObjectMale.length(); i++) {
+                maritalStatusConstantMale.add(maritalStatusObjectMale.names().getString(i));
+                maritalStatusMale.add((String) maritalStatusObjectMale.get(maritalStatusObjectMale.names().getString(i)));
+            }
+
+            for (int i = 0; i < maritalStatusObjectFemale.length(); i++) {
+                maritalStatusConstantFemale.add(maritalStatusObjectFemale.names().getString(i));
+                maritalStatusFemale.add((String) maritalStatusObjectFemale.get(maritalStatusObjectFemale.names().getString(i)));
             }
 
             professonalGroupName = professonalGroup.toArray(professonalGroupName);
@@ -171,8 +184,11 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             relationName = relation.toArray(relationName);
             relationConstantValue = relationConstant.toArray(relationConstantValue);
 
-            maritalStatusName = maritalStatus.toArray(maritalStatusName);
-            maritalStatusConstantValue = maritalStatusConstant.toArray(maritalStatusConstantValue);
+            maritalStatusNameMale = maritalStatusMale.toArray(maritalStatusNameMale);
+            maritalStatusConstantValueMale = maritalStatusConstantMale.toArray(maritalStatusConstantValueMale);
+
+            maritalStatusNameFemale = maritalStatusFemale.toArray(maritalStatusNameFemale);
+            maritalStatusConstantValueFemale = maritalStatusConstantFemale.toArray(maritalStatusConstantValueFemale);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -193,7 +209,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             data = professonalGroupName;
             mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
         } else if (BrotherViewAdapter.selectedPopUp == 3) {
-            data = maritalStatusName;
+            data = maritalStatusNameMale;
             mTextViewTitle.setText("বৈবাহিক অবস্থা");
         } else if (BrotherViewAdapter.selectedPopUp == 4) {
             data = relationName;
@@ -215,7 +231,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             data = professonalGroupName;
             mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
         } else if (SisterViewAdapter.selectedPopUp == 3) {
-            data = maritalStatusName;
+            data = maritalStatusNameFemale;
             mTextViewTitle.setText("বৈবাহিক অবস্থা");
         } else if (SisterViewAdapter.selectedPopUp == 4) {
             data = relationName;
@@ -223,14 +239,21 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
         } else if (SisterViewAdapter.selectedPopUp == 5) {
             data = age;
             mTextViewTitle.setText("বয়স");
-        } else if (OtherViewAdapter.selectedPopUp == 1) {
+        } else if (SisterViewAdapter.selectedPopUp == 6) {
+            //brother spouse
+            data = brotherOccupationName;
+            mTextViewTitle.setText("পেশা");
+        } else if (SisterViewAdapter.selectedPopUp == 7) {
+            data = professonalGroupName;
+            mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
+        }else if (OtherViewAdapter.selectedPopUp == 1) {
             data = occupationName;
             mTextViewTitle.setText("পেশা");
         } else if (OtherViewAdapter.selectedPopUp == 2) {
             data = professonalGroupName;
             mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
         } else if (OtherViewAdapter.selectedPopUp == 3) {
-            data = maritalStatusName;
+            data = maritalStatusNameMale;
             mTextViewTitle.setText("বৈবাহিক অবস্থা");
         } else if (OtherViewAdapter.selectedPopUp == 4) {
             data = relationName;
@@ -306,22 +329,22 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
                     BrotherViewAdapter.MyViewHolder holder =
                             (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
                                     .findViewHolderForLayoutPosition(position);
-                    holder.brotherMaritalStatus.setText(maritalStatusName[newValue]);
+                    holder.brotherMaritalStatus.setText(maritalStatusNameMale[newValue]);
 
 
-                    value = maritalStatusConstantValue[newValue];
+                    value = maritalStatusConstantValueMale[newValue];
                     maritalStatusArrayBrother.put(position, value);
 
-                    if (value.equals("4")){
-                   /* BrotherViewAdapter.MyViewHolder holder =
-                            (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
-                                    .findViewHolderForLayoutPosition(position);*/
-                        holder.spouse.setVisibility(View.VISIBLE);
-                    } else {
-                   /* BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder)
-                            RegistrationFamilyInfoSecondPage.recyclerViewBrother.findViewHolderForLayoutPosition(position);*/
-                        holder.spouse.setVisibility(View.GONE);
-                    }
+//                    if (value.equals("4")){
+//                   /* BrotherViewAdapter.MyViewHolder holder =
+//                            (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
+//                                    .findViewHolderForLayoutPosition(position);*/
+//                        holder.spouse.setVisibility(View.VISIBLE);
+//                    } else {
+//                   /* BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder)
+//                            RegistrationFamilyInfoSecondPage.recyclerViewBrother.findViewHolderForLayoutPosition(position);*/
+//                        holder.spouse.setVisibility(View.GONE);
+//                    }
                 } else if (BrotherViewAdapter.selectedPopUp == 5){
                     //BrotherViewAdapter.brotherAge.setText(age[newVal]);
                     BrotherViewAdapter.MyViewHolder holder =
@@ -380,10 +403,21 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
                             (SisterViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewSister
                                     .findViewHolderForLayoutPosition(position);
 
-                    holder.sisterMaritalStatus.setText(maritalStatusName[newValue]);
+                    holder.sisterMaritalStatus.setText(maritalStatusNameFemale[newValue]);
 
-                    value = maritalStatusConstantValue[newValue];
+                    value = maritalStatusConstantValueFemale[newValue];
                     maritalStatusArraySister.put(position, value);
+
+                    if (value.equals("4")){
+                   /* BrotherViewAdapter.MyViewHolder holder =
+                            (BrotherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewBrother
+                                    .findViewHolderForLayoutPosition(position);*/
+                        holder.spouse.setVisibility(View.VISIBLE);
+                    } else {
+                   /* BrotherViewAdapter.MyViewHolder holder = (BrotherViewAdapter.MyViewHolder)
+                            RegistrationFamilyInfoSecondPage.recyclerViewBrother.findViewHolderForLayoutPosition(position);*/
+                        holder.spouse.setVisibility(View.GONE);
+                    }
                 } else if (SisterViewAdapter.selectedPopUp == 5) {
                     // SisterViewAdapter.sisterAge.setText(age[newVal]);
 
@@ -394,6 +428,25 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
 
                     value = "" + newValue;
                     ageArraySister.put(position, value);
+                } else if (SisterViewAdapter.selectedPopUp == 6) {
+                    //BrotherViewAdapter.brotherOcupationSpouse.setText(occupationName[newVal]);
+
+                    SisterViewAdapter.MyViewHolder holder =
+                            (SisterViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewSister
+                                    .findViewHolderForLayoutPosition(position);
+                    holder.sisterOcupationSpouse.setText(occupationName[newValue]);
+
+                    value = occupationConstantValue[newValue];
+                    occupationArraySisterSpouse.put(position, value);
+                } else if (SisterViewAdapter.selectedPopUp == 7) {
+                    //BrotherViewAdapter.brotherProfessionalGroupSpouse.setText(professonalGroupName[newVal]);
+
+                    SisterViewAdapter.MyViewHolder holder =
+                            (SisterViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewSister
+                                    .findViewHolderForLayoutPosition(position);
+                    holder.sisterProfessionalGroupSpouse.setText(professonalGroupName[newValue]);
+                    value = professonalGroupConstantValue[newValue];
+                    professionalGroupArraySisterSpouse.put(position, value);
                 } else if (OtherViewAdapter.selectedPopUp == 1) {
                     //OtherViewAdapter.otherOccupation.setText(occupationName[newVal]);
                     OtherViewAdapter.MyViewHolder holder =
@@ -418,9 +471,9 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
                     OtherViewAdapter.MyViewHolder holder =
                             (OtherViewAdapter.MyViewHolder) RegistrationFamilyInfoSecondPage.recyclerViewOther
                                     .findViewHolderForLayoutPosition(position);
-                    holder.otherMaritalStatus.setText(maritalStatusName[newValue]);
+                    holder.otherMaritalStatus.setText(maritalStatusNameMale[newValue]);
 
-                    value = maritalStatusConstantValue[newValue];
+                    value = maritalStatusConstantValueMale[newValue];
                     maritalStatusArrayOther.put(position, value);
                 } else if (OtherViewAdapter.selectedPopUp == 4) {
                     //   OtherViewAdapter.otherRelationalStatus.setText(relationName[newVal]);

@@ -38,13 +38,13 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             designationValue, occupationInstitutionValue, religionValue = "",
             rojaValue = "", disableValue = "", smokeValue = "", hijabValue = "", houseValue = "",
             heightValue = "", weightValue = "", skinValue = "", bloodValue = "",
-            feetValue = "", inchValue = "";
+            feetValue = "", inchValue = "", childValue = "", stayStatusValue = "";
     EditText subjectText, institutionText, designationText, occupationInstitutionText, disableDescEdit;
     LinearLayout maritalStatus, educationalStatus, professonalalStatus, religiousStatus,
             rojaStatus, disableStatus, smokeStatus, professionalGroupStatus, houseLinearLayout, hijabStatus,
-            heightStatus, skinColorStatus, weightStatus, bloodGroupStatus;
+            heightStatus, skinColorStatus, weightStatus, bloodGroupStatus, childNumber, stayStatus;
     TextView marriageTV, educationTV, professonTV, religionTV, rojaTV, disableTV, smokeTV,
-            professionalGroupTV, houseTV, hijabTV, heightTV, weightTV, bloodTV, skinTV, limitTV;
+            professionalGroupTV, houseTV, hijabTV, heightTV, weightTV, bloodTV, skinTV, limitTV, childTV, stayTV;
     Button next;
     ImageView back;
 
@@ -123,6 +123,16 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     public static ArrayList<String> bloodGroupConstant = new ArrayList<String>();
     public static String[] bloodGroupConstantValue = new String[bloodGroupArray.size()];
 
+    public static ArrayList<String> childArray = new ArrayList<String>();
+    public static String[] childName = new String[childArray.size()];
+    public static ArrayList<String> childConstant = new ArrayList<String>();
+    public static String[] childConstantValue = new String[childArray.size()];
+
+    public static ArrayList<String> stayStausArray = new ArrayList<String>();
+    public static String[] stayStausArrayName = new String[stayStausArray.size()];
+    public static ArrayList<String> stayStausArrayConstant = new ArrayList<String>();
+    public static String[] stayStausArrayConstantValue = new String[stayStausArray.size()];
+
     // public static String marriageArray[] = {"অবিবাহিত","বিপত্মীক","তালাকপ্রাপ্ত","বিবাহিত"};
     //public static String educationArray[] = {"মাধ্যমিক", "উচ্চমাধ্যমিক পড়ছি", "উচ্চমাধ্যমিক/ডিপ্লোমা","বাচেলর পড়ছি", "বাচেলর", "মাস্টার্স পড়ছি","মাস্টার্স", "ডক্টরেট পড়ছি","ডক্টরেট"};
     //public static String professionArray[] = {"ব্যবসায়ী","অবসরপ্রাপ্ত","শিক্ষার্থী", "পেশায় জড়িত নাই", "সরকারী চাকরিজীবী","বেসরকারী চাকরিজীবী"};
@@ -148,11 +158,14 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
     public static int height = -1;
     public static int weight = -1;
     public static int skin_color = -1;
+    public static int child_number = -1;
+    public static int stay_status = -1;
 
     private SharePref sharePref;
 
     TextView maritalStatusLabel, educationalStatusLabel, professionStatusLabel, religionStatusLabel,
-            rojaStatuLabel, smokeStatusLabel, houseStatusLabel, hijabStatuLabel, heightLabel, weightLabel, skinLabel;
+            rojaStatuLabel, smokeStatusLabel, houseStatusLabel, hijabStatuLabel, heightLabel, weightLabel,
+            skinLabel, childLabel, stayLabel;
 
     ProgressDialog progress;
 
@@ -327,6 +340,21 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             }
 
             skinColorName = skinColorArray.toArray(skinColorName);
+
+            for (int i = 0; i <= 20; i++) {         //child number from 0 to 20
+                childConstant.add(i+"");
+                childArray.add(Utils.convertEnglishDigittoBangla(i));
+            }
+
+            childName = childArray.toArray(childName);
+
+            //child stay with mother yes/no
+            stayStausArrayConstant.add("0");
+            stayStausArrayConstant.add("1");
+            stayStausArray.add("হ্যাঁ");
+            stayStausArray.add("না");
+
+            stayStausArrayName = stayStausArray.toArray(stayStausArrayName);
             /////////////////////////////////////////////////
 
         } catch (JSONException e) {
@@ -341,6 +369,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         disableDescEdit = (EditText) findViewById(R.id.disable_desc);
         limitTV = findViewById(R.id.limit_label);
 
+
         maritalStatusLabel = (TextView) findViewById(R.id.marital_status_label);
         educationalStatusLabel = (TextView) findViewById(R.id.educational_status_label);
         professionStatusLabel = (TextView) findViewById(R.id.profession_status_label);
@@ -352,6 +381,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         heightLabel = (TextView) findViewById(R.id.height);
         weightLabel = (TextView) findViewById(R.id.weight);
         skinLabel = (TextView) findViewById(R.id.skin_color);
+//        childLabel = (TextView) findViewById(R.id.child_number_text_view);
 
         heightLabel.getParent().requestChildFocus(heightLabel, heightLabel);
 
@@ -365,6 +395,8 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         smokeStatus = (LinearLayout) findViewById(R.id.smokeStatus);
         professionalGroupStatus = (LinearLayout) findViewById(R.id.professonalGroupStatus);
         houseLinearLayout = (LinearLayout) findViewById(R.id.house_linearLayout);
+        childNumber = (LinearLayout) findViewById(R.id.childNumber);
+        stayStatus = (LinearLayout) findViewById(R.id.stayStatus);
         ///////////////////////////////////////////////////////////////
         heightStatus = findViewById(R.id.ln_height);
         weightStatus = findViewById(R.id.ln_weight);
@@ -382,7 +414,8 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         smokeTV = (TextView) findViewById(R.id.smoke_text_view);
         professionalGroupTV = (TextView) findViewById(R.id.profession_group_text_view);
         houseTV = (TextView) findViewById(R.id.house_text_view);
-
+        childTV = (TextView) findViewById(R.id.child_number_text_view);
+        stayTV = (TextView) findViewById(R.id.stay_status_text_view);
         //////////////////////////////////////////////////////
         heightTV = findViewById(R.id.height_text_view);
         weightTV = findViewById(R.id.weight_text_view);
@@ -464,6 +497,20 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     return;
                 }
 
+                if(childNumber.getVisibility() == View.VISIBLE && childTV.getText().toString().length()==0)
+                {
+                    Toast.makeText(getBaseContext(), "আপনার সন্তানের সংখ্যা নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                    childTV.getParent().requestChildFocus(childTV, childTV);
+                    return;
+                }
+
+                if(stayStatus.getVisibility() == View.VISIBLE && stayTV.getText().toString().length()==0)
+                {
+                    Toast.makeText(getBaseContext(), "আপনার সন্তানের বর্তমান অবস্থান নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                    stayTV.getParent().requestChildFocus(stayTV, stayTV);
+                    return;
+                }
+
                 if (degreeValue.isEmpty()) {
                     Toast.makeText(getBaseContext(), "আপনার ডিগ্রীর নাম নির্বাচন করুন", Toast.LENGTH_LONG).show();
                     educationalStatusLabel.getParent().requestChildFocus(educationalStatusLabel, educationalStatusLabel);
@@ -533,12 +580,12 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                         .append(",")
                         .append("\"is_child_with\":")
                         .append("\"")
-                        .append(0)
+                        .append((stayStatus.getVisibility() == View.VISIBLE && stay_status>0)?stay_status:0)
                         .append("\"")
                         .append(",")
                         .append("\"child\":")
                         .append("\"")
-                        .append(0)
+                        .append((childNumber.getVisibility() == View.VISIBLE && child_number > 0)?child_number-1:0)
                         .append("\"")
                         .append(",")
                         .append("\"occupation\":")
@@ -644,7 +691,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                         .append("]")
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append(7)
+                        .append(4)
                         .append("}")
                         .toString();
 
@@ -796,6 +843,22 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     }
                 }
         );
+
+        childNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedPopUp = 15;
+                startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
+            }
+        });
+
+        stayStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedPopUp = 16;
+                startActivity(new Intent(RegistrationPersonalInformation.this, PopUpPersonalInfo.class));
+            }
+        });
     }
 
     @Override
@@ -806,6 +869,17 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             if (marriage > 0) {
                 marriageTV.setText(maritalStatusName[marriage - 1]);
                 maritalStatusValue = maritalStatusConstant.get(marriage - 1);
+                if(sharePref.get_data("gender").equalsIgnoreCase("female") && marriage > 1 )
+                {
+                    childNumber.setVisibility(View.VISIBLE);
+                }else{
+                    childNumber.setVisibility(View.GONE);
+                    stayStatus.setVisibility(View.GONE);
+                    if(childTV.getText().toString().length() > 0)
+                        childTV.setText("");
+                    if(stayTV.getText().toString().length() > 0)
+                        stayTV.setText("");
+                }
             }
 
         } else if (RegistrationPersonalInformation.selectedPopUp == 2) {
@@ -887,6 +961,24 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             if (skin_color > 0) {
                 skinTV.setText(skinColorName[skin_color - 1]);
                 skinValue = skinColorConstant.get(skin_color - 1);
+            }
+        }else if (RegistrationPersonalInformation.selectedPopUp == 15) {
+            if (child_number > 0) {
+                childTV.setText(childName[child_number - 1]);
+                childValue = childConstant.get(child_number - 1);
+                if(sharePref.get_data("gender").equalsIgnoreCase("female") && child_number > 1 )
+                {
+                    stayStatus.setVisibility(View.VISIBLE);
+                }else{
+                    stayStatus.setVisibility(View.GONE);
+                    if(stayTV.getText().toString().length() > 0)
+                        stayTV.setText("");
+                }
+            }
+        }else if (RegistrationPersonalInformation.selectedPopUp == 16) {
+            if (stay_status > 0) {
+                stayTV.setText(stayStausArrayName[stay_status - 1]);
+                stayStatusValue = stayStausArrayConstant.get(stay_status - 1);
             }
         }
         //////////////////////////////////////////////////////////////
@@ -998,7 +1090,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
-                    .url(Utils.STEP_CONSTANT_FETCH + 8)
+                    .url(Utils.STEP_CONSTANT_FETCH + 5)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
@@ -1041,11 +1133,11 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + 6)
+                    .url(Utils.STEP_CONSTANT_FETCH + 3)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 
-            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 6);
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 3);
             try {
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();
@@ -1076,7 +1168,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 clearStaticData();
                 Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
                 startActivity(new Intent(RegistrationPersonalInformation.this,
-                        RegistrationChoiceSelectionThirdPage.class).
+                        ImageUpload.class).
                         putExtra("constants", s));
                 finish();
             }

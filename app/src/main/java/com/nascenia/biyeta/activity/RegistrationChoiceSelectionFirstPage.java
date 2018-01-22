@@ -404,7 +404,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                         .append("\"")
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append(currentStep)
+                        .append(8)
                         .append("}")
                         .toString();
                 Log.i("prefresponse", total);
@@ -522,7 +522,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
-                    .url(Utils.STEP_CONSTANT_FETCH + 5)
+                    .url(Utils.STEP_CONSTANT_FETCH + 9)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
@@ -557,7 +557,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + 3)
+                    .url(Utils.STEP_CONSTANT_FETCH + 7)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 
@@ -592,7 +592,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                 }*/
                 Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
 
-                startActivity(new Intent(RegistrationChoiceSelectionFirstPage.this, ImageUpload.class).
+                startActivity(new Intent(RegistrationChoiceSelectionFirstPage.this, RegistrationUserAddressInformation.class).
                         putExtra("constants", s));
                 finish();
             }

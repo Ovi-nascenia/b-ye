@@ -226,4 +226,157 @@
             android:src="@drawable/down_arrow" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/spouse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/tab_text_color" />
+
+
+        <LinearLayout
+            android:id="@+id/reject_spouse"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/remove" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:text="বাদ দিন" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/name_sister_spouse"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:hint="স্বামীর  নাম*"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/lblFromName" />
+
+
+        <LinearLayout
+            android:id="@+id/professonal_status_sister_spouse"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/profession_text_view_sister_spouse"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:hint="স্বামীর  পেশা*"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/down_arrow_profession_sister_spouse"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/down_arrow" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/professonal_group_status_sister_spouse"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/profession_group_text_view_sister_spouse"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:hint="প্রফেশনাল গ্রুপ (ঐচ্ছিক)"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/down_arrow_profession_group_sister_spouse"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/down_arrow" />
+
+        </LinearLayout>
+
+        <!--<EditText-->
+            <!--android:id="@+id/designation_brother_spouse"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@color/white"-->
+            <!--android:hint="পদবী"-->
+            <!--android:padding="10dp"-->
+            <!--android:singleLine="true"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textColorHint="@color/lblFromName" />-->
+
+        <!--<EditText-->
+            <!--android:id="@+id/institution_brother_spouse"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:background="@color/white"-->
+            <!--android:hint="প্রতিষ্ঠান"-->
+            <!--android:padding="10dp"-->
+            <!--android:singleLine="true"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textColorHint="@color/lblFromName" />-->
+
+    </LinearLayout>
 </LinearLayout>

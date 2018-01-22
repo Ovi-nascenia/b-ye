@@ -186,7 +186,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                     return;
                 }
                 else
-                    sharePref.set_data("religion", castReligionText.getText().toString());
+                    sharePref.set_data("religion", religionValue);
 
                 if(castReligionText.getText().toString().isEmpty())
                 {
@@ -200,10 +200,10 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                         .append(2)
                         .append(",")
                         .append("\"religion\":")
-                        .append(religionValue)
+                        .append(religionValue.length()>0?religionValue:"")
                         .append(",")
                         .append("\"cast\":")
-                        .append(castValue)
+                        .append(castValue.length()>0?castValue:"")
                         .append(",")
                         .append("\"other_cast\":")
                         .append("\"")

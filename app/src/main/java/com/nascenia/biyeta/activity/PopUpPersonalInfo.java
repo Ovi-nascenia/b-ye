@@ -96,6 +96,16 @@ public class PopUpPersonalInfo extends AppCompatActivity {
             data = RegistrationPersonalInformation.skinColorName;
             mTextView.setText("গায়ের রং");
         }
+        else if(RegistrationPersonalInformation.selectedPopUp == 15){
+            RegistrationPersonalInformation.child_number = 1;
+            data = RegistrationPersonalInformation.childName;
+            mTextView.setText("সন্তান সংখ্যা");
+        }
+        else if(RegistrationPersonalInformation.selectedPopUp == 16){
+            RegistrationPersonalInformation.stay_status = 1;
+            data = RegistrationPersonalInformation.stayStausArrayName;
+            mTextView.setText("সন্তান সাথে থাকে?");
+        }
         /////////////////////////////////////////////////////////////
 
         picker.setMinValue(0);
@@ -167,15 +177,16 @@ public class PopUpPersonalInfo extends AppCompatActivity {
         /////////////////////////////////////////////////////////////
         else if(RegistrationPersonalInformation.selectedPopUp == 11){
             RegistrationPersonalInformation.height = -1;
-        }
-        else if(RegistrationPersonalInformation.selectedPopUp == 12){
+        }else if(RegistrationPersonalInformation.selectedPopUp == 12){
             RegistrationPersonalInformation.weight = -1;
-        }
-        else if(RegistrationPersonalInformation.selectedPopUp == 13){
+        }else if(RegistrationPersonalInformation.selectedPopUp == 13){
             RegistrationPersonalInformation.blood_group = -1;
-        }
-        else if(RegistrationPersonalInformation.selectedPopUp == 14){
+        }else if(RegistrationPersonalInformation.selectedPopUp == 14){
             RegistrationPersonalInformation.skin_color = -1;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 15){
+            RegistrationPersonalInformation.child_number = -1;
+        }else if(RegistrationPersonalInformation.selectedPopUp == 16){
+            RegistrationPersonalInformation.stay_status = -1;
         }
         finish();
     }
@@ -266,6 +277,10 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 RegistrationPersonalInformation.blood_group = newVal + 1;
             }else if(RegistrationPersonalInformation.selectedPopUp == 14){
                 RegistrationPersonalInformation.skin_color = newVal + 1;
+            }else if(RegistrationPersonalInformation.selectedPopUp == 15){
+                RegistrationPersonalInformation.child_number = newVal + 1;
+            }else if(RegistrationPersonalInformation.selectedPopUp == 16){
+                RegistrationPersonalInformation.stay_status = newVal + 1;
             }
             ////////////////////////////////////////////
 

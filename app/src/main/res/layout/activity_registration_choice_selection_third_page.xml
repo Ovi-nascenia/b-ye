@@ -376,10 +376,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="আবাসস্থল"
+                    android:hint="আবাসস্থল"
                     android:textSize="18dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"/>
 
                 <ImageView
                     android:id="@+id/down_arrow_house"

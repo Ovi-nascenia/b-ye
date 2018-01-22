@@ -281,7 +281,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                         .append("]")
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append(8)
+                        .append(5)
                         .append("}")
                         .toString();
                 Log.i("response: ", response);
@@ -431,7 +431,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
-                    .url(Utils.STEP_CONSTANT_FETCH + 9)
+                    .url(Utils.STEP_CONSTANT_FETCH + 6)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
@@ -473,11 +473,11 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + 7)
+                    .url(Utils.STEP_CONSTANT_FETCH + 4)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 
-            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 7);
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 4);
             try {
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();

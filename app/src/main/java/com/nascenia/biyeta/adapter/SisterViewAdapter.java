@@ -66,6 +66,13 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
         public TextView sisterMaritalStatus;
         public TextView sisterAge;
         public TextView tv_sister;
+        public LinearLayout spouse;
+        public LinearLayout rejectSpouse;
+        public EditText nameSisterSpouse;
+        public TextView sisterOcupationSpouse;
+        public TextView sisterProfessionalGroupSpouse;
+        LinearLayout occupationStatusSisterSpouse;
+        LinearLayout professonalStatusSisterSpouse;
 
 
 
@@ -81,7 +88,13 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
             sisterAge = (TextView) view.findViewById(R.id.age_text_view_sister);
             tv_sister = (TextView) view.findViewById(R.id.tv_sister);
 
-            String siblingType, name, designation, institute, spouse, sOccupation, sProfessionalGroup, sDesignation, sInstitute;
+            sisterOcupationSpouse = (TextView) view.findViewById(R.id.profession_text_view_sister_spouse);
+            sisterProfessionalGroupSpouse = (TextView) view.findViewById(R.id.profession_group_text_view_sister_spouse);
+            nameSisterSpouse = (EditText) view.findViewById(R.id.name_sister_spouse);
+
+            spouse = (LinearLayout) view.findViewById(R.id.spouse);
+
+            final String siblingType, name, designation, institute, spouseName, sOccupation, sProfessionalGroup, sDesignation, sInstitute;
             reject = (LinearLayout) view.findViewById(R.id.reject);
             reject.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -146,11 +159,44 @@ public class SisterViewAdapter extends RecyclerView.Adapter<SisterViewAdapter.My
                 }
             });
 
+            occupationStatusSisterSpouse = view.findViewById(R.id.professonal_status_sister_spouse);
+            occupationStatusSisterSpouse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedPopUp = 6;
+                    sister = 1;
+                    Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
+                    setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position", getAdapterPosition());
+                    context.startActivity(setIntent);
+                }
+            });
+            professonalStatusSisterSpouse = view.findViewById(R.id.professonal_group_status_sister_spouse);
+            professonalStatusSisterSpouse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedPopUp = 7;
+                    sister = 1;
+                    Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
+                    setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
+                    setIntent.putExtra("position", getAdapterPosition());
+                    context.startActivity(setIntent);
+                }
+            });
+
+            rejectSpouse = (LinearLayout) view.findViewById(R.id.reject_spouse);
+            rejectSpouse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    spouse.setVisibility(View.GONE);
+                }
+            });
+
             siblingType = "2";
             name = nameSister.getText().toString();
             designation = designationSister.getText().toString();
             institute = institutionSister.getText().toString();
-            spouse = "";
+            spouseName = "";
             sOccupation = "";
             sProfessionalGroup = "";
             sDesignation = "";

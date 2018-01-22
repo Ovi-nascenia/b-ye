@@ -482,7 +482,8 @@ public class ImageUpload extends AppCompatActivity {
                 //clearBitmapData();
                 Log.i("constantval", "ImageUploadNextfetchval: " + s);
                 Intent signupIntent;
-                signupIntent = new Intent(ImageUpload.this, RegistrationChoiceSelectionFirstPage.class);
+//                signupIntent = new Intent(ImageUpload.this, RegistrationChoiceSelectionFirstPage.class);
+                signupIntent = new Intent(ImageUpload.this, RegistrationPersonalInformation.class);
                 signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 finish();

@@ -350,7 +350,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             }
         });
 
-        religion = religionArray.indexOf(religionName) + 1;
+        religion = Integer.parseInt(religionName);
         if(religion > 0) {
             setReligionView();
             down_arrow_religion.setVisibility(View.GONE);
@@ -662,7 +662,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                         .append("\"")
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append(6)
+                        .append(10)
                         .append("}")
                         .toString();
                 Log.e("response","finaldata: "+ data);
@@ -713,7 +713,11 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                         Toast.makeText(RegistrationChoiceSelectionThirdPage.this, error,
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        new RegistrationChoiceSelectionThirdPage.FetchConstant().execute();
+//                        new RegistrationChoiceSelectionThirdPage.FetchConstant().execute();
+                        startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this,
+                                HomeScreen.class).
+                                putExtra("constants", s));
+                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -754,57 +758,57 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
     }
 
 
-    public class FetchConstant extends AsyncTask<String, String, String> {
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if (s == null) {
-                if (progress.isShowing())
-                    progress.dismiss();
-                Utils.ShowAlert(RegistrationChoiceSelectionThirdPage.this, getString(R.string.no_internet_connection));
-            } else {
-               /* if (progress.isShowing())
-                    progress.dismiss();*/
-                clearStaticData();
-                Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
-                Intent signupIntent;
-                signupIntent = new Intent(RegistrationChoiceSelectionThirdPage.this,
-                        RegistrationPersonalInformation.class);
-                signupIntent.putExtra("constants", s);
-                startActivity(signupIntent);
-                finish();
-            }
-        }
-
-        @Override
-        protected String doInBackground(String... parameters) {
-            final String token = sharePref.get_data("token");
-            // Login.currentMobileSignupStep += 1;
-            Request request = new Request.Builder()
-                    // .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
-                    .url(Utils.STEP_CONSTANT_FETCH + 7)
-                    .addHeader("Authorization", "Token token=" + token)
-                    .build();
-            try {
-                OkHttpClient client = new OkHttpClient();
-                Response response = client.newCall(request).execute();
-                String responseString = response.body().string();
-                Log.e(Utils.LOGIN_DEBUG, responseString);
-                response.body().close();
-                return responseString;
-            } catch (Exception e) {
-                e.printStackTrace();
-//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-    }
+//    public class FetchConstant extends AsyncTask<String, String, String> {
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            if (s == null) {
+//                if (progress.isShowing())
+//                    progress.dismiss();
+//                Utils.ShowAlert(RegistrationChoiceSelectionThirdPage.this, getString(R.string.no_internet_connection));
+//            } else {
+//               /* if (progress.isShowing())
+//                    progress.dismiss();*/
+//                clearStaticData();
+//                Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
+//                Intent signupIntent;
+//                signupIntent = new Intent(RegistrationChoiceSelectionThirdPage.this,
+//                        RegistrationPersonalInformation.class);
+//                signupIntent.putExtra("constants", s);
+//                startActivity(signupIntent);
+//                finish();
+//            }
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... parameters) {
+//            final String token = sharePref.get_data("token");
+//            // Login.currentMobileSignupStep += 1;
+//            Request request = new Request.Builder()
+//                    // .url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
+//                    .url(Utils.STEP_CONSTANT_FETCH + 7)
+//                    .addHeader("Authorization", "Token token=" + token)
+//                    .build();
+//            try {
+//                OkHttpClient client = new OkHttpClient();
+//                Response response = client.newCall(request).execute();
+//                String responseString = response.body().string();
+//                Log.e(Utils.LOGIN_DEBUG, responseString);
+//                response.body().close();
+//                return responseString;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+////                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+//                return null;
+//            }
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//        }
+//    }
 
 
     @Override
@@ -921,11 +925,11 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + 5)
+                    .url(Utils.STEP_CONSTANT_FETCH + 9)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 
-            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 5);
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 9);
             try {
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();

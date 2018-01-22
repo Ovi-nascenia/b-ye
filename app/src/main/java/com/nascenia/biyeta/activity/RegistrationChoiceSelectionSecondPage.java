@@ -880,7 +880,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                         .append(locationString())
                         .append(",")
                         .append("\"current_mobile_sign_up_step\":")
-                        .append(currentStep)
+                        .append(9)
                         .append("}")
                         .toString();
                 Log.i("result", total);
@@ -1364,7 +1364,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
                     //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep)
-                    .url(Utils.STEP_CONSTANT_FETCH + 6)
+                    .url(Utils.STEP_CONSTANT_FETCH + 10)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
             try {
@@ -1406,11 +1406,11 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + 4)
+                    .url(Utils.STEP_CONSTANT_FETCH + 8)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 
-            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 4);
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 8);
             try {
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();

@@ -537,51 +537,51 @@ public class Search extends Fragment {
                 getActivity().finish();
                 break;
             case 4:
-                Log.i("constantval", "Login-RegistrationChoiceSelectionFirstPage  " + s);
-                signupIntent = new Intent(getActivity(), RegistrationChoiceSelectionFirstPage.class);
-                signupIntent.putExtra("constants", s);
-                startActivity(signupIntent);
-                getActivity().finish();
-                break;
-            case 5:
-                Log.i("constantval", "Login-RegistrationChoiceSelectionSecondPage  " + s);
-                signupIntent = new Intent(getActivity(), RegistrationChoiceSelectionSecondPage.class);
-                signupIntent.putExtra("constants", s);
-                startActivity(signupIntent);
-                getActivity().finish();
-                break;
-            case 6:
-                Log.i("constantval", "Login-RegistrationChoiceSelectionThirdPage  " + s);
-                signupIntent = new Intent(getActivity(), RegistrationChoiceSelectionThirdPage.class);
-                signupIntent.putExtra("constants", s);
-                startActivity(signupIntent);
-                getActivity().finish();
-                break;
-            case 7:
                 Log.i("constantval", "Login-RegistrationPersonalInformation  " + s);
                 signupIntent = new Intent(getActivity(), RegistrationPersonalInformation.class);
                 signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 getActivity().finish();
                 break;
-            case 8:
+            case 5:
                 Log.i("constantval", "Login-RegistrationFamilyInfoFirstPage  " + s);
                 signupIntent = new Intent(getActivity(), RegistrationFamilyInfoFirstPage.class);
                 signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 getActivity().finish();
                 break;
-            case 9:
+            case 6:
                 Log.i("constantval", "Login-RegistrationFamilyInfoSecondPage  " + s);
                 signupIntent = new Intent(getActivity(), RegistrationFamilyInfoSecondPage.class);
                 signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 getActivity().finish();
                 break;
-            case 10:
+            case 7:
                 Log.i("constantval", "Login-RegistrationUserAddressInformation  " + s);
                 signupIntent = new Intent(getActivity(), RegistrationUserAddressInformation.class);
-//                signupIntent.putExtra("constants", s);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+            case 8:
+                Log.i("constantval", " Login-RegistrationChoiceSelectionFirstPage  " + s);
+                signupIntent = new Intent(getActivity(), RegistrationChoiceSelectionFirstPage.class);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+            case 9:
+                Log.i("constantval", "Login- Login-RegistrationChoiceSelectionSecondPage  " + s);
+                signupIntent = new Intent(getActivity(), RegistrationChoiceSelectionSecondPage.class);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                getActivity().finish();
+                break;
+            case 10:
+                Log.i("constantval", "Login-RegistrationChoiceSelectionThirdPage  " + s);
+                signupIntent = new Intent(getActivity(), RegistrationChoiceSelectionThirdPage.class);
+                signupIntent.putExtra("constants", s);
                 startActivity(signupIntent);
                 getActivity().finish();
                 break;

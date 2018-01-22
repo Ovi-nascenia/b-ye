@@ -71,6 +71,8 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
     private ProgressDialog progress;
 
+    SharePref sharePref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,8 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
         progress.setMessage(getResources().getString(R.string.progress_dialog_message));
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setCancelable(false);
+
+         sharePref = new SharePref(RegistrationUserAddressInformation.this);
 
        /* villageHouseLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -446,7 +450,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
         String response = new StringBuilder().append("{")
                 .append("\"current_mobile_sign_up_step\":")
                 //.append(Login.currentMobileSignupStep)
-                .append(10)
+                .append(7)
                 .append(",")
                 .append("\"home_town\":")
                 .append(getDistrictCode(villageDistrictNameTextView.getText().toString()))//disLinkedHashMap.villageDistrictNameTextView.getText().toString())
@@ -542,9 +546,10 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
                     }
                     else
                     {
-                        Intent homeIntent = new Intent(RegistrationUserAddressInformation.this, HomeScreen.class);
-                        startActivity(homeIntent);
-                        finish();
+                        new RegistrationUserAddressInformation.FetchConstant().execute();
+//                        Intent homeIntent = new Intent(RegistrationUserAddressInformation.this, HomeScreen.class);
+//                        startActivity(homeIntent);
+//                        finish();
                     }
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -667,11 +672,11 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             SharePref sharePref = new SharePref(RegistrationUserAddressInformation.this);
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + 9)
+                    .url(Utils.STEP_CONSTANT_FETCH + 6)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 
-            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 9);
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 6);
             OkHttpClient client = new OkHttpClient();
             try {
                 Response response = client.newCall(request).execute();
@@ -708,5 +713,64 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             }
         }
     }
+
+    public class FetchConstant extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (s == null) {
+                if (progress.isShowing())
+                    progress.dismiss();
+
+                Utils.ShowAlert(RegistrationUserAddressInformation.this, getString(R.string.no_internet_connection));
+            } else {
+               /* if (progress.isShowing())
+                    progress.dismiss();*/
+//                clearStaticData();
+                Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
+                Intent signupIntent;
+                signupIntent = new Intent(RegistrationUserAddressInformation.this,
+                        RegistrationChoiceSelectionFirstPage.class);
+                signupIntent.putExtra("constants", s);
+                startActivity(signupIntent);
+                finish();
+            }
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... parameters) {
+            //  Login.currentMobileSignupStep+=1;
+            final String token = sharePref.get_data("token");
+            Request request = new Request.Builder()
+                    //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
+                    .url(Utils.STEP_CONSTANT_FETCH + 8)
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
+            try {
+                OkHttpClient client = new OkHttpClient();
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.LOGIN_DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+    }
+
+//    private void clearStaticData() {
+//
+//    }
 
 }

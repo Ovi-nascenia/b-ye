@@ -288,6 +288,77 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/childNumber"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/child_number_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="সন্তান সংখ্যা*"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
+            <ImageView
+                android:id="@+id/down_arrow_child"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/stayStatus"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/stay_status_text_view"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="সন্তান সাথে থাকে?*"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/lblFromName"/>
+            <ImageView
+                android:id="@+id/down_arrow_stay_status"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/down_arrow"
+                />
+
+        </LinearLayout>
 
 
         <TextView

@@ -682,7 +682,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
                             sharePref.set_data("real_name", response.getLoginInformation().getRealName());
                             sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
-
+                            sharePref.set_data("religion", response.getLoginInformation().getReligion() + "");
                             gender = response.getLoginInformation().getGender();
                             currentMobileSignupStep = response.getLoginInformation().getStep();
                             Log.i("currentmoblesignupsetp", currentMobileSignupStep + "");
@@ -811,44 +811,44 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     startActivity(signupIntent);
                     finish();
                 } else if (currentMobileSignupStep == 4) {
-                    Log.i("constantval", "Login-RegistrationChoiceSelectionFirstPage  " + s);
-                    signupIntent = new Intent(Login.this, RegistrationChoiceSelectionFirstPage.class);
-                    signupIntent.putExtra("constants", s);
-                    startActivity(signupIntent);
-                    finish();
-                } else if (currentMobileSignupStep == 5) {
-                    Log.i("constantval", "Login-RegistrationChoiceSelectionSecondPage  " + s);
-                    signupIntent = new Intent(Login.this, RegistrationChoiceSelectionSecondPage.class);
-                    signupIntent.putExtra("constants", s);
-                    startActivity(signupIntent);
-                    finish();
-                } else if (currentMobileSignupStep == 6) {
-                    Log.i("constantval", "Login-RegistrationChoiceSelectionThirdPage  " + s);
-                    signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
-                    signupIntent.putExtra("constants", s);
-                    startActivity(signupIntent);
-                    finish();
-                } else if (currentMobileSignupStep == 7) {
-                    Log.i("constantval", "Login-RegistrationPersonalInformation  " + s);
+//                    Log.i("constantval", "Login-RegistrationChoiceSelectionFirstPage  " + s);
                     signupIntent = new Intent(Login.this, RegistrationPersonalInformation.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
-                } else if (currentMobileSignupStep == 8) {
-                    Log.i("constantval", "Login-RegistrationFamilyInfoFirstPage  " + s);
+                } else if (currentMobileSignupStep == 5) {
+//                    Log.i("constantval", "Login-RegistrationChoiceSelectionSecondPage  " + s);
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoFirstPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
-                } else if (currentMobileSignupStep == 9) {
-                    Log.i("constantval", "Login-RegistrationFamilyInfoSecondPage  " + s);
+                } else if (currentMobileSignupStep == 6) {
+//                    Log.i("constantval", "Login-RegistrationChoiceSelectionThirdPage  " + s);
                     signupIntent = new Intent(Login.this, RegistrationFamilyInfoSecondPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();
-                } else if (currentMobileSignupStep == 10) {
-                    Log.i("constantval", "Login-RegistrationUserAddressInformation  " + s);
+                } else if (currentMobileSignupStep == 7) {
+//                    Log.i("constantval", "Login-RegistrationPersonalInformation  " + s);
                     signupIntent = new Intent(Login.this, RegistrationUserAddressInformation.class);
+                    signupIntent.putExtra("constants", s);
+                    startActivity(signupIntent);
+                    finish();
+                } else if (currentMobileSignupStep == 8) {
+//                    Log.i("constantval", "Login-RegistrationFamilyInfoFirstPage  " + s);
+                    signupIntent = new Intent(Login.this, RegistrationChoiceSelectionFirstPage.class);
+                    signupIntent.putExtra("constants", s);
+                    startActivity(signupIntent);
+                    finish();
+                } else if (currentMobileSignupStep == 9) {
+//                    Log.i("constantval", "Login-RegistrationFamilyInfoSecondPage  " + s);
+                    signupIntent = new Intent(Login.this, RegistrationChoiceSelectionSecondPage.class);
+                    signupIntent.putExtra("constants", s);
+                    startActivity(signupIntent);
+                    finish();
+                } else if (currentMobileSignupStep == 10) {
+//                    Log.i("constantval", "Login-RegistrationUserAddressInformation  " + s);
+                    signupIntent = new Intent(Login.this, RegistrationChoiceSelectionThirdPage.class);
                     signupIntent.putExtra("constants", s);
                     startActivity(signupIntent);
                     finish();

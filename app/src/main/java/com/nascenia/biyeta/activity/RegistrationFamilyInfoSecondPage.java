@@ -329,17 +329,17 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                     .append(",")
                                     .append("\"spouse\":")
                                     .append("\"")
-                                    .append("")
+                                    .append(holder.spouse.getVisibility()==View.VISIBLE?holder.nameSisterSpouse.getText().toString().trim():"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"s_occupation\":")
                                     .append("\"")
-                                    .append("")
+                                    .append((holder.spouse.getVisibility()==View.VISIBLE && PopUpFamilyInfoSecondPage.occupationArraySisterSpouse.get(i)!=null)?PopUpFamilyInfoSecondPage.occupationArraySisterSpouse.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"s_professional_group\":")
                                     .append("\"")
-                                    .append("")
+                                    .append((holder.spouse.getVisibility()==View.VISIBLE && PopUpFamilyInfoSecondPage.professionalGroupArraySisterSpouse.get(i)!=null)?PopUpFamilyInfoSecondPage.professionalGroupArraySisterSpouse.get(i):"")
                                     .append("\"")
                                     .append(",")
                                     .append("\"s_designation\":")
@@ -746,7 +746,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                 .append("]")
                 .append(",")
                 .append("\"current_mobile_sign_up_step\":")
-                .append(Login.currentPageRegistration)
+                .append(6)//Login.currentPageRegistration)
                 .append("}")
                 .toString();
         Log.i("finalvalue: ", "totalJson-> " + response);
@@ -882,11 +882,11 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         protected String doInBackground(String... strings) {
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + 8)
+                    .url(Utils.STEP_CONSTANT_FETCH + 5)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 
-            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 8);
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 5);
             try {
                 Response response = client.newCall(request).execute();
                 String responseString = response.body().string();
