@@ -27,6 +27,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,6 +73,11 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
     private ProgressDialog progress;
 
     SharePref sharePref;
+    String data = "";
+    private String abroadStatusTypeArray[] = {"শিক্ষার্থী", "ওয়ার্ক পারমিট", "স্থায়ী বাসিন্দা", "নাগরিক", "প্রক্রিয়াধীন"};
+
+
+    private boolean isSignUp = false;
 
 
     @Override
@@ -88,7 +94,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setCancelable(false);
 
-         sharePref = new SharePref(RegistrationUserAddressInformation.this);
+        sharePref = new SharePref(RegistrationUserAddressInformation.this);
 
        /* villageHouseLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +105,76 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             }
         });*/
 
+        data = getIntent().getStringExtra("constants");
+        isSignUp = getIntent().getBooleanExtra("isSignUp", false);
+        if (data != null && data.length() > 0) {
+            try {
+                JSONObject json = new JSONObject(data);
+                if(json.has("data"))
+                {
+                    setViewWithData(json);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private void setViewWithData(JSONObject json) {
+
+        try {
+            JSONObject jsonData = json.getJSONObject("data");
+            villageDistrictNameTextView.setText(disLinkedHashMap.get(jsonData.get("home_town")));
+            if(jsonData.getString("residence").equalsIgnoreCase("BD")){
+                addressBangldeshCheckbox.setChecked(true);
+                addressAbroadCheckbox.setChecked(false);
+                addressBangldeshCheckboxAction();
+            }else{
+                addressAbroadCheckbox.setChecked(true);
+                addressBangldeshCheckbox.setChecked(false);
+                addressAbroadCheckboxAction();
+                selectedAbroadTypeNumber = jsonData.getString("living_abroad");
+                abroadTypeTextView.setText(abroadStatusTypeArray[Integer.parseInt(selectedAbroadTypeNumber)-1]);
+            }
+            JSONArray jsonArray = jsonData.getJSONArray("address");
+            if (jsonData.getBoolean("same_address")) {
+                permanentAddressCheckbox.setChecked(true);
+                permanentAddressLayout.setVisibility(View.GONE);
+            } else {
+                permanentAddressCheckbox.setChecked(false);
+                permanentAddressLayout.setVisibility(View.VISIBLE);
+            }
+            ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(Locale.getISOCountries()));
+            for(int i = 0; i <jsonArray.length(); i++) {
+                if(jsonArray.getJSONObject(i).getInt("address_type")==1) {
+                    presentAddressEditext.setText(jsonArray.getJSONObject(i).getString("address"));
+                    presentCountryCode = jsonArray.getJSONObject(i).getString("country");
+                    presentCountryTextView.setText(countryNameArray[arrayList.indexOf(jsonArray.getJSONObject(i).getString("country"))]);
+                    if(jsonArray.getJSONObject(i).getString("district").length()>0){
+                        presentDistrictTextView.setText(disLinkedHashMap.get(Integer.parseInt(jsonArray.getJSONObject(i).getString("district"))));
+                    }
+                }else{
+                    if (jsonData.getBoolean("same_address")) {
+                        permanentAddressCheckbox.setChecked(true);
+                        permanentAddressLayout.setVisibility(View.GONE);
+                    } else {
+                        permanentAddressCheckbox.setChecked(false);
+                        permanentAddressLayout.setVisibility(View.VISIBLE);
+                        permanentAddressEditext.setText(jsonArray.getJSONObject(i).getString("address"));
+                        permanentCountryCode = jsonArray.getJSONObject(i).getString("country");
+                        permanentCountryTextView.setText(countryNameArray[arrayList.indexOf(jsonArray.getJSONObject(i).getString("country"))]);
+                        if(jsonArray.getJSONObject(i).getString("district").length()>0){
+                            System.out.println(disLinkedHashMap.get(jsonArray.getJSONObject(i).getString("district")));
+                            permanentDistrictTextView.setText(disLinkedHashMap.get(Integer.parseInt(jsonArray.getJSONObject(i).getString("district"))));
+                        }
+                    }
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void prepareCountryListDialog() {
@@ -525,9 +601,9 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
+            if(progress.isShowing())
+                progress.dismiss();
             if(s == null){
-                if(progress.isShowing())
-                    progress.dismiss();
                 Utils.ShowAlert(RegistrationUserAddressInformation.this, getString(R.string.no_internet_connection));
             }
             else{
@@ -538,9 +614,6 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
                     if(jsonObject.has("errors"))
                     {
-                        if(progress.isShowing())
-                            progress.dismiss();
-
                         Toast.makeText(RegistrationUserAddressInformation.this,
                                 jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
                     }
@@ -695,21 +768,24 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.i("urldata", s + "");
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
             if (s == null) {
-                if (progress.isShowing()) {
-                    progress.dismiss();
-                }
-
                 Utils.ShowAlert(RegistrationUserAddressInformation.this, getString(R.string.no_internet_connection));
             } else {
                /* if (progress.isShowing()) {
                     progress.dismiss();
                 }*/
-                Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
-                startActivity(new Intent(RegistrationUserAddressInformation.this,
-                        RegistrationFamilyInfoSecondPage.class).
-                        putExtra("constants", s));
-                finish();
+               if(isSignUp) {
+                   finish();
+               }else {
+                   Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
+                   startActivity(new Intent(RegistrationUserAddressInformation.this,
+                           RegistrationFamilyInfoSecondPage.class).
+                           putExtra("constants", s));
+                   finish();
+               }
             }
         }
     }
@@ -719,10 +795,9 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (progress.isShowing())
+                progress.dismiss();
             if (s == null) {
-                if (progress.isShowing())
-                    progress.dismiss();
-
                 Utils.ShowAlert(RegistrationUserAddressInformation.this, getString(R.string.no_internet_connection));
             } else {
                /* if (progress.isShowing())
@@ -731,10 +806,11 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
                 Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationUserAddressInformation.this,
-                        RegistrationChoiceSelectionFirstPage.class);
+                        ThanksActivity.class);
                 signupIntent.putExtra("constants", s);
+                signupIntent.putExtra("isSignUp", true);
                 startActivity(signupIntent);
-                finish();
+//                finish();
             }
 
 

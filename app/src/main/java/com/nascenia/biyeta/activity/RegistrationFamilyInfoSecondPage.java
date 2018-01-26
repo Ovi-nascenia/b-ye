@@ -51,7 +51,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
     String responseBrother = "";
     String responseSister = "";
     String responseOther = "";
-    int brotherCount, sisterCount = 0, otherCount = 0;
+    int brotherCount = 0, sisterCount = 0, otherCount = 0;
     private List<Integer> brotherList = new ArrayList<>();
     private List<Integer> sisterList = new ArrayList<>();
     private List<Integer> otherList = new ArrayList<>();
@@ -76,6 +76,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
 
     ProgressDialog progress;
     private SharePref sharePref;
+    private boolean isSignUp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
+        isSignUp = getIntent().getBooleanExtra("isSignUp", false);
         // Toast.makeText(RegistrationFamilyInfoSecondPage.this,constant,Toast.LENGTH_LONG).show();
         client = new OkHttpClient();
 
@@ -162,6 +164,24 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                 responseBrother = "";
                 responseSister = "";
                 responseOther = "";
+
+                if (brotherNumber.getText().toString().length() == 0) {
+                    Toast.makeText(getBaseContext(),
+                            getString(R.string.brother_nubmer_choise_message),
+                            Toast.LENGTH_LONG).show();
+                    brotherNubmerTitleTextView.getParent()
+                            .requestChildFocus(brotherNubmerTitleTextView, brotherNubmerTitleTextView);
+                    return;
+                }
+
+                if (sisterNumber.getText().toString().length() == 0) {
+                    Toast.makeText(getBaseContext(),
+                            getString(R.string.sister_nubmer_choise_message),
+                            Toast.LENGTH_LONG).show();
+                    sisterNumberTitleTextView.getParent()
+                            .requestChildFocus(sisterNumberTitleTextView, sisterNumberTitleTextView);
+                    return;
+                }
 
                 if (RegistrationFamilyInfoSecondPage.numberOfBrother > 0) {
 
@@ -260,14 +280,6 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                         }
                     }
 
-                } else if (brotherNumber.getText().toString().
-                        equalsIgnoreCase(getString(R.string.brother_sister_number_textview_hint))) {
-                    Toast.makeText(getBaseContext(),
-                            getString(R.string.brother_nubmer_choise_message),
-                            Toast.LENGTH_LONG).show();
-                    brotherNubmerTitleTextView.getParent()
-                            .requestChildFocus(brotherNubmerTitleTextView, brotherNubmerTitleTextView);
-                    return;
                 }
 
                 if (RegistrationFamilyInfoSecondPage.numberOfSister > 0) {
@@ -358,14 +370,6 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                             responseSister = responseSister + response;
                         }
                     }
-                } else if (sisterNumber.getText().toString().
-                        equalsIgnoreCase(getString(R.string.brother_sister_number_textview_hint))) {
-                    Toast.makeText(getBaseContext(),
-                            getString(R.string.sister_nubmer_choise_message),
-                            Toast.LENGTH_LONG).show();
-                    sisterNumberTitleTextView.getParent()
-                            .requestChildFocus(sisterNumberTitleTextView, sisterNumberTitleTextView);
-                    return;
                 }
 
 
@@ -374,6 +378,49 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                         if (recyclerViewOther.findViewHolderForLayoutPosition(i) instanceof OtherViewAdapter.MyViewHolder) {
                             OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder)
                                     recyclerViewOther.findViewHolderForLayoutPosition(i);
+
+                            if(holder.otherRelationalStatus.getText().toString().length() == 0)
+                            {
+                                Toast.makeText(getBaseContext(),
+                                        "R.string.choose_realtion_message",
+                                        Toast.LENGTH_LONG).show();
+                                holder.otherRelationalStatus.getParent().
+                                        requestChildFocus(holder.otherRelationalStatus, holder.otherRelationalStatus);
+
+                                return;
+                            }
+
+                            if(holder.nameOther.getText().toString().length() == 0)
+                            {
+                                Toast.makeText(getBaseContext(),
+                                        "আপনার " + holder.otherRelationalStatus.getText().toString() + "র "
+                                                + getString(R.string.write_name_message),
+                                        Toast.LENGTH_LONG).show();
+                                holder.otherRelationalStatus.getParent().
+                                        requestChildFocus(holder.otherRelationalStatus, holder.otherRelationalStatus);
+
+                                return;
+                            }
+                            if(holder.otherOccupation.getText().toString().length() == 0)
+                            {
+                                Toast.makeText(getBaseContext(),
+                                        "আপনার " + holder.otherRelationalStatus.getText().toString() + "র "
+                                                + getString(R.string.select_occupation_message),
+                                        Toast.LENGTH_LONG).show();
+                                holder.otherOccupation.getParent().
+                                        requestChildFocus(holder.otherOccupation, holder.otherOccupation);
+
+                                return;
+                            }
+//                            if (!isUserFillAllSiblingMandatoryField("বোনের",
+//                                    holder.nameOther.getText().toString(),
+//                                    PopUpFamilyInfoSecondPage.ageArraySister.get(i),
+//                                    PopUpFamilyInfoSecondPage.occupationArraySister.get(i),
+//                                    i)) {
+//                                sisterNumberTitleTextView.getParent()
+//                                        .requestChildFocus(sisterNumberTitleTextView, sisterNumberTitleTextView);
+//                                return;
+//                            }
 
                             String response = new StringBuilder().append("{")
                                     .append("\"name\":")
@@ -386,11 +433,11 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                     .append(PopUpFamilyInfoSecondPage.relationStatusArrayOther.get(i))
                                     .append("\"")
                                     .append(",")
-                                    .append("\"age\":")
-                                    .append("\"")
-                                    .append(PopUpFamilyInfoSecondPage.ageArrayOther.get(i)!=null?PopUpFamilyInfoSecondPage.ageArrayOther.get(i):"")
-                                    .append("\"")
-                                    .append(",")
+//                                    .append("\"age\":")
+//                                    .append("\"")
+//                                    .append(PopUpFamilyInfoSecondPage.ageArrayOther.get(i)!=null?PopUpFamilyInfoSecondPage.ageArrayOther.get(i):"")
+//                                    .append("\"")
+//                                    .append(",")
                                     .append("\"occupation\":")
                                     .append("\"")
                                     .append(PopUpFamilyInfoSecondPage.occupationArrayOther.get(i)!=null?PopUpFamilyInfoSecondPage.occupationArrayOther.get(i):"")
@@ -551,8 +598,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                             OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder)
                                     recyclerViewOther.findViewHolderForLayoutPosition(childPosition);
 
-                            if (holder.otherRelationalStatus.getText().toString().
-                                    equalsIgnoreCase(getString(R.string.relation_title_text))) {
+                            if (holder.otherRelationalStatus.getText().toString().length() == 0) {
                                 Toast.makeText(getBaseContext(), getString(R.string.choose_realtion_message),
                                         Toast.LENGTH_SHORT).show();
                                 return;
@@ -562,13 +608,13 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                                                 + getString(R.string.write_name_message),
                                         Toast.LENGTH_SHORT).show();
                                 return;
-                            } else if (PopUpFamilyInfoSecondPage.ageArrayOther.get(childPosition) == null) {
+                            } /*else if (PopUpFamilyInfoSecondPage.ageArrayOther.get(childPosition) == null) {
                                 Toast.makeText(getBaseContext(),
                                         "আপনার " + holder.otherRelationalStatus.getText().toString() + " "
                                                 + getString(R.string.select_age_message),
                                         Toast.LENGTH_SHORT).show();
                                 return;
-                            } else if (PopUpFamilyInfoSecondPage.occupationArrayOther.get(childPosition) == null) {
+                            } */else if (holder.otherOccupation.getText().toString().length() == 0) {
                                 Toast.makeText(getBaseContext(),
                                         "আপনার " + holder.otherRelationalStatus.getText().toString() + " "
                                                 + getString(R.string.select_occupation_message),
@@ -604,7 +650,112 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
             }
         });
 
+        try {
+            JSONObject json = new JSONObject(constant);
+            if(json.has("data")) {
+                brotherNumber.setText(json.getJSONObject("data").getString("total_brothers"));
+                numberOfBrother = json.getJSONObject("data").getInt("total_brothers");
+                if(Integer.parseInt(json.getJSONObject("data").getString("total_brothers")) > 0){
+                    brotherList.clear();
+                    brotherViewAdapter.notifyDataSetChanged();
 
+                    if (numberOfBrother > 0) {
+                        brotherViewAdapter.updateWithBrotherData(json.getJSONObject("data").getJSONArray("brother_sister_information"));
+                        brotherInfoDetailsLayout.setVisibility(View.VISIBLE);
+                        brotherCount = 1;
+                        prepareBrotherData();
+
+//                        if (numberOfBrother > 1) {
+                            buttonBrother.setVisibility(View.INVISIBLE);
+//                        }
+                    } else {
+
+                        brotherInfoDetailsLayout.setVisibility(View.GONE);
+                    }
+                }
+                sisterNumber.setText(json.getJSONObject("data").getString("total_sisters"));
+                numberOfSister = json.getJSONObject("data").getInt("total_sisters");
+                if(Integer.parseInt(json.getJSONObject("data").getString("total_sisters")) > 0){
+                    sisterList.clear();
+                    sisterViewAdapter.notifyDataSetChanged();
+
+                    if (numberOfSister > 0) {
+                        sisterInfoDetailsLayout.setVisibility(View.VISIBLE);
+                        sisterCount = 1;
+                        prepareSisterData();
+
+//                        if (numberOfSister > 1) {
+                            buttonSister.setVisibility(View.INVISIBLE);
+//                        }
+                    } else {
+                        sisterInfoDetailsLayout.setVisibility(View.GONE);
+                    }
+                }
+                for(int i = 0; i < json.getJSONObject("data").getJSONArray("brother_sister_information").length(); i++) {
+                    JSONObject jsonObject = json.getJSONObject("data").getJSONArray("brother_sister_information").getJSONObject(i);
+                    if(jsonObject.getInt("sibling_type")==1) {
+                        buttonBrother.setVisibility(View.VISIBLE);
+                        if(brotherCount == 1) {
+                            brotherCount++;
+                            continue;
+                        }else if (brotherCount <= numberOfBrother) {
+                            brotherViewAdapter.add(brotherCount -1, brotherCount -1 );
+                            if(brotherCount < numberOfBrother)
+                                buttonBrother.setVisibility(View.VISIBLE);
+                            else
+                                buttonBrother.setVisibility(View.INVISIBLE);
+                            brotherCount++;
+                            continue;
+                        }
+
+                    }else {
+                        buttonSister.setVisibility(View.VISIBLE);
+                        if(sisterCount == 1) {
+                            sisterCount++;
+                            continue;
+                        }else if (sisterCount <= numberOfSister) {
+                            sisterViewAdapter.add(sisterCount - 1, sisterCount - 1);
+                            if(sisterCount < numberOfBrother)
+                                buttonSister.setVisibility(View.VISIBLE);
+                            else
+                                buttonSister.setVisibility(View.INVISIBLE);
+                            brotherCount++;
+                            continue;
+                        }
+                    }
+                }
+                brotherCount--;
+                sisterCount--;
+
+//                int brotherItem = 0, sisterItem = 0;
+//                for (int i = 0; i < json.getJSONObject("data").getJSONArray("brother_sister_information").length(); i++) {
+//                    JSONObject jsonObject = json.getJSONObject("data").getJSONArray("brother_sister_information").getJSONObject(i);
+//                    if(jsonObject.getInt("sibling_type") == 1)
+//                    {
+//                        if (recyclerViewBrother.findViewHolderForLayoutPosition(brotherItem) instanceof BrotherViewAdapter.MyViewHolder) {
+//                            BrotherViewAdapter.MyViewHolder holder =
+//                                    (BrotherViewAdapter.MyViewHolder)
+//                                            recyclerViewBrother.findViewHolderForLayoutPosition(brotherItem);
+//
+//                            holder.nameBrother.setText(jsonObject.getString("name"));
+//                            brotherItem++;
+//                        }
+//
+//                    }else {
+//                        if (recyclerViewSister.findViewHolderForLayoutPosition(
+//                                sisterItem) instanceof SisterViewAdapter.MyViewHolder) {
+//                            SisterViewAdapter.MyViewHolder holder = (SisterViewAdapter.MyViewHolder)
+//                                    recyclerViewSister.findViewHolderForLayoutPosition(sisterItem);
+//                            holder.nameSister.setText(jsonObject.getString("name"));
+//
+//                            sisterItem++;
+//                        }
+//                    }
+//                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         //   prepareOtherData();
 
 
@@ -795,15 +946,12 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.i("val", s + "");
+            if (progress.isShowing())
+                progress.dismiss();
             if (s == null) {
-                if (progress.isShowing())
-                    progress.dismiss();
                 Utils.ShowAlert(RegistrationFamilyInfoSecondPage.this, getString(R.string.no_internet_connection));
             } else {
                 try {
-                    if (progress.isShowing())
-                        progress.dismiss();
-
                     clearStaticData();
 
                     JSONObject jsonObject = new JSONObject(s);
@@ -820,8 +968,9 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                         finish();*/
 
                         Intent intent = new Intent(RegistrationFamilyInfoSecondPage.this, RegistrationUserAddressInformation.class);
+                        intent.putExtra("isSignUp", true);
                         startActivity(intent);
-                        finish();
+//                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -904,22 +1053,25 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.i("urldata", s + "");
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
             if (s == null) {
-                if (progress.isShowing()) {
-                    progress.dismiss();
-                }
-
                 Utils.ShowAlert(RegistrationFamilyInfoSecondPage.this, getString(R.string.no_internet_connection));
             } else {
               /*  if (progress.isShowing()) {
                     progress.dismiss();
                 }*/
                 clearStaticData();
-                Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
-                startActivity(new Intent(RegistrationFamilyInfoSecondPage.this,
-                        RegistrationFamilyInfoFirstPage.class).
-                        putExtra("constants", s));
-                finish();
+                if(isSignUp){
+                    finish();
+                }else {
+                    Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
+                    startActivity(new Intent(RegistrationFamilyInfoSecondPage.this,
+                            RegistrationFamilyInfoFirstPage.class).
+                            putExtra("constants", s));
+                    finish();
+                }
             }
         }
     }

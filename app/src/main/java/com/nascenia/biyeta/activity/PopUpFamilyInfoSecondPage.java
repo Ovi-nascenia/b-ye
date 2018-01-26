@@ -247,7 +247,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             data = professonalGroupName;
             mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
         }else if (OtherViewAdapter.selectedPopUp == 1) {
-            data = occupationName;
+            data = brotherOccupationName;
             mTextViewTitle.setText("পেশা");
         } else if (OtherViewAdapter.selectedPopUp == 2) {
             data = professonalGroupName;
@@ -485,7 +485,8 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
 
                     value = relationConstantValue[newValue];
                     relationStatusArrayOther.put(position, value);
-                } else if (OtherViewAdapter.selectedPopUp == 5) {
+                }
+                /*else if (OtherViewAdapter.selectedPopUp == 5) {
                     //OtherViewAdapter.otherAge.setText(age[newVal]);
 
                     OtherViewAdapter.MyViewHolder holder =
@@ -495,7 +496,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
 
                     value = "" + newValue;
                     ageArrayOther.put(position, value);
-                }/* else if (RegistrationFamilyInfoSecondPage.selectedPopUp == 1) {
+                }*//* else if (RegistrationFamilyInfoSecondPage.selectedPopUp == 1) {
                 *//*RegistrationFamilyInfoSecondPage.brotherNumber.setText(data[newVal]);
                 RegistrationFamilyInfoSecondPage.numberOfBrother = constantOfBrotherSister[newVal];
                 *//*

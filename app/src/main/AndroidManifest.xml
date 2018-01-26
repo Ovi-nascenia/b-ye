@@ -237,7 +237,8 @@
             android:name=".activity.AbroadOptionPickerPopUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarPopUp" />
-        <activity android:name=".activity.FacebookRegistrationDataInput"></activity>
+        <activity android:name=".activity.FacebookRegistrationDataInput" />
+        <activity android:name=".activity.ThanksActivity"></activity>
     </application>
 
 </manifest>

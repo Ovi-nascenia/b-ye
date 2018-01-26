@@ -20,6 +20,10 @@ import com.nascenia.biyeta.activity.RegistrationFamilyInfoSecondPage;
 import com.nascenia.biyeta.utils.RemoveBrotherItemCallBack;
 import com.nascenia.biyeta.utils.Utils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 
@@ -51,11 +55,18 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
 
     private RemoveBrotherItemCallBack removeBrotherItemCallBack;
 
+    private JSONArray mJSONArray = null;
+    int brotherItem = 0;
+
     public BrotherViewAdapter(List<Integer> brotherCount, Context context,
                               RemoveBrotherItemCallBack removeBrotherItemCallBack) {
         this.brotherCount = brotherCount;
         this.context = context;
         this.removeBrotherItemCallBack = removeBrotherItemCallBack;
+    }
+
+    public void updateWithBrotherData(JSONArray jsonArray) {
+        mJSONArray = jsonArray;
     }
 
 
@@ -216,6 +227,40 @@ public class BrotherViewAdapter extends RecyclerView.Adapter<BrotherViewAdapter.
             sProfessionalGroup = "";
             sDesignation = "";
             sInstitute = "";
+
+            /*if(mJSONArray!=null)
+            {
+                try {
+//                int brotherItem = 0, sisterItem = 0;
+                    for (int i = 0; i < mJSONArray.length(); i++) {
+                        JSONObject jsonObject = null;
+
+                        jsonObject = mJSONArray.getJSONObject(i);
+
+                        if (jsonObject.getInt("sibling_type") == 1) {
+                            nameBrother.setText(jsonObject.getString("name"));
+                            designationBrother.setText(jsonObject.getString("designation"));
+                            institutionBrother.setText(jsonObject.getString("institute"));
+                            brotherOccupation.setText(jsonObject.getString("occupation"));
+                            brotherProfessionalGroup.setText(jsonObject.getString("professional_group"));
+                            brotherMaritalStatus.setText(jsonObject.getString("marital_status"));
+                            brotherAge.setText(jsonObject.getString("age"));
+
+                        } /*else {
+                        if (RegistrationFamilyInfoSecondPage.recyclerViewSister.findViewHolderForLayoutPosition(
+                                sisterItem) instanceof SisterViewAdapter.MyViewHolder) {
+                            SisterViewAdapter.MyViewHolder holderS = (SisterViewAdapter.MyViewHolder)
+                                    RegistrationFamilyInfoSecondPage.recyclerViewSister.findViewHolderForLayoutPosition(sisterItem);
+                            holderS.nameSister.setText(jsonObject.getString("name"));
+
+                            sisterItem++;
+                        }
+                    }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }*/
         }
 
 

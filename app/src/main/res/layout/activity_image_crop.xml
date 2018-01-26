@@ -2,23 +2,66 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:background="#EAEBED">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_marginTop="43dp">
 
 
+        <LinearLayout
+            android:id="@+id/tips"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp">
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/drag"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="অবস্থান সরানোর জন্য ছবিটি টানুন"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="3dp"
+                android:textSize="10sp"/>
 
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/zoom_in"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ছবি বড় করুন"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="3dp"
+                android:textSize="10sp"/>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/zoom_out"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ছোট করুন "
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="3dp"
+                android:textSize="10sp"/>
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/imageCrop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_alignParentTop="true"
+            android:layout_below="@id/tips"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="43dp">
+            >
 
 
 
@@ -59,7 +102,8 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="@string/registration_cancel_btn_text" />
+                android:text="@string/registration_cancel_btn_text"
+                android:backgroundTint="#CDCECF"/>
             <Button
                 android:id="@+id/crop"
                 android:layout_width="0dp"

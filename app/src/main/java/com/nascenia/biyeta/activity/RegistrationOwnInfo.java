@@ -221,6 +221,8 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                         .append("\"")
                         .append("}")
                         .toString();
+
+               System.out.println(response);
                new SendOwnInfo().execute(response,Utils.SEND_INFO);
             }
         });
@@ -293,9 +295,10 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
+            if(progress.isShowing())
+                progress.dismiss();
             if(s == null){
-                if(progress.isShowing())
-                    progress.dismiss();
+
                 Utils.ShowAlert(RegistrationOwnInfo.this, getString(R.string.no_internet_connection));
             }
             else{
@@ -306,8 +309,8 @@ public class RegistrationOwnInfo extends AppCompatActivity{
 
                     if(jsonObject.has("errors"))
                     {
-                        if(progress.isShowing())
-                            progress.dismiss();
+//                        if(progress.isShowing())
+//                            progress.dismiss();
 
                         Toast.makeText(RegistrationOwnInfo.this,
                                 jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
@@ -361,9 +364,10 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
+            if(progress.isShowing())
+                progress.dismiss();
             if(s == null){
-                if(progress.isShowing())
-                    progress.dismiss();
+
                 Utils.ShowAlert(RegistrationOwnInfo.this, getString(R.string.no_internet_connection));
             }
             else
@@ -375,6 +379,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationOwnInfo.this, ImageUpload.class);
                 signupIntent.putExtra("constant",s);
+                signupIntent.putExtra("isSignUp", true);
                 startActivity(signupIntent);
             }
         }
@@ -438,7 +443,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
             }
 
             RequestBody requestBody = new FormEncodingBuilder()
-                    .add("user_login[imei]",imei)
+                    .add("user_login[imei]",imei!=null?imei:"")
                     .build();
 
             //   //imei of device

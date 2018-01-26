@@ -162,14 +162,14 @@ public class MobileVarification extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (progressDialog.isShowing())
+                progressDialog.dismiss();
             if (s == null) {
-                if (progressDialog.isShowing())
-                    progressDialog.dismiss();
+
                 Utils.ShowAlert(MobileVarification.this, getString(R.string.no_internet_connection));
             } else {
-                if (progressDialog.isShowing())
-                    progressDialog.dismiss();
-
+//                if (progressDialog.isShowing())
+//                    progressDialog.dismiss();
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
@@ -249,16 +249,16 @@ public class MobileVarification extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            if (progressDialog.isShowing())
+                progressDialog.dismiss();
             if (s == null) {
-                if (progressDialog.isShowing())
-                    progressDialog.dismiss();
+
                 Utils.ShowAlert(MobileVarification.this, getString(R.string.no_internet_connection));
             } else {
                 try {
 
-                    if (progressDialog.isShowing())
-                        progressDialog.dismiss();
+//                    if (progressDialog.isShowing())
+//                        progressDialog.dismiss();
 
                     JSONObject jsonObject = new JSONObject(s);
 
@@ -358,13 +358,14 @@ public class MobileVarification extends AppCompatActivity {
 
                     if (jsonObject.has("message")) {
                         String details = jsonObject.getJSONObject("message").getString("detail");
-                        Toast.makeText(getBaseContext(), details, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MobileVarification.this,Login.class));
-                        finish();
-                         new MobileVarification.FetchConstant().execute(jsonObject.getString("current_mobile_sign_up_step"));
+                        Toast.makeText(MobileVarification.this, details, Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(MobileVarification.this,Login.class));
+//                        finish();
+                        new MobileVarification.FetchConstant().execute(jsonObject.getString("current_mobile_sign_up_step"));
                     } else if (jsonObject.has("errors")) {
                         //Utils.ShowAlert(MobileVarification.this, "কোডটি ভুল হয়েছে।\nসঠিক কোড প্রদান করুন।");
-                        Toast.makeText(getBaseContext(),jsonObject.getString("detail"),Toast.LENGTH_LONG).show();
+//                        Toast.makeText(MobileVarification.this,"কোডটি ভুল হয়েছে। সঠিক কোডপ্রদান করুন।",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MobileVarification.this,jsonObject.getJSONObject("errors").getString("detail"),Toast.LENGTH_LONG).show();
                         //if(jsonObject.getJSONObject("errors").getString("detail").equals("'verification code did not match")){
                         //}
 
@@ -425,7 +426,6 @@ public class MobileVarification extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
             Intent nextActivity = new Intent(MobileVarification.this, RegistrationOwnInfo.class);
             nextActivity.putExtra("constants", s);
             startActivity(nextActivity);

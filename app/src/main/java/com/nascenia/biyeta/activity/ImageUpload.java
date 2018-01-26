@@ -67,6 +67,7 @@ public class ImageUpload extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private Uri fileUri;
+    private boolean isSignUp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,8 @@ public class ImageUpload extends AppCompatActivity {
         progress.setMessage(getResources().getString(R.string.progress_dialog_message));
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setCancelable(false);
+
+        isSignUp = getIntent().getBooleanExtra("isSignUp", false);
 
         client = new OkHttpClient();
         beforeProPicUpload = (LinearLayout) findViewById(R.id.before_pro_pic_upload);
@@ -407,8 +410,9 @@ public class ImageUpload extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progress.cancel();
             if (s == null) {
-                progress.cancel();
+
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
             } else {
                 try {
@@ -416,7 +420,7 @@ public class ImageUpload extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
                     if (jsonObject.has("errors")) {
-                        progress.cancel();
+//                        progress.cancel();
                         jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(ImageUpload.this,
                                 jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
@@ -475,8 +479,9 @@ public class ImageUpload extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progress.cancel();
             if (s == null) {
-                progress.cancel();
+//                progress.cancel();
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
             } else {
                 //clearBitmapData();
@@ -485,8 +490,9 @@ public class ImageUpload extends AppCompatActivity {
 //                signupIntent = new Intent(ImageUpload.this, RegistrationChoiceSelectionFirstPage.class);
                 signupIntent = new Intent(ImageUpload.this, RegistrationPersonalInformation.class);
                 signupIntent.putExtra("constants", s);
+                signupIntent.putExtra("isSignUp", true);
                 startActivity(signupIntent);
-                finish();
+//                finish();
             }
         }
 
@@ -560,11 +566,13 @@ public class ImageUpload extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
             Log.i("urldata", s + "");
+
             if (s == null) {
-                if (progress.isShowing()) {
-                    progress.dismiss();
-                }
+
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
             } else {
                 /*if (progress.isShowing()) {
@@ -572,9 +580,13 @@ public class ImageUpload extends AppCompatActivity {
                 }*/
                 //clearBitmapData();
                 Log.i("constantval", "ImageUpdloadBackfetchval: " + s);
-                startActivity(new Intent(ImageUpload.this, RegistrationOwnInfo.class).
-                        putExtra("constants", s));
-                finish();
+                if(isSignUp) {
+                    finish();
+                }else {
+                    startActivity(new Intent(ImageUpload.this, RegistrationOwnInfo.class).
+                            putExtra("constants", s));
+                    finish();
+                }
             }
         }
     }

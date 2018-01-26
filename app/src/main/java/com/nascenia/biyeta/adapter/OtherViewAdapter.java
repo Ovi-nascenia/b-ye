@@ -34,13 +34,13 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
     LinearLayout occupationStatusOther;
 //    LinearLayout maritalStatusOther;
     LinearLayout relationalStatusOther;
-    LinearLayout ageOther;
+//    LinearLayout ageOther;
 
     public static TextView otherOccupation;
     public static TextView otherProfessionalGroup;
     public static TextView otherMaritalStatus;
     public static TextView otherRelationalStatus;
-    public static TextView otherAge;
+//    public static TextView otherAge;
 
     public static String responseOther = "";
 
@@ -63,7 +63,7 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
         public TextView otherProfessionalGroup;
         public  TextView otherMaritalStatus;
         public  TextView otherRelationalStatus;
-        public  TextView otherAge;
+//        public  TextView otherAge;
 
 
         String name = "", designation = "", institute = "";
@@ -79,7 +79,7 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
             otherProfessionalGroup = (TextView) view.findViewById(R.id.profession_group_text_view_other);
 //            otherMaritalStatus = (TextView) view.findViewById(R.id.marital_text_view_other);
             otherRelationalStatus = (TextView) view.findViewById(R.id.relation_text_view_other);
-            otherAge = (TextView) view.findViewById(R.id.age_text_view_other);
+//            otherAge = (TextView) view.findViewById(R.id.age_text_view_other);
             detailsInfoFieldsRootLayout = (LinearLayout) view.findViewById(R.id.details_info_fields_root_layout);
             reject = (LinearLayout) view.findViewById(R.id.reject);
 
@@ -171,18 +171,18 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
                 }
             });
 
-            ageOther = (LinearLayout) view.findViewById(R.id.age_other);
-            ageOther.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectedPopUp = 5;
-                    other = 1;
-                    Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
-                    setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
-                    setIntent.putExtra("position", getAdapterPosition());
-                    context.startActivity(setIntent);
-                }
-            });
+//            ageOther = (LinearLayout) view.findViewById(R.id.age_other);
+//            ageOther.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    selectedPopUp = 5;
+//                    other = 1;
+//                    Intent setIntent = new Intent(context, PopUpFamilyInfoSecondPage.class);
+//                    setIntent.putExtra("constant", RegistrationFamilyInfoSecondPage.constant);
+//                    setIntent.putExtra("position", getAdapterPosition());
+//                    context.startActivity(setIntent);
+//                }
+//            });
 
 
         }

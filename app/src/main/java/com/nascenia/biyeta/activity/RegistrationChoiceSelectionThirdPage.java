@@ -48,9 +48,8 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
     ArrayList<String> muslimCastSelectedArray = new ArrayList<String>();
     ArrayList<String> hinduCastSelectedArray = new ArrayList<String>();
-    ;
     ArrayList<String> christianCastSelectedArray = new ArrayList<String>();
-    ;
+    ArrayList<String> marriageSelectedArray = new ArrayList<String>();
 
     Map<Integer, String> prayerMale = new HashMap<Integer, String>();
 
@@ -64,7 +63,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
     int namajStart, rojaStart, hijabStart, namajEnd, rojaEnd, hijabEnd;
 
-    public static String religionValue, castValue, otherCast = "", otherReligion = "";
+    public static String religionValue="", castValue="", otherCast = "", otherReligion = "";
     public static String jobAfterMarriage = "", maritalStatus = "", religionStatus = "", houseStatus = "";
 
     public static ArrayList<String> jobArray = new ArrayList<String>();
@@ -90,13 +89,13 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
     LinearLayout jobLayout, maritalStatusLayout, religionLayout, mCastLayout, hCastLayout, cCastLayout,
             namajLayout, rojaLayout, hijabLayout;
-    public static LinearLayout onlyForMuslimLayout, muslimCastLayout, hinduCastLayout, christianCastLayout;
+    public LinearLayout onlyForMuslimLayout, muslimCastLayout, hinduCastLayout, christianCastLayout;
 
-    public CheckBox muslimCheckBox, hinduCheckBox, christianCheckBox;
+    public CheckBox muslimCheckBox, hinduCheckBox, christianCheckBox, marriageCheckBox;
 
-    public static TextView jobLabel, maritalStatusLabel, religionLabel, castLabel,
+    public TextView jobLabel, maritalStatusLabel, religionLabel, castLabel,
             namajLabel, rojaLabel, hijabLabel, houseStatusLabel;
-    public static TextView religionText, maritalText, jobText, houseStatusTextView;
+    public TextView religionText, /*maritalText,*/ jobText, houseStatusTextView;
 
     SimpleRangeView rangeView_namaj, rangeView_roja, rangeView_hijab;
     public static int job = -1;
@@ -114,6 +113,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
     private LinearLayout houseLinearLayout;
     SharePref sharePref;
     String religionName = "";
+    private boolean isSignUp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,9 +131,10 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
+        isSignUp = getIntent().getBooleanExtra("isSignUp", false);
         client = new OkHttpClient();
 
-        currentStep = 6;
+//        currentStep = 6;
         Log.i("gender", sharePref.get_data("gender"));
 
         try {
@@ -211,7 +212,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         rangeView_hijab = (SimpleRangeView) findViewById(R.id.hajab);
 
         jobText = (TextView) findViewById(R.id.job_text_view);
-        maritalText = (TextView) findViewById(R.id.marital_text_view);
+//        maritalText = (TextView) findViewById(R.id.marital_text_view);
 
         onlyForMuslimLayout = (LinearLayout) findViewById(R.id.only_for_muslim);
         onlyForMuslimLayout.setVisibility(View.GONE);
@@ -220,7 +221,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
         jobLayout = (LinearLayout) findViewById(R.id.job);
 
-        maritalStatusLayout = (LinearLayout) findViewById(R.id.marital);
+//        maritalStatusLayout = (LinearLayout) findViewById(R.id.marital);
 
         religionLayout = (LinearLayout) findViewById(R.id.cast_religion);
 
@@ -241,6 +242,29 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         down_arrow_religion = findViewById(R.id.down_arrow_religion);
         castLabel.setVisibility(View.GONE);
 
+        maritalStatusLayout = (LinearLayout) findViewById(R.id.marital_status);
+        maritalStatusLayout.removeAllViews();
+        for (int i = 0; i < marriageArrayConstant.size(); i++) {
+            marriageCheckBox = new CheckBox(this);
+            marriageCheckBox.setText(marriageArray.get(i) + "   ");
+            marriageCheckBox.setId(Integer.parseInt(1000 + marriageArrayConstant.get(i)));
+            marriageCheckBox.setPadding(0, 0, 5, 0);
+            final int index = i;
+            marriageCheckBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CheckBox checkBox = (CheckBox) findViewById(Integer.parseInt(1000+marriageArrayConstant.get(index)));
+                    if (checkBox.isChecked()) {
+                        marriageSelectedArray.add(marriageArrayConstant.get(index));
+                    } else if (!checkBox.isChecked()) {
+                        marriageSelectedArray.remove(marriageArrayConstant.get(index));
+                    }
+                    //Toast.makeText(RegistrationChoiceSelectionThirdPage.this, "id  : " + muslimCastConstant.get(index), Toast.LENGTH_LONG).show();
+                }
+            });
+            maritalStatusLayout.addView(marriageCheckBox);
+        }
+
 
         muslimCastLayout = (LinearLayout) findViewById(R.id.muslim_cast);
 
@@ -248,7 +272,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         houseStatusLabel = findViewById(R.id.house_status_label);
         houseLinearLayout = findViewById(R.id.house_linearLayout);
         houseStatusTextView = findViewById(R.id.house_text_view);
-
+        muslimCastLayout.removeAllViews();
         for (int i = 0; i < muslimCastConstant.size(); i++) {
             muslimCheckBox = new CheckBox(this);
             muslimCheckBox.setText(muslimCast.get(i) + "   ");
@@ -271,7 +295,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         }
 
         hinduCastLayout = (LinearLayout) findViewById(R.id.hindu_cast);
-
+        hinduCastLayout.removeAllViews();
         for (int i = 0; i < hinduCastConstant.size(); i++) {
             Log.i("checkbox:","data: "+hinduCast.get(i)+" "+hinduCastConstant.get(i));
             hinduCheckBox = new CheckBox(this);
@@ -299,7 +323,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
 
         christianCastLayout = (LinearLayout) findViewById(R.id.christian_cast);
-
+        christianCastLayout.removeAllViews();
         for (int i = 0; i < christianCastConstant.size(); i++) {
             christianCheckBox = new CheckBox(this);
             christianCheckBox.setText(christianCast.get(i) + "   ");
@@ -342,13 +366,13 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                 startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this, PopUpChoiceSelectionThirdPage.class));
             }
         });
-        maritalStatusLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPopUp = 2;
-                startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this, PopUpChoiceSelectionThirdPage.class));
-            }
-        });
+//        maritalStatusLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                selectedPopUp = 2;
+//                startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this, PopUpChoiceSelectionThirdPage.class));
+//            }
+//        });
 
         religion = Integer.parseInt(religionName);
         if(religion > 0) {
@@ -496,7 +520,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
             maritalStatusLabel.setText("পাত্রের বৈবাহিক অবস্থা*");
 
-            religionLabel.setText("পাত্রের ধর্ম ও বর্ণ*");
+            religionLabel.setText("পাত্রের ধর্ম");
 
             hijabLabel.setVisibility(View.GONE);
 
@@ -505,7 +529,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
             maritalStatusLabel.setText("পাত্রীর বৈবাহিক অবস্থা*");
 
-            religionLabel.setText("পাত্রীর ধর্ম ও বর্ণ*");
+            religionLabel.setText("পাত্রীর ধর্ম");
         }
 
 
@@ -527,7 +551,15 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                     return;
                 }
 
-                if (maritalStatus.isEmpty()) {
+//                if (maritalStatus.isEmpty()) {
+//                    Toast.makeText(getBaseContext(),
+//                            getResources().getString(R.string.choose_maritial_status_selction_message),
+//                            Toast.LENGTH_LONG).show();
+//                    maritalStatusLabel.getParent().
+//                            requestChildFocus(maritalStatusLabel, maritalStatusLabel);
+//                    return;
+//                }
+                if (marriageSelectedArray.size() == 0) {
                     Toast.makeText(getBaseContext(),
                             getResources().getString(R.string.choose_maritial_status_selction_message),
                             Toast.LENGTH_LONG).show();
@@ -545,6 +577,13 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                     return;
                 }
 
+                String maritalStatus = "";
+                for (int i = 0; i < marriageSelectedArray.size(); i++) {
+                    maritalStatus += "\"" + marriageSelectedArray.get(i) +"\"";
+                    if (i != marriageSelectedArray.size() - 1) {
+                        maritalStatus += ",";
+                    }
+                }
 
                 String castStatus = "";
                 if (religionStatus.equals("1")) {
@@ -610,9 +649,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                         .append(",")
                         .append("\"marital_status\":")
                         .append("[")
-                        .append("\"")
                         .append(maritalStatus)
-                        .append("\"")
                         .append("]")
                         .append(",")
                         .append("\"religion\":")
@@ -668,6 +705,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                 Log.e("response","finaldata: "+ data);
 
                 new RegistrationChoiceSelectionThirdPage.SendChoiceThird().execute(data, Utils.SEND_INFO);
+
             }
         });
 
@@ -695,10 +733,9 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (progress.isShowing())
+                progress.dismiss();
             if (s == null) {
-                if (progress.isShowing())
-                    progress.dismiss();
-
                 Utils.ShowAlert(RegistrationChoiceSelectionThirdPage.this, getString(R.string.no_internet_connection));
             } else {
                 try {
@@ -706,17 +743,25 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
                     if (jsonObject.has("errors")) {
-                        if (progress.isShowing())
-                            progress.dismiss();
+//                        if (progress.isShowing())
+//                            progress.dismiss();
 
                         String error = jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(RegistrationChoiceSelectionThirdPage.this, error,
                                 Toast.LENGTH_LONG).show();
                     } else {
 //                        new RegistrationChoiceSelectionThirdPage.FetchConstant().execute();
-                        startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this,
-                                HomeScreen.class).
-                                putExtra("constants", s));
+                        clearStaticData();
+                        Intent intent = new Intent(getApplicationContext(),
+                                HomeScreen.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("constants", s);
+                        intent.putExtra("isSignUp", true);
+                        startActivity(intent);
+//                        startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this,
+//                                HomeScreen.class)
+//                                .putExtra("constants", s)
+//                                .putExtra("isSignUp", true));
                         finish();
                     }
                 } catch (JSONException e) {
@@ -824,10 +869,10 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             jobAfterMarriage = jobConstant.get(job - 1);
             jobText.setText(jobArray.get(job - 1));
         }
-        if (selectedPopUp == 2 && marriage != -1) {
-            maritalStatus = marriageArrayConstant.get(marriage - 1);
-            maritalText.setText(marriageArray.get(marriage - 1));
-        }
+//        if (selectedPopUp == 2 && marriage != -1) {
+//            maritalStatus = marriageArrayConstant.get(marriage - 1);
+//            maritalText.setText(marriageArray.get(marriage - 1));
+//        }
         if (selectedPopUp == 3 && religion != -1) {
             religionStatus = religionArrayConstant.get(religion - 1);
             religionText.setText(religionArray.get(religion - 1));
@@ -946,23 +991,26 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
             Log.i("urldata", s + "");
             if (s == null) {
-                if (progress.isShowing()) {
-                    progress.dismiss();
-                }
-
                 Utils.ShowAlert(RegistrationChoiceSelectionThirdPage.this, getString(R.string.no_internet_connection));
             } else {
                /* if (progress.isShowing()) {
                     progress.dismiss();
                 }*/
                 clearStaticData();
-                Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
-                startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this,
-                        RegistrationChoiceSelectionSecondPage.class).
-                        putExtra("constants", s));
-                finish();
+                if(isSignUp){
+                    finish();
+                }else {
+                    Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
+                    startActivity(new Intent(RegistrationChoiceSelectionThirdPage.this,
+                            RegistrationChoiceSelectionSecondPage.class).
+                            putExtra("constants", s));
+                    finish();
+                }
             }
         }
     }

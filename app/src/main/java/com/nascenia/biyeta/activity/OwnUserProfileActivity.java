@@ -647,7 +647,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.disabilities_text),
 
-                    userProfile.getProfile().getPersonalInformation().getDisabilities() +
+                    userProfile.getProfile().getPersonalInformation().getDisabilities() + ", " +
                             checkNullField(userProfile.getProfile().getPersonalInformation().getDisabilitiesDescription())
             ));
         }

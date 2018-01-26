@@ -223,7 +223,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             }
         }
 
-
         super.finish();
     }
 

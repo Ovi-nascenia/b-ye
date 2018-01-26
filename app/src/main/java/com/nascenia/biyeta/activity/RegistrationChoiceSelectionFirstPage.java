@@ -72,6 +72,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
     private ProgressDialog progress;
 
     private SharePref sharePref;
+    private boolean isSignUp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
+        isSignUp = getIntent().getBooleanExtra("isSignUp", false);
         client = new OkHttpClient();
 
         progress = new ProgressDialog(RegistrationChoiceSelectionFirstPage.this);
@@ -433,9 +435,9 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (progress.isShowing())
+                progress.dismiss();
             if (s == null) {
-                if (progress.isShowing())
-                    progress.dismiss();
                 Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this, getString(R.string.no_internet_connection));
             } else {
                 try {
@@ -443,8 +445,8 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
                     if (jsonObject.has("errors")) {
-                        if (progress.isShowing())
-                            progress.dismiss();
+//                        if (progress.isShowing())
+//                            progress.dismiss();
 
                         String error = jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(RegistrationChoiceSelectionFirstPage.this,
@@ -497,9 +499,9 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (progress.isShowing())
+                progress.dismiss();
             if (s == null) {
-                if (progress.isShowing())
-                    progress.dismiss();
                 Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this, getString(R.string.no_internet_connection));
             } else {
                 /*if(progress.isShowing())
@@ -509,8 +511,9 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                 signupIntent = new Intent(RegistrationChoiceSelectionFirstPage.this,
                         RegistrationChoiceSelectionSecondPage.class);
                 signupIntent.putExtra("constants", s);
+                signupIntent.putExtra("isSignUp", true);
                 startActivity(signupIntent);
-                finish();
+//                finish();
             }
 
 
@@ -579,11 +582,10 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.i("urldata", s + "");
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
             if (s == null) {
-                if (progress.isShowing()) {
-                    progress.dismiss();
-                }
-
                 Utils.ShowAlert(RegistrationChoiceSelectionFirstPage.this,
                         getString(R.string.no_internet_connection));
             } else {
@@ -591,10 +593,14 @@ public class RegistrationChoiceSelectionFirstPage extends AppCompatActivity {
                     progress.dismiss();
                 }*/
                 Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
-
-                startActivity(new Intent(RegistrationChoiceSelectionFirstPage.this, RegistrationUserAddressInformation.class).
-                        putExtra("constants", s));
-                finish();
+                if(isSignUp){
+                    finish();
+                }else {
+                    startActivity(new Intent(RegistrationChoiceSelectionFirstPage.this,
+                            RegistrationUserAddressInformation.class).
+                            putExtra("constants", s));
+                    finish();
+                }
             }
         }
     }

@@ -72,6 +72,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     private ImageView searchImageView, matchImageView, fevImageView, inboxImageView,
             profileImageView, menuProfileImgView;
+    private boolean isSignUp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         if (ContextCompat.checkSelfPermission(HomeScreen.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(HomeScreen.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
         }
+
+        isSignUp = getIntent().getBooleanExtra("isSignUp", false);
 
 
 
@@ -278,19 +281,16 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
         });
-
-
     }
-
 
     @Override
     public void onBackPressed() {
-
-
         if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
             drawerLayout.closeDrawer(Gravity.RIGHT);
         } else {
             super.onBackPressed();
+            ActivityCompat.finishAffinity(HomeScreen.this);
+
         }
     }
 
@@ -450,7 +450,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             sharePref.set_data("token", "key");
-            startActivity(new Intent(HomeScreen.this, Login.class));
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
             finish();
         }
 

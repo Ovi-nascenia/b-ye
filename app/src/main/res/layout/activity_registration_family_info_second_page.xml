@@ -318,7 +318,7 @@
                         android:layout_gravity="right"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="@dimen/small_margin"
-                        android:text="আরো যোগ করুন" />
+                        android:text="যোগ করুন" />
                 </LinearLayout>
 
             </RelativeLayout>

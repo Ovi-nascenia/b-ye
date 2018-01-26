@@ -73,6 +73,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
     ProgressDialog progress;
     OkHttpClient client;
     private SharePref sharePref;
+    private boolean isSignUp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,7 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
+        isSignUp = getIntent().getBooleanExtra("isSignUp", false);
 
         try {
             JSONObject jsonObject = new JSONObject(constant);
@@ -340,10 +342,9 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (progress.isShowing())
+                progress.dismiss();
             if (s == null) {
-                if (progress.isShowing())
-                    progress.dismiss();
-
                 Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
             } else {
                 try {
@@ -351,9 +352,6 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
                     if (jsonObject.has("errors")) {
-                        if (progress.isShowing())
-                            progress.dismiss();
-
                         String error = jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(RegistrationFamilyInfoFirstPage.this, error, Toast.LENGTH_LONG).show();
                     } else {
@@ -404,10 +402,9 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (progress.isShowing())
+                progress.dismiss();
             if (s == null) {
-                if (progress.isShowing())
-                    progress.dismiss();
-
                 Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
             } else {
                /* if (progress.isShowing())
@@ -418,8 +415,9 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                 signupIntent = new Intent(RegistrationFamilyInfoFirstPage.this,
                         RegistrationFamilyInfoSecondPage.class);
                 signupIntent.putExtra("constants", s);
+                signupIntent.putExtra("isSignUp", true);
                 startActivity(signupIntent);
-                finish();
+//                finish();
             }
 
 
@@ -495,11 +493,10 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.i("urldata", s + "");
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
             if (s == null) {
-                if (progress.isShowing()) {
-                    progress.dismiss();
-                }
-
                 Utils.ShowAlert(RegistrationFamilyInfoFirstPage.this, getString(R.string.no_internet_connection));
             } else {
                 /*if (progress.isShowing()) {
@@ -507,10 +504,14 @@ public class RegistrationFamilyInfoFirstPage extends AppCompatActivity {
                 }*/
                 clearStaticData();
                 Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
-                startActivity(new Intent(RegistrationFamilyInfoFirstPage.this,
-                        RegistrationPersonalInformation.class).
-                        putExtra("constants", s));
-                finish();
+                if(isSignUp){
+                    finish();
+                }else {
+                    startActivity(new Intent(RegistrationFamilyInfoFirstPage.this,
+                            RegistrationPersonalInformation.class).
+                            putExtra("constants", s));
+                    finish();
+                }
             }
         }
     }

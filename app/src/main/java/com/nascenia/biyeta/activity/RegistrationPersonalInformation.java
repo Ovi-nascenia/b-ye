@@ -171,6 +171,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
     OkHttpClient client;
     private String loginUserReligion;
+    private boolean isSignUp = false;
 
 
     @Override
@@ -188,6 +189,7 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
+        isSignUp = getIntent().getBooleanExtra("isSignUp", false);
 
         try {
             JSONObject jsonObject = new JSONObject(constant);
@@ -998,20 +1000,18 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("Response","postexe: "+ s);
+            if (progress.isShowing())
+                progress.dismiss();
             if (s == null) {
-                //progress.cancel();
-                if (progress.isShowing())
-                    progress.dismiss();
-
                 Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
             } else {
                 try {
-                    progress.cancel();
+//                    progress.cancel();
                     JSONObject jsonObject = new JSONObject(s);
 
                     if (jsonObject.has("errors")) {
-                        if (progress.isShowing())
-                            progress.dismiss();
+//                        if (progress.isShowing())
+//                            progress.dismiss();
                         String error = jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(RegistrationPersonalInformation.this, error, Toast.LENGTH_LONG).show();
                     } else {
@@ -1064,9 +1064,9 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (progress.isShowing())
+                progress.dismiss();
             if (s == null) {
-                if (progress.isShowing())
-                    progress.dismiss();
                 Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
             } else {
                /* if (progress.isShowing())
@@ -1075,12 +1075,14 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                 Log.i("constantval",s+"");
                 //Toast.makeText(getBaseContext(), "fetch constant else", Toast.LENGTH_LONG).show();
                 Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
+
                 Intent signupIntent;
                 signupIntent = new Intent(RegistrationPersonalInformation.this,
                         RegistrationFamilyInfoFirstPage.class);
                 signupIntent.putExtra("constants", s);
+                signupIntent.putExtra("isSignUp", true);
                 startActivity(signupIntent);
-                finish();
+//                finish();
             }
         }
 
@@ -1155,10 +1157,11 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.i("urldata", s + "");
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
             if (s == null) {
-                if (progress.isShowing()) {
-                    progress.dismiss();
-                }
+
 
                 Utils.ShowAlert(RegistrationPersonalInformation.this, getString(R.string.no_internet_connection));
             } else {
@@ -1166,11 +1169,15 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
                     progress.dismiss();
                 }*/
                 clearStaticData();
-                Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
-                startActivity(new Intent(RegistrationPersonalInformation.this,
-                        ImageUpload.class).
-                        putExtra("constants", s));
-                finish();
+                if(isSignUp) {
+                    finish();
+                }else {
+                    Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
+                    startActivity(new Intent(RegistrationPersonalInformation.this,
+                            ImageUpload.class).
+                            putExtra("constants", s));
+                    finish();
+                }
             }
         }
     }

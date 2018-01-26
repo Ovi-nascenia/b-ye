@@ -35,7 +35,7 @@
             android:layout_marginLeft="@dimen/negative_large_margin"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:text=""
+            android:text="সামান্য শারীরিক প্রতিবন্ধকতা(asdadadad ada dasd adad)"
             android:textColor="#00011F"
             android:textSize="@dimen/item_textsize"
             android:textStyle="normal" />

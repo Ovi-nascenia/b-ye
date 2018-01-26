@@ -364,6 +364,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         super.onResume();
         buttonSubmit.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
+        etPassword.setText("");
+        etUserName.setText("");
+        etUserName.requestFocus();
 
         /*Google Analytics*/
         mTracker.setScreenName("লগইন");

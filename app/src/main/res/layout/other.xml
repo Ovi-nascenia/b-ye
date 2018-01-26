@@ -86,40 +86,40 @@
             android:textColor="@color/black"
             android:textColorHint="@color/lblFromName"/>
 
-        <LinearLayout
-            android:id="@+id/age_other"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="0dp"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:weightSum="2">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/age_other"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="0dp"-->
+            <!--android:background="@color/white"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:weightSum="2">-->
 
-            <TextView
-                android:id="@+id/age_text_view_other"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:hint="বয়স*"
-                android:textSize="18dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/lblFromName"/>
+            <!--<TextView-->
+                <!--android:id="@+id/age_text_view_other"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="left"-->
+                <!--android:hint="বয়স*"-->
+                <!--android:textSize="18dp"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textColorHint="@color/lblFromName"/>-->
 
-            <ImageView
-                android:id="@+id/down_arrow_age_other"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:src="@drawable/down_arrow" />
+            <!--<ImageView-->
+                <!--android:id="@+id/down_arrow_age_other"-->
+                <!--android:layout_width="50dp"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_gravity="right"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:src="@drawable/down_arrow" />-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/professonal_status_other"

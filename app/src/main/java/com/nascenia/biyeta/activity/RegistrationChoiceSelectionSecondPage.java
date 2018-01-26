@@ -78,11 +78,23 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 
     ArrayList<String> rangpurDivisionDistrict = new ArrayList<String>();
     final ArrayList<String> rangpurDivisionDistrictConstant = new ArrayList<String>();
+    int dhakaDivDistSelected = 0, mymensinghDivDistSelected = 0, chittagongDivDistSelected = 0,
+            khulnaDivDistSelected = 0,  rajshahiDivDistSelected = 0,barisalDivDistSelected = 0,
+            sylhetDivDistSelected = 0, rangpurDivDistSelected = 0;
 
     ProgressDialog progress ;
     OkHttpClient client;
 
     private SharePref sharePref;
+    private boolean isSignUp = false;
+    private LinearLayout dhaka = null;
+    private LinearLayout mymensing = null;
+    private LinearLayout chittagong = null;
+    private LinearLayout khulna = null;
+    private LinearLayout rajshahi = null;
+    private LinearLayout barisal = null;
+    private LinearLayout sylhet = null;
+    private LinearLayout rangpur = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +110,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
+        isSignUp = getIntent().getBooleanExtra("isSignUp", false);
         client = new OkHttpClient();
 
         occupationSelectedArray = new ArrayList<String>();
@@ -201,14 +214,14 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         for (int i = 0; i < occupationConstant.size(); i++) {
             occupationCheckbox = new CheckBox(this);
             occupationCheckbox.setText(occupation.get(i));
-            occupationCheckbox.setId(Integer.parseInt(occupationConstant.get(i)));
+            occupationCheckbox.setId(1000 + Integer.parseInt(occupationConstant.get(i)));
             occupationCheckbox.setChecked(true);
             occupationSelectedArray.add(occupationConstant.get(i));
             final int index = i;
             occupationCheckbox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CheckBox checkBox = (CheckBox) findViewById(Integer.parseInt(occupationConstant.get(index)));
+                    CheckBox checkBox = (CheckBox) findViewById(1000 + Integer.parseInt(occupationConstant.get(index)));
                     if (checkBox.isChecked()) {
                         occupationSelectedArray.add(occupationConstant.get(index));
                     } else if (!checkBox.isChecked()) {
@@ -245,7 +258,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         }
 
 
-        final LinearLayout dhaka = (LinearLayout) findViewById(R.id.dhaka_districts);
+        dhaka = (LinearLayout) findViewById(R.id.dhaka_districts);
 
         dhakaDivision = (CheckBox) findViewById(R.id.dhaka);
         dhakaLabel = findViewById(R.id.dhaka_label);
@@ -256,12 +269,15 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         prepareDhakaDivisionLoationCheckbox(dhaka);
 //        }
 
-        dhakaDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        setDhakaDivitionClickListner(dhaka, true);
+
+        /*dhakaDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             for (int i = 0; i < dhakaDivisionDistrictConstant.size(); i++) {
                 CheckBox checkBox = findViewById(Integer.parseInt(dhakaDivisionDistrictConstant.get(i)));
                 if(dhakaDivision.isChecked()) {
+                    dhakaDivDistSelected++;
                     if(dhaka.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) >= 0)
                         checkBox.setChecked(true);
                     if(districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) <0)
@@ -272,6 +288,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                     for (int j = 0; j < districtSelectedArray.size(); j++) {
                         if (dhakaDivisionDistrictConstant.get(i).equalsIgnoreCase(districtSelectedArray.get(j))) {
                             districtSelectedArray.remove(j);
+                            dhakaDivDistSelected--;
                             if(dhaka.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) < 0)
                                 checkBox.setChecked(dhakaDivision.isChecked());
                         }
@@ -293,7 +310,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                 dhaka.removeAllViews();
             }
             }
-        });
+        });*/
 
         /*dhakaDivision.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -342,7 +359,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 //        });
 
 
-        final LinearLayout mymensing = (LinearLayout) findViewById(R.id.mymensing_districts);
+        mymensing = (LinearLayout) findViewById(R.id.mymensing_districts);
 
         mymensingDivision = (CheckBox) findViewById(R.id.mymensing);
         mymensinghLabel = findViewById(R.id.mymensing_label);
@@ -352,7 +369,9 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         prepareMymensingDivisionLocationCheckbox(mymensing);
 //        }
 
-        mymensingDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        setmymensingDivitionClickListner(mymensing, true);
+
+       /* mymensingDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             for (int i = 0; i < mymensinghDivisionDistrictConstant.size(); i++) {
@@ -389,7 +408,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                 mymensing.removeAllViews();
             }
             }
-        });
+        });*/
 
         /*
         mymensingDivision.setOnClickListener(new View.OnClickListener() {
@@ -414,7 +433,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         });
 */
 
-        final LinearLayout chittagong = (LinearLayout) findViewById(R.id.chittagong_districts);
+        chittagong = (LinearLayout) findViewById(R.id.chittagong_districts);
 
         chittagongDivision = (CheckBox) findViewById(R.id.chittagong);
         chittagongLabel = findViewById(R.id.chittagong_label);
@@ -423,7 +442,8 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 //            chittagong.setVisibility(View.VISIBLE);
         prepareChittagongDivisionLocationCheckbox(chittagong);
 //        }
-        chittagongDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        setChittagongDivitionClickListner(chittagong, true);
+        /*chittagongDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             for (int i = 0; i < chittagongDivisionDistrictConstant.size(); i++) {
@@ -460,7 +480,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                 chittagong.removeAllViews();
             }
             }
-        });
+        });*/
         /*chittagongDivision.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -482,7 +502,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
             }
         });*/
 
-        final LinearLayout khulna = (LinearLayout) findViewById(R.id.khulna_districts);
+        khulna = (LinearLayout) findViewById(R.id.khulna_districts);
 
         khulnaDivision = (CheckBox) findViewById(R.id.khulna);
         khulnaLabel = findViewById(R.id.khulna_label);
@@ -491,8 +511,9 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 //            khulna.setVisibility(View.VISIBLE);
         prepareKhulnaDivisionLocationCheckbox(khulna);
 //        }
+        setKhulnaDivitionClickListner(khulna, true);
 
-        khulnaDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        /*khulnaDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             for (int i = 0; i < khulnaDivisionDistrictConstant.size(); i++) {
@@ -529,7 +550,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                 khulna.removeAllViews();
             }
             }
-        });
+        });*/
         /*khulnaDivision.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -552,7 +573,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         });*/
 
 
-        final LinearLayout rajshahi = (LinearLayout) findViewById(R.id.rajshahi_districts);
+        rajshahi = (LinearLayout) findViewById(R.id.rajshahi_districts);
 
         rajshahiDivision = (CheckBox) findViewById(R.id.rajshahi);
         rajshahiLabel = findViewById(R.id.rajshahi_label);
@@ -561,7 +582,8 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 //            rajshahi.setVisibility(View.VISIBLE);
         prepareRajshahiDivisionLocationCheckbox(rajshahi);
 //        }
-        rajshahiDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        setRajshahiDivitionClickListner(rajshahi, true);
+        /*rajshahiDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             for (int i = 0; i < rajshahiDivisionDistrictConstant.size(); i++) {
@@ -598,7 +620,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                 rajshahi.removeAllViews();
             }
             }
-        });
+        });*/
         /*rajshahiDivision.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -621,7 +643,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         });*/
 
 
-        final LinearLayout barisal = (LinearLayout) findViewById(R.id.barisal_districts);
+        barisal = (LinearLayout) findViewById(R.id.barisal_districts);
 
         barisalDivision = (CheckBox) findViewById(R.id.barisal);
         barisalLabel = findViewById(R.id.barisal_label);
@@ -630,7 +652,8 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 //            barisal.setVisibility(View.VISIBLE);
         prepareBarisalDivisionLocationCheckbox(barisal);
 //        }
-        barisalDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        setBarisalDivitionClickListner(barisal, true);
+        /*barisalDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             for (int i = 0; i < barisalDivisionDistrictConstant.size(); i++) {
@@ -667,7 +690,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                     barisal.removeAllViews();
                 }
             }
-        });
+        });*/
         /*barisalDivision.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -690,7 +713,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         });*/
 
 
-        final LinearLayout sylhet = (LinearLayout) findViewById(R.id.sylhet_districts);
+        sylhet = (LinearLayout) findViewById(R.id.sylhet_districts);
 
         sylhetDivision = (CheckBox) findViewById(R.id.sylhet);
         sylhetLabel = findViewById(R.id.sylhet_label);
@@ -699,7 +722,8 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 //            sylhet.setVisibility(View.VISIBLE);
         prepareSylhetDivisionLocationCheckbox(sylhet);
 //        }
-        sylhetDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        setSylhetDivitionClickListner(sylhet, true);
+        /*sylhetDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             for (int i = 0; i < sylhetDivisionDistrictConstant.size(); i++) {
@@ -737,6 +761,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
             }
             }
         });
+        */
         /*sylhetDivision.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -759,7 +784,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         });*/
 
 
-        final LinearLayout rangpur = (LinearLayout) findViewById(R.id.rangpur_districts);
+        rangpur = (LinearLayout) findViewById(R.id.rangpur_districts);
 
         rangpurDivision = (CheckBox) findViewById(R.id.rangpur);
         rangpurLabel = findViewById(R.id.rangpur_label);
@@ -768,8 +793,8 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 //            rangpur.setVisibility(View.VISIBLE);
         prepareRangpurDivisionLocationCheckbox(rangpur);
 //        }
-
-        rangpurDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        setRangpurDivitionClickListner(rangpur, true);
+        /*rangpurDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             for (int i = 0; i < rangpurDivisionDistrictConstant.size(); i++) {
@@ -806,7 +831,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                 rangpur.removeAllViews();
             }
             }
-        });
+        });*/
         /*rangpurDivision.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -890,7 +915,352 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         });
     }
 
-    private void prepareRangpurDivisionLocationCheckbox(LinearLayout rangpur) {
+    private void setRangpurDivitionClickListner(final LinearLayout rangpur, boolean isAllSelected) {
+        rangpurDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                for (int i = 0; i < rangpurDivisionDistrictConstant.size(); i++) {
+                    CheckBox checkBox = findViewById(Integer.parseInt(rangpurDivisionDistrictConstant.get(i)));
+                    if(rangpurDivision.isChecked()) {
+                        rangpurDivDistSelected++;
+                        if(rangpur.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) >= 0)
+                            checkBox.setChecked(true);
+                        if(districtSelectedArray.indexOf(rangpurDivisionDistrictConstant.get(i)) <0)
+                            districtSelectedArray.add(rangpurDivisionDistrictConstant.get(i));
+                    }
+                    else
+                    {
+                        for (int j = 0; j < districtSelectedArray.size(); j++) {
+                            if (rangpurDivisionDistrictConstant.get(i).equalsIgnoreCase(districtSelectedArray.get(j))) {
+                                districtSelectedArray.remove(j);
+                                rangpurDivDistSelected--;
+                                if(rangpur.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) < 0)
+                                    checkBox.setChecked(rangpurDivision.isChecked());
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        rangpurDivision.setChecked(isAllSelected);
+        rangpurLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rangpur.getVisibility() == View.GONE) {
+                    rangpur.setVisibility(View.VISIBLE);
+                    Log.i("arraysize: ",rangpurDivisionDistrictConstant.size()+"");
+                    prepareRangpurDivisionLocationCheckbox(rangpur);
+                } else {
+                    rangpur.setVisibility(View.GONE);
+                    rangpur.removeAllViews();
+                }
+            }
+        });
+    }
+
+    private void setSylhetDivitionClickListner(final LinearLayout sylhet, boolean isAllSelected) {
+        sylhetDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                for (int i = 0; i < sylhetDivisionDistrictConstant.size(); i++) {
+                    CheckBox checkBox = findViewById(Integer.parseInt(sylhetDivisionDistrictConstant.get(i)));
+                    if(sylhetDivision.isChecked()) {
+                        sylhetDivDistSelected++;
+                        if(sylhet.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) >= 0)
+                            checkBox.setChecked(true);
+                        if(districtSelectedArray.indexOf(sylhetDivisionDistrictConstant.get(i)) <0)
+                            districtSelectedArray.add(sylhetDivisionDistrictConstant.get(i));
+                    }
+                    else
+                    {
+                        for (int j = 0; j < districtSelectedArray.size(); j++) {
+                            if (sylhetDivisionDistrictConstant.get(i).equalsIgnoreCase(districtSelectedArray.get(j))) {
+                                districtSelectedArray.remove(j);
+                                sylhetDivDistSelected--;
+                                if(sylhet.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) < 0)
+                                    checkBox.setChecked(sylhetDivision.isChecked());
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        sylhetDivision.setChecked(isAllSelected);
+        sylhetLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sylhet.getVisibility() == View.GONE) {
+                    sylhet.setVisibility(View.VISIBLE);
+                    Log.i("arraysize: ",sylhetDivisionDistrictConstant.size()+"");
+                    prepareSylhetDivisionLocationCheckbox(sylhet);
+                } else {
+                    sylhet.setVisibility(View.GONE);
+                    sylhet.removeAllViews();
+                }
+            }
+        });
+    }
+
+    private void setBarisalDivitionClickListner(final LinearLayout barisal, boolean isAllSelected) {
+        barisalDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                for (int i = 0; i < barisalDivisionDistrictConstant.size(); i++) {
+                    CheckBox checkBox = barisal.findViewById(Integer.parseInt(barisalDivisionDistrictConstant.get(i)));
+                    if(barisalDivision.isChecked()) {
+                        barisalDivDistSelected++;
+                        if(barisal.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) >= 0)
+                            checkBox.setChecked(true);
+                        if(districtSelectedArray.indexOf(barisalDivisionDistrictConstant.get(i)) <0)
+                            districtSelectedArray.add(barisalDivisionDistrictConstant.get(i));
+                    }
+                    else
+                    {
+                        for (int j = 0; j < districtSelectedArray.size(); j++) {
+                            if (barisalDivisionDistrictConstant.get(i).equalsIgnoreCase(districtSelectedArray.get(j))) {
+                                districtSelectedArray.remove(j);
+                                barisalDivDistSelected--;
+                                if(barisal.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) < 0)
+                                    checkBox.setChecked(barisalDivision.isChecked());
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        barisalDivision.setChecked(isAllSelected);
+        barisalLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (barisal.getVisibility() == View.GONE) {
+                    barisal.setVisibility(View.VISIBLE);
+                    Log.i("arraysize: ",barisalDivisionDistrictConstant.size()+"");
+                    prepareBarisalDivisionLocationCheckbox(barisal);
+                } else {
+                    barisal.setVisibility(View.GONE);
+                    barisal.removeAllViews();
+                }
+            }
+        });
+    }
+
+    private void setRajshahiDivitionClickListner(final LinearLayout rajshahi, boolean isAllselected) {
+        rajshahiDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                for (int i = 0; i < rajshahiDivisionDistrictConstant.size(); i++) {
+                    CheckBox checkBox = findViewById(Integer.parseInt(rajshahiDivisionDistrictConstant.get(i)));
+                    if(rajshahiDivision.isChecked()) {
+                        rajshahiDivDistSelected++;
+                        if(rajshahi.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) >= 0)
+                            checkBox.setChecked(true);
+                        if(districtSelectedArray.indexOf(rajshahiDivisionDistrictConstant.get(i)) <0)
+                            districtSelectedArray.add(rajshahiDivisionDistrictConstant.get(i));
+                    }
+                    else
+                    {
+                        for (int j = 0; j < districtSelectedArray.size(); j++) {
+                            if (rajshahiDivisionDistrictConstant.get(i).equalsIgnoreCase(districtSelectedArray.get(j))) {
+                                districtSelectedArray.remove(j);
+                                rajshahiDivDistSelected--;
+                                if(rajshahi.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) < 0)
+                                    checkBox.setChecked(rajshahiDivision.isChecked());
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        rajshahiDivision.setChecked(isAllselected);
+        rajshahiLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rajshahi.getVisibility() == View.GONE) {
+                    rajshahi.setVisibility(View.VISIBLE);
+                    Log.i("arraysize: ",rajshahiDivisionDistrictConstant.size()+"");
+                    prepareRajshahiDivisionLocationCheckbox(rajshahi);
+                } else {
+                    rajshahi.setVisibility(View.GONE);
+                    rajshahi.removeAllViews();
+                }
+            }
+        });
+    }
+
+    private void setKhulnaDivitionClickListner(final LinearLayout khulna, boolean isAllSelected) {
+        khulnaDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                for (int i = 0; i < khulnaDivisionDistrictConstant.size(); i++) {
+                    CheckBox checkBox = findViewById(Integer.parseInt(khulnaDivisionDistrictConstant.get(i)));
+                    if(khulnaDivision.isChecked()) {
+                        khulnaDivDistSelected++;
+                        if(khulna.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) >= 0)
+                            checkBox.setChecked(true);
+                        if(districtSelectedArray.indexOf(khulnaDivisionDistrictConstant.get(i)) <0)
+                            districtSelectedArray.add(khulnaDivisionDistrictConstant.get(i));
+                    }
+                    else
+                    {
+                        for (int j = 0; j < districtSelectedArray.size(); j++) {
+                            if (khulnaDivisionDistrictConstant.get(i).equalsIgnoreCase(districtSelectedArray.get(j))) {
+                                districtSelectedArray.remove(j);
+                                khulnaDivDistSelected--;
+                                if(khulna.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) < 0)
+                                    checkBox.setChecked(khulnaDivision.isChecked());
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        khulnaDivision.setChecked(isAllSelected);
+        khulnaLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (khulna.getVisibility() == View.GONE) {
+                    khulna.setVisibility(View.VISIBLE);
+                    Log.i("arraysize: ",khulnaDivisionDistrictConstant.size()+"");
+                    prepareKhulnaDivisionLocationCheckbox(khulna);
+                } else {
+                    khulna.setVisibility(View.GONE);
+                    khulna.removeAllViews();
+                }
+            }
+        });
+    }
+
+    private void setChittagongDivitionClickListner(final LinearLayout chittagong, boolean isAllSelected) {
+        chittagongDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                for (int i = 0; i < chittagongDivisionDistrictConstant.size(); i++) {
+                    CheckBox checkBox = findViewById(Integer.parseInt(chittagongDivisionDistrictConstant.get(i)));
+                    if(chittagongDivision.isChecked()) {
+                        chittagongDivDistSelected++;
+                        if(chittagong.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) >= 0)
+                            checkBox.setChecked(true);
+                        if(districtSelectedArray.indexOf(chittagongDivisionDistrictConstant.get(i)) <0)
+                            districtSelectedArray.add(chittagongDivisionDistrictConstant.get(i));
+                    }
+                    else
+                    {
+                        for (int j = 0; j < districtSelectedArray.size(); j++) {
+                            if (chittagongDivisionDistrictConstant.get(i).equalsIgnoreCase(districtSelectedArray.get(j))) {
+                                districtSelectedArray.remove(j);
+                                chittagongDivDistSelected--;
+                                if(chittagong.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) < 0)
+                                    checkBox.setChecked(chittagongDivision.isChecked());
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        chittagongDivision.setChecked(isAllSelected);
+        chittagongLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chittagong.getVisibility() == View.GONE) {
+                    chittagong.setVisibility(View.VISIBLE);
+                    Log.i("arraysize: ",chittagongDivisionDistrictConstant.size()+"");
+                    prepareChittagongDivisionLocationCheckbox(chittagong);
+                } else {
+                    chittagong.setVisibility(View.GONE);
+                    chittagong.removeAllViews();
+                }
+            }
+        });
+    }
+
+    private void setmymensingDivitionClickListner(final LinearLayout mymensing, boolean isAllSelected) {
+        mymensingDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                for (int i = 0; i < mymensinghDivisionDistrictConstant.size(); i++) {
+                    CheckBox checkBox = findViewById(Integer.parseInt(mymensinghDivisionDistrictConstant.get(i)));
+                    if(mymensingDivision.isChecked()) {
+                        mymensinghDivDistSelected++;
+                        if(mymensing.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) >= 0)
+                            checkBox.setChecked(true);
+                        if(districtSelectedArray.indexOf(mymensinghDivisionDistrictConstant.get(i)) <0)
+                            districtSelectedArray.add(mymensinghDivisionDistrictConstant.get(i));
+                    }
+                    else
+                    {
+                        for (int j = 0; j < districtSelectedArray.size(); j++) {
+                            if (mymensinghDivisionDistrictConstant.get(i).equalsIgnoreCase(districtSelectedArray.get(j))) {
+                                districtSelectedArray.remove(j);
+                                mymensinghDivDistSelected--;
+                                if(mymensing.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) < 0)
+                                    checkBox.setChecked(mymensingDivision.isChecked());
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        mymensingDivision.setChecked(isAllSelected);
+        mymensinghLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mymensing.getVisibility() == View.GONE) {
+                    mymensing.setVisibility(View.VISIBLE);
+                    Log.i("arraysize: ",mymensinghDivisionDistrictConstant.size()+"");
+                    prepareMymensingDivisionLocationCheckbox(mymensing);
+                } else {
+                    mymensing.setVisibility(View.GONE);
+                    mymensing.removeAllViews();
+                }
+            }
+        });
+    }
+
+    private void setDhakaDivitionClickListner(final LinearLayout dhaka,
+            boolean isAllChecked) {
+        dhakaDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                for (int i = 0; i < dhakaDivisionDistrictConstant.size(); i++) {
+                    CheckBox checkBox = findViewById(Integer.parseInt(dhakaDivisionDistrictConstant.get(i)));
+                    if(dhakaDivision.isChecked()) {
+                        dhakaDivDistSelected++;
+                        if(dhaka.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) >= 0)
+                            checkBox.setChecked(true);
+                        if(districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) <0)
+                            districtSelectedArray.add(dhakaDivisionDistrictConstant.get(i));
+                    }
+                    else
+                    {
+                        for (int j = 0; j < districtSelectedArray.size(); j++) {
+                            if (dhakaDivisionDistrictConstant.get(i).equalsIgnoreCase(districtSelectedArray.get(j))) {
+                                districtSelectedArray.remove(j);
+                                dhakaDivDistSelected--;
+                                if(dhaka.getVisibility() == View.VISIBLE)// && districtSelectedArray.indexOf(dhakaDivisionDistrictConstant.get(i)) < 0)
+                                    checkBox.setChecked(dhakaDivision.isChecked());
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        dhakaDivision.setChecked(isAllChecked);
+        dhakaLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dhaka.getVisibility() == View.GONE) {
+                    dhaka.setVisibility(View.VISIBLE);
+                    Log.i("arraysize: ",dhakaDivisionDistrictConstant.size()+"");
+                    prepareDhakaDivisionLoationCheckbox(dhaka);
+                } else {
+                    dhaka.setVisibility(View.GONE);
+                    dhaka.removeAllViews();
+                }
+            }
+        });
+    }
+
+    private void prepareRangpurDivisionLocationCheckbox(final LinearLayout rangpur) {
 
         for (int i = 0; i < rangpurDivisionDistrictConstant.size(); i++) {
             if(findViewById(Integer.parseInt(rangpurDivisionDistrictConstant.get(i))) == null)
@@ -908,9 +1278,19 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                     CheckBox checkBox = (CheckBox) findViewById(Integer.parseInt(rangpurDivisionDistrictConstant.get(index)));
 
                     if (checkBox.isChecked()) {
-                        districtSelectedArray.add(rajshahiDivisionDistrictConstant.get(index));
+                        rangpurDivDistSelected++;
+                        districtSelectedArray.add(rangpurDivisionDistrictConstant.get(index));
                     } else if (!checkBox.isChecked()) {
-                        districtSelectedArray.remove(rajshahiDivisionDistrictConstant.get(index));
+                        rangpurDivDistSelected--;
+                        districtSelectedArray.remove(rangpurDivisionDistrictConstant.get(index));
+                    }
+                    if(rangpurDivDistSelected == 0)
+                        rangpurDivision.setChecked(false);
+                    else {
+                        rangpurDivision.setOnCheckedChangeListener(null);
+                        rangpurDivision.setChecked(true);
+                        setRangpurDivitionClickListner(rangpur, true);
+
                     }
                     //Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ rangpurDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
@@ -926,7 +1306,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         }
     }
 
-    private void prepareSylhetDivisionLocationCheckbox(LinearLayout sylhet) {
+    private void prepareSylhetDivisionLocationCheckbox(final LinearLayout sylhet) {
 
         for (int i = 0; i < sylhetDivisionDistrictConstant.size(); i++) {
             if(findViewById(Integer.parseInt(sylhetDivisionDistrictConstant.get(i))) == null)
@@ -944,9 +1324,19 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                     CheckBox checkBox = (CheckBox) findViewById(Integer.parseInt(sylhetDivisionDistrictConstant.get(index)));
 
                     if (checkBox.isChecked()) {
+                        sylhetDivDistSelected++;
                         districtSelectedArray.add(sylhetDivisionDistrictConstant.get(index));
                     } else if (!checkBox.isChecked()) {
+                        sylhetDivDistSelected--;
                         districtSelectedArray.remove(sylhetDivisionDistrictConstant.get(index));
+                    }
+                    if(sylhetDivDistSelected == 0)
+                        sylhetDivision.setChecked(false);
+                    else {
+                        sylhetDivision.setOnCheckedChangeListener(null);
+                        sylhetDivision.setChecked(true);
+                        setSylhetDivitionClickListner(sylhet, true);
+
                     }
                     //Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ sylhetDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
@@ -963,7 +1353,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 
     }
 
-    private void prepareBarisalDivisionLocationCheckbox(LinearLayout barisal) {
+    private void prepareBarisalDivisionLocationCheckbox(final LinearLayout barisal) {
 
         for (int i = 0; i < barisalDivisionDistrictConstant.size(); i++) {
             if(barisal.findViewById(Integer.parseInt(barisalDivisionDistrictConstant.get(i))) == null)
@@ -981,9 +1371,20 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                     CheckBox checkBox = (CheckBox) findViewById(Integer.parseInt(barisalDivisionDistrictConstant.get(index)));
 
                     if (checkBox.isChecked()) {
+                        barisalDivDistSelected++;
                         districtSelectedArray.add(barisalDivisionDistrictConstant.get(index));
                     } else if (!checkBox.isChecked()) {
+                        barisalDivDistSelected--;
                         districtSelectedArray.remove(barisalDivisionDistrictConstant.get(index));
+                    }
+
+                    if(barisalDivDistSelected == 0)
+                        barisalDivision.setChecked(false);
+                    else {
+                        barisalDivision.setOnCheckedChangeListener(null);
+                        barisalDivision.setChecked(true);
+                        setBarisalDivitionClickListner(barisal, true);
+
                     }
                     //Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ barisalDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
@@ -999,7 +1400,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         }
     }
 
-    private void prepareRajshahiDivisionLocationCheckbox(LinearLayout rajshahi) {
+    private void prepareRajshahiDivisionLocationCheckbox(final LinearLayout rajshahi) {
 
         for (int i = 0; i < rajshahiDivisionDistrictConstant.size(); i++) {
             if(findViewById(Integer.parseInt(rajshahiDivisionDistrictConstant.get(i))) == null)
@@ -1018,9 +1419,19 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                     CheckBox checkBox = (CheckBox) findViewById(Integer.parseInt(rajshahiDivisionDistrictConstant.get(index)));
 
                     if (checkBox.isChecked()) {
+                        rajshahiDivDistSelected++;
                         districtSelectedArray.add(rajshahiDivisionDistrictConstant.get(index));
                     } else if (!checkBox.isChecked()) {
+                        rajshahiDivDistSelected--;
                         districtSelectedArray.remove(rajshahiDivisionDistrictConstant.get(index));
+                    }
+                    if(rajshahiDivDistSelected == 0)
+                        rajshahiDivision.setChecked(false);
+                    else {
+                        rajshahiDivision.setOnCheckedChangeListener(null);
+                        rajshahiDivision.setChecked(true);
+                        setRajshahiDivitionClickListner(rajshahi, true);
+
                     }
                     // Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ rajshahiDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
@@ -1037,7 +1448,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 
     }
 
-    private void prepareKhulnaDivisionLocationCheckbox(LinearLayout khulna) {
+    private void prepareKhulnaDivisionLocationCheckbox(final LinearLayout khulna) {
 
         for (int i = 0; i < khulnaDivisionDistrictConstant.size(); i++) {
             if(findViewById(Integer.parseInt(khulnaDivisionDistrictConstant.get(i))) == null)
@@ -1055,9 +1466,19 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                     CheckBox checkBox = (CheckBox) findViewById(Integer.parseInt(khulnaDivisionDistrictConstant.get(index)));
 
                     if (checkBox.isChecked()) {
+                        khulnaDivDistSelected++;
                         districtSelectedArray.add(khulnaDivisionDistrictConstant.get(index));
                     } else if (!checkBox.isChecked()) {
+                        khulnaDivDistSelected--;
                         districtSelectedArray.remove(khulnaDivisionDistrictConstant.get(index));
+                    }
+                    if(khulnaDivDistSelected == 0)
+                        khulnaDivision.setChecked(false);
+                    else {
+                        khulnaDivision.setOnCheckedChangeListener(null);
+                        khulnaDivision.setChecked(true);
+                        setKhulnaDivitionClickListner(khulna, true);
+
                     }
                     // Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ khulnaDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
@@ -1072,7 +1493,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         }
     }
 
-    private void prepareChittagongDivisionLocationCheckbox(LinearLayout chittagong) {
+    private void prepareChittagongDivisionLocationCheckbox(final LinearLayout chittagong) {
 
         for (int i = 0; i < chittagongDivisionDistrictConstant.size(); i++) {
             if(findViewById(Integer.parseInt(chittagongDivisionDistrictConstant.get(i))) == null)
@@ -1091,8 +1512,18 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 
                     if (checkBox.isChecked()) {
                         districtSelectedArray.add(chittagongDivisionDistrictConstant.get(index));
+                        chittagongDivDistSelected++;
                     } else if (!checkBox.isChecked()) {
                         districtSelectedArray.remove(chittagongDivisionDistrictConstant.get(index));
+                        chittagongDivDistSelected--;
+                    }
+                    if(chittagongDivDistSelected == 0)
+                        chittagongDivision.setChecked(false);
+                    else {
+                        chittagongDivision.setOnCheckedChangeListener(null);
+                        chittagongDivision.setChecked(true);
+                        setChittagongDivitionClickListner(chittagong, true);
+
                     }
                     //  Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ chittagongDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
@@ -1108,7 +1539,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         }
     }
 
-    private void prepareMymensingDivisionLocationCheckbox(LinearLayout mymensing) {
+    private void prepareMymensingDivisionLocationCheckbox(final LinearLayout mymensing) {
 
         for (int i = 0; i < mymensinghDivisionDistrictConstant.size(); i++) {
             if(findViewById(Integer.parseInt(mymensinghDivisionDistrictConstant.get(i))) == null)
@@ -1127,8 +1558,18 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                     CheckBox checkBox = (CheckBox) findViewById(Integer.parseInt(mymensinghDivisionDistrictConstant.get(index)));
                     if (checkBox.isChecked()) {
                         districtSelectedArray.add(mymensinghDivisionDistrictConstant.get(index));
+                        mymensinghDivDistSelected++;
                     } else if (!checkBox.isChecked()) {
                         districtSelectedArray.remove(mymensinghDivisionDistrictConstant.get(index));
+                        mymensinghDivDistSelected--;
+                    }
+                    if(mymensinghDivDistSelected == 0)
+                        mymensingDivision.setChecked(false);
+                    else {
+                        mymensingDivision.setOnCheckedChangeListener(null);
+                        mymensingDivision.setChecked(true);
+                        setmymensingDivitionClickListner(mymensing, true);
+
                     }
                     // Toast.makeText(RegistrationChoiceSelectionSecondPage.this,"id  : "+ mymensinghDivisionDistrictConstant.get(index) ,Toast.LENGTH_LONG ).show();
                 }
@@ -1145,7 +1586,7 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
 
     }
 
-    private void prepareDhakaDivisionLoationCheckbox(LinearLayout dhaka) {
+    private void prepareDhakaDivisionLoationCheckbox(final LinearLayout dhaka) {
 
         for (int i = 0; i < dhakaDivisionDistrictConstant.size(); i++) {
             if(findViewById(Integer.parseInt(dhakaDivisionDistrictConstant.get(i))) == null)
@@ -1167,12 +1608,21 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                     if (checkBox.isChecked()) {
                         districtSelectedArray.add(dhakaDivisionDistrictConstant.get(index));
                         dhakaDivisionCheckboxColor++;
+                        dhakaDivDistSelected++;
                     } else if (!checkBox.isChecked()) {
                         districtSelectedArray.remove(dhakaDivisionDistrictConstant.get(index));
                         dhakaDivisionCheckboxColor--;
+                        dhakaDivDistSelected--;
                     }
 
+                    if(dhakaDivDistSelected == 0)
+                        dhakaDivision.setChecked(false);
+                    else {
+                        dhakaDivision.setOnCheckedChangeListener(null);
+                        dhakaDivision.setChecked(true);
+                        setDhakaDivitionClickListner(dhaka, true);
 
+                    }
                     if (dhakaDivisionCheckboxColor != dhakaDivisionDistrict.size()) {
 //                        dhakaDivision.setBackgroundColor(Color.rgb(64, 131, 207));
                     } else if (dhakaDivisionCheckboxColor == dhakaDivisionDistrict.size()) {
@@ -1276,10 +1726,9 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if(progress.isShowing())
+                progress.dismiss();
             if (s == null) {
-                if(progress.isShowing())
-                    progress.dismiss();
-
                 Utils.ShowAlert(RegistrationChoiceSelectionSecondPage.this, getString(R.string.no_internet_connection));
             } else {
                 try {
@@ -1287,10 +1736,10 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Response", s);
                     if (jsonObject.has("errors")) {
-                        if(progress.isShowing())
-                            progress.dismiss();
+//                        if(progress.isShowing())
+//                            progress.dismiss();
 
-                       String error= jsonObject.getJSONObject("errors").getString("detail");
+                        String error= jsonObject.getJSONObject("errors").getString("detail");
                         Toast.makeText(RegistrationChoiceSelectionSecondPage.this,
                                 error, Toast.LENGTH_LONG).show();
                     } else {
@@ -1341,9 +1790,9 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if(progress.isShowing())
+                progress.dismiss();
             if (s == null) {
-                if(progress.isShowing())
-                    progress.dismiss();
                 Utils.ShowAlert(RegistrationChoiceSelectionSecondPage.this, getString(R.string.no_internet_connection));
             } else {
                /* if(progress.isShowing())
@@ -1353,8 +1802,9 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
                 signupIntent = new Intent(RegistrationChoiceSelectionSecondPage.this,
                         RegistrationChoiceSelectionThirdPage.class);
                 signupIntent.putExtra("constants", s);
+                signupIntent.putExtra("isSignUp", true);
                 startActivity(signupIntent);
-                finish();
+//                finish();
             }
         }
 
@@ -1428,21 +1878,24 @@ public class RegistrationChoiceSelectionSecondPage extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.i("urldata", s + "");
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
             if (s == null) {
-                if (progress.isShowing()) {
-                    progress.dismiss();
-                }
-
                 Utils.ShowAlert(RegistrationChoiceSelectionSecondPage.this, getString(R.string.no_internet_connection));
             } else {
                /* if (progress.isShowing()) {
                     progress.dismiss();
                 }*/
                 Log.i("constantval",this.getClass().getSimpleName()+"_backfetchval: "+s);
-                startActivity(new Intent(RegistrationChoiceSelectionSecondPage.this,
-                        RegistrationChoiceSelectionFirstPage.class).
-                        putExtra("constants", s));
-                finish();
+                if(isSignUp){
+                    finish();
+                }else {
+                    startActivity(new Intent(RegistrationChoiceSelectionSecondPage.this,
+                            RegistrationChoiceSelectionFirstPage.class).
+                            putExtra("constants", s));
+                    finish();
+                }
             }
         }
     }
