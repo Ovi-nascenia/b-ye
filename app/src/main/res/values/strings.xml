@@ -412,9 +412,9 @@
     <string name="title_activity_registration_user_address_information">
         আপনার যোগাযোগের তথ্য
     </string>
-    <string name="thanks_msg_male">নিজের সম্পর্কে বলার জন্য ধন্যবাদ।\n আপনার স্বপ্নের রাজকন্যা কেমন হবে এখন তা আমাদেরকে জানান।</string>
+    <string name="thanks_msg_male">নিজের সম্পর্কে বলার জন্য ধন্যবাদ।\n আপনার স্বপ্নের রাজকন্যাকে কেমন দেখতে চান সেটা কি আমাদেরকে জানাবেন?</string>
 
-    <string name="thanks_msg_female">নিজের সম্পর্কে বলার জন্য ধন্যবাদ।\n আপনার স্বপ্নের রাজপুত্র কেমন হবে এখন তা আমাদেরকে জানান।</string>
+    <string name="thanks_msg_female">নিজের সম্পর্কে বলার জন্য ধন্যবাদ।\n আপনার স্বপ্নের রাজপুত্রকে কেমন দেখতে চান সেটা কি আমাদেরকে জানাবেন?</string>
 
 
 </resources>

@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -382,7 +383,7 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
                             if(holder.otherRelationalStatus.getText().toString().length() == 0)
                             {
                                 Toast.makeText(getBaseContext(),
-                                        "R.string.choose_realtion_message",
+                                        R.string.choose_realtion_message,
                                         Toast.LENGTH_LONG).show();
                                 holder.otherRelationalStatus.getParent().
                                         requestChildFocus(holder.otherRelationalStatus, holder.otherRelationalStatus);
@@ -925,6 +926,11 @@ public class RegistrationFamilyInfoSecondPage extends AppCompatActivity implemen
     @Override
     public void removeOtherRelationItemCallBack(int position) {
         otherCount--;
+        recyclerViewOther.clearOnScrollListeners();
+
+        if (buttonOther.getVisibility() == View.INVISIBLE) {
+            buttonOther.setVisibility(View.VISIBLE);
+        }
         Log.i("otherdata", "remove: " + otherCount + "");
         /*OtherViewAdapter.MyViewHolder holder = (OtherViewAdapter.MyViewHolder)
                 recyclerViewOther.findViewHolderForLayoutPosition(position);

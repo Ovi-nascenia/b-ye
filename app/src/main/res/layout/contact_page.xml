@@ -123,7 +123,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/contact_for_helpNumber"
                 android:textColor="@color/contact_footer_text"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:autoLink="web"/>
 
             <TextView
                 android:id="@+id/time_schedule"

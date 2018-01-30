@@ -581,10 +581,12 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 userProfile.getProfile().getProfileReligion().getReligion()
         ));
 
-        personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.cast_text),
-                userProfile.getProfile().getProfileReligion().getCast()
-        ));
-
+        if( userProfile.getProfile().getProfileReligion().getCast()!=null) {
+            personalInfoChildItemList.add(
+                    new UserProfileChild(getResources().getString(R.string.cast_text),
+                            userProfile.getProfile().getProfileReligion().getCast()
+                    ));
+        }
 
         if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())).equals("")) {
 

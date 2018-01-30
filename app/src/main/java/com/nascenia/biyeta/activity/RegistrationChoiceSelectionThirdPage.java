@@ -26,6 +26,7 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -121,7 +122,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         setContentView(R.layout.activity_registration_choice_selection_third_page);
 
         sharePref = new SharePref(RegistrationChoiceSelectionThirdPage.this);
-//        sharePref.set_data("religion", "মুসলিম");
+//        sharePref.set_data("religion", "5");
 //        "1":"মুসলিম","2":"হিন্দু","3":"খ্রীষ্টান","4":"বৌদ্ধ","5":"অন্যান্য "        for testing
         religionName = sharePref.get_data("religion").trim();
         progress = new ProgressDialog(RegistrationChoiceSelectionThirdPage.this);
@@ -249,6 +250,8 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             marriageCheckBox.setText(marriageArray.get(i) + "   ");
             marriageCheckBox.setId(Integer.parseInt(1000 + marriageArrayConstant.get(i)));
             marriageCheckBox.setPadding(0, 0, 5, 0);
+            marriageCheckBox.setChecked(true);
+            marriageSelectedArray.add(marriageArrayConstant.get(i));
             final int index = i;
             marriageCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -278,6 +281,8 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             muslimCheckBox.setText(muslimCast.get(i) + "   ");
             muslimCheckBox.setId(Integer.parseInt(muslimCastConstant.get(i)));
             muslimCheckBox.setPadding(0, 0, 5, 0);
+            muslimCheckBox.setChecked(true);
+            muslimCastSelectedArray.add(muslimCastConstant.get(i));
             final int index = i;
             muslimCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -301,6 +306,8 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             hinduCheckBox = new CheckBox(this);
             hinduCheckBox.setText(hinduCast.get(i) + "   ");
             hinduCheckBox.setId(Integer.parseInt("100"+hinduCastConstant.get(i)));// here 100 added for making unique hinducast checkbox
+            hinduCheckBox.setChecked(true);
+            hinduCastSelectedArray.add(hinduCastConstant.get(i));
             final int index = i;
             hinduCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -328,6 +335,8 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             christianCheckBox = new CheckBox(this);
             christianCheckBox.setText(christianCast.get(i) + "   ");
             christianCheckBox.setId(Integer.parseInt(christianCastConstant.get(i)));
+            christianCheckBox.setChecked(true);
+            christianCastSelectedArray.add(christianCastConstant.get(i));
             final int index = i;
             christianCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -752,6 +761,18 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
                     } else {
 //                        new RegistrationChoiceSelectionThirdPage.FetchConstant().execute();
                         clearStaticData();
+                        JSONObject json = new JSONObject(s);
+                        String profile_photo = "";
+                        if(json.has("photo_information"))
+                        {
+                            JSONArray jsonArray = json.getJSONArray("photo_information");
+                            for(int i = 0; i<jsonArray.length(); i++)
+                            {
+                                if(((JSONObject)jsonArray.get(i)).getInt("photo_type") == 1)
+                                    sharePref.set_data("profile_picture", ((JSONObject)jsonArray.get(i)).getString("image_url"));
+                            }
+                        }
+
                         Intent intent = new Intent(getApplicationContext(),
                                 HomeScreen.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);

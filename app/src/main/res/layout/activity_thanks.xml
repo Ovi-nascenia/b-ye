@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nascenia.biyeta.activity.ThanksActivity"
-    android:layout_marginBottom="100dp">
+    android:layout_marginBottom="100dp"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/tv_thanks"

@@ -202,7 +202,7 @@
             android:name=".activity.RegistrationFamilyInfoSecondPage"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".activity.PopUpFamilyInfoSecondPage"
             android:screenOrientation="portrait"
@@ -238,7 +238,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarPopUp" />
         <activity android:name=".activity.FacebookRegistrationDataInput" />
-        <activity android:name=".activity.ThanksActivity"></activity>
+        <activity android:name=".activity.ThanksActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

@@ -37,6 +37,7 @@ import com.nascenia.biyeta.fragment.Inbox;
 import com.nascenia.biyeta.fragment.Match;
 import com.nascenia.biyeta.fragment.Search;
 import com.nascenia.biyeta.model.loginInfromation.LoginInformation;
+import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -90,6 +91,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
         sharePref = new SharePref(HomeScreen.this);
+//        String constants = getIntent().getStringExtra("constants");
 
         initIdAndActionBar();
 
@@ -108,7 +110,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         isSignUp = getIntent().getBooleanExtra("isSignUp", false);
 
-
+//        UserProfile userProfile = UserProfile.
 
         //FCM
         //String token= FirebaseInstanceId.getInstance().getToken();

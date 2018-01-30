@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp">
+            android:layout_marginBottom="@dimen/small_margin"
+            android:layout_alignLeft="@+id/imageCrop">
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
@@ -24,7 +25,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="অবস্থান সরানোর জন্য ছবিটি টানুন"
+                android:text="অবস্থান সরান"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="3dp"
                 android:textSize="10sp"/>

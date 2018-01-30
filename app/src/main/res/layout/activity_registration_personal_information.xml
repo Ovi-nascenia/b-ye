@@ -777,6 +777,7 @@
             android:hint="প্রতিবন্ধকতা সম্পর্কে কিছু বলুন(ঐচ্ছিক)"
             android:background="@color/white"
             android:textColor="@color/black"
+            android:padding="10dp"
             android:textColorHint="@color/lblFromName"
             android:maxLines="5"
             android:gravity="top"

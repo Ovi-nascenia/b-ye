@@ -107,13 +107,17 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
             reject.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    otherCount.remove(position);
-                    notifyItemRemoved(position);
-                    //nameOther.clearFocus();
-                  /*  ViewParent parent = nameOther.getParent();
-                    parent.clearChildFocus(nameOther);*/
-                    removeOtherRelationItemCallBack.removeOtherRelationItemCallBack(position);
+                    try {
+                        int position = getAdapterPosition();
+                        otherCount.remove(position);
+                        notifyDataSetChanged();//ItemRemoved(position);
+                        //nameOther.clearFocus();
+                      /*  ViewParent parent = nameOther.getParent();
+                        parent.clearChildFocus(nameOther);*/
+                        removeOtherRelationItemCallBack.removeOtherRelationItemCallBack(position);
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
 
                 }
             });
@@ -201,9 +205,14 @@ public class OtherViewAdapter extends RecyclerView.Adapter<OtherViewAdapter.MyVi
     public void remove(Integer item) {
         int position = otherCount.indexOf(item);
         otherCount.remove(position);
-        notifyItemRemoved(position);
+        notifyDataSetChanged();//ItemRemoved(position);
     }
 
+//    @Override
+//    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+//        super.onDetachedFromRecyclerView(recyclerView);
+//        recyclerView.clearFocus();
+//    }
 
     public OtherViewAdapter(List<Integer> otherCount, Context context,
                             RemoveOtherRelationItemCallBack removeOtherRelationItemCallBack) {

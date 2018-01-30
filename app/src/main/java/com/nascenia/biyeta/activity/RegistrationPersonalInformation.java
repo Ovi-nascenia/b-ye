@@ -239,8 +239,8 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
 //                    + "}");
             ////////////////////////////////
 
-            loginUserReligion = jsonObject.getString("login_user_religion");
-            Log.i("login_user_religion", loginUserReligion);
+            loginUserReligion = (jsonObject.has("login_user_religion")?jsonObject.getString("login_user_religion"):"");
+//            Log.i("login_user_religion", loginUserReligion);
 
 
             for (int i = 0; i < marriageObject.length(); i++) {
@@ -351,8 +351,8 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             childName = childArray.toArray(childName);
 
             //child stay with mother yes/no
-            stayStausArrayConstant.add("0");
             stayStausArrayConstant.add("1");
+            stayStausArrayConstant.add("0");
             stayStausArray.add("হ্যাঁ");
             stayStausArray.add("না");
 

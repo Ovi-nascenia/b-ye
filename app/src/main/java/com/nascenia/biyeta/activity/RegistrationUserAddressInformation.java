@@ -472,7 +472,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
         } else {
             if (currentLivingLocationStatus.equalsIgnoreCase("ab") &&
                     abroadTypeTextView.getText().toString().equalsIgnoreCase("")) {
-                Toast.makeText(getBaseContext(), "আপনার বিদেশে অবস্থানের ধরন নির্বাচন করুন", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "আপনার বিদেশে অবস্থানের ধরণ নির্বাচন করুন", Toast.LENGTH_LONG).show();
                 return;
             }
         }
@@ -701,7 +701,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             addressBangldeshCheckbox.setChecked(false);
             abroadTypeStatusTitleTextView.setVisibility(View.VISIBLE);
             abroadTypeLayout.setVisibility(View.VISIBLE);
-            abroadTypeTextView.setHint("বিদেশে অবস্থানের ধরন");
+            abroadTypeTextView.setHint("বিদেশে অবস্থানের ধরণ");
             presentDistrictLayout.setVisibility(View.GONE);
             presentCountryTextView.setText(null);
             presentCountryTextView.setHint("দেশ");

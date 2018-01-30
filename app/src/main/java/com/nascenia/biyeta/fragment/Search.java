@@ -410,6 +410,7 @@ public class Search extends Fragment {
                     } else if (jsonObject.has("is_profile_complete") &&
                             !jsonObject.getBoolean("is_profile_complete")) {
                         //login user profile is incomplete
+                        builder.setCancelable(false);
                         builder.setMessage(getString(R.string.incomplete_account_dialog_message))
                                 .setPositiveButton("হ্যাঁ", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {

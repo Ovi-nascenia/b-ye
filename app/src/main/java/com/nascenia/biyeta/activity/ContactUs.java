@@ -1,13 +1,20 @@
 package com.nascenia.biyeta.activity;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.HitBuilders;
@@ -38,6 +45,7 @@ public class ContactUs extends CustomActionBarActivity {
     Button sendButton;
     Response response;
     OkHttpClient okHttpClient = new OkHttpClient();
+    TextView help;
 
     public final static boolean isValidEmail(CharSequence target) {
         if (target == null) {
@@ -60,6 +68,31 @@ public class ContactUs extends CustomActionBarActivity {
         mTracker.send(new HitBuilders.ScreenViewBuilder()
                 .setNewSession()
                 .build());
+        help = findViewById(R.id.help_number);
+        Linkify.addLinks(help, Linkify.WEB_URLS);
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_CALL,
+                        Uri.parse("tel:" + "+8809666778779"));
+                if (ActivityCompat.checkSelfPermission(ContactUs.this, Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[]
+                    // permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the
+                    // documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override

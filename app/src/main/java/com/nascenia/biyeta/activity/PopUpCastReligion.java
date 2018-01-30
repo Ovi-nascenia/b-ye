@@ -227,7 +227,7 @@ public class PopUpCastReligion extends AppCompatActivity {
                         else{
                             RegistrationOwnInfo.castReligionText.setText(religion.getText().toString());
                             RegistrationOwnInfo.otherReligion = religion.getText().toString();
-                            RegistrationOwnInfo.religionValue = "";
+                            RegistrationOwnInfo.religionValue = "5";
                             RegistrationOwnInfo.castValue="";
                             RegistrationOwnInfo.otherCast="";
 

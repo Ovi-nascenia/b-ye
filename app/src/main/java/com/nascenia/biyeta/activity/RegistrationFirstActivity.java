@@ -271,13 +271,18 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             // Utils.ShowAlert(RegistrationFirstActivity.this, "নাম পূরণ করুন");
             return;
         }
+        else
+            sharePref.set_data("real_name", name_edit_text.getText().toString());
+
+
         if (display_name_edit_text.getText().length() == 0) {
             display_name_edit_text.requestFocus();
             display_name_edit_text.setSelection(0);
             Toast.makeText(getBaseContext(), "আপনার ডিসপ্লে নাম পূরণ করুন", Toast.LENGTH_LONG).show();
             // Utils.ShowAlert(RegistrationFirstActivity.this, "ডিসপ্লে নাম পূরণ করুন");
             return;
-        }
+        }else
+            sharePref.set_data("display_name", display_name_edit_text.getText().toString());
 
         if (dateOfBirthEditext.getText().length() == 0) {
             dateOfBirthEditext.requestFocus();
@@ -532,6 +537,8 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                 email = data.getStringExtra("email");
                 realName = data.getStringExtra("first_name");
                 displayName = data.getStringExtra("display_name");
+                sharePref.set_data("real_name", realName);
+                sharePref.set_data("display_name", displayName);
                 birthday = data.getStringExtra("birthday");
                 callFacebookAccountCreate();
             }
