@@ -42,6 +42,10 @@ public class LoginInformation_ {
     @Expose
     private int religion;
 
+    @SerializedName("cast")
+    @Expose
+    private int cast;
+
     public Boolean getProfileComplete() {
         return isProfileComplete;
     }
@@ -120,6 +124,14 @@ public class LoginInformation_ {
 
     public void setReligion(int religion) {
         this.religion = religion;
+    }
+
+    public int getCast() {
+        return cast;
+    }
+
+    public void setCast(int cast) {
+        this.cast = cast;
     }
 
 }

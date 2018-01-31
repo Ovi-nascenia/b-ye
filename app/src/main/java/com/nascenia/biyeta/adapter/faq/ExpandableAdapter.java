@@ -74,9 +74,9 @@ public  class ExpandableAdapter extends ExpandableRecyclerAdapter<ParentObj, Str
 
         if (this.parentList.get(parentPosition).getmChildItemList().size() > 1) {
             childViewHolder.bullet.setVisibility(View.VISIBLE);
-
-
         }
+        else
+            childViewHolder.bullet.setVisibility(View.INVISIBLE);
 
         childViewHolder.mItemTV.setText(child);
 

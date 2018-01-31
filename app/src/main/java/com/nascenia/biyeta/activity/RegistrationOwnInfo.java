@@ -184,9 +184,10 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                 {
                     Toast.makeText(getBaseContext(),getString(R.string.religion_pick_message),Toast.LENGTH_LONG).show();
                     return;
-                }
-                else
+                }else {
                     sharePref.set_data("religion", religionValue);
+                    sharePref.set_data("cast", castValue);
+                }
 
                 if(castReligionText.getText().toString().isEmpty())
                 {

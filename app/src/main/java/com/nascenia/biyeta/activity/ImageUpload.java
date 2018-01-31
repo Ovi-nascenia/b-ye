@@ -388,6 +388,15 @@ public class ImageUpload extends AppCompatActivity {
                 }
             }
         }
+        if(proPic.getDrawable()!= null){
+            afterProPicUploadValue = 1;
+        }
+        if(bodyPic.getDrawable()!= null){
+            afterBodyPicUploadValue = 1;
+        }
+        if(otherPic.getDrawable()!= null){
+            afterOtherPicUploadValue = 1;
+        }
 
     }
 
@@ -434,6 +443,7 @@ public class ImageUpload extends AppCompatActivity {
                             afterProPicUploadValue = 0;
                             afterBodyPicUploadValue = 0;
                             afterOtherPicUploadValue = 0;
+                            numberOfImage = 0;
                         }
                     }
                 } catch (JSONException e) {

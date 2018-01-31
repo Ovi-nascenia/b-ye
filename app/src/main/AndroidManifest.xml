@@ -102,7 +102,7 @@
             android:name=".activity.ContactUs"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.PaymentActivity"
             android:screenOrientation="portrait"

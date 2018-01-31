@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
@@ -69,7 +71,7 @@ public class ContactUs extends CustomActionBarActivity {
                 .setNewSession()
                 .build());
         help = findViewById(R.id.help_number);
-        Linkify.addLinks(help, Linkify.WEB_URLS);
+        underLineText(help, "০৯৬৬৬৭৭৮৭৭৯");
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,6 +95,12 @@ public class ContactUs extends CustomActionBarActivity {
         });
 
 
+    }
+
+    private void underLineText(TextView tv, String text) {
+        SpannableString content = new SpannableString(text);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        tv.setText(content);
     }
 
     @Override

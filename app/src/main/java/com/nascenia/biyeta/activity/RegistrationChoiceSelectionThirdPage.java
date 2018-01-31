@@ -101,7 +101,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
     SimpleRangeView rangeView_namaj, rangeView_roja, rangeView_hijab;
     public static int job = -1;
     public static int marriage = -1;
-    public static int religion = -1;
+    public static int religion = -1, cast = -1;
     public static int house = -1;
 
     public static int selectedPopUp = 0;
@@ -113,7 +113,7 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 
     private LinearLayout houseLinearLayout;
     SharePref sharePref;
-    String religionName = "";
+    String religionName = "", castName = "";
     private boolean isSignUp = false;
 
     @Override
@@ -125,6 +125,11 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
 //        sharePref.set_data("religion", "5");
 //        "1":"মুসলিম","2":"হিন্দু","3":"খ্রীষ্টান","4":"বৌদ্ধ","5":"অন্যান্য "        for testing
         religionName = sharePref.get_data("religion").trim();
+        castName = sharePref.get_data("cast").trim();
+        if(castName.length() > 0)
+        {
+            cast = Integer.parseInt(castName);
+        }
         progress = new ProgressDialog(RegistrationChoiceSelectionThirdPage.this);
         progress.setMessage(getResources().getString(R.string.progress_dialog_message));
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -250,8 +255,10 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             marriageCheckBox.setText(marriageArray.get(i) + "   ");
             marriageCheckBox.setId(Integer.parseInt(1000 + marriageArrayConstant.get(i)));
             marriageCheckBox.setPadding(0, 0, 5, 0);
-            marriageCheckBox.setChecked(true);
-            marriageSelectedArray.add(marriageArrayConstant.get(i));
+            if(marriageArrayConstant.get(i).equalsIgnoreCase("1")) {
+                marriageCheckBox.setChecked(true);
+                marriageSelectedArray.add(marriageArrayConstant.get(i));
+            }
             final int index = i;
             marriageCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -281,8 +288,10 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             muslimCheckBox.setText(muslimCast.get(i) + "   ");
             muslimCheckBox.setId(Integer.parseInt(muslimCastConstant.get(i)));
             muslimCheckBox.setPadding(0, 0, 5, 0);
-            muslimCheckBox.setChecked(true);
-            muslimCastSelectedArray.add(muslimCastConstant.get(i));
+            if(cast == Integer.parseInt(muslimCastConstant.get(i))) {
+                muslimCheckBox.setChecked(true);
+                muslimCastSelectedArray.add(muslimCastConstant.get(i));
+            }
             final int index = i;
             muslimCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -306,8 +315,10 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             hinduCheckBox = new CheckBox(this);
             hinduCheckBox.setText(hinduCast.get(i) + "   ");
             hinduCheckBox.setId(Integer.parseInt("100"+hinduCastConstant.get(i)));// here 100 added for making unique hinducast checkbox
-            hinduCheckBox.setChecked(true);
-            hinduCastSelectedArray.add(hinduCastConstant.get(i));
+            if(cast == Integer.parseInt(hinduCastConstant.get(i))) {
+                hinduCheckBox.setChecked(true);
+                hinduCastSelectedArray.add(hinduCastConstant.get(i));
+            }
             final int index = i;
             hinduCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -335,8 +346,10 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
             christianCheckBox = new CheckBox(this);
             christianCheckBox.setText(christianCast.get(i) + "   ");
             christianCheckBox.setId(Integer.parseInt(christianCastConstant.get(i)));
-            christianCheckBox.setChecked(true);
-            christianCastSelectedArray.add(christianCastConstant.get(i));
+            if(cast == Integer.parseInt(christianCastConstant.get(i))) {
+                christianCheckBox.setChecked(true);
+                christianCastSelectedArray.add(christianCastConstant.get(i));
+            }
             final int index = i;
             christianCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override

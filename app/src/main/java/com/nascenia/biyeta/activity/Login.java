@@ -686,6 +686,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             sharePref.set_data("real_name", response.getLoginInformation().getRealName());
                             sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
                             sharePref.set_data("religion", response.getLoginInformation().getReligion() + "");
+                            sharePref.set_data("cast", response.getLoginInformation().getCast() + "");
                             gender = response.getLoginInformation().getGender();
                             currentMobileSignupStep = response.getLoginInformation().getStep();
                             Log.i("currentmoblesignupsetp", currentMobileSignupStep + "");
