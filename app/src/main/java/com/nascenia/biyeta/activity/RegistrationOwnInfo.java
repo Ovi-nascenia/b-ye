@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.constant.Constant;
@@ -474,6 +475,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            LoginManager.getInstance().logOut();
             sharePref.set_data("token", "key");
             startActivity(new Intent(RegistrationOwnInfo.this, Login.class));
             finish();

@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.FacebookActivity;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
@@ -645,6 +646,7 @@ public class Search extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            LoginManager.getInstance().logOut();
             sharePref.set_data("token", "key");
             startActivity(new Intent(getActivity(), Login.class));
             getActivity().finish();

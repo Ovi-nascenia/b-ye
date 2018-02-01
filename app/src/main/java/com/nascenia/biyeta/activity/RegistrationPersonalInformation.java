@@ -432,13 +432,13 @@ public class RegistrationPersonalInformation extends AppCompatActivity {
             houseStatusLabel.setVisibility(View.GONE);
             houseLinearLayout.setVisibility(View.GONE);
 
-            if(loginUserReligion.equalsIgnoreCase("muslim")){
+            if(loginUserReligion != null && loginUserReligion.equalsIgnoreCase("muslim")){
                 hijabStatuLabel.setVisibility(View.VISIBLE);
                 hijabStatus.setVisibility(View.VISIBLE);
             }
         }
 
-        if (!loginUserReligion.equalsIgnoreCase("muslim")) {
+        if (loginUserReligion != null && !loginUserReligion.equalsIgnoreCase("muslim")) {
             religionStatusLabel.setVisibility(View.GONE);
             religiousStatus.setVisibility(View.GONE);
 
