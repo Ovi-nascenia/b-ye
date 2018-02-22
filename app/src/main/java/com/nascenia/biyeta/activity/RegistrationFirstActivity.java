@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -99,6 +102,8 @@ public class RegistrationFirstActivity extends AppCompatActivity {
     private final int DATE_OF_BIRTH_REQUEST_CODE = 2;
 
     private static final int facebook_request_code = 1000;
+    private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE_BASIC = 1001;
+    private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE_FB = 1002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,7 +227,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
     private void createAccount() {
 
-        String gender = null;
+        gender = null;
         if (genderValue == 0) {
             gender = "female";
         } else if (genderValue == 1) {
@@ -292,16 +297,30 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             return;
         }
 
-
-        new RegistrationFirstActivity.RegistretionBasicInfoTask()
-                .execute(email_edit_text.getText().toString(),
-                        password_edit_text.getText().toString(),
-                        name_edit_text.getText().toString(),
-                        display_name_edit_text.getText().toString(),
-                        "",
-                        gender.equalsIgnoreCase("male")?"female":"male",
-                        "own",
-                        dateOfBirthEditext.getText().toString());
+        checkPermission(PERMISSIONS_REQUEST_READ_PHONE_STATE_BASIC);
+//            String imei = Utils.deviceIMEI(this);
+//            String regtoken = FirebaseInstanceId.getInstance().getToken();
+//            new RegistrationFirstActivity.RegistretionBasicInfoTask()
+//                .execute(email_edit_text.getText().toString(),
+//                    password_edit_text.getText().toString(),
+//                    name_edit_text.getText().toString(),
+//                    display_name_edit_text.getText().toString(),
+//                    "",
+//                    gender.equalsIgnoreCase("male") ? "female" : "male",
+//                    "own",
+//                    dateOfBirthEditext.getText().toString(),
+//                    imei,
+//                    regtoken);
+//        }
+//        new RegistrationFirstActivity.RegistretionBasicInfoTask()
+//                .execute(email_edit_text.getText().toString(),
+//                        password_edit_text.getText().toString(),
+//                        name_edit_text.getText().toString(),
+//                        display_name_edit_text.getText().toString(),
+//                        "",
+//                        gender.equalsIgnoreCase("male")?"female":"male",
+//                        "own",
+//                        dateOfBirthEditext.getText().toString());
 
 
     }
@@ -416,12 +435,12 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             intent.putExtra("provider", provider);
             startActivityForResult(intent, facebook_request_code);
         }else {
-            callFacebookAccountCreate();
-
+//            callFacebookAccountCreate();
+            checkPermission(PERMISSIONS_REQUEST_READ_PHONE_STATE_FB);
         }
     }
 
-    private void callFacebookAccountCreate() {
+    private void callFacebookAccountCreate(String imei, String firebase_token) {
         provider = "facebook";
         profilePic = "";
         createdBy = "own";
@@ -484,9 +503,20 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                 .append("\"")
                 .append(gender.equalsIgnoreCase("female")?"male":"female")
                 .append("\"")
+                .append(",")
+                .append("\"imei\":")
+                .append("\"")
+                .append(imei)
+                .append("\"")
+                .append(",")
+                .append("\"registration_token\":")
+                .append("\"")
+                .append(firebase_token)
+                .append("\"")
                 .append("}")
                 .append("}").toString();
         Log.e("json", fbSignUp);
+
         new RegistrationFirstActivity.FbRegistration().execute(fbSignUp, Utils.FB_SIGNUP);
     }
 
@@ -540,7 +570,8 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                 sharePref.set_data("real_name", realName);
                 sharePref.set_data("display_name", displayName);
                 birthday = data.getStringExtra("birthday");
-                callFacebookAccountCreate();
+//                callFacebookAccountCreate();
+                checkPermission(PERMISSIONS_REQUEST_READ_PHONE_STATE_FB);
             }
         }
     }
@@ -619,6 +650,8 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     .add("created_by", createdBy)
                     .add("dateofbirth", convertedEglishYearFromBanglaYear + "/" +
                             convertedEnglishMonthFromBanglaMonth + "/" + convertedEnglishDateFromBanglaDate)
+                    .add("imei", parameters[7])
+                    .add("registration_token", parameters[8])
                     .build();
 
 
@@ -651,7 +684,6 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
     class FbRegistration extends AsyncTask<String, String, String> {
         ProgressDialog progress = new ProgressDialog(RegistrationFirstActivity.this);
-        ;
 
         @Override
         protected void onPreExecute() {
@@ -718,6 +750,70 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 //                application.trackEception(e, "GetResult/doInBackground", "Search_Filter", e.getMessage().toString(), mTracker);
             }
             return responseString;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+            String permissions[], int[] grantResults) {
+        if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            String imei = Utils.deviceIMEI(this);
+            String regtoken = FirebaseInstanceId.getInstance().getToken();// If request is cancelled, the result arrays are empty.
+            switch (requestCode) {
+                case PERMISSIONS_REQUEST_READ_PHONE_STATE_BASIC: {
+
+                        new RegistrationFirstActivity.RegistretionBasicInfoTask()
+                                .execute(email_edit_text.getText().toString(),
+                                        password_edit_text.getText().toString(),
+                                        name_edit_text.getText().toString(),
+                                        display_name_edit_text.getText().toString(),
+                                        "",
+                                        gender.equalsIgnoreCase("male") ? "female" : "male",
+                                        "own",
+                                        dateOfBirthEditext.getText().toString(),
+                                        imei,
+                                        regtoken);
+                        }
+                        break;
+                case PERMISSIONS_REQUEST_READ_PHONE_STATE_FB: {
+                            callFacebookAccountCreate(imei, regtoken);
+                        }
+             }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }else {
+
+            // permission denied, boo! Disable the
+            // functionality that depends on this permission.
+            Toast.makeText(RegistrationFirstActivity.this, "Permission denied to read device IMEI", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void checkPermission(int PERMISSION_CODE) {
+
+        Log.e("version", String.valueOf(Build.VERSION.SDK_INT));
+        if (ContextCompat.checkSelfPermission(RegistrationFirstActivity.this, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(RegistrationFirstActivity.this,
+                    new String[]{android.Manifest.permission.READ_PHONE_STATE}, PERMISSION_CODE);
+        } else {
+            String imei = Utils.deviceIMEI(this);
+            String regtoken = FirebaseInstanceId.getInstance().getToken();
+            if(PERMISSION_CODE == PERMISSIONS_REQUEST_READ_PHONE_STATE_BASIC) {
+                new RegistrationFirstActivity.RegistretionBasicInfoTask()
+                        .execute(email_edit_text.getText().toString(),
+                                password_edit_text.getText().toString(),
+                                name_edit_text.getText().toString(),
+                                display_name_edit_text.getText().toString(),
+                                "",
+                                gender.equalsIgnoreCase("male") ? "female" : "male",
+                                "own",
+                                dateOfBirthEditext.getText().toString(),
+                                imei,
+                                regtoken);
+            }else{
+                callFacebookAccountCreate(imei, regtoken);
+            }
         }
     }
 }
