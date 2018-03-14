@@ -296,22 +296,25 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             R.drawable.accept_icon};
 
                     viewPager = (ViewPager) findViewById(R.id.pager);
-                    if (userProfile.getProfile().getPersonalInformation().getImage().getOther().size() > 1) {
-                        userProfileImage.setVisibility(View.INVISIBLE);
-                        adapter = new ViewPagerAdapter(OwnUserProfileActivity.this,
-                                userProfile.getProfile().getPersonalInformation().getImage().getOther());
-                        viewPager.setAdapter(adapter);
+                    if(userProfile.getProfile().getPersonalInformation().getImage()!=null) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (userProfile.getProfile().getPersonalInformation().getImage().getOther().size()
+                                        > 1) {
+                                    userProfileImage.setVisibility(View.INVISIBLE);
+                                    adapter = new ViewPagerAdapter(OwnUserProfileActivity.this,
+                                            userProfile.getProfile().getPersonalInformation()
+                                                    .getImage()
+                                                    .getOther());
+                                    viewPager.setAdapter(adapter);
 
+                                } else {
+                                    userProfileImage.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        });
                     }
-                    else{
-                        userProfileImage.setVisibility(View.VISIBLE);
-                    }
-
-
-
-
-
-
                 } catch (Exception e) {
                     //Log.i("errormsg", e.getMessage().toString() + " " + res);
                     e.printStackTrace();

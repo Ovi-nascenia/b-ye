@@ -1,10 +1,12 @@
 package com.nascenia.biyeta.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -88,17 +90,33 @@ public class FavoriteActivity extends CustomActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            if (data.hasExtra("returnId")) {
-                int id = data.getIntExtra("returnId", -1);
-                for (int i = 0; i< favoriteResponse.getProfiles().size(); i++){
-                    if (favoriteResponse.getProfiles().get(i).getId() == id){
-                        favoriteResponse.getProfiles().remove(i);
-                        break;
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CODE) {
+                if (data.hasExtra("returnId")) {
+                    int id = data.getIntExtra("returnId", -1);
+                    for (int i = 0; i < favoriteResponse.getProfiles().size(); i++) {
+                        if (favoriteResponse.getProfiles().get(i).getId() == id) {
+                            favoriteResponse.getProfiles().remove(i);
+                            break;
+                        }
                     }
                 }
+                favoriteAdapter.notifyDataSetChanged();
+            }else if(requestCode == Utils.UPGRADE_REQUEST_CODE){
+                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(FavoriteActivity.this);
+                alertBuilder.setCancelable(true);
+                alertBuilder.setTitle("Upgrade successful");
+                alertBuilder.setMessage("You have upgraded your account successfully");
+                alertBuilder.setPositiveButton(android.R.string.yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+
+                            }
+                        });
+                AlertDialog alert = alertBuilder.create();
+                alert.show();
             }
-            favoriteAdapter.notifyDataSetChanged();
         }
     }
 
@@ -206,6 +224,5 @@ public class FavoriteActivity extends CustomActionBarActivity {
     public void callFavoriteAPI(){
         new LoadFavoriteDataConnection().execute(Utils.Base_URL+"/api/v1/favorites");
     }
-
 
 }

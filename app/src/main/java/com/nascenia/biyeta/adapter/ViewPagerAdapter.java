@@ -56,6 +56,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         proPics = (ImageView) itemView.findViewById(R.id.flag);
         // Capture position and set to the ImageView
 
+        proPics.getParent().requestChildFocus(proPics,proPics);
         Picasso.with(context)
                 .load(Utils.Base_URL + image.get(position))
                 .into(proPics, new Callback() {

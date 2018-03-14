@@ -1,11 +1,13 @@
 package com.nascenia.biyeta.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -445,8 +447,49 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                     ///  Toast.makeText(RequestSentFromMe.this, " sent", Toast.LENGTH_SHORT).show();
                     communicationResponse.getProfiles().get(listposition).getRequestStatus().setExpired(false);
                     communicationResponse.getProfiles().get(listposition).getRequestStatus().setMessage("আপনি যোগাযোগের  অনুরোধ  করেছেন");
-
                     communicationRequestFromMeAdapter.notifyDataSetChanged();
+                }else if (jsonObject.has("error")) {
+                    JSONObject errorObj = jsonObject.getJSONArray("error").getJSONObject(0);
+                    String msg = "Error";
+                    if (errorObj.has("show_pricing_plan")) {
+                        if (errorObj.getBoolean("show_pricing_plan")) {
+                            Toast.makeText(RequestSentFromMe.this, jsonObject.getJSONArray(
+                                    "error").getJSONObject(0).getString("detail"),
+                                    Toast.LENGTH_LONG).show();
+
+                            final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(RequestSentFromMe.this);
+                            alertBuilder.setCancelable(true);
+//                            alertBuilder.setTitle(R.string.account_recharge_title);
+                            alertBuilder.setMessage(jsonObject.getJSONArray("error").getJSONObject(0).getString("detail"));
+                            alertBuilder.setPositiveButton(R.string.see_details,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent myIntent = new Intent(RequestSentFromMe.this,
+                                                WebViewPayment.class);
+                                            startActivityForResult(myIntent, Utils.UPGRADE_REQUEST_CODE);
+                                    }
+                                });
+                            alertBuilder.setNegativeButton(R.string.not_now,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                            final AlertDialog alert = alertBuilder.create();
+                            alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                                @Override
+                                public void onShow(DialogInterface arg0) {
+                                    alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.black));
+                                    alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorPrimary));
+                                }
+                            });
+                            alert.show();
+                        }
+                    } else {
+                        Toast.makeText(RequestSentFromMe.this, jsonObject.getJSONArray("error").getJSONObject(
+                                0).getString("detail"), Toast.LENGTH_LONG).show();
+//                        msg = jsonObject.getJSONArray("error").getJSONObject(0).getString("detail");
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -464,6 +507,7 @@ public class RequestSentFromMe extends CustomActionBarActivity {
             listposition = Integer.parseInt(strings[2]);
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("profile_id", id + "")
+                    .add("new_pricing_plan", true + "")
                     .build();
 
 
@@ -486,8 +530,30 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                 return null;
 
             }
+        }
+    }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if(requestCode == Utils.UPGRADE_REQUEST_CODE){
+                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(RequestSentFromMe.this);
+                alertBuilder.setCancelable(true);
+                alertBuilder.setTitle("Upgrade successful");
+                alertBuilder.setMessage("You have upgraded your account successfully");
+                alertBuilder.setPositiveButton(android.R.string.yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+
+                            }
+                        });
+                AlertDialog alert = alertBuilder.create();
+                alert.show();
+            }
         }
     }
 

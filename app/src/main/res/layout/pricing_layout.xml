@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_stroke"
+    android:padding="3dp">
+
+    <LinearLayout
+        android:id="@+id/ln_plan_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_plan_name1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="You are enjoying "/>
+            <TextView
+                android:id="@+id/tv_plan_name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="free "
+                android:textColor="@color/black"
+                android:layout_toRightOf="@+id/tv_plan_name1"/>
+            <TextView
+                android:id="@+id/tv_plan_name3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="plan"
+                android:layout_toRightOf="@+id/tv_plan_name2"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ln_plan_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3.5"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_below="@id/ln_plan_name"
+        android:layout_marginTop="2dp">
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:textColor="@android:color/black"
+            android:background="@color/white"
+            android:layout_marginRight="0.5dp"
+            android:text="Features and access"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_weight="2.5"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/white"
+            android:text="FREE TRAIL"
+            android:maxLines="2"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:ellipsize="end"
+            android:visibility="visible"/>
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gv_pricing_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="1dp"
+        android:stretchMode="columnWidth"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="0.5dp"
+        android:numColumns="1"
+        android:layout_below="@id/ln_plan_type"/>
+
+    <TextView
+        android:id="@+id/tv_plan_suggestion_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="Please select your plan"
+        android:layout_below="@id/gv_pricing_plan"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/tv_plan_suggestion_text">
+        <TextView
+            android:id="@+id/upgrade"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="select plan"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"/>
+    </RelativeLayout>
+
+</RelativeLayout>

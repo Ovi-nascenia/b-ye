@@ -94,7 +94,7 @@
     <string name="nav_profile">প্রোফাইল</string>
     <string name="nav_inbox">ইনবক্স</string>
     <string name="nav_fav">আপনার পছন্দ</string>
-    <string name="balance_recharge">ব্যালেন্স ও রিচার্জ</string>
+    <string name="balance_recharge">আপগ্রেড</string>
     <string name="accunt_setting">অ্যাকাউন্ট সেটিংস</string>
 
     <string name="nav_about_biyeta">বিয়েটা সম্পর্কে</string>
@@ -132,6 +132,11 @@
     <string name="make_message">মেসেজ পাঠান</string>
 
     <string name="connection_again">আবারো যোগাযোগ করুন</string>
+    <string name="see_details">বিস্তারিত দেখুন</string>
+    <string name="not_now">এখন না</string>
+    <string name="upgrade_title">বিস্তারিত দেখুন</string>
+    <string name="upgrade_message">এখন না</string>
+
 
 
     <string name="privacy_policy_title">প্রাইভেসি পলিসি</string>
@@ -289,7 +294,7 @@
 
 
     <!--Account_Recharge_page-->
-    <string name="account_recharge_title">ব্যালেন্স ও রিচার্জ </string>
+    <string name="account_recharge_title">আপগ্রেড</string>
     <string name="account_recharge_currentbalance">বর্তমান ব্যালেন্স ১০০ টাকা </string>
     <string name="every_payment">প্রতিটি যোগাযোগের মূল্য ১০০ টাকা।</string>
     <string name="account_recharge_descrip1"> আপনি আরও একজনকে যোগাযোগের অনুরোধ পাঠাতে পারবেন। </string>
@@ -307,8 +312,13 @@
         ]]>
        </string>
     <string name="money_sent_procedureTitle">যেভাবে বিকাশ করবেন </string>
+    <string name="bikash_title">বিকাশের মাধ্যমে পরিশোধ করুন</string>
     <string name="bKash_precedureDescrip">যে কোন পারসোনাল অ্যাকাউন্ট থেকে পাঠানো যাবে, এজেন্ট অ্যাকাউন্ট থেকে নয়। </string>
+    <string name="bkash_amount"> বিকাশের পরিমান ২০০০ টাকা। </string>
+    <string name="bkash_account_desc"> আমাদের বিকাশ একাউন্টটি  মার্চেন্ট একাউন্ট। আপনাকে পার্সোনাল একাউন্ট থেকে বিকাশ করতে হবে।  </string>
+
     <string name="bullet_point_recharge">●</string>
+    <string name="card_string">ক্রেডিট/ডেবিট কার্ডের মাধ্যমে পরিশোধ করুন </string>
 
     <string name="no_request_from_me">
     কোন অনুরোধ নেই। \n\n
@@ -318,13 +328,19 @@
     ● বায়োডাটা খুব ভালোভাবে পুরণ করবেন। নিজের সম্পর্কে এবং আত্নীয়-স্বজন সম্পর্কে বিস্তারিত তুলে ধরবেন।\n
     ● নিয়মিত অ্যাকাউন্ট-এ লগইন করবেন যাতে আপনাকে বিপরীত পক্ষ সহজেই খুঁজে পায় । \n
     </string>
-    <string name="recharge_step1">ডায়াল করুন *২৪৭# </string>
-    <string name="recharge_step2">৩ নম্বর অপশন "পেমেন্ট" অপশনটি নির্বাচন করুন </string>
-    <string name="recharge_step3">পাঠানোর নম্বর দিনঃ 01755690000 </string>
-    <string name="recharge_step4">টাকার পরিমাণ দিন </string>
-    <string name="recharge_step5">কাউন্টার নম্বর দিনঃ ১ </string>
-    <string name="recharge_step6">রেফারেন্স নম্বর দিনঃ ১ </string>
-    <string name="recharge_step7">পিন নম্বর দিয়ে টাকা পাঠিয়ে দিন </string>
+    <string name="recharge_step1">● ডায়াল করুন *২৪৭# </string>
+    <string name="recharge_step2">● "পেমেন্ট" অপশনটি নির্বাচন করুন </string>
+    <string name="recharge_step3">● মার্চেন্ট একাউন্ট নম্বর ০১৭৫৫৬৯০০০০ দিন </string>
+    <string name="recharge_step4">● টাকার পরিমান ২০০০ টাকা লিখুন </string>
+    <string name="recharge_step5">● কাউন্টার নম্বর ১ দিন</string>
+    <string name="recharge_step6">● রেফারেন্স নম্বর ১ দিন</string>
+    <string name="recharge_step7">● পিন নম্বর দিয়ে টাকা পাঠিয়ে দিন </string>
+
+    <string name="after_bikas_text1">টাকা পাঠিয়ে আপনার </string>
+    <string name="after_bikas_text2"> ইমেইল আইডি </string>
+    <string name="after_bikas_text3"> এবং </string>
+    <string name="after_bikas_text4"> বিকাশ ট্রানজেকশন আইডি </string>
+    <string name="after_bikas_text5"> SMS করে পাঠিয়ে দিন। অথবা আমাদের ফোন করে জানান ০১৭৫৫৬৯০০০০ নম্বরে। </string>
 
     <string name="profile_request_message">আপনার কাছে বায়োডাটা দেখার অনুরোধ করেছেন</string>
     <string name="communication_request_message">আপনার কাছে যোগাযোগের  অনুরোধ করেছেন</string>
@@ -424,12 +440,19 @@
         ইন্টারনেট সংযোগ নেই। পুনরায় চেষ্টা করুন।</string>
 
     <string name="incomplete_account_dialog_message"> আপনার অ্যাকাউন্টটি অসম্পূর্ণ রয়েছে। আপনি কি আপনার অ্যাকাউন্টটি সম্পূর্ণ করতে চান?</string>
+    <string name="unregistered_facebook_account_dialog_message"> ফেইসবুক দিয়ে লগইন করার জন্য আপনাকে রেজিস্ট্রেশন করতে হবে । আপনি কি ফেইসবুক দিয়ে রেজিস্ট্রেশন করতে চান ?</string>
     <string name="title_activity_registration_user_address_information">
         আপনার যোগাযোগের তথ্য
     </string>
     <string name="thanks_msg_male">নিজের সম্পর্কে বলার জন্য ধন্যবাদ।\n আপনার স্বপ্নের রাজকন্যাকে কেমন দেখতে চান সেটা কি আমাদেরকে জানাবেন?</string>
 
     <string name="thanks_msg_female">নিজের সম্পর্কে বলার জন্য ধন্যবাদ।\n আপনার স্বপ্নের রাজপুত্রকে কেমন দেখতে চান সেটা কি আমাদেরকে জানাবেন?</string>
+    <string name="title_activity_plans">PlansActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="upgrade_msg">প্ল্যান পরিবর্তনের জন্য বা বর্তমান প্ল্যানের মেয়াদ বাড়ানোর জন্য আপগ্রেড করুন।</string>
+
 
 
 </resources>

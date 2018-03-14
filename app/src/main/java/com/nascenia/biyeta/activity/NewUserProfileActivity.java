@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -61,7 +63,6 @@ import static com.nascenia.biyeta.R.id.emoIconImage;
 
 /**
  * Created by saiful on 3/3/17.
- *
  */
 
 
@@ -77,7 +78,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
     private LinearLayout sliderDotsPanel;
-    private  int dotscount;
+    private int dotscount;
     private ImageView[] dots;
 
     private ImageView indicatorImage1, indicatorImage2, indicatorImage3, userProfileImage,
@@ -96,7 +97,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
     private ImageView profileViewerPersonImageView, selfImageView;
 
-    private CardView familyCardView, communicationCarview, otherInfoCardView, userProfileDescriptionCardview,
+    private CardView familyCardView, communicationCarview, otherInfoCardView,
+            userProfileDescriptionCardview,
             generalInfoCarView, matchUserChoiceCardView;
 
     private Button finalResultButton;
@@ -143,7 +145,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         old.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         old.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset,
+                    int positionOffsetPixels) {
 
             }
 
@@ -185,7 +188,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 //            Log.i("profileId", getIntent().getExtras().getString("id"));
 
         } else {
-            Utils.ShowAlert(NewUserProfileActivity.this, getString(R.string.no_internet_connection));
+            Utils.ShowAlert(NewUserProfileActivity.this,
+                    getString(R.string.no_internet_connection));
             finish();
         }
 
@@ -204,15 +208,21 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
     protected void onResume() {
         super.onResume();
 
+//        Intent intent = getIntent();
+//        boolean data = intent.getExtras().getBoolean("payment");
+//        data = intent.getBooleanExtra("payment", false);
+//        System.out.println("here i am");
+
         /*Google Analytics*/
-//        Log.e("new user profile", getIntent().hasExtra("user_name")?getIntent().getExtras().getString("user_name") + "'s Profile" : userProfile.getProfile().getPersonalInformation().getDisplayName() + "'s Profile");
+//        Log.e("new user profile", getIntent().hasExtrad("user_name")?getIntent().getExtras()
+// .getString("user_name") + "'s Profile" : userProfile.getProfile().getPersonalInformation()
+// .getDisplayName() + "'s Profile");
 
     }
 
     @Override
     public void finish() {
-        if(userProfile!=null)
-        {
+        if (userProfile != null) {
             if (!userProfile.getProfile().isIsFavorite()) {
                 Intent intent = new Intent();
 
@@ -226,7 +236,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         super.finish();
     }
 
-    public void backBtnAction(View v){
+    public void backBtnAction(View v) {
         finish();
     }
 
@@ -252,8 +262,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         bottomRelativeLayout = (RelativeLayout) findViewById(R.id.r1);
         coordnatelayout = (CoordinatorLayout) findViewById(R.id.coordnatelayout);
 
-        userProfileDescriptionTextViewTag = (TextView) findViewById(R.id.user_profile_description_textView_tag);
-        userProfileDescriptionCardview = (CardView) findViewById(R.id.user_profile_description_cardview);
+        userProfileDescriptionTextViewTag = (TextView) findViewById(
+                R.id.user_profile_description_textView_tag);
+        userProfileDescriptionCardview = (CardView) findViewById(
+                R.id.user_profile_description_cardview);
 
         generalInfoTagTextview = (TextView) findViewById(R.id.generalInfoTagTextview);
         generalInfoCarView = (CardView) findViewById(R.id.generalInfoCarView);
@@ -279,7 +291,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                 if (!userProfile.getProfile().isIsSmileSent()) {
 
-                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(NewUserProfileActivity.this,
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(
+                            NewUserProfileActivity.this,
                             Utils.SEND_SMILE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
@@ -297,7 +310,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 /*
                     layoutSendSmiley.setEnabled(false);
                     emoIconImageView.setImageResource(R.drawable.red_smile);
-                    sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
+                    sendEmoIconTextTag.setText(getResources().getString(R.string
+                    .after_send_smile_text));
 */
 
 
@@ -314,7 +328,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                 if (!userProfile.getProfile().isIsFavorite()) {
 
-                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(NewUserProfileActivity.this,
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(
+                            NewUserProfileActivity.this,
                             Utils.FAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
@@ -339,8 +354,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                 } else {
 
 
-
-                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(NewUserProfileActivity.this,
+                    NetWorkOperation.sendFavoriteUnFavoriteandSmileRequest(
+                            NewUserProfileActivity.this,
                             Utils.UNFAVORITE_URL,
                             userProfile.getProfile().getPersonalInformation().getId() + "",
                             "Authorization",
@@ -370,12 +385,17 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         old = (ViewPager) findViewById(R.id.viewpager);
         generalInfoRecyclerView = (RecyclerView) findViewById(R.id.user_general_info_recycler_view);
         generalInfoRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
-        matchUserChoiceRecyclerView = (RecyclerView) findViewById(R.id.match_user_choice_recyclerView);
-        matchUserChoiceRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
+        matchUserChoiceRecyclerView = (RecyclerView) findViewById(
+                R.id.match_user_choice_recyclerView);
+        matchUserChoiceRecyclerView.setLayoutManager(
+                new CustomStopScrollingRecylerLayoutManager(this));
         familyMemberInfoRecylerView = (RecyclerView) findViewById(R.id.family_info_recylerview);
-        familyMemberInfoRecylerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
-        communicationInfoRecylerview = (RecyclerView) findViewById(R.id.communication_info_recylerview);
-        communicationInfoRecylerview.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
+        familyMemberInfoRecylerView.setLayoutManager(
+                new CustomStopScrollingRecylerLayoutManager(this));
+        communicationInfoRecylerview = (RecyclerView) findViewById(
+                R.id.communication_info_recylerview);
+        communicationInfoRecylerview.setLayoutManager(
+                new CustomStopScrollingRecylerLayoutManager(this));
         otherInfoRecylerView = (RecyclerView) findViewById(R.id.other_info_recylerview);
         otherInfoRecylerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
 
@@ -383,6 +403,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         profileViewerPersonImageView = (ImageView) findViewById(R.id.viewer_image);
 
         userProfileImage = (ImageView) findViewById(R.id.user_profile_image);
+        userProfileImage.getParent().requestChildFocus(userProfileImage, userProfileImage);
         userNameTextView = (TextView) findViewById(R.id.user_name);
 
 //        userNameTextView.setText(getIntent().getExtras().getString("user_name"));
@@ -423,7 +444,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         indicatorImage3 = (ImageView) findViewById(R.id.page3);
 
 
-
     }
 
     private void fetchUserProfileDetails(final String url) {
@@ -434,7 +454,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             @Override
             public void run() {
                 try {
-                    Response response = new ResourceProvider(NewUserProfileActivity.this).fetchGetResponse(url);
+                    Response response = new ResourceProvider(
+                            NewUserProfileActivity.this).fetchGetResponse(url);
                     ResponseBody responseBody = response.body();
                     final String responseValue = responseBody.string();
 //                    Log.i("profileresponsevalue", responseValue);
@@ -462,62 +483,96 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                 favoriteImageView.setImageResource(R.drawable.red_favorite);
 
                             }
-                            if (userProfile.getProfile().getPersonalInformation().getDisplayName() != null) {
+                            if (userProfile.getProfile().getPersonalInformation().getDisplayName()
+                                    != null) {
 
                                 //favoriteImageView.setEnabled(false);
-                                if(userProfile.getProfile().getPersonalInformation().getRealName()==null){
+                                if (userProfile.getProfile().getPersonalInformation().getRealName()
+                                        == null) {
 
-                                    userNameTextView.setText(userProfile.getProfile().getPersonalInformation().getDisplayName());
+                                    userNameTextView.setText(
+                                            userProfile.getProfile().getPersonalInformation()
+                                                    .getDisplayName());
 
+                                } else if (
+                                        userProfile.getProfile().getPersonalInformation()
+                                                .getRealName()
+                                                != null) {
+                                    userNameTextView.setText(
+                                            userProfile.getProfile().getPersonalInformation()
+                                                    .getRealName());
                                 }
-
-                                else if(userProfile.getProfile().getPersonalInformation().getRealName()!=null)
-                                    userNameTextView.setText(userProfile.getProfile().getPersonalInformation().getRealName());
-                                if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
-                                    if (userProfile.getProfile().getPersonalInformation().getImage().getOther().size() > 1) {
-                                        dotscount = userProfile.getProfile().getPersonalInformation().getImage().getOther().size();
+                                if (userProfile.getProfile().getPersonalInformation().getImage()
+                                        != null) {
+                                    if (userProfile.getProfile().getPersonalInformation()
+                                            .getImage().getOther().size()
+                                            > 1) {
+                                        dotscount =
+                                                userProfile.getProfile().getPersonalInformation()
+                                                        .getImage().getOther().size();
                                         dots = new ImageView[dotscount];
 
                                         for (int i = 0; i < dotscount; i++) {
                                             dots[i] = new ImageView(getApplicationContext());
-                                            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.default_dot));
-                                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                            dots[i].setImageDrawable(ContextCompat.getDrawable(
+                                                    getApplicationContext(),
+                                                    R.drawable.default_dot));
+                                            LinearLayout.LayoutParams params =
+                                                    new LinearLayout.LayoutParams(
+                                                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                            LinearLayout.LayoutParams.WRAP_CONTENT);
                                             params.setMargins(6, 4, 6, 4);
                                             sliderDotsPanel.addView(dots[i], params);
                                             dots[i].getLayoutParams().height = 16;
                                             dots[i].getLayoutParams().width = 16;
                                         }
 
-                                        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.selected_dot));
-                                        if(viewPager!=null)
-                                        {
+                                        dots[0].setImageDrawable(
+                                                ContextCompat.getDrawable(getApplicationContext(),
+                                                        R.drawable.selected_dot));
+                                        if (viewPager != null) {
                                             viewPager.addOnPageChangeListener(
 
                                                     new ViewPager.OnPageChangeListener() {
-                                                        private int fromPosition = 0,previousState=0;
+                                                        private int fromPosition = 0,
+                                                                previousState = 0;
+
                                                         @Override
-                                                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                                                        public void onPageScrolled(int position,
+                                                                float positionOffset,
+                                                                int positionOffsetPixels) {
                                                             fromPosition = position;
                                                         }
 
                                                         @Override
                                                         public void onPageSelected(int position) {
                                                             for (int i = 0; i < dotscount; i++) {
-                                                                dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.default_dot));
+                                                                dots[i].setImageDrawable(
+                                                                        ContextCompat.getDrawable(
+                                                                                getApplicationContext(),
+                                                                                R.drawable
+                                                                                        .default_dot));
                                                             }
-                                                            dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.selected_dot));
+                                                            dots[position].setImageDrawable(
+                                                                    ContextCompat.getDrawable(
+                                                                            getApplicationContext(),
+                                                                            R.drawable
+                                                                                    .selected_dot));
                                                         }
 
                                                         @Override
-                                                        public void onPageScrollStateChanged(int state) {
-                                                            if(state==0 && previousState!=2&&fromPosition==dotscount-1)
-                                                            {
-                                                                viewPager.setCurrentItem(0,true);
+                                                        public void onPageScrollStateChanged(
+                                                                int state) {
+                                                            if (state == 0 && previousState != 2
+                                                                    && fromPosition
+                                                                    == dotscount - 1) {
+                                                                viewPager.setCurrentItem(0, true);
                                                                 return;
-                                                            }
-                                                            else if(state==0 && previousState!=2&&fromPosition==0)
-                                                            {
-                                                                viewPager.setCurrentItem(dotscount-1,true);
+                                                            } else if (state == 0
+                                                                    && previousState != 2
+                                                                    && fromPosition == 0) {
+                                                                viewPager.setCurrentItem(
+                                                                        dotscount - 1, true);
                                                                 return;
                                                             }
 
@@ -532,7 +587,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             }
 
-                            mTracker.setScreenName(userProfile.getProfile().getPersonalInformation().getDisplayName() + "'s Profile");
+                            mTracker.setScreenName(
+                                    userProfile.getProfile().getPersonalInformation()
+                                            .getDisplayName()
+                                            + "'s Profile");
 //        Log.i("user_name", getIntent().getExtras().getString("user_name"));
                             mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
@@ -540,30 +598,39 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                 layoutSendSmiley.setEnabled(false);
                                 emoIconImageView.setImageResource(R.drawable.red_smile);
-                                sendEmoIconTextTag.setText(getResources().getString(R.string.after_send_smile_text));
+                                sendEmoIconTextTag.setText(
+                                        getResources().getString(R.string.after_send_smile_text));
                             }
 
 
-                            if (userProfile.getProfile().getPersonalInformation().getAboutYourself() != null) {
+                            if (userProfile.getProfile().getPersonalInformation().getAboutYourself()
+                                    != null) {
 
                                 userProfileDescriptionTextViewTag.setVisibility(View.VISIBLE);
                                 userProfileDescriptionCardview.setVisibility(View.VISIBLE);
-                                userProfileDescriptionText.setText(userProfile.getProfile().getPersonalInformation().getAboutYourself());
+                                userProfileDescriptionText.setText(
+                                        userProfile.getProfile().getPersonalInformation()
+                                                .getAboutYourself());
                             }
 
 
-                            if (userProfile.getProfile().getPersonalInformation().getImage() != null) {
+                            if (userProfile.getProfile().getPersonalInformation().getImage()
+                                    != null) {
 //
 
                                 Picasso.with(NewUserProfileActivity.this)
-                                        .load(Utils.Base_URL + userProfile.getProfile().getPersonalInformation().getImage().getProfilePicture())
+                                        .load(Utils.Base_URL
+                                                + userProfile.getProfile().getPersonalInformation
+                                                ().getImage().getProfilePicture())
                                         .into(userProfileImage, new Callback() {
                                             @Override
                                             public void onSuccess() {
                                                 userProfileImage.post(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        Utils.scaleImage(NewUserProfileActivity.this, 2f, userProfileImage);
+                                                        Utils.scaleImage(
+                                                                NewUserProfileActivity.this, 2f,
+                                                                userProfileImage);
                                                     }
                                                 });
                                             }
@@ -580,14 +647,22 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                         .into(profileViewerPersonImageView);
 
 
-                            } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
-                                    (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER))) {
+                            } else if ((userProfile.getProfile().getPersonalInformation().getImage()
+                                    == null) &
+                                    (userProfile.getProfile().getPersonalInformation().getGender
+                                            ().equals(
+                                            Utils.MALE_GENDER))) {
                                 userProfileImage.setImageResource(R.drawable.profile_icon_male);
-                                profileViewerPersonImageView.setImageResource(R.drawable.profile_icon_male);
-                            } else if ((userProfile.getProfile().getPersonalInformation().getImage() == null) &
-                                    (userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.FEMALE_GENDER))) {
+                                profileViewerPersonImageView.setImageResource(
+                                        R.drawable.profile_icon_male);
+                            } else if ((userProfile.getProfile().getPersonalInformation().getImage()
+                                    == null) &
+                                    (userProfile.getProfile().getPersonalInformation().getGender
+                                            ().equals(
+                                            Utils.FEMALE_GENDER))) {
                                 userProfileImage.setImageResource(R.drawable.profile_icon_female);
-                                profileViewerPersonImageView.setImageResource(R.drawable.profile_icon_female);
+                                profileViewerPersonImageView.setImageResource(
+                                        R.drawable.profile_icon_female);
                             } else {
                             }
 
@@ -606,7 +681,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                             matchUserChoiceTextViewTag.setVisibility(View.VISIBLE);
                             matchUserChoiceCardView.setVisibility(View.VISIBLE);
-                            SendRequestFragmentView.setDataonMatchUserChoiceRecylerView(getBaseContext(),
+                            SendRequestFragmentView.setDataonMatchUserChoiceRecylerView(
+                                    getBaseContext(),
                                     userProfile, matchUserChoiceRecyclerView);
 
 
@@ -615,7 +691,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                 /*otherInfoTagTextview.setVisibility(View.VISIBLE);
                                 otherInfoCardView.setVisibility(View.VISIBLE);
                                 */
-                                SendRequestFragmentView.setDataonOtherInfoRecylerView(getBaseContext(),
+                                SendRequestFragmentView.setDataonOtherInfoRecylerView(
+                                        getBaseContext(),
                                         userProfile,
                                         otherInfoRecylerView,
                                         otherInfoTagTextview,
@@ -636,42 +713,47 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                             null)) {
 
 
-                                // Toast.makeText(getBaseContext(), "No Match Found", Toast.LENGTH_LONG).show();
+                                // Toast.makeText(getBaseContext(), "No Match Found", Toast
+                                // .LENGTH_LONG).show();
                                 finalResultButton.setTag(Utils.sendBiodataRequest);
 
-                            }else if(userProfile.getProfile().getRequestStatus().getName().
+                            } else if (userProfile.getProfile().getRequestStatus().getName().
                                     equals("profile request") &&
                                     (userProfile.getProfile().getRequestStatus().getSender() ==
                                             Integer.parseInt(sharePref.get_data("user_id"))) &&
                                     (!userProfile.getProfile().getRequestStatus().isAccepted()) &&
                                     (!userProfile.getProfile().getRequestStatus().isRejected())
-                                    ){
+                                    ) {
 
 
                                /* familyInfoTagTextView.setVisibility(View.VISIBLE);
                                 familyCardView.setVisibility(View.VISIBLE);
-                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView
+                                (getBaseContext(),
                                         userProfile, familyMemberInfoRecylerView);*/
 
 
-                                finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                finalResultButton.setText(
+                                        userProfile.getProfile().getRequestStatus().getMessage());
                                 finalResultButton.setEnabled(false);
 
-                            } else if(userProfile.getProfile().getRequestStatus().getName().
+                            } else if (userProfile.getProfile().getRequestStatus().getName().
                                     equals("profile request") &&
                                     (userProfile.getProfile().getRequestStatus().getSender() ==
                                             Integer.parseInt(sharePref.get_data("user_id"))) &&
                                     (!userProfile.getProfile().getRequestStatus().isAccepted()) &&
                                     (userProfile.getProfile().getRequestStatus().isRejected())
-                                    ){
+                                    ) {
 
 
                                 /*familyInfoTagTextView.setVisibility(View.VISIBLE);
                                 familyCardView.setVisibility(View.VISIBLE);
-                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView
+                                (getBaseContext(),
                                         userProfile, familyMemberInfoRecylerView);*/
 
-                                finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                finalResultButton.setText(
+                                        userProfile.getProfile().getRequestStatus().getMessage());
                                 finalResultButton.setEnabled(false);
 
                             } else if (userProfile.getProfile().getRequestStatus().getName().
@@ -685,12 +767,14 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                 familyInfoTagTextView.setVisibility(View.VISIBLE);
                                 familyCardView.setVisibility(View.VISIBLE);
-                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(
+                                        getBaseContext(),
                                         userProfile, familyMemberInfoRecylerView);
 
                                 finalResultButton.setEnabled(true);
                                 finalResultButton.setVisibility(View.VISIBLE);
-                                finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                finalResultButton.setText(
+                                        userProfile.getProfile().getRequestStatus().getMessage());
                                 finalResultButton.setTag(Utils.sendCommunicationRequest);
 
                             }
@@ -710,7 +794,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                 /*familyInfoTagTextView.setVisibility(View.VISIBLE);
                                 familyCardView.setVisibility(View.VISIBLE);
-                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView
+                                (getBaseContext(),
                                         userProfile, familyMemberInfoRecylerView);*/
                                 Toast.makeText(getApplicationContext(),
                                         getResources().getString(R.string.profile_request_message),
@@ -732,11 +817,13 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     ) {
 
                                 //abaro profile request send r kaj hobe
-                                //Toast.makeText(getBaseContext(), " abaro profile request send r kaj hobe", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getBaseContext(), " abaro profile request send r
+                                // kaj hobe", Toast.LENGTH_LONG).show();
 
                                 finalResultButton.setVisibility(View.VISIBLE);
                                 finalResultButton.setEnabled(true);
-                                finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                finalResultButton.setText(
+                                        userProfile.getProfile().getRequestStatus().getMessage());
                                 finalResultButton.setTag(Utils.sendBiodataRequest);
 
                             }
@@ -748,17 +835,21 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                             //no communication connection between sender and reciver
                             if (userProfile.getProfile().getRequestStatus().getName().
                                     equals("communication request") &&
-                                    (userProfile.getProfile().getRequestStatus().getCommunicationRequestId() == null)
+                                    (userProfile.getProfile().getRequestStatus()
+                                            .getCommunicationRequestId()
+                                            == null)
                                     ) {
 
                                 familyInfoTagTextView.setVisibility(View.VISIBLE);
                                 familyCardView.setVisibility(View.VISIBLE);
-                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(
+                                        getBaseContext(),
                                         userProfile, familyMemberInfoRecylerView);
 
                                 finalResultButton.setEnabled(true);
                                 finalResultButton.setVisibility(View.VISIBLE);
-                                finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                finalResultButton.setText(
+                                        userProfile.getProfile().getRequestStatus().getMessage());
                                 finalResultButton.setTag(Utils.sendCommunicationRequest);
 
                             } else {
@@ -773,13 +864,15 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                     familyInfoTagTextView.setVisibility(View.VISIBLE);
                                     familyCardView.setVisibility(View.VISIBLE);
-                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(
+                                            getBaseContext(),
                                             userProfile, familyMemberInfoRecylerView);
 
 
                                     communicationTagTextview.setVisibility(View.VISIBLE);
                                     communicationCarview.setVisibility(View.VISIBLE);
-                                    SendRequestFragmentView.setDataOnCommunincationRecylerView(getBaseContext(),
+                                    SendRequestFragmentView.setDataOnCommunincationRecylerView(
+                                            getBaseContext(),
                                             userProfile, communicationInfoRecylerview);
 
 
@@ -788,8 +881,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
                                     acceptImageView.setImageResource(R.drawable.envelope_icon);
                                     cancelImageView.setImageResource(R.drawable.phone_icon);
-                                    acceptTextView.setText(getResources().getString(R.string.make_message));
-                                    cancelTextView.setText(getResources().getString(R.string.make_call));
+                                    acceptTextView.setText(
+                                            getResources().getString(R.string.make_message));
+                                    cancelTextView.setText(
+                                            getResources().getString(R.string.make_call));
 
                                     acceptImageView.setTag(Utils.sendmessage);
                                     cancelImageView.setTag(Utils.call);
@@ -797,17 +892,23 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                         equals("communication request") &&
                                         (userProfile.getProfile().getRequestStatus().getSender() ==
                                                 Integer.parseInt(sharePref.get_data("user_id"))) &&
-                                        (userProfile.getProfile().getRequestStatus().isRejected())) {
+                                        (userProfile.getProfile().getRequestStatus().isRejected()
+                                        )) {
 
-                                    // Toast.makeText(getBaseContext(), "apnar communication request reject hoise", Toast.LENGTH_LONG).show();
-                                    //set message : apnar communication request reject hoise,btn action off
-                                    finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                    // Toast.makeText(getBaseContext(), "apnar communication
+                                    // request reject hoise", Toast.LENGTH_LONG).show();
+                                    //set message : apnar communication request reject hoise,btn
+                                    // action off
+                                    finalResultButton.setText(
+                                            userProfile.getProfile().getRequestStatus()
+                                                    .getMessage());
                                     finalResultButton.setEnabled(false);
 
 
                                     familyInfoTagTextView.setVisibility(View.VISIBLE);
                                     familyCardView.setVisibility(View.VISIBLE);
-                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(
+                                            getBaseContext(),
                                             userProfile, familyMemberInfoRecylerView);
 
                                 } else if (userProfile.getProfile().getRequestStatus().getName().
@@ -815,19 +916,25 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                         (userProfile.getProfile().getRequestStatus().getSender() ==
                                                 Integer.parseInt(sharePref.get_data("user_id"))) &&
                                         (!userProfile.getProfile().getRequestStatus().isAccepted()
-                                                && (!userProfile.getProfile().getRequestStatus().isRejected()))) {
+                                                && (!userProfile.getProfile().getRequestStatus()
+                                                .isRejected()))) {
 
 
-                                    //set message : already communication resquest send,btn action off
-                                    //  Toast.makeText(getBaseContext(), " already communication resquest send", Toast.LENGTH_LONG).show();
+                                    //set message : already communication resquest send,btn
+                                    // action off
+                                    //  Toast.makeText(getBaseContext(), " already communication
+                                    // resquest send", Toast.LENGTH_LONG).show();
 
                                     familyInfoTagTextView.setVisibility(View.VISIBLE);
                                     familyCardView.setVisibility(View.VISIBLE);
-                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(
+                                            getBaseContext(),
                                             userProfile, familyMemberInfoRecylerView);
 
 
-                                    finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                    finalResultButton.setText(
+                                            userProfile.getProfile().getRequestStatus()
+                                                    .getMessage());
                                     finalResultButton.setEnabled(false);
 
 
@@ -836,7 +943,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                 //reciver = appuser
                                 else if (userProfile.getProfile().getRequestStatus().getName().
                                         equals("communication request") &&
-                                        (userProfile.getProfile().getRequestStatus().getReceiver() ==
+                                        (userProfile.getProfile().getRequestStatus().getReceiver()
+                                                ==
                                                 Integer.parseInt(sharePref.get_data("user_id"))) &&
                                         (userProfile.getProfile().getRequestStatus().isAccepted())
                                         ) {
@@ -846,8 +954,10 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     requestSendButtonsLayout.setVisibility(View.VISIBLE);
                                     acceptImageView.setImageResource(R.drawable.envelope_icon);
                                     cancelImageView.setImageResource(R.drawable.phone_icon);
-                                    acceptTextView.setText(getResources().getString(R.string.make_message));
-                                    cancelTextView.setText(getResources().getString(R.string.make_call));
+                                    acceptTextView.setText(
+                                            getResources().getString(R.string.make_message));
+                                    cancelTextView.setText(
+                                            getResources().getString(R.string.make_call));
 
                                     acceptImageView.setTag(Utils.sendmessage);
                                     cancelImageView.setTag(Utils.call);
@@ -855,51 +965,63 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                     familyInfoTagTextView.setVisibility(View.VISIBLE);
                                     familyCardView.setVisibility(View.VISIBLE);
-                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(
+                                            getBaseContext(),
                                             userProfile, familyMemberInfoRecylerView);
 
 
                                     communicationTagTextview.setVisibility(View.VISIBLE);
                                     communicationCarview.setVisibility(View.VISIBLE);
-                                    SendRequestFragmentView.setDataOnCommunincationRecylerView(getBaseContext(),
+                                    SendRequestFragmentView.setDataOnCommunincationRecylerView(
+                                            getBaseContext(),
                                             userProfile, communicationInfoRecylerview);
 
                                 } else if (userProfile.getProfile().getRequestStatus().getName().
                                         equals("communication request") &&
-                                        (userProfile.getProfile().getRequestStatus().getReceiver() ==
+                                        (userProfile.getProfile().getRequestStatus().getReceiver()
+                                                ==
                                                 Integer.parseInt(sharePref.get_data("user_id"))) &&
-                                        (userProfile.getProfile().getRequestStatus().isRejected())) {
+                                        (userProfile.getProfile().getRequestStatus().isRejected()
+                                        )) {
 
 
                                     //send communication request again
-                                    // Toast.makeText(getBaseContext(), " send communication request again", Toast.LENGTH_LONG).show();
+                                    // Toast.makeText(getBaseContext(), " send communication
+                                    // request again", Toast.LENGTH_LONG).show();
 
 
                                     familyInfoTagTextView.setVisibility(View.VISIBLE);
                                     familyCardView.setVisibility(View.VISIBLE);
-                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(
+                                            getBaseContext(),
                                             userProfile, familyMemberInfoRecylerView);
 
                                     finalResultButton.setEnabled(true);
                                     finalResultButton.setVisibility(View.VISIBLE);
-                                    finalResultButton.setText(userProfile.getProfile().getRequestStatus().getMessage());
+                                    finalResultButton.setText(
+                                            userProfile.getProfile().getRequestStatus()
+                                                    .getMessage());
                                     finalResultButton.setTag(Utils.sendCommunicationRequest);
 
 
                                 } else if (userProfile.getProfile().getRequestStatus().getName().
                                         equals("communication request") &&
-                                        (userProfile.getProfile().getRequestStatus().getReceiver() ==
+                                        (userProfile.getProfile().getRequestStatus().getReceiver()
+                                                ==
                                                 Integer.parseInt(sharePref.get_data("user_id"))) &&
                                         (!userProfile.getProfile().getRequestStatus().isAccepted()
-                                                && (!userProfile.getProfile().getRequestStatus().isRejected()))) {
+                                                && (!userProfile.getProfile().getRequestStatus()
+                                                .isRejected()))) {
 
                                     familyInfoTagTextView.setVisibility(View.VISIBLE);
                                     familyCardView.setVisibility(View.VISIBLE);
-                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(getBaseContext(),
+                                    SendRequestFragmentView.setDataonFamilyMemberInfoRecylerView(
+                                            getBaseContext(),
                                             userProfile, familyMemberInfoRecylerView);
 
                                     Toast.makeText(getApplicationContext(),
-                                            getResources().getString(R.string.communication_request_message),
+                                            getResources().getString(
+                                                    R.string.communication_request_message),
                                             Toast.LENGTH_LONG).show();
 
 
@@ -912,35 +1034,47 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
                             }
-                            if (progressDialog.isShowing()){
+                            if (progressDialog.isShowing()) {
                                 progressDialog.dismiss();
                             }
                         }
                     });
 
 
-
-
-                //added by masum
+                    //added by masum
                     viewPager = (ViewPager) findViewById(R.id.pager);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
-                    if (userProfile.getProfile().getPersonalInformation().getImage().getOther().size()>1){
-                        userProfileImage.setVisibility(View.INVISIBLE);
-                        adapter = new ViewPagerAdapter(NewUserProfileActivity.this,
-                                userProfile.getProfile().getPersonalInformation().getImage().getOther());
-                        viewPager.setAdapter(adapter);
+                            if (userProfile.getProfile().getPersonalInformation().getImage()
+                                    != null) {
+                                if (userProfile.getProfile().getPersonalInformation().getImage()
+                                        .getOther().size()
 
-                    }
-                    else{
-                        userProfileImage.setVisibility(View.VISIBLE);
-                    }
+                                        > 1) {
 
-                ////
+                                    userProfileImage.setVisibility(View.INVISIBLE);
+                                }
+
+                                adapter = new ViewPagerAdapter(NewUserProfileActivity.this,
+                                        userProfile.getProfile().getPersonalInformation().getImage()
+                                                .getOther());
+                                viewPager.setAdapter(adapter);
+
+                            } else {
+                                userProfileImage.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
+
+                    ////
 
 
                 } catch (Exception e) {
                     e.printStackTrace();
-//                    application.trackEception(e, "fetchUserProfileDetails", "NewUserProfileActivity", e.getMessage().toString(), mTracker);
+//                    application.trackEception(e, "fetchUserProfileDetails",
+// "NewUserProfileActivity", e.getMessage().toString(), mTracker);
                 }
             }
         }).start();
@@ -949,51 +1083,59 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
     @Override
-    public void onClick(View v){
+    public void onClick(View v) {
 
 
-        if (v.getTag().equals(Utils.profileRequestAccept)){
+        if (v.getTag().equals(Utils.profileRequestAccept)) {
 
             new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
-                            userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/accept",
+                            userProfile.getProfile().getRequestStatus().getProfileRequestId() +
+                            "/accept",
                     getResources().getString(R.string.send_communication_request_text),
                     Utils.sendCommunicationRequest,
                     Utils.profileRequestAccept);
 
-            application.setEvent("Action", "Click", userProfile.getProfile().getRequestStatus().getMessage(), mTracker);
+            application.setEvent("Action", "Click",
+                    userProfile.getProfile().getRequestStatus().getMessage(), mTracker);
 
         } else if (v.getTag().equals(Utils.profileRequestCancel)) {
 
 
             new SendRequestTask().execute(Utils.PROFILE_REQUEST_URL +
-                            userProfile.getProfile().getRequestStatus().getProfileRequestId() + "/reject",
+                            userProfile.getProfile().getRequestStatus().getProfileRequestId() +
+                            "/reject",
                     getResources().getString(R.string.biodata_request_text),
                     Utils.sendBiodataRequest,
                     Utils.profileRequestCancel);
 
-            application.setEvent("Action", "Click", userProfile.getProfile().getRequestStatus().getMessage(), mTracker);
+            application.setEvent("Action", "Click",
+                    userProfile.getProfile().getRequestStatus().getMessage(), mTracker);
 
-        } else if (v.getTag().equals(Utils.sendCommunicationRequest)){
-
+        } else if (v.getTag().equals(Utils.sendCommunicationRequest)) {
+/////////////////////////////
             NetWorkOperation.createCommunicationReqeust(NewUserProfileActivity.this,
                     Utils.COMMUNICATION_REQUEST_URL,
                     userProfile.getProfile().getPersonalInformation().getId() + "",
                     finalResultButton,
-                    getResources().getString(R.string.after_sending_communication_request_text), application, mTracker);
+                    getResources().getString(R.string.after_sending_communication_request_text),
+                    application, mTracker);
 
-            application.setEvent("Action", "Click", userProfile.getProfile().getRequestStatus().getMessage(), mTracker);
+            application.setEvent("Action", "Click",
+                    userProfile.getProfile().getRequestStatus().getMessage(), mTracker);
 
 
         } else if (v.getTag().equals(Utils.sendBiodataRequest)) {
 
-
+/////////////////////////
             NetWorkOperation.createProfileReqeust(NewUserProfileActivity.this,
                     Utils.PROFILES_URL + userProfile.getProfile().getPersonalInformation().getId()
                             + "/profile_request",
                     finalResultButton,
-                    getResources().getString(R.string.after_sending_biodata_request_text), application, mTracker);
+                    getResources().getString(R.string.after_sending_biodata_request_text),
+                    application, mTracker);
 
-            application.setEvent("Action", "Click", userProfile.getProfile().getRequestStatus().getMessage(), mTracker);
+            application.setEvent("Action", "Click",
+                    userProfile.getProfile().getRequestStatus().getMessage(), mTracker);
 
 
         } else if (v.getTag().equals(Utils.commRequestAccept)) {
@@ -1015,21 +1157,25 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
 
             new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL +
-                            userProfile.getProfile().getRequestStatus().getCommunicationRequestId() + "/reject",
+                            userProfile.getProfile().getRequestStatus().getCommunicationRequestId()
+                            + "/reject",
                     getResources().getString(R.string.send_communication_request_text),
                     Utils.sendCommunicationRequest,
                     Utils.commRequestCancel);
 
-            application.setEvent("Action", "Click", userProfile.getProfile().getRequestStatus().getMessage(), mTracker);
+            application.setEvent("Action", "Click",
+                    userProfile.getProfile().getRequestStatus().getMessage(), mTracker);
 
 
         } else if (v.getTag().equals(Utils.sendmessage)) {
 
             startActivity(new Intent(NewUserProfileActivity.this, InboxSingleChat.class)
                     .putExtra("sender_id", userProfile.getProfile().getRequestStatus().getSender())
-                    .putExtra("receiver_id", userProfile.getProfile().getRequestStatus().getReceiver())
+                    .putExtra("receiver_id",
+                            userProfile.getProfile().getRequestStatus().getReceiver())
                     .putExtra("current_user", Integer.parseInt(sharePref.get_data("user_id")))
-                    .putExtra("userName", userProfile.getProfile().getPersonalInformation().getDisplayName())
+                    .putExtra("userName",
+                            userProfile.getProfile().getPersonalInformation().getDisplayName())
             );
 
             application.setEvent("Action", "Click", "Send Message", mTracker);
@@ -1059,17 +1205,16 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                 return;
             }
             application.setEvent("Action", "Click", "Phone Called", mTracker);
-            TelephonyManager telMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+            TelephonyManager telMgr = (TelephonyManager) this.getSystemService(
+                    Context.TELEPHONY_SERVICE);
             int simState = telMgr.getSimState();
-            if(simState==TelephonyManager.SIM_STATE_ABSENT) {
+            if (simState == TelephonyManager.SIM_STATE_ABSENT) {
                 Toast.makeText(this, "সিম কার্ড নেই", Toast.LENGTH_LONG).show();
-            }
-            else if(simState==TelephonyManager.SIM_STATE_UNKNOWN)
-            {
-                Toast.makeText(this,"সিম কার্ড নেই",Toast.LENGTH_LONG).show();
-            }
-            else
+            } else if (simState == TelephonyManager.SIM_STATE_UNKNOWN) {
+                Toast.makeText(this, "সিম কার্ড নেই", Toast.LENGTH_LONG).show();
+            } else {
                 startActivity(intent);
+            }
         }
     }
 
@@ -1149,11 +1294,11 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
             super.onPostExecute(s);
 
 
-
             try {
 
                 if (s == null) {
-                    Utils.ShowAlert(NewUserProfileActivity.this, getResources().getString(R.string.no_internet_connection));
+                    Utils.ShowAlert(NewUserProfileActivity.this,
+                            getResources().getString(R.string.no_internet_connection));
                 } else {
 
                     JSONObject jsonObject = new JSONObject(s);
@@ -1172,11 +1317,14 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                         if (jsonObject.has("message")) {
                             Toast.makeText(getApplicationContext(),
-                                    jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"),
+                                    jsonObject.getJSONArray("message").getJSONObject(0).getString(
+                                            "detail"),
                                     Toast.LENGTH_LONG).show();
 
-                            if(jsonObject.getJSONArray("message").getJSONObject(0).getString("profile_request_already_rejected")!=null||jsonObject.getJSONArray("message").getJSONObject(0).getString("profile_request_already_accepted")!=null)
-                            {
+                            if (jsonObject.getJSONArray("message").getJSONObject(0).getString(
+                                    "profile_request_already_rejected") != null
+                                    || jsonObject.getJSONArray("message").getJSONObject(
+                                    0).getString("profile_request_already_accepted") != null) {
                                 finish();
                                 startActivity(getIntent());
                             }
@@ -1197,7 +1345,8 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                         if (jsonObject.has("message")) {
                             Toast.makeText(getApplicationContext(),
-                                    jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"),
+                                    jsonObject.getJSONArray("message").getJSONObject(0).getString(
+                                            "detail"),
                                     Toast.LENGTH_LONG).show();
                         }
 
@@ -1211,7 +1360,6 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                 e.printStackTrace();
 //                application.trackEception(e, "SendRequestTask/onPostExecute", "NewUserProfileActivity", e.getMessage().toString(), mTracker);
             }
-
 
 
             try {
@@ -1229,4 +1377,27 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK)
+        {
+            if(requestCode == Utils.UPGRADE_REQUEST_CODE)
+            {
+                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(NewUserProfileActivity.this);
+                alertBuilder.setCancelable(true);
+                alertBuilder.setTitle("Upgrade successful");
+                alertBuilder.setMessage("You have upgraded your account successfully");
+                alertBuilder.setPositiveButton(android.R.string.yes,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                        }
+                    });
+                AlertDialog alert = alertBuilder.create();
+                alert.show();
+            }
+        }
+    }
 }

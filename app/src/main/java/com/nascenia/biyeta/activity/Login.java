@@ -102,6 +102,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     ///sub url
     String SUB_URL = "sign-in";
     OkHttpClient client;
+    private AlertDialog.Builder builder;
 
 
     @Override
@@ -151,8 +152,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 // No explanation needed, we can request the permission.
 
                 ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                        999);
+                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_PHONE_STATE},
+                        1001);
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
@@ -383,70 +384,88 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
             try {
                 JSONObject jsonObject = new JSONObject(s);
-                if (Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_ban")) == true) {
-                    buttonSubmit.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.GONE);
-                    LoginManager.getInstance().logOut();
-                    Utils.ShowAlert(Login.this, getString(R.string.banned_profile_message));
+                if(jsonObject.has("login_information")) {
+                    if (Boolean.parseBoolean(
+                            jsonObject.getJSONObject("login_information").getString("is_ban"))
+                            == true) {
+                        buttonSubmit.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        LoginManager.getInstance().logOut();
+                        Utils.ShowAlert(Login.this, getString(R.string.banned_profile_message));
 
-                } else if (Boolean.parseBoolean(jsonObject.getJSONObject("login_information").getString("is_active")) == false) {
-                    new AlertDialog.Builder(context)
+                    } else if (Boolean.parseBoolean(
+                            jsonObject.getJSONObject("login_information").getString("is_active"))
+                            == false) {
+                        new AlertDialog.Builder(context)
 //                .setTitle("Error")
-                            .setMessage("আপনার অ্যাকাউন্টটি ডিঅ্যাক্টিভেট ছিল। আপনি কি এখন অ্যাক্টিভেট করতে চান?")
-                            .setCancelable(false)
-                            .setPositiveButton("হ্যা, অ্যাক্টিভেট করব", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    new Login.LoginRequestForInactiveUser().execute();
-                                    dialog.dismiss();
+                                .setMessage(
+                                        "আপনার অ্যাকাউন্টটি ডিঅ্যাক্টিভেট ছিল। আপনি কি এখন অ্যাক্টিভেট করতে চান?")
 
-                                }
-                            })
-                            .setNegativeButton("না, সাইন আউট করব", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    buttonSubmit.setVisibility(View.VISIBLE);
-                                    progressBar.setVisibility(View.GONE);
-                                    dialog.dismiss();
-                                }
-                            })
-                            .show();
-                } else if (jsonObject.has("message")) {
-                    Utils.ShowAlert(Login.this, jsonObject.getJSONObject("message").get("detail").toString());
-                    LoginManager.getInstance().logOut();
-                    buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
-                } else {
-                    Gson gson = new Gson();
-                    InputStream is = new ByteArrayInputStream(s.getBytes());
-                    InputStreamReader isr = new InputStreamReader(is);
-                    LoginInformation response = gson.fromJson(isr, LoginInformation.class);
+                                .setCancelable(false)
+                                .setPositiveButton("হ্যা, অ্যাক্টিভেট করব",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                new Login.LoginRequestForInactiveUser().execute();
+                                                dialog.dismiss();
 
-
-                    //Toast.makeText(Login.this,R.string.incomplete_profile_message,Toast.LENGTH_LONG).show();
-                    // LoginManager.getInstance().logOut();
-
-
-                    try {
+                                            }
+                                        })
+                                .setNegativeButton("না, সাইন আউট করব",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                buttonSubmit.setVisibility(View.VISIBLE);
+                                                progressBar.setVisibility(View.GONE);
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                .show();
+                    } else if (jsonObject.has("message")) {
+                        Utils.ShowAlert(Login.this, jsonObject.getJSONObject("message").get(
+                                "detail").toString());
+                        LoginManager.getInstance().logOut();
+                        buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
+                    } else {
+                        Gson gson = new Gson();
+                        InputStream is = new ByteArrayInputStream(s.getBytes());
+                        InputStreamReader isr = new InputStreamReader(is);
+                        LoginInformation response = gson.fromJson(isr, LoginInformation.class);
 
 
-                        SharePref sharePref = new SharePref(Login.this);
+                        //Toast.makeText(Login.this,R.string.incomplete_profile_message,Toast
+                        // .LENGTH_LONG).show();
+                        // LoginManager.getInstance().logOut();
 
-                        sharePref.set_data("token", response.getLoginInformation().getAuthToken());
-                        sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
-                        sharePref.set_data("profile_picture", response.getLoginInformation().getProfilePicture());
-                        sharePref.set_data("gender", response.getLoginInformation().getGender());
-                        sharePref.set_data("display_name", response.getLoginInformation().getDisplayName());
-                        sharePref.set_data("real_name", response.getLoginInformation().getRealName());
-                        sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
 
-                        gender = response.getLoginInformation().getGender();
-                        currentMobileSignupStep = response.getLoginInformation().getStep();
+                        try {
 
-                        //check display name
 
-                        // check the mobile verify screen
+                            SharePref sharePref = new SharePref(Login.this);
 
-                        //legacy code
+                            sharePref.set_data("token",
+                                    response.getLoginInformation().getAuthToken());
+                            sharePref.set_data("user_id",
+                                    response.getLoginInformation().getCurrentUserSignedIn() + "");
+                            sharePref.set_data("profile_picture",
+                                    response.getLoginInformation().getProfilePicture());
+                            sharePref.set_data("gender",
+                                    response.getLoginInformation().getGender());
+                            sharePref.set_data("display_name",
+                                    response.getLoginInformation().getDisplayName());
+                            sharePref.set_data("real_name",
+                                    response.getLoginInformation().getRealName());
+                            sharePref.set_data("mobile_verified",
+                                    response.getLoginInformation().getMobileVerified() + "");
+
+                            gender = response.getLoginInformation().getGender();
+                            currentMobileSignupStep = response.getLoginInformation().getStep();
+
+                            //check display name
+
+                            // check the mobile verify screen
+
+                            //legacy code
                         /*if (response.getLoginInformation().getMobileVerified()) {
                             if (currentMobileSignupStep == 10)
                                 startActivity(new Intent(Login.this, HomeScreen.class));
@@ -459,33 +478,50 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             // finish();
                         }*/
 
-                        //present code
-                        if (response.getLoginInformation().getMobileVerified()) {
-                            if (currentMobileSignupStep >= 10 || currentMobileSignupStep <=1) {
-                                startActivity(new Intent(Login.this, HomeScreen.class));
-                                finish();
-                            } else
-                                new Login.FetchConstant(response.getLoginInformation().getAuthToken()).execute();
-                            //finish();
-                        } else {
-                            startActivity(new Intent(Login.this, MobileVarification.class));
-                            // finish();
-                        }
+                            //present code
+                            if (response.getLoginInformation().getMobileVerified()) {
+                                if (currentMobileSignupStep >= 10 || currentMobileSignupStep <= 1) {
+                                    startActivity(new Intent(Login.this, HomeScreen.class));
+                                    finish();
+                                } else
+                                    new Login.FetchConstant(
+                                            response.getLoginInformation().getAuthToken())
+                                            .execute();
+                                //finish();
+                            } else {
+                                startActivity(new Intent(Login.this, MobileVarification.class));
+                                // finish();
+                            }
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
-                        buttonSubmit.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Utils.ShowAlert(Login.this, "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
+                            buttonSubmit.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
 //                            application.trackEception(e, "LoginByFacebook/onPostExecute", "Login", e.getMessage().toString(), mTracker);
+                        }
                     }
                 }
-                    /*else{
-                        Utils.ShowAlert(Login.this, getString(R.string.incomplete_profile_message));
-                        LoginManager.getInstance().logOut();
-                        buttonFacebookLogin.setText("ফেসবুকের সাহায্যে লগইন করুন");
-                    }*/
 
+                /*else{
+                    builder = new AlertDialog.Builder(Login.this);
+                    builder.setCancelable(false);
+                    builder.setMessage(getString(R.string.unregistered_facebook_account_dialog_message))
+                            .setPositiveButton("হ্যাঁ", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent signupIntent = new Intent(Login.this, RegistrationFirstActivity.class);
+                                    signupIntent.putExtra("isFBSignUp", true);
+                                    startActivity(signupIntent);
+                                }
+                            })
+                            .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                LoginManager.getInstance().logOut();
+                                }
+                            })
+                            .show();
+                }*/
             } catch (JSONException e) {
                 e.printStackTrace();
 //                application.trackEception(e, "LoginByFacebook/onPostExecute", "Login", e.getMessage().toString(), mTracker);
@@ -524,7 +560,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case 1: {
+            case PERMISSIONS_REQUEST_READ_PHONE_STATE: {
 
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0

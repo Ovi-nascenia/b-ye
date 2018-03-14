@@ -3,7 +3,10 @@ package com.nascenia.biyeta.NetWorkOperation;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,7 +18,9 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.activity.FavoriteActivity;
 import com.nascenia.biyeta.activity.NewUserProfileActivity;
+import com.nascenia.biyeta.activity.WebViewPayment;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.fragment.Match;
 import com.nascenia.biyeta.model.newuserprofile.Image;
@@ -140,6 +145,7 @@ public class NetWorkOperation {
             Integer id = Integer.parseInt(strings[1]);
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("profile_id", id + "")
+                    .add("new_pricing_plan", true + "")
                     .build();
 
 
@@ -182,7 +188,56 @@ public class NetWorkOperation {
                         NewUserProfileActivity.message = jsonObject.getJSONArray("message").getJSONObject(0).getString("detail");
                         this.finalResultButton.setText(jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"));
                         this.finalResultButton.setEnabled(false);
-                    } else {
+                    } else if (jsonObject.has("error")) {
+                        JSONObject errorObj = jsonObject.getJSONArray("error").getJSONObject(0);
+                        if (errorObj.has("show_pricing_plan")) {
+                            if (errorObj.getBoolean("show_pricing_plan")) {
+//                                Toast.makeText(context, jsonObject.getJSONArray(
+//                                        "error").getJSONObject(0).getString("detail"),
+//                                        Toast.LENGTH_LONG).show();
+
+                                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+                                alertBuilder.setCancelable(true);
+//                                alertBuilder.setTitle(R.string.account_recharge_title);
+                                alertBuilder.setMessage(jsonObject.getJSONArray("error").getJSONObject(0).getString("detail"));
+                                alertBuilder.setPositiveButton(R.string.see_details,
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Intent myIntent = new Intent(context,
+                                                        WebViewPayment.class);
+                                                if (context instanceof NewUserProfileActivity) {
+                                                    ((NewUserProfileActivity) context).startActivityForResult(
+                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
+                                                }else if (context instanceof FavoriteActivity) {
+                                                    ((FavoriteActivity) context).startActivityForResult(
+                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
+                                                }
+                                            }
+                                        });
+                                alertBuilder.setNegativeButton(R.string.not_now,
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                final AlertDialog alert = alertBuilder.create();
+                                alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                                    @Override
+                                    public void onShow(DialogInterface arg0) {
+                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
+                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
+                                    }
+                                });
+                                alert.show();
+                            }
+                        }else {
+                            Toast.makeText(context, jsonObject.getJSONArray("error").getJSONObject(
+                                    0).getString("detail"), Toast.LENGTH_LONG).show();
+                            this.finalResultButton.setText(jsonObject.getJSONArray(
+                                    "message").getJSONObject(0).getString("detail"));
+                            this.finalResultButton.setEnabled(false);
+                        }
+                    }else {
                         this.finalResultButton.setEnabled(false);
                         this.finalResultButton.setText("Error");
                     }
@@ -239,6 +294,7 @@ public class NetWorkOperation {
             Request request = new Request.Builder()
                     .url(strings[0])
                     .addHeader("Authorization", "Token token=" + token)
+                    .addHeader("new-pricing-plan", true + "")
                     .build();
             try {
                 response = client.newCall(request).execute();
@@ -269,6 +325,85 @@ public class NetWorkOperation {
                         Toast.makeText(context, jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"), Toast.LENGTH_LONG).show();
                         this.finalResultButton.setText(jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"));
                         this.finalResultButton.setEnabled(false);
+
+//                        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+//                        alertBuilder.setCancelable(true);
+//                        alertBuilder.setTitle("Upgrade needed");
+//                        alertBuilder.setMessage("You need to upgrade your account");
+//                        alertBuilder.setPositiveButton(android.R.string.yes,
+//                                new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        Intent myIntent = new Intent(context,
+//                                                WebViewPayment.class);
+//                                        if (context instanceof NewUserProfileActivity) {
+//                                            ((NewUserProfileActivity) context).startActivityForResult(
+//
+//                                                    myIntent, 1001);
+////                                            context.startActivity(myIntent);
+//                                        }
+//                                    }
+//                                });
+//                        alertBuilder.setNegativeButton(android.R.string.no,
+//                                new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.dismiss();
+//                                    }
+//                                });
+//                        AlertDialog alert = alertBuilder.create();
+//                        alert.show();
+                    }else if (jsonObject.has("error")) {
+                        JSONObject errorObj = jsonObject.getJSONArray("error").getJSONObject(0);
+                        if(errorObj.has("show_pricing_plan")){
+                            if(errorObj.getBoolean("show_pricing_plan")){
+//                                Toast.makeText(context, jsonObject.getJSONArray("error").getJSONObject(0).getString("detail"), Toast.LENGTH_LONG).show();
+//                                this.finalResultButton.setText(jsonObject.getJSONArray(
+//                                        "message").getJSONObject(0).getString("detail"));
+//                                this.finalResultButton.setEnabled(false);
+
+                                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+                                alertBuilder.setCancelable(true);
+//                                alertBuilder.setTitle(R.string.account_recharge_title);
+                                alertBuilder.setMessage(jsonObject.getJSONArray("error").getJSONObject(0).getString("detail"));
+                                alertBuilder.setPositiveButton(R.string.see_details,
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Intent myIntent = new Intent(context,
+                                                        WebViewPayment.class);
+                                                if (context instanceof NewUserProfileActivity) {
+                                                    ((NewUserProfileActivity) context).startActivityForResult(
+                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
+                                                }else if (context instanceof FavoriteActivity) {
+                                                    ((FavoriteActivity) context).startActivityForResult(
+                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
+                                                }
+                                            }
+                                        });
+                                alertBuilder.setNegativeButton(R.string.not_now,
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                final AlertDialog alert = alertBuilder.create();
+                                alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                                    @Override
+                                    public void onShow(DialogInterface arg0) {
+                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
+//                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setBackgroundColor(context.getResources().getColor(R.color.title_gray));
+                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
+//                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+                                    }
+                                });
+
+                                alert.show();
+                            }
+                        }else {
+                            Toast.makeText(context, jsonObject.getJSONArray("error").getJSONObject(
+                                    0).getString("detail"), Toast.LENGTH_LONG).show();
+                            this.finalResultButton.setText(jsonObject.getJSONArray(
+                                    "message").getJSONObject(0).getString("detail"));
+                            this.finalResultButton.setEnabled(false);
+                        }
                     } else {
                         this.finalResultButton.setEnabled(false);
                         this.finalResultButton.setText("Error");

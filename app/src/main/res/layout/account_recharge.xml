@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-  >
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/rl_account_recharge"
@@ -12,11 +11,8 @@
         android:layout_height="wrap_content"
         android:background="@color/accountrecharge_backGround_color">
 
-
-
         <LinearLayout
             android:id="@+id/ll_account_container"
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
@@ -214,8 +210,7 @@
                 android:id="@+id/money_send_confirmation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/bKash_imageview"
-                >
+                android:layout_below="@+id/bKash_imageview">
 
             </WebView>
 
@@ -247,8 +242,7 @@
                 android:text="@string/bullet_point_recharge"
                 android:textSize="20sp"
                 android:padding="10dp"
-                android:textColor="@color/recharge_bullet"
-                />
+                android:textColor="@color/recharge_bullet"/>
 
             <TextView
                 android:id="@+id/recharge_step1"
@@ -269,8 +263,7 @@
                 android:text="@string/bullet_point_recharge"
                 android:textSize="20sp"
                 android:padding="10dp"
-                android:textColor="@color/recharge_bullet"
-                />
+                android:textColor="@color/recharge_bullet"/>
 
             <TextView
                 android:id="@+id/recharge_step2"
@@ -290,8 +283,7 @@
                 android:text="@string/bullet_point_recharge"
                 android:textSize="20sp"
                 android:padding="10dp"
-                android:textColor="@color/recharge_bullet"
-                />
+                android:textColor="@color/recharge_bullet"/>
 
             <TextView
                 android:id="@+id/recharge_step3"
@@ -313,8 +305,7 @@
                 android:text="@string/bullet_point_recharge"
                 android:textSize="20sp"
                 android:padding="10dp"
-                android:textColor="@color/recharge_bullet"
-                />
+                android:textColor="@color/recharge_bullet"/>
 
             <TextView
                 android:id="@+id/recharge_step4"
@@ -335,8 +326,7 @@
                 android:text="@string/bullet_point_recharge"
                 android:textSize="20sp"
                 android:padding="10dp"
-                android:textColor="@color/recharge_bullet"
-                />
+                android:textColor="@color/recharge_bullet"/>
 
             <TextView
                 android:id="@+id/recharge_step5"
@@ -356,8 +346,7 @@
                 android:text="@string/bullet_point_recharge"
                 android:textSize="20sp"
                 android:padding="10dp"
-                android:textColor="@color/recharge_bullet"
-                />
+                android:textColor="@color/recharge_bullet"/>
 
             <TextView
                 android:id="@+id/recharge_step6"
@@ -377,8 +366,7 @@
                 android:text="@string/bullet_point_recharge"
                 android:textSize="20sp"
                 android:padding="10dp"
-                android:textColor="@color/recharge_bullet"
-                />
+                android:textColor="@color/recharge_bullet"/>
 
             <TextView
                 android:id="@+id/recharge_step7"

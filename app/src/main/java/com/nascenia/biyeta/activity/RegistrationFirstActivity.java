@@ -104,6 +104,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
     private static final int facebook_request_code = 1000;
     private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE_BASIC = 1001;
     private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE_FB = 1002;
+    private boolean isFBSignUp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +115,13 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         male = (Button) findViewById(R.id.man);
         female = (Button) findViewById(R.id.woman);
         callbackManager = CallbackManager.Factory.create();
+
+        isFBSignUp = getIntent().getBooleanExtra("isFBSignUp", false);
+
+        if(isFBSignUp)
+        {
+            onFbSignup();
+        }
 
         progressDialog = new ProgressDialog(RegistrationFirstActivity.this);
         progressDialog.setMessage(getResources().getString(R.string.progress_dialog_message));

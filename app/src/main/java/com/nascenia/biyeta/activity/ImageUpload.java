@@ -46,7 +46,7 @@ import java.util.Locale;
 public class ImageUpload extends AppCompatActivity {
     OkHttpClient client;
 
-    int numberOfImage = 0;
+    int numberOfImage = 0, numberOfImageAdded = 0;
 
     public static int beforeProPicUploadValue = 0, beforeBodyPicUploadValue = 0, beforeOtherPicUploadValue = 0;
     public static int afterProPicUploadValue = 0, afterBodyPicUploadValue = 0, afterOtherPicUploadValue = 0;
@@ -249,8 +249,15 @@ public class ImageUpload extends AppCompatActivity {
 
                 if (afterProPicUploadValue == 1) {
                     new ImageUpload.SendPicture().execute(proPic, Utils.SEND_INFO);
-                    new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
-                    new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
+                    numberOfImageAdded++;
+                    if(bodyPicBase64!=null) {
+                        new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
+                        numberOfImageAdded++;
+                    }
+                    if(otherPicBase64!=null){
+                        new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
+                        numberOfImageAdded++;
+                     }
                 } else {
                     Toast.makeText(getBaseContext(), getString(R.string.select_image_message), Toast.LENGTH_SHORT).show();
                 }
@@ -334,8 +341,15 @@ public class ImageUpload extends AppCompatActivity {
 
                 if (afterProPicUploadValue == 1) {
                     new ImageUpload.SendPicture().execute(proPic, Utils.SEND_INFO);
-                    new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
-                    new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
+                    numberOfImageAdded++;
+                    if(bodyPicBase64!=null) {
+                        new ImageUpload.SendPicture().execute(bodyPic, Utils.SEND_INFO);
+                        numberOfImageAdded++;
+                    }
+                    if(otherPicBase64!=null) {
+                        new ImageUpload.SendPicture().execute(otherPic, Utils.SEND_INFO);
+                        numberOfImageAdded++;
+                    }
                 } else {
                     Toast.makeText(getBaseContext(), getString(R.string.select_image_message), Toast.LENGTH_SHORT).show();
                 }
@@ -435,7 +449,7 @@ public class ImageUpload extends AppCompatActivity {
                                 jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
                     } else {
                         numberOfImage++;
-                        if (numberOfImage == 3) {
+                        if (numberOfImage == numberOfImageAdded) {
                             new ImageUpload.FetchConstant().execute();
                             beforeProPicUploadValue = 0;
                             beforeBodyPicUploadValue = 0;
@@ -444,6 +458,7 @@ public class ImageUpload extends AppCompatActivity {
                             afterBodyPicUploadValue = 0;
                             afterOtherPicUploadValue = 0;
                             numberOfImage = 0;
+                            numberOfImageAdded = 0;
                         }
                     }
                 } catch (JSONException e) {
@@ -610,9 +625,18 @@ public class ImageUpload extends AppCompatActivity {
         afterBodyPicUploadValue = 0;
         afterOtherPicUploadValue = 0;
 
-        proPicBitmap = null;
-        bodyPicBitmap = null;
-        otherPicBitmap = null;
+        if(proPicBitmap!=null) {
+            proPicBitmap.recycle();
+            proPicBitmap = null;
+        }
+        if(bodyPicBitmap!=null) {
+            bodyPicBitmap.recycle();
+            bodyPicBitmap = null;
+        }
+        if(otherPicBitmap!=null) {
+            otherPicBitmap.recycle();
+            otherPicBitmap = null;
+        }
 
         proPicBase64 = "";
         bodyPicBase64 = "";
@@ -770,9 +794,18 @@ public class ImageUpload extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        proPicBitmap = null;
-        bodyPicBitmap = null;
-        otherPicBitmap = null;
+        if(proPicBitmap!=null) {
+            proPicBitmap.recycle();
+            proPicBitmap = null;
+        }
+        if(bodyPicBitmap!=null) {
+            bodyPicBitmap.recycle();
+            bodyPicBitmap = null;
+        }
+        if(otherPicBitmap!=null) {
+            otherPicBitmap.recycle();
+            otherPicBitmap = null;
+        }
     }
 
     /*@Override

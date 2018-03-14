@@ -60,10 +60,19 @@ public class ImageCrop extends Activity {
                     bitmap = Bitmap.createScaledBitmap(myBitmap, ((width * ((screenWidth * 10) / 16)) / height), (screenWidth * 10) / 16, true);
                 }
 
+                if (myBitmap != null) {
+                    myBitmap.recycle();
+                    myBitmap = null;
+                }
 
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+                if (bitmap != null) {
+                    bitmap.recycle();
+                    bitmap = null;
+                }
 
                 encoded = Base64.encodeToString(byteArray, Base64.NO_WRAP);
                 Log.i("bitmap", "original: " + encoded);
@@ -98,6 +107,10 @@ public class ImageCrop extends Activity {
                 //view.setImageBitmap(decodedByte);
                 view.setImageBitmap(imageRotateBitmap);
                 view.setBackgroundColor(Color.rgb(0, 0, 0));
+//                if(decodedByte!=null) {
+//                    decodedByte.recycle();
+//                    decodedByte = null;
+//                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,6 +127,10 @@ public class ImageCrop extends Activity {
                 Bitmap bitmap = Bitmap.createBitmap(bmap, view.getLeft() + 50, view.getTop(),
                         view.getWidth() - 100, view.getHeight());
                 //modifiedBitmap = bitmap;
+                if (bmap != null) {
+                    bmap.recycle();
+                    bmap = null;
+                }
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
@@ -196,7 +213,10 @@ public class ImageCrop extends Activity {
         }
         try {
             Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-            bitmap.recycle();
+            if(bitmap!=null) {
+                bitmap.recycle();
+                bitmap = null;
+            }
             return bmRotated;
         } catch (OutOfMemoryError e) {
             e.printStackTrace();

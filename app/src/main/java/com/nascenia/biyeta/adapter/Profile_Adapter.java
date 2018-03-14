@@ -15,6 +15,7 @@ import android.widget.TextView;
  */
 
 import com.bumptech.glide.Glide;
+import com.nascenia.biyeta.activity.OwnUserProfileActivity;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.SearchProfileModel;
 
@@ -22,6 +23,8 @@ import java.util.List;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.utils.Utils;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapter.MyViewHolder> {
     //parent context
@@ -45,7 +48,7 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         SearchProfileModel prfile = profile_list.get(position);
         if(prfile.getReal_name()=="null")
         {
@@ -66,15 +69,40 @@ public abstract class Profile_Adapter extends RecyclerView.Adapter<Profile_Adapt
                 + "'" + Utils.convertEnglishDigittoBangla(Integer.parseInt(prfile.getHeight_inc()))
                 + "\", " + prfile.getProfessional_group() + ", "
                 + prfile.getSkin_color() + ", " + prfile.getHealth() + ", " + prfile.getLocation());
-        Log.e("image_link", prfile.getImage());
+//        Log.e("image_link", prfile.getImage());
         if ((position >= getItemCount() - 1))
             load();
-        String gender = new SharePref(holder.profile_image.getContext()).get_data("gender");
-        Glide.
-                with(holder.profile_image.getContext()).
-                load(Utils.Base_URL + prfile.getImage()).
-                placeholder(gender.equalsIgnoreCase("male") ? R.drawable.profile_icon_female : R.drawable.profile_icon_male).
-                into(holder.profile_image);
+        final String gender = new SharePref(holder.profile_image.getContext()).get_data("gender");
+        holder.profile_image.setImageResource(gender.equalsIgnoreCase("male") ? R.drawable.profile_icon_female : R.drawable.profile_icon_male);
+//        Glide.
+//                with(holder.profile_image.getContext()).
+//                load(Utils.Base_URL + prfile.getImage()).
+//                placeholder(gender.equalsIgnoreCase("male") ? R.drawable.profile_icon_female : R.drawable.profile_icon_male).
+//                into(holder.profile_image);
+
+        if(prfile.getImage()!= null) {
+            Picasso.with(context)
+                    .load(Utils.Base_URL + prfile.getImage())
+                    .into(holder.profile_image, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            holder.profile_image.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    holder.profile_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//                                    Utils.scaleImage(context, holder.profile_image);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError() {
+//                            holder.profile_image.setImageResource(gender.equalsIgnoreCase("male") ? R.drawable.profile_icon_female : R.drawable.profile_icon_male);
+                        }
+                    });
+        }else{
+            holder.profile_image.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
     }
 
     @Override

@@ -345,6 +345,8 @@ public class Search extends Fragment {
                     String health = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("health");
                     String location = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("location");
                     String image = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("image");
+                    if(image.equalsIgnoreCase("null"))
+                        image = null;
                     String real_name = jsonObject.getJSONArray("profiles").getJSONObject(i).getString("real_name");
                     SearchProfileModel profile = new SearchProfileModel(id, age, height_ft, height_inc, display_name, occupation, professional_group, skin_color, location, health, image, real_name);
 

@@ -53,9 +53,9 @@ public class Utils{
 
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
-//    public static final String Base_URL = "http://test.biyeta.com";
+    public static final String Base_URL = "http://test.biyeta.com";
 //    public static final String Base_URL = "http://192.168.1.94:3000";
-    public static final String Base_URL = "https://www.biyeta.com";
+//    public static final String Base_URL = "https://www.biyeta.com";
     public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
     public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
 
@@ -85,6 +85,7 @@ public class Utils{
     public static final int SMILEY_BUTTON_PRESS_TAG = 222;
     public static final int FAVORITE_BUTTON_PRESS_TAG = 1;
     public static final int UNFAVORITE_BUTTON_PRESS_TAG = 0;
+    public static final int UPGRADE_REQUEST_CODE = 1001;
 
 
     ///debug section
@@ -348,6 +349,90 @@ public class Utils{
 
         Matrix matrix = new Matrix();
         matrix.postScale(xScale, yScale);
+
+        Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        BitmapDrawable result = new BitmapDrawable(context.getResources(), scaledBitmap);
+
+        view.setImageDrawable(result);
+
+        view.setMaxWidth(scaledBitmap.getWidth());
+        view.setMaxHeight(scaledBitmap.getHeight());
+    }
+
+    public static void scaleImage(Context context, ImageView view) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int device_width = displayMetrics.widthPixels;
+        int device_height = displayMetrics.heightPixels;
+        Drawable drawing = view.getDrawable();
+        int iv_width = view.getMeasuredWidth();
+        int iv_height = view.getMeasuredWidth();
+        float iv_ratio = 0, img_ratio = 0, scale = 0, yScale=0;
+//        if(iv_width>iv_height)
+//            iv_ratio = (float) (iv_width/iv_height);
+//        else
+//            iv_ratio = (float) (iv_height/iv_width);
+//        if(iv_ratio < 1.2)
+//            return;
+        if (drawing == null) {
+            return;
+        }
+        Bitmap bitmap = ((BitmapDrawable) drawing).getBitmap();
+
+        int img_width = bitmap.getWidth();
+        int img_height = bitmap.getHeight();
+        if(img_height == 0 || img_width == 0)
+            return;
+        if(img_width>img_height) {
+            img_ratio = (float) (img_width / img_height);
+            scale = (float)img_width/iv_width;
+        }else {
+            img_ratio = (float) (img_height / img_width);
+            scale = (float)img_height/iv_height;
+        }
+//        if(img_ratio < 1.2)
+//            return;
+
+
+
+
+//        int img_height_max = device_height * 2 / 5;
+//        float xScale = 1, yScale = 1;
+//        if (img_height_max > img_height) {
+//            if (img_height_max > img_height) {
+//                if (img_height * 1 > img_height_max) {
+//                    img_height_max = img_height;
+//                } else {
+//                    img_height_max = (int) (img_height * 1);
+//                    xScale = yScale = 1;
+//                    if (img_width * yScale > device_width) {
+//                        xScale = yScale = (float) (device_width / img_width);
+//                        img_width = device_width;
+//                    }
+////                    else
+////                    {
+////                        img_width = (int)(img_width*max_zoom);
+////                    }
+//                }
+//                img_height = img_height_max;
+//            }
+//
+//        } else {
+//            xScale = yScale = (float) img_height_max / img_height;
+//            img_height = img_height_max;
+//            img_width = (int) (img_width * xScale);
+//            if (img_width * yScale > device_width) {
+//                yScale = xScale = (float) device_width / img_width;
+//                img_width = device_width;
+//                img_height = (int) (img_height * xScale);
+//            } else if (img_width > device_width) {
+//                img_width = device_width;
+//                xScale = yScale = (float) device_width / bitmap.getWidth();
+//                img_height = (int) (bitmap.getHeight() * yScale);
+//            }
+//        }
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
 
         Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         BitmapDrawable result = new BitmapDrawable(context.getResources(), scaledBitmap);
