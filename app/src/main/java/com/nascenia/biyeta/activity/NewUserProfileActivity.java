@@ -1384,19 +1384,20 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
         {
             if(requestCode == Utils.UPGRADE_REQUEST_CODE)
             {
-                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(NewUserProfileActivity.this);
-                alertBuilder.setCancelable(true);
-                alertBuilder.setTitle("Upgrade successful");
-                alertBuilder.setMessage("You have upgraded your account successfully");
-                alertBuilder.setPositiveButton(android.R.string.yes,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-
-                        }
-                    });
-                AlertDialog alert = alertBuilder.create();
-                alert.show();
+                new NetWorkOperation.loadAccountBalance(NewUserProfileActivity.this, application, mTracker).execute();
+//                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(NewUserProfileActivity.this);
+//                alertBuilder.setCancelable(true);
+////                alertBuilder.setTitle("Upgrade successful");
+//                alertBuilder.setMessage("You have upgraded your account successfully");
+//                alertBuilder.setPositiveButton(android.R.string.yes,
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//
+//                        }
+//                    });
+//                AlertDialog alert = alertBuilder.create();
+//                alert.show();
             }
         }
     }

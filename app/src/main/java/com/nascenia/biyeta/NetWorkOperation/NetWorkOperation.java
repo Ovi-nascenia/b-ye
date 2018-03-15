@@ -35,6 +35,8 @@ import com.squareup.okhttp.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 /**
  * Created by god father on 3/27/2017.
  */
@@ -196,39 +198,40 @@ public class NetWorkOperation {
 //                                        "error").getJSONObject(0).getString("detail"),
 //                                        Toast.LENGTH_LONG).show();
 
-                                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-                                alertBuilder.setCancelable(true);
-//                                alertBuilder.setTitle(R.string.account_recharge_title);
-                                alertBuilder.setMessage(jsonObject.getJSONArray("error").getJSONObject(0).getString("detail"));
-                                alertBuilder.setPositiveButton(R.string.see_details,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                Intent myIntent = new Intent(context,
-                                                        WebViewPayment.class);
-                                                if (context instanceof NewUserProfileActivity) {
-                                                    ((NewUserProfileActivity) context).startActivityForResult(
-                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
-                                                }else if (context instanceof FavoriteActivity) {
-                                                    ((FavoriteActivity) context).startActivityForResult(
-                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
-                                                }
-                                            }
-                                        });
-                                alertBuilder.setNegativeButton(R.string.not_now,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-                                final AlertDialog alert = alertBuilder.create();
-                                alert.setOnShowListener( new DialogInterface.OnShowListener() {
-                                    @Override
-                                    public void onShow(DialogInterface arg0) {
-                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
-                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
-                                    }
-                                });
-                                alert.show();
+                                Utils.showPricingPlanDialog(context, jsonObject.getJSONArray("error").getJSONObject(0).getString("detail"));
+//                                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+//                                alertBuilder.setCancelable(true);
+////                                alertBuilder.setTitle(R.string.account_recharge_title);
+//                                alertBuilder.setMessage(jsonObject.getJSONArray("error").getJSONObject(0).getString("detail"));
+//                                alertBuilder.setPositiveButton(R.string.see_details,
+//                                        new DialogInterface.OnClickListener() {
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                                Intent myIntent = new Intent(context,
+//                                                        WebViewPayment.class);
+//                                                if (context instanceof NewUserProfileActivity) {
+//                                                    ((NewUserProfileActivity) context).startActivityForResult(
+//                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
+//                                                }else if (context instanceof FavoriteActivity) {
+//                                                    ((FavoriteActivity) context).startActivityForResult(
+//                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
+//                                                }
+//                                            }
+//                                        });
+//                                alertBuilder.setNegativeButton(R.string.not_now,
+//                                        new DialogInterface.OnClickListener() {
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                                dialog.dismiss();
+//                                            }
+//                                        });
+//                                final AlertDialog alert = alertBuilder.create();
+//                                alert.setOnShowListener( new DialogInterface.OnShowListener() {
+//                                    @Override
+//                                    public void onShow(DialogInterface arg0) {
+//                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
+//                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
+//                                    }
+//                                });
+//                                alert.show();
                             }
                         }else {
                             Toast.makeText(context, jsonObject.getJSONArray("error").getJSONObject(
@@ -325,32 +328,6 @@ public class NetWorkOperation {
                         Toast.makeText(context, jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"), Toast.LENGTH_LONG).show();
                         this.finalResultButton.setText(jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"));
                         this.finalResultButton.setEnabled(false);
-
-//                        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-//                        alertBuilder.setCancelable(true);
-//                        alertBuilder.setTitle("Upgrade needed");
-//                        alertBuilder.setMessage("You need to upgrade your account");
-//                        alertBuilder.setPositiveButton(android.R.string.yes,
-//                                new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        Intent myIntent = new Intent(context,
-//                                                WebViewPayment.class);
-//                                        if (context instanceof NewUserProfileActivity) {
-//                                            ((NewUserProfileActivity) context).startActivityForResult(
-//
-//                                                    myIntent, 1001);
-////                                            context.startActivity(myIntent);
-//                                        }
-//                                    }
-//                                });
-//                        alertBuilder.setNegativeButton(android.R.string.no,
-//                                new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        dialog.dismiss();
-//                                    }
-//                                });
-//                        AlertDialog alert = alertBuilder.create();
-//                        alert.show();
                     }else if (jsonObject.has("error")) {
                         JSONObject errorObj = jsonObject.getJSONArray("error").getJSONObject(0);
                         if(errorObj.has("show_pricing_plan")){
@@ -360,42 +337,44 @@ public class NetWorkOperation {
 //                                        "message").getJSONObject(0).getString("detail"));
 //                                this.finalResultButton.setEnabled(false);
 
-                                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-                                alertBuilder.setCancelable(true);
-//                                alertBuilder.setTitle(R.string.account_recharge_title);
-                                alertBuilder.setMessage(jsonObject.getJSONArray("error").getJSONObject(0).getString("detail"));
-                                alertBuilder.setPositiveButton(R.string.see_details,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                Intent myIntent = new Intent(context,
-                                                        WebViewPayment.class);
-                                                if (context instanceof NewUserProfileActivity) {
-                                                    ((NewUserProfileActivity) context).startActivityForResult(
-                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
-                                                }else if (context instanceof FavoriteActivity) {
-                                                    ((FavoriteActivity) context).startActivityForResult(
-                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
-                                                }
-                                            }
-                                        });
-                                alertBuilder.setNegativeButton(R.string.not_now,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-                                final AlertDialog alert = alertBuilder.create();
-                                alert.setOnShowListener( new DialogInterface.OnShowListener() {
-                                    @Override
-                                    public void onShow(DialogInterface arg0) {
-                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
-//                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setBackgroundColor(context.getResources().getColor(R.color.title_gray));
-                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
-//                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
-                                    }
-                                });
 
-                                alert.show();
+                                Utils.showPricingPlanDialog(context, jsonObject.getJSONArray("error").getJSONObject(0).getString("detail"));
+//                                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+//                                alertBuilder.setCancelable(true);
+////                                alertBuilder.setTitle(R.string.account_recharge_title);
+//                                alertBuilder.setMessage(jsonObject.getJSONArray("error").getJSONObject(0).getString("detail"));
+//                                alertBuilder.setPositiveButton(R.string.see_details,
+//                                        new DialogInterface.OnClickListener() {
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                                Intent myIntent = new Intent(context,
+//                                                        WebViewPayment.class);
+//                                                if (context instanceof NewUserProfileActivity) {
+//                                                    ((NewUserProfileActivity) context).startActivityForResult(
+//                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
+//                                                }else if (context instanceof FavoriteActivity) {
+//                                                    ((FavoriteActivity) context).startActivityForResult(
+//                                                            myIntent, Utils.UPGRADE_REQUEST_CODE);
+//                                                }
+//                                            }
+//                                        });
+//                                alertBuilder.setNegativeButton(R.string.not_now,
+//                                        new DialogInterface.OnClickListener() {
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                                dialog.dismiss();
+//                                            }
+//                                        });
+//                                final AlertDialog alert = alertBuilder.create();
+//                                alert.setOnShowListener( new DialogInterface.OnShowListener() {
+//                                    @Override
+//                                    public void onShow(DialogInterface arg0) {
+//                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
+////                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setBackgroundColor(context.getResources().getColor(R.color.title_gray));
+//                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
+////                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+//                                    }
+//                                });
+//
+//                                alert.show();
                             }
                         }else {
                             Toast.makeText(context, jsonObject.getJSONArray("error").getJSONObject(
@@ -421,6 +400,130 @@ public class NetWorkOperation {
             }
 
         }
+    }
+
+//    public static void showPricingPlanDialog(final Context context, String message){
+//        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+//        alertBuilder.setCancelable(true);
+////                                alertBuilder.setTitle(R.string.account_recharge_title);
+//        alertBuilder.setMessage(message);
+//        alertBuilder.setPositiveButton(R.string.see_details,
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        Intent myIntent = new Intent(context,
+//                                WebViewPayment.class);
+//                        if (context instanceof NewUserProfileActivity) {
+//                            ((NewUserProfileActivity) context).startActivityForResult(
+//                                    myIntent, Utils.UPGRADE_REQUEST_CODE);
+//                        }else if (context instanceof FavoriteActivity) {
+//                            ((FavoriteActivity) context).startActivityForResult(
+//                                    myIntent, Utils.UPGRADE_REQUEST_CODE);
+//                        }
+//                    }
+//                });
+//        alertBuilder.setNegativeButton(R.string.not_now,
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//        final AlertDialog alert = alertBuilder.create();
+//        alert.setOnShowListener( new DialogInterface.OnShowListener() {
+//            @Override
+//            public void onShow(DialogInterface arg0) {
+//                alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
+////                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setBackgroundColor(context.getResources().getColor(R.color.title_gray));
+//                alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
+////                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+//            }
+//        });
+//
+//        alert.show();
+//    }
+
+    public static class loadAccountBalance extends AsyncTask<String, String, String> {
+
+        Context context;
+        public loadAccountBalance(Context context, AnalyticsApplication application,
+                Tracker tracker) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(this.context);
+            progressDialog.setMessage(this.context.getResources().getString(R.string.progress_dialog_message));
+            progressDialog.setCancelable(true);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            try{
+                super.onPostExecute(s);
+                Log.e("testtt", s);
+            }catch(Exception e)
+            {
+                Utils.ShowAlert(context, context.getResources().getString(R.string.no_internet_connection));
+            }
+
+            if (s == null) {
+                Utils.ShowAlert(context, context.getResources().getString(R.string.no_internet_connection));
+            } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.has("text")) {
+                        showBalanceMessage(jsonObject.getString("text"),context);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            Response response;
+            SharePref sharePref = new SharePref(context);
+            String token = sharePref.get_data("token");
+            Request request = null;
+            request = new Request.Builder()
+                    .url(Utils.Base_URL+"/api/v1/payments/balance")
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
+            try {
+                response = client.newCall(request).execute();
+                String jsonData = response.body().string();
+                JSONObject Jobject = new JSONObject(jsonData);
+                return Jobject.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoadAccoutBalance/doInBackground", "PaymentActivity", e.getMessage().toString(), mTracker);
+            } catch (JSONException e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoadAccoutBalance/doInBackground", "PaymentActivity", e.getMessage().toString(), mTracker);
+            }
+            return null;
+        }
+    }
+
+    private static void showBalanceMessage(String text, Context context) {
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setCancelable(true);
+        alertBuilder.setTitle(context.getResources().getString(R.string.success_title));
+        alertBuilder.setMessage(text);
+        alertBuilder.setPositiveButton(R.string.ok,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
     }
 
     private static class PostTask extends AsyncTask<String, String, String> {

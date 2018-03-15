@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
+import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.utils.Utils;
@@ -97,7 +98,7 @@ public class PaymentActivity extends CustomActionBarActivity {
                 .setNewSession()
                 .build());
 
-        new LoadAccoutBalance().execute("");
+//        new LoadAccoutBalance().execute("");
 
 //        mSettingsChangeReceiver = new BroadcastReceiver() {
 //            @Override
@@ -141,19 +142,20 @@ public class PaymentActivity extends CustomActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK) {
             if (requestCode == PAYMENT_REQUEST_CODE) {
-                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(PaymentActivity.this);
-                alertBuilder.setCancelable(true);
-                alertBuilder.setTitle("Upgrade successful");
-                alertBuilder.setMessage("You have upgraded your account successfully");
-                alertBuilder.setPositiveButton(android.R.string.yes,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                new LoadAccoutBalance().execute("");
-                            }
-                        });
-                AlertDialog alert = alertBuilder.create();
-                alert.show();
+                new NetWorkOperation.loadAccountBalance(PaymentActivity.this, application, mTracker).execute();
+//                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(PaymentActivity.this);
+//                alertBuilder.setCancelable(true);
+//                alertBuilder.setTitle("Upgrade successful");
+//                alertBuilder.setMessage("You have upgraded your account successfully");
+//                alertBuilder.setPositiveButton(android.R.string.yes,
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                                new LoadAccoutBalance().execute("");
+//                            }
+//                        });
+//                AlertDialog alert = alertBuilder.create();
+//                alert.show();
             }
         }
     }
@@ -194,7 +196,7 @@ public class PaymentActivity extends CustomActionBarActivity {
         mTracker.setScreenName(getString(R.string.account_recharge_title));
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-//        new LoadAccoutBalance().execute("");
+        new LoadAccoutBalance().execute("");
     }
 
     OkHttpClient client = new OkHttpClient();
@@ -226,9 +228,6 @@ public class PaymentActivity extends CustomActionBarActivity {
             {
                 Utils.ShowAlert(PaymentActivity.this, getString(R.string.no_internet_connection));
             }
-
-
-
 
             if (s == null) {
                 Utils.ShowAlert(PaymentActivity.this, getString(R.string.no_internet_connection));

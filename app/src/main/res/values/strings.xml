@@ -133,6 +133,8 @@
 
     <string name="connection_again">আবারো যোগাযোগ করুন</string>
     <string name="see_details">বিস্তারিত দেখুন</string>
+    <string name="see_plans">প্ল্যান দেখুন</string>
+    <string name="update">আপডেট</string>
     <string name="not_now">এখন না</string>
     <string name="upgrade_title">বিস্তারিত দেখুন</string>
     <string name="upgrade_message">এখন না</string>
@@ -452,7 +454,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="upgrade_msg">প্ল্যান পরিবর্তনের জন্য বা বর্তমান প্ল্যানের মেয়াদ বাড়ানোর জন্য আপগ্রেড করুন।</string>
-
+    <string name="ok">ঠিক আছে</string>
+    <string name="success_title">অভিনন্দন</string>
 
 
 </resources>

@@ -540,19 +540,20 @@ public class RequestSentFromMe extends CustomActionBarActivity {
 
         if (resultCode == RESULT_OK) {
             if(requestCode == Utils.UPGRADE_REQUEST_CODE){
-                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(RequestSentFromMe.this);
-                alertBuilder.setCancelable(true);
-                alertBuilder.setTitle("Upgrade successful");
-                alertBuilder.setMessage("You have upgraded your account successfully");
-                alertBuilder.setPositiveButton(android.R.string.yes,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-
-                            }
-                        });
-                AlertDialog alert = alertBuilder.create();
-                alert.show();
+                new NetWorkOperation.loadAccountBalance(RequestSentFromMe.this, application, mTracker).execute();
+//                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(RequestSentFromMe.this);
+//                alertBuilder.setCancelable(true);
+//                alertBuilder.setTitle("Upgrade successful");
+//                alertBuilder.setMessage("You have upgraded your account successfully");
+//                alertBuilder.setPositiveButton(android.R.string.yes,
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//
+//                            }
+//                        });
+//                AlertDialog alert = alertBuilder.create();
+//                alert.show();
             }
         }
     }

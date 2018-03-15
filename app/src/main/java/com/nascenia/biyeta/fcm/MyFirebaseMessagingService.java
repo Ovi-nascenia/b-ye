@@ -24,6 +24,7 @@ import com.nascenia.biyeta.activity.Login;
 import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.activity.SplashScreen;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -265,12 +266,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             showPushNotification(intent,text,"যোগাযোগ");
+        }else if(type.equals("100")&&Integer.parseInt(to)==Integer.parseInt(currentLoginUserId))
+        {
+            Utils.ShowAlert(getApplicationContext(), text);
         }
-
-
-
     }
-
 
     void showPushNotification(Intent intent, String text, String title)
     {

@@ -18,6 +18,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
+import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.BiodatarequestFromMe;
 import com.nascenia.biyeta.adapter.ExpireListAdapter;
@@ -306,19 +307,20 @@ public class ExpiredConnection extends CustomActionBarActivity {
 
         if (resultCode == RESULT_OK) {
             if(requestCode == Utils.UPGRADE_REQUEST_CODE){
-                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ExpiredConnection.this);
-                alertBuilder.setCancelable(true);
-                alertBuilder.setTitle("Upgrade successful");
-                alertBuilder.setMessage("You have upgraded your account successfully");
-                alertBuilder.setPositiveButton(android.R.string.yes,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-
-                            }
-                        });
-                AlertDialog alert = alertBuilder.create();
-                alert.show();
+                new NetWorkOperation.loadAccountBalance(ExpiredConnection.this, application, mTracker).execute();
+//                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ExpiredConnection.this);
+//                alertBuilder.setCancelable(true);
+//                alertBuilder.setTitle("Upgrade successful");
+//                alertBuilder.setMessage("You have upgraded your account successfully");
+//                alertBuilder.setPositiveButton(android.R.string.yes,
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//
+//                            }
+//                        });
+//                AlertDialog alert = alertBuilder.create();
+//                alert.show();
             }
         }
     }

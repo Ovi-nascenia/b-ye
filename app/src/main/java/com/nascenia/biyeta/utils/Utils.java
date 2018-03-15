@@ -15,9 +15,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
@@ -31,7 +33,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.activity.FavoriteActivity;
+import com.nascenia.biyeta.activity.HomeScreen;
 import com.nascenia.biyeta.activity.Login;
+import com.nascenia.biyeta.activity.NewUserProfileActivity;
+import com.nascenia.biyeta.activity.WebViewPayment;
+import com.nascenia.biyeta.fragment.Search;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -44,6 +51,9 @@ import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by user on 1/9/2017.
@@ -649,4 +659,120 @@ public class Utils{
         }
     }
 
+    public static void showPricingPlanDialog(final Context context, String message){
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setCancelable(true);
+//                                alertBuilder.setTitle(R.string.account_recharge_title);
+        alertBuilder.setMessage(message);
+        alertBuilder.setPositiveButton(R.string.see_details,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent myIntent = new Intent(context,
+                                WebViewPayment.class);
+                        if (context instanceof NewUserProfileActivity) {
+                            ((NewUserProfileActivity) context).startActivityForResult(
+                                    myIntent, Utils.UPGRADE_REQUEST_CODE);
+                        }else if (context instanceof FavoriteActivity) {
+                            ((FavoriteActivity) context).startActivityForResult(
+                                    myIntent, Utils.UPGRADE_REQUEST_CODE);
+                        }
+                    }
+                });
+        alertBuilder.setNegativeButton(R.string.not_now,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        final AlertDialog alert = alertBuilder.create();
+        alert.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
+//                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setBackgroundColor(context.getResources().getColor(R.color.title_gray));
+                alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
+//                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+            }
+        });
+
+        alert.show();
+    }
+
+    public static void showOldUserDialog(final Context context, String message){
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setCancelable(true);
+//                                alertBuilder.setTitle(R.string.account_recharge_title);
+        alertBuilder.setMessage(message);
+        alertBuilder.setPositiveButton(R.string.see_plans,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent myIntent = new Intent(context,
+                                WebViewPayment.class);
+                        if (context instanceof HomeScreen) {
+                            ((HomeScreen) context).startActivityForResult(
+                                    myIntent, Utils.UPGRADE_REQUEST_CODE);
+                        }
+                    }
+                });
+        alertBuilder.setNegativeButton(R.string.not_now,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        final AlertDialog alert = alertBuilder.create();
+        alert.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
+//                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setBackgroundColor(context.getResources().getColor(R.color.title_gray));
+                alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
+//                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+            }
+        });
+
+        alert.show();
+    }
+
+    public static void showAppUpdateDialog(final Context context, JSONObject jsonObject) {
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setCancelable(false);
+//                                alertBuilder.setTitle(R.string.account_recharge_title);
+        try {
+            alertBuilder.setMessage(jsonObject.getString("app_update_message"));
+
+            alertBuilder.setPositiveButton(R.string.update,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        final String appPackageName = getApplicationContext().getPackageName(); // package name of the app
+                        try {
+                            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                        } catch (android.content.ActivityNotFoundException anfe) {
+                            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                        }
+                        ((HomeScreen)context).onBackPressed();
+                    }
+                });
+//            alertBuilder.setNegativeButton(R.string.not_now,
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+            final AlertDialog alert = alertBuilder.create();
+            alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface arg0) {
+//                    alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
+    //                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setBackgroundColor(context.getResources().getColor(R.color.title_gray));
+                    alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
+    //                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+                }
+            });
+
+            alert.show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

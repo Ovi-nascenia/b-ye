@@ -100,6 +100,8 @@ public class Search extends Fragment {
     private LinearLayout noInternetLayout;
 
     private Fragment thisFragment;
+    private boolean alreadyOldUserDialogShown = false;
+    private boolean showAppUpgradeDialog = false;
 
     public Search() {
 
@@ -356,6 +358,10 @@ public class Search extends Fragment {
 
                 }
             }
+            if(jsonObject.has("old_user_text") && !alreadyOldUserDialogShown){
+                Utils.showOldUserDialog(getActivity(), jsonObject.getString("old_user_text"));
+                alreadyOldUserDialogShown = true;
+            }
         } catch (JSONException e) {
             Utils.ShowInternetConnectionError(getContext());
 
@@ -394,6 +400,11 @@ public class Search extends Fragment {
                 if (flag != 1) snackbar.dismiss();
                 try {
                     final JSONObject jsonObject = new JSONObject(res);
+
+                    if(jsonObject.has("need_app_update")){
+                        Utils.showAppUpdateDialog(getActivity(), jsonObject);
+                        return;
+                    }
 
                     if (jsonObject.has("is_profile_complete") &&
                             jsonObject.getBoolean("is_profile_complete")) {
