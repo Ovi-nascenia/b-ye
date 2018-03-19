@@ -93,23 +93,19 @@
                     android:text="cccccccccccccccccccccccccc"
                     android:textStyle="normal"
                     android:maxLines="2"
-                    android:ellipsize="end" />
+                    android:ellipsize="end"
+                    android:padding="3dp"/>
 
-                    <Button
-                        android:id="@+id/phone"
-                        android:layout_width="match_parent"
-                        android:layout_weight="3"
-                        android:textSize="11sp"
-                        android:lines="1"
-                        android:layout_height="0dp"
-                        android:text="@string/make_call"
-                        android:background="@drawable/btn_border"
-                        android:textColor="@drawable/button_selector"/>
-
-
-
-
-
+                <Button
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_weight="3"
+                    android:textSize="10sp"
+                    android:lines="2"
+                    android:layout_height="0dp"
+                    android:text="@string/make_call"
+                    android:background="@drawable/btn_border"
+                    android:textColor="@drawable/button_selector"/>
             </LinearLayout>
 
         </LinearLayout>

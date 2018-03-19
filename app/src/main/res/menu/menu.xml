@@ -5,12 +5,13 @@
 
         <item
             android:id="@+id/nav_profile"
-            android:title="@string/nav_profile" />
+            android:title="@string/nav_profile"/>
 
 
         <item
             android:id="@+id/nav_balance"
-            android:title="@string/balance_recharge"/>
+            android:title="@string/balance_recharge_menu"
+            android:checked="true"/>
         </group>
 
 
@@ -23,10 +24,10 @@
 
                 <item
                     android:id="@+id/nav_about_us"
-                    android:title="@string/nav_about_biyeta" />
+                    android:title="@string/nav_about_biyeta"/>
                 <item
                     android:id="@+id/nav_connection"
-                    android:title="@string/connection" />
+                    android:title="@string/connection"/>
                 <item
                     android:id="@+id/nav_faq"
                     android:title="@string/nav_faq" />

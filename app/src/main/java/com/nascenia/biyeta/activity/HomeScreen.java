@@ -1,6 +1,8 @@
 package com.nascenia.biyeta.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,8 +17,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.InflateException;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +35,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
+import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
 
 import com.nascenia.biyeta.appdata.SharePref;
@@ -51,6 +59,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -73,7 +82,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     private ImageView searchImageView, matchImageView, fevImageView, inboxImageView,
             profileImageView, menuProfileImgView;
-    private boolean isSignUp = false;
+    NavigationView navigationView;
+    private boolean isSignUp = false, need_upgrade = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +141,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         fevImageView = (ImageView) actionBarView.findViewById(R.id.favorite);
         inboxImageView = (ImageView) actionBarView.findViewById(R.id.inbox);
         profileImageView = (ImageView) actionBarView.findViewById(R.id.profile);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         searchImageView.setOnClickListener(this);
         matchImageView.setOnClickListener(this);
@@ -179,7 +189,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 //            Log.i("image", "no image found");
         }
 
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
@@ -214,7 +223,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
                                      if (drawerLayout.isDrawerOpen(Gravity.RIGHT))
                                          drawerLayout.closeDrawer(Gravity.RIGHT);
-                                         startActivity(new Intent(HomeScreen.this, PaymentActivity.class));
+                                     if(need_upgrade) {
+                                         callWebView();
+                                     }else {
+                                         startActivity(new Intent(HomeScreen.this,
+                                                 PaymentActivity.class));
+                                     }
 
 
 
@@ -390,6 +404,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     drawerLayout.closeDrawer(Gravity.RIGHT);
                 } else {
                     drawerLayout.openDrawer(Gravity.RIGHT);
+                    try {
+                        new LoadAccoutBalance().execute("");
+                    }catch (Exception ex){
+
+                    }
                 }
                 break;
 
@@ -464,5 +483,102 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    public class LoadAccoutBalance extends AsyncTask<String, String, String> {
+        ProgressDialog progressBar;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar = new ProgressDialog(HomeScreen.this);
+            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressBar.show();
+
+        }
+
+        @SuppressLint("ResourceAsColor")
+        @Override
+        protected void onPostExecute(String s) {
+            if (progressBar.isShowing()) {
+
+                progressBar.dismiss();
+            }
+
+            try{
+                super.onPostExecute(s);
+                Log.e("testtt", s);
+            }catch(Exception e)
+            {
+                Utils.ShowAlert(HomeScreen.this, getString(R.string.no_internet_connection));
+                return;
+            }
+
+            if (s == null) {
+                Utils.ShowAlert(HomeScreen.this, getString(R.string.no_internet_connection));
+            } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+
+                    if (jsonObject.has("upgrade_user")) {
+                        MenuItem menuItem = navigationView.getMenu().findItem(R.id.nav_balance);
+//                        menuItem.getActionView().setBackgroundColor(R.color.colorPrimary);
+                        System.out.println("here");
+
+                        if(jsonObject.getBoolean("upgrade_user")){
+                            menuItem.setTitle(R.string.balance_recharge_menu);
+                            need_upgrade = true;
+                        }else{
+                            menuItem.setTitle(R.string.payment_plan);
+                            need_upgrade = false;
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            Response response;
+            SharePref sharePref = new SharePref(HomeScreen.this);
+            String token = sharePref.get_data("token");
+            Request request = null;
+            request = new Request.Builder()
+                    .url(Utils.Base_URL+"/api/v1/payments/balance")
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
+            try {
+                response = client.newCall(request).execute();
+                String jsonData = response.body().string();
+                JSONObject Jobject = new JSONObject(jsonData);
+                return Jobject.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoadAccoutBalance/doInBackground", "PaymentActivity", e.getMessage().toString(), mTracker);
+            } catch (JSONException e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoadAccoutBalance/doInBackground", "PaymentActivity", e.getMessage().toString(), mTracker);
+            }
+
+            return null;
+        }
+    }
+
+    private void callWebView() {
+        Intent myIntent = new Intent(HomeScreen.this,
+                WebViewPayment.class);
+        startActivityForResult(myIntent, Utils.UPGRADE_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK) {
+            if (requestCode == Utils.UPGRADE_REQUEST_CODE) {
+                new NetWorkOperation.loadAccountBalance(HomeScreen.this, application, mTracker).execute();
+            }
+        }
+    }
 
 }

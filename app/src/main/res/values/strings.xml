@@ -95,6 +95,8 @@
     <string name="nav_inbox">ইনবক্স</string>
     <string name="nav_fav">আপনার পছন্দ</string>
     <string name="balance_recharge">আপগ্রেড</string>
+    <string name="balance_recharge_menu">আপগ্রেড করুন </string>
+    <string name="payment_plan">পেমেন্ট প্ল্যান </string>
     <string name="accunt_setting">অ্যাকাউন্ট সেটিংস</string>
 
     <string name="nav_about_biyeta">বিয়েটা সম্পর্কে</string>

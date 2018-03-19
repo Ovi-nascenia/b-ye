@@ -131,7 +131,7 @@ public class ExpiredConnection extends CustomActionBarActivity {
                         expireListAdapter = new ExpireListAdapter(response, R.layout.list_item_expire) {
                             @Override
                             public void onClickSmile(int id, int postion) {
-                                Toast.makeText(ExpiredConnection.this, "Sent Connection", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(ExpiredConnection.this, "Sent Connection", Toast.LENGTH_SHORT).show();
                                 position = postion;
 
                                 new SendConnection().execute(Utils.Base_URL+"/api/v1/communication_requests", id + "", position + "");

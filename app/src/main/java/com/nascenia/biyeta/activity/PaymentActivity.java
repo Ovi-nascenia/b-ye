@@ -221,12 +221,17 @@ public class PaymentActivity extends CustomActionBarActivity {
 
         @Override
         protected void onPostExecute(String s) {
+            if (progressBar.isShowing()) {
+
+                progressBar.dismiss();
+            }
             try{
                 super.onPostExecute(s);
                 Log.e("testtt", s);
             }catch(Exception e)
             {
                 Utils.ShowAlert(PaymentActivity.this, getString(R.string.no_internet_connection));
+                return;
             }
 
             if (s == null) {
@@ -249,12 +254,6 @@ public class PaymentActivity extends CustomActionBarActivity {
                     e.printStackTrace();
 //                    application.trackEception(e, "LoadAccoutBalance/onPostExecute", "PaymentActivity", e.getMessage().toString(), mTracker);
                 }
-            }
-
-
-            if (progressBar.isShowing()) {
-
-                progressBar.dismiss();
             }
 
         }

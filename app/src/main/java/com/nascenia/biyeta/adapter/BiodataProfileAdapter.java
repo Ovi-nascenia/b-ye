@@ -107,7 +107,7 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
                 holder.call.setEnabled(false);
                 holder.call.setText(profile.getRequestStatus().getMessage());
                 holder.call.setTextColor(Color.BLACK);
-                holder.call.setBackgroundColor(Color.GRAY);
+                holder.call.setBackgroundColor(Color.parseColor("#F2F1F1"));
             } else {
                 holder.call.setEnabled(true);
                 holder.call.setText(profile.getRequestStatus().getMessage());

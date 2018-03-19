@@ -647,7 +647,7 @@ public class ImageUpload extends AppCompatActivity {
 
     private void selectImage() {
 
-        final CharSequence[] items = {"Take Photo", "Choose from Gallary",
+        final CharSequence[] items = {"Take Photo", "Choose From Gallery",
                 "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ImageUpload.this);
@@ -661,7 +661,7 @@ public class ImageUpload extends AppCompatActivity {
                     if (result)
                         cameraIntent();
 
-                } else if (items[item].equals("Choose from Gallary")) {
+                } else if (items[item].equals("Choose From Gallery")) {
                     if (result)
                         galleryIntent();
 

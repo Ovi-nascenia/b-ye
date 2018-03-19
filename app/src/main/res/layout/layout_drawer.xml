@@ -24,7 +24,8 @@
         android:layout_gravity="right"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/menu" />
+        app:menu="@menu/menu"/>
+        <!--app:itemBackground="@drawable/drawer_list_selector"/>-->
 
 
 </android.support.v4.widget.DrawerLayout>
