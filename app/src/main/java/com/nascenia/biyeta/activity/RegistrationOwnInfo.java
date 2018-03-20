@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.renderscript.ScriptGroup;
@@ -48,7 +49,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
     public static TextView castReligionText;
     public EditText details;
     public Button next;
-    public TextView noNumberEmail;
+    public TextView noNumberEmail, tvCount;
     public EditText editTextOwn;
     ImageView back;
     public static String castValue = "",religionValue = "",otherReligion = "",otherCast = "";
@@ -96,6 +97,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
 
         castReligion = (LinearLayout) findViewById(R.id.castReligion);
         details = (EditText) findViewById(R.id.edit_text_own);
+        tvCount = findViewById(R.id.tv_count);
         if(sharePref.get_data("gender").equals("male")){
             details.setHint("আপনার সম্পর্কে বিস্তারিত লিখুন যাতে পাত্রী-পক্ষ আগ্রহী হয়।");
         }
@@ -236,10 +238,13 @@ public class RegistrationOwnInfo extends AppCompatActivity{
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             //This sets a textview to the current length
+            tvCount.setText(Utils.convertEnglishDigittoBangla(s.length()));
             if(s.length()>= 50 && s.length()<=4000 ){
+                tvCount.setTextColor(Color.parseColor("#66CD00"));    //#006400
                 next.setVisibility(View.VISIBLE);
                 noNumberEmail.setVisibility(View.INVISIBLE);
                 details.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
 //                details.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
 //                details.setSingleLine(false);
 //                details.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
@@ -259,6 +264,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                 editTextOwn.setText(text.substring(0, text.length() - 1));
                 editTextOwn.setSelection(editTextOwn.getText().length());
                 details.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+                tvCount.setTextColor(Color.parseColor("#ff0000"));
             }
 
             else if(s.length()>=1&&s.charAt(s.length()-1)=='@'){
@@ -269,11 +275,13 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                 editTextOwn.setText(text.substring(0, text.length() - 1));
                 editTextOwn.setSelection(editTextOwn.getText().length());
                 details.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+                tvCount.setTextColor(Color.parseColor("#ff0000"));
             }
 
             else{
                 next.setVisibility(View.INVISIBLE);
                 noNumberEmail.setVisibility(View.INVISIBLE);
+                tvCount.setTextColor(Color.parseColor("#ff0000"));
                 if(flag==1)
                 {
                     noNumberEmail.setVisibility(View.VISIBLE);

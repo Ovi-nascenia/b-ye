@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class ImageUpload extends AppCompatActivity {
     OkHttpClient client;
@@ -186,6 +187,7 @@ public class ImageUpload extends AppCompatActivity {
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                numberOfImageAdded = 0;
                 String proPic = new StringBuilder().append("{")
                         .append("\"image\":")
                         .append("\"")
@@ -417,7 +419,6 @@ public class ImageUpload extends AppCompatActivity {
 
     class SendPicture extends AsyncTask<String, String, String> {
         ProgressDialog progress = new ProgressDialog(ImageUpload.this);
-        ;
 
         @Override
         protected void onPreExecute() {
@@ -426,6 +427,7 @@ public class ImageUpload extends AppCompatActivity {
             progress.setMessage(getResources().getString(R.string.progress_dialog_message));
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setIndeterminate(true);
+            progress.setCancelable(false);
             if (!progress.isShowing())
                 progress.show();
         }
@@ -433,7 +435,9 @@ public class ImageUpload extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            progress.cancel();
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
             if (s == null) {
 
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));
@@ -478,6 +482,9 @@ public class ImageUpload extends AppCompatActivity {
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
             OkHttpClient client = new OkHttpClient();
+            client.setConnectTimeout(300, TimeUnit.SECONDS);
+            client.setReadTimeout(300, TimeUnit.SECONDS);
+            client.setWriteTimeout(300, TimeUnit.SECONDS);
 
             RequestBody body = RequestBody.create(JSON, strings[0]);
             Request request = new Request.Builder()
@@ -504,7 +511,10 @@ public class ImageUpload extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            progress.cancel();
+
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
             if (s == null) {
 //                progress.cancel();
                 Utils.ShowAlert(ImageUpload.this, getString(R.string.no_internet_connection));

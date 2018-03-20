@@ -3,10 +3,12 @@ package com.nascenia.biyeta.activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,12 +27,15 @@ import org.w3c.dom.Text;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WebViewPayment extends AppCompatActivity {
+public class WebViewPayment extends CustomActionBarActivity {
     private WebView recharge_webview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view_payment);
+
+        setUpToolBar(getResources().getString(R.string.payment_plan), this);
 
         //initiate webview with browser client
         recharge_webview=(WebView)findViewById(R.id.webview_recharge);
@@ -48,6 +53,12 @@ public class WebViewPayment extends AppCompatActivity {
         //Get request by web view
         recharge_webview.loadUrl(Utils.Base_URL+"/api/v1/sign_in_from_app",headers);
     }
+
+    @Override
+    void setUpToolBar(String title, Context context) {
+        super.setUpToolBar(title, context);
+    }
+
     private class MyBrowser extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {

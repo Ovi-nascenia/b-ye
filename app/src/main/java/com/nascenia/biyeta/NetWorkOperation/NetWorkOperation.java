@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -514,14 +516,18 @@ public class NetWorkOperation {
     private static void showBalanceMessage(String text, Context context) {
         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
         alertBuilder.setCancelable(true);
-        alertBuilder.setTitle(context.getResources().getString(R.string.success_title));
+        View view = LayoutInflater.from(context).inflate(R.layout.custom_title, null);
+        ((TextView)view.findViewById(R.id.title)).setText(context.getResources().getString(R.string.success_title));
+        alertBuilder.setCustomTitle(view);
+//        alertBuilder.setTitle(context.getResources().getString(R.string.success_title));
         alertBuilder.setMessage(text);
+//        alertBuilder.setB
         alertBuilder.setPositiveButton(R.string.ok,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
         AlertDialog alert = alertBuilder.create();
         alert.show();
     }

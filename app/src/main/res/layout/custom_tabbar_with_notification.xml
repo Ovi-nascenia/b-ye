@@ -16,8 +16,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-
-
             android:text="বায়োডাটার অনুরোধ"
             android:textColor="#FF353333"
             android:textSize="15sp" />

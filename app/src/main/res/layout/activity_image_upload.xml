@@ -135,7 +135,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="ছবি আপডেট করুন" />
+                            android:text="ছবি আপডেট করুন"
+                            android:textSize="14sp"/>
                     </LinearLayout>
 
                 </FrameLayout>
@@ -207,7 +208,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="ছবি আপডেট করুন" />
+                                android:text="ছবি আপডেট করুন"
+                                android:textSize="14sp"/>
                         </LinearLayout>
 
                     </FrameLayout>
@@ -275,7 +277,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="ছবি আপডেট করুন" />
+                                android:text="ছবি আপডেট করুন"
+                                android:textSize="14sp"/>
                         </LinearLayout>
 
                     </FrameLayout>

@@ -84,7 +84,7 @@
             android:layout_height="50dp"
             android:layout_below="@id/religion"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="0dp"
             android:background="@color/white"
             android:orientation="horizontal"
@@ -126,11 +126,43 @@
             android:textColor="@color/colorPrimary"
             android:textSize="18sp" />
 
+
+        <RelativeLayout
+            android:id="@+id/rlLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textOwn"
+            android:layout_alignRight="@+id/castReligion">
+
+            <TextView
+                android:id="@+id/label"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="0dp"
+                android:text="সর্বনিম্ন ৫০ অক্ষর। "
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_toRightOf="@id/label"
+                android:layout_marginBottom="0dp"
+                android:text="০"
+                android:textColor="#ff0000"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+
         <EditText
             android:id="@+id/edit_text_own"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_below="@id/textOwn"
+            android:layout_height="60dp"
+            android:layout_below="@id/rlLabel"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@color/white"
@@ -145,21 +177,11 @@
             android:textColor="@color/black"
             android:textColorHint="@color/lblFromName"/>
 
-        <TextView
-            android:id="@+id/label"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_below="@id/edit_text_own"
-            android:layout_marginRight="15dp"
-            android:gravity="right"
-            android:text="সর্বনিম্ন ৫০ অক্ষর, সর্বোচ্চ ৪০০০ অক্ষরের ভিতর"
-            android:textSize="10sp" />
-
         <Button
             android:id="@+id/next"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@id/label"
+            android:layout_below="@id/edit_text_own"
             android:layout_margin="15dp"
             android:background="@color/colorPrimary"
             android:text="পরবর্তী ধাপ"
@@ -171,13 +193,16 @@
             android:id="@+id/no_number_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/label"
+            android:layout_below="@id/edit_text_own"
             android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:gravity="center"
+            android:lines="2"
             android:text="মোবাইল নাম্বার, ইমেইল বা যোগাযোগের ঠিকানা প্রদান করা থেকে বিরত থাকুন।"
             android:textColor="@color/colorPrimary"
             android:textSize="10sp"
-            android:visibility="invisible" />
+            android:visibility="invisible"/>
 
     </RelativeLayout>
 

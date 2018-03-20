@@ -1,9 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.nascenia.biyeta.activity.TestActivity">
+    android:layout_height="wrap_content"
+    android:layout_margin="50dp">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title here"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:text="Message here Message here  Message here Message here Message hereMessage here Message here Message here Message here"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/title_gray"/>
+
+    <RelativeLayout
+        android:id="@+id/rlLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_message"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignRight="@+id/tv_message"
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/no"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="0dp"
+            android:text="সর্বনিম্ন ৫০ অক্ষর। "
+            android:textSize="12sp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/title_gray"/>
+
+        <TextView
+            android:id="@+id/yes"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/no"
+            android:layout_marginBottom="0dp"
+            android:text="০"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
