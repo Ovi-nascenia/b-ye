@@ -63,9 +63,9 @@ public class Utils{
 
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
-//    public static final String Base_URL = "http://test.biyeta.com";
+    public static final String Base_URL = "http://test.biyeta.com";
 //    public static final String Base_URL = "http://192.168.1.94:3000";
-    public static final String Base_URL = "https://www.biyeta.com";
+//    public static final String Base_URL = "https://www.biyeta.com";
     public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
     public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
 
@@ -85,6 +85,8 @@ public class Utils{
     public static final String STEP_CONSTANT_FETCH = Utils.Base_URL+"/api/v1/step_constants/fetch/";
     public static final String SEND_INFO = Utils.Base_URL+"/api/v1/registrations";
     public static final String FB_SIGNUP = Utils.Base_URL+"/api/v1/facebook_authorization/sign_up_with_fb";
+    public static final String PASS_RESET = Utils.Base_URL+"/api/v1/passwords";
+
 
     public static final String MUSLIM_TAG="muslim";
 

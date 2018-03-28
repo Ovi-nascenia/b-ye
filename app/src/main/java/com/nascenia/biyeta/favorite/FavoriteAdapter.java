@@ -162,7 +162,7 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                 && (profile.getRequestStatus().getSender()!=null)) {
 
             Log.d("message 5 Profile_req", "biodata dekhun to you");
-            Toast.makeText(context, profile.getRequestStatus().getMessage(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(context, profile.getRequestStatus().getMessage(), Toast.LENGTH_LONG).show();
             holder.mRequest.setVisibility(View.GONE);
             holder.accept.setVisibility(View.VISIBLE);
             holder.cancel.setVisibility(View.VISIBLE);
@@ -584,17 +584,17 @@ public abstract class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapt
                 holder.cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (v.getTag().equals(Utils.commRequestCancel)) {
+                    if (v.getTag().equals(Utils.commRequestCancel)) {
 
 
-                            new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL +
-                                            profile.getRequestStatus().getCommunicationRequestId() + "/reject",
-                                    context.getResources().getString(R.string.send_communication_request_text),
-                                    Utils.sendCommunicationRequest,
-                                    Utils.commRequestCancel);
+                        new SendRequestTask().execute(Utils.COMMUNICATION_REQUEST_URL +
+                                        profile.getRequestStatus().getCommunicationRequestId() + "/reject",
+                                context.getResources().getString(R.string.send_communication_request_text),
+                                Utils.sendCommunicationRequest,
+                                Utils.commRequestCancel);
 
-                            application.setEvent("Action", "Click", "Communication Request Rejected", mTracker);
-                        }
+                        application.setEvent("Action", "Click", "Communication Request Rejected", mTracker);
+                    }
                     }
                 });
                 holder.accept.setOnClickListener(new View.OnClickListener() {

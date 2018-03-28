@@ -14,7 +14,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.KeyEvent;
@@ -24,6 +26,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -72,7 +75,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
     private Button male, female;
     //private IntlPhoneInput phoneInputView;
     Button buttonRegistration, buttonFacebookLogin;
-    TextView buttonLogin;
+    TextView buttonLogin, termsTextView1, termsTextView2;
     CallbackManager callbackManager;
     EditText email_edit_text, password_edit_text, name_edit_text, display_name_edit_text;
     OkHttpClient client;
@@ -98,6 +101,8 @@ public class RegistrationFirstActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private EditText dateOfBirthEditext;
+
+    private CheckBox terms_check;
 
     private final int DATE_OF_BIRTH_REQUEST_CODE = 2;
 
@@ -166,6 +171,15 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
 
         buttonLogin = (TextView) findViewById(R.id.login);
+        termsTextView1 = findViewById(R.id.terms_text1);
+        underLineText(termsTextView1, "শর্তাবলী ");
+        terms_check = findViewById(R.id.terms_check);
+        termsTextView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegistrationFirstActivity.this, TermOfUse.class));
+            }
+        });
 
         sharePref = new SharePref(RegistrationFirstActivity.this);
 
@@ -206,7 +220,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
         buttonRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAccount();
+                    createAccount();
             }
         });
 
@@ -231,6 +245,14 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+    }
+
+    private void underLineText(TextView tv, String text) {
+        SpannableString content = new SpannableString(text);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        tv.setText(content);
     }
 
     private void createAccount() {
@@ -302,6 +324,13 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             dateOfBirthEditext.setSelection(0);
             Toast.makeText(getBaseContext(), "আপনার জন্ম তারিখ নির্বাচন করুন", Toast.LENGTH_LONG).show();
             // Utils.ShowAlert(RegistrationFirstActivity.this, "ডিসপ্লে নাম পূরণ করুন");
+            return;
+        }
+
+        if(!terms_check.isChecked()) {
+            terms_check.requestFocus();
+            Toast.makeText(getBaseContext(), "শর্তাবলী গ্রহণ করুন",
+                    Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -405,32 +434,32 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             email = object.getString("email");
         }
 
-        if (object.has("first_name")) {
-            realName = object.getString("name");
-        }
+//        if (object.has("first_name")) {
+//            realName = object.getString("name");
+//        }
 //        if (object.has("last_name")) {
 //            realName = realName + " " + object.getString("last_name");
 ////            displayName = object.getString("last_name");
 //
 //        }
 
-        if (object.has("gender")) {
-            gender = object.getString("gender");
-            if (gender.equals("male")) {
-                searchingFor = "female";
-                sharePref.set_data("gender", "male");
-            } else if (gender.equals("female")) {
-                searchingFor = "male";
-                sharePref.set_data("gender", "female");
-            }
-        }
+//        if (object.has("gender")) {
+//            gender = object.getString("gender");
+//            if (gender.equals("male")) {
+//                searchingFor = "female";
+//                sharePref.set_data("gender", "male");
+//            } else if (gender.equals("female")) {
+//                searchingFor = "male";
+//                sharePref.set_data("gender", "female");
+//            }
+//        }
 
-        if (object.has("birthday")) {
-            birthday = object.getString("birthday");
-        }
+//        if (object.has("birthday")) {
+//            birthday = object.getString("birthday");
+//        }
 
-        if(email==null || email.length() <=0 || realName==null || realName.length() <=0 || displayName==null
-                || displayName.length()<=0 || birthday == null || birthday.length() <= 0) {
+//        if(email==null || email.length() <=0 || realName==null || realName.length() <=0 || displayName==null
+//                || displayName.length()<=0 || birthday == null || birthday.length() <= 0) {
 
             Intent intent = new Intent(RegistrationFirstActivity.this,
                     FacebookRegistrationDataInput.class);
@@ -442,10 +471,10 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             intent.putExtra("uid", uid);
             intent.putExtra("provider", provider);
             startActivityForResult(intent, facebook_request_code);
-        }else {
-//            callFacebookAccountCreate();
-            checkPermission(PERMISSIONS_REQUEST_READ_PHONE_STATE_FB);
-        }
+//        }else {
+
+//            checkPermission(PERMISSIONS_REQUEST_READ_PHONE_STATE_FB);
+//        }
     }
 
     private void callFacebookAccountCreate(String imei, String firebase_token) {
@@ -578,6 +607,16 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                 sharePref.set_data("real_name", realName);
                 sharePref.set_data("display_name", displayName);
                 birthday = data.getStringExtra("birthday");
+                gender = data.getStringExtra("gender");
+
+                if (gender.equals("male")) {
+                    searchingFor = "female";
+                    sharePref.set_data("gender", "male");
+                } else if (gender.equals("female")) {
+                    searchingFor = "male";
+                    sharePref.set_data("gender", "female");
+                }
+
 //                callFacebookAccountCreate();
                 checkPermission(PERMISSIONS_REQUEST_READ_PHONE_STATE_FB);
             }

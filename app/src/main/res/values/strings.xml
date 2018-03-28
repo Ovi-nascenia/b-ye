@@ -142,7 +142,6 @@
     <string name="upgrade_message">এখন না</string>
 
 
-
     <string name="privacy_policy_title">প্রাইভেসি পলিসি</string>
     <string name="privacy_policy_parag1">Biyeta.com is an online matrimonial portal endeavouring constantly to find your best life partner. This privacy statement is common to all the matrimonial sites operated under Biyeta.com Since we are strongly committed to your right to privacy, we have drawn out a privacy statement with regard to the information we collect from you. </string>
     <string name="privacy_policy_parag2">Payments are processed by third party gateway who use secure server for credit card transactions to protect the credit card information of our users and Cookies are used to store the login information. </string>
@@ -458,6 +457,9 @@
     <string name="upgrade_msg">প্ল্যান পরিবর্তনের জন্য বা বর্তমান প্ল্যানের মেয়াদ বাড়ানোর জন্য আপগ্রেড করুন।</string>
     <string name="ok">ঠিক আছে</string>
     <string name="success_title">অভিনন্দন!</string>
-
+    <string name="forgot_pass">পাসওয়ার্ড ভুলে গিয়েছি </string>
+    <string name="forgot_pass1">পাসওয়ার্ড ভুলে গিয়েছেন? </string>
+    <string name="pass_reset">পাসওয়ার্ড রিসেট </string>
+    <string name="reset_pass_btn_text">পাসওয়ার্ড রিসেট নির্দেশাবলী পাঠান </string>
 
 </resources>

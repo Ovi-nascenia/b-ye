@@ -15,6 +15,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -95,6 +97,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     //for open new account
     private LinearLayout new_account;
     private EditText etPassword, etUserName;
+    private TextView tv_forgot_pass;
     private Button buttonSubmit;
     private ProgressBar progressBar;
     private Context context = this;
@@ -111,6 +114,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //initialize the Okhttp
         client = new OkHttpClient();
         setContentView(R.layout.login);
+
 
         //Remove ImageUpload class data
         ImageUpload.clearImageUploadClassStaticData();
@@ -197,6 +201,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    private void underLineText(TextView tv, String text) {
+        SpannableString content = new SpannableString(text);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        tv.setText(content);
+    }
 
     void set_id() {
 
@@ -287,6 +296,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 } else {
                     return false;
                 }
+            }
+        });
+
+        tv_forgot_pass = (TextView) findViewById(R.id.tv_forgot);
+        underLineText(tv_forgot_pass, "পাসওয়ার্ড ভুলে গিয়েছি ");
+        tv_forgot_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Login.this, ForgotPassActivity.class));
             }
         });
     }

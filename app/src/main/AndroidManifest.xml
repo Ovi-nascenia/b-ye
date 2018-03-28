@@ -237,20 +237,29 @@
             android:name=".activity.AbroadOptionPickerPopUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarPopUp" />
-        <activity android:name=".activity.FacebookRegistrationDataInput" />
+        <activity
+            android:name=".activity.FacebookRegistrationDataInput"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.ThanksActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.WebViewPayment"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"></activity>
-        <!--<activity-->
-            <!--android:name=".activity.PlansActivity"-->
-            <!--android:label="@string/title_activity_plans"-->
-            <!--android:theme="@style/AppTheme.NoActionBar"></activity>-->
+            android:theme="@style/AppTheme" />
+        <!-- <activity -->
+        <!-- android:name=".activity.PlansActivity" -->
+        <!-- android:label="@string/title_activity_plans" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"></activity> -->
+        <activity android:name=".activity.ForgotPassActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+        </activity>
     </application>
 
 </manifest>

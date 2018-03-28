@@ -20,13 +20,39 @@
             android:orientation="vertical"
             android:weightSum="10">
 
-            <ImageView
-                android:id="@+id/imageview"
+            <!--<ImageView-->
+                <!--android:id="@+id/imageview"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:layout_weight="1.1"-->
+                <!--android:src="@drawable/biyeta_name_image" />-->
+
+
+            <Button
+                android:id="@+id/login_button"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:layout_weight="1.1"
-                android:src="@drawable/biyeta_name_image" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="15dp"
+                android:text="ফেসবুক দিয়ে রেজিস্ট্রেশন করুন"
+                android:textColor="@color/white"
+                android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/or"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/register_button"
+                android:layout_marginLeft="10dp"
+                android:layout_weight=".5"
+                android:gravity="center"
+                android:text="অথবা"
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/find_text"
@@ -182,39 +208,74 @@
                  android:layout_centerHorizontal="true"
                  android:layout_below="@id/numbervarifytextView1"/>-->
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@id/date_Of_birth_editext">
+
+                <CheckBox
+                    android:id="@+id/terms_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="-2dp"
+                    android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:id="@+id/terms_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="17sp"/>
+                <TextView
+                    android:id="@+id/terms_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" আমি পড়েছি এবং সম্মত হয়েছি"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
             <Button
                 android:id="@+id/register_button"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@id/date_Of_birth_editext"
-                android:layout_margin="10dp"
+                android:layout_below="@id/terms_check"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
                 android:layout_weight=".8"
                 android:background="@color/colorPrimary"
                 android:text="রেজিস্ট্রেশন করুন"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/or"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@id/register_button"
-                android:layout_marginLeft="10dp"
-                android:layout_weight=".5"
-                android:gravity="center"
-                android:text="অথবা" />
+            <!--<TextView-->
+                <!--android:id="@+id/or"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_below="@id/register_button"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_weight=".5"-->
+                <!--android:gravity="center"-->
+                <!--android:text="অথবা" />-->
 
-            <Button
-                android:id="@+id/login_button"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="10dp"
-                android:paddingLeft="15dp"
-                android:text="ফেসবুক দিয়ে রেজিস্ট্রেশন করুন"
-                android:textColor="@color/white"
-                android:textSize="15sp"/>
+            <!--<Button-->
+                <!--android:id="@+id/login_button"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:paddingLeft="15dp"-->
+                <!--android:text="ফেসবুক দিয়ে রেজিস্ট্রেশন করুন"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="15sp"/>-->
 
             <TextView
                 android:layout_width="match_parent"
