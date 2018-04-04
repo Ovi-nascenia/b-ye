@@ -46,6 +46,14 @@ public class LoginInformation_ {
     @Expose
     private int cast;
 
+    @SerializedName("other_religion")
+    @Expose
+    private String other_religion;
+
+    @SerializedName("other_cast")
+    @Expose
+    private String other_cast;
+
     public Boolean getProfileComplete() {
         return isProfileComplete;
     }
@@ -132,6 +140,22 @@ public class LoginInformation_ {
 
     public void setCast(int cast) {
         this.cast = cast;
+    }
+
+    public String getOtherReligion() {
+        return other_religion;
+    }
+
+    public void setReligion(String other_religion) {
+        this.other_religion = other_religion;
+    }
+
+    public String getOtherCast() {
+        return other_cast;
+    }
+
+    public void setOtherCast(String other_cast) {
+        this.other_cast = other_cast;
     }
 
 }

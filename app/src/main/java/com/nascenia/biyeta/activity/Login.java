@@ -106,6 +106,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     String SUB_URL = "sign-in";
     OkHttpClient client;
     private AlertDialog.Builder builder;
+    SharePref sharePref;
 
 
     @Override
@@ -115,7 +116,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         client = new OkHttpClient();
         setContentView(R.layout.login);
 
-
+        sharePref = new SharePref(Login.this);
         //Remove ImageUpload class data
         ImageUpload.clearImageUploadClassStaticData();
 
@@ -958,7 +959,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
                 try {
-                    SharePref sharePref = new SharePref(Login.this);
+
 
                     sharePref.set_data("token", response.getLoginInformation().getAuthToken());
                     sharePref.set_data("user_id", response.getLoginInformation().getCurrentUserSignedIn() + "");
@@ -969,6 +970,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     sharePref.set_data("mobile_verified", response.getLoginInformation().getMobileVerified() + "");
                     sharePref.set_data("religion", response.getLoginInformation().getReligion() + "");
                     sharePref.set_data("cast", response.getLoginInformation().getCast() + "");
+                    sharePref.set_data("other_religion", response.getLoginInformation().getOtherReligion() + "");
+                    sharePref.set_data("other_cast", response.getLoginInformation().getOtherCast() + "");
                     buttonSubmit.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                     startActivity(new Intent(Login.this, HomeScreen.class));
@@ -988,7 +991,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             String id = user_name;
             String pass = password;
             String regtoken = FirebaseInstanceId.getInstance().getToken();
-
+            sharePref.set_data("religion", "");
+            sharePref.set_data("cast", "");
+            sharePref.set_data("other_religion", "");
+            sharePref.set_data("other_cast", "");
 
             Log.e("back", id + "---" + password + "---" + regtoken);
 

@@ -63,6 +63,8 @@ public class RegistrationOwnInfo extends AppCompatActivity{
 
     private String SUB_URL = "sign-out";
     private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 999;
+    private JSONObject religionObject, muslimCastObject, hinduCastObject, christianCastObject;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -86,22 +88,15 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         final Intent intent = getIntent();
         client = new OkHttpClient();
         final String constants = intent.getStringExtra("constants");
-        try {
-            JSONObject jsonObject = new JSONObject(constants);
-            //Toast.makeText(RegistrationOwnInfo.this,constants,Toast.LENGTH_LONG).show();
-            Log.i("constantdata: ",constants);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-       Log.i("classnames",getClass().getSimpleName());
+
+//       Log.i("classnames",getClass().getSimpleName());
 
         castReligion = (LinearLayout) findViewById(R.id.castReligion);
         details = (EditText) findViewById(R.id.edit_text_own);
         tvCount = findViewById(R.id.tv_count);
         if(sharePref.get_data("gender").equals("male")){
             details.setHint("আপনার সম্পর্কে বিস্তারিত লিখুন যাতে পাত্রী-পক্ষ আগ্রহী হয়।");
-        }
-        else if(sharePref.get_data("gender").equals("female")){
+        }else if(sharePref.get_data("gender").equals("female")){
             details.setHint("আপনার সম্পর্কে বিস্তারিত লিখুন যাতে পাত্র-পক্ষ আগ্রহী হয়।");
         }
 
@@ -122,7 +117,6 @@ public class RegistrationOwnInfo extends AppCompatActivity{
         noNumberEmail = (TextView) findViewById(R.id.no_number_email);
         editTextOwn = (EditText)findViewById(R.id.edit_text_own);
 
-
         castReligion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -130,6 +124,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                 castReligionOwn = 1;
                 Intent intent = new Intent(RegistrationOwnInfo.this, PopUpCastReligion.class );
                 intent.putExtra("constants",constants);
+//                intent.putExtra("religion", )
                 startActivity(intent);
             }
         });
@@ -189,7 +184,9 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                     return;
                 }else {
                     sharePref.set_data("religion", religionValue);
-                    sharePref.set_data("cast", castValue);
+                    sharePref.set_data("cast", otherCast.length() > 0?3+"":castValue);
+                    sharePref.set_data("other_religion", otherReligion);
+                    sharePref.set_data("other_cast", otherCast);
                 }
 
                 if(castReligionText.getText().toString().isEmpty())
@@ -230,6 +227,92 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                new SendOwnInfo().execute(response,Utils.SEND_INFO);
             }
         });
+
+        try {
+            JSONObject jsonObject = new JSONObject(constants);
+            religionObject = jsonObject.getJSONObject("religion_constant");
+            muslimCastObject = jsonObject.getJSONObject("muslim_cast");
+            hinduCastObject = jsonObject.getJSONObject("hindu_cast");
+            christianCastObject = jsonObject.getJSONObject("christian_cast");
+            //Toast.makeText(RegistrationOwnInfo.this,constants,Toast.LENGTH_LONG).show();
+            Log.i("constantdata: ",constants);
+            if(jsonObject.has("data")){
+                details.setText(jsonObject.getJSONObject("data").getString("about_yourself"));
+                int relValue = jsonObject.getJSONObject("data").getInt("religion");
+                String currentCast = "";
+                religionValue = relValue + "";
+                otherReligion = "";
+                if(relValue == 1){
+                    sharePref.set_data("religion", jsonObject.getJSONObject("data").getString("religion"));
+                    sharePref.set_data("cast", jsonObject.getJSONObject("data").getString("cast").equalsIgnoreCase("null")?"": jsonObject.getJSONObject("data").getString("cast"));
+                    sharePref.set_data("other_religion", jsonObject.getJSONObject("data").getString("other_religion"));
+                    sharePref.set_data("other_cast", jsonObject.getJSONObject("data").getString("other_cast"));
+
+                    if(jsonObject.getJSONObject("data").getString("other_cast").length() > 0){
+                        currentCast = sharePref.get_data("other_cast");//jsonObject.getJSONObject("data").getString("other_cast");
+                        otherCast = currentCast;
+                        castValue = "";
+
+                    }else {
+                        currentCast = muslimCastObject.getString(sharePref.get_data("cast"));
+//                                Integer.parseInt(jsonObject.getJSONObject("data").getString("cast"))
+//                                        + "");
+                        castValue = currentCast;
+                        otherCast = "";
+                    }
+
+                }else if(relValue == 2){
+                    currentCast = hinduCastObject.getString(Integer.parseInt(jsonObject.getJSONObject("data").getString("cast")) + "");
+                }else if(relValue == 3){
+                    currentCast = christianCastObject.getString(Integer.parseInt(jsonObject.getJSONObject("data").getString("cast")) + "");
+                }else if(relValue == 4){
+
+                }else{
+
+                }
+                castReligionText.setText(religionObject.getString(religionValue + "") + (currentCast.length()>0?", " + currentCast:""));
+                setData(jsonObject);
+            }else{
+                sharePref.set_data("religion", "");
+                sharePref.set_data("cast", "");
+                sharePref.set_data("other_religion", "");
+                sharePref.set_data("other_cast", "");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        religionValue = sharePref.get_data("religion") + "";
+        castValue = sharePref.get_data("cast") + "";
+        otherReligion = sharePref.get_data("other_religion") + "";
+        otherCast = sharePref.get_data("other_cast") + "";
+        try {
+            if(religionValue.equalsIgnoreCase("1")) {
+                if(otherCast.length() > 0)
+                    castReligionText.setText(religionObject.getString(religionValue ) + ", " + otherCast);
+                else
+                    castReligionText.setText(religionObject.getString(religionValue) + ", " + muslimCastObject.get(castValue));
+            }else if(religionValue.equalsIgnoreCase("2")){
+                castReligionText.setText(religionObject.getString(religionValue) + ", " + hinduCastObject.get(castValue));
+            }else if(religionValue.equalsIgnoreCase("3")){
+                castReligionText.setText(religionObject.getString(religionValue) + ", " + christianCastObject.get(castValue));
+            }else if(religionValue.equalsIgnoreCase("4")){
+                castReligionText.setText(religionObject.getString(religionValue));
+            }else{
+                castReligionText.setText(otherReligion.equalsIgnoreCase("key")?"":otherReligion);
+            }
+        } catch (JSONException e) {
+                e.printStackTrace();
+            }
+    }
+
+    private void setData(JSONObject jsonObject) {
+
     }
 
     private final TextWatcher mTextEditorWatcher = new TextWatcher() {
