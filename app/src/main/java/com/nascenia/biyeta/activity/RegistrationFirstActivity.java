@@ -427,6 +427,10 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
         if (object.has("birthday")) {
             birthday = object.getString("birthday");
+            String dateOfBirth[] = birthday.split("/");
+
+            birthday = dateOfBirth[2] + "/" +
+                    dateOfBirth[1] + "/" +  dateOfBirth[0];
         }
 
         if(email==null || email.length() <=0 || realName==null || realName.length() <=0 || displayName==null
