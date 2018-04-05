@@ -454,9 +454,17 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 //            }
 //        }
 
-//        if (object.has("birthday")) {
-//            birthday = object.getString("birthday");
-//        }
+        if (object.has("birthday")) {
+            birthday = object.getString("birthday");
+//            Change date format of facebook
+            if(birthday != null && birthday.length()>0) {
+                String dateOfBirth[] = birthday.split("/");
+
+                birthday = dateOfBirth[2] + "/" +
+                        dateOfBirth[1] + "/" + dateOfBirth[0];
+            }
+        }
+
 
 //        if(email==null || email.length() <=0 || realName==null || realName.length() <=0 || displayName==null
 //                || displayName.length()<=0 || birthday == null || birthday.length() <= 0) {

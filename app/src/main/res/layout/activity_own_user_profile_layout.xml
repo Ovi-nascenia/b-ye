@@ -9,10 +9,7 @@
         android:id="@+id/coordnatelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/r1"
         android:visibility="invisible">
-
-
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -31,15 +28,9 @@
                 app:expandedTitleMarginStart="48dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-
-
-
-
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
 
                     <ImageView
                         android:id="@+id/page1"
@@ -84,14 +75,11 @@
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     android:background="@color/white">
 
-
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:padding="@dimen/small_padding"
-                        >
-
+                        android:padding="@dimen/small_padding">
 
                         <ImageView
                             android:id="@+id/backPreviousActivityImage"
@@ -122,29 +110,21 @@
                             android:src="@drawable/favorite"
                             android:visibility="invisible" />
 
-
                     </RelativeLayout>
 
                 </android.support.v7.widget.Toolbar>
-
-
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
-
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#e9ebed">
-
 
                 <LinearLayout
                     android:id="@+id/detils_info_layout"
@@ -383,18 +363,37 @@
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF">
 
-                        <TextView
+                        <EditText
                             android:id="@+id/userProfileDescriptionText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/medium_padding"
                             android:text=""
+                            android:layout_marginRight="20dp"
                             android:textColor="#000000"
                             android:textSize="@dimen/item_textsize"
-                            android:textStyle="normal" />
+                            android:textStyle="normal"
+                            android:background="@color/white"/>
+
+                        <ImageView
+                            android:id="@+id/img_edit"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/editicon"
+                            android:visibility="visible"
+                            android:layout_gravity="top|right"/>
+
+                        <ImageView
+                            android:id="@+id/img_accept"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/accept_icon"
+                            android:visibility="gone"
+                            android:layout_gravity="top|right"/>
 
                     </android.support.v7.widget.CardView>
-
 
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
