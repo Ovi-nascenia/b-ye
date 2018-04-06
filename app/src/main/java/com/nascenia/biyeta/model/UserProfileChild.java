@@ -8,6 +8,7 @@ public class UserProfileChild {
 
     private String title;
     private String titleResult;
+    private boolean isEditable = false;
 
     public UserProfileChild(String title, String titleResult) {
         this.title = title;
@@ -28,5 +29,13 @@ public class UserProfileChild {
 
     public void setTitleResult(String titleResult) {
         this.titleResult = titleResult;
+    }
+
+    public boolean isEditable() {
+        return isEditable;
+    }
+
+    public void setEditable(boolean editable) {
+        isEditable = editable;
     }
 }

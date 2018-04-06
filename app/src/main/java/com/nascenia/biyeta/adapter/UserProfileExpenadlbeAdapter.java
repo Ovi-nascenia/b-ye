@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
@@ -86,6 +88,16 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     @Override
     public ChildItemViewHolder onCreateChildViewHolder(@NonNull ViewGroup childViewGroup, int viewType) {
         View childView = mInflater.inflate(R.layout.profile_details_child_item, childViewGroup, false);
+        final TextView titleTextView = childView.findViewById(R.id.titleTextView);
+        ImageView img_edit = childView.findViewById(R.id.img_edit);
+        img_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.age))){
+                    Toast.makeText(baseContext, "age", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         return new ChildItemViewHolder(childView);
     }
 

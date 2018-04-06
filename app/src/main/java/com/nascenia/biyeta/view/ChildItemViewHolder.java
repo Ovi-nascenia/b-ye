@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class ChildItemViewHolder extends ChildViewHolder {
 
     public TextView titleTextView;
     public EditText titleResultTextView;
+    public ImageView img_edit;
     public LinearLayout itemDividerLayout;
 
 
@@ -34,7 +36,7 @@ public class ChildItemViewHolder extends ChildViewHolder {
 
         titleTextView = (TextView) itemView.findViewById(R.id.titleTextView);
         titleResultTextView = (EditText) itemView.findViewById(R.id.titleResultTextView);
-        titleResultTextView.setEnabled(false);
+//        titleResultTextView.setEnabled(true);
         itemDividerLayout = (LinearLayout) itemView.findViewById(R.id.divider);
     }
 
