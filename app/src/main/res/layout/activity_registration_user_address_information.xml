@@ -50,11 +50,24 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <TextView
+        android:id="@+id/address_title_for_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center|top"
+        android:text="@string/title_activity_registration_user_address_information"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/medium_textsize"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        android:layout_marginTop="@dimen/small_padding"/>
+
     <ScrollView
         android:id="@+id/scroll_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
+        android:layout_below="@id/address_title_for_update">
 
         <LinearLayout
             android:layout_width="match_parent"

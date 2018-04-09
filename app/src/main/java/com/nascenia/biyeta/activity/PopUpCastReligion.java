@@ -58,6 +58,7 @@ public class PopUpCastReligion extends AppCompatActivity {
     String constant;
     JSONObject religionObject, muslimCastObject, hinduCastObject, christianCastObject;
     private SharePref sharePref;
+    private String strDataForUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,11 @@ public class PopUpCastReligion extends AppCompatActivity {
 
         constant = extras.getString("constants");
         Log.i("constantjson", constant);
+
+        strDataForUpdate = getIntent().getStringExtra("data");
+        if(strDataForUpdate!=null){
+
+        }
 
         sharePref = new SharePref(PopUpCastReligion.this);
 
@@ -87,8 +93,6 @@ public class PopUpCastReligion extends AppCompatActivity {
             Log.i("religionvalue: ",muslimCastObject.toString());
             Log.i("religionvalue: ",hinduCastObject.toString());
             Log.i("religionvalue: ",christianCastObject.toString());
-
-
 
             for (int i = 0; i < religionObject.length(); i++) {
                 dataConstant.add(religionObject.names().getString(i));
@@ -247,31 +251,31 @@ public class PopUpCastReligion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (RegistrationOwnInfo.castReligionOwn == 1) {
+                if (RegistrationOwnInfo.castReligionOwn == 1 || strDataForUpdate != null) {
 
                     if (dataConstant.get(religionValue -1).equals("1") && muslimCastConstant.get(castValue - 1).equals("3")) {
                         if (cast.getText().toString().isEmpty())
                             Toast.makeText(getBaseContext(), getString(R.string.write_muslim_cast_name), Toast.LENGTH_LONG).show();
                         else {
 
-                            RegistrationOwnInfo.castReligionText.setText(religionName[religionValue -1] + ", " +
-                                    cast.getText().toString());
+//                            RegistrationOwnInfo.castReligionText.setText(religionName[religionValue -1] + ", " +
+//                                    cast.getText().toString());
 //                            religionValue = Integer.parseInt(dataConstant.get(religionValue));
                             otherCast = cast.getText().toString();
 //                            castValue=0;
                             otherReligion="";
                             updateSharedPrf(religionValue, castValue, otherCast, otherReligion);
 
-                            onFinishPopUpCastReligionTask();
+                            onFinishPopUpCastReligionTask(true);
                         }
 //                        PopUpCastReligion.castValue=0;
                     } else if (!dataConstant.get(religionValue -1).equals("4") && !dataConstant.get(religionValue-1).equals("5")) {
 
                         if (dataConstant.get(religionValue-1).equals("1")) {
                             if(castValue == 3){//sharePref.get_data("other_cast").length()>0) {
-                                RegistrationOwnInfo.castReligionText.setText(
-                                        religionName[religionValue-1]
-                                                + ", " + cast.getText().toString());
+//                                RegistrationOwnInfo.castReligionText.setText(
+//                                        religionName[religionValue-1]
+//                                                + ", " + cast.getText().toString());
                                 otherCast = cast.getText().toString();
 //                                sharePref.set_data("other_cast", cast.getText().toString());
 //                                sharePref.set_data("cast", "");
@@ -323,7 +327,7 @@ public class PopUpCastReligion extends AppCompatActivity {
 //                        RegistrationOwnInfo.otherCast="";
 //                        RegistrationOwnInfo.otherReligion="";
 
-                        onFinishPopUpCastReligionTask();
+                        onFinishPopUpCastReligionTask(true);
 
                     } else if (dataConstant.get(religionValue-1).equals("4")) {
 //                        RegistrationOwnInfo.castReligionText.setText(religionName[religionValue]);
@@ -334,7 +338,7 @@ public class PopUpCastReligion extends AppCompatActivity {
                         updateSharedPrf(religionValue, castValue, otherCast, otherReligion);
 //                        PopUpCastReligion.castValue=0;
 
-                        onFinishPopUpCastReligionTask();
+                        onFinishPopUpCastReligionTask(true);
                     } else if (dataConstant.get(religionValue-1).equals("5")) {
                         if(religion.getText().toString().isEmpty())
                             Toast.makeText(getBaseContext(),getString(R.string.write_other_religion_name_message)
@@ -346,12 +350,14 @@ public class PopUpCastReligion extends AppCompatActivity {
                             castValue=0;
                             otherCast="";
                             updateSharedPrf(religionValue, castValue, otherCast, otherReligion);
-                            onFinishPopUpCastReligionTask();
+                            onFinishPopUpCastReligionTask(true);
                         }
 
                         PopUpCastReligion.castValue=0;
                     }
                 }
+
+
 
                 /*RegistrationOwnInfo.castReligionOwn = 0;
                 RegistrationChoiceSelectionThirdPage.castReligionChoice = 0;
@@ -365,7 +371,7 @@ public class PopUpCastReligion extends AppCompatActivity {
               /*  RegistrationOwnInfo.castReligionOwn = 0;
                 RegistrationChoiceSelectionThirdPage.castReligionChoice = 0;
                 finish();*/
-              onFinishPopUpCastReligionTask();
+              onFinishPopUpCastReligionTask(false);
             }
         });
     }
@@ -378,10 +384,19 @@ public class PopUpCastReligion extends AppCompatActivity {
         sharePref.set_data("other_cast", otherCast);
     }
 
-    private void onFinishPopUpCastReligionTask() {
+    private void onFinishPopUpCastReligionTask(boolean isUpdated) {
 
         RegistrationOwnInfo.castReligionOwn = 0;
         RegistrationChoiceSelectionThirdPage.castReligionChoice = 0;
+        if(strDataForUpdate != null && isUpdated)
+        {
+            Intent intent = new Intent();
+            intent.putExtra("religion", religionPicker.getDisplayedValues()[religionPicker.getValue()]);
+            intent.putExtra("cast", (castPicker.getVisibility()==View.VISIBLE)?castPicker.getDisplayedValues()[castPicker.getValue()]:"");
+            intent.putExtra("other_cast", (cast.getVisibility()==View.VISIBLE)?cast.getText().toString():"");
+            intent.putExtra("other_religion", (religion.getVisibility()==View.VISIBLE)?religion.getText().toString():"");
+            setResult(RESULT_OK, intent);
+        }
         finish();
     }
 

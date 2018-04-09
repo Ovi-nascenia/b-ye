@@ -1,6 +1,7 @@
 package com.nascenia.biyeta.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -33,6 +34,7 @@ import com.nascenia.biyeta.model.UserProfileParent;
 import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.service.ResourceProvider;
+import com.nascenia.biyeta.utils.CalenderBanglaInfo;
 import com.nascenia.biyeta.utils.Utils;
 import com.nascenia.biyeta.view.CustomStopScrollingRecylerLayoutManager;
 import com.squareup.okhttp.Response;
@@ -41,6 +43,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static com.nascenia.biyeta.view.SendRequestFragmentView.checkNullField;
 
@@ -48,7 +51,7 @@ import static com.nascenia.biyeta.view.SendRequestFragmentView.checkNullField;
  * Created by saiful on 4/2/17.
  */
 
-public class OwnUserProfileActivity extends AppCompatActivity {
+public class OwnUserProfileActivity extends AppCompatActivity{
     int page_position = 0;
     private Tracker mTracker;
     private AnalyticsApplication application;
@@ -125,7 +128,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     private PagerAdapter adapter;
     int[] image;
     String[] proPics = null;
-
+    private UserProfileExpenadlbeAdapter upea;
 
 
     @Override
@@ -180,7 +183,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     ResponseBody responseBody = response.body();
                     final String responseValue = responseBody.string();
                     res = responseValue;
-//                    Log.i("ownresponsevalue", responseValue);
+                    Log.i("ownresponsevalue", responseValue);
                     responseBody.close();
                     userProfile = new Gson().fromJson(responseValue, UserProfile.class);
 
@@ -444,7 +447,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     , otherInfoChildItemList));
 
             otherInformationRecyclerView.scrollToPosition(otherInfoChildItemList.size()-1);
-            otherInformationRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+            otherInformationRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                     otherInfoChildItemHeader,
                     true));
         } else {
@@ -500,7 +503,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
                 professionChildItemHeader.add(new UserProfileParent(
                         getResources().getString(R.string.profession_text), professionChildItemList));
-                professionRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                professionRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                         professionChildItemHeader,
                         true));
 
@@ -550,7 +553,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
             if (educationalInfoChildItemList.size() > 0) {
 
                 educationalInfoChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.education_male), educationalInfoChildItemList));
-                educationRecylerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                educationRecylerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                         educationalInfoChildItemHeader,
                         true));
 
@@ -564,37 +567,77 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
     private void setDataOnPersonalInfoRecylerView(UserProfile userProfile) {
 
+
+//        personalInfoRecylerView.removeAllViews();
         //add personal Information
-        personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.age),
-                Utils.convertEnglishDigittoBangla(
-                        userProfile.getProfile().getPersonalInformation().getAge()) +
-                        " " + getResources().getString(R.string.year) + ","
+        if(personalInfoChildItemList.size() > 0 && personalInfoChildItemList.get(0).getTitle().equalsIgnoreCase(getResources().getString(R.string.age))) {
+            personalInfoChildItemList.set(0,
+                    new UserProfileChild(getResources().getString(R.string.age),
+                            Utils.convertEnglishDigittoBangla(
+                                    userProfile.getProfile().getPersonalInformation().getAge()) +
+                                    " " + getResources().getString(R.string.year) + ","
 
-        ));
+                    ));
+        }else{
+            personalInfoChildItemList.add(0,
+                    new UserProfileChild(getResources().getString(R.string.age),
+                            Utils.convertEnglishDigittoBangla(
+                                    userProfile.getProfile().getPersonalInformation().getAge()) +
+                                    " " + getResources().getString(R.string.year) + ","
 
-        personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.height),
-                Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightFt())
-                        + "'" +
-                        Utils.convertEnglishDigittoBangla(userProfile.getProfile().getPersonalInformation().getHeightInc())
-                        + "\""
-        ));
-
-
-        personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.religion_text),
-                userProfile.getProfile().getProfileReligion().getReligion()
-        ));
-
-        if( userProfile.getProfile().getProfileReligion().getCast()!=null) {
-            personalInfoChildItemList.add(
-                    new UserProfileChild(getResources().getString(R.string.cast_text),
-                            userProfile.getProfile().getProfileReligion().getCast()
                     ));
         }
 
+        if(personalInfoChildItemList.size() > 1 && personalInfoChildItemList.get(1).getTitle().equalsIgnoreCase(getResources().getString(R.string.height))) {
+            personalInfoChildItemList.set(1,
+                    new UserProfileChild(getResources().getString(R.string.height),
+                            Utils.convertEnglishDigittoBangla(
+                                    userProfile.getProfile().getPersonalInformation().getHeightFt())
+                                    + "'" +
+                                    Utils.convertEnglishDigittoBangla(
+                                            userProfile.getProfile().getPersonalInformation().getHeightInc())
+                                    + "\""
+                    ));
+        }else{
+            personalInfoChildItemList.add(1,
+                    new UserProfileChild(getResources().getString(R.string.height),
+                            Utils.convertEnglishDigittoBangla(
+                                    userProfile.getProfile().getPersonalInformation().getHeightFt())
+                                    + "'" +
+                                    Utils.convertEnglishDigittoBangla(
+                                            userProfile.getProfile().getPersonalInformation().getHeightInc())
+                                    + "\""
+                    ));
+        }
+
+        if(personalInfoChildItemList.size() > 2 && personalInfoChildItemList.get(2).getTitle().equalsIgnoreCase(getResources().getString(R.string.religion_text))) {
+            personalInfoChildItemList.set(2,
+                    new UserProfileChild(getResources().getString(R.string.religion_text),
+                            userProfile.getProfile().getProfileReligion().getReligion()
+                    ));
+        }else {
+            personalInfoChildItemList.add(2,
+                    new UserProfileChild(getResources().getString(R.string.religion_text),
+                            userProfile.getProfile().getProfileReligion().getReligion()
+                    ));
+        }
+
+        if( userProfile.getProfile().getProfileReligion().getCast()!=null) {
+            if(personalInfoChildItemList.size() > 3 && personalInfoChildItemList.get(3).getTitle().equalsIgnoreCase(getResources().getString(R.string.cast_text))) {
+                personalInfoChildItemList.set(3,
+                        new UserProfileChild(getResources().getString(R.string.cast_text),
+                                userProfile.getProfile().getProfileReligion().getCast()
+                        ));
+            }else{
+                personalInfoChildItemList.add(3,
+                        new UserProfileChild(getResources().getString(R.string.cast_text),
+                                userProfile.getProfile().getProfileReligion().getCast()
+                        ));
+            }
+        }
+
         if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getCountry())).equals("")) {
-
-
-            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.present_loaction_text),
+            personalInfoChildItemList.add(4, new UserProfileChild(getResources().getString(R.string.present_loaction_text),
                     userProfile.getProfile().getProfileLivingIn().getCountry()
             ));
         }
@@ -602,7 +645,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())).equals("")) {
 
-            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.home_town),
+            personalInfoChildItemList.add(5, new UserProfileChild(getResources().getString(R.string.home_town),
                     userProfile.getProfile().getProfileLivingIn().getLocation()
             ));
 
@@ -610,39 +653,67 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
 
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getSkinColor())).equals("")) {
+            if(personalInfoChildItemList.size() > 6 && personalInfoChildItemList.get(6).getTitle().equalsIgnoreCase(getResources().getString(R.string.skin_color))) {
 
-            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.body_color),
-                    userProfile.getProfile().getPersonalInformation().getSkinColor()
-            ));
+                personalInfoChildItemList.set(6,
+                        new UserProfileChild(getResources().getString(R.string.skin_color),
+                                userProfile.getProfile().getPersonalInformation().getSkinColor()
+                        ));
+            }else{
+                personalInfoChildItemList.add(6,
+                        new UserProfileChild(getResources().getString(R.string.skin_color),
+                                userProfile.getProfile().getPersonalInformation().getSkinColor()
+                        ));
+            }
 
         }
 
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())).equals("")) {
-
-            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.body),
-                    userProfile.getProfile().getPersonalInformation().getWeight()
-            ));
+            if(personalInfoChildItemList.size() > 7 && personalInfoChildItemList.get(7).getTitle().equalsIgnoreCase(getResources().getString(R.string.body))) {
+                personalInfoChildItemList.set(7,
+                    new UserProfileChild(getResources().getString(R.string.body),
+                            userProfile.getProfile().getPersonalInformation().getWeight()
+                    ));
+            }else{
+                personalInfoChildItemList.add(7,
+                    new UserProfileChild(getResources().getString(R.string.body),
+                            userProfile.getProfile().getPersonalInformation().getWeight()
+                    ));
+            }
 
         }
 
 
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getMaritalStatus()))
                 .equals("")) {
-
-            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.marital_status),
-                    userProfile.getProfile().getPersonalInformation().getMaritalStatus()
-            ));
+            if(personalInfoChildItemList.size() > 8 && personalInfoChildItemList.get(8).getTitle().equalsIgnoreCase(getResources().getString(R.string.marital_status))) {
+                personalInfoChildItemList.set(8,
+                    new UserProfileChild(getResources().getString(R.string.marital_status),
+                            userProfile.getProfile().getPersonalInformation().getMaritalStatus()
+                    ));
+            }else{
+                personalInfoChildItemList.add(8,
+                        new UserProfileChild(getResources().getString(R.string.marital_status),
+                                userProfile.getProfile().getPersonalInformation().getMaritalStatus()
+                        ));
+            }
 
         }
 
 
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getBloodGroup()))
                 .equals("")) {
-
-
-            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.blood_group_text),
-                    userProfile.getProfile().getPersonalInformation().getBloodGroup()
-            ));
+            if(personalInfoChildItemList.size() > 9 && personalInfoChildItemList.get(9).getTitle().equalsIgnoreCase(getResources().getString(R.string.blood_group_text))) {
+                personalInfoChildItemList.set(9,
+                    new UserProfileChild(getResources().getString(R.string.blood_group_text),
+                            userProfile.getProfile().getPersonalInformation().getBloodGroup()
+                    ));
+            }else{
+                personalInfoChildItemList.add(9,
+                        new UserProfileChild(getResources().getString(R.string.blood_group_text),
+                                userProfile.getProfile().getPersonalInformation().getBloodGroup()
+                        ));
+            }
 
         }
 
@@ -650,7 +721,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 .equals("")) {
 
 
-            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.disabilities_text),
+            personalInfoChildItemList.add(10, new UserProfileChild(getResources().getString(R.string.disabilities_text),
 
                     userProfile.getProfile().getPersonalInformation().getDisabilities() + ", " +
                             checkNullField(userProfile.getProfile().getPersonalInformation().getDisabilitiesDescription())
@@ -661,19 +732,30 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 (!(checkNullField(userProfile.getProfile().getPersonalInformation().getSmoking()))
                         .equals(""))
                 ) {
-
-            personalInfoChildItemList.add(new UserProfileChild(getResources().getString(R.string.smoking_text),
-                    userProfile.getProfile().getPersonalInformation().getSmoking()));
+            if(personalInfoChildItemList.size() > 11 && personalInfoChildItemList.get(11).getTitle().equalsIgnoreCase(getResources().getString(R.string.smoking_text))) {
+                personalInfoChildItemList.set(11,
+                        new UserProfileChild(getResources().getString(R.string.smoking_text),
+                                userProfile.getProfile().getPersonalInformation().getSmoking()));
+            }else{
+                personalInfoChildItemList.add(11,
+                        new UserProfileChild(getResources().getString(R.string.smoking_text),
+                                userProfile.getProfile().getPersonalInformation().getSmoking()));
+            }
 
         }
 
         //add personal Child Item list to parent list
         if (personalInfoChildItemList.size() > 0) {
-            personalInfoChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.personal_info), personalInfoChildItemList));
+            if(personalInfoChildItemHeader.size() ==0)
+                personalInfoChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.personal_info), personalInfoChildItemList));
 
-            personalInfoRecylerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+            personalInfoRecylerView.removeAllViews();
+            upea = new UserProfileExpenadlbeAdapter(this,
                     personalInfoChildItemHeader,
-                    true));
+                    true);
+            personalInfoRecylerView.setAdapter(upea);
+            upea.expandParent(0);
+//            upea.notifyDataSetChanged();
         }
 
 
@@ -726,7 +808,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                 getResources().getString(R.string.mother_text),
                         parentChildItemList));
 
-                parentsRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                parentsRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                         parentChildItemHeader,
                         true));
 
@@ -785,7 +867,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                 + Utils.convertEnglishDigittoBangla(brothersChildItemList.size()) + ")"
                         , brothersChildItemList));
 
-                brotherRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                brotherRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                         brothersChildItemHeader,
                         true));
 
@@ -795,7 +877,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         , getResources().getString(R.string.no_brother_text)));
                 brothersChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.brother_text)
                         , brothersChildItemList));
-                brotherRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                brotherRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                         brothersChildItemHeader,
                         true));
 
@@ -854,7 +936,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                 + Utils.convertEnglishDigittoBangla(sistersChildItemList.size()) + ")"
                         , sistersChildItemList));
 
-                sisterRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                sisterRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                         sistersChildItemHeader,
                         true));
 
@@ -865,7 +947,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         getResources().getString(R.string.no_sister_text)));
                 sistersChildItemHeader.add(new UserProfileParent(
                         getResources().getString(R.string.sister_text), sistersChildItemList));
-                sisterRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                sisterRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                         sistersChildItemHeader,
                         true));
 
@@ -911,14 +993,14 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     childsChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.child_text)
                             , childsChildItemList));
 
-                    childRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                    childRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                             childsChildItemHeader,
                             true));
                 } else {
                     childsChildItemList.add(new UserProfileChild(getResources().getString(R.string.child_text), getResources().getString(R.string.no_child_text)));
                     childsChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.child_text), childsChildItemList));
 
-                    childRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                    childRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                             childsChildItemHeader,
                             true));
 
@@ -1107,7 +1189,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         "অন্যান্য(" + Utils.convertEnglishDigittoBangla(otherRelativeChildItemList.size()) + ")"
                         , otherRelativeChildItemList));
 
-                otherRelativeInfoRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(getBaseContext(),
+                otherRelativeInfoRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                         otherRelativeChildItemHeader,
                         true));
             } else {
@@ -1175,11 +1257,114 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         otherInformationRecyclerView = (RecyclerView) findViewById(R.id.other_info_recylerView);
         otherInformationRecyclerView.setLayoutManager(new CustomStopScrollingRecylerLayoutManager(this));
         otherInformationRecyclerView.getParent().requestChildFocus(otherInformationRecyclerView,otherInformationRecyclerView);
-
-
     }
 
     public void backBtnAction(View v) {
         finish();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK) {
+            if (requestCode == 2) {
+
+                if (data != null && !data.getStringExtra("DATE_OF_BIRTH").equalsIgnoreCase(
+                        "reject")) {
+//                dateOfBirthEditext.setText(data.getStringExtra("DATE_OF_BIRTH"));
+                    Log.d("age: ", data.getStringExtra("DATE_OF_BIRTH"));
+                    String age = data.getStringExtra("DATE_OF_BIRTH");
+                    String[] age1 = age.split("/");
+                    String convertedEnglishDateFromBanglaDate = Integer.parseInt(
+                            CalenderBanglaInfo.getDigitEnglishFromBangla(age1[0])) + "";
+
+                    String convertedEnglishMonthFromBanglaMonth = Integer.parseInt(
+                            CalenderBanglaInfo.getDigitEnglishFromBangla(age1[1])) + "";
+
+                    String convertedEglishYearFromBanglaYear = Integer.parseInt(
+                            CalenderBanglaInfo.getDigitEnglishFromBangla(age1[2])) + "";
+
+                    userProfile.getProfile().getPersonalInformation().setAge(
+                            Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(
+                                    convertedEglishYearFromBanglaYear));
+                    setDataOnPersonalInfoRecylerView(userProfile);
+                }
+            } else if (requestCode == 3) {
+                if (data != null && data.hasExtra("height")) {
+                    if (data.getIntExtra("height", 0) > 0) {
+                        int height = data.getIntExtra("height", 0);
+                        int feetValue = ((height - 1) / 12 + 4);
+                        int inchValue = ((height - 1) % 12);
+                        ArrayList<String> heightArray = new ArrayList<String>();
+                        String[] heightName = new String[heightArray.size()];
+
+                        for (int i = 4; i < 8; i++) {           //height from 4ft to 7ft 11inch
+                            for (int j = 0; j < 12; j++)
+                                heightArray.add(Utils.convertEnglishDigittoBangla(i) + " ফিট "
+                                        + Utils.convertEnglishDigittoBangla(j) + " ইঞ্চি");
+                        }
+
+                        heightName = heightArray.toArray(heightName);
+
+                        userProfile.getProfile().getPersonalInformation().setHeightFt(feetValue);
+                        userProfile.getProfile().getPersonalInformation().setHeightInc(inchValue);
+                        setDataOnPersonalInfoRecylerView(userProfile);
+                    }
+                }
+            } else if (requestCode == 4) {
+                String religionValue = sharePref.get_data("religion") + "";
+                String castValue = sharePref.get_data("cast") + "";
+                String otherReligion = sharePref.get_data("other_religion") + "";
+                String otherCast = sharePref.get_data("other_cast") + "";
+                if (otherReligion.length() > 0) {
+                    userProfile.getProfile().getProfileReligion().setReligion((otherReligion));
+                } else {
+                    userProfile.getProfile().getProfileReligion().setReligion(
+                            data.getStringExtra("religion"));
+                }
+                if (otherCast.length() > 0) {
+                    userProfile.getProfile().getProfileReligion().setCast(otherCast);
+                } else {
+                    userProfile.getProfile().getProfileReligion().setCast(
+                            data.getStringExtra("cast"));
+                }
+
+                setDataOnPersonalInfoRecylerView(userProfile);
+            }else if (requestCode == 5) {
+                userProfile.getProfile().getPersonalInformation().setSkinColor(
+                            data.getStringExtra("skin_color_data"));
+
+                setDataOnPersonalInfoRecylerView(userProfile);
+            }else if (requestCode == 6) {
+                if (data != null && data.hasExtra("body_value")) {
+                    if (data.getIntExtra("body_value", 0) > 0) {
+                        int weight = data.getIntExtra("body_value", 0);
+                        userProfile.getProfile().getPersonalInformation().setWeight(Utils.convertEnglishDigittoBangla(weight + 29) + " কেজি");
+                        setDataOnPersonalInfoRecylerView(userProfile);
+                    }
+                }
+            }else if (requestCode == 7) {
+                if (data != null && data.hasExtra("marital_status_data")) {
+                    if (data.hasExtra("marital_status_data")) {
+                        userProfile.getProfile().getPersonalInformation().setMaritalStatus(data.getStringExtra("marital_status_data"));
+                        setDataOnPersonalInfoRecylerView(userProfile);
+                    }
+                }
+            }else if (requestCode == 8) {
+                if (data != null && data.hasExtra("blood_group_data")) {
+                    if (data.hasExtra("blood_group_data")) {
+                        userProfile.getProfile().getPersonalInformation().setBloodGroup(data.getStringExtra("blood_group_data"));
+                        setDataOnPersonalInfoRecylerView(userProfile);
+                    }
+                }
+            }else if (requestCode == 9) {
+                if (data != null && data.hasExtra("smoke_data")) {
+                    if (data.hasExtra("smoke_data")) {
+                        userProfile.getProfile().getPersonalInformation().setSmoking(data.getStringExtra("smoke_data"));
+                        setDataOnPersonalInfoRecylerView(userProfile);
+                    }
+                }
+            }
+        }
     }
 }

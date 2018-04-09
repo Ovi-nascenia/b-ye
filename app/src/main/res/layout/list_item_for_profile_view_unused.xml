@@ -91,7 +91,7 @@
                     android:weightSum="2">
 
                     <TextView
-                        android:id="@+id/body_color"
+                        android:id="@+id/skin_color"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

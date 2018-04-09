@@ -152,7 +152,7 @@
                         android:layout_height="wrap_content"
                         android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp_1x"
                         android:padding="20dp"
-                        android:text="@string/body_color"
+                        android:text="@string/skin_color"
 
                         android:textStyle="bold" />
 

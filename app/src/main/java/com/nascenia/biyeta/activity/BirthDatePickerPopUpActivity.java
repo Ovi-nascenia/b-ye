@@ -133,7 +133,7 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
                 intent.putExtra("DATE_OF_BIRTH", dateArray[dateValue] + "/" +
                         convertedBanglaMonthValue + "/" +
                         yearArray[yearValue]);
-                setResult(2, intent);
+                setResult(RESULT_OK, intent);
                 finish();//finishing activity
             }
         });
@@ -143,7 +143,7 @@ public class BirthDatePickerPopUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.putExtra("DATE_OF_BIRTH", "reject");
-                setResult(2, intent);
+                setResult(RESULT_CANCELED, intent);
                 finish();//finishing activity
             }
         });

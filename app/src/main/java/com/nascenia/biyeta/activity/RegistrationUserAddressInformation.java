@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -73,18 +74,17 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
     private ProgressDialog progress;
 
     SharePref sharePref;
-    String data = "";
+    String data = "", strDataForUpdate = "";
     private String abroadStatusTypeArray[] = {"শিক্ষার্থী", "ওয়ার্ক পারমিট", "স্থায়ী বাসিন্দা", "নাগরিক", "প্রক্রিয়াধীন"};
-
-
     private boolean isSignUp = false;
+    Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_user_address_information);
-
+        toolbar = findViewById(R.id.toolbar);
         initView();
         prePareDistrictListDialog();
         prepareCountryListDialog();
@@ -106,6 +106,13 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
         });*/
 
         data = getIntent().getStringExtra("constants");
+        strDataForUpdate = getIntent().getStringExtra("data");
+        if(strDataForUpdate != null){
+            toolbar.setVisibility(View.GONE);
+            TextView tvTitle = findViewById(R.id.address_title_for_update);
+            tvTitle.setVisibility(View.VISIBLE);
+            nextBtn.setText("সংরক্ষণ করুন ");
+        }
         isSignUp = getIntent().getBooleanExtra("isSignUp", false);
         if (data != null && data.length() > 0) {
             try {
