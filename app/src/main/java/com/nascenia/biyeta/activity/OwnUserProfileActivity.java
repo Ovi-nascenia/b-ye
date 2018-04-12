@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -68,6 +69,7 @@ public class OwnUserProfileActivity extends AppCompatActivity{
     private LinearLayout sliderDotsPanel;
     private  int dotscount;
     private ImageView[] dots;
+    private ImageView img_edit_details;
 
     private UserProfile userProfile;
 
@@ -75,7 +77,7 @@ public class OwnUserProfileActivity extends AppCompatActivity{
 
     private ImageView userProfileImage;
 
-    private TextView userProfileDescriptionText;
+    private EditText userProfileDescriptionText;
 
 
     private ArrayList<UserProfileChild> personalInfoChildItemList = new ArrayList<UserProfileChild>();
@@ -128,7 +130,7 @@ public class OwnUserProfileActivity extends AppCompatActivity{
     private PagerAdapter adapter;
     int[] image;
     String[] proPics = null;
-    private UserProfileExpenadlbeAdapter upea;
+    private UserProfileExpenadlbeAdapter upea, upga;
 
 
     @Override
@@ -463,21 +465,23 @@ public class OwnUserProfileActivity extends AppCompatActivity{
 
         if (userProfile.getProfile().getProfession() != null) {
 
-            if (!(checkNullField(userProfile.getProfile().getProfession().getProfessionalGroup())).equals("")) {
-
-                professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle(
-                        getResources().getString(R.string.professional_group_text)),
-                        userProfile.getProfile().getProfession().getProfessionalGroup()));
-
+            if(professionChildItemList.size() > 0 && professionChildItemList.get(0).getTitle().equalsIgnoreCase(Utils.setBanglaProfileTitle(getResources().getString(R.string.professional_group_text)))){
+                professionChildItemList.set(0, new UserProfileChild(Utils.setBanglaProfileTitle(
+                    getResources().getString(R.string.professional_group_text)),
+                    userProfile.getProfile().getProfession().getProfessionalGroup()));
+            }else{
+                professionChildItemList.add(0, new UserProfileChild(Utils.setBanglaProfileTitle(
+                    getResources().getString(R.string.professional_group_text)),
+                    userProfile.getProfile().getProfession().getProfessionalGroup()));
             }
 
-
-            if (!(checkNullField(userProfile.getProfile().getProfession().getOccupation())).equals("")) {
-
-                professionChildItemList.add(new UserProfileChild(Utils.setBanglaProfileTitle(
-                        getResources().getString(R.string.occupation_text)),
-                        userProfile.getProfile().getProfession().getOccupation()));
-
+            if(professionChildItemList.size() > 1 && professionChildItemList.get(1).getTitle().equalsIgnoreCase(getResources().getString(R.string.profession_text))) {
+                professionChildItemList.set(1, new UserProfileChild(Utils.setBanglaProfileTitle(
+                    getResources().getString(R.string.occupation_text)),
+                    userProfile.getProfile().getProfession().getOccupation()));
+            }else{
+                professionChildItemList.add(1, new UserProfileChild(getResources().getString(R.string.profession_text),
+                    userProfile.getProfile().getProfession().getOccupation()));
             }
 
 
@@ -501,16 +505,38 @@ public class OwnUserProfileActivity extends AppCompatActivity{
 
             if (professionChildItemList.size() > 0) {
 
-                professionChildItemHeader.add(new UserProfileParent(
-                        getResources().getString(R.string.profession_text), professionChildItemList));
-                professionRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
-                        professionChildItemHeader,
-                        true));
-
+                if(professionChildItemHeader.size() ==0){
+                    professionChildItemHeader.add(new UserProfileParent(
+                            getResources().getString(R.string.profession_text),
+                            professionChildItemList));
+                    upga = new UserProfileExpenadlbeAdapter(this,
+                            professionChildItemHeader,
+                            true);
+                    professionRecyclerView.setAdapter(upga);
+                }else{
+                    personalInfoRecylerView.removeAllViews();
+                    upga = new UserProfileExpenadlbeAdapter(this,
+                            professionChildItemHeader,
+                            true);
+                    professionRecyclerView.setAdapter(upga);
+                    upga.notifyDataSetChanged();
+                    upga.expandParent(0);
+                }
             }
+            //add personal Child Item list to parent list
+//            if (personalInfoChildItemList.size() > 0) {
+//                if(personalInfoChildItemHeader.size() ==0)
+//                    personalInfoChildItemHeader.add(new UserProfileParent(getResources().getString(R.string.personal_info), personalInfoChildItemList));
+//
+//                personalInfoRecylerView.removeAllViews();
+//                upea = new UserProfileExpenadlbeAdapter(this,
+//                        personalInfoChildItemHeader,
+//                        true);
+//                personalInfoRecylerView.setAdapter(upea);
+//                upea.expandParent(0);
+////            upea.notifyDataSetChanged();
+//            }
         }
-
-
     }
 
     private void setDataOnEducationalRecylerView(UserProfile userProfile) {
@@ -720,12 +746,27 @@ public class OwnUserProfileActivity extends AppCompatActivity{
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getDisabilities()))
                 .equals("")) {
 
+            if(personalInfoChildItemList.size() > 10 && personalInfoChildItemList.get(10).getTitle().equalsIgnoreCase(getResources().getString(R.string.disabilities_text))) {
 
-            personalInfoChildItemList.add(10, new UserProfileChild(getResources().getString(R.string.disabilities_text),
+                personalInfoChildItemList.set(10,
+                        new UserProfileChild(getResources().getString(R.string.disabilities_text),
 
-                    userProfile.getProfile().getPersonalInformation().getDisabilities() + ", " +
-                            checkNullField(userProfile.getProfile().getPersonalInformation().getDisabilitiesDescription())
-            ));
+                                userProfile.getProfile().getPersonalInformation().getDisabilities()
+                                        + ", " +
+                                        checkNullField(
+                                                userProfile.getProfile().getPersonalInformation().getDisabilitiesDescription())
+                        ));
+            }else {
+                personalInfoChildItemList.add(10,
+                        new UserProfileChild(getResources().getString(R.string.disabilities_text),
+
+                                userProfile.getProfile().getPersonalInformation().getDisabilities()
+                                        + ", " +
+                                        checkNullField(
+                                                userProfile.getProfile().getPersonalInformation().getDisabilitiesDescription())
+
+                        ));
+            }
         }
 
         if ((userProfile.getProfile().getPersonalInformation().getGender().equals(Utils.MALE_GENDER)) &&
@@ -1225,7 +1266,16 @@ public class OwnUserProfileActivity extends AppCompatActivity{
         coordnatelayout = (CoordinatorLayout) findViewById(R.id.coordnatelayout);
 
 
-        userProfileDescriptionText = (TextView) findViewById(R.id.userProfileDescriptionText);
+        userProfileDescriptionText = (EditText) findViewById(R.id.userProfileDescriptionText);
+        img_edit_details = findViewById(R.id.img_edit);
+
+        img_edit_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userProfileDescriptionText.requestFocus();
+                userProfileDescriptionText.setSelection(userProfileDescriptionText.getText().length());
+            }
+        });
 
         userProfileImage = (ImageView) findViewById(R.id.user_profile_image);
         userNameTextView = (TextView) findViewById(R.id.user_name);
@@ -1362,6 +1412,28 @@ public class OwnUserProfileActivity extends AppCompatActivity{
                     if (data.hasExtra("smoke_data")) {
                         userProfile.getProfile().getPersonalInformation().setSmoking(data.getStringExtra("smoke_data"));
                         setDataOnPersonalInfoRecylerView(userProfile);
+                    }
+                }
+            }else if (requestCode == 10) {
+                if (data != null && data.hasExtra("disable_data")) {
+                    if (data.hasExtra("disable_data")) {
+                        userProfile.getProfile().getPersonalInformation().setDisabilities(data.getStringExtra("disable_data"));
+                        userProfile.getProfile().getPersonalInformation().setDisabilitiesDescription(data.getStringExtra("disable_desc_data"));
+                        setDataOnPersonalInfoRecylerView(userProfile);
+                    }
+                }
+            }else if (requestCode == 11) {
+                if (data != null && data.hasExtra("professional_group_data")) {
+                    if (data.hasExtra("professional_group_data")) {
+                        userProfile.getProfile().getProfession().setProfessionalGroup(data.getStringExtra("professional_group_data"));
+                        setDataOnProfessionRecylerView(userProfile);
+                    }
+                }
+            }else if (requestCode == 12) {
+                if (data != null && data.hasExtra("profession_data")) {
+                    if (data.hasExtra("profession_data")) {
+                        userProfile.getProfile().getProfession().setOccupation(data.getStringExtra("profession_data"));
+                        setDataOnProfessionRecylerView(userProfile);
                     }
                 }
             }

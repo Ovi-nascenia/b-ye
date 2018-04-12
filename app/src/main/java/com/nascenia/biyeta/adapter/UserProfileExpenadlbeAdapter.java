@@ -4,34 +4,28 @@ package com.nascenia.biyeta.adapter;
  * Created by saiful on 2/23/17.
  */
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.text.method.KeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.nascenia.biyeta.activity.BirthDatePickerPopUpActivity;
 import com.nascenia.biyeta.activity.OwnUserProfileActivity;
 import com.nascenia.biyeta.activity.PopUpCastReligion;
 import com.nascenia.biyeta.activity.PopUpPersonalInfo;
-import com.nascenia.biyeta.activity.RegistrationFamilyInfoFirstPage;
 import com.nascenia.biyeta.activity.RegistrationUserAddressInformation;
-import com.nascenia.biyeta.activity.UserProfileActivity;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.UserProfileParent;
 import com.nascenia.biyeta.model.UserProfileChild;
@@ -53,7 +47,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     private LayoutInflater mInflater;
 
     private List<UserProfileParent> userProfilesListParent;
-    private Context baseContext;
+    private static Context baseContext;
     private boolean isProfileEditOptionEnable;
     private final int DATE_OF_BIRTH_REQUEST_CODE = 2;
     private final int HEIGHT_REQUEST_CODE = 3;
@@ -63,6 +57,9 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     private final int MARITAL_STATUS_REQUEST_CODE = 7;
     private final int BLOOD_GROUP_REQUEST_CODE = 8;
     private final int SMOKE_REQUEST_CODE = 9;
+    private final int DISABLE_REQUEST_CODE = 10;
+    private final int PROFESSIONAL_GROUP_REQUEST_CODE = 11;
+    private final int PROFESSION_REQUEST_CODE = 12;
 
     /*public static ArrayList<Boolean> parentPositionList = new ArrayList<>();*/
 
@@ -106,50 +103,97 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     public ChildItemViewHolder onCreateChildViewHolder(@NonNull ViewGroup childViewGroup, int viewType) {
         View childView = mInflater.inflate(R.layout.profile_details_child_item, childViewGroup, false);
         final TextView titleTextView = childView.findViewById(R.id.titleTextView);
-        ImageView img_edit = childView.findViewById(R.id.img_edit);
+        final EditText descView = childView.findViewById(R.id.titleResultTextView);
+        final ImageView img_edit = childView.findViewById(R.id.img_edit);
+        final boolean editEnabled = false;
         img_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.age))){
-                    Toast.makeText(baseContext, "age", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(baseContext, "age", Toast.LENGTH_SHORT).show();
                     ((OwnUserProfileActivity)baseContext).startActivityForResult(
                             new Intent(baseContext, BirthDatePickerPopUpActivity.class),
                             DATE_OF_BIRTH_REQUEST_CODE);
 
                 }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.height))){
-                    Toast.makeText(baseContext, "height", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(baseContext, "height", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(baseContext, PopUpPersonalInfo.class);
                     intent.putExtra("data", "height");
                     ((OwnUserProfileActivity)baseContext).startActivityForResult(intent,
                             HEIGHT_REQUEST_CODE);
                 }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.skin_color))){
-                    Toast.makeText(baseContext, "skin", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(baseContext, "skin", Toast.LENGTH_SHORT).show();
                     new GetPersonalInfoStepFetchConstant("skin", SKIN_REQUEST_CODE).execute();
                 }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.body))){
-                    Toast.makeText(baseContext, "body", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(baseContext, "body", Toast.LENGTH_SHORT).show();
                     new GetPersonalInfoStepFetchConstant("body", BODY_REQUEST_CODE).execute();
                 }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.marital_status))){
-                    Toast.makeText(baseContext, "marital status", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(baseContext, "marital status", Toast.LENGTH_SHORT).show();
                     new GetPersonalInfoStepFetchConstant("marital_status", MARITAL_STATUS_REQUEST_CODE).execute();
                 }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.blood_group_text))){
-                    Toast.makeText(baseContext, "blood group", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(baseContext, "blood group", Toast.LENGTH_SHORT).show();
                     new GetPersonalInfoStepFetchConstant("blood_group", BLOOD_GROUP_REQUEST_CODE).execute();
                 }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.smoking_text))){
-                    Toast.makeText(baseContext, "smoke", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(baseContext, "smoke", Toast.LENGTH_SHORT).show();
                     new GetPersonalInfoStepFetchConstant("smoke", SMOKE_REQUEST_CODE).execute();
                 }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.religion_text))){
-                    Toast.makeText(baseContext, "religion", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(baseContext, "religion", Toast.LENGTH_SHORT).show();
                     new GetReligionStepFetchConstant().execute();
                 }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.present_loaction_text))){
-                    Toast.makeText(baseContext, "present address", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(baseContext, "present address", Toast.LENGTH_SHORT).show();
                     new GetAddressStepFetchConstant().execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.home_town))){
+//                    Toast.makeText(baseContext, "permanent address", Toast.LENGTH_SHORT).show();
+                    new GetAddressStepFetchConstant().execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.disabilities_text))){
+//                    Toast.makeText(baseContext, "disable", Toast.LENGTH_SHORT).show();
+                    new GetPersonalInfoStepFetchConstant("disable", DISABLE_REQUEST_CODE).execute();
                 }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.cast_text))){
-                    Toast.makeText(baseContext, "cast", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(baseContext, "cast", Toast.LENGTH_SHORT).show();
                     new GetReligionStepFetchConstant().execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(Utils.setBanglaProfileTitle(baseContext.getResources().getString(R.string.professional_group_text)))){
+//                    Toast.makeText(baseContext, "group", Toast.LENGTH_SHORT).show();
+                    new GetPersonalInfoStepFetchConstant("professional_group", PROFESSIONAL_GROUP_REQUEST_CODE).execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.profession_text))){
+//                    Toast.makeText(baseContext, "profession", Toast.LENGTH_SHORT).show();
+                    new GetPersonalInfoStepFetchConstant("profession", PROFESSION_REQUEST_CODE).execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(Utils.setBanglaProfileTitle(baseContext.getResources().getString(R.string.designation_text)))){
+//                    Toast.makeText(baseContext, "designation", Toast.LENGTH_SHORT).show();
+                    enableEditing(descView, img_edit);
+//                    if(img_edit.getDrawable())
+
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(Utils.setBanglaProfileTitle(baseContext.getResources().getString(R.string.institute_text)))){
+//                    Toast.makeText(baseContext, "institute", Toast.LENGTH_SHORT).show();
+                    enableEditing(descView, img_edit);
                 }
             }
         });
-        return new ChildItemViewHolder(childView);
+        return new ChildItemViewHolder(childView, false);
+    }
+
+    private void enableEditing(final EditText descView, ImageView img_edit) {
+
+        if(img_edit.getTag()!=null && img_edit.getTag().equals("enabled")) {   //save data, server call
+            img_edit.setTag("");
+            img_edit.setImageResource(R.drawable.editicon);
+            descView.setEnabled(false);
+//            descView.setFocusable(false);
+            hideSoftKeyboard(descView);
+            descView.clearFocus();
+        }else{
+            img_edit.setTag("enabled");
+            img_edit.setImageResource(R.drawable.accept_icon);
+            descView.setEnabled(true);
+//            descView.setFocusable(true);
+            descView.requestFocus();
+            descView.setSelection(descView.getText().length());
+        }
+    }
+
+    public static void hideSoftKeyboard (EditText view)
+    {
+        InputMethodManager imm = (InputMethodManager)baseContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
     }
 
     @Override

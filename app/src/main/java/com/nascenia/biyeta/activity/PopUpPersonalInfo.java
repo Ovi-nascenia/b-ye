@@ -1,13 +1,18 @@
 package com.nascenia.biyeta.activity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,8 +38,8 @@ public class PopUpPersonalInfo extends AppCompatActivity {
     private ArrayList<String> heightArray = new ArrayList<String>();
     private String[] heightName = new String[heightArray.size()];
     private String info_data = "";
-
-    private JSONObject skinColorObject, marriageObject, bloodObject, smokeObject;
+    EditText disableEditText;
+    private JSONObject skinColorObject, marriageObject, bloodObject, smokeObject, disableObject,  professionalGroupObject, occupationObject;
 
     //skin
     private ArrayList<String> skinColorArray = new ArrayList<String>();
@@ -62,6 +67,23 @@ public class PopUpPersonalInfo extends AppCompatActivity {
     private ArrayList<String> smokeConstant = new ArrayList<String>();
     private String[] smokeConstantValue = new String[smokeArray.size()];
 
+    private ArrayList<String> disableArray = new ArrayList<String>();
+    private String[] disableName = new String[disableArray.size()];
+    private ArrayList<String> disableConstant = new ArrayList<String>();
+    private String[] disableConstantValue = new String[disableArray.size()];
+
+    private ArrayList<String> professonalGroupArray = new ArrayList<String>();
+    private String[] professonalGroupName = new String[professonalGroupArray.size()];
+    private ArrayList<String> professonalGroupConstant = new ArrayList<String>();
+    private String[] professonalGroupConstantValue = new String[professonalGroupArray.size()];
+
+    private ArrayList<String> occupationArray = new ArrayList<String>();
+    private String[] occupationName = new String[occupationArray.size()];
+    private ArrayList<String> occupationConstant = new ArrayList<String>();
+    private String[] occupationConstantValue = new String[occupationArray.size()];
+    int width = 0;
+    int height = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -71,6 +93,7 @@ public class PopUpPersonalInfo extends AppCompatActivity {
         accept = (Button)findViewById(R.id.accept);
         reject = (Button)findViewById(R.id.cancel);
         mTextView = (TextView) findViewById(R.id.title);
+        disableEditText = (EditText) findViewById(R.id.disable_desc);
 
 
         info_data = getIntent().getStringExtra("constants");
@@ -191,8 +214,8 @@ public class PopUpPersonalInfo extends AppCompatActivity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
+        width = dm.widthPixels;
+        height = dm.heightPixels;
 
         getWindow().setLayout((int)(width*.8),(int)(height*.6));
 
@@ -200,43 +223,60 @@ public class PopUpPersonalInfo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(RegistrationPersonalInformation.selectedPopUp == 11 || strDataForUpdate.equalsIgnoreCase("height")){
-                    if(strDataForUpdate.equalsIgnoreCase("height"))
-                    {
-                        Intent intent = new Intent();
-                        intent.putExtra("height", picker.getValue() + 1);
-                        setResult(RESULT_OK, intent);
-                    }
-                    RegistrationPersonalInformation.height = picker.getValue() + 1;
-                }else if(RegistrationPersonalInformation.selectedPopUp == 12){
-                    RegistrationPersonalInformation.weight = picker.getValue() + 1;
-                }else if(strDataForUpdate.equalsIgnoreCase("skin")) {
+            if(RegistrationPersonalInformation.selectedPopUp == 11 || strDataForUpdate.equalsIgnoreCase("height")){
+                if(strDataForUpdate.equalsIgnoreCase("height"))
+                {
                     Intent intent = new Intent();
-                    intent.putExtra("skin_color_value", picker.getValue() + 1);
-                    intent.putExtra("skin_color_data", skinColorName[picker.getValue()]);
-                    setResult(RESULT_OK, intent);
-                }else if(strDataForUpdate.equalsIgnoreCase("body")){
-                    Intent intent = new Intent();
-                    intent.putExtra("body_value", picker.getValue() + 1);
-                    setResult(RESULT_OK, intent);
-                }else if(strDataForUpdate.equalsIgnoreCase("marital_status")) {
-                    Intent intent = new Intent();
-                    intent.putExtra("marital_status_value", picker.getValue() + 1);
-                    intent.putExtra("marital_status_data", maritalStatusName[picker.getValue()]);
-                    setResult(RESULT_OK, intent);
-                }else if(strDataForUpdate.equalsIgnoreCase("blood_group")) {
-                    Intent intent = new Intent();
-                    intent.putExtra("blood_group_value", picker.getValue() + 1);
-                    intent.putExtra("blood_group_data", bloodGroupName[picker.getValue()]);
-                    setResult(RESULT_OK, intent);
-                }else if(strDataForUpdate.equalsIgnoreCase("smoke")) {
-                    Intent intent = new Intent();
-                    intent.putExtra("smoke_value", picker.getValue() + 1);
-                    intent.putExtra("smoke_data", smokeName[picker.getValue()]);
+                    intent.putExtra("height", picker.getValue() + 1);
                     setResult(RESULT_OK, intent);
                 }
+                RegistrationPersonalInformation.height = picker.getValue() + 1;
+            }else if(RegistrationPersonalInformation.selectedPopUp == 12){
+                RegistrationPersonalInformation.weight = picker.getValue() + 1;
+            }else if(strDataForUpdate.equalsIgnoreCase("skin")) {
+                Intent intent = new Intent();
+                intent.putExtra("skin_color_value", picker.getValue() + 1);
+                intent.putExtra("skin_color_data", skinColorName[picker.getValue()]);
+                setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate.equalsIgnoreCase("body")){
+                Intent intent = new Intent();
+                intent.putExtra("body_value", picker.getValue() + 1);
+                setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate.equalsIgnoreCase("marital_status")) {
+                Intent intent = new Intent();
+                intent.putExtra("marital_status_value", picker.getValue() + 1);
+                intent.putExtra("marital_status_data", maritalStatusName[picker.getValue()]);
+                setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate.equalsIgnoreCase("blood_group")) {
+                Intent intent = new Intent();
+                intent.putExtra("blood_group_value", picker.getValue() + 1);
+                intent.putExtra("blood_group_data", bloodGroupName[picker.getValue()]);
+                setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate.equalsIgnoreCase("smoke")) {
+                Intent intent = new Intent();
+                intent.putExtra("smoke_value", picker.getValue() + 1);
+                intent.putExtra("smoke_data", smokeName[picker.getValue()]);
+                setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate.equalsIgnoreCase("disable")) {
+                Intent intent = new Intent();
+                Log.d("disable value", picker.getValue() + "");
+                intent.putExtra("disable_value", picker.getValue() + 1);
+                intent.putExtra("disable_data", disableName[picker.getValue()]);
+                intent.putExtra("disable_desc_data", picker.getValue()>0?disableEditText.getText().toString():"");
+                setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate.equalsIgnoreCase("professional_group")) {
+                Intent intent = new Intent();
+                intent.putExtra("professional_group_value", picker.getValue() + 1);
+                intent.putExtra("professional_group_data", professonalGroupName[picker.getValue()]);
+                setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate.equalsIgnoreCase("profession")) {
+                Intent intent = new Intent();
+                intent.putExtra("profession_value", picker.getValue() + 1);
+                intent.putExtra("profession_data", occupationName[picker.getValue()]);
+                setResult(RESULT_OK, intent);
+            }
 
-                finish();
+            finish();
             }
         });
 
@@ -247,6 +287,40 @@ public class PopUpPersonalInfo extends AppCompatActivity {
             }
         });
     }
+
+//    private void showDisableDescUI(String message) {
+//
+//        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+//        LayoutInflater inflater = this.getLayoutInflater();
+//        View dialogView = inflater.inflate(R.layout.disable_desc, null);
+//        dialogBuilder.setView(dialogView);
+//
+//        EditText editText = (EditText) dialogView.findViewById(R.id.disable_desc);
+//        editText.setText(message);
+//        dialogBuilder.setCancelable(true);
+//        dialogBuilder.setPositiveButton(R.string.see_details,
+//            new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int which) {
+//
+//                }
+//            });
+//        dialogBuilder.setNegativeButton(R.string.not_now,
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//        final AlertDialog alert = dialogBuilder.create();
+//        alert.setOnShowListener( new DialogInterface.OnShowListener() {
+//            @Override
+//            public void onShow(DialogInterface arg0) {
+//                alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.black));
+//                alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorPrimary));
+//            }
+//        });
+//
+//        alert.show();
+//    }
 
     private void setData() {
         JSONObject jsonObject = null;
@@ -283,6 +357,36 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 bloodGroupName = bloodGroupArray.toArray(bloodGroupName);
                 data = bloodGroupName;
                 mTextView.setText(getResources().getString(R.string.blood_group_text));
+            }else if(strDataForUpdate.equalsIgnoreCase("disable")) {
+                disableObject = jsonObject.getJSONObject("physical_disability_options");
+                for (int i = 0; i < disableObject.length(); i++) {
+                    disableConstant.add(disableObject.names().getString(i));
+                    disableArray.add((String) disableObject.get(disableObject.names().getString(i)));
+                }
+
+                disableName = disableArray.toArray(disableName);
+                data = disableName;
+                mTextView.setText(getResources().getString(R.string.disabilities_text));
+            }else if(strDataForUpdate.equalsIgnoreCase("professional_group")) {
+                professionalGroupObject = jsonObject.getJSONObject("professional_group_constant");
+                for (int i = 0; i < professionalGroupObject.length(); i++) {
+                    professonalGroupConstant.add(professionalGroupObject.names().getString(i));
+                    professonalGroupArray.add((String) professionalGroupObject.get(professionalGroupObject.names().getString(i)));
+                }
+
+                professonalGroupName = professonalGroupArray.toArray(professonalGroupName);
+                data = professonalGroupName;
+                mTextView.setText(Utils.setBanglaProfileTitle(getResources().getString(R.string.professional_group_text)));
+            }else if(strDataForUpdate.equalsIgnoreCase("profession")) {
+                occupationObject = jsonObject.getJSONObject("occupation_constant");
+                for (int i = 0; i < occupationObject.length(); i++) {
+                    occupationConstant.add(occupationObject.names().getString(i));
+                    occupationArray.add((String) occupationObject.get(occupationObject.names().getString(i)));
+                }
+
+                occupationName = occupationArray.toArray(occupationName);
+                data = occupationName;
+                mTextView.setText(Utils.setBanglaProfileTitle(getResources().getString(R.string.profession_text)));
             }else if(strDataForUpdate.equalsIgnoreCase("marital_status")) {
                 SharePref sharePref = new SharePref(PopUpPersonalInfo.this);
                 if (sharePref.get_data("gender").equalsIgnoreCase("female")) {
@@ -408,8 +512,17 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 RegistrationPersonalInformation.religion = newVal + 1;
             }else if(RegistrationPersonalInformation.selectedPopUp == 5){
                 RegistrationPersonalInformation.roja = newVal + 1;
-            }else if(RegistrationPersonalInformation.selectedPopUp == 6){
+            }else if(RegistrationPersonalInformation.selectedPopUp == 6 || strDataForUpdate.equalsIgnoreCase("disable")){
                 RegistrationPersonalInformation.disable = newVal + 1;
+                if(newVal == 0 && strDataForUpdate.equalsIgnoreCase("disable"))
+                {
+                    findViewById(R.id.ln_disable_desc).setVisibility(View.GONE);
+                    getWindow().setLayout((int)(width*.8),(int)(height*.6));
+                }else if(strDataForUpdate.equalsIgnoreCase("disable")){
+                    findViewById(R.id.ln_disable_desc).setVisibility(View.VISIBLE);
+                    getWindow().setLayout((int)(width*.8),(int)(height*.75));
+                }
+
             }else if(RegistrationPersonalInformation.selectedPopUp == 7){
                 RegistrationPersonalInformation.smoke = newVal + 1;
             }else if(RegistrationPersonalInformation.selectedPopUp == 8){

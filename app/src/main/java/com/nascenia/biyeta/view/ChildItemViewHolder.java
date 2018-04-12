@@ -31,12 +31,12 @@ public class ChildItemViewHolder extends ChildViewHolder {
     public LinearLayout itemDividerLayout;
 
 
-    public ChildItemViewHolder(@NonNull View itemView) {
+    public ChildItemViewHolder(@NonNull View itemView, boolean isEditable) {
         super(itemView);
 
         titleTextView = (TextView) itemView.findViewById(R.id.titleTextView);
         titleResultTextView = (EditText) itemView.findViewById(R.id.titleResultTextView);
-//        titleResultTextView.setEnabled(true);
+        titleResultTextView.setEnabled(false);
         itemDividerLayout = (LinearLayout) itemView.findViewById(R.id.divider);
     }
 
