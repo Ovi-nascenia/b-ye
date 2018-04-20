@@ -104,6 +104,8 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
 
     TextView mTextViewTitle;
 
+    String strAgeData = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -119,6 +121,8 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             int defaultValue = 0;
             position = extras.getInt("position", defaultValue);
         }
+
+        strAgeData = getIntent().getStringExtra("data");
 
         age = new String[100];
 
@@ -192,6 +196,8 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }catch (NullPointerException e) {
+            e.printStackTrace();
         }
 
 
@@ -214,7 +220,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
         } else if (BrotherViewAdapter.selectedPopUp == 4) {
             data = relationName;
             mTextViewTitle.setText("");
-        } else if (BrotherViewAdapter.selectedPopUp == 5) {
+        } else if (BrotherViewAdapter.selectedPopUp == 5 || strAgeData.equalsIgnoreCase("age")) {
             data = age;
             mTextViewTitle.setText("বয়স");
         } else if (BrotherViewAdapter.selectedPopUp == 6) {
@@ -352,9 +358,12 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
                                     .findViewHolderForLayoutPosition(position);
 
                     holder.brotherAge.setText(age[newValue]);
-
                     value = "" + newValue;
                     ageArrayBrother.put(position, value);
+                }else if (strAgeData.equalsIgnoreCase("age")){
+                    Intent intent = new Intent();
+                    intent.putExtra("age_data", newValue + "");
+                    setResult(RESULT_OK, intent);
                 } else if (BrotherViewAdapter.selectedPopUp == 6) {
                     //BrotherViewAdapter.brotherOcupationSpouse.setText(occupationName[newVal]);
 

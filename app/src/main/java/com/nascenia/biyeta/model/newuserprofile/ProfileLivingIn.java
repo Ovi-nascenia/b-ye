@@ -12,9 +12,13 @@ public class ProfileLivingIn implements Serializable
     @SerializedName("country")
     @Expose
     private String country;
-    @SerializedName("location")
+    @SerializedName("home_town")
     @Expose
     private String location;
+    @SerializedName("own_house")
+    @Expose
+    private String own_house;
+
     private final static long serialVersionUID = 7205212140060749127L;
 
     public String getCountry() {
@@ -36,6 +40,14 @@ public class ProfileLivingIn implements Serializable
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getOwnHouse() {
+        return own_house;
+    }
+
+    public void setOwnHouse(String own_house) {
+        this.own_house = own_house;
     }
 
     public ProfileLivingIn withLocation(String location) {

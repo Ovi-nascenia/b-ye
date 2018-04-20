@@ -19,6 +19,7 @@
     <string name="body">গড়ন </string>
     <string name="skin_color">গায়ের রং </string>
     <string name="education_male">  শিক্ষাগত যোগ্যতা </string>
+    <string name="education">  শিক্ষা </string>
     <string name="profession_identity_male">প্রফেশনাল গ্রুপ </string>
     <string name="profession_male">পেশা</string>
     <string name="year">বছর</string>
@@ -58,10 +59,7 @@
 
     <string name="send_biodata_request_message"> বায়োডাটার অনুরোধ পাঠানো হয়েছে</string>
     <string name="send_communication_request_message">যোগাযোগের অনুরোধ পাঠানো হয়েছে</string>
-
-
     <string name="title_activity_send_request">Request send</string>
-
     <string name="sent_request"> আপনাকে পাঠানো  অনুরোধ</string>
     <string name="your_sent_request">আপনার  পাঠানো  অনুরোধ</string>
     <string name="message">মেসেজ</string>
@@ -73,6 +71,7 @@
     <string name="favorites">ফেভারিট</string>
     <string name="request_to_see_biodata">বায়োডাটা দেখার অনুরোধ করুন</string>
     <string name="request_to_communicate">যোগাযোগের অনুরোধ করুন</string>
+    <string name="save_text">সংরক্ষণ করুন </string>
 
     <string name="trash">ট্র্যাশ</string>
 
@@ -427,6 +426,7 @@
     <string name="choose_your_father_occupation">আপনার বাবার পেশা নির্বাচন করুন</string>
 
     <string name="write_your_mother_name">আপনার মায়ের নাম লিখুন</string>
+    <string name="mother_name">মায়ের নাম</string>
     <string name="choose_your_mother_occupation">আপনার মায়ের পেশা নির্বাচন করুন</string>
 
     <string name="select_image_message">আপনার প্রোফাইল ছবি নির্বাচন করুন</string>

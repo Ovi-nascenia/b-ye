@@ -376,7 +376,7 @@
                             android:background="@color/white"/>
 
                         <ImageView
-                            android:id="@+id/img_edit"
+                            android:id="@+id/img_edit_details"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_margin="5dp"

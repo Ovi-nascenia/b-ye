@@ -254,11 +254,25 @@
         <!-- android:name=".activity.PlansActivity" -->
         <!-- android:label="@string/title_activity_plans" -->
         <!-- android:theme="@style/AppTheme.NoActionBar"></activity> -->
-        <activity android:name=".activity.ForgotPassActivity"
+        <activity
+            android:name=".activity.ForgotPassActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.PopupEducationEdit"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.PopupParentsEdit"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".BrotherEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
-
         </activity>
     </application>
 

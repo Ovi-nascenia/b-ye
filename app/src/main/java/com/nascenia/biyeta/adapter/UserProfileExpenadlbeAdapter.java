@@ -21,10 +21,13 @@ import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
 
 import java.util.List;
 
+import com.nascenia.biyeta.BrotherEditActivity;
 import com.nascenia.biyeta.activity.BirthDatePickerPopUpActivity;
 import com.nascenia.biyeta.activity.OwnUserProfileActivity;
 import com.nascenia.biyeta.activity.PopUpCastReligion;
 import com.nascenia.biyeta.activity.PopUpPersonalInfo;
+import com.nascenia.biyeta.activity.PopupEducationEdit;
+import com.nascenia.biyeta.activity.PopupParentsEdit;
 import com.nascenia.biyeta.activity.RegistrationUserAddressInformation;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.UserProfileParent;
@@ -60,6 +63,14 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     private final int DISABLE_REQUEST_CODE = 10;
     private final int PROFESSIONAL_GROUP_REQUEST_CODE = 11;
     private final int PROFESSION_REQUEST_CODE = 12;
+    private final int FASTING_REQUEST_CODE = 13;
+    private final int PRAYER_REQUEST_CODE = 14;
+    private final int OWN_HOUSE_REQUEST_CODE = 15;
+    private final int EDUCATION_REQUEST_CODE = 16;
+    private final int FATHER_REQUEST_CODE = 17;
+    private final int MOTHER_REQUEST_CODE = 18;
+    private final int BROTHER_REQUEST_CODE = 19;
+
 
     /*public static ArrayList<Boolean> parentPositionList = new ArrayList<>();*/
 
@@ -165,28 +176,72 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 }else if(titleTextView.getText().toString().equalsIgnoreCase(Utils.setBanglaProfileTitle(baseContext.getResources().getString(R.string.institute_text)))){
 //                    Toast.makeText(baseContext, "institute", Toast.LENGTH_SHORT).show();
                     enableEditing(descView, img_edit);
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.fast_text))){
+//                    Toast.makeText(baseContext, "fasting", Toast.LENGTH_SHORT).show();
+                    new GetPersonalInfoStepFetchConstant("fasting", FASTING_REQUEST_CODE).execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.prayet_text))){
+//                    Toast.makeText(baseContext, "prayer", Toast.LENGTH_SHORT).show();
+                    new GetPersonalInfoStepFetchConstant("prayer", PRAYER_REQUEST_CODE).execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.own_house_text))){
+//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
+                    new GetPersonalInfoStepFetchConstant("own_house", OWN_HOUSE_REQUEST_CODE).execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.education))){
+//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
+                    new GetPersonalInfoStepFetchConstant("education", EDUCATION_REQUEST_CODE).execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.father_text))){
+//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
+                    new GetPersonalInfoStepFetchConstant("father", FATHER_REQUEST_CODE).execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.mother_text))){
+//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
+                    new GetPersonalInfoStepFetchConstant("mother", MOTHER_REQUEST_CODE).execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.brother_text))){
+//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
+                    new GetPersonalInfoStepFetchConstant("brother", BROTHER_REQUEST_CODE).execute();
                 }
             }
         });
         return new ChildItemViewHolder(childView, false);
     }
 
-    private void enableEditing(final EditText descView, ImageView img_edit) {
+    private void enableEditing(final EditText descView, final ImageView img_edit) {
 
-        if(img_edit.getTag()!=null && img_edit.getTag().equals("enabled")) {   //save data, server call
-            img_edit.setTag("");
-            img_edit.setImageResource(R.drawable.editicon);
-            descView.setEnabled(false);
-//            descView.setFocusable(false);
-            hideSoftKeyboard(descView);
-            descView.clearFocus();
-        }else{
-            img_edit.setTag("enabled");
-            img_edit.setImageResource(R.drawable.accept_icon);
-            descView.setEnabled(true);
-//            descView.setFocusable(true);
+//        if(img_edit.getTag()!=null && img_edit.getTag().equals("enabled")) {   //save data, server call
+//            img_edit.setTag("");
+//            img_edit.setImageResource(R.drawable.editicon);
+//            descView.setEnabled(false);
+////            descView.setFocusable(false);
+//            hideSoftKeyboard(descView);
+//            descView.clearFocus();
+//        }else{
+//            img_edit.setTag("enabled");
+//            img_edit.setImageResource(R.drawable.accept_icon);
+//            descView.setEnabled(true);
+////            descView.setFocusable(true);
+//            descView.requestFocus();
+//            descView.setSelection(descView.getText().length());
+//        }
+        descView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean isFocused) {
+                if(isFocused) {
+                    img_edit.setTag("enabled");
+                    img_edit.setImageResource(R.drawable.accept_icon);
+                    descView.setEnabled(true);
+//                    descView.requestFocus();
+                    descView.setSelection(descView.getText().length());
+                }else {
+                    img_edit.setTag("");
+                    img_edit.setImageResource(R.drawable.editicon);
+                    descView.setEnabled(false);
+                    hideSoftKeyboard(descView);
+//                    descView.clearFocus();
+                }
+            }
+        });
+        if(img_edit.getTag() == null || img_edit.getTag().equals("")){
             descView.requestFocus();
-            descView.setSelection(descView.getText().length());
+        }else{
+            descView.clearFocus();
         }
     }
 
@@ -352,8 +407,28 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 Intent intent = new Intent(baseContext, PopUpPersonalInfo.class);
                 intent.putExtra("constants", s);
                 intent.putExtra("data", reqType);
-                ((OwnUserProfileActivity)baseContext).startActivityForResult(intent,
-                        req_code);
+                if(reqType.equalsIgnoreCase("education")){
+                    intent = new Intent(baseContext, PopupEducationEdit.class);
+                    intent.putExtra("constants", s);
+                    intent.putExtra("data", reqType);
+                    ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
+                            req_code);
+                }else if(reqType.equalsIgnoreCase("father") || reqType.equalsIgnoreCase("mother")){
+                    intent = new Intent(baseContext, PopupParentsEdit.class);
+                    intent.putExtra("constants", s);
+                    intent.putExtra("data", reqType);
+                    ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
+                            req_code);
+                }else if(reqType.equalsIgnoreCase("brother") || reqType.equalsIgnoreCase("sister")){
+                    intent = new Intent(baseContext, BrotherEditActivity.class);
+                    intent.putExtra("constants", s);
+                    intent.putExtra("data", reqType);
+                    ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
+                            req_code);
+                }else {
+                    ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
+                            req_code);
+                }
             }
         }
     }
@@ -403,6 +478,5 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 ((OwnUserProfileActivity)baseContext).startActivityForResult(intent, 1001);
             }
         }
-
     }
 }

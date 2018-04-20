@@ -75,6 +75,13 @@ public class FamilyMembers implements Serializable {
     @Expose
     private List<Khalu> khalus = null;
 
+    @SerializedName("number_of_others")
+    @Expose
+    private int numberOfOthers;
+    @SerializedName("others")
+    @Expose
+    private List<Other> others = null;
+
     @SerializedName("number_of_child")
     @Expose
     private int numberOfChild;
@@ -294,12 +301,28 @@ public class FamilyMembers implements Serializable {
         this.numberOfKhalu = numberOfKhalu;
     }
 
+    public int getNumberOfOthers() {
+        return numberOfOthers;
+    }
+
+    public void setNumberOfOthers(int numberOfOthers) {
+        this.numberOfOthers = numberOfOthers;
+    }
+
     public List<Khalu> getKhalus() {
         return khalus;
     }
 
     public void setKhalus(List<Khalu> khalus) {
         this.khalus = khalus;
+    }
+
+    public List<Other> getOthers() {
+        return others;
+    }
+
+    public void setOthers(List<Other> others) {
+        this.others = others;
     }
 
     public static long getSerialVersionUID() {

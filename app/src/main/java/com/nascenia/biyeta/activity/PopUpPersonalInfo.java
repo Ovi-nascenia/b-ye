@@ -39,7 +39,8 @@ public class PopUpPersonalInfo extends AppCompatActivity {
     private String[] heightName = new String[heightArray.size()];
     private String info_data = "";
     EditText disableEditText;
-    private JSONObject skinColorObject, marriageObject, bloodObject, smokeObject, disableObject,  professionalGroupObject, occupationObject;
+    private JSONObject skinColorObject, marriageObject, bloodObject, smokeObject, disableObject,  professionalGroupObject,
+            occupationObject, rojaObject, religionObject, houseObject, educationObject;
 
     //skin
     private ArrayList<String> skinColorArray = new ArrayList<String>();
@@ -81,6 +82,27 @@ public class PopUpPersonalInfo extends AppCompatActivity {
     private String[] occupationName = new String[occupationArray.size()];
     private ArrayList<String> occupationConstant = new ArrayList<String>();
     private String[] occupationConstantValue = new String[occupationArray.size()];
+
+    private ArrayList<String> rojaArray = new ArrayList<String>();
+    private String[] rojaName = new String[rojaArray.size()];
+    private ArrayList<String> rojaConstant = new ArrayList<String>();
+    private String[] rojaConstantValue = new String[rojaArray.size()];
+
+    private ArrayList<String> religionArray = new ArrayList<String>();
+    private String[] religionName = new String[religionArray.size()];
+    private ArrayList<String> religionConstant = new ArrayList<String>();
+    private String[] religionConstantValue = new String[religionArray.size()];
+
+    private ArrayList<String> houseArray = new ArrayList<String>();
+    private String[] houseName = new String[houseArray.size()];
+    private ArrayList<String> houseConstant = new ArrayList<String>();
+    private String[] houseConstantValue = new String[houseArray.size()];
+
+    private ArrayList<String> educationArray = new ArrayList<String>();
+    private String[] educationName = new String[educationArray.size()];
+    private ArrayList<String> educationConstant = new ArrayList<String>();
+    private String[] educationConstantValue = new String[educationArray.size()];
+
     int width = 0;
     int height = 0;
 
@@ -264,15 +286,35 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 intent.putExtra("disable_data", disableName[picker.getValue()]);
                 intent.putExtra("disable_desc_data", picker.getValue()>0?disableEditText.getText().toString():"");
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("professional_group")) {
+            }else if(strDataForUpdate.equalsIgnoreCase("professional_group") || strDataForUpdate.equalsIgnoreCase("father_professional_group")) {
                 Intent intent = new Intent();
                 intent.putExtra("professional_group_value", picker.getValue() + 1);
                 intent.putExtra("professional_group_data", professonalGroupName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("profession")) {
+            }else if(strDataForUpdate.equalsIgnoreCase("profession") || strDataForUpdate.equalsIgnoreCase("father_profession")) {
                 Intent intent = new Intent();
                 intent.putExtra("profession_value", picker.getValue() + 1);
                 intent.putExtra("profession_data", occupationName[picker.getValue()]);
+                setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate.equalsIgnoreCase("fasting")) {
+                Intent intent = new Intent();
+                intent.putExtra("fasting_value", picker.getValue() + 1);
+                intent.putExtra("fasting_data", rojaName[picker.getValue()]);
+                setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate.equalsIgnoreCase("prayer")) {
+                Intent intent = new Intent();
+                intent.putExtra("prayer_value", picker.getValue() + 1);
+                intent.putExtra("prayer_data", religionName[picker.getValue()]);
+                setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate.equalsIgnoreCase("own_house")) {
+                Intent intent = new Intent();
+                intent.putExtra("own_house_value", picker.getValue() + 1);
+                intent.putExtra("own_house_data", houseName[picker.getValue()]);
+                setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate.equalsIgnoreCase("education")) {
+                Intent intent = new Intent();
+                intent.putExtra("education_value", picker.getValue() + 1);
+                intent.putExtra("education_data", educationName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
             }
 
@@ -367,7 +409,7 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 disableName = disableArray.toArray(disableName);
                 data = disableName;
                 mTextView.setText(getResources().getString(R.string.disabilities_text));
-            }else if(strDataForUpdate.equalsIgnoreCase("professional_group")) {
+            }else if(strDataForUpdate.equalsIgnoreCase("professional_group") || strDataForUpdate.equalsIgnoreCase("father_professional_group")) {
                 professionalGroupObject = jsonObject.getJSONObject("professional_group_constant");
                 for (int i = 0; i < professionalGroupObject.length(); i++) {
                     professonalGroupConstant.add(professionalGroupObject.names().getString(i));
@@ -377,7 +419,7 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 professonalGroupName = professonalGroupArray.toArray(professonalGroupName);
                 data = professonalGroupName;
                 mTextView.setText(Utils.setBanglaProfileTitle(getResources().getString(R.string.professional_group_text)));
-            }else if(strDataForUpdate.equalsIgnoreCase("profession")) {
+            }else if(strDataForUpdate.equalsIgnoreCase("profession") || strDataForUpdate.equalsIgnoreCase("father_profession")) {
                 occupationObject = jsonObject.getJSONObject("occupation_constant");
                 for (int i = 0; i < occupationObject.length(); i++) {
                     occupationConstant.add(occupationObject.names().getString(i));
@@ -387,6 +429,45 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 occupationName = occupationArray.toArray(occupationName);
                 data = occupationName;
                 mTextView.setText(Utils.setBanglaProfileTitle(getResources().getString(R.string.profession_text)));
+            }else if(strDataForUpdate.equalsIgnoreCase("fasting")) {
+                rojaObject = jsonObject.getJSONObject("fasting");
+                for (int i = 0; i < rojaObject.length(); i++) {
+                    rojaConstant.add(rojaObject.names().getString(i));
+                    rojaArray.add((String) rojaObject.get(rojaObject.names().getString(i)));
+                }
+
+                rojaName = rojaArray.toArray(rojaName);
+                data = rojaName;
+                mTextView.setText(getResources().getString(R.string.fast_text));
+            }else if(strDataForUpdate.equalsIgnoreCase("prayer")) {
+                religionObject = jsonObject.getJSONObject("prayer_options");
+                for (int i = 0; i < religionObject.length(); i++) {
+                    religionConstant.add(religionObject.names().getString(i));
+                    religionArray.add((String) religionObject.get(religionObject.names().getString(i)));
+                }
+
+                religionName = religionArray.toArray(religionName);
+                data = religionName;
+                mTextView.setText(getResources().getString(R.string.religion_text));
+            }else if(strDataForUpdate.equalsIgnoreCase("own_house")) {
+                houseObject = jsonObject.getJSONObject("house_options");
+                for (int i = 0; i < houseObject.length(); i++) {
+                    houseConstant.add(houseObject.names().getString(i));
+                    houseArray.add((String) houseObject.get(houseObject.names().getString(i)));
+                }
+
+                houseName = houseArray.toArray(houseName);
+                data = houseName;
+                mTextView.setText(Utils.setBanglaProfileTitle(getResources().getString(R.string.own_house_text)));
+            }else if(strDataForUpdate.equalsIgnoreCase("education")) {
+                educationObject = jsonObject.getJSONObject("education_constant");
+                for (int i = 0; i < educationObject.length(); i++) {
+                    educationConstant.add(educationObject.names().getString(i));
+                    educationArray.add((String) educationObject.get(educationObject.names().getString(i)));
+                }
+                educationName = educationArray.toArray(educationName);
+                data = educationName;
+                mTextView.setText(Utils.setBanglaProfileTitle(getResources().getString(R.string.education_male)));
             }else if(strDataForUpdate.equalsIgnoreCase("marital_status")) {
                 SharePref sharePref = new SharePref(PopUpPersonalInfo.this);
                 if (sharePref.get_data("gender").equalsIgnoreCase("female")) {

@@ -1194,14 +1194,11 @@ public abstract class SendRequestFragmentView {
     }
 
     public static String checkNullField(String value) {
-
-
         if (value == null || value.isEmpty()) {
             return "";
         } else {
             return value + ",";
         }
-
     }
 
 
