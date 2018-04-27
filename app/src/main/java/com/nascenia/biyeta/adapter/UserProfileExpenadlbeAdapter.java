@@ -23,6 +23,7 @@ import java.util.List;
 
 import com.nascenia.biyeta.BrotherEditActivity;
 import com.nascenia.biyeta.activity.BirthDatePickerPopUpActivity;
+import com.nascenia.biyeta.activity.OthersEditActivity;
 import com.nascenia.biyeta.activity.OwnUserProfileActivity;
 import com.nascenia.biyeta.activity.PopUpCastReligion;
 import com.nascenia.biyeta.activity.PopUpPersonalInfo;
@@ -70,6 +71,10 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     private final int FATHER_REQUEST_CODE = 17;
     private final int MOTHER_REQUEST_CODE = 18;
     private final int BROTHER_REQUEST_CODE = 19;
+    private final int SISTER_REQUEST_CODE = 20;
+    private final int OTHER_REQUEST_CODE = 21;
+
+    private int childId;
 
 
     /*public static ArrayList<Boolean> parentPositionList = new ArrayList<>();*/
@@ -197,6 +202,12 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.brother_text))){
 //                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
                     new GetPersonalInfoStepFetchConstant("brother", BROTHER_REQUEST_CODE).execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.sister_text))){
+//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
+                    new GetPersonalInfoStepFetchConstant("sister", SISTER_REQUEST_CODE).execute();
+                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.other))){
+//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
+                    new FetchOthersConstant("other", OTHER_REQUEST_CODE).execute();
                 }
             }
         });
@@ -282,6 +293,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                                       @NonNull UserProfileChild child) {
 
         childViewHolder.bind(child);
+        childId = childViewHolder.getId();
 /*
         if (parentPositionList.get(parentPosition)) {
             childViewHolder.titleResultTextView.setEnabled(true);
@@ -423,6 +435,14 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                     intent = new Intent(baseContext, BrotherEditActivity.class);
                     intent.putExtra("constants", s);
                     intent.putExtra("data", reqType);
+                    intent.putExtra("id", childId);
+                    ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
+                            req_code);
+                }else if(reqType.equalsIgnoreCase("other")){
+                    intent = new Intent(baseContext, OthersEditActivity.class);
+                    intent.putExtra("constants", s);
+                    intent.putExtra("data", reqType);
+                    intent.putExtra("id", childId);
                     ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
                             req_code);
                 }else {
@@ -477,6 +497,67 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 intent.putExtra("data", "address");
                 ((OwnUserProfileActivity)baseContext).startActivityForResult(intent, 1001);
             }
+        }
+    }
+
+    public class FetchOthersConstant extends AsyncTask<String, String, String> {
+
+        String reqType = "";
+        int req_code;
+
+        public FetchOthersConstant(String strType, int req_code) {
+            this.reqType = strType;
+            this.req_code = req_code;
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+//            if (progress.isShowing())
+//                progress.dismiss();
+            if (s == null) {
+                Utils.ShowAlert(baseContext, baseContext.getString(R.string.no_internet_connection));
+            } else {
+               /* if (progress.isShowing())
+                    progress.dismiss();*/
+//                clearStaticData();
+                Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
+                Intent intent;
+                intent = new Intent(baseContext, OthersEditActivity.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                intent.putExtra("id", childId);
+                ((OwnUserProfileActivity)baseContext).startActivityForResult(intent, req_code);
+//                finish();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... parameters) {
+            //  Login.currentMobileSignupStep+=1;
+            SharePref sharePref = new SharePref(baseContext);
+            final String token = sharePref.get_data("token");
+            Request request = new Request.Builder()
+                    //.url(Utils.STEP_CONSTANT_FETCH + Login.currentMobileSignupStep )
+                    .url(Utils.STEP_CONSTANT_FETCH + 6)
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
+            try {
+                OkHttpClient client = new OkHttpClient();
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e(Utils.DEBUG, responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
         }
     }
 }

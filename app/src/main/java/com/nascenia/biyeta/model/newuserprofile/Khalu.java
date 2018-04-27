@@ -9,6 +9,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Khalu implements Serializable
 {
 
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -28,6 +31,14 @@ public class Khalu implements Serializable
 
     public String getName() {
         return name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setName(String name) {

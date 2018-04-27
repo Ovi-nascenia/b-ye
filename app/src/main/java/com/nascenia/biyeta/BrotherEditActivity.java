@@ -64,7 +64,7 @@ public class BrotherEditActivity extends AppCompatActivity {
     private final int EDUCATION_REQUEST_CODE = 16;
     private final int SPOUSE_PROFESSIONAL_GROUP_REQUEST_CODE = 18;
     private final int SPOUSE_PROFESSION_REQUEST_CODE = 19;
-    private int brotherOcupationValue, brotherProfessionalGroupValue, brotherOcupationSpouseValue, brotherMaritalStatusValue;
+    private int brotherOcupationValue, brotherProfessionalGroupValue, brotherOcupationSpouseValue, brotherMaritalStatusValue, id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,7 @@ public class BrotherEditActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
+        id = intent.getIntExtra("id", 0);
         client = new OkHttpClient();
 
         progress = new ProgressDialog(BrotherEditActivity.this);
@@ -214,6 +215,7 @@ public class BrotherEditActivity extends AppCompatActivity {
                 }
 
                 Intent intent = getIntent();
+                intent.putExtra("id", id);
                 intent.putExtra("name_brother", nameBrother.getText().toString());
                 intent.putExtra("age_brother", brotherAge.getText().toString());
                 intent.putExtra("profession_brother_data", brotherOccupation.getText().toString());

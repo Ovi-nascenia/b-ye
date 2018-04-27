@@ -269,11 +269,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".BrotherEditActivity"
+        <activity
+            android:name=".BrotherEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+        <activity android:name=".activity.OthersEditActivity"></activity>
     </application>
 
 </manifest>

@@ -29,6 +29,7 @@ public class ChildItemViewHolder extends ChildViewHolder {
     public EditText titleResultTextView;
     public ImageView img_edit;
     public LinearLayout itemDividerLayout;
+    public int id;
 
 
     public ChildItemViewHolder(@NonNull View itemView, boolean isEditable) {
@@ -47,7 +48,21 @@ public class ChildItemViewHolder extends ChildViewHolder {
         titleResultTextView.setText(Utils.formatString(userProfileChild.getTitleResult())
                 .replace(",", ", ")
         );
+        if(titleTextView.getText().toString().equalsIgnoreCase("ভাই")) {
+            id = userProfileChild.getId();
+        }else if(titleTextView.getText().toString().equalsIgnoreCase("বোন")) {
+            id = userProfileChild.getId();
+        }else if(titleTextView.getText().toString().equalsIgnoreCase("অন্যান্য")) {
+            id = userProfileChild.getId();
+        }else if(titleTextView.getText().toString().equalsIgnoreCase("খালু")) {
+            id = userProfileChild.getId();
+        }else if(titleTextView.getText().toString().equalsIgnoreCase("ফুপা")) {
+            id = userProfileChild.getId();
+        }
 
+    }
 
+    public int getId(){
+        return id;
     }
 }

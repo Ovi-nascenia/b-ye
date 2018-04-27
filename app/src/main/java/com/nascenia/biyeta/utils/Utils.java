@@ -104,6 +104,7 @@ public class Utils{
     ///debug section
 
     public static final String LOGIN_DEBUG = "LoginDebug";
+    public static final String DEBUG = "Debug";
 
 
     //userprofile request tag

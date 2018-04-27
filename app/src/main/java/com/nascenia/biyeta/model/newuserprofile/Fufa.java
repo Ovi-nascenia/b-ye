@@ -9,6 +9,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Fufa implements Serializable
 {
 
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -32,6 +35,14 @@ public class Fufa implements Serializable
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Fufa withName(String name) {

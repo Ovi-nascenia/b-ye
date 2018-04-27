@@ -9,6 +9,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Dada implements Serializable
 {
 
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -37,6 +40,14 @@ public class Dada implements Serializable
     public Dada withName(String name) {
         this.name = name;
         return this;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getRelation() {

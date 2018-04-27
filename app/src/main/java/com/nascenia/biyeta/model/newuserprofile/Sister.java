@@ -10,6 +10,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class Sister implements Serializable {
 
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -61,6 +64,14 @@ public class Sister implements Serializable {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Sister withAge(int age) {

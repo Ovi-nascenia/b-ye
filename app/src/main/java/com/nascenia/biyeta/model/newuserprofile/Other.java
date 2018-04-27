@@ -9,6 +9,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Other implements Serializable
 {
 
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -25,6 +28,14 @@ public class Other implements Serializable
     @Expose
     private String institute;
     private final static long serialVersionUID = -8632695032620419274L;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

@@ -104,7 +104,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
 
     TextView mTextViewTitle;
 
-    String strAgeData = "";
+    String strUpdateData = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +122,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
             position = extras.getInt("position", defaultValue);
         }
 
-        strAgeData = getIntent().getStringExtra("data");
+        strUpdateData = getIntent().getStringExtra("data");
 
         age = new String[100];
 
@@ -220,7 +220,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
         } else if (BrotherViewAdapter.selectedPopUp == 4) {
             data = relationName;
             mTextViewTitle.setText("");
-        } else if (BrotherViewAdapter.selectedPopUp == 5 || strAgeData.equalsIgnoreCase("age")) {
+        } else if (BrotherViewAdapter.selectedPopUp == 5 || (strUpdateData!=null && strUpdateData.equalsIgnoreCase("age"))) {
             data = age;
             mTextViewTitle.setText("বয়স");
         } else if (BrotherViewAdapter.selectedPopUp == 6) {
@@ -252,16 +252,16 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
         } else if (SisterViewAdapter.selectedPopUp == 7) {
             data = professonalGroupName;
             mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
-        }else if (OtherViewAdapter.selectedPopUp == 1) {
+        }else if (OtherViewAdapter.selectedPopUp == 1 || (strUpdateData!=null && strUpdateData.equalsIgnoreCase("profession"))) {
             data = brotherOccupationName;
             mTextViewTitle.setText("পেশা");
-        } else if (OtherViewAdapter.selectedPopUp == 2) {
+        } else if (OtherViewAdapter.selectedPopUp == 2 || (strUpdateData!=null && strUpdateData.equalsIgnoreCase("professional_group"))) {
             data = professonalGroupName;
             mTextViewTitle.setText("প্রফেশনাল গ্রুপ");
         } else if (OtherViewAdapter.selectedPopUp == 3) {
             data = maritalStatusNameMale;
             mTextViewTitle.setText("বৈবাহিক অবস্থা");
-        } else if (OtherViewAdapter.selectedPopUp == 4) {
+        } else if (OtherViewAdapter.selectedPopUp == 4 || (strUpdateData!=null && strUpdateData.equalsIgnoreCase("relation"))) {
             data = relationName;
             mTextViewTitle.setText("সম্পর্ক");
         } else if (OtherViewAdapter.selectedPopUp == 5) {
@@ -360,9 +360,14 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
                     holder.brotherAge.setText(age[newValue]);
                     value = "" + newValue;
                     ageArrayBrother.put(position, value);
-                }else if (strAgeData.equalsIgnoreCase("age")){
+                }else if (strUpdateData.equalsIgnoreCase("age")){
                     Intent intent = new Intent();
                     intent.putExtra("age_data", newValue + "");
+                    setResult(RESULT_OK, intent);
+                }else if (strUpdateData!= null && strUpdateData.equalsIgnoreCase("relation")){
+                    Intent intent = new Intent();
+                    intent.putExtra("relation_data", relationName[newValue]);
+                    intent.putExtra("relation_value", newValue + "");
                     setResult(RESULT_OK, intent);
                 } else if (BrotherViewAdapter.selectedPopUp == 6) {
                     //BrotherViewAdapter.brotherOcupationSpouse.setText(occupationName[newVal]);
@@ -465,6 +470,16 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
 
                     value = occupationConstantValue[newValue];
                     occupationArrayOther.put(position, value);
+                }else if (strUpdateData!= null && strUpdateData.equalsIgnoreCase("profession")) {
+                    Intent intent = new Intent();
+                    intent.putExtra("profession_data", occupationName[newValue]);
+                    intent.putExtra("profession_value", occupationConstantValue[newValue]);
+                    setResult(RESULT_OK, intent);
+                }else if (strUpdateData!= null && strUpdateData.equalsIgnoreCase("professional_group")) {
+                    Intent intent = new Intent();
+                    intent.putExtra("professional_group_data", professonalGroupName[newValue]);
+                    intent.putExtra("profession_group_value", professonalGroupConstantValue[newValue]);
+                    setResult(RESULT_OK, intent);
                 } else if (OtherViewAdapter.selectedPopUp == 2) {
                     //OtherViewAdapter.otherProfessionalGroup.setText(professonalGroupName[newVal]);
 
