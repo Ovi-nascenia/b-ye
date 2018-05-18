@@ -22,6 +22,9 @@ public class EducationInformation implements Serializable {
     @SerializedName("subject")
     @Expose
     private String subject;
+    @SerializedName("id")
+    @Expose
+    private int id;
 
     @SerializedName("highest_degree")
     @Expose
@@ -82,6 +85,14 @@ public class EducationInformation implements Serializable {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public EducationInformation withSubject(String subject) {

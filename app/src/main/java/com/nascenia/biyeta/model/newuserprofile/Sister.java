@@ -13,6 +13,9 @@ public class Sister implements Serializable {
     @SerializedName("id")
     @Expose
     private int id;
+    @SerializedName("sibling_type")
+    @Expose
+    private int relation_id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -72,6 +75,14 @@ public class Sister implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getRelationId() {
+        return relation_id;
+    }
+
+    public void setRelationId(int id) {
+        this.relation_id = id;
     }
 
     public Sister withAge(int age) {

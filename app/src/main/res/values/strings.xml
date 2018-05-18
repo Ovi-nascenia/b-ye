@@ -42,7 +42,7 @@
     <string name="cast_text">বর্ণ</string>
     <string name="home_town">দেশের বাড়ি</string>
     <string name="present_loaction_text">বর্তমান অবস্থান</string>
-    <string name="permanent_address_text">্থায়ী ঠিকানা</string>
+    <string name="permanent_address_text">স্থায়ী ঠিকানা</string>
     <string name="present_address_text">বর্তমান ঠিকান</string>
 
     <string name="age_text">বয়স</string>
@@ -121,6 +121,7 @@
     <string name="sister_text">বোন</string>
     <string name="child_text">সন্তান</string>
     <string name="no_child_text">কোন সন্তান নেই</string>
+    <string name="dada">দাদা</string>
 
     <string name="no_brother_text">কোন ভাই নেই</string>
     <string name="no_sister_text">কোন বোন নেই</string>
@@ -379,6 +380,7 @@
     <string name="progress_dialog_message">অনুগ্রহপূর্বক অপেক্ষা করুন</string>
 
     <string name="send_communication_request_text">যোগাযোগের জন্য অনুরোধ করুন</string>
+    <string name="communication_text">যোগাযোগ</string>
     <string name="biodata_request_text">পুরো বায়োডাটা দেখার অনুরোধ করুন</string>
     <string name="after_sending_communication_request_text">আপনি যোগাযোগের জন্য অনুরোধ করেছেন</string>
     <string name="after_sending_biodata_request_text">আপনি পুরো বায়োডাটা দেখার অনুরোধ করেছেন</string>
@@ -461,5 +463,6 @@
     <string name="forgot_pass1">পাসওয়ার্ড ভুলে গিয়েছেন? </string>
     <string name="pass_reset">পাসওয়ার্ড রিসেট </string>
     <string name="reset_pass_btn_text">পাসওয়ার্ড রিসেট নির্দেশাবলী পাঠান </string>
+    <string name="discard_text">বাতিল করুন</string>
 
 </resources>

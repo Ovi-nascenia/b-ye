@@ -59,6 +59,22 @@
                 android:visibility="gone">
 
                 <EditText
+                    android:id="@+id/relation_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:hint="@string/relation_title_text"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/lblFromName"
+                    android:visibility="gone"/>
+
+                <EditText
                     android:id="@+id/name_other"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"

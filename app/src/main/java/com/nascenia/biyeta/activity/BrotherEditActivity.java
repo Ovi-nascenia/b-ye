@@ -1,25 +1,18 @@
-package com.nascenia.biyeta;
+package com.nascenia.biyeta.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nascenia.biyeta.activity.BirthDatePickerPopUpActivity;
-import com.nascenia.biyeta.activity.PopUpFamilyInfoSecondPage;
-import com.nascenia.biyeta.activity.PopUpPersonalInfo;
+import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
-import com.nascenia.biyeta.model.newuserprofile.Brother;
-import com.nascenia.biyeta.utils.CalenderBanglaInfo;
 import com.squareup.okhttp.OkHttpClient;
-
-import java.util.Calendar;
 
 public class BrotherEditActivity extends AppCompatActivity {
 
@@ -64,7 +57,11 @@ public class BrotherEditActivity extends AppCompatActivity {
     private final int EDUCATION_REQUEST_CODE = 16;
     private final int SPOUSE_PROFESSIONAL_GROUP_REQUEST_CODE = 18;
     private final int SPOUSE_PROFESSION_REQUEST_CODE = 19;
-    private int brotherOcupationValue, brotherProfessionalGroupValue, brotherOcupationSpouseValue, brotherMaritalStatusValue, id;
+    private String brotherOcupationValue, brotherProfessionalGroupValue, brotherOcupationSpouseValue, brotherProfessionalGroupSpouseValue;
+    private int id, brotherMaritalStatusValue;
+
+
+    private String strDataUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +73,7 @@ public class BrotherEditActivity extends AppCompatActivity {
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
         id = intent.getIntExtra("id", 0);
+        strDataUpdate = intent.getStringExtra("data");
         client = new OkHttpClient();
 
         progress = new ProgressDialog(BrotherEditActivity.this);
@@ -119,7 +117,10 @@ public class BrotherEditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent setIntent = new Intent(BrotherEditActivity.this, PopUpPersonalInfo.class);
                 setIntent.putExtra("constants", constant);
-                setIntent.putExtra("data", "profession");
+                if(strDataUpdate.equalsIgnoreCase("brother"))
+                    setIntent.putExtra("data", "profession");
+                else
+                    setIntent.putExtra("data", "profession");
                 startActivityForResult(setIntent, PROFESSION_REQUEST_CODE);
             }
         });
@@ -141,7 +142,10 @@ public class BrotherEditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent setIntent = new Intent(BrotherEditActivity.this, PopUpPersonalInfo.class);
                 setIntent.putExtra("constants", constant);
-                setIntent.putExtra("data", "marital_status");
+                if(strDataUpdate.equalsIgnoreCase("brother"))
+                    setIntent.putExtra("data", "marital_status");
+                else
+                    setIntent.putExtra("data", "marital_status");
                 startActivityForResult(setIntent, MARITAL_STATUS_REQUEST_CODE);
             }
         });
@@ -216,23 +220,24 @@ public class BrotherEditActivity extends AppCompatActivity {
 
                 Intent intent = getIntent();
                 intent.putExtra("id", id);
-                intent.putExtra("name_brother", nameBrother.getText().toString());
-                intent.putExtra("age_brother", brotherAge.getText().toString());
-                intent.putExtra("profession_brother_data", brotherOccupation.getText().toString());
-                intent.putExtra("profession_brother_value", brotherOcupationValue);
-                intent.putExtra("professional_group_brother_data", brotherProfessionalGroup.getText().toString());
-                intent.putExtra("professional_group_brother_value", brotherProfessionalGroupValue);
-                intent.putExtra("designation_brother", designationBrother.getText().toString());
-                intent.putExtra("institute_brother", institutionBrother.getText().toString());
-                intent.putExtra("marital_status_brother_data", brotherMaritalStatus.getText().toString());
-                intent.putExtra("marital_status_brother_value", brotherMaritalStatusValue);
-                intent.putExtra("name_brother_spouse", nameBrotherSpouse.getText().toString());
-                intent.putExtra("profession_brother_spouse_data", brotherOcupationSpouse.getText().toString());
-                intent.putExtra("profession_brother_spouse_value", brotherOcupationSpouseValue);
-                intent.putExtra("professional_group_brother_spouse_data", brotherProfessionalGroupSpouse.getText().toString());
-                intent.putExtra("professional_group_brother_spouse_value", brotherProfessionalGroupValue);
-                intent.putExtra("designation_brother_spouse", designationBrotherSpouse.getText().toString());
-                intent.putExtra("institute_brother_spouse", institutionBrotherSpouse.getText().toString());
+                System.out.println(nameBrother.getText().toString());
+                intent.putExtra("name", nameBrother.getText().toString());
+                intent.putExtra("age", brotherAge.getText().toString());
+                intent.putExtra("profession_data", brotherOccupation.getText().toString());
+                intent.putExtra("profession_value", brotherOcupationValue);
+                intent.putExtra("professional_group_data", brotherProfessionalGroup.getText().toString());
+                intent.putExtra("professional_group_value", brotherProfessionalGroupValue);
+                intent.putExtra("designation", designationBrother.getText().toString());
+                intent.putExtra("institute", institutionBrother.getText().toString());
+                intent.putExtra("marital_status_data", brotherMaritalStatus.getText().toString());
+                intent.putExtra("marital_status_value", brotherMaritalStatusValue);
+                intent.putExtra("name_spouse", nameBrotherSpouse.getText().toString());
+                intent.putExtra("profession_spouse_data", brotherOcupationSpouse.getText().toString());
+                intent.putExtra("profession_spouse_value", brotherOcupationSpouseValue);
+                intent.putExtra("professional_group_spouse_data", brotherProfessionalGroupSpouse.getText().toString());
+                intent.putExtra("professional_group_spouse_value", brotherProfessionalGroupSpouseValue);
+                intent.putExtra("designation_spouse", designationBrotherSpouse.getText().toString());
+                intent.putExtra("institute_spouse", institutionBrotherSpouse.getText().toString());
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -285,24 +290,25 @@ public class BrotherEditActivity extends AppCompatActivity {
                 if (data != null && !data.getStringExtra("profession_data").equalsIgnoreCase(
                         "reject")) {
                     brotherOccupation.setText(data.getStringExtra("profession_data"));
-                    brotherOcupationValue = data.getIntExtra("profession", 0);
+                    brotherOcupationValue = data.getStringExtra("profession_value");
                 }
             }else if (requestCode == PROFESSIONAL_GROUP_REQUEST_CODE) {
                 if (data != null && !data.getStringExtra("professional_group_data").equalsIgnoreCase(
                         "reject")) {
                     brotherProfessionalGroup.setText(data.getStringExtra("professional_group_data"));
-                    brotherProfessionalGroupValue = data.getIntExtra("professional_group_value", 0);
+                    brotherProfessionalGroupValue = data.getStringExtra("professional_group_value");
                 }
             }else if (requestCode == SPOUSE_PROFESSION_REQUEST_CODE) {
                 if (data != null && !data.getStringExtra("profession_data").equalsIgnoreCase(
                         "reject")) {
                     brotherOcupationSpouse.setText(data.getStringExtra("profession_data"));
-                    brotherOcupationSpouseValue = data.getIntExtra("profession_value", 0);
+                    brotherOcupationSpouseValue = data.getStringExtra("profession_value");
                 }
             }else if (requestCode == SPOUSE_PROFESSIONAL_GROUP_REQUEST_CODE) {
                 if (data != null && !data.getStringExtra("professional_group_data").equalsIgnoreCase(
                         "reject")) {
                     brotherProfessionalGroupSpouse.setText(data.getStringExtra("professional_group_data"));
+                    brotherProfessionalGroupSpouseValue = data.getStringExtra("professional_group_value");
                 }
             }
         }

@@ -58,7 +58,7 @@ public class PopupParentsEdit extends AppCompatActivity {
     private SharePref sharePref;
     private final static int PROFESSION_REQUEST = 1001;
     private final static int PROFESSIONAL_GROUP_REQUEST = 1002;
-    private int profession_value, profession_group_value;
+    private String profession_value, profession_group_value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +89,7 @@ public class PopupParentsEdit extends AppCompatActivity {
             for (int i = 0; i < occupationObject.length(); i++) {
                 occupationConstant.add(occupationObject.names().getString(i));
                 occupationArray.add((String) occupationObject.get(occupationObject.names().getString(i)));
+
             }
 
             occupationName = occupationArray.toArray(occupationName);
@@ -133,7 +134,10 @@ public class PopupParentsEdit extends AppCompatActivity {
         professionFatherStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(PopupParentsEdit.this, PopUpPersonalInfo.class).putExtra("constants", constant).putExtra("data", "father_profession"), PROFESSION_REQUEST);
+                if(data.equalsIgnoreCase("father"))
+                    startActivityForResult(new Intent(PopupParentsEdit.this, PopUpPersonalInfo.class).putExtra("constants", constant).putExtra("data", "father_profession"), PROFESSION_REQUEST);
+                else
+                    startActivityForResult(new Intent(PopupParentsEdit.this, PopUpPersonalInfo.class).putExtra("constants", constant).putExtra("data", "mother_profession"), PROFESSION_REQUEST);
             }
         });
 
@@ -193,10 +197,10 @@ public class PopupParentsEdit extends AppCompatActivity {
         if(resultCode == RESULT_OK){
             if(requestCode == PROFESSION_REQUEST){
                 professionFatherTV.setText(data.getStringExtra("profession_data"));
-                profession_value = data.getIntExtra("profession_value", 0);
+                profession_value = data.getStringExtra("profession_value");
             }else if(requestCode == PROFESSIONAL_GROUP_REQUEST){
                 professionalGroupFatherTV.setText(data.getStringExtra("professional_group_data"));
-                profession_group_value = data.getIntExtra("professional_group_value", 0);
+                profession_group_value = data.getStringExtra("professional_group_value");
             }
         }
     }

@@ -44,6 +44,7 @@ public class OthersEditActivity extends AppCompatActivity {
     public EditText nameOther;
     public EditText designationOther;
     public EditText institutionOther;
+    public EditText relationName;
     public LinearLayout rootLayout;
     public LinearLayout detailsInfoFieldsRootLayout;
     public TextView otherOccupation;
@@ -115,15 +116,19 @@ public class OthersEditActivity extends AppCompatActivity {
 
                 Intent intent = getIntent();
                 intent.putExtra("id", id);
-                intent.putExtra("relation_data", otherRelationalStatus.getText().toString());
+                if(relation_value == 9){
+                    intent.putExtra("relation_data", relationName.getText().toString());
+                }else {
+                    intent.putExtra("relation_data", otherRelationalStatus.getText().toString());
+                }
                 intent.putExtra("relation_value", relation_value);
-                intent.putExtra("name_other", nameOther.getText().toString());
-                intent.putExtra("profession_other_data", otherOccupation.getText().toString());
-                intent.putExtra("profession_brother_value", profession_value);
-                intent.putExtra("professional_group_other_data", otherProfessionalGroup.getText().toString());
-                intent.putExtra("professional_group_other_value", professional_group_value);
-                intent.putExtra("designation_other", designationOther.getText().toString());
-                intent.putExtra("institute_brother", institutionOther.getText().toString());
+                intent.putExtra("name", nameOther.getText().toString());
+                intent.putExtra("profession_data", otherOccupation.getText().toString());
+                intent.putExtra("profession_value", profession_value);
+                intent.putExtra("professional_group_data", otherProfessionalGroup.getText().toString());
+                intent.putExtra("professional_group_value", professional_group_value);
+                intent.putExtra("designation", designationOther.getText().toString());
+                intent.putExtra("institute", institutionOther.getText().toString());
                 setResult(RESULT_OK, intent);
                 finish();
 
@@ -169,6 +174,7 @@ public class OthersEditActivity extends AppCompatActivity {
         nameOther = (EditText) findViewById(R.id.name_other);
         designationOther = (EditText) findViewById(R.id.designation_other);
         institutionOther = (EditText) findViewById(R.id.institution_other);
+        relationName = findViewById(R.id.relation_name);
         otherOccupation = (TextView) findViewById(R.id.profession_text_view_other);
         otherProfessionalGroup = (TextView) findViewById(R.id.profession_group_text_view_other);
         otherRelationalStatus = (TextView) findViewById(R.id.relation_text_view_other);
@@ -221,16 +227,16 @@ public class OthersEditActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (detailsInfoFieldsRootLayout.getVisibility() == View.GONE)
                     detailsInfoFieldsRootLayout.setVisibility(View.VISIBLE);
-                else
-                    detailsInfoFieldsRootLayout.setVisibility(View.VISIBLE);
+//                else
+//                    detailsInfoFieldsRootLayout.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 if (detailsInfoFieldsRootLayout.getVisibility() == View.GONE)
                     detailsInfoFieldsRootLayout.setVisibility(View.VISIBLE);
-                else
-                    detailsInfoFieldsRootLayout.setVisibility(View.VISIBLE);
+//                else
+//                    detailsInfoFieldsRootLayout.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -240,14 +246,19 @@ public class OthersEditActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 2) {
+                relation_value = Integer.parseInt(data.getStringExtra("relation_value"));
+                if (relation_value == 9)
+                    relationName.setVisibility(View.VISIBLE);
+                else
+                    relationName.setVisibility(View.GONE);
                 otherRelationalStatus.setText(data.getStringExtra("relation_data"));
-                relation_value = data.getIntExtra("relation_value", 0);
+
             }else if(requestCode == 3){
                 otherOccupation.setText(data.getStringExtra("profession_data"));
-                profession_value = data.getIntExtra("profession_value", 0);
+                profession_value = Integer.parseInt(data.getStringExtra("profession_value"));
             }else if(requestCode == 1){
                 otherProfessionalGroup.setText(data.getStringExtra("professional_group_data"));
-                professional_group_value = data.getIntExtra("professional_group_value", 0);
+                professional_group_value = Integer.parseInt(data.getStringExtra("professional_group_value"));
             }
         }
     }

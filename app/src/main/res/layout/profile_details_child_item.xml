@@ -38,7 +38,8 @@
             android:textColor="#00011F"
             android:textSize="@dimen/item_textsize"
             android:textStyle="normal"
-            android:imeOptions="actionDone"/>
+            android:imeOptions="actionDone"
+            android:importantForAutofill="noExcludeDescendants"/>
         <ImageView
             android:id="@+id/img_edit"
             android:layout_width="20dp"

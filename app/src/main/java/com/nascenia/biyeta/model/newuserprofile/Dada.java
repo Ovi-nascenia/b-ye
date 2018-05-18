@@ -12,6 +12,9 @@ public class Dada implements Serializable
     @SerializedName("id")
     @Expose
     private int id;
+    @SerializedName("relation_id")
+    @Expose
+    private int relation_id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -47,6 +50,14 @@ public class Dada implements Serializable
     }
 
     public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getRelationId() {
+        return relation_id;
+    }
+
+    public void setRelationId(int id) {
         this.id = id;
     }
 

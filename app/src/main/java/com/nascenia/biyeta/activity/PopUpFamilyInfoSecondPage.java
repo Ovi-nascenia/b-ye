@@ -367,7 +367,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
                 }else if (strUpdateData!= null && strUpdateData.equalsIgnoreCase("relation")){
                     Intent intent = new Intent();
                     intent.putExtra("relation_data", relationName[newValue]);
-                    intent.putExtra("relation_value", newValue + "");
+                    intent.putExtra("relation_value", relationConstant.get(newValue));
                     setResult(RESULT_OK, intent);
                 } else if (BrotherViewAdapter.selectedPopUp == 6) {
                     //BrotherViewAdapter.brotherOcupationSpouse.setText(occupationName[newVal]);
@@ -478,7 +478,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
                 }else if (strUpdateData!= null && strUpdateData.equalsIgnoreCase("professional_group")) {
                     Intent intent = new Intent();
                     intent.putExtra("professional_group_data", professonalGroupName[newValue]);
-                    intent.putExtra("profession_group_value", professonalGroupConstantValue[newValue]);
+                    intent.putExtra("professional_group_value", professonalGroupConstantValue[newValue]);
                     setResult(RESULT_OK, intent);
                 } else if (OtherViewAdapter.selectedPopUp == 2) {
                     //OtherViewAdapter.otherProfessionalGroup.setText(professonalGroupName[newVal]);

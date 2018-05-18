@@ -13,6 +13,9 @@ public class Brother implements Serializable {
     @SerializedName("id")
     @Expose
     private int id;
+    @SerializedName("sibling_type")
+    @Expose
+    private int relation_id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -25,6 +28,9 @@ public class Brother implements Serializable {
     @SerializedName("occupation")
     @Expose
     private String occupation;
+    @SerializedName("professional_group")
+    @Expose
+    private String professional_group;
     @SerializedName("designation")
     @Expose
     private String designation;
@@ -74,6 +80,14 @@ public class Brother implements Serializable {
         this.id = id;
     }
 
+    public int getRelationId() {
+        return relation_id;
+    }
+
+    public void setRelationId(int id) {
+        this.relation_id = id;
+    }
+
     public Brother withAge(int age) {
         this.age = age;
         return this;
@@ -98,6 +112,14 @@ public class Brother implements Serializable {
 
     public void setOccupation(String occupation) {
         this.occupation = occupation;
+    }
+
+    public String getProfessionalGroup() {
+        return professional_group;
+    }
+
+    public void setProfessionalGroup(String professional_group) {
+        this.professional_group = professional_group;
     }
 
     public Brother withOccupation(String occupation) {

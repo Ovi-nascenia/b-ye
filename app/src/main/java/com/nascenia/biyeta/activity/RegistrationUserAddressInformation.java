@@ -530,70 +530,101 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             }
         }
 
-        String response = new StringBuilder().append("{")
-                .append("\"current_mobile_sign_up_step\":")
-                //.append(Login.currentMobileSignupStep)
-                .append(7)
-                .append(",")
-                .append("\"home_town\":")
-                .append(getDistrictCode(villageDistrictNameTextView.getText().toString()))//disLinkedHashMap.villageDistrictNameTextView.getText().toString())
-                .append(",")
-                .append("\"residence\":")
-                .append("\"")
-                .append(currentLivingLocationStatus)
-                .append("\"")
-                .append(",")
-                .append("\"living_abroad\":")
-                .append("\"")
-                .append(selectedAbroadTypeNumber)
-                .append("\"")
-                .append(",")
-                .append("\"same_address\":")
-                .append(permanentAddressCheckbox.isChecked()?1:0)
-                .append(",")
-                .append("\"address\":")
-                .append("[{")
-                .append("\"address\":")
-                .append("\"")
-                .append(presentAddressEditext.getText().toString().trim())
-                .append("\"")
-                .append(",")
-                .append("\"address_type\":")
-                .append(1)
-                .append(",")
-                .append("\"country\":")
-                .append("\"")
-                .append(presentCountryCode)
-                .append("\"")
-                .append(",")
-                .append("\"district\":")
-                .append("\"")
-                .append(presentCountryCode.equalsIgnoreCase("BD")?getDistrictCode(presentDistrictTextView.getText().toString()):"")
-                .append("\"")
-                .append("},{")
-                .append("\"address\":")
-                .append("\"")
-                .append(permanentAddressCheckbox.isChecked()?presentAddressEditext.getText().toString().trim():permanentAddressEditext.getText().toString().trim())
-                .append("\"")
-                .append(",")
-                .append("\"address_type\":")
-                .append(2)
-                .append(",")
-                .append("\"country\":")
-                .append("\"")
-                .append(permanentAddressCheckbox.isChecked()?presentCountryCode:permanentCountryCode)
-                .append("\"")
-                .append(",")
-                .append("\"district\":")
-                .append("\"")
-                .append(permanentAddressCheckbox.isChecked()?getDistrictCode(presentDistrictTextView.getText().toString()):getDistrictCode(permanentDistrictTextView.getText().toString()))
-                .append("\"")
-                .append("}]")
-                .append("}")
-                .toString();
-        Log.i("data", response );
+        if(strDataForUpdate != null){
+            Intent intent = getIntent();
+            intent.putExtra("home_town_data", getDistrictCode(villageDistrictNameTextView.getText().toString()));
+            intent.putExtra("home_town_value", villageDistrictNameTextView.getText().toString());
+            intent.putExtra("residence", currentLivingLocationStatus);
+            intent.putExtra("living_abroad_data", abroadTypeTextView.getText().toString());
+            intent.putExtra("living_abroad_value", selectedAbroadTypeNumber);
+            intent.putExtra("same_address", permanentAddressCheckbox.isChecked() ? 1 : 0);
+            intent.putExtra("present_address", presentAddressEditext.getText().toString().trim());
+            intent.putExtra("present_country_value", presentCountryCode);
+            intent.putExtra("present_country_data", presentCountryTextView.getText().toString());
+            intent.putExtra("present_district_data", presentDistrictTextView.getText().toString());
+            intent.putExtra("present_district_value", getDistrictCode(presentDistrictTextView.getText().toString()));
+            intent.putExtra("permanent_address", permanentAddressEditext.getText().toString().trim());
+            intent.putExtra("permanent_country_value", permanentCountryCode);
+            intent.putExtra("permanent_country_data", permanentCountryTextView.getText().toString());
+            intent.putExtra("permanent_district_data", permanentDistrictTextView.getText().toString());
+            intent.putExtra("permanent_district_value", getDistrictCode(permanentDistrictTextView.getText().toString()));
+            setResult(RESULT_OK, intent);
+            finish();
+        }else {
 
-        new SendAddressInfo().execute(response, Utils.SEND_INFO);
+            String response = new StringBuilder().append("{")
+                    .append("\"current_mobile_sign_up_step\":")
+                    //.append(Login.currentMobileSignupStep)
+                    .append(7)
+                    .append(",")
+                    .append("\"home_town\":")
+                    .append(getDistrictCode(
+                            villageDistrictNameTextView.getText().toString()))//disLinkedHashMap.villageDistrictNameTextView.getText().toString())
+
+                    .append(",")
+                    .append("\"residence\":")
+                    .append("\"")
+                    .append(currentLivingLocationStatus)
+                    .append("\"")
+                    .append(",")
+                    .append("\"living_abroad\":")
+                    .append("\"")
+                    .append(selectedAbroadTypeNumber)
+                    .append("\"")
+                    .append(",")
+                    .append("\"same_address\":")
+                    .append(permanentAddressCheckbox.isChecked() ? 1 : 0)
+                    .append(",")
+                    .append("\"address\":")
+                    .append("[{")
+                    .append("\"address\":")
+                    .append("\"")
+                    .append(presentAddressEditext.getText().toString().trim())
+                    .append("\"")
+                    .append(",")
+                    .append("\"address_type\":")
+                    .append(1)
+                    .append(",")
+                    .append("\"country\":")
+                    .append("\"")
+                    .append(presentCountryCode)
+                    .append("\"")
+                    .append(",")
+                    .append("\"district\":")
+                    .append("\"")
+                    .append(presentCountryCode.equalsIgnoreCase("BD") ? getDistrictCode(
+                            presentDistrictTextView.getText().toString()) : "")
+                    .append("\"")
+                    .append("},{")
+                    .append("\"address\":")
+                    .append("\"")
+                    .append(permanentAddressCheckbox.isChecked()
+                            ? presentAddressEditext.getText().toString().trim()
+                            : permanentAddressEditext.getText().toString().trim())
+                    .append("\"")
+                    .append(",")
+                    .append("\"address_type\":")
+                    .append(2)
+                    .append(",")
+                    .append("\"country\":")
+                    .append("\"")
+                    .append(permanentAddressCheckbox.isChecked() ? presentCountryCode
+                            : permanentCountryCode)
+                    .append("\"")
+                    .append(",")
+                    .append("\"district\":")
+                    .append("\"")
+                    .append(permanentAddressCheckbox.isChecked() ? getDistrictCode(
+                            presentDistrictTextView.getText().toString())
+                            : getDistrictCode(permanentDistrictTextView.getText().toString()))
+                    .append("\"")
+                    .append("}]")
+                    .append("}")
+                    .toString();
+            Log.i("data", response);
+
+            new SendAddressInfo().execute(response, Utils.SEND_INFO);
+        }
 
     }
 
@@ -730,7 +761,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
         if (requestCode == 2) {
 
-            if (!data.getStringExtra("ABROAD_STATUS_TYPE").equalsIgnoreCase("reject")) {
+            if (data!=null && !data.getStringExtra("ABROAD_STATUS_TYPE").equalsIgnoreCase("reject")) {
                 abroadTypeTextView.setText(data.getStringExtra("ABROAD_STATUS_TYPE"));
                 selectedAbroadTypeNumber = data.getIntExtra("ABROAD_STATUS_TYPE_SELECTOR_NUMBER",
                         0) + "";

@@ -39,6 +39,7 @@ public class ChildItemViewHolder extends ChildViewHolder {
         titleResultTextView = (EditText) itemView.findViewById(R.id.titleResultTextView);
         titleResultTextView.setEnabled(false);
         itemDividerLayout = (LinearLayout) itemView.findViewById(R.id.divider);
+        img_edit = itemView.findViewById(R.id.img_edit);
     }
 
 
@@ -57,6 +58,8 @@ public class ChildItemViewHolder extends ChildViewHolder {
         }else if(titleTextView.getText().toString().equalsIgnoreCase("খালু")) {
             id = userProfileChild.getId();
         }else if(titleTextView.getText().toString().equalsIgnoreCase("ফুপা")) {
+            id = userProfileChild.getId();
+        }else if(titleTextView.getText().toString().equalsIgnoreCase("দাদা")) {
             id = userProfileChild.getId();
         }
 

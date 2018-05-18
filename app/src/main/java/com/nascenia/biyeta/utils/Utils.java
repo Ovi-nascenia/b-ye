@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -87,6 +88,45 @@ public class Utils{
     public static final String FB_SIGNUP = Utils.Base_URL+"/api/v1/facebook_authorization/sign_up_with_fb";
     public static final String FB_SIGNUP_local = "https://www.biyeta.com"+"/api/v1/facebook_authorization/sign_up_with_fb";
     public static final String PASS_RESET = Utils.Base_URL+"/api/v1/passwords";
+    public static final String PROFILE_UPDATE = Utils.Base_URL + "/api/v1/profile/update";
+    public static final String PROFILE = "profile";
+    public static final String ABOUT_YOURSELF = "about_yourself";
+    public static final String DATE_OF_BIRTH = "dob";
+    public static final String HEIGHT_FEET = "height_ft";
+    public static final String HEIGHT_INCH = "height_inc";
+    public static final String RELIGION = "religious";
+    public static final String CAST = "cast";
+    public static final String OTHER_RELIGION = "other_religious";
+    public static final String OTHER_CAST = "other_cast";
+    public static final String SKIN_COLOR = "skin_color";
+    public static final String WEIGHT = "weight";
+    public static final String MARITAL_STATUS = "marital_status";
+    public static final String BLOOD_GROUP = "blood_group";
+    public static final String SMOKE = "is_smoking";
+    public static final String FAST = "fast";
+    public static final String PRAYER = "prayer";
+    public static final String OWN_HOUSE = "own_house";
+    public static final String DISABILITY = "physical_disability";
+    public static final String DISABILITY_DESC = "physical_disability_description";
+    public static final String PROFESSIONAL_GROUP = "professional_group";
+    public static final String OCCUPATION = "occupation";
+    public static final String DESIGNATION = "designation";
+    public static final String EDUCATION_ATTR = "educations_attributes";
+    public static final String NAME = "name";
+    public static final String SUBJECT = "subject";
+    public static final String INSTITUTION = "institution";
+    public static final String INSTITUTE = "institute";
+    public static final String YEAR = "year";
+    public static final String ID = "id";
+    public static String FAMILY_MEMBER_ATTRIBUTE = "family_members_attributes";
+    public static final String RELATION = "relation";
+//    public static final String FAMILY_MEMBER_ATTR = "family_members_attributes";
+    public static String SIBLING_ID = "sibling_id";
+    public static String SIBLING_ATTR = "siblings_attributes";
+    public static String SIBLING_TYPE = "sibling_type";
+    public static String SPOUSE = "spouse";
+    public static String AGE = "age";
+
 
 
     public static final String MUSLIM_TAG="muslim";
@@ -119,6 +159,8 @@ public class Utils{
     public static final String call = "call";
     public static final String MESSAGE_CALL_BLOCK = "message_call_block";
 
+
+
     //for imei
 
 
@@ -126,6 +168,11 @@ public class Utils{
     private static String deviceImei;
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
+    public static String SPOUSE_OCCUPATION = "s_occupation";
+    public static String SPOUSE_PROFESSIONAL_GROUP = "s_professional_group";
+    public static String SPOUSE_DESIGNTION = "s_designation";
+    public static String SPOUSE_INSTITUTE = "s_institute";
+
 
     public static void ShowAlert(Context context, String bodyMessage) {
 
@@ -779,4 +826,6 @@ public class Utils{
             e.printStackTrace();
         }
     }
+
+
 }

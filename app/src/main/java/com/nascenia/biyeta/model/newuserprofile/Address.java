@@ -9,6 +9,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Address implements Serializable
 {
 
+    @SerializedName("same_address")
+    @Expose
+    private Boolean sameAddress;
     @SerializedName("present_address")
     @Expose
     private PresentAddress presentAddress;
@@ -16,6 +19,14 @@ public class Address implements Serializable
     @Expose
     private PermanentAddress permanentAddress;
     private final static long serialVersionUID = -7774737620627329511L;
+
+    public Boolean getSameAddress() {
+        return sameAddress;
+    }
+
+    public void setSameAddress(Boolean sameAddress) {
+        this.sameAddress = sameAddress;
+    }
 
     public PresentAddress getPresentAddress() {
         return presentAddress;

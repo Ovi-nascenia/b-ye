@@ -22,6 +22,7 @@ import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.FavoriteActivity;
 import com.nascenia.biyeta.activity.NewUserProfileActivity;
+import com.nascenia.biyeta.activity.OwnUserProfileActivity;
 import com.nascenia.biyeta.activity.WebViewPayment;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.fragment.Match;
@@ -29,6 +30,7 @@ import com.nascenia.biyeta.model.newuserprofile.Image;
 import com.nascenia.biyeta.model.newuserprofile.UserProfile;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -118,6 +120,8 @@ public class NetWorkOperation {
 
 
     }
+
+
 
     static class SendConnectionRequest extends AsyncTask<String, String, String> {
 
@@ -651,6 +655,63 @@ public class NetWorkOperation {
             jsonObject = null;
 
 
+        }
+    }
+
+    public static class updateProfileData extends AsyncTask<String, String, String> {
+        private Context context;
+        public  updateProfileData(Context context){
+            this.context = context;
+        }
+
+        ProgressDialog progress;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress = new ProgressDialog(this.context);
+            progress.setMessage(context.getResources().getString(R.string.progress_dialog_message));
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setIndeterminate(true);
+            if ( !progress.isShowing() )
+                progress.show();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (progress.isShowing() )
+                progress.dismiss();
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            SharePref sharePref = new SharePref(this.context);
+            final String token = sharePref.get_data("token");
+
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+            OkHttpClient client = new OkHttpClient();
+
+            RequestBody body = RequestBody.create(JSON, strings[0]);
+            Request request = new Request.Builder()
+                    .url(Utils.PROFILE_UPDATE)
+                    .addHeader("Authorization", "Token token=" + token)
+                    .post(body)
+                    .build();
+            Response response = null;
+            String ch = "";
+            try {
+                response = client.newCall(request).execute();
+                ch = response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return ch;
         }
     }
 }

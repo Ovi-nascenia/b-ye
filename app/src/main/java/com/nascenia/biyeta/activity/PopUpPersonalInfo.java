@@ -257,21 +257,21 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 RegistrationPersonalInformation.weight = picker.getValue() + 1;
             }else if(strDataForUpdate.equalsIgnoreCase("skin")) {
                 Intent intent = new Intent();
-                intent.putExtra("skin_color_value", picker.getValue() + 1);
+                intent.putExtra("skin_color_value", picker.getValue());
                 intent.putExtra("skin_color_data", skinColorName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
             }else if(strDataForUpdate.equalsIgnoreCase("body")){
                 Intent intent = new Intent();
                 intent.putExtra("body_value", picker.getValue() + 1);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("marital_status")) {
+            }else if(strDataForUpdate.equalsIgnoreCase("marital_status") || strDataForUpdate.equalsIgnoreCase("marital_status_brother") || strDataForUpdate.equalsIgnoreCase("marital_status_sister")) {
                 Intent intent = new Intent();
                 intent.putExtra("marital_status_value", picker.getValue() + 1);
                 intent.putExtra("marital_status_data", maritalStatusName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
             }else if(strDataForUpdate.equalsIgnoreCase("blood_group")) {
                 Intent intent = new Intent();
-                intent.putExtra("blood_group_value", picker.getValue() + 1);
+                intent.putExtra("blood_group_value", bloodGroupConstant.get(picker.getValue()));
                 intent.putExtra("blood_group_data", bloodGroupName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
             }else if(strDataForUpdate.equalsIgnoreCase("smoke")) {
@@ -288,32 +288,32 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 setResult(RESULT_OK, intent);
             }else if(strDataForUpdate.equalsIgnoreCase("professional_group") || strDataForUpdate.equalsIgnoreCase("father_professional_group")) {
                 Intent intent = new Intent();
-                intent.putExtra("professional_group_value", picker.getValue() + 1);
+                intent.putExtra("professional_group_value", professonalGroupConstant.get(picker.getValue()));
                 intent.putExtra("professional_group_data", professonalGroupName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("profession") || strDataForUpdate.equalsIgnoreCase("father_profession")) {
+            }else if(strDataForUpdate.equalsIgnoreCase("profession") || strDataForUpdate.equalsIgnoreCase("father_profession" )|| strDataForUpdate.equalsIgnoreCase("mother_profession")|| strDataForUpdate.equalsIgnoreCase("brother_profession")|| strDataForUpdate.equalsIgnoreCase("sister_profession")) {
                 Intent intent = new Intent();
-                intent.putExtra("profession_value", picker.getValue() + 1);
+                intent.putExtra("profession_value", occupationConstant.get(picker.getValue()));
                 intent.putExtra("profession_data", occupationName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
             }else if(strDataForUpdate.equalsIgnoreCase("fasting")) {
                 Intent intent = new Intent();
-                intent.putExtra("fasting_value", picker.getValue() + 1);
+                intent.putExtra("fasting_value", rojaConstant.get(picker.getValue()));
                 intent.putExtra("fasting_data", rojaName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
             }else if(strDataForUpdate.equalsIgnoreCase("prayer")) {
                 Intent intent = new Intent();
-                intent.putExtra("prayer_value", picker.getValue() + 1);
+                intent.putExtra("prayer_value", religionConstant.get(picker.getValue()));
                 intent.putExtra("prayer_data", religionName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
             }else if(strDataForUpdate.equalsIgnoreCase("own_house")) {
                 Intent intent = new Intent();
-                intent.putExtra("own_house_value", picker.getValue() + 1);
+                intent.putExtra("own_house_value", houseConstant.get(picker.getValue()));
                 intent.putExtra("own_house_data", houseName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
             }else if(strDataForUpdate.equalsIgnoreCase("education")) {
                 Intent intent = new Intent();
-                intent.putExtra("education_value", picker.getValue() + 1);
+                intent.putExtra("education_value", picker.getValue());
                 intent.putExtra("education_data", educationName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
             }
@@ -415,15 +415,20 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                     professonalGroupConstant.add(professionalGroupObject.names().getString(i));
                     professonalGroupArray.add((String) professionalGroupObject.get(professionalGroupObject.names().getString(i)));
                 }
-
                 professonalGroupName = professonalGroupArray.toArray(professonalGroupName);
                 data = professonalGroupName;
                 mTextView.setText(Utils.setBanglaProfileTitle(getResources().getString(R.string.professional_group_text)));
-            }else if(strDataForUpdate.equalsIgnoreCase("profession") || strDataForUpdate.equalsIgnoreCase("father_profession")) {
+            }else if(strDataForUpdate.equalsIgnoreCase("profession") || strDataForUpdate.equalsIgnoreCase("father_profession") || strDataForUpdate.equalsIgnoreCase("mother_profession")|| strDataForUpdate.equalsIgnoreCase("brother_profession")|| strDataForUpdate.equalsIgnoreCase("sister_profession")) {
                 occupationObject = jsonObject.getJSONObject("occupation_constant");
                 for (int i = 0; i < occupationObject.length(); i++) {
                     occupationConstant.add(occupationObject.names().getString(i));
                     occupationArray.add((String) occupationObject.get(occupationObject.names().getString(i)));
+                }
+
+                if(strDataForUpdate.equalsIgnoreCase("father_profession"))
+                {
+                    occupationConstant.remove(occupationConstant.size()-1);
+                    occupationArray.remove(occupationArray.size()-1);
                 }
 
                 occupationName = occupationArray.toArray(occupationName);
@@ -468,11 +473,11 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 educationName = educationArray.toArray(educationName);
                 data = educationName;
                 mTextView.setText(Utils.setBanglaProfileTitle(getResources().getString(R.string.education_male)));
-            }else if(strDataForUpdate.equalsIgnoreCase("marital_status")) {
+            }else if(strDataForUpdate.equalsIgnoreCase("marital_status") || strDataForUpdate.equalsIgnoreCase("marital_status_brother") || strDataForUpdate.equalsIgnoreCase("marital_status_sister")) {
                 SharePref sharePref = new SharePref(PopUpPersonalInfo.this);
-                if (sharePref.get_data("gender").equalsIgnoreCase("female")) {
+                if (sharePref.get_data("gender").equalsIgnoreCase("female") || strDataForUpdate.equalsIgnoreCase("marital_status_sister")) {
                     marriageObject = jsonObject.getJSONObject("marital_status_constant_for_female");
-                } else if (sharePref.get_data("gender").equalsIgnoreCase("male")) {
+                } else if (sharePref.get_data("gender").equalsIgnoreCase("male") || strDataForUpdate.equalsIgnoreCase("marital_status_brother")) {
                     marriageObject = jsonObject.getJSONObject("marital_status_constant_for_male");
                 }
                 for (int i = 0; i < marriageObject.length(); i++) {

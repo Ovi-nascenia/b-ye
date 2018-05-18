@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,8 @@ import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
 
 import java.util.List;
 
-import com.nascenia.biyeta.BrotherEditActivity;
+import com.nascenia.biyeta.activity.BrotherEditActivity;
+import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.activity.BirthDatePickerPopUpActivity;
 import com.nascenia.biyeta.activity.OthersEditActivity;
 import com.nascenia.biyeta.activity.OwnUserProfileActivity;
@@ -40,6 +42,9 @@ import com.nascenia.biyeta.view.ParentItemViewHolder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by saiful on 2/12/17.
@@ -73,6 +78,11 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     private final int BROTHER_REQUEST_CODE = 19;
     private final int SISTER_REQUEST_CODE = 20;
     private final int OTHER_REQUEST_CODE = 21;
+    private final int DADA_REQUEST_CODE = 22;
+    private final int PRESENT_ADDRESS_REQUEST_CODE = 23;
+    private final int PERMANENT_ADDRESS_REQUEST_CODE = 24;
+    private final int PRESENT_LOCATION_REQUEST_CODE = 25;
+    private final int HOME_TOWN_REQUEST_CODE = 26;
 
     private int childId;
 
@@ -80,7 +90,8 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
     /*public static ArrayList<Boolean> parentPositionList = new ArrayList<>();*/
 
 
-    public UserProfileExpenadlbeAdapter(Context baseContext, List<UserProfileParent> userProfilesListParent, boolean isProfileEditOptionEnable) {
+    public UserProfileExpenadlbeAdapter(Context baseContext,
+            List<UserProfileParent> userProfilesListParent, boolean isProfileEditOptionEnable) {
         super(userProfilesListParent);
         mInflater = LayoutInflater.from(baseContext);
         this.userProfilesListParent = userProfilesListParent;
@@ -91,8 +102,10 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
 
     @NonNull
     @Override
-    public ParentItemViewHolder onCreateParentViewHolder(@NonNull ViewGroup parentViewGroup, int viewType) {
-        View parentView = mInflater.inflate(R.layout.list_profile_details_parent_item, parentViewGroup, false);
+    public ParentItemViewHolder onCreateParentViewHolder(@NonNull ViewGroup parentViewGroup,
+            int viewType) {
+        View parentView = mInflater.inflate(R.layout.list_profile_details_parent_item,
+                parentViewGroup, false);
         final ParentItemViewHolder parentItem = new ParentItemViewHolder(parentView, baseContext);
         parentView.setOnClickListener(
                 new View.OnClickListener() {
@@ -100,7 +113,9 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
 
                     @Override
                     public void onClick(View v) {
-                        parentItem.parentItemTitleTextView.getParent().requestChildFocus(parentItem.parentItemTitleTextView,parentItem.parentItemTitleTextView);
+                        parentItem.parentItemTitleTextView.getParent().requestChildFocus(
+                                parentItem.parentItemTitleTextView,
+                                parentItem.parentItemTitleTextView);
                         if (parentItem.isExpanded()) {
                             parentItem.setExpandAction();
                         } else {
@@ -116,8 +131,10 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
 
     @NonNull
     @Override
-    public ChildItemViewHolder onCreateChildViewHolder(@NonNull ViewGroup childViewGroup, int viewType) {
-        View childView = mInflater.inflate(R.layout.profile_details_child_item, childViewGroup, false);
+    public ChildItemViewHolder onCreateChildViewHolder(@NonNull ViewGroup childViewGroup,
+            int viewType) {
+        View childView = mInflater.inflate(R.layout.profile_details_child_item, childViewGroup,
+                false);
         final TextView titleTextView = childView.findViewById(R.id.titleTextView);
         final EditText descView = childView.findViewById(R.id.titleResultTextView);
         final ImageView img_edit = childView.findViewById(R.id.img_edit);
@@ -125,89 +142,109 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         img_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.age))){
-//                    Toast.makeText(baseContext, "age", Toast.LENGTH_SHORT).show();
-                    ((OwnUserProfileActivity)baseContext).startActivityForResult(
+                if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.age))) {
+                    ((OwnUserProfileActivity) baseContext).startActivityForResult(
                             new Intent(baseContext, BirthDatePickerPopUpActivity.class),
                             DATE_OF_BIRTH_REQUEST_CODE);
 
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.height))){
-//                    Toast.makeText(baseContext, "height", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.height))) {
                     Intent intent = new Intent(baseContext, PopUpPersonalInfo.class);
                     intent.putExtra("data", "height");
-                    ((OwnUserProfileActivity)baseContext).startActivityForResult(intent,
+                    ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
                             HEIGHT_REQUEST_CODE);
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.skin_color))){
-//                    Toast.makeText(baseContext, "skin", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.skin_color))) {
                     new GetPersonalInfoStepFetchConstant("skin", SKIN_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.body))){
-//                    Toast.makeText(baseContext, "body", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.body))) {
                     new GetPersonalInfoStepFetchConstant("body", BODY_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.marital_status))){
-//                    Toast.makeText(baseContext, "marital status", Toast.LENGTH_SHORT).show();
-                    new GetPersonalInfoStepFetchConstant("marital_status", MARITAL_STATUS_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.blood_group_text))){
-//                    Toast.makeText(baseContext, "blood group", Toast.LENGTH_SHORT).show();
-                    new GetPersonalInfoStepFetchConstant("blood_group", BLOOD_GROUP_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.smoking_text))){
-//                    Toast.makeText(baseContext, "smoke", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.marital_status))) {
+                    new GetPersonalInfoStepFetchConstant("marital_status",
+                            MARITAL_STATUS_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.blood_group_text))) {
+                    new GetPersonalInfoStepFetchConstant("blood_group",
+                            BLOOD_GROUP_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.smoking_text))) {
                     new GetPersonalInfoStepFetchConstant("smoke", SMOKE_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.religion_text))){
-//                    Toast.makeText(baseContext, "religion", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.religion_text))) {
                     new GetReligionStepFetchConstant().execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.present_loaction_text))){
-//                    Toast.makeText(baseContext, "present address", Toast.LENGTH_SHORT).show();
-                    new GetAddressStepFetchConstant().execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.home_town))){
-//                    Toast.makeText(baseContext, "permanent address", Toast.LENGTH_SHORT).show();
-                    new GetAddressStepFetchConstant().execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.disabilities_text))){
-//                    Toast.makeText(baseContext, "disable", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.present_loaction_text))) {
+                    new GetAddressStepFetchConstant(PRESENT_LOCATION_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.home_town))) {
+                    new GetAddressStepFetchConstant(HOME_TOWN_REQUEST_CODE).execute();
+                }else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.present_address_text))) {
+                    new GetAddressStepFetchConstant(PRESENT_ADDRESS_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.permanent_address_text))) {
+                    new GetAddressStepFetchConstant(PERMANENT_ADDRESS_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.disabilities_text))) {
                     new GetPersonalInfoStepFetchConstant("disable", DISABLE_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.cast_text))){
-//                    Toast.makeText(baseContext, "cast", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.cast_text))) {
                     new GetReligionStepFetchConstant().execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(Utils.setBanglaProfileTitle(baseContext.getResources().getString(R.string.professional_group_text)))){
-//                    Toast.makeText(baseContext, "group", Toast.LENGTH_SHORT).show();
-                    new GetPersonalInfoStepFetchConstant("professional_group", PROFESSIONAL_GROUP_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.profession_text))){
-//                    Toast.makeText(baseContext, "profession", Toast.LENGTH_SHORT).show();
-                    new GetPersonalInfoStepFetchConstant("profession", PROFESSION_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(Utils.setBanglaProfileTitle(baseContext.getResources().getString(R.string.designation_text)))){
-//                    Toast.makeText(baseContext, "designation", Toast.LENGTH_SHORT).show();
-                    enableEditing(descView, img_edit);
-//                    if(img_edit.getDrawable())
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        Utils.setBanglaProfileTitle(baseContext.getResources().getString(
+                                R.string.professional_group_text)))) {
+                    new GetPersonalInfoStepFetchConstant("professional_group",
+                            PROFESSIONAL_GROUP_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.profession_text))) {
+                    new GetPersonalInfoStepFetchConstant("profession",
+                            PROFESSION_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        Utils.setBanglaProfileTitle(
+                                baseContext.getResources().getString(R.string.designation_text)))) {
+                    ((OwnUserProfileActivity)baseContext).getUpdatedText(Utils.setBanglaProfileTitle(
+                            baseContext.getResources().getString(R.string.designation_text)), descView.getText().toString(), Utils.setBanglaProfileTitle(
+                            baseContext.getResources().getString(R.string.designation_text)), descView, Utils.PROFILE, Utils.DESIGNATION);
 
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(Utils.setBanglaProfileTitle(baseContext.getResources().getString(R.string.institute_text)))){
-//                    Toast.makeText(baseContext, "institute", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        Utils.setBanglaProfileTitle(
+                                baseContext.getResources().getString(R.string.institute_text)))) {
                     enableEditing(descView, img_edit);
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.fast_text))){
-//                    Toast.makeText(baseContext, "fasting", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.fast_text))) {
                     new GetPersonalInfoStepFetchConstant("fasting", FASTING_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.prayet_text))){
-//                    Toast.makeText(baseContext, "prayer", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.prayet_text))) {
                     new GetPersonalInfoStepFetchConstant("prayer", PRAYER_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.own_house_text))){
-//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
-                    new GetPersonalInfoStepFetchConstant("own_house", OWN_HOUSE_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.education))){
-//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
-                    new GetPersonalInfoStepFetchConstant("education", EDUCATION_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.father_text))){
-//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
-                    new GetPersonalInfoStepFetchConstant("father", FATHER_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.mother_text))){
-//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
-                    new GetPersonalInfoStepFetchConstant("mother", MOTHER_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.brother_text))){
-//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.own_house_text))) {
+                    new GetPersonalInfoStepFetchConstant("own_house",
+                            OWN_HOUSE_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.education))) {
+                    new GetPersonalInfoStepFetchConstant("education",
+                            EDUCATION_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.father_text))) {
+                    new GetFamilyInfoStepFetchConstant("father", FATHER_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.mother_text))) {
+                    new GetFamilyInfoStepFetchConstant("mother", MOTHER_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.brother_text))) {
                     new GetPersonalInfoStepFetchConstant("brother", BROTHER_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.sister_text))){
-//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.sister_text))) {
                     new GetPersonalInfoStepFetchConstant("sister", SISTER_REQUEST_CODE).execute();
-                }else if(titleTextView.getText().toString().equalsIgnoreCase(baseContext.getResources().getString(R.string.other))){
-//                    Toast.makeText(baseContext, "own house", Toast.LENGTH_SHORT).show();
-                    new FetchOthersConstant("other", OTHER_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.other))) {
+                    new FetchOthersConstant("other", img_edit.getTag(), OTHER_REQUEST_CODE).execute();
+                }
+                else if (titleTextView.getText().toString().equalsIgnoreCase(
+                        baseContext.getResources().getString(R.string.dada))) {
+                    new FetchOthersConstant("dada", img_edit.getTag(), DADA_REQUEST_CODE).execute();
                 }
             }
         });
@@ -234,13 +271,13 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         descView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean isFocused) {
-                if(isFocused) {
+                if (isFocused) {
                     img_edit.setTag("enabled");
                     img_edit.setImageResource(R.drawable.accept_icon);
                     descView.setEnabled(true);
 //                    descView.requestFocus();
                     descView.setSelection(descView.getText().length());
-                }else {
+                } else {
                     img_edit.setTag("");
                     img_edit.setImageResource(R.drawable.editicon);
                     descView.setEnabled(false);
@@ -249,23 +286,23 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 }
             }
         });
-        if(img_edit.getTag() == null || img_edit.getTag().equals("")){
+        if (img_edit.getTag() == null || img_edit.getTag().equals("")) {
             descView.requestFocus();
-        }else{
+        } else {
             descView.clearFocus();
         }
     }
 
-    public static void hideSoftKeyboard (EditText view)
-    {
-        InputMethodManager imm = (InputMethodManager)baseContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+    public static void hideSoftKeyboard(EditText view) {
+        InputMethodManager imm = (InputMethodManager) baseContext.getSystemService(
+                Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
     }
 
     @Override
     public void onBindParentViewHolder(@NonNull final ParentItemViewHolder parentViewHolder,
-                                       final int parentPosition,
-                                       @NonNull UserProfileParent parent) {
+            final int parentPosition,
+            @NonNull UserProfileParent parent) {
 
         parentViewHolder.bind(parent);
        /* if (parentPosition == (userProfilesListParent.size() - 1)) {
@@ -281,19 +318,19 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         }*/
 
 
-
-
     }
 
 
     @Override
     public void onBindChildViewHolder(@NonNull final ChildItemViewHolder childViewHolder,
-                                      int parentPosition,
-                                      int childPosition,
-                                      @NonNull UserProfileChild child) {
+            int parentPosition,
+            int childPosition,
+            @NonNull UserProfileChild child) {
 
+        childViewHolder.img_edit.setTag(child.getId());
         childViewHolder.bind(child);
-        childId = childViewHolder.getId();
+//        childId = childViewHolder.getId();
+        childId = child.getId();
 /*
         if (parentPositionList.get(parentPosition)) {
             childViewHolder.titleResultTextView.setEnabled(true);
@@ -311,11 +348,9 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
 
         if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1))
             childViewHolder.itemDividerLayout.setVisibility(View.GONE);
-        else
-        {
+        else {
             childViewHolder.itemDividerLayout.setVisibility(View.VISIBLE);
         }
-
 
 
     }
@@ -357,12 +392,13 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
             super.onPostExecute(s);
             Log.i("religion_step_data", s + "");
             if (s == null) {
-                Utils.ShowAlert(baseContext, baseContext.getResources().getString(R.string.no_internet_connection));
+                Utils.ShowAlert(baseContext,
+                        baseContext.getResources().getString(R.string.no_internet_connection));
             } else {
                 Intent intent = new Intent(baseContext, PopUpCastReligion.class);
                 intent.putExtra("constants", s);
                 intent.putExtra("data", "religion");
-                ((OwnUserProfileActivity)baseContext).startActivityForResult(intent,
+                ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
                         RELIGION_REQUEST_CODE);
 
             }
@@ -370,7 +406,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
 
     }
 
-    private class GetPersonalInfoStepFetchConstant  extends AsyncTask<String, String, String> {
+    private class GetPersonalInfoStepFetchConstant extends AsyncTask<String, String, String> {
         String reqType = "";
         int req_code;
 
@@ -413,39 +449,42 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
             super.onPostExecute(s);
             Log.i("urldata", s + "");
             if (s == null) {
-                Utils.ShowAlert(baseContext, baseContext.getResources().getString(R.string.no_internet_connection));
+                Utils.ShowAlert(baseContext,
+                        baseContext.getResources().getString(R.string.no_internet_connection));
             } else {
                 Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
                 Intent intent = new Intent(baseContext, PopUpPersonalInfo.class);
                 intent.putExtra("constants", s);
                 intent.putExtra("data", reqType);
-                if(reqType.equalsIgnoreCase("education")){
+                if (reqType.equalsIgnoreCase("education")) {
                     intent = new Intent(baseContext, PopupEducationEdit.class);
                     intent.putExtra("constants", s);
                     intent.putExtra("data", reqType);
                     ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
                             req_code);
-                }else if(reqType.equalsIgnoreCase("father") || reqType.equalsIgnoreCase("mother")){
+                } else if (reqType.equalsIgnoreCase("father") || reqType.equalsIgnoreCase(
+                        "mother")) {
                     intent = new Intent(baseContext, PopupParentsEdit.class);
                     intent.putExtra("constants", s);
                     intent.putExtra("data", reqType);
                     ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
                             req_code);
-                }else if(reqType.equalsIgnoreCase("brother") || reqType.equalsIgnoreCase("sister")){
+                } else if (reqType.equalsIgnoreCase("brother") || reqType.equalsIgnoreCase(
+                        "sister")) {
                     intent = new Intent(baseContext, BrotherEditActivity.class);
                     intent.putExtra("constants", s);
                     intent.putExtra("data", reqType);
                     intent.putExtra("id", childId);
                     ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
                             req_code);
-                }else if(reqType.equalsIgnoreCase("other")){
+                } else if (reqType.equalsIgnoreCase("other")) {
                     intent = new Intent(baseContext, OthersEditActivity.class);
                     intent.putExtra("constants", s);
                     intent.putExtra("data", reqType);
                     intent.putExtra("id", childId);
                     ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
                             req_code);
-                }else {
+                } else {
                     ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
                             req_code);
                 }
@@ -453,7 +492,93 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         }
     }
 
-    private class GetAddressStepFetchConstant  extends AsyncTask<String, String, String> {
+    private class GetFamilyInfoStepFetchConstant extends AsyncTask<String, String, String> {
+        String reqType = "";
+        int req_code;
+
+        public GetFamilyInfoStepFetchConstant(String strType, int req_code) {
+            this.reqType = strType;
+            this.req_code = req_code;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            SharePref sharePref = new SharePref(baseContext);
+            final String token = sharePref.get_data("token");
+            Request request = new Request.Builder()
+                    .url(Utils.STEP_CONSTANT_FETCH + 5)
+                    .addHeader("Authorization", "Token token=" + token)
+                    .build();
+
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 4);
+            try {
+                OkHttpClient client = new OkHttpClient();
+                Response response = client.newCall(request).execute();
+                String responseString = response.body().string();
+                Log.e("profile_edit", responseString);
+                response.body().close();
+                return responseString;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.i("urldata", s + "");
+            if (s == null) {
+                Utils.ShowAlert(baseContext,
+                        baseContext.getResources().getString(R.string.no_internet_connection));
+            } else {
+                Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
+                Intent intent = new Intent(baseContext, PopUpPersonalInfo.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                if (reqType.equalsIgnoreCase("father") || reqType.equalsIgnoreCase(
+                        "mother")) {
+                    intent = new Intent(baseContext, PopupParentsEdit.class);
+                    intent.putExtra("constants", s);
+                    intent.putExtra("data", reqType);
+                    ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
+                            req_code);
+                } else if (reqType.equalsIgnoreCase("brother") || reqType.equalsIgnoreCase(
+                        "sister")) {
+                    intent = new Intent(baseContext, BrotherEditActivity.class);
+                    intent.putExtra("constants", s);
+                    intent.putExtra("data", reqType);
+                    intent.putExtra("id", childId);
+                    ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
+                            req_code);
+                } else if (reqType.equalsIgnoreCase("other")) {
+                    intent = new Intent(baseContext, OthersEditActivity.class);
+                    intent.putExtra("constants", s);
+                    intent.putExtra("data", reqType);
+                    intent.putExtra("id", childId);
+                    ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
+                            req_code);
+                } else {
+                    ((OwnUserProfileActivity) baseContext).startActivityForResult(intent,
+                            req_code);
+                }
+            }
+        }
+    }
+
+    private class GetAddressStepFetchConstant extends AsyncTask<String, String, String> {
+
+        int reqCode;
+
+        public GetAddressStepFetchConstant(int request_code) {
+            this.reqCode = request_code;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -489,13 +614,14 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
             super.onPostExecute(s);
             Log.i("urldata", s + "");
             if (s == null) {
-                Utils.ShowAlert(baseContext, baseContext.getResources().getString(R.string.no_internet_connection));
+                Utils.ShowAlert(baseContext,
+                        baseContext.getResources().getString(R.string.no_internet_connection));
             } else {
                 Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
                 Intent intent = new Intent(baseContext, RegistrationUserAddressInformation.class);
                 intent.putExtra("constants", s);
                 intent.putExtra("data", "address");
-                ((OwnUserProfileActivity)baseContext).startActivityForResult(intent, 1001);
+                ((OwnUserProfileActivity) baseContext).startActivityForResult(intent, reqCode);
             }
         }
     }
@@ -504,18 +630,22 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
 
         String reqType = "";
         int req_code;
+        int id;
 
-        public FetchOthersConstant(String strType, int req_code) {
+        public FetchOthersConstant(String strType, Object id, int req_code) {
             this.reqType = strType;
             this.req_code = req_code;
+            this.id = (Integer) id;
         }
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 //            if (progress.isShowing())
 //                progress.dismiss();
             if (s == null) {
-                Utils.ShowAlert(baseContext, baseContext.getString(R.string.no_internet_connection));
+                Utils.ShowAlert(baseContext,
+                        baseContext.getString(R.string.no_internet_connection));
             } else {
                /* if (progress.isShowing())
                     progress.dismiss();*/
@@ -525,8 +655,8 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 intent = new Intent(baseContext, OthersEditActivity.class);
                 intent.putExtra("constants", s);
                 intent.putExtra("data", reqType);
-                intent.putExtra("id", childId);
-                ((OwnUserProfileActivity)baseContext).startActivityForResult(intent, req_code);
+                intent.putExtra("id", id);
+                ((OwnUserProfileActivity) baseContext).startActivityForResult(intent, req_code);
 //                finish();
             }
         }
@@ -558,6 +688,53 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+        }
+    }
+
+    private void updateDetails(AlertDialog alert, JSONObject jsonObject) {
+        new NetWorkOperation.updateProfileData(baseContext).execute(jsonObject.toString());
+        alert.dismiss();
+    }
+
+    public void getUpdatedText(String title, String msg, String hint, final TextView textView, String parent, String key) {
+        final View view = LayoutInflater.from(baseContext).inflate(R.layout.custom_edit, null);
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(baseContext);
+        alertBuilder.setView(view);
+        alertBuilder.setCancelable(true);
+        final EditText editText = view.findViewById(R.id.etText);
+//        final TextInputLayout til = view.findViewById(R.id.til1);
+        TextView tv_title = view.findViewById(R.id.title);
+        TextView tv_ok = view.findViewById(R.id.okBtn);
+        TextView tv_no = view.findViewById(R.id.noBtn);
+        tv_title.setText(title);
+        final AlertDialog alert = alertBuilder.create();
+        try {
+            editText.setText(msg);
+            editText.setHint(hint);
+
+            tv_ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    JSONObject jobjPro = new JSONObject();
+                    JSONObject jobj = new JSONObject();
+                    try {
+                        jobjPro.put(Utils.DESIGNATION, editText.getText().toString());
+                        jobj.put(Utils.PROFILE, jobjPro);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    updateDetails(alert, jobjPro);
+                }
+            });
+            tv_no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                }
+            });
+            alert.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
