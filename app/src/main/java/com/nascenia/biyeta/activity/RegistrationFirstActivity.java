@@ -419,7 +419,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
 
-//                Log.i("error", error.getMessage().toString());
+                Log.i("error", error.getMessage().toString());
 
             }
         });
