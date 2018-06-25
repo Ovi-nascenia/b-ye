@@ -392,8 +392,12 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 try {
-                                    uid = loginResult.getAccessToken().getUserId();
-                                    showFacebookSignInResultDataOnView(object);
+                                    if(object==null){
+                                        Utils.ShowAlert(RegistrationFirstActivity.this, getString(R.string.no_internet_connection));
+                                    }else {
+                                        uid = loginResult.getAccessToken().getUserId();
+                                        showFacebookSignInResultDataOnView(object);
+                                    }
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -415,7 +419,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
 
-//                Log.i("error", error.getMessage().toString());
+                Log.i("error", error.getMessage().toString());
 
             }
         });
@@ -760,8 +764,12 @@ public class RegistrationFirstActivity extends AppCompatActivity {
             } else {
                 try {
                     progress.cancel();
-                    JSONObject jsonObject = new JSONObject(s);
+                    if(s==null){
+                        Utils.ShowAlert(RegistrationFirstActivity.this, getString(R.string.no_internet_connection));
+                        return;
+                    }
                     Log.e("Response", s);
+                    JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.has("errors")) {
 //                        jsonObject.getJSONObject("errors").getString("detail");
                         // Toast.makeText(RegistrationFirstActivity.this, jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
@@ -774,6 +782,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Utils.ShowAlert(RegistrationFirstActivity.this, getString(R.string.no_internet_connection));
                 }
             }
         }

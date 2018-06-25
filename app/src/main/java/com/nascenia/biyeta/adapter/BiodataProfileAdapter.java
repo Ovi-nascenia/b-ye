@@ -99,19 +99,38 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
 
         holder.call.setText(profile.getRequestStatus().getMessage());
 
-
         try {
-
-            if (null != profile.getRequestStatus().getCommunicationRequestId() || profile.getRequestStatus().getMessage().equals("আপনি যোগাযোগের  অনুরোধ  করেছেন") ||
-                    profile.getRequestStatus().getName().equals("profile request")||profile.getRequestStatus().getRejected() || profile.getRequestStatus().getExpired() || profile.getRequestStatus().getAccepted()) {
+            if(profile.getRequestStatus().getCommunicationRequestId() == null){
+                if (profile.getRequestStatus().getRejected() || profile.getRequestStatus().getMessage().equals("আপনি যোগাযোগের  অনুরোধ  করেছেন") || profile.getRequestStatus().getMessage().equals("আপনি সফলভাবে যোগাযোগের অনুরোধ করেছেন")){
+                    holder.call.setEnabled(false);
+                    holder.call.setText(profile.getRequestStatus().getMessage());
+                    holder.call.setTextColor(Color.BLACK);
+                    holder.call.setBackgroundColor(Color.parseColor("#F2F1F1"));
+                } else if(profile.getRequestStatus().getExpired()){
+                    holder.call.setEnabled(true);
+                    holder.call.setText(profile.getRequestStatus().getMessage() + ", পুনরায় যোগাযোগের অনুরোধ করুন");
+                } else if(profile.getRequestStatus().getName().equals("profile request")){
+                    holder.call.setEnabled(true);
+                    holder.call.setText(profile.getRequestStatus().getMessage());
+                }
+            }else{
                 holder.call.setEnabled(false);
-                holder.call.setText(profile.getRequestStatus().getMessage());
                 holder.call.setTextColor(Color.BLACK);
                 holder.call.setBackgroundColor(Color.parseColor("#F2F1F1"));
-            } else {
-                holder.call.setEnabled(true);
-                holder.call.setText(profile.getRequestStatus().getMessage());
             }
+//            if (null != profile.getRequestStatus().getCommunicationRequestId() || profile.getRequestStatus().getMessage().equals("আপনি যোগাযোগের  অনুরোধ  করেছেন") || profile.getRequestStatus().getMessage().equals("আপনি সফলভাবে যোগাযোগের অনুরোধ করেছেন") ||
+//                    profile.getRequestStatus().getName().equals("profile request") || profile.getRequestStatus().getRejected() || profile.getRequestStatus().getExpired() || profile.getRequestStatus().getAccepted()) {
+//                holder.call.setEnabled(false);
+//                holder.call.setText(profile.getRequestStatus().getMessage());
+//                holder.call.setTextColor(Color.BLACK);
+//                holder.call.setBackgroundColor(Color.parseColor("#F2F1F1"));
+//            }else if(profile.getRequestStatus().getCommunicationRequestId() == null && profile.getRequestStatus().getExpired() && !profile.getRequestStatus().getRejected()){
+//                holder.call.setEnabled(true);
+//                holder.call.setText(profile.getRequestStatus().getMessage() + ", পুনরায় যোগাযোগের অনুরোধ করুন");
+//            } else {
+//                holder.call.setEnabled(true);
+//                holder.call.setText(profile.getRequestStatus().getMessage());
+//            }
         } catch (Exception e) {
             holder.call.setEnabled(true);
             holder.call.setText(profile.getRequestStatus().getMessage());
@@ -150,8 +169,6 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
             @Override
             public void onClick(View view) {
                 onClickProfile(position);
-
-
             }
         });
 
@@ -159,7 +176,6 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
             @Override
             public void onClick(View view) {
                 onClickProfile(position);
-
             }
         });
 

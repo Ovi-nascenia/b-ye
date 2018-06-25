@@ -331,15 +331,13 @@ public class RegistrationOwnInfo extends AppCompatActivity{
 //                details.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
 //                details.setSingleLine(false);
 //                details.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
-                if(flag==1)
-                {
+                if(flag==1){
                     noNumberEmail.setVisibility(View.VISIBLE);
                     flag=0;
                 }
                 editTextOwn.setImeOptions(EditorInfo.IME_ACTION_DONE);
                 editTextOwn.setSelection(editTextOwn.getText().length());
-            }
-            else if(s.length()>=4&&Character.isDigit(s.charAt(s.length()-1))&&Character.isDigit(s.charAt(s.length()-2))&&Character.isDigit(s.charAt(s.length()-3))&&Character.isDigit(s.charAt(s.length()-4))){
+            }else if(s.length()>=4&&Character.isDigit(s.charAt(s.length()-1))&&Character.isDigit(s.charAt(s.length()-2))&&Character.isDigit(s.charAt(s.length()-3))&&Character.isDigit(s.charAt(s.length()-4))){
                 flag = 1;
                 next.setVisibility(View.INVISIBLE);
                 noNumberEmail.setVisibility(View.VISIBLE);
@@ -348,9 +346,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                 editTextOwn.setSelection(editTextOwn.getText().length());
                 details.setImeOptions(EditorInfo.IME_ACTION_NEXT);
                 tvCount.setTextColor(Color.parseColor("#ff0000"));
-            }
-
-            else if(s.length()>=1&&s.charAt(s.length()-1)=='@'){
+            }else if(s.length()>=1&&s.charAt(s.length()-1)=='@'){
                 flag = 1;
                 next.setVisibility(View.INVISIBLE);
                 noNumberEmail.setVisibility(View.VISIBLE);
@@ -359,9 +355,7 @@ public class RegistrationOwnInfo extends AppCompatActivity{
                 editTextOwn.setSelection(editTextOwn.getText().length());
                 details.setImeOptions(EditorInfo.IME_ACTION_NEXT);
                 tvCount.setTextColor(Color.parseColor("#ff0000"));
-            }
-
-            else{
+            }else{
                 next.setVisibility(View.INVISIBLE);
                 noNumberEmail.setVisibility(View.INVISIBLE);
                 tvCount.setTextColor(Color.parseColor("#ff0000"));

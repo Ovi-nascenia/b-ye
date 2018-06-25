@@ -159,8 +159,6 @@ public class Utils{
     public static final String call = "call";
     public static final String MESSAGE_CALL_BLOCK = "message_call_block";
 
-
-
     //for imei
 
 
@@ -826,6 +824,4 @@ public class Utils{
             e.printStackTrace();
         }
     }
-
-
 }

@@ -238,27 +238,27 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 // App code
                 GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                Log.v("LoginActivity", response.toString());
+                    loginResult.getAccessToken(),
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            Log.v("LoginActivity", response.toString());
 
-                                // Application code
-                                try {
-                                    String uid = loginResult.getAccessToken().getUserId();
-                                    String email = object.getString("email");
+                            // Application code
+                            try {
+                                String uid = loginResult.getAccessToken().getUserId();
+                                String email = object.getString("email");
 
-                                    //send data from facebook to our server
-                                    new LoginByFacebook().execute(Utils.FACEBOOK_LOGIN_URL, uid, "facebook", email);
-                                    Log.e("FacebookData", email + " " + loginResult.getAccessToken().getToken() + "");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                                //send data from facebook to our server
+                                new LoginByFacebook().execute(Utils.FACEBOOK_LOGIN_URL, uid, "facebook", email);
+                                Log.e("FacebookData", email + " " + loginResult.getAccessToken().getToken() + "");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
 //                                    application.trackEception(e, "GraphRequest/onCompleted", "Login", e.getMessage().toString(), mTracker);
-                                }
-                                // 01/31/1980 format
                             }
-                        });
+                            // 01/31/1980 format
+                        }
+                    });
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,name,email");
                 request.setParameters(parameters);
@@ -476,6 +476,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                     response.getLoginInformation().getRealName());
                             sharePref.set_data("mobile_verified",
                                     response.getLoginInformation().getMobileVerified() + "");
+                            sharePref.set_data("religion", response.getLoginInformation().getReligion() + "");
+                            sharePref.set_data("cast", response.getLoginInformation().getCast() + "");
 
                             gender = response.getLoginInformation().getGender();
                             currentMobileSignupStep = response.getLoginInformation().getStep();
@@ -521,6 +523,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         }
                     }
                 }
+                else if(jsonObject.has("message")){
+                    Utils.ShowAlert(Login.this, jsonObject.getJSONObject("message").getString("detail"));
+                    LoginManager.getInstance().logOut();
+                }
 
                 /*else{
                     builder = new AlertDialog.Builder(Login.this);
@@ -543,6 +549,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 }*/
             } catch (JSONException e) {
                 e.printStackTrace();
+                LoginManager.getInstance().logOut();
 //                application.trackEception(e, "LoginByFacebook/onPostExecute", "Login", e.getMessage().toString(), mTracker);
             }
         }

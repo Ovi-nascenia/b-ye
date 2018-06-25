@@ -99,7 +99,7 @@ public class PopUpCastReligion extends AppCompatActivity {
                 data.add((String) religionObject.get(religionObject.names().getString(i)));
             }
 
-            for (int i = 0; i < muslimCastObject.length(); i++) {
+            for (int i = 0; i < muslimCastObject.length() - 1; i++) { //quick fix to remove others muslim cast
 
                 muslimCastConstant.add(muslimCastObject.names().getString(i));
                 muslimCast.add((String) muslimCastObject.get(muslimCastObject.names().getString(i)));
