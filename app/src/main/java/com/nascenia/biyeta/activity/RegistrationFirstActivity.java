@@ -657,7 +657,13 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(s);
                     Log.e("Token", s);
                     if (jsonObject.has("errors")) {
-                        Utils.ShowAlert(RegistrationFirstActivity.this, jsonObject.getJSONObject("errors").getString("detail"));
+                        if(jsonObject.getJSONObject("errors").has("email_user")){
+                            Utils.showRegisteredUserDialog(RegistrationFirstActivity.this,
+                                    jsonObject.getJSONObject("errors").getString("detail") + "" + getString(R.string.login_confirmation), email_edit_text.getText().toString(), null);
+                        }else {
+                            Utils.ShowAlert(RegistrationFirstActivity.this,
+                                    jsonObject.getJSONObject("errors").getString("detail"));
+                        }
                         email_edit_text.requestFocus();
                     } else {
                         //sharePref.set_data("registration_token",jsonObject.getString("auth_token"));
@@ -677,7 +683,7 @@ public class RegistrationFirstActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... parameters) {
-            String email = parameters[0];
+            email = parameters[0];
             String password = parameters[1];
             String realName = parameters[2];
             String displayName = parameters[3];
@@ -771,9 +777,13 @@ public class RegistrationFirstActivity extends AppCompatActivity {
                     Log.e("Response", s);
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.has("errors")) {
-//                        jsonObject.getJSONObject("errors").getString("detail");
-                        // Toast.makeText(RegistrationFirstActivity.this, jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
-                        Utils.ShowAlert(RegistrationFirstActivity.this, jsonObject.getJSONObject("errors").getString("detail"));
+                        if(jsonObject.getJSONObject("errors").has("fb_user")){
+                            Utils.showRegisteredUserDialog(RegistrationFirstActivity.this,
+                                    jsonObject.getJSONObject("errors").getString("detail") + "" + getString(R.string.login_confirmation), email, uid);
+                        }else {
+                            Utils.ShowAlert(RegistrationFirstActivity.this,
+                                    jsonObject.getJSONObject("errors").getString("detail"));
+                        }
                     } else {
                         sharePref.set_data("token", jsonObject.getString("auth_token"));
                         Intent intent = new Intent(RegistrationFirstActivity.this, MobileVarification.class);

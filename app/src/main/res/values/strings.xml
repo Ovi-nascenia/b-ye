@@ -138,6 +138,7 @@
     <string name="see_plans">প্ল্যান দেখুন</string>
     <string name="update">আপডেট</string>
     <string name="not_now">এখন না</string>
+    <string name="yes">হ্যা</string>
     <string name="upgrade_title">বিস্তারিত দেখুন</string>
     <string name="upgrade_message">এখন না</string>
 
@@ -461,5 +462,6 @@
     <string name="forgot_pass1">পাসওয়ার্ড ভুলে গিয়েছেন? </string>
     <string name="pass_reset">পাসওয়ার্ড রিসেট </string>
     <string name="reset_pass_btn_text">পাসওয়ার্ড রিসেট নির্দেশাবলী পাঠান </string>
+    <string name="login_confirmation">। আপনি কি লগইন করতে চান?</string>
 
 </resources>

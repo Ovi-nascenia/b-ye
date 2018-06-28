@@ -32,11 +32,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.FavoriteActivity;
 import com.nascenia.biyeta.activity.HomeScreen;
 import com.nascenia.biyeta.activity.Login;
 import com.nascenia.biyeta.activity.NewUserProfileActivity;
+import com.nascenia.biyeta.activity.RegistrationFirstActivity;
 import com.nascenia.biyeta.activity.WebViewPayment;
 import com.nascenia.biyeta.fragment.Search;
 
@@ -84,7 +86,7 @@ public class Utils{
     public static final String VERIFICATION_CODE_VERIFY_URL = Utils.Base_URL+"/api/v1/mobile_verifications/verify_mobile";
     public static final String STEP_CONSTANT_FETCH = Utils.Base_URL+"/api/v1/step_constants/fetch/";
     public static final String SEND_INFO = Utils.Base_URL+"/api/v1/registrations";
-    public static final String FB_SIGNUP = Utils.Base_URL+"/api/v1/facebook_authorization/sign_up_with_fb";
+    public static final String FB_SIGNUP = Utils.Base_URL + "/api/v1/facebook_authorization/sign_up_with_fb";
     public static final String FB_SIGNUP_local = "https://www.biyeta.com"+"/api/v1/facebook_authorization/sign_up_with_fb";
     public static final String PASS_RESET = Utils.Base_URL+"/api/v1/passwords";
 
@@ -777,5 +779,40 @@ public class Utils{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void showRegisteredUserDialog(final Context context, String message, final String email, final String uid){
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setCancelable(true);
+        alertBuilder.setMessage(message);
+        alertBuilder.setPositiveButton(R.string.yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent myIntent = ((Activity)context).getIntent();
+                        myIntent.putExtra("email", email);
+                        if(uid != null)
+                            myIntent.putExtra("uid", uid);
+                        ((RegistrationFirstActivity)context).setResult(Activity.RESULT_OK, myIntent);
+                        ((RegistrationFirstActivity)context).finish();
+                    }
+                });
+        alertBuilder.setNegativeButton(R.string.not_now,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        final AlertDialog alert = alertBuilder.create();
+        alert.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
+//                                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setBackgroundColor(context.getResources().getColor(R.color.title_gray));
+                alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
+//                                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+            }
+        });
+
+        alert.show();
     }
 }
