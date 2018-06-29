@@ -69,6 +69,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+import javax.xml.transform.Result;
+
 /**
  * Created by user on 1/5/2017.
  */
@@ -107,6 +109,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     OkHttpClient client;
     private AlertDialog.Builder builder;
     SharePref sharePref;
+    private int ALREADY_EXISTS = 1000;
+    private boolean isAlreadyExists = false;
 
 
     @Override
@@ -338,7 +342,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 */
                 Intent signupIntent = new Intent(Login.this, RegistrationFirstActivity.class);
                 //new Login.FetchConstant().execute();
-                startActivity(signupIntent);
+                startActivityForResult(signupIntent, ALREADY_EXISTS);
                 break;
         }
     }
@@ -375,7 +379,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK) {
+            if(requestCode == ALREADY_EXISTS){
+                String email = data.getStringExtra("email").toString();
+                etUserName.setText(email);
+                if(data.hasExtra("uid")) {
+                    String uid = data.getStringExtra("uid").toString();
+                    if (uid != null)
+                        new LoginByFacebook().execute(Utils.FACEBOOK_LOGIN_URL, uid, "facebook",
+                                email);
+                }
+                else
+                    isAlreadyExists = true;
+            }else {
+                callbackManager.onActivityResult(requestCode, resultCode, data);
+            }
+        }
     }
 
 
@@ -385,8 +404,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         buttonSubmit.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         etPassword.setText("");
-        etUserName.setText("");
         etUserName.requestFocus();
+        if(!isAlreadyExists) {
+            etUserName.setText("");
+        }else{
+            etUserName.setSelection(etUserName.getText().length());
+            isAlreadyExists = false;
+            etPassword.requestFocus();
+        }
 
         /*Google Analytics*/
         mTracker.setScreenName("লগইন");
