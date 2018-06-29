@@ -17,7 +17,7 @@
     <string name="age">বয়স</string>
     <string name="height"> উচ্চতা </string>
     <string name="body">গড়ন </string>
-    <string name="body_color">গায়ের রং </string>
+    <string name="skin_color">গায়ের রং </string>
     <string name="education_male">  শিক্ষাগত যোগ্যতা </string>
     <string name="education">  শিক্ষা </string>
     <string name="profession_identity_male">প্রফেশনাল গ্রুপ </string>
