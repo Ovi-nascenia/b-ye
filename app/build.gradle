@@ -8,8 +8,8 @@ android {
         applicationId 'com.nascenia.biyeta'
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 17
-        versionName "2.2"
+        versionCode 18
+        versionName "2.3"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

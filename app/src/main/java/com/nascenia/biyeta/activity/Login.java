@@ -251,13 +251,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             // Application code
                             try {
                                 String uid = loginResult.getAccessToken().getUserId();
-                                String email = object.getString("email");
+                                String email = "";
+                                if(object.has("email"))
+                                    email = object.getString("email");
 
                                 //send data from facebook to our server
                                 new LoginByFacebook().execute(Utils.FACEBOOK_LOGIN_URL, uid, "facebook", email);
                                 Log.e("FacebookData", email + " " + loginResult.getAccessToken().getToken() + "");
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                LoginManager.getInstance().logOut();
 //                                    application.trackEception(e, "GraphRequest/onCompleted", "Login", e.getMessage().toString(), mTracker);
                             }
                             // 01/31/1980 format
