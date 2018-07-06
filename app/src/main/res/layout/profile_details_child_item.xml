@@ -38,7 +38,7 @@
             android:textColor="#00011F"
             android:textSize="@dimen/item_textsize"
             android:textStyle="normal"
-            android:imeOptions="actionDone"
+            android:enabled="true"
             android:importantForAutofill="noExcludeDescendants"/>
         <ImageView
             android:id="@+id/img_edit"
@@ -46,7 +46,8 @@
             android:layout_height="20dp"
             android:layout_weight=".5"
             android:layout_gravity="top|right"
-            android:src="@drawable/editicon"/>
+            android:src="@drawable/accept_icon"
+            android:visibility="invisible"/>
     </LinearLayout>
 
 

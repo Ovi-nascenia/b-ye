@@ -360,6 +360,7 @@
                         android:visibility="gone" />
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/userProfileDescriptionCardView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF">
@@ -374,7 +375,8 @@
                             android:textColor="#000000"
                             android:textSize="@dimen/item_textsize"
                             android:textStyle="normal"
-                            android:enabled="false"
+                            android:enabled="true"
+                            android:nextFocusDown="@+id/user_general_info_recycler_view"
                             android:background="@color/white"/>
 
                         <ImageView
@@ -382,7 +384,6 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_margin="5dp"
-                            android:src="@drawable/editicon"
                             android:visibility="visible"
                             android:layout_gravity="top|right"/>
 
@@ -410,9 +411,7 @@
                             android:layout_marginLeft="@dimen/small_margin"
                             android:layout_marginRight="@dimen/small_margin"
                             android:scrollbars="vertical"
-                            android:visibility="visible"
-
-                            />
+                            android:visibility="visible"/>
 
 
                     </android.support.v7.widget.CardView>

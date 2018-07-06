@@ -221,11 +221,11 @@ public class PopUpPersonalInfo extends AppCompatActivity {
         picker.setMinValue(0);
         picker.setMaxValue(data.length-1);
         picker.setDisplayedValues(data);
-        if(RegistrationPersonalInformation.selectedPopUp==12 || strDataForUpdate.equalsIgnoreCase("body"))
+        if(RegistrationPersonalInformation.selectedPopUp==12 || (strDataForUpdate !=null ? strDataForUpdate.equalsIgnoreCase("body"):false))
         {
             picker.setValue(30);                             // default 60 kg
         }
-        if(RegistrationPersonalInformation.selectedPopUp==11 || strDataForUpdate.equalsIgnoreCase("height"))
+        if(RegistrationPersonalInformation.selectedPopUp==11 || (strDataForUpdate !=null ? strDataForUpdate.equalsIgnoreCase("height"):false))
         {
             picker.setValue(17);                             // default 5 feet 5 inch
         }
@@ -245,8 +245,8 @@ public class PopUpPersonalInfo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-            if(RegistrationPersonalInformation.selectedPopUp == 11 || strDataForUpdate.equalsIgnoreCase("height")){
-                if(strDataForUpdate.equalsIgnoreCase("height"))
+            if(RegistrationPersonalInformation.selectedPopUp == 11 || (strDataForUpdate !=null ? strDataForUpdate.equalsIgnoreCase("height"):false)){
+                if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("height"))
                 {
                     Intent intent = new Intent();
                     intent.putExtra("height", picker.getValue() + 1);
@@ -255,63 +255,63 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 RegistrationPersonalInformation.height = picker.getValue() + 1;
             }else if(RegistrationPersonalInformation.selectedPopUp == 12){
                 RegistrationPersonalInformation.weight = picker.getValue() + 1;
-            }else if(strDataForUpdate.equalsIgnoreCase("skin")) {
+            }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("skin")) {
                 Intent intent = new Intent();
                 intent.putExtra("skin_color_value", picker.getValue());
                 intent.putExtra("skin_color_data", skinColorName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("body")){
+            }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("body")){
                 Intent intent = new Intent();
                 intent.putExtra("body_value", picker.getValue() + 1);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("marital_status") || strDataForUpdate.equalsIgnoreCase("marital_status_brother") || strDataForUpdate.equalsIgnoreCase("marital_status_sister")) {
+            }else if(strDataForUpdate != null && (strDataForUpdate.equalsIgnoreCase("marital_status") || strDataForUpdate.equalsIgnoreCase("marital_status_brother") || strDataForUpdate.equalsIgnoreCase("marital_status_sister"))) {
                 Intent intent = new Intent();
                 intent.putExtra("marital_status_value", picker.getValue() + 1);
                 intent.putExtra("marital_status_data", maritalStatusName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("blood_group")) {
+            }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("blood_group")) {
                 Intent intent = new Intent();
                 intent.putExtra("blood_group_value", bloodGroupConstant.get(picker.getValue()));
                 intent.putExtra("blood_group_data", bloodGroupName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("smoke")) {
+            }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("smoke")) {
                 Intent intent = new Intent();
                 intent.putExtra("smoke_value", picker.getValue() + 1);
                 intent.putExtra("smoke_data", smokeName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("disable")) {
+            }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("disable")) {
                 Intent intent = new Intent();
                 Log.d("disable value", picker.getValue() + "");
                 intent.putExtra("disable_value", picker.getValue() + 1);
                 intent.putExtra("disable_data", disableName[picker.getValue()]);
                 intent.putExtra("disable_desc_data", picker.getValue()>0?disableEditText.getText().toString():"");
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("professional_group") || strDataForUpdate.equalsIgnoreCase("father_professional_group")) {
+            }else if(strDataForUpdate != null && (strDataForUpdate.equalsIgnoreCase("professional_group") || strDataForUpdate.equalsIgnoreCase("father_professional_group"))) {
                 Intent intent = new Intent();
                 intent.putExtra("professional_group_value", professonalGroupConstant.get(picker.getValue()));
                 intent.putExtra("professional_group_data", professonalGroupName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("profession") || strDataForUpdate.equalsIgnoreCase("father_profession" )|| strDataForUpdate.equalsIgnoreCase("mother_profession")|| strDataForUpdate.equalsIgnoreCase("brother_profession")|| strDataForUpdate.equalsIgnoreCase("sister_profession")) {
+            }else if(strDataForUpdate != null && (strDataForUpdate.equalsIgnoreCase("profession") || strDataForUpdate.equalsIgnoreCase("father_profession" )|| strDataForUpdate.equalsIgnoreCase("mother_profession")|| strDataForUpdate.equalsIgnoreCase("brother_profession")|| strDataForUpdate.equalsIgnoreCase("sister_profession"))) {
                 Intent intent = new Intent();
                 intent.putExtra("profession_value", occupationConstant.get(picker.getValue()));
                 intent.putExtra("profession_data", occupationName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("fasting")) {
+            }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("fasting")) {
                 Intent intent = new Intent();
                 intent.putExtra("fasting_value", rojaConstant.get(picker.getValue()));
                 intent.putExtra("fasting_data", rojaName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("prayer")) {
+            }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("prayer")) {
                 Intent intent = new Intent();
                 intent.putExtra("prayer_value", religionConstant.get(picker.getValue()));
                 intent.putExtra("prayer_data", religionName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("own_house")) {
+            }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("own_house")) {
                 Intent intent = new Intent();
                 intent.putExtra("own_house_value", houseConstant.get(picker.getValue()));
                 intent.putExtra("own_house_data", houseName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
-            }else if(strDataForUpdate.equalsIgnoreCase("education")) {
+            }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("education")) {
                 Intent intent = new Intent();
                 intent.putExtra("education_value", picker.getValue());
                 intent.putExtra("education_data", educationName[picker.getValue()]);

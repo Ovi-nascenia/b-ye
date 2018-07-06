@@ -7,10 +7,12 @@ package com.nascenia.biyeta.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -50,7 +52,9 @@ import org.json.JSONObject;
  * Created by saiful on 2/12/17.
  */
 
-public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<UserProfileParent, UserProfileChild, ParentItemViewHolder, ChildItemViewHolder> {
+public class UserProfileExpenadlbeAdapter extends
+        ExpandableRecyclerAdapter<UserProfileParent, UserProfileChild, ParentItemViewHolder,
+                ChildItemViewHolder> {
 
 
     private LayoutInflater mInflater;
@@ -139,7 +143,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         final EditText descView = childView.findViewById(R.id.titleResultTextView);
         final ImageView img_edit = childView.findViewById(R.id.img_edit);
         final boolean editEnabled = false;
-        img_edit.setOnClickListener(new View.OnClickListener() {
+        childView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (titleTextView.getText().toString().equalsIgnoreCase(
@@ -180,7 +184,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 } else if (titleTextView.getText().toString().equalsIgnoreCase(
                         baseContext.getResources().getString(R.string.home_town))) {
                     new GetAddressStepFetchConstant(HOME_TOWN_REQUEST_CODE).execute();
-                }else if (titleTextView.getText().toString().equalsIgnoreCase(
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
                         baseContext.getResources().getString(R.string.present_address_text))) {
                     new GetAddressStepFetchConstant(PRESENT_ADDRESS_REQUEST_CODE).execute();
                 } else if (titleTextView.getText().toString().equalsIgnoreCase(
@@ -204,14 +208,19 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 } else if (titleTextView.getText().toString().equalsIgnoreCase(
                         Utils.setBanglaProfileTitle(
                                 baseContext.getResources().getString(R.string.designation_text)))) {
-                    ((OwnUserProfileActivity)baseContext).getUpdatedText(Utils.setBanglaProfileTitle(
-                            baseContext.getResources().getString(R.string.designation_text)), descView.getText().toString(), Utils.setBanglaProfileTitle(
-                            baseContext.getResources().getString(R.string.designation_text)), descView, Utils.PROFILE, Utils.DESIGNATION);
+                    ((OwnUserProfileActivity) baseContext).getUpdatedText(
+                            Utils.setBanglaProfileTitle(
+                                    baseContext.getResources().getString(
+                                            R.string.designation_text)),
+                            descView.getText().toString(), Utils.setBanglaProfileTitle(
+                                    baseContext.getResources().getString(
+                                            R.string.designation_text)), descView, Utils.PROFILE,
+                            Utils.DESIGNATION);
 
                 } else if (titleTextView.getText().toString().equalsIgnoreCase(
                         Utils.setBanglaProfileTitle(
                                 baseContext.getResources().getString(R.string.institute_text)))) {
-                    enableEditing(descView, img_edit);
+                    enableEditing(descView, baseContext.getString(R.string.institute_text), img_edit,true, Utils.INSTITUTION);
                 } else if (titleTextView.getText().toString().equalsIgnoreCase(
                         baseContext.getResources().getString(R.string.fast_text))) {
                     new GetPersonalInfoStepFetchConstant("fasting", FASTING_REQUEST_CODE).execute();
@@ -240,9 +249,9 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                     new GetPersonalInfoStepFetchConstant("sister", SISTER_REQUEST_CODE).execute();
                 } else if (titleTextView.getText().toString().equalsIgnoreCase(
                         baseContext.getResources().getString(R.string.other))) {
-                    new FetchOthersConstant("other", img_edit.getTag(), OTHER_REQUEST_CODE).execute();
-                }
-                else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    new FetchOthersConstant("other", img_edit.getTag(),
+                            OTHER_REQUEST_CODE).execute();
+                } else if (titleTextView.getText().toString().equalsIgnoreCase(
                         baseContext.getResources().getString(R.string.dada))) {
                     new FetchOthersConstant("dada", img_edit.getTag(), DADA_REQUEST_CODE).execute();
                 }
@@ -251,45 +260,46 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         return new ChildItemViewHolder(childView, false);
     }
 
-    private void enableEditing(final EditText descView, final ImageView img_edit) {
+    private void enableEditing(final EditText descView, String hint,
+            final ImageView img_edit, boolean isFocused, final String key) {
 
-//        if(img_edit.getTag()!=null && img_edit.getTag().equals("enabled")) {   //save data, server call
-//            img_edit.setTag("");
-//            img_edit.setImageResource(R.drawable.editicon);
-//            descView.setEnabled(false);
-////            descView.setFocusable(false);
-//            hideSoftKeyboard(descView);
-//            descView.clearFocus();
-//        }else{
-//            img_edit.setTag("enabled");
-//            img_edit.setImageResource(R.drawable.accept_icon);
-//            descView.setEnabled(true);
-////            descView.setFocusable(true);
-//            descView.requestFocus();
-//            descView.setSelection(descView.getText().length());
-//        }
-        descView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean isFocused) {
-                if (isFocused) {
-                    img_edit.setTag("enabled");
-                    img_edit.setImageResource(R.drawable.accept_icon);
-                    descView.setEnabled(true);
-//                    descView.requestFocus();
-                    descView.setSelection(descView.getText().length());
-                } else {
+        if (isFocused) {
+            descView.setEnabled(true);
+            descView.setSelection(descView.getText().length());
+            img_edit.setVisibility(View.VISIBLE);
+            img_edit.setTag("");
+            img_edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    JSONObject jobjPro = new JSONObject();
+                    JSONObject jobj = new JSONObject();
+                    try {
+                        jobjPro.put(key, descView.getText().toString());
+                        jobj.put(Utils.PROFILE, jobjPro);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    updateDetails(jobjPro);
                     img_edit.setTag("");
-                    img_edit.setImageResource(R.drawable.editicon);
-                    descView.setEnabled(false);
+                    img_edit.setVisibility(View.INVISIBLE);
                     hideSoftKeyboard(descView);
-//                    descView.clearFocus();
+                    descView.clearFocus();
+                    descView.setFocusableInTouchMode(false);
+                    descView.setFocusable(false);
                 }
-            }
-        });
-        if (img_edit.getTag() == null || img_edit.getTag().equals("")) {
-            descView.requestFocus();
+            });
         } else {
-            descView.clearFocus();
+            img_edit.setTag("");
+            img_edit.setVisibility(View.INVISIBLE);
+        }
+        if (img_edit.getTag() == null || img_edit.getTag().equals("")) {
+            img_edit.setVisibility(View.VISIBLE);
+            img_edit.setTag("enabled");
+            img_edit.setImageResource(R.drawable.accept_icon);
+            descView.setFocusableInTouchMode(true);
+            descView.setFocusable(true);
+            descView.requestFocus();
+            descView.setSelection(descView.getText().length());
         }
     }
 
@@ -339,16 +349,18 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         }*/
 
 
-       /* if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1)) {
+       /* if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size()
+       - 1)) {
 
 //            childViewHolder.itemDividerLayout.setVisibility(View.VISIBLE);
         } else
             childViewHolder.itemDividerLayout.setVisibility(View.GONE);*/
 
 
-        if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size() - 1))
+        if (childPosition == (userProfilesListParent.get(parentPosition).getChildList().size()
+                - 1)) {
             childViewHolder.itemDividerLayout.setVisibility(View.GONE);
-        else {
+        } else {
             childViewHolder.itemDividerLayout.setVisibility(View.VISIBLE);
         }
 
@@ -382,7 +394,8 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 return responseString;
             } catch (Exception e) {
                 e.printStackTrace();
-//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e
+// .getMessage().toString(), mTracker);
                 return null;
             }
         }
@@ -439,7 +452,8 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 return responseString;
             } catch (Exception e) {
                 e.printStackTrace();
-//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e
+// .getMessage().toString(), mTracker);
                 return null;
             }
         }
@@ -525,7 +539,8 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 return responseString;
             } catch (Exception e) {
                 e.printStackTrace();
-//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e
+// .getMessage().toString(), mTracker);
                 return null;
             }
         }
@@ -590,11 +605,11 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
             SharePref sharePref = new SharePref(baseContext);
             final String token = sharePref.get_data("token");
             Request request = new Request.Builder()
-                    .url(Utils.STEP_CONSTANT_FETCH + 5)
+                    .url(Utils.STEP_CONSTANT_FETCH + 6)
                     .addHeader("Authorization", "Token token=" + token)
                     .build();
 
-            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 5);
+            Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 6);
             try {
                 OkHttpClient client = new OkHttpClient();
                 Response response = client.newCall(request).execute();
@@ -604,7 +619,8 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 return responseString;
             } catch (Exception e) {
                 e.printStackTrace();
-//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e
+// .getMessage().toString(), mTracker);
                 return null;
             }
         }
@@ -619,8 +635,16 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
             } else {
                 Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
                 Intent intent = new Intent(baseContext, RegistrationUserAddressInformation.class);
-                intent.putExtra("constants", s);
-                intent.putExtra("data", "address");
+                Bundle bundle = new Bundle();
+                bundle.putString("constants", s);
+                bundle.putString("data", "address");
+                bundle.putSerializable("personal_info",
+                        ((OwnUserProfileActivity) baseContext).getPersonalInfo());
+                bundle.putSerializable("profile_living_in",
+                        ((OwnUserProfileActivity) baseContext).getProfileLivingIn());
+                bundle.putSerializable("address",
+                        ((OwnUserProfileActivity) baseContext).getAddress());
+                intent.putExtras(bundle);
                 ((OwnUserProfileActivity) baseContext).startActivityForResult(intent, reqCode);
             }
         }
@@ -680,7 +704,8 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                 return responseString;
             } catch (Exception e) {
                 e.printStackTrace();
-//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e.getMessage().toString(), mTracker);
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e
+// .getMessage().toString(), mTracker);
                 return null;
             }
         }
@@ -691,12 +716,12 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
         }
     }
 
-    private void updateDetails(AlertDialog alert, JSONObject jsonObject) {
+    private void updateDetails(JSONObject jsonObject) {
         new NetWorkOperation.updateProfileData(baseContext).execute(jsonObject.toString());
-        alert.dismiss();
     }
 
-    public void getUpdatedText(String title, String msg, String hint, final TextView textView, String parent, String key) {
+    public void getUpdatedText(String title, String msg, String hint, final TextView textView,
+            String parent, String key) {
         final View view = LayoutInflater.from(baseContext).inflate(R.layout.custom_edit, null);
         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(baseContext);
         alertBuilder.setView(view);
@@ -723,7 +748,7 @@ public class UserProfileExpenadlbeAdapter extends ExpandableRecyclerAdapter<User
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    updateDetails(alert, jobjPro);
+//                    updateDetails(alert, jobjPro);
                 }
             });
             tv_no.setOnClickListener(new View.OnClickListener() {

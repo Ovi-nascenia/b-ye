@@ -18,6 +18,9 @@ public class PermanentAddress implements Serializable
     @SerializedName("district")
     @Expose
     private String district;
+    @SerializedName("id")
+    @Expose
+    private int id;
     private final static long serialVersionUID = -7689039370012588558L;
 
     public String getAddress() {
@@ -30,6 +33,19 @@ public class PermanentAddress implements Serializable
 
     public PermanentAddress withAddress(String address) {
         this.address = address;
+        return this;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public PermanentAddress withId(int id) {
+        this.id = id;
         return this;
     }
 

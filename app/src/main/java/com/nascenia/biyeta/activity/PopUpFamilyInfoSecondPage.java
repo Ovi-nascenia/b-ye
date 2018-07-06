@@ -360,7 +360,7 @@ public class PopUpFamilyInfoSecondPage extends AppCompatActivity {
                     holder.brotherAge.setText(age[newValue]);
                     value = "" + newValue;
                     ageArrayBrother.put(position, value);
-                }else if (strUpdateData.equalsIgnoreCase("age")){
+                }else if (strUpdateData != null && strUpdateData.equalsIgnoreCase("age")){
                     Intent intent = new Intent();
                     intent.putExtra("age_data", newValue + "");
                     setResult(RESULT_OK, intent);

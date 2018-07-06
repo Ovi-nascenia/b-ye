@@ -60,6 +60,9 @@ public class PersonalInformation implements Serializable
     @SerializedName("mobile_no")
     @Expose
     private String mobileNo;
+    @SerializedName("living_abroad_status")
+    @Expose
+    private String living_abroad_status;
     private final static long serialVersionUID = -702282443100461262L;
 
     public int getId() {
@@ -281,6 +284,14 @@ public class PersonalInformation implements Serializable
     public PersonalInformation withMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
         return this;
+    }
+
+    public void setLivingAbroadStatus(String status) {
+        this.living_abroad_status = status;
+    }
+
+    public String getLivingAbroadStatus() {
+        return living_abroad_status;
     }
 
     @Override

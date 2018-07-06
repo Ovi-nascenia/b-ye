@@ -21,6 +21,9 @@ import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.model.newuserprofile.Address;
+import com.nascenia.biyeta.model.newuserprofile.PersonalInformation;
+import com.nascenia.biyeta.model.newuserprofile.ProfileLivingIn;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -79,6 +82,10 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
     private boolean isSignUp = false;
     Toolbar toolbar;
 
+    private ProfileLivingIn mProfileLivingIn;
+    private Address mAddress;
+    private PersonalInformation mPersonalInformation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,27 +112,87 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             }
         });*/
 
-        data = getIntent().getStringExtra("constants");
-        strDataForUpdate = getIntent().getStringExtra("data");
+        data = getIntent().getExtras().getString("constants");
+        strDataForUpdate = getIntent().getExtras().getString("data");
+        mProfileLivingIn =
+                (ProfileLivingIn) getIntent().getExtras().getSerializable("profile_living_in");
+        mAddress = (Address) getIntent().getExtras().getSerializable("address");
+        mPersonalInformation = (PersonalInformation) getIntent().getExtras().getSerializable("personal_info");
         if(strDataForUpdate != null){
             toolbar.setVisibility(View.GONE);
             TextView tvTitle = findViewById(R.id.address_title_for_update);
             tvTitle.setVisibility(View.VISIBLE);
             nextBtn.setText("সংরক্ষণ করুন ");
+            setViewWithData();
         }
         isSignUp = getIntent().getBooleanExtra("isSignUp", false);
-        if (data != null && data.length() > 0) {
-            try {
-                JSONObject json = new JSONObject(data);
-                if(json.has("data"))
-                {
-                    setViewWithData(json);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (data != null && data.length() > 0) {
+//            try {
+//                JSONObject json = new JSONObject(data);
+//                if(json.has("data"))
+//                {
+//                    setViewWithData(json);
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
+    }
+
+    private void setViewWithData() {
+//        intent.putExtra("home_town_data", getDistrictCode(villageDistrictNameTextView.getText().toString()));
+        villageDistrictNameTextView.setText(mProfileLivingIn.getLocation());
+//        intent.putExtra("home_town_value", villageDistrictNameTextView.getText().toString());
+//        intent.putExtra("residence", currentLivingLocationStatus);
+        if(mProfileLivingIn.getCountry() != null && mProfileLivingIn.getCountry().equalsIgnoreCase(getString(R.string.bangladesh))){
+            addressBangldeshCheckbox.setChecked(true);
+            addressAbroadCheckbox.setChecked(false);
+            addressBangldeshCheckboxAction();
+        }else{
+            addressBangldeshCheckbox.setChecked(false);
+            addressAbroadCheckbox.setChecked(true);
+            addressAbroadCheckboxAction();
+        }
+//        intent.putExtra("living_abroad_data", abroadTypeTextView.getText().toString());
+        abroadTypeTextView.setText(mPersonalInformation.getLivingAbroadStatus());
+//        intent.putExtra("living_abroad_value", selectedAbroadTypeNumber);
+        selectedAbroadTypeNumber = (Arrays.asList(abroadStatusTypeArray).indexOf(mPersonalInformation.getLivingAbroadStatus()) + 1)+ "";
+//        intent.putExtra("same_address", permanentAddressCheckbox.isChecked() ? 1 : 0);
+        permanentAddressCheckbox.setChecked(mAddress.getSameAddress());
+        if(mAddress.getSameAddress()){
+            permanentAddressLayout.setVisibility(View.GONE);
+        }else{
+            permanentAddressLayout.setVisibility(View.VISIBLE);
+        }
+//        intent.putExtra("present_address", presentAddressEditext.getText().toString().trim());
+        presentAddressEditext.setText(mAddress.getPresentAddress().getAddress());
+//        intent.putExtra("present_country_value", presentCountryCode);
+//        presentCountryCode = getCountryCode(mAddress.getPresentAddress().getCountry());
+        if(presentCountryCode.equalsIgnoreCase("bd")){
+            presentDistrictLayout.setVisibility(View.VISIBLE);
+        }else{
+            presentDistrictLayout.setVisibility(View.GONE);
+        }
+//        intent.putExtra("present_country_data", presentCountryTextView.getText().toString());
+        presentCountryTextView.setText(mAddress.getPresentAddress().getCountry());
+//        intent.putExtra("present_district_data", presentDistrictTextView.getText().toString());
+        presentDistrictTextView.setText(mAddress.getPresentAddress().getDistrict());
+//        intent.putExtra("present_district_value", getDistrictCode(presentDistrictTextView.getText().toString()));
+//        intent.putExtra("permanent_address", permanentAddressEditext.getText().toString().trim());
+        permanentAddressEditext.setText(mAddress.getPermanentAddress().getAddress());
+//        intent.putExtra("permanent_country_value", permanentCountryCode);
+        permanentCountryCode = getCountryCode(mAddress.getPermanentAddress().getCountry());
+        if(permanentCountryCode.equalsIgnoreCase("bd")){
+            permanentDistrictLayout.setVisibility(View.VISIBLE);
+        }else{
+            permanentDistrictLayout.setVisibility(View.GONE);
+        }
+//        intent.putExtra("permanent_country_data", permanentCountryTextView.getText().toString());
+        permanentCountryTextView.setText(mAddress.getPermanentAddress().getCountry());
+//        intent.putExtra("permanent_district_data", permanentDistrictTextView.getText().toString());
+        permanentDistrictTextView.setText(mAddress.getPermanentAddress().getDistrict());
+//        intent.putExtra("permanent_district_value", getDistrictCode(permanentDistrictTextView.getText().toString()));
     }
 
     private void setViewWithData(JSONObject json) {
@@ -534,7 +601,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             Intent intent = getIntent();
             intent.putExtra("home_town_data", getDistrictCode(villageDistrictNameTextView.getText().toString()));
             intent.putExtra("home_town_value", villageDistrictNameTextView.getText().toString());
-            intent.putExtra("residence", currentLivingLocationStatus);
+            intent.putExtra("residence", presentCountryCode);
             intent.putExtra("living_abroad_data", abroadTypeTextView.getText().toString());
             intent.putExtra("living_abroad_value", selectedAbroadTypeNumber);
             intent.putExtra("same_address", permanentAddressCheckbox.isChecked() ? 1 : 0);
@@ -705,12 +772,19 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
     {
         if (disLinkedHashMap.containsValue(strDistrict)) {
             for (final Object entry : disLinkedHashMap.keySet()) {
-                if (disLinkedHashMap.get(entry) == strDistrict) {
+                if (disLinkedHashMap.get(entry).contains(strDistrict)) {
                     return entry.toString();
                 }
             }
         }
         return "";
+    }
+
+    private String getCountryCode(String strCountry)
+    {
+        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(Locale.getISOCountries()));
+        int index = Arrays.asList(countryNameArray).indexOf(strCountry);
+        return arrayList.get(index);
     }
 
     private void addressBangldeshCheckboxAction() {

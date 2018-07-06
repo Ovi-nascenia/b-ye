@@ -466,5 +466,7 @@
     <string name="reset_pass_btn_text">পাসওয়ার্ড রিসেট নির্দেশাবলী পাঠান </string>
     <string name="login_confirmation">। আপনি কি লগইন করতে চান?</string>
     <string name="discard_text">বাতিল করুন</string>
+    <string name="bangladesh">বাংলাদেশ</string>
+    <string name="abroad">বিদেশে</string>
 
 </resources>

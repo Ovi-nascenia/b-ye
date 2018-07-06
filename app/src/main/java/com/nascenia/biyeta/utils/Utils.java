@@ -66,9 +66,9 @@ public class Utils{
 
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
-//    public static final String Base_URL = "http://test.biyeta.com";
+    public static final String Base_URL = "http://test.biyeta.com";
 //    public static final String Base_URL = "http://192.168.1.95:3000";
-    public static final String Base_URL = "https://www.biyeta.com";
+//    public static final String Base_URL = "https://www.biyeta.com";
     public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
     public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
 
@@ -120,6 +120,13 @@ public class Utils{
     public static final String INSTITUTE = "institute";
     public static final String YEAR = "year";
     public static final String ID = "id";
+    public static final String HOME_TOWN = "home_town";
+    public static final String RESIDENCE = "residence";
+    public static final String ADDRESS = "address";
+    public static final String ADDRESS_TYPE = "address_type";
+    public static final String COUNTRY = "country";
+    public static final String DISTRICT = "district";
+    public static final String ADDRESSES_ATTRIBUTES = "addresses_attributes";
     public static String FAMILY_MEMBER_ATTRIBUTE = "family_members_attributes";
     public static final String RELATION = "relation";
 //    public static final String FAMILY_MEMBER_ATTR = "family_members_attributes";

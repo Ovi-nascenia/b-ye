@@ -27,7 +27,7 @@ public class PopupEducationEdit extends AppCompatActivity {
     LinearLayout educationalStatus;
     TextView educationTV;
     Button next;
-    String constant, degreeValue = "", subjectValue = "", institutionValue, degreeData="";
+    String constant, data, degreeValue = "", subjectValue = "", institutionValue, degreeData="";
     JSONObject educationObject;
     private SharePref sharePref;
 
@@ -61,18 +61,6 @@ public class PopupEducationEdit extends AppCompatActivity {
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
 
-        try {
-            JSONObject jsonObject = new JSONObject(constant);
-            educationObject = jsonObject.getJSONObject("education_constant");
-            for (int i = 0; i < educationObject.length(); i++) {
-                educationConstant.add(educationObject.names().getString(i));
-                educationArray.add((String) educationObject.get(educationObject.names().getString(i)));
-            }
-            educationName = educationArray.toArray(educationName);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         subjectText = (EditText) findViewById(R.id.subject_text);
         institutionText = (EditText) findViewById(R.id.institution_text);
         educationalStatusLabel = (TextView) findViewById(R.id.educational_status_label);
@@ -80,7 +68,30 @@ public class PopupEducationEdit extends AppCompatActivity {
         educationTV = (TextView) findViewById(R.id.education_text_view);
         next = (Button) findViewById(R.id.next);
 
-        next.setOnClickListener(new View.OnClickListener() {
+        try {
+            JSONObject jsonObject = new JSONObject(constant);
+            educationObject = jsonObject.getJSONObject("education_constant");
+
+            for (int i = 0; i < educationObject.length(); i++) {
+                educationConstant.add(educationObject.names().getString(i));
+                educationArray.add((String) educationObject.get(educationObject.names().getString(i)));
+            }
+            educationName = educationArray.toArray(educationName);
+
+            if(jsonObject.has("data")){
+                JSONObject jsonData = jsonObject.getJSONObject("data").getJSONArray("educations_information").getJSONObject(0);
+                institutionText.setText(jsonData.getString("institution"));
+                subjectText.setText(jsonData.getString("subject"));
+                degreeValue = jsonData.getInt("name") + "";
+                degreeData = educationName[jsonData.getInt("name")];
+                educationTV.setText(degreeData);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+       next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 institutionValue = institutionText.getText().toString();
