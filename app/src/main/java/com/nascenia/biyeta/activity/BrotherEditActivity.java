@@ -4,15 +4,25 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.model.newuserprofile.Brother;
+import com.nascenia.biyeta.model.newuserprofile.Sister;
+import com.nascenia.biyeta.utils.Utils;
 import com.squareup.okhttp.OkHttpClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class BrotherEditActivity extends AppCompatActivity {
 
@@ -62,6 +72,27 @@ public class BrotherEditActivity extends AppCompatActivity {
 
 
     private String strDataUpdate;
+    private ImageView back;
+    private Toolbar toolbar;
+    private Brother brother = null;
+    private Sister sister = null;
+
+    private ArrayList<String> professonalGroupArray = new ArrayList<String>();
+    private String[] professonalGroupName = new String[professonalGroupArray.size()];
+    private ArrayList<String> professonalGroupConstant = new ArrayList<String>();
+    private String[] professonalGroupConstantValue = new String[professonalGroupArray.size()];
+
+    private ArrayList<String> occupationArray = new ArrayList<String>();
+    private String[] occupationName = new String[occupationArray.size()];
+    private ArrayList<String> occupationConstant = new ArrayList<String>();
+    private String[] occupationConstantValue = new String[occupationArray.size()];
+
+    private ArrayList<String> marriageArray = new ArrayList<String>();
+    private String[] maritalStatusName = new String[marriageArray.size()];
+    private ArrayList<String> maritalStatusConstant = new ArrayList<String>();
+    private String[] maritalStatusConstantValue = new String[marriageArray.size()];
+
+    private JSONObject professionalGroupObject, occupationObject, marriageObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +100,7 @@ public class BrotherEditActivity extends AppCompatActivity {
         setContentView(R.layout.brother_edit);
 
         sharePref = new SharePref(BrotherEditActivity.this);
+        toolbar = findViewById(R.id.toolbar);
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
@@ -80,6 +112,48 @@ public class BrotherEditActivity extends AppCompatActivity {
         progress.setMessage(getResources().getString(R.string.progress_dialog_message));
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setCancelable(false);
+
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(constant);
+            if(strDataUpdate.equalsIgnoreCase("brother") || strDataUpdate.equalsIgnoreCase("sister")) {
+                professionalGroupObject = jsonObject.getJSONObject("professional_group_constant");
+                for (int i = 0; i < professionalGroupObject.length(); i++) {
+                    professonalGroupConstant.add(professionalGroupObject.names().getString(i));
+                    professonalGroupArray.add((String) professionalGroupObject.get(professionalGroupObject.names().getString(i)));
+                }
+            }
+
+            if(strDataUpdate.equalsIgnoreCase("brother") || strDataUpdate.equalsIgnoreCase("sister")) {
+                occupationObject = jsonObject.getJSONObject("occupation_constant");
+                for (int i = 0; i < occupationObject.length(); i++) {
+                    occupationConstant.add(occupationObject.names().getString(i));
+                    occupationArray.add((String) occupationObject.get(occupationObject.names().getString(i)));
+                }
+            }
+
+            if(strDataUpdate.equalsIgnoreCase("brother")) {
+                marriageObject = jsonObject.getJSONObject("marital_status_constant_for_male");
+                for (int i = 0; i < marriageObject.length(); i++) {
+                    maritalStatusConstant.add(marriageObject.names().getString(i));
+                    marriageArray.add(
+                            (String) marriageObject.get(marriageObject.names().getString(i)));
+                }
+                maritalStatusName = marriageArray.toArray(maritalStatusName);
+            }
+
+            if(strDataUpdate.equalsIgnoreCase("sister")) {
+                marriageObject = jsonObject.getJSONObject("marital_status_constant_for_female");
+                for (int i = 0; i < marriageObject.length(); i++) {
+                    maritalStatusConstant.add(marriageObject.names().getString(i));
+                    marriageArray.add(
+                            (String) marriageObject.get(marriageObject.names().getString(i)));
+                }
+                maritalStatusName = marriageArray.toArray(maritalStatusName);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         nameBrother = (EditText) findViewById(R.id.name_brother);
         designationBrother = (EditText) findViewById(R.id.designation_brother);
@@ -100,6 +174,28 @@ public class BrotherEditActivity extends AppCompatActivity {
 
         reject = (LinearLayout) findViewById(R.id.reject);
         spouse = (LinearLayout) findViewById(R.id.spouse);
+
+        back = (ImageView) findViewById(R.id.backPreviousActivityImage);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        if(strDataUpdate.equalsIgnoreCase("brother")){
+            tv_bhai.setText(getResources().getString(R.string.brother_text));
+            TextView tvType = findViewById(R.id.type);
+            tvType.setText(getResources().getString(R.string.brother_text));
+            brother = getIntent().getParcelableExtra("brother_info");
+            sister = null;
+        }else{
+            tv_bhai.setText(getResources().getString(R.string.sister_text));
+            TextView tvType = findViewById(R.id.type);
+            tvType.setText(getResources().getString(R.string.sister_text));
+            sister = getIntent().getParcelableExtra("sister_info");
+            brother = null;
+        }
 
 //        reject.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -257,6 +353,104 @@ public class BrotherEditActivity extends AppCompatActivity {
         sProfessionalGroup = "";
         sDesignation = "";
         sInstitute = "";
+
+        if(strDataUpdate != null){
+            if(brother != null){
+                setBrotherData(brother);
+            }else if(sister != null){
+                setSisterData(sister);
+            }
+        }
+
+    }
+
+    private void setSisterData(Sister sister) {
+        nameBrother.setText(sister.getName().toString());
+        brotherAge.setText(sister.getAge() + "");
+        String occupa = sister.getOccupation().replaceAll(" \\(", " ");
+        occupa = occupa.replace(")", "");
+        String[] occupation = occupa.split(" ");
+        if(occupation.length > 0) {
+            brotherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
+            brotherOcupationValue = getOccupationValue(occupation[0]);
+        }
+        if(occupation.length > 1) {
+            brotherProfessionalGroup.setText(occupation[1]);
+            brotherProfessionalGroupValue = getProfessionValue(occupation[1]);
+        }
+
+        designationBrother.setText(sister.getDesignation().toString());
+        institutionBrother.setText(sister.getInstitute().toString());
+        brotherMaritalStatus.setText(sister.getMaritalStatus());
+//        if(!sister.getMaritalStatus().equalsIgnoreCase("")) {
+//            brotherMaritalStatusValue = Integer.parseInt(
+//                    getMaritalStatusValue(sister.getMaritalStatus()));
+//        }
+
+    }
+
+    private void setBrotherData(Brother brother) {
+        nameBrother.setText(brother.getName().toString());
+        brotherAge.setText(brother.getAge() + "");
+        String occupa = brother.getOccupation().replaceAll(" \\(", " ");
+        occupa = occupa.replace(")", "");
+        String[] occupation = occupa.split(" ");
+        if(occupation.length > 0) {
+            brotherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
+            brotherOcupationValue = getOccupationValue(occupation[0]);
+        }
+        if(occupation.length > 1) {
+            brotherProfessionalGroup.setText(occupation[1]);
+            brotherProfessionalGroupValue = getProfessionValue(occupation[1]);
+        }
+
+        designationBrother.setText(brother.getDesignation().toString());
+        institutionBrother.setText(brother.getInstitute().toString());
+        brotherMaritalStatus.setText(brother.getMaritalStatus());
+        if(!brother.getMaritalStatus().equalsIgnoreCase("")) {
+            brotherMaritalStatusValue = Integer.parseInt(
+                    getMaritalStatusValue(brother.getMaritalStatus()));
+        }
+//        intent.putExtra("name_spouse", nameBrotherSpouse.getText().toString());
+//        intent.putExtra("profession_spouse_data", brotherOcupationSpouse.getText().toString());
+//        intent.putExtra("profession_spouse_value", brotherOcupationSpouseValue);
+//        intent.putExtra("professional_group_spouse_data", brotherProfessionalGroupSpouse.getText().toString());
+//        intent.putExtra("professional_group_spouse_value", brotherProfessionalGroupSpouseValue);
+//        intent.putExtra("designation_spouse", designationBrotherSpouse.getText().toString());
+//        intent.putExtra("institute_spouse", institutionBrotherSpouse.getText().toString());
+    }
+
+    private String getProfessionValue(String profession) {
+        int index = -1;
+        for(int i = 0; i < professonalGroupArray.size(); i++){
+            if(professonalGroupArray.get(i).equalsIgnoreCase(profession)) {
+                index = i;
+                break;
+            }
+        }
+        return index > -1 ? professonalGroupConstant.get(index) : "";
+    }
+
+    private String getOccupationValue(String occupation){
+        int index = -1;
+        for(int i = 0; i < occupationArray.size(); i++){
+            if(occupationArray.get(i).equalsIgnoreCase(occupation)) {
+                index = i;
+                break;
+            }
+        }
+        return index > -1 ? occupationConstant.get(index) : "";
+    }
+
+    private String getMaritalStatusValue(String maritalStatus){
+        int index = -1;
+       for(int i = 0; i < marriageArray.size(); i++){
+            if(marriageArray.get(i).equalsIgnoreCase(maritalStatus)) {
+                index = i;
+                break;
+            }
+        }
+        return index > -1 ? maritalStatusConstant.get(index): "";
     }
 
     @Override

@@ -5,26 +5,68 @@
     android:layout_height="match_parent"
     android:background="#e9ebed">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/white"
+        android:clipToPadding="false"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/backPreviousActivityImage"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="@dimen/small_image_size"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:onClick="backBtnAction"
+                android:src="@drawable/red_back_arrow" />
+
+            <TextView
+                android:id="@+id/activity_address_toolbar_title_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:lines="2"
+                android:text="@string/education_male"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/medium_textsize"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Scroll">
+        android:layout_below="@id/toolbar"
+        android:id="@+id/Scroll"
+        android:layout_marginTop="20dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/toolbar">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/educational_status_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="শিক্ষাগত যোগ্যতা*"
-                android:textColor="@color/colorPrimary"
-                android:layout_margin="10dp"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:textStyle="bold"/>
+            <!--<TextView-->
+                <!--android:id="@+id/educational_status_label"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="শিক্ষাগত যোগ্যতা*"-->
+                <!--android:textColor="@color/colorPrimary"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:textSize="16sp"-->
+                <!--android:gravity="center"-->
+                <!--android:textStyle="bold"/>-->
             <LinearLayout
                 android:id="@+id/educationalStatus"
                 android:layout_width="match_parent"

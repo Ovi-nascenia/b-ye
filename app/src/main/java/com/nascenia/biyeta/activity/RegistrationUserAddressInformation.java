@@ -119,9 +119,9 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
         mAddress = (Address) getIntent().getExtras().getSerializable("address");
         mPersonalInformation = (PersonalInformation) getIntent().getExtras().getSerializable("personal_info");
         if(strDataForUpdate != null){
-            toolbar.setVisibility(View.GONE);
-            TextView tvTitle = findViewById(R.id.address_title_for_update);
-            tvTitle.setVisibility(View.VISIBLE);
+//            toolbar.setVisibility(View.GONE);
+//            TextView tvTitle = findViewById(R.id.address_title_for_update);
+//            tvTitle.setVisibility(View.VISIBLE);
             nextBtn.setText("সংরক্ষণ করুন ");
             setViewWithData();
         }
@@ -168,7 +168,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 //        intent.putExtra("present_address", presentAddressEditext.getText().toString().trim());
         presentAddressEditext.setText(mAddress.getPresentAddress().getAddress());
 //        intent.putExtra("present_country_value", presentCountryCode);
-//        presentCountryCode = getCountryCode(mAddress.getPresentAddress().getCountry());
+        presentCountryCode = getCountryCode(mAddress.getPresentAddress().getCountry());
         if(presentCountryCode.equalsIgnoreCase("bd")){
             presentDistrictLayout.setVisibility(View.VISIBLE);
         }else{
@@ -470,7 +470,11 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             public void onClick(View v) {
                 /*new Intent(RegistrationPersonalInformation.this, Login.class);
                 finish();*/
-                new GetPreviousStepFetchConstant().execute();
+                if(strDataForUpdate != null) {
+                    finish();
+                }else {
+                    new GetPreviousStepFetchConstant().execute();
+                }
             }
         });
 
@@ -782,6 +786,8 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
     private String getCountryCode(String strCountry)
     {
+        if(strCountry.equalsIgnoreCase(getString(R.string.bangladesh)))
+            strCountry = "Bangladesh";
         ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(Locale.getISOCountries()));
         int index = Arrays.asList(countryNameArray).indexOf(strCountry);
         return arrayList.get(index);

@@ -1,6 +1,9 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
@@ -8,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Sister implements Serializable {
+public class Sister implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -47,6 +50,33 @@ public class Sister implements Serializable {
     @Expose
     private String spouseInstitue;
     private final static long serialVersionUID = -6432880487371468233L;
+
+    protected Sister(Parcel in) {
+        id = in.readInt();
+        relation_id = in.readInt();
+        name = in.readString();
+        age = in.readInt();
+        maritalStatus = in.readString();
+        occupation = in.readString();
+        designation = in.readString();
+        institute = in.readString();
+        spouseName = in.readString();
+        spouseOccupation = in.readString();
+        spouseDesignation = in.readString();
+        spouseInstitue = in.readString();
+    }
+
+    public static final Creator<Sister> CREATOR = new Creator<Sister>() {
+        @Override
+        public Sister createFromParcel(Parcel in) {
+            return new Sister(in);
+        }
+
+        @Override
+        public Sister[] newArray(int size) {
+            return new Sister[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -199,4 +229,24 @@ public class Sister implements Serializable {
         return ToStringBuilder.reflectionToString(this);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeInt(relation_id);
+        parcel.writeString(name);
+        parcel.writeInt(age);
+        parcel.writeString(maritalStatus);
+        parcel.writeString(occupation);
+        parcel.writeString(designation);
+        parcel.writeString(institute);
+        parcel.writeString(spouseName);
+        parcel.writeString(spouseOccupation);
+        parcel.writeString(spouseDesignation);
+        parcel.writeString(spouseInstitue);
+    }
 }

@@ -14,7 +14,8 @@
         android:paddingBottom="@dimen/smiley_icon_padding"
         android:paddingRight="@dimen/smiley_icon_padding"
         android:paddingTop="@dimen/smiley_icon_padding"
-        android:weightSum="9.5">
+        android:weightSum="9.5"
+        android:id="@+id/ln">
 
         <TextView
             android:id="@+id/titleTextView"
@@ -25,10 +26,10 @@
             android:text=""
             android:textColor="@color/title_textview_item_color"
             android:textSize="@dimen/item_textsize"
-            android:textStyle="normal" />
+            android:textStyle="normal"/>
 
         <EditText
-            android:id="@+id/titleResultTextView"
+            android:id="@+id/titleResultEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/negative_large_margin"
@@ -37,9 +38,7 @@
             android:text="সামান্য শারীরিক প্রতিবন্ধকতা(asdadadad ada dasd adad)"
             android:textColor="#00011F"
             android:textSize="@dimen/item_textsize"
-            android:textStyle="normal"
-            android:enabled="true"
-            android:importantForAutofill="noExcludeDescendants"/>
+            android:textStyle="normal"/>
         <ImageView
             android:id="@+id/img_edit"
             android:layout_width="20dp"

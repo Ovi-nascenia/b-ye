@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.model.newuserprofile.Father;
+import com.nascenia.biyeta.model.newuserprofile.Mother;
 import com.squareup.okhttp.OkHttpClient;
 
 import org.json.JSONException;
@@ -59,6 +61,9 @@ public class PopupParentsEdit extends AppCompatActivity {
     private final static int PROFESSION_REQUEST = 1001;
     private final static int PROFESSIONAL_GROUP_REQUEST = 1002;
     private String profession_value, profession_group_value;
+    private View toolbar;
+    private Father father = null;
+    private Mother mother = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public class PopupParentsEdit extends AppCompatActivity {
         setContentView(R.layout.activity_popup_parents_edit);
 
         sharePref = new SharePref(PopupParentsEdit.this);
+        toolbar = findViewById(R.id.toolbar);
 
         progress = new ProgressDialog(PopupParentsEdit.this);
         progress.setMessage(getResources().getString(R.string.progress_dialog_message));
@@ -77,6 +83,11 @@ public class PopupParentsEdit extends AppCompatActivity {
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
         data = intent.getStringExtra("data");
+        if(data.equalsIgnoreCase("father")){
+            father = (Father) intent.getSerializableExtra("father");
+        }else{
+            mother = (Mother) intent.getSerializableExtra("mother");
+        }
 
         try {
             JSONObject jsonObject = new JSONObject(constant);
@@ -118,6 +129,17 @@ public class PopupParentsEdit extends AppCompatActivity {
                 sendData();
             }
         });
+
+        back = (ImageView) findViewById(R.id.backPreviousActivityImage);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(data != null) {
+                    finish();
+                }
+            }
+        });
+
         nameFather = (EditText) findViewById(R.id.name_father);
         designationFather = (EditText) findViewById(R.id.designation_father);
         institutionFather = (EditText) findViewById(R.id.institution_father);
@@ -129,6 +151,8 @@ public class PopupParentsEdit extends AppCompatActivity {
         if(data.equalsIgnoreCase("mother")){
             labelFather.setText(getResources().getString(R.string.mother_text));
             nameFather.setHint(R.string.mother_name);
+            TextView tvType = findViewById(R.id.type);
+            tvType.setText(getResources().getString(R.string.mother_text));
         }
 
         professionFatherStatus.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +171,74 @@ public class PopupParentsEdit extends AppCompatActivity {
                 startActivityForResult(new Intent(PopupParentsEdit.this, PopUpPersonalInfo.class).putExtra("constants", constant).putExtra("data", "father_professional_group"), PROFESSIONAL_GROUP_REQUEST);
             }
         });
+
+        if(data.equalsIgnoreCase("father")){
+            setFatherData(father);
+        }else{
+            setMotherData(mother);
+        }
     }
+
+    private void setMotherData(Mother mother) {
+        nameFather.setText(mother.getName().toString());
+        String occupa = mother.getOccupation().replaceAll(" \\(", " ");
+        occupa = occupa.replace(")", "");
+        String[] occupation = occupa.split(" ");
+        if(occupation.length > 0) {
+            professionFatherTV.setText(occupation.length > 0 ? occupation[0] : "");
+            profession_value = getOccupationValue(occupation[0]);
+        }
+
+        if(occupation.length > 1) {
+            professionalGroupFatherTV.setText(occupation[1]);
+            profession_group_value = getProfessionValue(occupation[1]);
+        }
+
+        designationFather.setText(mother.getDesignation().toString());
+        institutionFather.setText(mother.getInstitute().toString());
+    }
+
+    private void setFatherData(Father father) {
+        nameFather.setText(father.getName().toString());
+        String occupa = father.getOccupation().replaceAll(" \\(", " ");
+        occupa = occupa.replace(")", "");
+        String[] occupation = occupa.split(" ");
+        if(occupation.length > 0) {
+            professionFatherTV.setText(occupation.length > 0 ? occupation[0] : "");
+            profession_value = getOccupationValue(occupation[0]);
+        }
+
+        if(occupation.length > 1) {
+            professionalGroupFatherTV.setText(occupation[1]);
+            profession_group_value = getProfessionValue(occupation[1]);
+        }
+
+        designationFather.setText(father.getDesignation().toString());
+        institutionFather.setText(father.getInstitute().toString());
+    }
+
+    private String getOccupationValue(String occupation){
+        int index = -1;
+        for(int i = 0; i < occupationArray.size(); i++){
+            if(occupationArray.get(i).equalsIgnoreCase(occupation)) {
+                index = i;
+                break;
+            }
+        }
+        return index > -1 ? occupationConstant.get(index) : "";
+    }
+
+    private String getProfessionValue(String profession) {
+        int index = -1;
+        for(int i = 0; i < professonalGroupArray.size(); i++){
+            if(professonalGroupArray.get(i).equalsIgnoreCase(profession)) {
+                index = i;
+                break;
+            }
+        }
+        return index > -1 ? professonalGroupConstant.get(index) : "";
+    }
+
 
     private void sendData() {
         if (nameFather.getText().toString().isEmpty()) {
@@ -186,10 +277,10 @@ public class PopupParentsEdit extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -26,7 +26,7 @@ public class ChildItemViewHolder extends ChildViewHolder {
      */
 
     public TextView titleTextView;
-    public EditText titleResultTextView;
+    public EditText titleResultEditText;
     public ImageView img_edit;
     public LinearLayout itemDividerLayout;
     public int id;
@@ -36,8 +36,8 @@ public class ChildItemViewHolder extends ChildViewHolder {
         super(itemView);
 
         titleTextView = (TextView) itemView.findViewById(R.id.titleTextView);
-        titleResultTextView = (EditText) itemView.findViewById(R.id.titleResultTextView);
-        titleResultTextView.setEnabled(false);
+        titleResultEditText = (EditText) itemView.findViewById(R.id.titleResultEditText);
+        titleResultEditText.setEnabled(false);
         itemDividerLayout = (LinearLayout) itemView.findViewById(R.id.divider);
         img_edit = itemView.findViewById(R.id.img_edit);
     }
@@ -46,7 +46,7 @@ public class ChildItemViewHolder extends ChildViewHolder {
     public void bind(UserProfileChild userProfileChild) {
 
         titleTextView.setText(userProfileChild.getTitle());
-        titleResultTextView.setText(Utils.formatString(userProfileChild.getTitleResult())
+        titleResultEditText.setText(Utils.formatString(userProfileChild.getTitleResult())
                 .replace(",", ", ")
         );
         if(titleTextView.getText().toString().equalsIgnoreCase("ভাই")) {

@@ -8,43 +8,50 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:background="@color/white"
+        android:layout_height="?attr/actionBarSize"
         android:clipToPadding="false"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
         app:layout_collapseMode="pin"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="@color/white">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:padding="@dimen/small_padding">
-
 
             <ImageView
                 android:id="@+id/backPreviousActivityImage"
                 android:layout_width="@dimen/small_image_size"
                 android:layout_height="@dimen/small_image_size"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
                 android:layout_gravity="center"
+                android:layout_centerVertical="true"
                 android:onClick="backBtnAction"
-                android:src="@drawable/red_back_arrow" />
-
+                android:src="@drawable/red_back_arrow"/>
             <TextView
-                android:id="@+id/activity_address_toolbar_title_textview"
+                android:id="@+id/type"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:lines="2"
+                android:text="@string/title_activity_registration_user_address_information"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:lines="2"
-                android:text="@string/title_activity_registration_user_address_information"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/medium_textsize"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/likeImage"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="@dimen/small_image_size"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/favorite"
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
@@ -60,14 +67,14 @@
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/medium_textsize"
         android:textStyle="bold"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/small_padding"/>
 
     <ScrollView
         android:id="@+id/scroll_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/address_title_for_update">
+        android:layout_below="@id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -2,6 +2,7 @@
 package com.nascenia.biyeta.model.newuserprofile;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
@@ -25,13 +26,13 @@ public class FamilyMembers implements Serializable {
     private int numberOfBrothers;
     @SerializedName("brothers")
     @Expose
-    private List<Brother> brothers = null;
+    private ArrayList<Brother> brothers = null;
     @SerializedName("number_of_sisters")
     @Expose
     private int numberOfSisters;
     @SerializedName("sisters")
     @Expose
-    private List<Sister> sisters = null;
+    private ArrayList<Sister> sisters = null;
 
     @SerializedName("number_of_dada")
     @Expose
@@ -145,15 +146,15 @@ public class FamilyMembers implements Serializable {
         return this;
     }
 
-    public List<Brother> getBrothers() {
+    public ArrayList<Brother> getBrothers() {
         return brothers;
     }
 
-    public void setBrothers(List<Brother> brothers) {
+    public void setBrothers(ArrayList<Brother> brothers) {
         this.brothers = brothers;
     }
 
-    public FamilyMembers withBrothers(List<Brother> brothers) {
+    public FamilyMembers withBrothers(ArrayList<Brother> brothers) {
         this.brothers = brothers;
         return this;
     }
@@ -171,15 +172,15 @@ public class FamilyMembers implements Serializable {
         return this;
     }
 
-    public List<Sister> getSisters() {
+    public ArrayList<Sister> getSisters() {
         return sisters;
     }
 
-    public void setSisters(List<Sister> sisters) {
+    public void setSisters(ArrayList<Sister> sisters) {
         this.sisters = sisters;
     }
 
-    public FamilyMembers withSisters(List<Sister> sisters) {
+    public FamilyMembers withSisters(ArrayList<Sister> sisters) {
         this.sisters = sisters;
         return this;
     }

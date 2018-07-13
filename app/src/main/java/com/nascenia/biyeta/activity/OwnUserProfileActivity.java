@@ -2,14 +2,10 @@ package com.nascenia.biyeta.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,7 +23,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.analytics.HitBuilders;
@@ -39,6 +33,7 @@ import com.nascenia.biyeta.NetWorkOperation.NetWorkOperation;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.UserProfileExpenadlbeAdapter;
 import com.nascenia.biyeta.adapter.ViewPagerAdapter;
+import com.nascenia.biyeta.appdata.RecyclerItemClickListener;
 import com.nascenia.biyeta.appdata.SharePref;
 import com.nascenia.biyeta.model.UserProfileChild;
 import com.nascenia.biyeta.model.UserProfileParent;
@@ -57,16 +52,13 @@ import com.nascenia.biyeta.service.ResourceProvider;
 import com.nascenia.biyeta.utils.CalenderBanglaInfo;
 import com.nascenia.biyeta.utils.Utils;
 import com.nascenia.biyeta.view.CustomStopScrollingRecylerLayoutManager;
-import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -297,13 +289,13 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                                                         ContextCompat.getDrawable(
                                                                                 getApplicationContext(),
                                                                                 R.drawable
-                                                                                .default_dot));
+                                                                                        .default_dot));
                                                             }
                                                             dots[position].setImageDrawable(
                                                                     ContextCompat.getDrawable(
                                                                             getApplicationContext(),
                                                                             R.drawable
-                                                                            .selected_dot));
+                                                                                    .selected_dot));
 
                                                         }
 
@@ -385,7 +377,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 if (userProfile.getProfile().getPersonalInformation().getImage()
-                                .getOther().size()
+                                        .getOther().size()
                                         > 1) {
                                     userProfileImage.setVisibility(View.INVISIBLE);
                                     adapter = new ViewPagerAdapter(OwnUserProfileActivity.this,
@@ -582,6 +574,21 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 otherInfoChildItemHeader.add(new UserProfileParent(
                         getResources().getString(R.string.other_question_ans_text),
                         otherInfoChildItemList));
+
+                otherInformationRecyclerView.addOnItemTouchListener(
+                        new RecyclerItemClickListener(this, otherInformationRecyclerView,
+                                new RecyclerItemClickListener.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+                                        updateAction(view, position);
+                                    }
+
+                                    @Override
+                                    public void onLongItemClick(View view, int position) {
+                                        return;
+                                    }
+                                })
+                );
             }
 
             otherInformationRecyclerView.removeAllViews();
@@ -602,7 +609,6 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
 
         if (userProfile.getProfile().getProfession() != null) {
-
             if (professionChildItemList.size() > 0 && professionChildItemList.get(
                     0).getTitle().equalsIgnoreCase(Utils.setBanglaProfileTitle(
                     getResources().getString(R.string.professional_group_text)))) {
@@ -664,6 +670,21 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             professionChildItemHeader,
                             true);
                     professionRecyclerView.setAdapter(upga);
+
+                    professionRecyclerView.addOnItemTouchListener(
+                            new RecyclerItemClickListener(this, professionRecyclerView,
+                                    new RecyclerItemClickListener.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int position) {
+                                            updateAction(view, position);
+                                        }
+
+                                        @Override
+                                        public void onLongItemClick(View view, int position) {
+                                            return;
+                                        }
+                                    })
+                    );
                 } else {
                     personalInfoRecylerView.removeAllViews();
                     upga = new UserProfileExpenadlbeAdapter(this,
@@ -674,20 +695,6 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     upga.expandParent(0);
                 }
             }
-            //add personal Child Item list to parent list
-//            if (personalInfoChildItemList.size() > 0) {
-//                if(personalInfoChildItemHeader.size() ==0)
-//                    personalInfoChildItemHeader.add(new UserProfileParent(getResources()
-// .getString(R.string.personal_info), personalInfoChildItemList));
-//
-//                personalInfoRecylerView.removeAllViews();
-//                upea = new UserProfileExpenadlbeAdapter(this,
-//                        personalInfoChildItemHeader,
-//                        true);
-//                personalInfoRecylerView.setAdapter(upea);
-//                upea.expandParent(0);
-////            upea.notifyDataSetChanged();
-//            }
         }
     }
 
@@ -747,24 +754,33 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     upedua = new UserProfileExpenadlbeAdapter(this,
                             educationalInfoChildItemHeader,
                             true);
+                    educationRecylerView.addOnItemTouchListener(
+                            new RecyclerItemClickListener(this, educationRecylerView,
+                                    new RecyclerItemClickListener.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int position) {
+                                            updateAction(view, position);
+                                        }
+
+                                        @Override
+                                        public void onLongItemClick(View view, int position) {
+                                            return;
+                                        }
+                                    })
+                    );
                 }
                 educationRecylerView.setAdapter(upedua);
 
             }
 
-
         }
-
-
     }
 
     private void setDataOnPersonalInfoRecylerView(UserProfile userProfile, int updateIndex) {
 
-
-//        personalInfoRecylerView.removeAllViews();
-        //add personal Information
         if (personalInfoChildItemList.size() > 0 && personalInfoChildItemList.get(
-                0).getTitle().equalsIgnoreCase(getResources().getString(R.string.age)) && updateIndex == 0) {
+                0).getTitle().equalsIgnoreCase(getResources().getString(R.string.age))
+                && updateIndex == 0) {
             personalInfoChildItemList.set(0,
                     new UserProfileChild(getResources().getString(R.string.age),
                             Utils.convertEnglishDigittoBangla(
@@ -772,7 +788,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                     " " + getResources().getString(R.string.year) + ","
 
                     ));
-        } else if(updateIndex == -1){
+        } else if (updateIndex == -1) {
             personalInfoChildItemList.add(0,
                     new UserProfileChild(getResources().getString(R.string.age),
                             Utils.convertEnglishDigittoBangla(
@@ -783,7 +799,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         }
 
         if (personalInfoChildItemList.size() > 1 && personalInfoChildItemList.get(
-                1).getTitle().equalsIgnoreCase(getResources().getString(R.string.height))  && updateIndex == 1) {
+                1).getTitle().equalsIgnoreCase(getResources().getString(R.string.height))
+                && updateIndex == 1) {
             personalInfoChildItemList.set(1,
                     new UserProfileChild(getResources().getString(R.string.height),
                             Utils.convertEnglishDigittoBangla(
@@ -791,10 +808,10 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                     + "'" +
                                     Utils.convertEnglishDigittoBangla(
                                             userProfile.getProfile().getPersonalInformation()
-                                            .getHeightInc())
+                                                    .getHeightInc())
                                     + "\""
                     ));
-        } else if(updateIndex == -1){
+        } else if (updateIndex == -1) {
             personalInfoChildItemList.add(1,
                     new UserProfileChild(getResources().getString(R.string.height),
                             Utils.convertEnglishDigittoBangla(
@@ -802,18 +819,19 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                     + "'" +
                                     Utils.convertEnglishDigittoBangla(
                                             userProfile.getProfile().getPersonalInformation()
-                                            .getHeightInc())
+                                                    .getHeightInc())
                                     + "\""
                     ));
         }
 
         if (personalInfoChildItemList.size() > 2 && personalInfoChildItemList.get(
-                2).getTitle().equalsIgnoreCase(getResources().getString(R.string.religion_text))  && updateIndex == 2) {
+                2).getTitle().equalsIgnoreCase(getResources().getString(R.string.religion_text))
+                && updateIndex == 2) {
             personalInfoChildItemList.set(2,
                     new UserProfileChild(getResources().getString(R.string.religion_text),
                             userProfile.getProfile().getProfileReligion().getReligion()
                     ));
-        } else if(updateIndex == -1){
+        } else if (updateIndex == -1) {
             personalInfoChildItemList.add(2,
                     new UserProfileChild(getResources().getString(R.string.religion_text),
                             userProfile.getProfile().getProfileReligion().getReligion()
@@ -822,12 +840,13 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (userProfile.getProfile().getProfileReligion().getCast() != null) {
             if (personalInfoChildItemList.size() > 3 && personalInfoChildItemList.get(
-                    3).getTitle().equalsIgnoreCase(getResources().getString(R.string.cast_text)) && updateIndex == 2) {
+                    3).getTitle().equalsIgnoreCase(getResources().getString(R.string.cast_text))
+                    && updateIndex == 2) {
                 personalInfoChildItemList.set(3,
                         new UserProfileChild(getResources().getString(R.string.cast_text),
                                 userProfile.getProfile().getProfileReligion().getCast()
                         ));
-            } else if(updateIndex == -1){
+            } else if (updateIndex == -1) {
                 personalInfoChildItemList.add(3,
                         new UserProfileChild(getResources().getString(R.string.cast_text),
                                 userProfile.getProfile().getProfileReligion().getCast()
@@ -835,19 +854,25 @@ public class OwnUserProfileActivity extends AppCompatActivity {
             }
         }
 
-        if (!(checkNullField(userProfile.getProfile().getAddress().getPresentAddress().getCountry())).equals(
+        if (!(checkNullField(
+                userProfile.getProfile().getAddress().getPresentAddress().getCountry())).equals(
                 "")) {
             if (personalInfoChildItemList.size() > 4 && personalInfoChildItemList.get(
-                    4).getTitle().equalsIgnoreCase(getResources().getString(R.string.present_loaction_text)) && updateIndex == 22) {
+                    4).getTitle().equalsIgnoreCase(
+                    getResources().getString(R.string.present_loaction_text))
+                    && updateIndex == 22) {
                 personalInfoChildItemList.set(4,
-                        new UserProfileChild(getResources().getString(R.string.present_loaction_text),
-                                userProfile.getProfile().getAddress().getPresentAddress().getCountry()
+                        new UserProfileChild(
+                                getResources().getString(R.string.present_loaction_text),
+                                userProfile.getProfile().getAddress().getPresentAddress()
+                                        .getCountry()
                         ));
-            }else if(updateIndex == -1) {
+            } else if (updateIndex == -1) {
                 personalInfoChildItemList.add(4,
                         new UserProfileChild(
                                 getResources().getString(R.string.present_loaction_text),
-                                userProfile.getProfile().getAddress().getPresentAddress().getCountry()
+                                userProfile.getProfile().getAddress().getPresentAddress()
+                                        .getCountry()
                         ));
             }
         }
@@ -856,12 +881,13 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())).equals(
                 "")) {
             if (personalInfoChildItemList.size() > 5 && personalInfoChildItemList.get(
-                    5).getTitle().equalsIgnoreCase(getResources().getString(R.string.home_town)) && updateIndex == 22) {
+                    5).getTitle().equalsIgnoreCase(getResources().getString(R.string.home_town))
+                    && updateIndex == 22) {
                 personalInfoChildItemList.set(5,
                         new UserProfileChild(getResources().getString(R.string.home_town),
                                 userProfile.getProfile().getProfileLivingIn().getLocation()
                         ));
-            }else if(updateIndex == -1) {
+            } else if (updateIndex == -1) {
                 personalInfoChildItemList.add(5,
                         new UserProfileChild(getResources().getString(R.string.home_town),
                                 userProfile.getProfile().getProfileLivingIn().getLocation()
@@ -873,13 +899,14 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         if (!(checkNullField(
                 userProfile.getProfile().getPersonalInformation().getSkinColor())).equals("")) {
             if (personalInfoChildItemList.size() > 6 && personalInfoChildItemList.get(
-                    6).getTitle().equalsIgnoreCase(getResources().getString(R.string.skin_color))  && updateIndex == 6) {
+                    6).getTitle().equalsIgnoreCase(getResources().getString(R.string.skin_color))
+                    && updateIndex == 6) {
 
                 personalInfoChildItemList.set(6,
                         new UserProfileChild(getResources().getString(R.string.skin_color),
                                 userProfile.getProfile().getPersonalInformation().getSkinColor()
                         ));
-            } else if(updateIndex == -1){
+            } else if (updateIndex == -1) {
                 personalInfoChildItemList.add(6,
                         new UserProfileChild(getResources().getString(R.string.skin_color),
                                 userProfile.getProfile().getPersonalInformation().getSkinColor()
@@ -891,12 +918,13 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())).equals(
                 "")) {
             if (personalInfoChildItemList.size() > 7 && personalInfoChildItemList.get(
-                    7).getTitle().equalsIgnoreCase(getResources().getString(R.string.body))  && updateIndex == 7) {
+                    7).getTitle().equalsIgnoreCase(getResources().getString(R.string.body))
+                    && updateIndex == 7) {
                 personalInfoChildItemList.set(7,
                         new UserProfileChild(getResources().getString(R.string.body),
                                 userProfile.getProfile().getPersonalInformation().getWeight()
                         ));
-            } else if(updateIndex == -1){
+            } else if (updateIndex == -1) {
                 personalInfoChildItemList.add(7,
                         new UserProfileChild(getResources().getString(R.string.body),
                                 userProfile.getProfile().getPersonalInformation().getWeight()
@@ -910,12 +938,12 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 .equals("")) {
             if (personalInfoChildItemList.size() > 8 && personalInfoChildItemList.get(
                     8).getTitle().equalsIgnoreCase(
-                    getResources().getString(R.string.marital_status))  && updateIndex == 8) {
+                    getResources().getString(R.string.marital_status)) && updateIndex == 8) {
                 personalInfoChildItemList.set(8,
                         new UserProfileChild(getResources().getString(R.string.marital_status),
                                 userProfile.getProfile().getPersonalInformation().getMaritalStatus()
                         ));
-            } else if(updateIndex == -1){
+            } else if (updateIndex == -1) {
                 personalInfoChildItemList.add(8,
                         new UserProfileChild(getResources().getString(R.string.marital_status),
                                 userProfile.getProfile().getPersonalInformation().getMaritalStatus()
@@ -929,12 +957,12 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 .equals("")) {
             if (personalInfoChildItemList.size() > 9 && personalInfoChildItemList.get(
                     9).getTitle().equalsIgnoreCase(
-                    getResources().getString(R.string.blood_group_text))  && updateIndex == 9) {
+                    getResources().getString(R.string.blood_group_text)) && updateIndex == 9) {
                 personalInfoChildItemList.set(9,
                         new UserProfileChild(getResources().getString(R.string.blood_group_text),
                                 userProfile.getProfile().getPersonalInformation().getBloodGroup()
                         ));
-            } else if(updateIndex == -1){
+            } else if (updateIndex == -1) {
                 personalInfoChildItemList.add(9,
                         new UserProfileChild(getResources().getString(R.string.blood_group_text),
                                 userProfile.getProfile().getPersonalInformation().getBloodGroup()
@@ -948,7 +976,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
             if (personalInfoChildItemList.size() > 10 && personalInfoChildItemList.get(
                     10).getTitle().equalsIgnoreCase(
-                    getResources().getString(R.string.disabilities_text))  && updateIndex == 10) {
+                    getResources().getString(R.string.disabilities_text)) && updateIndex == 10) {
 
                 personalInfoChildItemList.set(10,
                         new UserProfileChild(getResources().getString(R.string.disabilities_text),
@@ -957,9 +985,9 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                         + ", " +
                                         checkNullField(
                                                 userProfile.getProfile().getPersonalInformation()
-                                                .getDisabilitiesDescription())
+                                                        .getDisabilitiesDescription())
                         ));
-            } else if(updateIndex == -1){
+            } else if (updateIndex == -1) {
                 personalInfoChildItemList.add(10,
                         new UserProfileChild(getResources().getString(R.string.disabilities_text),
 
@@ -967,7 +995,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                         + ", " +
                                         checkNullField(
                                                 userProfile.getProfile().getPersonalInformation()
-                                                .getDisabilitiesDescription())
+                                                        .getDisabilitiesDescription())
 
                         ));
             }
@@ -980,11 +1008,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 ) {
             if (personalInfoChildItemList.size() > 11 && personalInfoChildItemList.get(
                     11).getTitle().equalsIgnoreCase(
-                    getResources().getString(R.string.smoking_text))  && updateIndex == 11) {
+                    getResources().getString(R.string.smoking_text)) && updateIndex == 11) {
                 personalInfoChildItemList.set(11,
                         new UserProfileChild(getResources().getString(R.string.smoking_text),
                                 userProfile.getProfile().getPersonalInformation().getSmoking()));
-            } else if(updateIndex == -1){
+            } else if (updateIndex == -1) {
                 personalInfoChildItemList.add(11,
                         new UserProfileChild(getResources().getString(R.string.smoking_text),
                                 userProfile.getProfile().getPersonalInformation().getSmoking()));
@@ -998,6 +1026,20 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 personalInfoChildItemHeader.add(
                         new UserProfileParent(getResources().getString(R.string.personal_info),
                                 personalInfoChildItemList));
+                personalInfoRecylerView.addOnItemTouchListener(
+                        new RecyclerItemClickListener(this, personalInfoRecylerView,
+                                new RecyclerItemClickListener.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+                                        updateAction(view, position);
+                                    }
+
+                                    @Override
+                                    public void onLongItemClick(View view, int position) {
+                                        return;
+                                    }
+                                })
+                );
             }
 
             personalInfoRecylerView.removeAllViews();
@@ -1007,6 +1049,181 @@ public class OwnUserProfileActivity extends AppCompatActivity {
             personalInfoRecylerView.setAdapter(upea);
             upea.expandParent(0);
 //            upea.notifyDataSetChanged();
+        }
+    }
+
+    private void updateAction(View view, int position) {
+
+        final TextView titleTextView = view.findViewById(R.id.titleTextView);
+        final EditText descView = view.findViewById(R.id.titleResultEditText);
+        final ImageView img_edit = view.findViewById(R.id.img_edit);
+        final boolean editEnabled = false;
+        if (titleTextView != null) {
+
+            if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.age))) {
+                startActivityForResult(
+                        new Intent(this, BirthDatePickerPopUpActivity.class),
+                        Utils.DATE_OF_BIRTH_REQUEST_CODE);
+
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.height))) {
+                Intent intent = new Intent(this, PopUpPersonalInfo.class);
+                intent.putExtra("data", "height");
+                startActivityForResult(intent,
+                        Utils.HEIGHT_REQUEST_CODE);
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.skin_color))) {
+                new GetPersonalInfoStepFetchConstant(this, "skin",
+                        position, Utils.SKIN_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.body))) {
+                new GetPersonalInfoStepFetchConstant(this, "body",
+                        position, Utils.BODY_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.marital_status))) {
+                new GetPersonalInfoStepFetchConstant(this, "marital_status",
+                        position, Utils.MARITAL_STATUS_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.blood_group_text))) {
+                new GetPersonalInfoStepFetchConstant(this, "blood_group",
+                        position, Utils.BLOOD_GROUP_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.smoking_text))) {
+                new GetPersonalInfoStepFetchConstant(this, "smoke",
+                        position, Utils.SMOKE_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.religion_text))) {
+                new GetReligionStepFetchConstant(this).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.present_loaction_text))) {
+                new GetAddressStepFetchConstant(this,
+                        Utils.PRESENT_LOCATION_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.home_town))) {
+                new GetAddressStepFetchConstant(this,
+                        Utils.HOME_TOWN_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.present_address_text))) {
+                new GetAddressStepFetchConstant(this,
+                        Utils.PRESENT_ADDRESS_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.permanent_address_text))) {
+                new GetAddressStepFetchConstant(this,
+                        Utils.PERMANENT_ADDRESS_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.disabilities_text))) {
+                new GetPersonalInfoStepFetchConstant(this, "disable",
+                        position, Utils.DISABLE_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.cast_text))) {
+                new GetReligionStepFetchConstant(this).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    Utils.setBanglaProfileTitle(getResources().getString(
+                            R.string.professional_group_text)))) {
+                new GetPersonalInfoStepFetchConstant(this, "professional_group",
+                        position, Utils.PROFESSIONAL_GROUP_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.profession_text))) {
+                new GetPersonalInfoStepFetchConstant(this, "profession",
+                        position, Utils.PROFESSION_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    Utils.setBanglaProfileTitle(
+                            getResources().getString(R.string.designation_text)))) {
+                enableEditing(descView, getResources().getString(
+                        R.string.designation_text), img_edit, true, Utils.DESIGNATION);
+
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    Utils.setBanglaProfileTitle(
+                            getResources().getString(R.string.institute_text)))) {
+                enableEditing(descView, getResources().getString(
+                        R.string.institute_text), img_edit, true, Utils.INSTITUTION);
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.fast_text))) {
+                new GetPersonalInfoStepFetchConstant(this, "fasting",
+                        position, Utils.FASTING_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.prayet_text))) {
+                new GetPersonalInfoStepFetchConstant(this, "prayer",
+                        position, Utils.PRAYER_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.own_house_text))) {
+                new GetPersonalInfoStepFetchConstant(this, "own_house",
+                        position, Utils.OWN_HOUSE_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.education))) {
+                new GetPersonalInfoStepFetchConstant(this, "education",
+                        position, Utils.EDUCATION_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.father_text))) {
+                new GetFamilyInfoStepFetchConstant(this, "father",
+                        Utils.FATHER_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.mother_text))) {
+                new GetFamilyInfoStepFetchConstant(this, "mother",
+                        Utils.MOTHER_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.brother_text))) {
+                new GetPersonalInfoStepFetchConstant(this, "brother", position,
+                        Utils.BROTHER_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.sister_text))) {
+                new GetPersonalInfoStepFetchConstant(this, "sister", position,
+                        Utils.SISTER_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.other))) {
+                new FetchOthersConstant(this, "other", img_edit.getTag(),
+                        Utils.OTHER_REQUEST_CODE).execute();
+            } else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.dada))) {
+                new FetchOthersConstant(this, "dada", img_edit.getTag(),
+                        Utils.DADA_REQUEST_CODE).execute();
+            }
+        } else {
+            return;
+        }
+    }
+
+    private void enableEditing(final EditText descView, String hint,
+            final ImageView img_edit, boolean isFocused, final String key) {
+
+        if (isFocused) {
+            descView.setEnabled(true);
+            descView.setSelection(descView.getText().length());
+            img_edit.setVisibility(View.VISIBLE);
+            img_edit.setTag("");
+            img_edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    JSONObject jobjPro = new JSONObject();
+                    JSONObject jobj = new JSONObject();
+                    try {
+                        jobjPro.put(key, descView.getText().toString());
+                        jobj.put(Utils.PROFILE, jobjPro);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    updateDetails(jobjPro);
+                    img_edit.setTag("");
+                    img_edit.setVisibility(View.INVISIBLE);
+                    hideSoftKeyboard(descView);
+                    descView.clearFocus();
+                    descView.setFocusableInTouchMode(false);
+                    descView.setFocusable(false);
+                }
+            });
+        } else {
+            img_edit.setTag("");
+            img_edit.setVisibility(View.INVISIBLE);
+        }
+        if (img_edit.getTag() == null || img_edit.getTag().equals("")) {
+            img_edit.setVisibility(View.VISIBLE);
+            img_edit.setTag("enabled");
+            img_edit.setImageResource(R.drawable.accept_icon);
+            descView.setFocusableInTouchMode(true);
+            descView.setFocusable(true);
+            descView.requestFocus();
+            descView.setSelection(descView.getText().length());
         }
     }
 
@@ -1114,6 +1331,21 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     uppa = new UserProfileExpenadlbeAdapter(this,
                             parentChildItemHeader,
                             true);
+
+                    parentsRecyclerView.addOnItemTouchListener(
+                            new RecyclerItemClickListener(this, parentsRecyclerView,
+                                    new RecyclerItemClickListener.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int position) {
+                                            updateAction(view, position);
+                                        }
+
+                                        @Override
+                                        public void onLongItemClick(View view, int position) {
+                                            return;
+                                        }
+                                    })
+                    );
                 }
                 parentsRecyclerView.removeAllViews();
                 parentsRecyclerView.setAdapter(uppa);
@@ -1168,7 +1400,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             get(i).getId());
 //                    if(brothersChildItemList.contains(upc)){
                     int index = getBroIndex(upc.getId());
-                    if (index >= 0 && brothersChildItemList.size() > 0 && i < brothersChildItemList.size()) {
+                    if (index >= 0 && brothersChildItemList.size() > 0
+                            && i < brothersChildItemList.size()) {
                         brothersChildItemList.set(index, upc);
                     } else {
                         brothersChildItemList.add(i, upc);
@@ -1209,6 +1442,21 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     upb = new UserProfileExpenadlbeAdapter(this,
                             brothersChildItemHeader,
                             true);
+
+                    brotherRecyclerView.addOnItemTouchListener(
+                            new RecyclerItemClickListener(this, brotherRecyclerView,
+                                    new RecyclerItemClickListener.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int position) {
+                                            updateAction(view, position);
+                                        }
+
+                                        @Override
+                                        public void onLongItemClick(View view, int position) {
+                                            return;
+                                        }
+                                    })
+                    );
                 }
                 brotherRecyclerView.removeAllViews();
                 brotherRecyclerView.setAdapter(upb);
@@ -1224,7 +1472,6 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 brotherRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter(this,
                         brothersChildItemHeader,
                         true));
-
             }
 
             /*..................................brothers block
@@ -1276,7 +1523,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             get(i).getId());
 //                    if(brothersChildItemList.contains(upc)){
                     int index = getSisIndex(upc.getId());
-                    if (index >= 0 && sistersChildItemList.size() > 0 && i < sistersChildItemList.size()) {
+                    if (index >= 0 && sistersChildItemList.size() > 0
+                            && i < sistersChildItemList.size()) {
                         sistersChildItemList.set(index, upc);
                     } else {
                         sistersChildItemList.add(i, upc);
@@ -1307,6 +1555,21 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     ups = new UserProfileExpenadlbeAdapter(this,
                             sistersChildItemHeader,
                             true);
+
+                    sisterRecyclerView.addOnItemTouchListener(
+                            new RecyclerItemClickListener(this, sisterRecyclerView,
+                                    new RecyclerItemClickListener.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int position) {
+                                            updateAction(view, position);
+                                        }
+
+                                        @Override
+                                        public void onLongItemClick(View view, int position) {
+                                            return;
+                                        }
+                                    })
+                    );
                 }
                 sisterRecyclerView.removeAllViews();
                 sisterRecyclerView.setAdapter(ups);
@@ -1323,6 +1586,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         true));
 
             }
+
             /*..................................sisters block
             end.........................................*/
 
@@ -1347,7 +1611,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             new UserProfileChild(getResources().getString(R.string.child_text),
                                     Utils.convertEnglishDigittoBangla(
                                             userProfile.getProfile().getFamilyMembers()
-                                            .getNumberOfChild())
+                                                    .getNumberOfChild())
                                             + " জন সন্তান, সাথে থাকে"));
 
                 } else if (userProfile.getProfile().getFamilyMembers().getNumberOfChild() > 0 &&
@@ -1357,7 +1621,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             new UserProfileChild(getResources().getString(R.string.child_text),
                                     Utils.convertEnglishDigittoBangla(
                                             userProfile.getProfile().getFamilyMembers()
-                                            .getNumberOfChild())
+                                                    .getNumberOfChild())
                                             + " জন সন্তান, সাথে থাকে না"));
                 } else {
 //                    Log.i("childstatus", "nothing found");
@@ -1386,8 +1650,22 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             childsChildItemHeader,
                             true));
 
-                }
+                    childRecyclerView.addOnItemTouchListener(
+                            new RecyclerItemClickListener(this, childRecyclerView,
+                                    new RecyclerItemClickListener.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int position) {
+                                            updateAction(view, position);
+                                        }
 
+                                        @Override
+                                        public void onLongItemClick(View view, int position) {
+                                            return;
+                                        }
+                                    })
+                    );
+
+                }
 
             } else {
                 childCardView.setVisibility(View.GONE);
@@ -1657,42 +1935,29 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         ups = new UserProfileExpenadlbeAdapter(this,
                                 otherRelativeChildItemHeader,
                                 true);
+
+                        otherRelativeInfoRecyclerView.addOnItemTouchListener(
+                                new RecyclerItemClickListener(this, otherRelativeInfoRecyclerView,
+                                        new RecyclerItemClickListener.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(View view, int position) {
+                                                updateAction(view, position);
+                                            }
+
+                                            @Override
+                                            public void onLongItemClick(View view, int position) {
+                                                return;
+                                            }
+                                        })
+                        );
+
                     }
                     otherRelativeInfoRecyclerView.removeAllViews();
                     otherRelativeInfoRecyclerView.setAdapter(ups);
 
                 } else {
                     otherRelativeCardview.setVisibility(View.GONE);
-
-
-//                    otherRelativeChildItemList.add(new UserProfileChild(
-//                            getResources().getString(R.string.other),
-//                            Utils.convertEnglishDigittoBangla(otherRelativeChildItemList.size()
-// )));
-//                    otherRelativeChildItemHeader.add(new UserProfileParent(
-//                            getResources().getString(R.string.other),
-// otherRelativeChildItemList));
-//                    otherRelativeInfoRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter
-// (this,
-//                            otherRelativeChildItemHeader,
-//                            true));
-
                 }
-
-//                if (otherRelativeChildItemList.size() > 0) {
-//
-//                    otherRelativeChildItemHeader.add(new UserProfileParent(
-//                            "অন্যান্য(" + Utils.convertEnglishDigittoBangla
-// (otherRelativeChildItemList.size()) + ")"
-//                            , otherRelativeChildItemList));
-//
-//                    otherRelativeInfoRecyclerView.setAdapter(new UserProfileExpenadlbeAdapter
-// (this,
-//                            otherRelativeChildItemHeader,
-//                            true));
-//                } else {
-//                    otherRelativeCardview.setVisibility(View.GONE);
-//                }
             }
 
             /*..................................other relative block
@@ -1714,11 +1979,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                     getResources().getString(R.string.present_address_text),
                                     checkNullField(
                                             userProfile.getProfile().getAddress()
-                                            .getPresentAddress()
+                                                    .getPresentAddress()
                                                     .getAddress())
                                             + checkNullField(
                                             userProfile.getProfile().getAddress()
-                                            .getPresentAddress().getDistrict())
+                                                    .getPresentAddress().getDistrict())
                                             + checkNullField(
                                             userProfile.getProfile().getAddress()
                                                     .getPresentAddress().getCountry())
@@ -1729,11 +1994,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                     getResources().getString(R.string.present_address_text),
                                     checkNullField(
                                             userProfile.getProfile().getAddress()
-                                            .getPresentAddress()
+                                                    .getPresentAddress()
                                                     .getAddress())
                                             + checkNullField(
                                             userProfile.getProfile().getAddress()
-                                            .getPresentAddress().getDistrict())
+                                                    .getPresentAddress().getDistrict())
                                             + checkNullField(
                                             userProfile.getProfile().getAddress()
                                                     .getPresentAddress().getCountry())
@@ -1751,11 +2016,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                     getResources().getString(R.string.permanent_address_text),
                                     checkNullField(
                                             userProfile.getProfile().getAddress()
-                                            .getPermanentAddress()
+                                                    .getPermanentAddress()
                                                     .getAddress())
                                             + checkNullField(
                                             userProfile.getProfile().getAddress()
-                                            .getPermanentAddress().getDistrict())
+                                                    .getPermanentAddress().getDistrict())
                                             + checkNullField(
                                             userProfile.getProfile().getAddress()
                                                     .getPermanentAddress().getCountry())
@@ -1766,11 +2031,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                     getResources().getString(R.string.permanent_address_text),
                                     checkNullField(
                                             userProfile.getProfile().getAddress()
-                                            .getPermanentAddress()
+                                                    .getPermanentAddress()
                                                     .getAddress())
                                             + checkNullField(
                                             userProfile.getProfile().getAddress()
-                                            .getPermanentAddress().getDistrict())
+                                                    .getPermanentAddress().getDistrict())
                                             + checkNullField(
                                             userProfile.getProfile().getAddress()
                                                     .getPermanentAddress().getCountry())
@@ -1798,6 +2063,21 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     upadd = new UserProfileExpenadlbeAdapter(this,
                             communicationChildItemHeader,
                             true);
+
+                    communicationRecyclerView.addOnItemTouchListener(
+                            new RecyclerItemClickListener(this, communicationRecyclerView,
+                                    new RecyclerItemClickListener.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int position) {
+                                            updateAction(view, position);
+                                        }
+
+                                        @Override
+                                        public void onLongItemClick(View view, int position) {
+                                            return;
+                                        }
+                                    })
+                    );
                 }
                 communicationRecyclerView.removeAllViews();
                 communicationRecyclerView.setAdapter(upadd);
@@ -1873,7 +2153,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
             }
         });*/
 
-        userProfileDescriptionText.setOnTouchListener(new View.OnTouchListener(){
+        userProfileDescriptionText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 String hint = "আপনার সম্পর্কে বিস্তারিত লিখুন যাতে পাত্র-পক্ষ আগ্রহী হয়।";
@@ -1928,43 +2208,45 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 otherInformationRecyclerView);
     }
 
-    private void enableEditing(final EditText descView, final ImageView img_edit, boolean isFocused) {
+    private void enableEditing(final EditText descView, final ImageView img_edit,
+            boolean isFocused) {
 //        descView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //            @Override
 //            public void onFocusChange(View view, boolean isFocused) {
-                if (isFocused) {
+        if (isFocused) {
 //                    img_edit.setTag("enabled");
 //                    img_edit.setImageResource(R.drawable.accept_icon);
 
-                    descView.setEnabled(true);
+            descView.setEnabled(true);
 //                    descView.requestFocus();
 //                    descView.setSelection(descView.getText().length());
-                    img_edit_accept.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            JSONObject jobjPro = new JSONObject();
-                            JSONObject jobj = new JSONObject();
-                            try {
-                                jobj.put(Utils.ABOUT_YOURSELF, userProfileDescriptionText.getText().toString());
-                                jobjPro.put(Utils.PROFILE, jobj);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            updateDetails(jobjPro);
-                            img_edit_accept.setTag("");
-                            img_edit_accept.setVisibility(View.GONE);
-                            hideSoftKeyboard(descView);
-                            descView.clearFocus();
-                            descView.setFocusableInTouchMode(false);
-                            descView.setFocusable(false);
+            img_edit_accept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    JSONObject jobjPro = new JSONObject();
+                    JSONObject jobj = new JSONObject();
+                    try {
+                        jobj.put(Utils.ABOUT_YOURSELF,
+                                userProfileDescriptionText.getText().toString());
+                        jobjPro.put(Utils.PROFILE, jobj);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    updateDetails(jobjPro);
+                    img_edit_accept.setTag("");
+                    img_edit_accept.setVisibility(View.GONE);
+                    hideSoftKeyboard(descView);
+                    descView.clearFocus();
+                    descView.setFocusableInTouchMode(false);
+                    descView.setFocusable(false);
 //                            descView.setFocusable(false);
 //                            descView.clearFocus();
-                        }
-                    });
-                } else {
-                    img_edit_accept.setTag("");
-//                    hideSoftKeyboard(descView);
                 }
+            });
+        } else {
+            img_edit_accept.setTag("");
+//                    hideSoftKeyboard(descView);
+        }
         if (img_edit_accept.getTag() == null || img_edit_accept.getTag().equals("")) {
             img_edit_accept.setVisibility(View.VISIBLE);
             img_edit_accept.setTag("enabled");
@@ -2157,8 +2439,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         userProfile.getProfile().getPersonalInformation().setDisabilities(
                                 data.getStringExtra("disable_data"));
                         userProfile.getProfile().getPersonalInformation()
-                        .setDisabilitiesDescription(
-                                data.getStringExtra("disable_desc_data"));
+                                .setDisabilitiesDescription(
+                                        data.getStringExtra("disable_desc_data"));
                         JSONObject jobjPro = new JSONObject();
                         JSONObject jobj = new JSONObject();
                         try {
@@ -2262,7 +2544,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             "professional_group_data")) {
                         userProfile.getProfile().getFamilyMembers().getFather().setOccupation(
                                 userProfile.getProfile().getFamilyMembers().getFather()
-                                .getOccupation()
+                                        .getOccupation()
                                         + (data.getStringExtra("professional_group_data").length()
                                         > 0 ? " (" + data.getStringExtra("professional_group_data")
                                         + ")" : ""));
@@ -2313,7 +2595,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     if (data.hasExtra("professional_group_data")) {
                         userProfile.getProfile().getFamilyMembers().getMother().setOccupation(
                                 userProfile.getProfile().getFamilyMembers().getMother()
-                                .getOccupation()
+                                        .getOccupation()
                                         + (data.getStringExtra("professional_group_data").length()
                                         > 0 ? " (" + data.getStringExtra("professional_group_data")
                                         + ")" : ""));
@@ -2620,33 +2902,45 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 }
 
                 setDataOnFamilyMemberRecylerView(userProfile);
-            } else if (requestCode == 23 || requestCode == 24 || requestCode == 25 || requestCode == 26) {
+            } else if (requestCode == 23 || requestCode == 24 || requestCode == 25
+                    || requestCode == 26) {
                 if (data != null) {
                     if (data.hasExtra("home_town_data")) {
-                        userProfile.getProfile().getProfileLivingIn().setLocation(data.getStringExtra("home_town_value"));
-                        userProfile.getProfile().getAddress().getPresentAddress().setAddress(data.getStringExtra("present_address"));
-                        userProfile.getProfile().getAddress().getPresentAddress().setCountry(data.getStringExtra("present_country_data"));
-                        if(data.getStringExtra("present_country_data").equalsIgnoreCase("bangladesh")) {
+                        userProfile.getProfile().getProfileLivingIn().setLocation(
+                                data.getStringExtra("home_town_value"));
+                        userProfile.getProfile().getAddress().getPresentAddress().setAddress(
+                                data.getStringExtra("present_address"));
+                        userProfile.getProfile().getAddress().getPresentAddress().setCountry(
+                                data.getStringExtra("present_country_data"));
+                        if (data.getStringExtra("present_country_data").equalsIgnoreCase(
+                                "bangladesh")) {
                             userProfile.getProfile().getAddress().getPresentAddress().setDistrict(
                                     data.getStringExtra("present_district_data"));
-                        }else {
-                            userProfile.getProfile().getAddress().getPresentAddress().setDistrict("");
+                        } else {
+                            userProfile.getProfile().getAddress().getPresentAddress().setDistrict(
+                                    "");
                         }
-                        userProfile.getProfile().getAddress().getPermanentAddress().setAddress(data.getStringExtra("permanent_address"));
-                        userProfile.getProfile().getAddress().getPermanentAddress().setCountry(data.getStringExtra("permanent_country_data"));
-                        if(data.getStringExtra("permanent_country_data").equalsIgnoreCase("bangladesh")) {
+                        userProfile.getProfile().getAddress().getPermanentAddress().setAddress(
+                                data.getStringExtra("permanent_address"));
+                        userProfile.getProfile().getAddress().getPermanentAddress().setCountry(
+                                data.getStringExtra("permanent_country_data"));
+                        if (data.getStringExtra("permanent_country_data").equalsIgnoreCase(
+                                "bangladesh")) {
 
                             userProfile.getProfile().getAddress().getPermanentAddress().setDistrict(
                                     data.getStringExtra("permanent_district_data"));
-                        }else {
-                            userProfile.getProfile().getAddress().getPermanentAddress().setDistrict("");
+                        } else {
+                            userProfile.getProfile().getAddress().getPermanentAddress().setDistrict(
+                                    "");
                         }
 
 
-                        if(data.getStringExtra("residence").equalsIgnoreCase("BD")){
-                            userProfile.getProfile().getProfileLivingIn().setCountry(getString(R.string.bangladesh));
-                        }else{
-                            userProfile.getProfile().getProfileLivingIn().setCountry(data.getStringExtra("present_country_data"));
+                        if (data.getStringExtra("residence").equalsIgnoreCase("BD")) {
+                            userProfile.getProfile().getProfileLivingIn().setCountry(
+                                    getString(R.string.bangladesh));
+                        } else {
+                            userProfile.getProfile().getProfileLivingIn().setCountry(
+                                    data.getStringExtra("present_country_data"));
                         }
                         JSONObject jobj_pro = new JSONObject();
                         JSONObject jobj_all = new JSONObject();
@@ -2657,23 +2951,38 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         JSONObject jobj_present_address = new JSONObject();
                         JSONObject jobj_permanent_address = new JSONObject();
                         try {
-                            jobj_home_town.put(Utils.HOME_TOWN, data.getStringExtra("home_town_data"));
+                            jobj_home_town.put(Utils.HOME_TOWN,
+                                    data.getStringExtra("home_town_data"));
                             jobj_residence.put(Utils.RESIDENCE, data.getStringExtra("residence"));
-                            jobj_present_address.put(Utils.ID, userProfile.getProfile().getAddress().getPresentAddress().getId() + "");
+                            jobj_present_address.put(Utils.ID,
+                                    userProfile.getProfile().getAddress().getPresentAddress()
+                                            .getId()
+                                            + "");
                             jobj_present_address.put(Utils.ADDRESS_TYPE, "1");
-                            jobj_present_address.put(Utils.ADDRESS, data.getStringExtra("present_address"));
-                            jobj_present_address.put(Utils.DISTRICT, data.getStringExtra("present_district_value"));
-                            jobj_present_address.put(Utils.COUNTRY, data.getStringExtra("present_country_value"));
+                            jobj_present_address.put(Utils.ADDRESS,
+                                    data.getStringExtra("present_address"));
+                            jobj_present_address.put(Utils.DISTRICT,
+                                    data.getStringExtra("present_district_value"));
+                            jobj_present_address.put(Utils.COUNTRY,
+                                    data.getStringExtra("present_country_value"));
                             jobj_address.put("0", jobj_present_address);
-                            jobj_permanent_address.put(Utils.ID, userProfile.getProfile().getAddress().getPermanentAddress().getId() + "");
+                            jobj_permanent_address.put(Utils.ID,
+                                    userProfile.getProfile().getAddress().getPermanentAddress()
+                                            .getId()
+                                            + "");
                             jobj_permanent_address.put(Utils.ADDRESS_TYPE, "2");
-                            jobj_permanent_address.put(Utils.ADDRESS, data.getStringExtra("permanent_address"));
-                            jobj_permanent_address.put(Utils.DISTRICT, data.getStringExtra("permanent_district_value"));
-                            jobj_permanent_address.put(Utils.COUNTRY, data.getStringExtra("permanent_country_value"));
+                            jobj_permanent_address.put(Utils.ADDRESS,
+                                    data.getStringExtra("permanent_address"));
+                            jobj_permanent_address.put(Utils.DISTRICT,
+                                    data.getStringExtra("permanent_district_value"));
+                            jobj_permanent_address.put(Utils.COUNTRY,
+                                    data.getStringExtra("permanent_country_value"));
                             jobj_address.put("1", jobj_permanent_address);
                             jobj_address_attr.put(Utils.ADDRESSES_ATTRIBUTES, jobj_address);
-                            jobj_address_attr.put(Utils.HOME_TOWN, data.getStringExtra("home_town_data"));
-                            jobj_address_attr.put(Utils.RESIDENCE, data.getStringExtra("residence"));
+                            jobj_address_attr.put(Utils.HOME_TOWN,
+                                    data.getStringExtra("home_town_data"));
+                            jobj_address_attr.put(Utils.RESIDENCE,
+                                    data.getStringExtra("residence"));
                             jobj_pro.put(Utils.PROFILE, jobj_address_attr);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -2901,15 +3210,402 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         });
     }
 
-    public ProfileLivingIn getProfileLivingIn(){
-        return  userProfile.getProfile().getProfileLivingIn();
+    public ProfileLivingIn getProfileLivingIn() {
+        return userProfile.getProfile().getProfileLivingIn();
     }
 
-    public Address getAddress(){
-        return  userProfile.getProfile().getAddress();
+    public Address getAddress() {
+        return userProfile.getProfile().getAddress();
     }
 
-    public PersonalInformation getPersonalInfo(){
-        return  userProfile.getProfile().getPersonalInformation();
+    public PersonalInformation getPersonalInfo() {
+        return userProfile.getProfile().getPersonalInformation();
+    }
+
+    public Brother getBrother(int position) {
+        return userProfile.getProfile().getFamilyMembers().getBrothers().get(position - 1);
+    }
+
+    public Sister getSister(int position) {
+        return userProfile.getProfile().getFamilyMembers().getSisters().get(position - 1);
+    }
+
+    public Father getFather() {
+        return userProfile.getProfile().getFamilyMembers().getFather();
+    }
+
+    public Mother getMother() {
+        return userProfile.getProfile().getFamilyMembers().getMother();
+    }
+}
+
+class GetReligionStepFetchConstant extends AsyncTask<String, String, String> {
+
+    Context mContext;
+
+    public GetReligionStepFetchConstant(Context context) {
+        mContext = context;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected String doInBackground(String... strings) {
+        SharePref sharePref = new SharePref(mContext);
+        final String token = sharePref.get_data("token");
+        Request request = new Request.Builder()
+                .url(Utils.STEP_CONSTANT_FETCH + 2)
+                .addHeader("Authorization", "Token token=" + token)
+                .build();
+
+        Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 2);
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Response response = client.newCall(request).execute();
+            String responseString = response.body().string();
+            Log.e(Utils.LOGIN_DEBUG, responseString);
+            response.body().close();
+            return responseString;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        Log.i("religion_step_data", s + "");
+
+        if (s == null) {
+            Utils.ShowAlert(mContext,
+                    mContext.getResources().getString(R.string.no_internet_connection));
+        } else {
+            Intent intent = new Intent(mContext, PopUpCastReligion.class);
+            intent.putExtra("constants", s);
+            intent.putExtra("data", "religion");
+            ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                    Utils.RELIGION_REQUEST_CODE);
+
+        }
+    }
+
+}
+
+class GetPersonalInfoStepFetchConstant extends AsyncTask<String, String, String> {
+    String reqType = "";
+    int req_code, position;
+    Context mContext;
+
+
+    public GetPersonalInfoStepFetchConstant(Context context, String strType, int position,
+            int req_code) {
+        this.reqType = strType;
+        this.req_code = req_code;
+        mContext = context;
+        this.position = position;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected String doInBackground(String... strings) {
+        SharePref sharePref = new SharePref(mContext);
+        final String token = sharePref.get_data("token");
+        Request request = new Request.Builder()
+                .url(Utils.STEP_CONSTANT_FETCH + 4)
+                .addHeader("Authorization", "Token token=" + token)
+                .build();
+
+        Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 4);
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Response response = client.newCall(request).execute();
+            String responseString = response.body().string();
+            Log.e("profile_edit", responseString);
+            response.body().close();
+            return responseString;
+        } catch (Exception e) {
+            e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e
+// .getMessage().toString(), mTracker);
+            return null;
+        }
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        Log.i("urldata", s + "");
+        if (s == null) {
+            Utils.ShowAlert(mContext,
+                    mContext.getResources().getString(R.string.no_internet_connection));
+        } else {
+            Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
+            Intent intent = new Intent(mContext, PopUpPersonalInfo.class);
+            intent.putExtra("constants", s);
+            intent.putExtra("data", reqType);
+            if (reqType.equalsIgnoreCase("education")) {
+                intent = new Intent(mContext, PopupEducationEdit.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            } else if (reqType.equalsIgnoreCase("father")) {
+                intent = new Intent(mContext, PopupParentsEdit.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                intent.putExtra("father", ((OwnUserProfileActivity) mContext).getFather());
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            } else if (reqType.equalsIgnoreCase("mother")) {
+                intent = new Intent(mContext, PopupParentsEdit.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                intent.putExtra("mother", ((OwnUserProfileActivity) mContext).getMother());
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            } else if (reqType.equalsIgnoreCase("brother")) {
+                intent = new Intent(mContext, BrotherEditActivity.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                intent.putExtra("brother_info",
+                        ((OwnUserProfileActivity) mContext).getBrother(position));
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            } else if (reqType.equalsIgnoreCase("sister")) {
+                intent = new Intent(mContext, BrotherEditActivity.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                intent.putExtra("sister_info",
+                        ((OwnUserProfileActivity) mContext).getSister(position));
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            } else if (reqType.equalsIgnoreCase("other")) {
+                intent = new Intent(mContext, OthersEditActivity.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            } else {
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            }
+        }
+    }
+}
+
+class GetFamilyInfoStepFetchConstant extends AsyncTask<String, String, String> {
+    String reqType = "";
+    int req_code;
+    Context mContext;
+
+    public GetFamilyInfoStepFetchConstant(Context context, String strType, int req_code) {
+        this.reqType = strType;
+        this.req_code = req_code;
+        mContext = context;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected String doInBackground(String... strings) {
+        SharePref sharePref = new SharePref(mContext);
+        final String token = sharePref.get_data("token");
+        Request request = new Request.Builder()
+                .url(Utils.STEP_CONSTANT_FETCH + 5)
+                .addHeader("Authorization", "Token token=" + token)
+                .build();
+
+        Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 4);
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Response response = client.newCall(request).execute();
+            String responseString = response.body().string();
+            Log.e("profile_edit", responseString);
+            response.body().close();
+            return responseString;
+        } catch (Exception e) {
+            e.printStackTrace();
+//                application.trackEception(e, "LoginRequest/doInBackground", "Login", e
+// .getMessage().toString(), mTracker);
+            return null;
+        }
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        Log.i("urldata", s + "");
+        if (s == null) {
+            Utils.ShowAlert(mContext,
+                    mContext.getResources().getString(R.string.no_internet_connection));
+        } else {
+            Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
+            Intent intent = new Intent(mContext, PopUpPersonalInfo.class);
+            intent.putExtra("constants", s);
+            intent.putExtra("data", reqType);
+            if (reqType.equalsIgnoreCase("father")) {
+                intent = new Intent(mContext, PopupParentsEdit.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                intent.putExtra("father", ((OwnUserProfileActivity) mContext).getFather());
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            } else if (reqType.equalsIgnoreCase("mother")) {
+                intent = new Intent(mContext, PopupParentsEdit.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                intent.putExtra("mother", ((OwnUserProfileActivity) mContext).getMother());
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            } else if (reqType.equalsIgnoreCase("brother") || reqType.equalsIgnoreCase(
+                    "sister")) {
+                intent = new Intent(mContext, BrotherEditActivity.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            } else if (reqType.equalsIgnoreCase("other")) {
+                intent = new Intent(mContext, OthersEditActivity.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            } else {
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                        req_code);
+            }
+        }
+    }
+}
+
+class GetAddressStepFetchConstant extends AsyncTask<String, String, String> {
+
+    int reqCode;
+    Context mContext;
+
+    public GetAddressStepFetchConstant(Context context, int request_code) {
+        this.reqCode = request_code;
+        mContext = context;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected String doInBackground(String... strings) {
+        SharePref sharePref = new SharePref(mContext);
+        final String token = sharePref.get_data("token");
+        Request request = new Request.Builder()
+                .url(Utils.STEP_CONSTANT_FETCH + 6)
+                .addHeader("Authorization", "Token token=" + token)
+                .build();
+
+        Log.i("urldata", Utils.STEP_CONSTANT_FETCH + 6);
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Response response = client.newCall(request).execute();
+            String responseString = response.body().string();
+            Log.e(Utils.LOGIN_DEBUG, responseString);
+            response.body().close();
+            return responseString;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        Log.i("urldata", s + "");
+        if (s == null) {
+            Utils.ShowAlert(mContext, mContext
+                    .getResources().getString(R.string.no_internet_connection));
+        } else {
+            Log.i("constantval", this.getClass().getSimpleName() + "_backfetchval: " + s);
+            Intent intent = new Intent(mContext, RegistrationUserAddressInformation.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("constants", s);
+            bundle.putString("data", "address");
+            bundle.putSerializable("personal_info",
+                    ((OwnUserProfileActivity) mContext).getPersonalInfo());
+            bundle.putSerializable("profile_living_in",
+                    ((OwnUserProfileActivity) mContext).getProfileLivingIn());
+            bundle.putSerializable("address",
+                    ((OwnUserProfileActivity) mContext).getAddress());
+            intent.putExtras(bundle);
+            ((OwnUserProfileActivity) mContext).startActivityForResult(intent, reqCode);
+        }
+    }
+}
+
+class FetchOthersConstant extends AsyncTask<String, String, String> {
+
+    String reqType = "";
+    int req_code;
+    int id;
+    Context mContext;
+
+    public FetchOthersConstant(Context context, String strType, Object id, int req_code) {
+        this.reqType = strType;
+        this.req_code = req_code;
+        this.id = (Integer) id;
+        this.mContext = context;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        if (s == null) {
+            Utils.ShowAlert(mContext,
+                    mContext.getString(R.string.no_internet_connection));
+        } else {
+            Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
+            Intent intent;
+            intent = new Intent(mContext, OthersEditActivity.class);
+            intent.putExtra("constants", s);
+            intent.putExtra("data", reqType);
+            intent.putExtra("id", id);
+            ((OwnUserProfileActivity) mContext).startActivityForResult(intent, req_code);
+        }
+    }
+
+    @Override
+    protected String doInBackground(String... parameters) {
+        SharePref sharePref = new SharePref(mContext);
+        final String token = sharePref.get_data("token");
+        Request request = new Request.Builder()
+                .url(Utils.STEP_CONSTANT_FETCH + 6)
+                .addHeader("Authorization", "Token token=" + token)
+                .build();
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Response response = client.newCall(request).execute();
+            String responseString = response.body().string();
+            Log.e(Utils.DEBUG, responseString);
+            response.body().close();
+            return responseString;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
     }
 }

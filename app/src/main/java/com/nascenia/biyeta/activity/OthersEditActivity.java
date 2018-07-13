@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -55,6 +56,7 @@ public class OthersEditActivity extends AppCompatActivity {
     LinearLayout occupationStatusOther;
     LinearLayout relationalStatusOther;
     private int relation_value, profession_value, professional_group_value, id;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class OthersEditActivity extends AppCompatActivity {
         setContentView(R.layout.others_edit);
 
         sharePref = new SharePref(OthersEditActivity.this);
+        toolbar = findViewById(R.id.toolbar);
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
@@ -75,6 +78,14 @@ public class OthersEditActivity extends AppCompatActivity {
         progress.setCancelable(false);
 
         buttonNext = (Button) findViewById(R.id.next);
+
+        back = (ImageView) findViewById(R.id.backPreviousActivityImage);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override

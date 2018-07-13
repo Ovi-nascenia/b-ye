@@ -158,7 +158,7 @@ public class PopUpCastReligion extends AppCompatActivity {
 
         otherReligion = sharePref.get_data("other_religion");
         otherCast = sharePref.get_data("other_cast");
-        if(otherCast.length() > 0 && religionValue == 1)
+        if(!otherCast.equalsIgnoreCase("key") && otherCast.length() > 0 && religionValue == 1)
             castValue = 3;
 
         if(religionValue == 0){

@@ -140,6 +140,32 @@ public class Utils{
 
     public static final String MUSLIM_TAG="muslim";
 
+    public static final int DATE_OF_BIRTH_REQUEST_CODE = 2;
+    public static final int HEIGHT_REQUEST_CODE = 3;
+    public static final int RELIGION_REQUEST_CODE = 4;
+    public static final int SKIN_REQUEST_CODE = 5;
+    public static final int BODY_REQUEST_CODE = 6;
+    public static final int MARITAL_STATUS_REQUEST_CODE = 7;
+    public static final int BLOOD_GROUP_REQUEST_CODE = 8;
+    public static final int SMOKE_REQUEST_CODE = 9;
+    public static final int DISABLE_REQUEST_CODE = 10;
+    public static final int PROFESSIONAL_GROUP_REQUEST_CODE = 11;
+    public static final int PROFESSION_REQUEST_CODE = 12;
+    public static final int FASTING_REQUEST_CODE = 13;
+    public static final int PRAYER_REQUEST_CODE = 14;
+    public static final int OWN_HOUSE_REQUEST_CODE = 15;
+    public static final int EDUCATION_REQUEST_CODE = 16;
+    public static final int FATHER_REQUEST_CODE = 17;
+    public static final int MOTHER_REQUEST_CODE = 18;
+    public static final int BROTHER_REQUEST_CODE = 19;
+    public static final int SISTER_REQUEST_CODE = 20;
+    public static final int OTHER_REQUEST_CODE = 21;
+    public static final int DADA_REQUEST_CODE = 22;
+    public static final int PRESENT_ADDRESS_REQUEST_CODE = 23;
+    public static final int PERMANENT_ADDRESS_REQUEST_CODE = 24;
+    public static final int PRESENT_LOCATION_REQUEST_CODE = 25;
+    public static final int HOME_TOWN_REQUEST_CODE = 26;
+
 
     public static final int BIODATA_REQUEST_FRAGEMNT_CLASS = 000;
     public static final int COMMUNICATION_REQUEST_FRAGEMNT_CLASS = 111;

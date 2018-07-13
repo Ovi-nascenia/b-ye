@@ -117,7 +117,6 @@ public class PopUpPersonalInfo extends AppCompatActivity {
         mTextView = (TextView) findViewById(R.id.title);
         disableEditText = (EditText) findViewById(R.id.disable_desc);
 
-
         info_data = getIntent().getStringExtra("constants");
         strDataForUpdate = getIntent().getStringExtra("data");
         if(info_data != null){

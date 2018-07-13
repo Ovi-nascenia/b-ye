@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ public class PopupEducationEdit extends AppCompatActivity {
     private SharePref sharePref;
 
     TextView educationalStatusLabel;
+    ImageView back;
 
     private ArrayList<String> educationArray = new ArrayList<String>();
     private String[] educationName = new String[educationArray.size()];
@@ -129,6 +131,14 @@ public class PopupEducationEdit extends AppCompatActivity {
                 }
             }
         );
+
+        back = (ImageView) findViewById(R.id.backPreviousActivityImage);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
