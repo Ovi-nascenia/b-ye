@@ -15,9 +15,12 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,7 +45,12 @@ import com.nascenia.biyeta.model.newuserprofile.Brother;
 import com.nascenia.biyeta.model.newuserprofile.Dada;
 import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
 import com.nascenia.biyeta.model.newuserprofile.Father;
+import com.nascenia.biyeta.model.newuserprofile.Fufa;
+import com.nascenia.biyeta.model.newuserprofile.Kaka;
+import com.nascenia.biyeta.model.newuserprofile.Khalu;
+import com.nascenia.biyeta.model.newuserprofile.Mama;
 import com.nascenia.biyeta.model.newuserprofile.Mother;
+import com.nascenia.biyeta.model.newuserprofile.Nana;
 import com.nascenia.biyeta.model.newuserprofile.Other;
 import com.nascenia.biyeta.model.newuserprofile.PersonalInformation;
 import com.nascenia.biyeta.model.newuserprofile.ProfileLivingIn;
@@ -223,7 +231,6 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     Log.i("ownresponsevalue", responseValue);
                     responseBody.close();
                     userProfile = new Gson().fromJson(responseValue, UserProfile.class);
-
 
                     OwnUserProfileActivity.this.runOnUiThread(new Runnable() {
                         @Override
@@ -1178,6 +1185,26 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     getResources().getString(R.string.dada))) {
                 new FetchOthersConstant(this, "dada", img_edit.getTag(),
                         Utils.DADA_REQUEST_CODE).execute();
+            }else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.nana))) {
+                new FetchOthersConstant(this, "nana", img_edit.getTag(),
+                        Utils.NANA_REQUEST_CODE).execute();
+            }else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.fupa))) {
+                new FetchOthersConstant(this, "fupa", img_edit.getTag(),
+                        Utils.FUPA_REQUEST_CODE).execute();
+            }else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.mama))) {
+                new FetchOthersConstant(this, "mama", img_edit.getTag(),
+                        Utils.MAMA_REQUEST_CODE).execute();
+            }else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.kaka))) {
+                new FetchOthersConstant(this, "kaka", img_edit.getTag(),
+                        Utils.KAKA_REQUEST_CODE).execute();
+            }else if (titleTextView.getText().toString().equalsIgnoreCase(
+                    getResources().getString(R.string.khalu))) {
+                new FetchOthersConstant(this, "khalu", img_edit.getTag(),
+                        Utils.KHALU_REQUEST_CODE).execute();
             }
         } else {
             return;
@@ -1190,6 +1217,17 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         if (isFocused) {
             descView.setEnabled(true);
             descView.setSelection(descView.getText().length());
+            descView.setLines(1);
+            descView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+            descView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+                @Override
+                public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                    if(keyEvent.getAction() == EditorInfo.IME_ACTION_DONE)
+                        System.out.println("Done");
+                    return false;
+                }
+            });
             img_edit.setVisibility(View.VISIBLE);
             img_edit.setTag("");
             img_edit.setOnClickListener(new View.OnClickListener() {
@@ -3237,6 +3275,66 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     public Mother getMother() {
         return userProfile.getProfile().getFamilyMembers().getMother();
     }
+
+    public Dada getDada(int id) {
+        for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getDadas().size(); i++) {
+            if (userProfile.getProfile().getFamilyMembers().getDadas().get(i).getId() == id) {
+                return userProfile.getProfile().getFamilyMembers().getDadas().get(i);
+            }
+        }
+        return null;
+    }
+
+    public Other getOther(int id) {
+        for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getOthers().size(); i++) {
+            if (userProfile.getProfile().getFamilyMembers().getOthers().get(i).getId() == id) {
+                return userProfile.getProfile().getFamilyMembers().getOthers().get(i);
+            }
+        }
+        return null;
+    }
+
+    public Nana getNana(int id) {
+        for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getNanas().size(); i++) {
+            if (userProfile.getProfile().getFamilyMembers().getNanas().get(i).getId() == id) {
+                return userProfile.getProfile().getFamilyMembers().getNanas().get(i);
+            }
+        }
+        return null;
+    }
+
+    public Mama getMama(int id) {
+        for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getMamas().size(); i++) {
+            if (userProfile.getProfile().getFamilyMembers().getMamas().get(i).getId() == id) {
+                return userProfile.getProfile().getFamilyMembers().getMamas().get(i);
+            }
+        }
+        return null;
+    }
+    public Kaka getKaka(int id) {
+        for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getKakas().size(); i++) {
+            if (userProfile.getProfile().getFamilyMembers().getKakas().get(i).getId() == id) {
+                return userProfile.getProfile().getFamilyMembers().getKakas().get(i);
+            }
+        }
+        return null;
+    }
+    public Fufa getFupa(int id) {
+        for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getFufas().size(); i++) {
+            if (userProfile.getProfile().getFamilyMembers().getFufas().get(i).getId() == id) {
+                return userProfile.getProfile().getFamilyMembers().getFufas().get(i);
+            }
+        }
+        return null;
+    }
+    public Khalu getKhalu(int id) {
+        for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getKhalus().size(); i++) {
+            if (userProfile.getProfile().getFamilyMembers().getKhalus().get(i).getId() == id) {
+                return userProfile.getProfile().getFamilyMembers().getKhalus().get(i);
+            }
+        }
+        return null;
+    }
 }
 
 class GetReligionStepFetchConstant extends AsyncTask<String, String, String> {
@@ -3578,7 +3676,21 @@ class FetchOthersConstant extends AsyncTask<String, String, String> {
             intent = new Intent(mContext, OthersEditActivity.class);
             intent.putExtra("constants", s);
             intent.putExtra("data", reqType);
-            intent.putExtra("id", id);
+//            intent.putExtra("id", id);
+            if(reqType.equalsIgnoreCase("dada"))
+                intent.putExtra("dada_info", ((OwnUserProfileActivity) mContext).getDada(id));
+            else if(reqType.equalsIgnoreCase("nana"))
+                intent.putExtra("nana_info", ((OwnUserProfileActivity) mContext).getNana(id));
+            else if(reqType.equalsIgnoreCase("khalu"))
+                intent.putExtra("khalu_info", ((OwnUserProfileActivity) mContext).getKhalu(id));
+            else if(reqType.equalsIgnoreCase("fupa"))
+                intent.putExtra("fupa_info", ((OwnUserProfileActivity) mContext).getFupa(id));
+            else if(reqType.equalsIgnoreCase("mama"))
+                intent.putExtra("mama_info", ((OwnUserProfileActivity) mContext).getMama(id));
+            else if(reqType.equalsIgnoreCase("kaka"))
+                intent.putExtra("kaka_info", ((OwnUserProfileActivity) mContext).getKaka(id));
+            else if(reqType.equalsIgnoreCase("other"))
+                intent.putExtra("other_info", ((OwnUserProfileActivity) mContext).getOther(id));
             ((OwnUserProfileActivity) mContext).startActivityForResult(intent, req_code);
         }
     }

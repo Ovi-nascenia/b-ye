@@ -1,17 +1,23 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Nana implements Serializable
+public class Nana implements Parcelable
 {
 
     @SerializedName("id")
     @Expose
     private int id;
+    @SerializedName("relation_id")
+    @Expose
+    private int relation_id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -28,6 +34,28 @@ public class Nana implements Serializable
     @Expose
     private String institute;
     private final static long serialVersionUID = 3441787034522447337L;
+
+    protected Nana(Parcel in) {
+        id = in.readInt();
+        relation_id = in.readInt();
+        name = in.readString();
+        relation = in.readString();
+        occupation = in.readString();
+        designation = in.readString();
+        institute = in.readString();
+    }
+
+    public static final Creator<Nana> CREATOR = new Creator<Nana>() {
+        @Override
+        public Nana createFromParcel(Parcel in) {
+            return new Nana(in);
+        }
+
+        @Override
+        public Nana[] newArray(int size) {
+            return new Nana[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -56,6 +84,14 @@ public class Nana implements Serializable
 
     public void setRelation(String relation) {
         this.relation = relation;
+    }
+
+    public int getRelationId() {
+        return relation_id;
+    }
+
+    public void setRelationId(int id) {
+        this.id = id;
     }
 
     public Nana withRelation(String relation) {
@@ -107,4 +143,19 @@ public class Nana implements Serializable
         return ToStringBuilder.reflectionToString(this);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeInt(relation_id);
+        parcel.writeString(name);
+        parcel.writeString(relation);
+        parcel.writeString(occupation);
+        parcel.writeString(designation);
+        parcel.writeString(institute);
+    }
 }

@@ -161,6 +161,11 @@ public class Utils{
     public static final int SISTER_REQUEST_CODE = 20;
     public static final int OTHER_REQUEST_CODE = 21;
     public static final int DADA_REQUEST_CODE = 22;
+    public static final int NANA_REQUEST_CODE = 27;
+    public static final int KAKA_REQUEST_CODE = 28;
+    public static final int KHALU_REQUEST_CODE = 29;
+    public static final int FUPA_REQUEST_CODE = 30;
+    public static final int MAMA_REQUEST_CODE = 31;
     public static final int PRESENT_ADDRESS_REQUEST_CODE = 23;
     public static final int PERMANENT_ADDRESS_REQUEST_CODE = 24;
     public static final int PRESENT_LOCATION_REQUEST_CODE = 25;

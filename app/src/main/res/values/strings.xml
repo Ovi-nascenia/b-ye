@@ -122,6 +122,11 @@
     <string name="child_text">সন্তান</string>
     <string name="no_child_text">কোন সন্তান নেই</string>
     <string name="dada">দাদা</string>
+    <string name="nana">নানা</string>
+    <string name="mama">মামা</string>
+    <string name="khalu">খালু</string>
+    <string name="kaka">চাচা</string>
+    <string name="fupa">ফুপা</string>
 
     <string name="no_brother_text">কোন ভাই নেই</string>
     <string name="no_sister_text">কোন বোন নেই</string>

@@ -1,12 +1,15 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Dada implements Serializable
+public class Dada implements Parcelable
 {
 
     @SerializedName("id")
@@ -31,6 +34,28 @@ public class Dada implements Serializable
     @Expose
     private String institute;
     private final static long serialVersionUID = 1035091253017465643L;
+
+    protected Dada(Parcel in) {
+        id = in.readInt();
+        relation_id = in.readInt();
+        name = in.readString();
+        relation = in.readString();
+        occupation = in.readString();
+        designation = in.readString();
+        institute = in.readString();
+    }
+
+    public static final Creator<Dada> CREATOR = new Creator<Dada>() {
+        @Override
+        public Dada createFromParcel(Parcel in) {
+            return new Dada(in);
+        }
+
+        @Override
+        public Dada[] newArray(int size) {
+            return new Dada[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -118,4 +143,19 @@ public class Dada implements Serializable
         return ToStringBuilder.reflectionToString(this);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeInt(relation_id);
+        parcel.writeString(name);
+        parcel.writeString(relation);
+        parcel.writeString(occupation);
+        parcel.writeString(designation);
+        parcel.writeString(institute);
+    }
 }

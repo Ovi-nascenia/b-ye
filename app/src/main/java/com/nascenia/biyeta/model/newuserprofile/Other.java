@@ -1,12 +1,15 @@
 
 package com.nascenia.biyeta.model.newuserprofile;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Other implements Serializable
+public class Other implements Parcelable
 {
 
     @SerializedName("id")
@@ -31,6 +34,28 @@ public class Other implements Serializable
     @Expose
     private String institute;
     private final static long serialVersionUID = -8632695032620419274L;
+
+    protected Other(Parcel in) {
+        id = in.readInt();
+        relation_id = in.readInt();
+        name = in.readString();
+        relation = in.readString();
+        occupation = in.readString();
+        designation = in.readString();
+        institute = in.readString();
+    }
+
+    public static final Creator<Other> CREATOR = new Creator<Other>() {
+        @Override
+        public Other createFromParcel(Parcel in) {
+            return new Other(in);
+        }
+
+        @Override
+        public Other[] newArray(int size) {
+            return new Other[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -118,4 +143,19 @@ public class Other implements Serializable
         return ToStringBuilder.reflectionToString(this);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeInt(relation_id);
+        parcel.writeString(name);
+        parcel.writeString(relation);
+        parcel.writeString(occupation);
+        parcel.writeString(designation);
+        parcel.writeString(institute);
+    }
 }

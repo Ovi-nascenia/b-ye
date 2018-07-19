@@ -18,7 +18,17 @@ import android.widget.Toast;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.adapter.OtherViewAdapter;
 import com.nascenia.biyeta.appdata.SharePref;
+import com.nascenia.biyeta.model.newuserprofile.Dada;
+import com.nascenia.biyeta.model.newuserprofile.Fufa;
+import com.nascenia.biyeta.model.newuserprofile.Kaka;
+import com.nascenia.biyeta.model.newuserprofile.Khalu;
+import com.nascenia.biyeta.model.newuserprofile.Mama;
+import com.nascenia.biyeta.model.newuserprofile.Nana;
+import com.nascenia.biyeta.model.newuserprofile.Other;
 import com.squareup.okhttp.OkHttpClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +67,26 @@ public class OthersEditActivity extends AppCompatActivity {
     LinearLayout relationalStatusOther;
     private int relation_value, profession_value, professional_group_value, id;
     private Toolbar toolbar;
+    private Dada dada;
+    private String strDataUpdate;
+
+    private ArrayList<String> professonalGroupArray = new ArrayList<String>();
+    private String[] professonalGroupName = new String[professonalGroupArray.size()];
+    private ArrayList<String> professonalGroupConstant = new ArrayList<String>();
+    private String[] professonalGroupConstantValue = new String[professonalGroupArray.size()];
+
+    private ArrayList<String> occupationArray = new ArrayList<String>();
+    private String[] occupationName = new String[occupationArray.size()];
+    private ArrayList<String> occupationConstant = new ArrayList<String>();
+    private String[] occupationConstantValue = new String[occupationArray.size()];
+
+    private JSONObject professionalGroupObject, occupationObject;
+    private Other other;
+    private Nana nana;
+    private Kaka kaka;
+    private Khalu khalu;
+    private Mama mama;
+    private Fufa fupa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +98,9 @@ public class OthersEditActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         constant = intent.getStringExtra("constants");
-        id = getIntent().getIntExtra("id", 0);
+//        id = getIntent().getIntExtra("id", 0);
+        strDataUpdate = intent.getStringExtra("data");
+
         // Toast.makeText(RegistrationFamilyInfoSecondPage.this,constant,Toast.LENGTH_LONG).show();
         client = new OkHttpClient();
 
@@ -250,6 +282,233 @@ public class OthersEditActivity extends AppCompatActivity {
 //                    detailsInfoFieldsRootLayout.setVisibility(View.VISIBLE);
             }
         });
+
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(constant);
+//            if(strDataUpdate.equalsIgnoreCase("brother") || strDataUpdate.equalsIgnoreCase("sister")) {
+                professionalGroupObject = jsonObject.getJSONObject("professional_group_constant");
+                for (int i = 0; i < professionalGroupObject.length(); i++) {
+                    professonalGroupConstant.add(professionalGroupObject.names().getString(i));
+                    professonalGroupArray.add((String) professionalGroupObject.get(professionalGroupObject.names().getString(i)));
+                }
+//            }
+
+//            if(strDataUpdate.equalsIgnoreCase("brother") || strDataUpdate.equalsIgnoreCase("sister")) {
+                occupationObject = jsonObject.getJSONObject("occupation_constant");
+                for (int i = 0; i < occupationObject.length(); i++) {
+                    occupationConstant.add(occupationObject.names().getString(i));
+                    occupationArray.add((String) occupationObject.get(occupationObject.names().getString(i)));
+                }
+//            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if(strDataUpdate != null) {
+            if(strDataUpdate.equalsIgnoreCase("dada")) {
+                dada = getIntent().getParcelableExtra("dada_info");
+                setViewWithDada(dada);
+            }else if(strDataUpdate.equalsIgnoreCase("nana")) {
+                nana = getIntent().getParcelableExtra("nana_info");
+                setViewWithNana(nana);
+            }if(strDataUpdate.equalsIgnoreCase("mama")) {
+                mama = getIntent().getParcelableExtra("mama_info");
+                setViewWithMama(mama);
+            }if(strDataUpdate.equalsIgnoreCase("khalu")) {
+                khalu = getIntent().getParcelableExtra("khalu_info");
+                setViewWithKhalu(khalu);
+            }if(strDataUpdate.equalsIgnoreCase("kaka")) {
+                kaka = getIntent().getParcelableExtra("kaka_info");
+                setViewWithKaka(kaka);
+            }if(strDataUpdate.equalsIgnoreCase("fupa")) {
+                fupa = getIntent().getParcelableExtra("fupa_info");
+                setViewWithFupa(fupa);
+            }else if(strDataUpdate.equalsIgnoreCase("other")){
+                other = getIntent().getParcelableExtra("other_info");
+                setViewWithOther(other);
+            }
+        }
+    }
+
+    private void setViewWithFupa(Fufa fupa) {
+        id = fupa.getId();
+        relationName.setText(fupa.getRelation().toString());
+        otherRelationalStatus.setText(fupa.getRelation().toString());
+        relation_value = fupa.getRelationId();
+        nameOther.setText(fupa.getName().toString());
+        String occupa = fupa.getOccupation().replaceAll(" \\(", " ");
+        occupa = occupa.replace(")", "");
+        String[] occupation = occupa.split(" ");
+        if(occupation.length > 0) {
+            otherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupation[0]));
+        }
+        if(occupation.length > 1) {
+            otherProfessionalGroup.setText(occupation[1]);
+            professional_group_value = Integer.parseInt(getProfessionValue(occupation[1]));
+        }
+        designationOther.setText(fupa.getDesignation().toString());
+        institutionOther.setText(fupa.getInstitute().toString());
+    }
+
+    private void setViewWithKaka(Kaka kaka) {
+        id = kaka.getId();
+        relationName.setText(kaka.getRelation().toString());
+        otherRelationalStatus.setText(kaka.getRelation().toString());
+        relation_value = kaka.getRelationId();
+        nameOther.setText(kaka.getName().toString());
+        String[] occupa = null;
+        boolean hasProGroup = false;
+        if(kaka.getOccupation().contains("\\("))
+            hasProGroup = true;
+        occupa = kaka.getOccupation().split(" \\(");
+//        occupa = occupa.replace(")", "");
+//        String[] occupation = occupa.split(" ");
+        if(occupa.length > 0) {
+            otherOccupation.setText(occupa.length > 0 ? occupa[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupa[0]));
+        }
+        if(occupa.length > 1 && hasProGroup) {
+            otherProfessionalGroup.setText(occupa[1].replace(")", ""));
+            professional_group_value = Integer.parseInt(getProfessionValue(occupa[1]));
+        }
+        designationOther.setText(kaka.getDesignation().toString());
+        institutionOther.setText(kaka.getInstitute().toString());
+    }
+
+    private void setViewWithMama(Mama mama) {
+        id = mama.getId();
+        relationName.setText(mama.getRelation().toString());
+        otherRelationalStatus.setText(mama.getRelation().toString());
+        relation_value = mama.getRelationId();
+        nameOther.setText(mama.getName().toString());
+        String occupa = mama.getOccupation().replaceAll(" \\(", " ");
+        occupa = occupa.replace(")", "");
+        String[] occupation = occupa.split(" ");
+        if(occupation.length > 0) {
+            otherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupation[0]));
+        }
+        if(occupation.length > 1) {
+            otherProfessionalGroup.setText(occupation[1]);
+            professional_group_value = Integer.parseInt(getProfessionValue(occupation[1]));
+        }
+        designationOther.setText(mama.getDesignation().toString());
+        institutionOther.setText(mama.getInstitute().toString());
+    }
+
+    private void setViewWithKhalu(Khalu khalu) {
+        id = khalu.getId();
+        relationName.setText(khalu.getRelation().toString());
+        otherRelationalStatus.setText(khalu.getRelation().toString());
+        relation_value = khalu.getRelationId();
+        nameOther.setText(khalu.getName().toString());
+        String[] occupa = null;
+        boolean hasProGroup = false;
+        occupa = khalu.getOccupation().split(" \\(");
+        if(occupa.length>1)
+            hasProGroup = true;
+        if(occupa.length > 0) {
+            otherOccupation.setText(occupa.length > 0 ? occupa[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupa[0]));
+        }
+        if(occupa.length > 1 && hasProGroup) {
+            otherProfessionalGroup.setText(occupa[1].replace(")", ""));
+            professional_group_value = Integer.parseInt(getProfessionValue(occupa[1]));
+        }
+        designationOther.setText(khalu.getDesignation().toString());
+        institutionOther.setText(khalu.getInstitute().toString());
+    }
+
+    private void setViewWithNana(Nana nana) {
+        id = nana.getId();
+        relationName.setText(nana.getRelation().toString());
+        otherRelationalStatus.setText(nana.getRelation().toString());
+        relation_value = nana.getRelationId();
+        nameOther.setText(nana.getName().toString());
+        String occupa = nana.getOccupation().replaceAll(" \\(", " ");
+        occupa = occupa.replace(")", "");
+        String[] occupation = occupa.split(" ");
+        if(occupation.length > 0) {
+            otherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupation[0]));
+        }
+        if(occupation.length > 1) {
+            otherProfessionalGroup.setText(occupation[1]);
+            professional_group_value = Integer.parseInt(getProfessionValue(occupation[1]));
+        }
+        designationOther.setText(nana.getDesignation().toString());
+        institutionOther.setText(nana.getInstitute().toString());
+    }
+
+    private void setViewWithDada(Dada dada) {
+        id = dada.getId();
+        relationName.setText(dada.getRelation().toString());
+        otherRelationalStatus.setText(dada.getRelation().toString());
+        relation_value = dada.getRelationId();
+        nameOther.setText(dada.getName().toString());
+        String occupa = dada.getOccupation().replaceAll(" \\(", " ");
+        occupa = occupa.replace(")", "");
+        String[] occupation = occupa.split(" ");
+        if(occupation.length > 0) {
+            otherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupation[0]));
+        }
+        if(occupation.length > 1) {
+            otherProfessionalGroup.setText(occupation[1]);
+            professional_group_value = Integer.parseInt(getProfessionValue(occupation[1]));
+        }
+        designationOther.setText(dada.getDesignation().toString());
+        institutionOther.setText(dada.getInstitute().toString());
+    }
+
+    private void setViewWithOther(Other other) {
+        id = other.getId();
+        relationName.setText(other.getRelation().toString());
+        otherRelationalStatus.setText(getString(R.string.other));
+//        intent.putExtra("relation_data", otherRelationalStatus.getText().toString());
+        relation_value = other.getRelationId();
+        if(relation_value == 9)
+            relationName.setVisibility(View.VISIBLE);
+        else
+            relationName.setVisibility(View.GONE);
+        nameOther.setText(other.getName().toString());
+        String occupa = other.getOccupation().replaceAll(" \\(", " ");
+        occupa = occupa.replace(")", "");
+        String[] occupation = occupa.split(" ");
+        if(occupation.length > 0) {
+            otherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupation[0]));
+        }
+        if(occupation.length > 1) {
+            otherProfessionalGroup.setText(occupation[1]);
+            professional_group_value = Integer.parseInt(getProfessionValue(occupation[1]));
+        }
+        designationOther.setText(other.getDesignation().toString());
+        institutionOther.setText(other.getInstitute().toString());
+    }
+
+    private String getProfessionValue(String profession) {
+        int index = -1;
+        for(int i = 0; i < professonalGroupArray.size(); i++){
+            if(professonalGroupArray.get(i).equalsIgnoreCase(profession.replace(")", ""))) {
+                index = i;
+                break;
+            }
+        }
+        return index > -1 ? professonalGroupConstant.get(index) : "";
+    }
+
+    private String getOccupationValue(String occupation){
+        int index = -1;
+        for(int i = 0; i < occupationArray.size(); i++){
+            if(occupationArray.get(i).equalsIgnoreCase(occupation)) {
+                index = i;
+                break;
+            }
+        }
+        return index > -1 ? occupationConstant.get(index) : "";
     }
 
     @Override
