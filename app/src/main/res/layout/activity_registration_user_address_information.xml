@@ -169,7 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="আপনার স্থায়ী/অস্থায়ী*"
+                android:text="বিদেশে অবস্থানের ধরণ*"
                 android:textColor="@color/colorPrimary" />
 
             <LinearLayout

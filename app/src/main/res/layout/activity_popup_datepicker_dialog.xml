@@ -4,12 +4,23 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/birhtday_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/birthday"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:textSize="20sp"/>
+
     <LinearLayout
         android:id="@+id/Level"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="3dp"
+        android:layout_below="@+id/birhtday_label"
         android:weightSum="3">
 
         <TextView

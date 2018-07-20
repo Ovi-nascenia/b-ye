@@ -99,7 +99,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     private int dotscount;
     private ImageView[] dots;
     private ImageView img_edit_details;
-    private ImageView img_edit_accept;
+    private ImageView img_edit_accept, img_edit_cancel;
 
     private UserProfile userProfile;
 
@@ -177,6 +177,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     int[] image;
     String[] proPics = null;
     private UserProfileExpenadlbeAdapter upea, upga, upoa, upedua, uppa, upb, ups, upadd;
+//    private String currentDesignationText = "", currentInstitutionText = "";
 
 
     @Override
@@ -603,7 +604,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     otherInfoChildItemHeader,
                     true);
             otherInformationRecyclerView.setAdapter(upoa);
-            upoa.expandParent(0);
+//            upoa.expandParent(0);
 //            upea.notifyDataSetChanged();
         }
 
@@ -786,21 +787,17 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     private void setDataOnPersonalInfoRecylerView(UserProfile userProfile, int updateIndex) {
 
         if (personalInfoChildItemList.size() > 0 && personalInfoChildItemList.get(
-                0).getTitle().equalsIgnoreCase(getResources().getString(R.string.age))
+                0).getTitle().equalsIgnoreCase(getResources().getString(R.string.birthday))
                 && updateIndex == 0) {
             personalInfoChildItemList.set(0,
-                    new UserProfileChild(getResources().getString(R.string.age),
-                            Utils.convertEnglishDigittoBangla(
-                                    userProfile.getProfile().getPersonalInformation().getAge()) +
-                                    " " + getResources().getString(R.string.year) + ","
+                    new UserProfileChild(getResources().getString(R.string.birthday),
+                            Utils.getEnglishDateToBanglaDate(userProfile.getProfile().getPersonalInformation().getDOB()) + ","
 
                     ));
         } else if (updateIndex == -1) {
             personalInfoChildItemList.add(0,
-                    new UserProfileChild(getResources().getString(R.string.age),
-                            Utils.convertEnglishDigittoBangla(
-                                    userProfile.getProfile().getPersonalInformation().getAge()) +
-                                    " " + getResources().getString(R.string.year) + ","
+                    new UserProfileChild(getResources().getString(R.string.birthday),
+                            Utils.getEnglishDateToBanglaDate(userProfile.getProfile().getPersonalInformation().getDOB()) + ","
 
                     ));
         }
@@ -1064,11 +1061,12 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         final TextView titleTextView = view.findViewById(R.id.titleTextView);
         final EditText descView = view.findViewById(R.id.titleResultEditText);
         final ImageView img_edit = view.findViewById(R.id.img_edit);
+        final ImageView img_edit_cancel = view.findViewById(R.id.img_edit_cancel);
         final boolean editEnabled = false;
         if (titleTextView != null) {
 
             if (titleTextView.getText().toString().equalsIgnoreCase(
-                    getResources().getString(R.string.age))) {
+                    getResources().getString(R.string.birthday))) {
                 startActivityForResult(
                         new Intent(this, BirthDatePickerPopUpActivity.class),
                         Utils.DATE_OF_BIRTH_REQUEST_CODE);
@@ -1138,13 +1136,13 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     Utils.setBanglaProfileTitle(
                             getResources().getString(R.string.designation_text)))) {
                 enableEditing(descView, getResources().getString(
-                        R.string.designation_text), img_edit, true, Utils.DESIGNATION);
+                        R.string.designation_text), img_edit, img_edit_cancel, true, Utils.DESIGNATION);
 
             } else if (titleTextView.getText().toString().equalsIgnoreCase(
                     Utils.setBanglaProfileTitle(
                             getResources().getString(R.string.institute_text)))) {
                 enableEditing(descView, getResources().getString(
-                        R.string.institute_text), img_edit, true, Utils.INSTITUTION);
+                        R.string.institute_text), img_edit, img_edit_cancel, true, Utils.INSTITUTE);
             } else if (titleTextView.getText().toString().equalsIgnoreCase(
                     getResources().getString(R.string.fast_text))) {
                 new GetPersonalInfoStepFetchConstant(this, "fasting",
@@ -1171,11 +1169,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         Utils.MOTHER_REQUEST_CODE).execute();
             } else if (titleTextView.getText().toString().equalsIgnoreCase(
                     getResources().getString(R.string.brother_text))) {
-                new GetPersonalInfoStepFetchConstant(this, "brother", position,
+                new FetchOthersConstant(this, "brother", img_edit.getTag(),
                         Utils.BROTHER_REQUEST_CODE).execute();
             } else if (titleTextView.getText().toString().equalsIgnoreCase(
                     getResources().getString(R.string.sister_text))) {
-                new GetPersonalInfoStepFetchConstant(this, "sister", position,
+                new FetchOthersConstant(this, "sister", img_edit.getTag(),
                         Utils.SISTER_REQUEST_CODE).execute();
             } else if (titleTextView.getText().toString().equalsIgnoreCase(
                     getResources().getString(R.string.other))) {
@@ -1212,9 +1210,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     }
 
     private void enableEditing(final EditText descView, String hint,
-            final ImageView img_edit, boolean isFocused, final String key) {
+            final ImageView img_edit, final ImageView img_edit_cancel, boolean isFocused,
+            final String key) {
 
         if (isFocused) {
+            final String currentText = descView.getText().toString();
             descView.setEnabled(true);
             descView.setSelection(descView.getText().length());
             descView.setLines(1);
@@ -1229,6 +1229,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 }
             });
             img_edit.setVisibility(View.VISIBLE);
+            img_edit_cancel.setVisibility(View.VISIBLE);
             img_edit.setTag("");
             img_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1241,21 +1242,39 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    updateDetails(jobjPro);
+                    updateDetails(jobj);
                     img_edit.setTag("");
-                    img_edit.setVisibility(View.INVISIBLE);
+                    img_edit.setVisibility(View.GONE);
+                    img_edit_cancel.setVisibility(View.GONE);
                     hideSoftKeyboard(descView);
                     descView.clearFocus();
                     descView.setFocusableInTouchMode(false);
                     descView.setFocusable(false);
                 }
             });
+            img_edit_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    img_edit.setVisibility(View.GONE);
+                    img_edit_cancel.setVisibility(View.GONE);
+                    hideSoftKeyboard(descView);
+                    descView.clearFocus();
+                    descView.setFocusableInTouchMode(false);
+                    descView.setFocusable(false);
+                    if(key.equalsIgnoreCase(Utils.DESIGNATION))
+                        descView.setText(userProfile.getProfile().getProfession().getDesignation());
+                    else
+                        descView.setText(userProfile.getProfile().getProfession().getInstitute());
+                }
+            });
         } else {
             img_edit.setTag("");
-            img_edit.setVisibility(View.INVISIBLE);
+            img_edit.setVisibility(View.GONE);
+            img_edit_cancel.setVisibility(View.GONE);
         }
         if (img_edit.getTag() == null || img_edit.getTag().equals("")) {
             img_edit.setVisibility(View.VISIBLE);
+            img_edit_cancel.setVisibility(View.VISIBLE);
             img_edit.setTag("enabled");
             img_edit.setImageResource(R.drawable.accept_icon);
             descView.setFocusableInTouchMode(true);
@@ -1360,7 +1379,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     uppa = new UserProfileExpenadlbeAdapter(this,
                             parentChildItemHeader,
                             true);
-                    uppa.expandParent(0);
+//                    uppa.expandParent(0);
                 } else {
                     parentChildItemHeader.add(0, new UserProfileParent(
                             getResources().getString(R.string.father_text) + "-" +
@@ -1470,7 +1489,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     upb = new UserProfileExpenadlbeAdapter(this,
                             brothersChildItemHeader,
                             true);
-                    upb.expandParent(0);
+//                    upb.expandParent(0);
                 } else {
                     brothersChildItemHeader.add(0, new UserProfileParent(
                             getResources().getString(R.string.brother_text) + "("
@@ -1583,7 +1602,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     ups = new UserProfileExpenadlbeAdapter(this,
                             sistersChildItemHeader,
                             true);
-                    ups.expandParent(0);
+//                    ups.expandParent(0);
                 } else {
                     sistersChildItemHeader.add(0, new UserProfileParent(
                             getResources().getString(R.string.sister_text) + "("
@@ -1963,7 +1982,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         ups = new UserProfileExpenadlbeAdapter(this,
                                 otherRelativeChildItemHeader,
                                 true);
-                        ups.expandParent(0);
+//                        ups.expandParent(0);
                     } else {
                         otherRelativeChildItemHeader.add(0, new UserProfileParent(
                                 getResources().getString(R.string.other) + "("
@@ -2093,7 +2112,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     upadd = new UserProfileExpenadlbeAdapter(this,
                             communicationChildItemHeader,
                             true);
-                    upadd.expandParent(0);
+//                    upadd.expandParent(0);
                 } else {
                     communicationChildItemHeader.add(0, new UserProfileParent(
                             getResources().getString(R.string.communication_text),
@@ -2148,6 +2167,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 //        hideSoftKeyboard(userProfileDescriptionText);
         img_edit_details = findViewById(R.id.img_edit_details);
         img_edit_accept = findViewById(R.id.img_accept);
+        img_edit_cancel = findViewById(R.id.img_edit_cancel);
 
 
 //        userProfileDescriptionCardView.setOnClickListener(new View.OnClickListener() {
@@ -2248,16 +2268,9 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
     private void enableEditing(final EditText descView, final ImageView img_edit,
             boolean isFocused) {
-//        descView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View view, boolean isFocused) {
         if (isFocused) {
-//                    img_edit.setTag("enabled");
-//                    img_edit.setImageResource(R.drawable.accept_icon);
-
+            final String currentText = descView.getText().toString();
             descView.setEnabled(true);
-//                    descView.requestFocus();
-//                    descView.setSelection(descView.getText().length());
             img_edit_accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -2273,35 +2286,38 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     updateDetails(jobjPro);
                     img_edit_accept.setTag("");
                     img_edit_accept.setVisibility(View.GONE);
+                    img_edit_cancel.setVisibility(View.GONE);
                     hideSoftKeyboard(descView);
                     descView.clearFocus();
                     descView.setFocusableInTouchMode(false);
                     descView.setFocusable(false);
-//                            descView.setFocusable(false);
-//                            descView.clearFocus();
+                }
+            });
+            img_edit_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    img_edit_accept.setTag("");
+                    img_edit_accept.setVisibility(View.GONE);
+                    img_edit_cancel.setVisibility(View.GONE);
+                    hideSoftKeyboard(descView);
+                    descView.clearFocus();
+                    descView.setFocusableInTouchMode(false);
+                    descView.setFocusable(false);
+                    descView.setText(currentText);
                 }
             });
         } else {
             img_edit_accept.setTag("");
-//                    hideSoftKeyboard(descView);
         }
         if (img_edit_accept.getTag() == null || img_edit_accept.getTag().equals("")) {
             img_edit_accept.setVisibility(View.VISIBLE);
+            img_edit_cancel.setVisibility(View.VISIBLE);
             img_edit_accept.setTag("enabled");
             img_edit_accept.setImageResource(R.drawable.accept_icon);
-//            descView.setEnabled(true);
             descView.setFocusableInTouchMode(true);
             descView.setFocusable(true);
             descView.requestFocus();
-//            descView.setSelection(descView.getText().length());
         }
-//        else {
-//            img_edit_accept.setTag("");
-//            img_edit_accept.setVisibility(View.GONE);
-//            descView.setEnabled(false);
-//            hideSoftKeyboard(descView);
-//            descView.clearFocus();
-//        }
     }
 
     private void hideSoftKeyboard(EditText view) {
@@ -2340,9 +2356,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             convertedEnglishDateFromBanglaDate + "/"
                                     + convertedEnglishMonthFromBanglaMonth + "/"
                                     + convertedEglishYearFromBanglaYear);
-                    userProfile.getProfile().getPersonalInformation().setAge(
-                            Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(
-                                    convertedEglishYearFromBanglaYear));
+//                    userProfile.getProfile().getPersonalInformation().setAge(
+//                            Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(
+//                                    convertedEglishYearFromBanglaYear));
+                    userProfile.getProfile().getPersonalInformation().setDOB(convertedEglishYearFromBanglaYear + "-" + convertedEnglishMonthFromBanglaMonth
+                    + "-" + convertedEnglishDateFromBanglaDate);
                     setDataOnPersonalInfoRecylerView(userProfile, 0);
                 }
             } else if (requestCode == 3) {
@@ -2940,6 +2958,261 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 }
 
                 setDataOnFamilyMemberRecylerView(userProfile);
+            }else if (requestCode == 27) {
+                if (data != null) {
+
+                    if (data.hasExtra("name")) {
+                        int id = data.getIntExtra("id", 0);
+                        int nanaIndex = getNanaIndex(id);
+                        if (nanaIndex >= 0) {
+                            userProfile.getProfile().getFamilyMembers().getNanas().get(
+                                    nanaIndex).setName(data.getStringExtra("name"));
+                            userProfile.getProfile().getFamilyMembers().getNanas().get(
+                                    nanaIndex).setRelation(data.getStringExtra("relation"));
+                            userProfile.getProfile().getFamilyMembers().getNanas().get(
+                                    nanaIndex).setOccupation(
+                                    data.getStringExtra("profession_data"));
+                            userProfile.getProfile().getFamilyMembers().getNanas().get(
+                                    nanaIndex).setRelation(data.getStringExtra("relation_data"));
+                            userProfile.getProfile().getFamilyMembers().getNanas().get(
+                                    nanaIndex).setDesignation(data.getStringExtra("designation"));
+                            userProfile.getProfile().getFamilyMembers().getNanas().get(
+                                    nanaIndex).setInstitute(data.getStringExtra("institute"));
+                        }
+                        Nana nana = userProfile.getProfile().getFamilyMembers().getNanas().get(
+                                nanaIndex);
+                        JSONObject jobj_pro = new JSONObject();
+                        JSONArray jobj_others = new JSONArray();
+                        JSONObject jobj_other_ = new JSONObject();
+                        JSONObject jobj_other = new JSONObject();
+                        try {
+                            jobj_other.put(Utils.PROFESSIONAL_GROUP,
+                                    data.getIntExtra("professional_group_value", 0));
+                            jobj_other.put(Utils.AGE, data.getStringExtra("age"));
+                            jobj_other.put(Utils.NAME, data.getStringExtra("name"));
+                            jobj_other.put(Utils.OCCUPATION,
+                                    data.getIntExtra("profession_value", 0));
+                            jobj_other.put(Utils.DESIGNATION, data.getStringExtra("designation"));
+                            jobj_other.put(Utils.INSTITUTE, data.getStringExtra("institute"));
+                            jobj_other.put(Utils.ID, nana.getId());
+                            jobj_other.put(Utils.RELATION, data.getIntExtra("relation_value",
+                                    0));  //brother sibling type value is 1
+                            jobj_others.put(jobj_other);
+                            jobj_other_.put(Utils.FAMILY_MEMBER_ATTRIBUTE, jobj_others);
+                            jobj_pro.put(Utils.PROFILE, jobj_other_);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(jobj_pro.toString());
+                        updateDetails(jobj_pro);
+                    }
+                }
+
+                setDataOnFamilyMemberRecylerView(userProfile);
+            }else if (requestCode == 28) {
+                if (data != null) {
+
+                    if (data.hasExtra("name")) {
+                        int id = data.getIntExtra("id", 0);
+                        int kakaIndex = getKakaIndex(id);
+                        if (kakaIndex >= 0) {
+                            userProfile.getProfile().getFamilyMembers().getKakas().get(
+                                    kakaIndex).setName(data.getStringExtra("name"));
+                            userProfile.getProfile().getFamilyMembers().getKakas().get(
+                                    kakaIndex).setRelation(data.getStringExtra("relation"));
+                            userProfile.getProfile().getFamilyMembers().getKakas().get(
+                                    kakaIndex).setOccupation(
+                                    data.getStringExtra("profession_data"));
+                            userProfile.getProfile().getFamilyMembers().getKakas().get(
+                                    kakaIndex).setRelation(data.getStringExtra("relation_data"));
+                            userProfile.getProfile().getFamilyMembers().getKakas().get(
+                                    kakaIndex).setDesignation(data.getStringExtra("designation"));
+                            userProfile.getProfile().getFamilyMembers().getKakas().get(
+                                    kakaIndex).setInstitute(data.getStringExtra("institute"));
+                        }
+                        Kaka kaka = userProfile.getProfile().getFamilyMembers().getKakas().get(
+                                kakaIndex);
+                        JSONObject jobj_pro = new JSONObject();
+                        JSONArray jobj_others = new JSONArray();
+                        JSONObject jobj_other_ = new JSONObject();
+                        JSONObject jobj_other = new JSONObject();
+                        try {
+                            jobj_other.put(Utils.PROFESSIONAL_GROUP,
+                                    data.getIntExtra("professional_group_value", 0));
+                            jobj_other.put(Utils.AGE, data.getStringExtra("age"));
+                            jobj_other.put(Utils.NAME, data.getStringExtra("name"));
+                            jobj_other.put(Utils.OCCUPATION,
+                                    data.getIntExtra("profession_value", 0));
+                            jobj_other.put(Utils.DESIGNATION, data.getStringExtra("designation"));
+                            jobj_other.put(Utils.INSTITUTE, data.getStringExtra("institute"));
+                            jobj_other.put(Utils.ID, kaka.getId());
+                            jobj_other.put(Utils.RELATION, data.getIntExtra("relation_value",
+                                    0));  //brother sibling type value is 1
+                            jobj_others.put(jobj_other);
+                            jobj_other_.put(Utils.FAMILY_MEMBER_ATTRIBUTE, jobj_others);
+                            jobj_pro.put(Utils.PROFILE, jobj_other_);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(jobj_pro.toString());
+                        updateDetails(jobj_pro);
+                    }
+                }
+
+                setDataOnFamilyMemberRecylerView(userProfile);
+            }else if (requestCode == 29) {
+                if (data != null) {
+
+                    if (data.hasExtra("name")) {
+                        int id = data.getIntExtra("id", 0);
+                        int khaluIndex = getKhaluIndex(id);
+                        if (khaluIndex >= 0) {
+                            userProfile.getProfile().getFamilyMembers().getKhalus().get(
+                                    khaluIndex).setName(data.getStringExtra("name"));
+                            userProfile.getProfile().getFamilyMembers().getKhalus().get(
+                                    khaluIndex).setRelation(data.getStringExtra("relation"));
+                            userProfile.getProfile().getFamilyMembers().getKhalus().get(
+                                    khaluIndex).setOccupation(
+                                    data.getStringExtra("profession_data"));
+                            userProfile.getProfile().getFamilyMembers().getKhalus().get(
+                                    khaluIndex).setRelation(data.getStringExtra("relation_data"));
+                            userProfile.getProfile().getFamilyMembers().getKhalus().get(
+                                    khaluIndex).setDesignation(data.getStringExtra("designation"));
+                            userProfile.getProfile().getFamilyMembers().getKhalus().get(
+                                    khaluIndex).setInstitute(data.getStringExtra("institute"));
+                        }
+                        Khalu khalu = userProfile.getProfile().getFamilyMembers().getKhalus().get(
+                                khaluIndex);
+                        JSONObject jobj_pro = new JSONObject();
+                        JSONArray jobj_others = new JSONArray();
+                        JSONObject jobj_other_ = new JSONObject();
+                        JSONObject jobj_other = new JSONObject();
+                        try {
+                            jobj_other.put(Utils.PROFESSIONAL_GROUP,
+                                    data.getIntExtra("professional_group_value", 0));
+                            jobj_other.put(Utils.AGE, data.getStringExtra("age"));
+                            jobj_other.put(Utils.NAME, data.getStringExtra("name"));
+                            jobj_other.put(Utils.OCCUPATION,
+                                    data.getIntExtra("profession_value", 0));
+                            jobj_other.put(Utils.DESIGNATION, data.getStringExtra("designation"));
+                            jobj_other.put(Utils.INSTITUTE, data.getStringExtra("institute"));
+                            jobj_other.put(Utils.ID, khalu.getId());
+                            jobj_other.put(Utils.RELATION, data.getIntExtra("relation_value",
+                                    0));  //brother sibling type value is 1
+                            jobj_others.put(jobj_other);
+                            jobj_other_.put(Utils.FAMILY_MEMBER_ATTRIBUTE, jobj_others);
+                            jobj_pro.put(Utils.PROFILE, jobj_other_);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(jobj_pro.toString());
+                        updateDetails(jobj_pro);
+                    }
+                }
+
+                setDataOnFamilyMemberRecylerView(userProfile);
+            }else if (requestCode == 30) {
+                if (data != null) {
+
+                    if (data.hasExtra("name")) {
+                        int id = data.getIntExtra("id", 0);
+                        int fupaIndex = getFupaIndex(id);
+                        if (fupaIndex >= 0) {
+                            userProfile.getProfile().getFamilyMembers().getFufas().get(
+                                    fupaIndex).setName(data.getStringExtra("name"));
+                            userProfile.getProfile().getFamilyMembers().getFufas().get(
+                                    fupaIndex).setRelation(data.getStringExtra("relation"));
+                            userProfile.getProfile().getFamilyMembers().getFufas().get(
+                                    fupaIndex).setOccupation(
+                                    data.getStringExtra("profession_data"));
+                            userProfile.getProfile().getFamilyMembers().getFufas().get(
+                                    fupaIndex).setRelation(data.getStringExtra("relation_data"));
+                            userProfile.getProfile().getFamilyMembers().getFufas().get(
+                                    fupaIndex).setDesignation(data.getStringExtra("designation"));
+                            userProfile.getProfile().getFamilyMembers().getFufas().get(
+                                    fupaIndex).setInstitute(data.getStringExtra("institute"));
+                        }
+                        Fufa fupa = userProfile.getProfile().getFamilyMembers().getFufas().get(
+                                fupaIndex);
+                        JSONObject jobj_pro = new JSONObject();
+                        JSONArray jobj_others = new JSONArray();
+                        JSONObject jobj_other_ = new JSONObject();
+                        JSONObject jobj_other = new JSONObject();
+                        try {
+                            jobj_other.put(Utils.PROFESSIONAL_GROUP,
+                                    data.getIntExtra("professional_group_value", 0));
+                            jobj_other.put(Utils.AGE, data.getStringExtra("age"));
+                            jobj_other.put(Utils.NAME, data.getStringExtra("name"));
+                            jobj_other.put(Utils.OCCUPATION,
+                                    data.getIntExtra("profession_value", 0));
+                            jobj_other.put(Utils.DESIGNATION, data.getStringExtra("designation"));
+                            jobj_other.put(Utils.INSTITUTE, data.getStringExtra("institute"));
+                            jobj_other.put(Utils.ID, fupa.getId());
+                            jobj_other.put(Utils.RELATION, data.getIntExtra("relation_value",
+                                    0));  //brother sibling type value is 1
+                            jobj_others.put(jobj_other);
+                            jobj_other_.put(Utils.FAMILY_MEMBER_ATTRIBUTE, jobj_others);
+                            jobj_pro.put(Utils.PROFILE, jobj_other_);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(jobj_pro.toString());
+                        updateDetails(jobj_pro);
+                    }
+                }
+
+                setDataOnFamilyMemberRecylerView(userProfile);
+            }else if (requestCode == 31) {
+                if (data != null) {
+
+                    if (data.hasExtra("name")) {
+                        int id = data.getIntExtra("id", 0);
+                        int mamaIndex = getMamaIndex(id);
+                        if (mamaIndex >= 0) {
+                            userProfile.getProfile().getFamilyMembers().getMamas().get(
+                                    mamaIndex).setName(data.getStringExtra("name"));
+                            userProfile.getProfile().getFamilyMembers().getMamas().get(
+                                    mamaIndex).setRelation(data.getStringExtra("relation"));
+                            userProfile.getProfile().getFamilyMembers().getMamas().get(
+                                    mamaIndex).setOccupation(
+                                    data.getStringExtra("profession_data"));
+                            userProfile.getProfile().getFamilyMembers().getMamas().get(
+                                    mamaIndex).setRelation(data.getStringExtra("relation_data"));
+                            userProfile.getProfile().getFamilyMembers().getMamas().get(
+                                    mamaIndex).setDesignation(data.getStringExtra("designation"));
+                            userProfile.getProfile().getFamilyMembers().getMamas().get(
+                                    mamaIndex).setInstitute(data.getStringExtra("institute"));
+                        }
+                        Mama mama = userProfile.getProfile().getFamilyMembers().getMamas().get(
+                                mamaIndex);
+                        JSONObject jobj_pro = new JSONObject();
+                        JSONArray jobj_others = new JSONArray();
+                        JSONObject jobj_other_ = new JSONObject();
+                        JSONObject jobj_other = new JSONObject();
+                        try {
+                            jobj_other.put(Utils.PROFESSIONAL_GROUP,
+                                    data.getIntExtra("professional_group_value", 0));
+                            jobj_other.put(Utils.AGE, data.getStringExtra("age"));
+                            jobj_other.put(Utils.NAME, data.getStringExtra("name"));
+                            jobj_other.put(Utils.OCCUPATION,
+                                    data.getIntExtra("profession_value", 0));
+                            jobj_other.put(Utils.DESIGNATION, data.getStringExtra("designation"));
+                            jobj_other.put(Utils.INSTITUTE, data.getStringExtra("institute"));
+                            jobj_other.put(Utils.ID, mama.getId());
+                            jobj_other.put(Utils.RELATION, data.getIntExtra("relation_value",
+                                    0));  //brother sibling type value is 1
+                            jobj_others.put(jobj_other);
+                            jobj_other_.put(Utils.FAMILY_MEMBER_ATTRIBUTE, jobj_others);
+                            jobj_pro.put(Utils.PROFILE, jobj_other_);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(jobj_pro.toString());
+                        updateDetails(jobj_pro);
+                    }
+                }
+
+                setDataOnFamilyMemberRecylerView(userProfile);
             } else if (requestCode == 23 || requestCode == 24 || requestCode == 25
                     || requestCode == 26) {
                 if (data != null) {
@@ -2950,6 +3223,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                 data.getStringExtra("present_address"));
                         userProfile.getProfile().getAddress().getPresentAddress().setCountry(
                                 data.getStringExtra("present_country_data"));
+                        userProfile.getProfile().getAddress().setSameAddress(data.getBooleanExtra("same_address", false));
                         if (data.getStringExtra("present_country_data").equalsIgnoreCase(
                                 "bangladesh")) {
                             userProfile.getProfile().getAddress().getPresentAddress().setDistrict(
@@ -3016,11 +3290,13 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                             jobj_permanent_address.put(Utils.COUNTRY,
                                     data.getStringExtra("permanent_country_value"));
                             jobj_address.put("1", jobj_permanent_address);
+
                             jobj_address_attr.put(Utils.ADDRESSES_ATTRIBUTES, jobj_address);
                             jobj_address_attr.put(Utils.HOME_TOWN,
                                     data.getStringExtra("home_town_data"));
                             jobj_address_attr.put(Utils.RESIDENCE,
                                     data.getStringExtra("residence"));
+                            jobj_address_attr.put(Utils.SAME_ADDRESS, (data.getBooleanExtra("same_address", false) == true) == true?"1":"0");
                             jobj_pro.put(Utils.PROFILE, jobj_address_attr);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -3260,12 +3536,22 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         return userProfile.getProfile().getPersonalInformation();
     }
 
-    public Brother getBrother(int position) {
-        return userProfile.getProfile().getFamilyMembers().getBrothers().get(position - 1);
+    public Brother getBrother(int id) {
+        for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getBrothers().size(); i++) {
+            if (userProfile.getProfile().getFamilyMembers().getBrothers().get(i).getId() == id) {
+                return userProfile.getProfile().getFamilyMembers().getBrothers().get(i);
+            }
+        }
+        return null;
     }
 
-    public Sister getSister(int position) {
-        return userProfile.getProfile().getFamilyMembers().getSisters().get(position - 1);
+    public Sister getSister(int id) {
+        for (int i = 0; i < userProfile.getProfile().getFamilyMembers().getSisters().size(); i++) {
+            if (userProfile.getProfile().getFamilyMembers().getSisters().get(i).getId() == id) {
+                return userProfile.getProfile().getFamilyMembers().getSisters().get(i);
+            }
+        }
+        return null;
     }
 
     public Father getFather() {
@@ -3673,25 +3959,46 @@ class FetchOthersConstant extends AsyncTask<String, String, String> {
         } else {
             Log.i("constantval", this.getClass().getSimpleName() + "_nextfetchval: " + s);
             Intent intent;
-            intent = new Intent(mContext, OthersEditActivity.class);
-            intent.putExtra("constants", s);
-            intent.putExtra("data", reqType);
+            if (reqType.equalsIgnoreCase("brother")) {
+                    intent = new Intent(mContext, BrotherEditActivity.class);
+                    intent.putExtra("constants", s);
+                    intent.putExtra("data", reqType);
+                    intent.putExtra("id", id);
+                    intent.putExtra("brother_info",
+                            ((OwnUserProfileActivity) mContext).getBrother(id));
+                    ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                            req_code);
+            } else if (reqType.equalsIgnoreCase("sister")) {
+                    intent = new Intent(mContext, BrotherEditActivity.class);
+                    intent.putExtra("constants", s);
+                    intent.putExtra("data", reqType);
+                    intent.putExtra("id", id);
+                    intent.putExtra("sister_info",
+                            ((OwnUserProfileActivity) mContext).getSister(id));
+                    ((OwnUserProfileActivity) mContext).startActivityForResult(intent,
+                            req_code);
+            }else {
+
+                intent = new Intent(mContext, OthersEditActivity.class);
+                intent.putExtra("constants", s);
+                intent.putExtra("data", reqType);
 //            intent.putExtra("id", id);
-            if(reqType.equalsIgnoreCase("dada"))
-                intent.putExtra("dada_info", ((OwnUserProfileActivity) mContext).getDada(id));
-            else if(reqType.equalsIgnoreCase("nana"))
-                intent.putExtra("nana_info", ((OwnUserProfileActivity) mContext).getNana(id));
-            else if(reqType.equalsIgnoreCase("khalu"))
-                intent.putExtra("khalu_info", ((OwnUserProfileActivity) mContext).getKhalu(id));
-            else if(reqType.equalsIgnoreCase("fupa"))
-                intent.putExtra("fupa_info", ((OwnUserProfileActivity) mContext).getFupa(id));
-            else if(reqType.equalsIgnoreCase("mama"))
-                intent.putExtra("mama_info", ((OwnUserProfileActivity) mContext).getMama(id));
-            else if(reqType.equalsIgnoreCase("kaka"))
-                intent.putExtra("kaka_info", ((OwnUserProfileActivity) mContext).getKaka(id));
-            else if(reqType.equalsIgnoreCase("other"))
-                intent.putExtra("other_info", ((OwnUserProfileActivity) mContext).getOther(id));
-            ((OwnUserProfileActivity) mContext).startActivityForResult(intent, req_code);
+                if (reqType.equalsIgnoreCase("dada"))
+                    intent.putExtra("dada_info", ((OwnUserProfileActivity) mContext).getDada(id));
+                else if (reqType.equalsIgnoreCase("nana"))
+                    intent.putExtra("nana_info", ((OwnUserProfileActivity) mContext).getNana(id));
+                else if (reqType.equalsIgnoreCase("khalu"))
+                    intent.putExtra("khalu_info", ((OwnUserProfileActivity) mContext).getKhalu(id));
+                else if (reqType.equalsIgnoreCase("fupa"))
+                    intent.putExtra("fupa_info", ((OwnUserProfileActivity) mContext).getFupa(id));
+                else if (reqType.equalsIgnoreCase("mama"))
+                    intent.putExtra("mama_info", ((OwnUserProfileActivity) mContext).getMama(id));
+                else if (reqType.equalsIgnoreCase("kaka"))
+                    intent.putExtra("kaka_info", ((OwnUserProfileActivity) mContext).getKaka(id));
+                else if (reqType.equalsIgnoreCase("other"))
+                    intent.putExtra("other_info", ((OwnUserProfileActivity) mContext).getOther(id));
+                ((OwnUserProfileActivity) mContext).startActivityForResult(intent, req_code);
+            }
         }
     }
 

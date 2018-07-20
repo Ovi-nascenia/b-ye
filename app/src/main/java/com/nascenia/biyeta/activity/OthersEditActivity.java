@@ -337,16 +337,18 @@ public class OthersEditActivity extends AppCompatActivity {
         otherRelationalStatus.setText(fupa.getRelation().toString());
         relation_value = fupa.getRelationId();
         nameOther.setText(fupa.getName().toString());
-        String occupa = fupa.getOccupation().replaceAll(" \\(", " ");
-        occupa = occupa.replace(")", "");
-        String[] occupation = occupa.split(" ");
-        if(occupation.length > 0) {
-            otherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
-            profession_value = Integer.parseInt(getOccupationValue(occupation[0]));
+        String[] occupa = null;
+        boolean hasProGroup = false;
+        occupa = fupa.getOccupation().split(" \\(");
+        if(occupa.length>1)
+            hasProGroup = true;
+        if(occupa.length > 0) {
+            otherOccupation.setText(occupa.length > 0 ? occupa[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupa[0]));
         }
-        if(occupation.length > 1) {
-            otherProfessionalGroup.setText(occupation[1]);
-            professional_group_value = Integer.parseInt(getProfessionValue(occupation[1]));
+        if(occupa.length > 1 && hasProGroup) {
+            otherProfessionalGroup.setText(occupa[1].replace(")", ""));
+            professional_group_value = Integer.parseInt(getProfessionValue(occupa[1]));
         }
         designationOther.setText(fupa.getDesignation().toString());
         institutionOther.setText(fupa.getInstitute().toString());
@@ -360,11 +362,9 @@ public class OthersEditActivity extends AppCompatActivity {
         nameOther.setText(kaka.getName().toString());
         String[] occupa = null;
         boolean hasProGroup = false;
-        if(kaka.getOccupation().contains("\\("))
-            hasProGroup = true;
         occupa = kaka.getOccupation().split(" \\(");
-//        occupa = occupa.replace(")", "");
-//        String[] occupation = occupa.split(" ");
+        if(occupa.length>1)
+            hasProGroup = true;
         if(occupa.length > 0) {
             otherOccupation.setText(occupa.length > 0 ? occupa[0] : "");
             profession_value = Integer.parseInt(getOccupationValue(occupa[0]));
@@ -383,16 +383,18 @@ public class OthersEditActivity extends AppCompatActivity {
         otherRelationalStatus.setText(mama.getRelation().toString());
         relation_value = mama.getRelationId();
         nameOther.setText(mama.getName().toString());
-        String occupa = mama.getOccupation().replaceAll(" \\(", " ");
-        occupa = occupa.replace(")", "");
-        String[] occupation = occupa.split(" ");
-        if(occupation.length > 0) {
-            otherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
-            profession_value = Integer.parseInt(getOccupationValue(occupation[0]));
+        String[] occupa = null;
+        boolean hasProGroup = false;
+        occupa = mama.getOccupation().split(" \\(");
+        if(occupa.length>1)
+            hasProGroup = true;
+        if(occupa.length > 0) {
+            otherOccupation.setText(occupa.length > 0 ? occupa[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupa[0]));
         }
-        if(occupation.length > 1) {
-            otherProfessionalGroup.setText(occupation[1]);
-            professional_group_value = Integer.parseInt(getProfessionValue(occupation[1]));
+        if(occupa.length > 1 && hasProGroup) {
+            otherProfessionalGroup.setText(occupa[1].replace(")", ""));
+            professional_group_value = Integer.parseInt(getProfessionValue(occupa[1]));
         }
         designationOther.setText(mama.getDesignation().toString());
         institutionOther.setText(mama.getInstitute().toString());
@@ -427,16 +429,18 @@ public class OthersEditActivity extends AppCompatActivity {
         otherRelationalStatus.setText(nana.getRelation().toString());
         relation_value = nana.getRelationId();
         nameOther.setText(nana.getName().toString());
-        String occupa = nana.getOccupation().replaceAll(" \\(", " ");
-        occupa = occupa.replace(")", "");
-        String[] occupation = occupa.split(" ");
-        if(occupation.length > 0) {
-            otherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
-            profession_value = Integer.parseInt(getOccupationValue(occupation[0]));
+        String[] occupa = null;
+        boolean hasProGroup = false;
+        occupa = nana.getOccupation().split(" \\(");
+        if(occupa.length>1)
+            hasProGroup = true;
+        if(occupa.length > 0) {
+            otherOccupation.setText(occupa.length > 0 ? occupa[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupa[0]));
         }
-        if(occupation.length > 1) {
-            otherProfessionalGroup.setText(occupation[1]);
-            professional_group_value = Integer.parseInt(getProfessionValue(occupation[1]));
+        if(occupa.length > 1 && hasProGroup) {
+            otherProfessionalGroup.setText(occupa[1].replace(")", ""));
+            professional_group_value = Integer.parseInt(getProfessionValue(occupa[1]));
         }
         designationOther.setText(nana.getDesignation().toString());
         institutionOther.setText(nana.getInstitute().toString());
@@ -448,16 +452,18 @@ public class OthersEditActivity extends AppCompatActivity {
         otherRelationalStatus.setText(dada.getRelation().toString());
         relation_value = dada.getRelationId();
         nameOther.setText(dada.getName().toString());
-        String occupa = dada.getOccupation().replaceAll(" \\(", " ");
-        occupa = occupa.replace(")", "");
-        String[] occupation = occupa.split(" ");
-        if(occupation.length > 0) {
-            otherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
-            profession_value = Integer.parseInt(getOccupationValue(occupation[0]));
+        String[] occupa = null;
+        boolean hasProGroup = false;
+        occupa = dada.getOccupation().split(" \\(");
+        if(occupa.length>1)
+            hasProGroup = true;
+        if(occupa.length > 0) {
+            otherOccupation.setText(occupa.length > 0 ? occupa[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupa[0]));
         }
-        if(occupation.length > 1) {
-            otherProfessionalGroup.setText(occupation[1]);
-            professional_group_value = Integer.parseInt(getProfessionValue(occupation[1]));
+        if(occupa.length > 1 && hasProGroup) {
+            otherProfessionalGroup.setText(occupa[1].replace(")", ""));
+            professional_group_value = Integer.parseInt(getProfessionValue(occupa[1]));
         }
         designationOther.setText(dada.getDesignation().toString());
         institutionOther.setText(dada.getInstitute().toString());
@@ -474,16 +480,18 @@ public class OthersEditActivity extends AppCompatActivity {
         else
             relationName.setVisibility(View.GONE);
         nameOther.setText(other.getName().toString());
-        String occupa = other.getOccupation().replaceAll(" \\(", " ");
-        occupa = occupa.replace(")", "");
-        String[] occupation = occupa.split(" ");
-        if(occupation.length > 0) {
-            otherOccupation.setText(occupation.length > 0 ? occupation[0] : "");
-            profession_value = Integer.parseInt(getOccupationValue(occupation[0]));
+        String[] occupa = null;
+        boolean hasProGroup = false;
+        occupa = other.getOccupation().split(" \\(");
+        if(occupa.length>1)
+            hasProGroup = true;
+        if(occupa.length > 0) {
+            otherOccupation.setText(occupa.length > 0 ? occupa[0] : "");
+            profession_value = Integer.parseInt(getOccupationValue(occupa[0]));
         }
-        if(occupation.length > 1) {
-            otherProfessionalGroup.setText(occupation[1]);
-            professional_group_value = Integer.parseInt(getProfessionValue(occupation[1]));
+        if(occupa.length > 1 && hasProGroup) {
+            otherProfessionalGroup.setText(occupa[1].replace(")", ""));
+            professional_group_value = Integer.parseInt(getProfessionValue(occupa[1]));
         }
         designationOther.setText(other.getDesignation().toString());
         institutionOther.setText(other.getInstitute().toString());

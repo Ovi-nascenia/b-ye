@@ -48,6 +48,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -210,6 +211,7 @@ public class Utils{
     public static String SPOUSE_PROFESSIONAL_GROUP = "s_professional_group";
     public static String SPOUSE_DESIGNTION = "s_designation";
     public static String SPOUSE_INSTITUTE = "s_institute";
+    public static String SAME_ADDRESS = "same_address";
 
 
     public static void ShowAlert(Context context, String bodyMessage) {
@@ -899,5 +901,40 @@ public class Utils{
         });
 
         alert.show();
+    }
+
+    private static ArrayList<String> monthArrayList = new ArrayList<>();
+
+    private static void loadMonthData() {
+
+        monthArrayList.add("জানুয়ারী");
+        monthArrayList.add("ফেব্রুয়ারি");
+        monthArrayList.add("মার্চ");
+        monthArrayList.add("এপ্রিল");
+        monthArrayList.add("মে");
+        monthArrayList.add("জুন");
+        monthArrayList.add("জুলাই");
+        monthArrayList.add("অগাস্ট");
+        monthArrayList.add("সেপ্টেম্বর");
+        monthArrayList.add("অক্টোবর");
+        monthArrayList.add("নভেম্বর");
+        monthArrayList.add("ডিসেম্বর");
+
+    }
+
+    public static String getMonthInBangla(int index)
+    {
+        if(monthArrayList.size() <= 0)
+            loadMonthData();
+        return monthArrayList.get(index -1);
+    }
+
+    public static String getEnglishDateToBanglaDate(String date){
+        String[] engDate = date.split("-");
+        engDate[1] = getMonthInBangla(Integer.parseInt(engDate[1]));
+        String daysofMonth = convertEnglishDigittoBangla(Integer.parseInt(engDate[2]));
+        if(daysofMonth.length()<2)
+            daysofMonth = "০" + daysofMonth;
+        return daysofMonth + " " + engDate[1] + " " + convertEnglishDigittoBangla(Integer.parseInt(engDate[0]));
     }
 }

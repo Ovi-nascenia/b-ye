@@ -18,6 +18,9 @@ public class PersonalInformation implements Serializable
     @SerializedName("age")
     @Expose
     private int age;
+    @SerializedName("dob")
+    @Expose
+    private String dob;
     @SerializedName("display_name")
     @Expose
     private String displayName;
@@ -104,6 +107,13 @@ public class PersonalInformation implements Serializable
         return this;
     }
 
+    public String getDOB() {
+        return dob;
+    }
+
+    public void setDOB(String dob) {
+        this.dob = dob;
+    }
     public String getDisplayName() {
         return displayName;
     }

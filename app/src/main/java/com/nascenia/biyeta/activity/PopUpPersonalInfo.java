@@ -475,9 +475,15 @@ public class PopUpPersonalInfo extends AppCompatActivity {
             }else if(strDataForUpdate.equalsIgnoreCase("marital_status") || strDataForUpdate.equalsIgnoreCase("marital_status_brother") || strDataForUpdate.equalsIgnoreCase("marital_status_sister")) {
                 SharePref sharePref = new SharePref(PopUpPersonalInfo.this);
                 if (sharePref.get_data("gender").equalsIgnoreCase("female") || strDataForUpdate.equalsIgnoreCase("marital_status_sister")) {
-                    marriageObject = jsonObject.getJSONObject("marital_status_constant_for_female");
+                    if(jsonObject.has("marital_status_constant_for_female"))
+                        marriageObject = jsonObject.getJSONObject("marital_status_constant_for_female");
+                    else if(jsonObject.has("marital_status_constant_female"))
+                        marriageObject = jsonObject.getJSONObject("marital_status_constant_female");
                 } else if (sharePref.get_data("gender").equalsIgnoreCase("male") || strDataForUpdate.equalsIgnoreCase("marital_status_brother")) {
-                    marriageObject = jsonObject.getJSONObject("marital_status_constant_for_male");
+                    if(jsonObject.has("marital_status_constant_for_male"))
+                        marriageObject = jsonObject.getJSONObject("marital_status_constant_for_male");
+                    else if(jsonObject.has("marital_status_constant_male"))
+                        marriageObject = jsonObject.getJSONObject("marital_status_constant_male");
                 }
                 for (int i = 0; i < marriageObject.length(); i++) {
                     maritalStatusConstant.add(marriageObject.names().getString(i));
@@ -597,13 +603,13 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 RegistrationPersonalInformation.religion = newVal + 1;
             }else if(RegistrationPersonalInformation.selectedPopUp == 5){
                 RegistrationPersonalInformation.roja = newVal + 1;
-            }else if(RegistrationPersonalInformation.selectedPopUp == 6 || strDataForUpdate.equalsIgnoreCase("disable")){
+            }else if(RegistrationPersonalInformation.selectedPopUp == 6 || (strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("disable"))){
                 RegistrationPersonalInformation.disable = newVal + 1;
-                if(newVal == 0 && strDataForUpdate.equalsIgnoreCase("disable"))
+                if(newVal == 0 && strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("disable"))
                 {
                     findViewById(R.id.ln_disable_desc).setVisibility(View.GONE);
                     getWindow().setLayout((int)(width*.8),(int)(height*.6));
-                }else if(strDataForUpdate.equalsIgnoreCase("disable")){
+                }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("disable")){
                     findViewById(R.id.ln_disable_desc).setVisibility(View.VISIBLE);
                     getWindow().setLayout((int)(width*.8),(int)(height*.75));
                 }

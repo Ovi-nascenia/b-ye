@@ -149,10 +149,12 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             addressBangldeshCheckbox.setChecked(true);
             addressAbroadCheckbox.setChecked(false);
             addressBangldeshCheckboxAction();
+            currentLivingLocationStatus = "BD";
         }else{
             addressBangldeshCheckbox.setChecked(false);
             addressAbroadCheckbox.setChecked(true);
             addressAbroadCheckboxAction();
+            currentLivingLocationStatus = "AB";
         }
 //        intent.putExtra("living_abroad_data", abroadTypeTextView.getText().toString());
         abroadTypeTextView.setText(mPersonalInformation.getLivingAbroadStatus());
@@ -252,6 +254,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
     }
 
     private void prepareCountryListDialog() {
+        countryCounter = 0;
         countryNameArray = new String[Locale.getISOCountries().length];
 
         // String[] locales = Locale.getISOCountries();
@@ -260,8 +263,12 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
 
             Locale obj = new Locale("", countryCode);
             countryNameArray[countryCounter] = obj.getDisplayCountry();
-            if(countryCode.equalsIgnoreCase("bd"))
+            if(countryCode.equalsIgnoreCase("bd")) {
                 bdIndex = countryCounter;
+//                if(currentLivingLocationStatus.equalsIgnoreCase("AB")){
+//                    countryCounter--;
+//                }
+            }
             countryCounter++;
             Log.i("countrylist", "Country Code = " + obj.getCountry()
                     + ", Country Name = " + obj.getDisplayCountry());
@@ -275,6 +282,57 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
                         // user checked an item
                         ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(Locale.getISOCountries()));
                         Locale obj = new Locale("", arrayList.get(selectItemPosition));
+                        // Toast.makeText(getBaseContext(), obj.getCountry() + " " + obj.getDisplayCountry(), Toast.LENGTH_LONG).show();
+
+                        if (countryIndicator == 0) {
+                            presentCountryTextView.setText(obj.getDisplayCountry());
+                            presentCountryCode = obj.getCountry();
+                            if( currentLivingLocationStatus.equalsIgnoreCase("AB"))
+                                presentDistrictLayout.setVisibility(View.GONE);
+                            else
+                                presentDistrictLayout.setVisibility(View.VISIBLE);
+                        } else {
+                            permanentCountryTextView.setText(obj.getDisplayCountry());
+                            permanentCountryCode = obj.getCountry();
+                            if( !permanentCountryCode.equalsIgnoreCase("BD"))
+                                permanentDistrictLayout.setVisibility(View.GONE);
+                            else
+                                permanentDistrictLayout.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                });
+    }
+
+    private void prepareCountryListDialogWithoutBD() {
+        countryCounter = 0;
+
+        countryNameArray = new String[Locale.getISOCountries().length - 1];
+
+        // String[] locales = Locale.getISOCountries();
+
+        for (String countryCode : Locale.getISOCountries()) {
+
+            Locale obj = new Locale("", countryCode);
+
+            if(countryCode.equalsIgnoreCase("bd")) {
+                bdIndex = countryCounter;
+            }else {
+                countryNameArray[countryCounter] = obj.getDisplayCountry();
+                countryCounter++;
+            }
+            Log.i("countrylist", "Country Code = " + obj.getCountry()
+                    + ", Country Name = " + obj.getDisplayCountry());
+
+        }
+
+        countryListDialog.setItems(countryNameArray,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int selectItemPosition) {
+                        // user checked an item
+                        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(Locale.getISOCountries()));
+                        Locale obj = new Locale("", arrayList.get(selectItemPosition>=bdIndex?++selectItemPosition:selectItemPosition));
                         // Toast.makeText(getBaseContext(), obj.getCountry() + " " + obj.getDisplayCountry(), Toast.LENGTH_LONG).show();
 
                         if (countryIndicator == 0) {
@@ -523,11 +581,14 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
                 break;
             case R.id.present_country_layout:
                 countryIndicator = 0;
+                if(currentLivingLocationStatus.equalsIgnoreCase("AB"))
+                    prepareCountryListDialogWithoutBD();
                 countryListDialog.create();
                 countryListDialog.show();
                 break;
             case R.id.permanent_country_layout:
                 countryIndicator = 1;
+                prepareCountryListDialog();
                 countryListDialog.create();
                 countryListDialog.show();
                 break;
@@ -608,7 +669,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             intent.putExtra("residence", presentCountryCode);
             intent.putExtra("living_abroad_data", abroadTypeTextView.getText().toString());
             intent.putExtra("living_abroad_value", selectedAbroadTypeNumber);
-            intent.putExtra("same_address", permanentAddressCheckbox.isChecked() ? 1 : 0);
+            intent.putExtra("same_address", permanentAddressCheckbox.isChecked() ? true : false);
             intent.putExtra("present_address", presentAddressEditext.getText().toString().trim());
             intent.putExtra("present_country_value", presentCountryCode);
             intent.putExtra("present_country_data", presentCountryTextView.getText().toString());
@@ -804,11 +865,13 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             selectedAbroadTypeNumber = "";
             presentDistrictLayout.setVisibility(View.VISIBLE);
             presentCountryTextView.setText("বাংলাদেশ");
+            presentCountryLayout.setOnClickListener(null);
             presentCountryCode = "BD";
             permanentDistrictLayout.setVisibility(View.VISIBLE);
         } else {
             currentLivingLocationStatus = "";
             presentCountryTextView.setHint("দেশ");
+            presentCountryLayout.setOnClickListener(this);
         }
     }
 
@@ -823,6 +886,7 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
             presentDistrictLayout.setVisibility(View.GONE);
             presentCountryTextView.setText(null);
             presentCountryTextView.setHint("দেশ");
+            presentCountryLayout.setOnClickListener(this);
         } else {
             currentLivingLocationStatus = "";
             abroadTypeStatusTitleTextView.setVisibility(View.GONE);
