@@ -47,16 +47,16 @@
             android:layout_gravity="right">
             <ImageView
                 android:id="@+id/img_edit"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="top|right"
                 android:src="@drawable/accept_icon"
                 android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/img_edit_cancel"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_marginTop="5dp"
                 android:layout_gravity="bottom|right"
                 android:src="@drawable/remove"
