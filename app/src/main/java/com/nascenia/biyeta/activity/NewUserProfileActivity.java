@@ -1059,7 +1059,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
 
                                 adapter = new ViewPagerAdapter(NewUserProfileActivity.this,
                                         userProfile.getProfile().getPersonalInformation().getImage()
-                                                .getOther());
+                                                .getOther(), false);                         // not editable
                                 viewPager.setAdapter(adapter);
 
                             } else {

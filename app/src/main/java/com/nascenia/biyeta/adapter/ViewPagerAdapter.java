@@ -1,6 +1,7 @@
 package com.nascenia.biyeta.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -10,22 +11,26 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.nascenia.biyeta.R;
+import com.nascenia.biyeta.activity.ImageUpload;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ViewPagerAdapter extends PagerAdapter {
     // Declare Variables
     Context context;
-    List<String> image;
+    ArrayList<String> image;
     LayoutInflater inflater;
+    boolean isEditable = false;
 
-    public ViewPagerAdapter(Context context, List<String> image) {
+    public ViewPagerAdapter(Context context, ArrayList<String> image, boolean isEditable) {
         this.context = context;
         this.image = image;
+        this.isEditable = isEditable;
     }
 
     @Override
@@ -77,6 +82,17 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         // Add viewpager_item.xml to ViewPager
         ((ViewPager) container).addView(itemView);
+
+        if(isEditable) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ImageUpload.class);
+                    intent.putStringArrayListExtra("images_list", image);
+                    context.startActivity(intent);
+                }
+            });
+        }
 
 
         return itemView;

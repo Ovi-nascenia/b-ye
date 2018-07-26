@@ -171,6 +171,8 @@ public class Utils{
     public static final int PERMANENT_ADDRESS_REQUEST_CODE = 24;
     public static final int PRESENT_LOCATION_REQUEST_CODE = 25;
     public static final int HOME_TOWN_REQUEST_CODE = 26;
+    public static final int JOB_AFTER_MARRIAGE_TOWN_REQUEST_CODE = 32;
+    public static final int HIJAB_REQUEST_CODE = 33;
 
 
     public static final int BIODATA_REQUEST_FRAGEMNT_CLASS = 000;
@@ -212,6 +214,8 @@ public class Utils{
     public static String SPOUSE_DESIGNTION = "s_designation";
     public static String SPOUSE_INSTITUTE = "s_institute";
     public static String SAME_ADDRESS = "same_address";
+    public static String JOB_PERMISSION = "job_permission";
+    public static String HIJAB = "hijab";
 
 
     public static void ShowAlert(Context context, String bodyMessage) {

@@ -181,17 +181,19 @@ public class PopupParentsEdit extends AppCompatActivity {
 
     private void setMotherData(Mother mother) {
         nameFather.setText(mother.getName().toString());
-        String occupa = mother.getOccupation().replaceAll(" \\(", " ");
-        occupa = occupa.replace(")", "");
-        String[] occupation = occupa.split(" ");
-        if(occupation.length > 0) {
-            professionFatherTV.setText(occupation.length > 0 ? occupation[0] : "");
-            profession_value = getOccupationValue(occupation[0]);
-        }
 
-        if(occupation.length > 1) {
-            professionalGroupFatherTV.setText(occupation[1]);
-            profession_group_value = getProfessionValue(occupation[1]);
+        String[] occupa = null;
+        boolean hasProGroup = false;
+        occupa = mother.getOccupation().split(" \\(");
+        if(occupa.length>1)
+            hasProGroup = true;
+        if(occupa.length > 0) {
+            professionFatherTV.setText(occupa.length > 0 ? occupa[0] : "");
+            profession_value = getOccupationValue(occupa[0]);
+        }
+        if(occupa.length > 1 && hasProGroup) {
+            professionalGroupFatherTV.setText(occupa[1].replace(")", ""));
+            profession_group_value = getProfessionValue(occupa[1]);
         }
 
         designationFather.setText(mother.getDesignation().toString());
@@ -200,17 +202,19 @@ public class PopupParentsEdit extends AppCompatActivity {
 
     private void setFatherData(Father father) {
         nameFather.setText(father.getName().toString());
-        String occupa = father.getOccupation().replaceAll(" \\(", " ");
-        occupa = occupa.replace(")", "");
-        String[] occupation = occupa.split(" ");
-        if(occupation.length > 0) {
-            professionFatherTV.setText(occupation.length > 0 ? occupation[0] : "");
-            profession_value = getOccupationValue(occupation[0]);
-        }
 
-        if(occupation.length > 1) {
-            professionalGroupFatherTV.setText(occupation[1]);
-            profession_group_value = getProfessionValue(occupation[1]);
+        String[] occupa = null;
+        boolean hasProGroup = false;
+        occupa = father.getOccupation().split(" \\(");
+        if(occupa.length>1)
+            hasProGroup = true;
+        if(occupa.length > 0) {
+            professionFatherTV.setText(occupa.length > 0 ? occupa[0] : "");
+            profession_value = getOccupationValue(occupa[0]);
+        }
+        if(occupa.length > 1 && hasProGroup) {
+            professionalGroupFatherTV.setText(occupa[1].replace(")", ""));
+            profession_group_value = getProfessionValue(occupa[1]);
         }
 
         designationFather.setText(father.getDesignation().toString());

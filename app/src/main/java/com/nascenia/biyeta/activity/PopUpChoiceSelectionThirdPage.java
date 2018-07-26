@@ -1,4 +1,5 @@
 package com.nascenia.biyeta.activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 
 import com.nascenia.biyeta.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -23,6 +27,9 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
     TextView tv_title;
     NumberPicker picker;
     String[] data = new String[]{};
+    private String info_data, strDataForUpdate;
+    private static ArrayList<String> jobArray = new ArrayList<String>();
+    private static ArrayList<String> jobConstant = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +41,30 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
         reject = (Button)findViewById(R.id.cancel);
         tv_title = (TextView) findViewById(R.id.title);
 
+        info_data = getIntent().getStringExtra("constants");
+        strDataForUpdate = getIntent().getStringExtra("data");
+        if((strDataForUpdate != null && info_data != null))   // from profile edit
+        {
+            setData();
+        }else {
 
-        if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 1){
-            RegistrationChoiceSelectionThirdPage.job = 1;
-            data = RegistrationChoiceSelectionThirdPage.jobArray.toArray(data);
-            tv_title.setText("বিয়ের পরে কি চাকরি করতে পারবে?");
-        }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 2){
-            RegistrationChoiceSelectionThirdPage.marriage = 1;
-            data = RegistrationChoiceSelectionThirdPage.marriageArray.toArray(data);
-            tv_title.setText("বৈবাহিক অবস্থা");
-        }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
-            RegistrationChoiceSelectionThirdPage.religion = 1;
-            data = RegistrationChoiceSelectionThirdPage.religionArray.toArray(data);
-            tv_title.setText("ধর্ম");
-        }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 4){
-            RegistrationChoiceSelectionThirdPage.house = 1;
-            data = RegistrationChoiceSelectionThirdPage.houseArray.toArray(data);
-            tv_title.setText("বাড়ি");
+            if (RegistrationChoiceSelectionThirdPage.selectedPopUp == 1) {
+                RegistrationChoiceSelectionThirdPage.job = 1;
+                data = RegistrationChoiceSelectionThirdPage.jobArray.toArray(data);
+                tv_title.setText("বিয়ের পরে কি চাকরি করবেন?");
+            } else if (RegistrationChoiceSelectionThirdPage.selectedPopUp == 2) {
+                RegistrationChoiceSelectionThirdPage.marriage = 1;
+                data = RegistrationChoiceSelectionThirdPage.marriageArray.toArray(data);
+                tv_title.setText("বৈবাহিক অবস্থা");
+            } else if (RegistrationChoiceSelectionThirdPage.selectedPopUp == 3) {
+                RegistrationChoiceSelectionThirdPage.religion = 1;
+                data = RegistrationChoiceSelectionThirdPage.religionArray.toArray(data);
+                tv_title.setText("ধর্ম");
+            } else if (RegistrationChoiceSelectionThirdPage.selectedPopUp == 4) {
+                RegistrationChoiceSelectionThirdPage.house = 1;
+                data = RegistrationChoiceSelectionThirdPage.houseArray.toArray(data);
+                tv_title.setText("বাড়ি");
+            }
         }
 
         picker.setMinValue(0);
@@ -59,7 +73,6 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
         picker.setOnValueChangedListener(new PopUpChoiceSelectionThirdPage.ListListener());
         setDividerColor(picker, Color.parseColor("#626262"));
         setNumberPickerTextColor(picker, Color.parseColor("#626262"));
-
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -72,7 +85,12 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
+                if(strDataForUpdate!=null) {
+                    Intent intent = new Intent();
+                    intent.putExtra("job_after_marriage_value", jobConstant.get(picker.getValue() % 3));
+                    intent.putExtra("job_after_marriage_data", jobArray.get(picker.getValue() % 3));
+                    setResult(RESULT_OK, intent);
+                }
                 finish();
             }
         });
@@ -93,6 +111,27 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void setData() {
+        try {
+            JSONObject jsonObject = new JSONObject(info_data);
+            JSONObject jobAfterMarriageObject = null;
+            jobAfterMarriageObject = jsonObject.getJSONObject("job_after_marriage");
+
+            for (int i = 0; i < jobAfterMarriageObject.length(); i++) {
+                jobConstant.add(jobAfterMarriageObject.names().getString(i));
+//                jobArray.add((String) jobAfterMarriageObject.get(jobAfterMarriageObject.names().getString(i)));
+            }
+            jobArray = new ArrayList<>();
+            jobArray.add("করতে পারি");
+            jobArray.add("অবশ্যই করবো");
+            jobArray.add("করবো না");
+            data = jobArray.toArray(data);
+            tv_title.setText("বিয়ের পরে কি চাকরি করতে পারবে?");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -151,19 +190,17 @@ public class PopUpChoiceSelectionThirdPage extends AppCompatActivity {
     private class ListListener implements NumberPicker.OnValueChangeListener{
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-            if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 1){
+            if(strDataForUpdate.equalsIgnoreCase("job_after_marriage")) {
+
+            }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 1){
                 RegistrationChoiceSelectionThirdPage.job = newVal + 1;
             }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 2){
                 RegistrationChoiceSelectionThirdPage.marriage = newVal + 1;
-            } else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
+            }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 3){
                 RegistrationChoiceSelectionThirdPage.religion = newVal + 1;
             }else if(RegistrationChoiceSelectionThirdPage.selectedPopUp == 4){
                 RegistrationChoiceSelectionThirdPage.house = newVal + 1;
             }
         }
     }
-
-
-
-
 }

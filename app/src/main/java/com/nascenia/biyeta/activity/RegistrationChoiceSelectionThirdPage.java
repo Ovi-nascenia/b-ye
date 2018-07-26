@@ -140,7 +140,6 @@ public class RegistrationChoiceSelectionThirdPage extends AppCompatActivity {
         isSignUp = getIntent().getBooleanExtra("isSignUp", false);
         client = new OkHttpClient();
 
-//        currentStep = 6;
         Log.i("gender", sharePref.get_data("gender"));
 
         try {

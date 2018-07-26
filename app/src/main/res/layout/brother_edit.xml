@@ -332,7 +332,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@color/white"
-                    android:hint="ভাইয়ের স্ত্রীর নাম*"
+                    android:hint="ভাইয়ের স্ত্রীর নাম"
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
@@ -358,7 +358,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:gravity="left"
-                        android:hint="পেশা*"
+                        android:hint="ভাইয়ের স্ত্রীর পেশা"
                         android:textColor="@color/black"
                         android:textColorHint="@color/lblFromName"
                         android:textSize="18dp" />

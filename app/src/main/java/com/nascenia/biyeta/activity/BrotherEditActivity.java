@@ -320,22 +320,22 @@ public class BrotherEditActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(spouse.getVisibility() == View.VISIBLE) {
-                    if (nameBrotherSpouse.getText().toString().equalsIgnoreCase("")) {
-                        Toast.makeText(getBaseContext(),
-                                "আপনার ভাইয়ের স্ত্রীর "
-                                        + getString(R.string.write_name_message),
-                                Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    if (brotherOcupationSpouse.getText().toString().equalsIgnoreCase("")) {
-                        Toast.makeText(getBaseContext(),
-                                "আপনার ভাইয়ের স্ত্রীর "
-                                        + getString(R.string.select_occupation_message),
-                                Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                }
+//                if(spouse.getVisibility() == View.VISIBLE) {
+//                    if (nameBrotherSpouse.getText().toString().equalsIgnoreCase("")) {
+//                        Toast.makeText(getBaseContext(),
+//                                "আপনার ভাইয়ের স্ত্রীর "
+//                                        + getString(R.string.write_name_message),
+//                                Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
+//                    if (brotherOcupationSpouse.getText().toString().equalsIgnoreCase("")) {
+//                        Toast.makeText(getBaseContext(),
+//                                "আপনার ভাইয়ের স্ত্রীর "
+//                                        + getString(R.string.select_occupation_message),
+//                                Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
+//                }
 
                 Intent intent = getIntent();
                 intent.putExtra("id", id);
@@ -349,14 +349,21 @@ public class BrotherEditActivity extends AppCompatActivity {
                 intent.putExtra("designation", designationBrother.getText().toString());
                 intent.putExtra("institute", institutionBrother.getText().toString());
                 intent.putExtra("marital_status_data", brotherMaritalStatus.getText().toString());
-                intent.putExtra("marital_status_value", brotherMaritalStatusValue);
-                intent.putExtra("name_spouse", nameBrotherSpouse.getText().toString());
-                intent.putExtra("profession_spouse_data", brotherOcupationSpouse.getText().toString());
-                intent.putExtra("profession_spouse_value", brotherOcupationSpouseValue);
-                intent.putExtra("professional_group_spouse_data", brotherProfessionalGroupSpouse.getText().toString());
-                intent.putExtra("professional_group_spouse_value", brotherProfessionalGroupSpouseValue);
-                intent.putExtra("designation_spouse", designationBrotherSpouse.getText().toString());
-                intent.putExtra("institute_spouse", institutionBrotherSpouse.getText().toString());
+                intent.putExtra("marital_status_value", brotherMaritalStatusValue + "");
+                if(strDataUpdate.equalsIgnoreCase("brother")) {
+                    intent.putExtra("name_spouse", nameBrotherSpouse.getText().toString());
+                    intent.putExtra("profession_spouse_data",
+                            brotherOcupationSpouse.getText().toString());
+                    intent.putExtra("profession_spouse_value", brotherOcupationSpouseValue);
+                    intent.putExtra("professional_group_spouse_data",
+                            brotherProfessionalGroupSpouse.getText().toString());
+                    intent.putExtra("professional_group_spouse_value",
+                            brotherProfessionalGroupSpouseValue);
+                    intent.putExtra("designation_spouse",
+                            designationBrotherSpouse.getText().toString());
+                    intent.putExtra("institute_spouse",
+                            institutionBrotherSpouse.getText().toString());
+                }
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -407,6 +414,10 @@ public class BrotherEditActivity extends AppCompatActivity {
         designationBrother.setText(sister.getDesignation().toString());
         institutionBrother.setText(sister.getInstitute().toString());
         brotherMaritalStatus.setText(sister.getMaritalStatus());
+        if(sister.getMaritalStatus() != null && !sister.getMaritalStatus().equalsIgnoreCase("")) {
+            brotherMaritalStatusValue = Integer.parseInt(
+                    getMaritalStatusValue(sister.getMaritalStatus()));
+        }
         spouse.setVisibility(View.GONE);
 
     }
@@ -430,7 +441,7 @@ public class BrotherEditActivity extends AppCompatActivity {
         designationBrother.setText(brother.getDesignation().toString());
         institutionBrother.setText(brother.getInstitute().toString());
         brotherMaritalStatus.setText(brother.getMaritalStatus());
-        if(!brother.getMaritalStatus().equalsIgnoreCase("")) {
+        if(brother.getMaritalStatus() != null && !brother.getMaritalStatus().equalsIgnoreCase("")) {
             brotherMaritalStatusValue = Integer.parseInt(
                     getMaritalStatusValue(brother.getMaritalStatus()));
             if(brotherMaritalStatusValue == 4){
@@ -438,16 +449,18 @@ public class BrotherEditActivity extends AppCompatActivity {
                 nameBrotherSpouse.setText(brother.getSpouseName());
                 occupa = null;
                 hasProGroup = false;
-                occupa = brother.getSpouseOccupation().split(" \\(");
-                if(occupa.length>1)
-                    hasProGroup = true;
-                if(occupa.length > 0) {
-                    brotherOcupationSpouse.setText(occupa.length > 0 ? occupa[0] : "");
-                    brotherOcupationSpouseValue = getOccupationValue(occupa[0]);
-                }
-                if(occupa.length > 1 && hasProGroup) {
-                    brotherProfessionalGroupSpouse.setText(occupa[1].replace(")", ""));
-                    brotherProfessionalGroupSpouseValue = getProfessionValue(occupa[1]);
+                if(brother.getSpouseOccupation() != null) {
+                    occupa = brother.getSpouseOccupation().split(" \\(");
+                    if (occupa.length > 1)
+                        hasProGroup = true;
+                    if (occupa.length > 0) {
+                        brotherOcupationSpouse.setText(occupa.length > 0 ? occupa[0] : "");
+                        brotherOcupationSpouseValue = getOccupationValue(occupa[0]);
+                    }
+                    if (occupa.length > 1 && hasProGroup) {
+                        brotherProfessionalGroupSpouse.setText(occupa[1].replace(")", ""));
+                        brotherProfessionalGroupSpouseValue = getProfessionValue(occupa[1]);
+                    }
                 }
                 designationBrotherSpouse.setText(brother.getSpouseDesignation());
                 institutionBrotherSpouse.setText(brother.getSpouseInstitue());
@@ -508,7 +521,7 @@ public class BrotherEditActivity extends AppCompatActivity {
                         "reject")) {
                     brotherMaritalStatus.setText(data.getStringExtra("marital_status_data"));
                     brotherMaritalStatusValue = data.getIntExtra("marital_status_value", 0);
-                    if (data.getIntExtra("marital_status_value", 0) == 4){
+                    if (strDataUpdate.equalsIgnoreCase("brother") && data.getIntExtra("marital_status_value", 0) == 4){
                         spouse.setVisibility(View.VISIBLE);
                     } else {
                         brotherProfessionalGroupSpouse.setText("");

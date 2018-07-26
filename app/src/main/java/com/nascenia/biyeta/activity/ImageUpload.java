@@ -32,6 +32,8 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +42,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -69,6 +72,7 @@ public class ImageUpload extends AppCompatActivity {
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private Uri fileUri;
     private boolean isSignUp = false;
+    ArrayList<String> images_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,7 @@ public class ImageUpload extends AppCompatActivity {
         progress.setCancelable(false);
 
         isSignUp = getIntent().getBooleanExtra("isSignUp", false);
+        images_list = getIntent().getStringArrayListExtra("images_list");
 
         client = new OkHttpClient();
         beforeProPicUpload = (LinearLayout) findViewById(R.id.before_pro_pic_upload);
@@ -103,6 +108,79 @@ public class ImageUpload extends AppCompatActivity {
         bodyPic = (ImageView) findViewById(R.id.body_pic);
         otherPic = (ImageView) findViewById(R.id.other_pic);
 
+        if(images_list != null){
+            Picasso.with(ImageUpload.this)
+                .load(Utils.Base_URL + images_list.get(0))
+                .into(proPic, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        proPic.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                beforeProPicUpload.setVisibility(View.GONE);
+                                afterProPicUpload.setVisibility(View.VISIBLE);
+                                Utils.scaleImage(ImageUpload.this, 2f, proPic);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError() {
+                    }
+                });
+
+            afterProPicUpload.setVisibility(View.VISIBLE);
+            afterOtherPicUpload.setVisibility(View.GONE);
+            beforeOtherPicUpload.setVisibility(View.VISIBLE);
+            afterBodyPicUpload.setVisibility(View.GONE);
+            beforeBodyPicUpload.setVisibility(View.VISIBLE);
+            otherImages.setVisibility(View.VISIBLE);
+
+            if(images_list.get(1) != null){
+                Picasso.with(ImageUpload.this)
+                        .load(Utils.Base_URL + images_list.get(1))
+                        .into(bodyPic, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                proPic.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        beforeBodyPicUpload.setVisibility(View.GONE);
+                                        afterBodyPicUpload.setVisibility(View.VISIBLE);
+                                        Utils.scaleImage(ImageUpload.this, 2f, bodyPic);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onError() {
+                            }
+                        });
+            }
+
+            if(images_list.get(2) != null){
+                Picasso.with(ImageUpload.this)
+                        .load(Utils.Base_URL + images_list.get(2))
+                        .into(otherPic, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                proPic.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        beforeOtherPicUpload.setVisibility(View.GONE);
+                                        afterOtherPicUpload.setVisibility(View.VISIBLE);
+                                        Utils.scaleImage(ImageUpload.this, 2f, otherPic);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onError() {
+                            }
+                        });
+            }
+        }
+
         permissionLayout = (LinearLayout) findViewById(R.id.permission);
 
 
@@ -110,12 +188,10 @@ public class ImageUpload extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* new Intent(ImageUpload.this,Login.class);
-                finish();*/
-                new GetPreviousStepFetchConstant().execute();
-
-                /*startActivity(new Intent(ImageUpload.this,RegistrationOwnInfo.class));
-                finish();*/
+                if(images_list != null)
+                    finish();
+                else
+                    new GetPreviousStepFetchConstant().execute();
             }
         });
 
@@ -367,9 +443,11 @@ public class ImageUpload extends AppCompatActivity {
             }
         });
 
-        afterOtherPicUpload.setVisibility(View.GONE);
-        afterBodyPicUpload.setVisibility(View.GONE);
-        afterProPicUpload.setVisibility(View.GONE);
+        if(images_list == null) {
+            afterOtherPicUpload.setVisibility(View.GONE);
+            afterBodyPicUpload.setVisibility(View.GONE);
+            afterProPicUpload.setVisibility(View.GONE);
+        }
 
         permissionLayout.setVisibility(View.VISIBLE);
 
@@ -454,15 +532,19 @@ public class ImageUpload extends AppCompatActivity {
                     } else {
                         numberOfImage++;
                         if (numberOfImage == numberOfImageAdded) {
-                            new ImageUpload.FetchConstant().execute();
-                            beforeProPicUploadValue = 0;
-                            beforeBodyPicUploadValue = 0;
-                            beforeOtherPicUploadValue = 0;
-                            afterProPicUploadValue = 0;
-                            afterBodyPicUploadValue = 0;
-                            afterOtherPicUploadValue = 0;
-                            numberOfImage = 0;
-                            numberOfImageAdded = 0;
+                            if(images_list != null)
+                                finish();
+                            else {
+                                new ImageUpload.FetchConstant().execute();
+                                beforeProPicUploadValue = 0;
+                                beforeBodyPicUploadValue = 0;
+                                beforeOtherPicUploadValue = 0;
+                                afterProPicUploadValue = 0;
+                                afterBodyPicUploadValue = 0;
+                                afterOtherPicUploadValue = 0;
+                                numberOfImage = 0;
+                                numberOfImageAdded = 0;
+                            }
                         }
                     }
                 } catch (JSONException e) {

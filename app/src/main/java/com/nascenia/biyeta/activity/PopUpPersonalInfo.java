@@ -40,7 +40,7 @@ public class PopUpPersonalInfo extends AppCompatActivity {
     private String info_data = "";
     EditText disableEditText;
     private JSONObject skinColorObject, marriageObject, bloodObject, smokeObject, disableObject,  professionalGroupObject,
-            occupationObject, rojaObject, religionObject, houseObject, educationObject;
+            occupationObject, rojaObject, religionObject, houseObject, educationObject, hijabObject;
 
     //skin
     private ArrayList<String> skinColorArray = new ArrayList<String>();
@@ -102,6 +102,11 @@ public class PopUpPersonalInfo extends AppCompatActivity {
     private String[] educationName = new String[educationArray.size()];
     private ArrayList<String> educationConstant = new ArrayList<String>();
     private String[] educationConstantValue = new String[educationArray.size()];
+
+    private ArrayList<String> hijabArray = new ArrayList<String>();
+    private String[] hijabName = new String[hijabArray.size()];
+    private ArrayList<String> hijabConstant = new ArrayList<String>();
+    private String[] hijabConstantValue = new String[hijabArray.size()];
 
     int width = 0;
     int height = 0;
@@ -305,6 +310,11 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 intent.putExtra("prayer_value", religionConstant.get(picker.getValue()));
                 intent.putExtra("prayer_data", religionName[picker.getValue()]);
                 setResult(RESULT_OK, intent);
+            }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("hijab")) {
+                Intent intent = new Intent();
+                intent.putExtra("hijab_value", hijabConstant.get(picker.getValue()));
+                intent.putExtra("hijab_data", hijabName[picker.getValue()]);
+                setResult(RESULT_OK, intent);
             }else if(strDataForUpdate != null && strDataForUpdate.equalsIgnoreCase("own_house")) {
                 Intent intent = new Intent();
                 intent.putExtra("own_house_value", houseConstant.get(picker.getValue()));
@@ -443,6 +453,16 @@ public class PopUpPersonalInfo extends AppCompatActivity {
                 rojaName = rojaArray.toArray(rojaName);
                 data = rojaName;
                 mTextView.setText(getResources().getString(R.string.fast_text));
+            }else if(strDataForUpdate.equalsIgnoreCase("hijab")) {
+                hijabObject = jsonObject.getJSONObject("hijab_options");
+                for (int i = 0; i < hijabObject.length(); i++) {
+                    hijabConstant.add(hijabObject.names().getString(i));
+                    hijabArray.add((String) hijabObject.get(hijabObject.names().getString(i)));
+                }
+
+                hijabName = hijabArray.toArray(hijabName);
+                data = hijabName;
+                mTextView.setText(getResources().getString(R.string.hijab_text));
             }else if(strDataForUpdate.equalsIgnoreCase("prayer")) {
                 religionObject = jsonObject.getJSONObject("prayer_options");
                 for (int i = 0; i < religionObject.length(); i++) {

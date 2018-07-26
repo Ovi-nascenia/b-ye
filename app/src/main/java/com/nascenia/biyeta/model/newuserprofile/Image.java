@@ -2,6 +2,7 @@
 package com.nascenia.biyeta.model.newuserprofile;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -12,21 +13,21 @@ public class Image implements Serializable
 
     @SerializedName("other")
     @Expose
-    private List<String> other = null;
+    private ArrayList<String> other = null;
     @SerializedName("profile_picture")
     @Expose
     private String profilePicture;
     private final static long serialVersionUID = -3621541389429611113L;
 
-    public List<String> getOther() {
+    public ArrayList<String> getOther() {
         return other;
     }
 
-    public void setOther(List<String> other) {
+    public void setOther(ArrayList<String> other) {
         this.other = other;
     }
 
-    public Image withOther(List<String> other) {
+    public Image withOther(ArrayList<String> other) {
         this.other = other;
         return this;
     }
