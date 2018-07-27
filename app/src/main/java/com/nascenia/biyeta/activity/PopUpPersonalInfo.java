@@ -472,7 +472,7 @@ public class PopUpPersonalInfo extends AppCompatActivity {
 
                 religionName = religionArray.toArray(religionName);
                 data = religionName;
-                mTextView.setText(getResources().getString(R.string.religion_text));
+                mTextView.setText(getResources().getString(R.string.prayet_text));
             }else if(strDataForUpdate.equalsIgnoreCase("own_house")) {
                 houseObject = jsonObject.getJSONObject("house_options");
                 for (int i = 0; i < houseObject.length(); i++) {

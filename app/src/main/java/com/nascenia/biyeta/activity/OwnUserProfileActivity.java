@@ -797,27 +797,30 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     }
 
     private void setDataOnPersonalInfoRecylerView(UserProfile userProfile, int updateIndex) {
+        int i = 0;
+        if(updateIndex >= 0)
+            i = updateIndex;
 
-        if (personalInfoChildItemList.size() > 0 && personalInfoChildItemList.get(
-                0).getTitle().equalsIgnoreCase(getResources().getString(R.string.birthday))
+        if (personalInfoChildItemList.size() > i && personalInfoChildItemList.get(
+                i).getTitle().equalsIgnoreCase(getResources().getString(R.string.birthday))
                 && updateIndex == 0) {
-            personalInfoChildItemList.set(0,
+            personalInfoChildItemList.set(i++,
                     new UserProfileChild(getResources().getString(R.string.birthday),
                             Utils.getEnglishDateToBanglaDate(userProfile.getProfile().getPersonalInformation().getDOB()) + ","
 
                     ));
         } else if (updateIndex == -1) {
-            personalInfoChildItemList.add(0,
+            personalInfoChildItemList.add(i++,
                     new UserProfileChild(getResources().getString(R.string.birthday),
                             Utils.getEnglishDateToBanglaDate(userProfile.getProfile().getPersonalInformation().getDOB()) + ","
 
                     ));
         }
 
-        if (personalInfoChildItemList.size() > 1 && personalInfoChildItemList.get(
-                1).getTitle().equalsIgnoreCase(getResources().getString(R.string.height))
+        if (personalInfoChildItemList.size() > i && personalInfoChildItemList.get(
+                i).getTitle().equalsIgnoreCase(getResources().getString(R.string.height))
                 && updateIndex == 1) {
-            personalInfoChildItemList.set(1,
+            personalInfoChildItemList.set(i++,
                     new UserProfileChild(getResources().getString(R.string.height),
                             Utils.convertEnglishDigittoBangla(
                                     userProfile.getProfile().getPersonalInformation().getHeightFt())
@@ -828,7 +831,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                     + "\""
                     ));
         } else if (updateIndex == -1) {
-            personalInfoChildItemList.add(1,
+            personalInfoChildItemList.add(i++,
                     new UserProfileChild(getResources().getString(R.string.height),
                             Utils.convertEnglishDigittoBangla(
                                     userProfile.getProfile().getPersonalInformation().getHeightFt())
@@ -840,51 +843,67 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     ));
         }
 
-        if (personalInfoChildItemList.size() > 2 && personalInfoChildItemList.get(
-                2).getTitle().equalsIgnoreCase(getResources().getString(R.string.religion_text))
+        if (personalInfoChildItemList.size() > i && personalInfoChildItemList.get(
+                i).getTitle().equalsIgnoreCase(getResources().getString(R.string.religion_text))
                 && updateIndex == 2) {
-            personalInfoChildItemList.set(2,
-                    new UserProfileChild(getResources().getString(R.string.religion_text),
-                            userProfile.getProfile().getProfileReligion().getReligion()
-                    ));
-        } else if (updateIndex == -1) {
-            personalInfoChildItemList.add(2,
-                    new UserProfileChild(getResources().getString(R.string.religion_text),
-                            userProfile.getProfile().getProfileReligion().getReligion()
-                    ));
-        }
-
-        if (userProfile.getProfile().getProfileReligion().getCast() != null) {
-            if (personalInfoChildItemList.size() > 3 && personalInfoChildItemList.get(
-                    3).getTitle().equalsIgnoreCase(getResources().getString(R.string.cast_text))
-                    && updateIndex == 2) {
-                personalInfoChildItemList.set(3,
-                        new UserProfileChild(getResources().getString(R.string.cast_text),
-                                userProfile.getProfile().getProfileReligion().getCast()
+            if(userProfile.getProfile().getProfileReligion().getCast() != null && userProfile.getProfile().getProfileReligion().getCast().length() > 0) {
+                personalInfoChildItemList.set(i++,
+                        new UserProfileChild(getResources().getString(R.string.religion_text),
+                                userProfile.getProfile().getProfileReligion().getReligion() + " (" + userProfile.getProfile().getProfileReligion().getCast() + ")"
                         ));
-            } else if (updateIndex == -1) {
-                personalInfoChildItemList.add(3,
-                        new UserProfileChild(getResources().getString(R.string.cast_text),
-                                userProfile.getProfile().getProfileReligion().getCast()
+            }else{
+                personalInfoChildItemList.set(i++,
+                        new UserProfileChild(getResources().getString(R.string.religion_text),
+                                userProfile.getProfile().getProfileReligion().getReligion()
+                        ));
+            }
+        } else if (updateIndex == -1) {
+            if(userProfile.getProfile().getProfileReligion().getCast() != null && userProfile.getProfile().getProfileReligion().getCast().length() > 0) {
+                personalInfoChildItemList.add(i++,
+                        new UserProfileChild(getResources().getString(R.string.religion_text),
+                                userProfile.getProfile().getProfileReligion().getReligion() + " ("
+                                        + userProfile.getProfile().getProfileReligion().getCast()
+                                        + ")"
+                        ));
+            }else {
+                personalInfoChildItemList.add(i++,
+                        new UserProfileChild(getResources().getString(R.string.religion_text),
+                                userProfile.getProfile().getProfileReligion().getReligion()
                         ));
             }
         }
 
+//        if (userProfile.getProfile().getProfileReligion().getCast() != null) {
+//            if (personalInfoChildItemList.size() > --i && personalInfoChildItemList.get(
+//                    i).getTitle().equalsIgnoreCase(getResources().getString(R.string.religion_text))
+//                    && updateIndex == 2) {
+//                personalInfoChildItemList.set(i++,
+//                        new UserProfileChild(getResources().getString(R.string.religion_text),
+//                                userProfile.getProfile().getProfileReligion().getReligion() + " (" + userProfile.getProfile().getProfileReligion().getCast() + ")"
+//                        ));
+//            } else if (updateIndex == -1) {
+//                personalInfoChildItemList.add(i++,
+//                        new UserProfileChild(getResources().getString(R.string.religion_text),
+//                                userProfile.getProfile().getProfileReligion().getReligion() + " (" + userProfile.getProfile().getProfileReligion().getCast() + ")"
+//                        ));
+//            }
+//        }
+
         if (!(checkNullField(
                 userProfile.getProfile().getAddress().getPresentAddress().getCountry())).equals(
                 "")) {
-            if (personalInfoChildItemList.size() > 4 && personalInfoChildItemList.get(
-                    4).getTitle().equalsIgnoreCase(
+            if (personalInfoChildItemList.size() > i && personalInfoChildItemList.get(
+                    i).getTitle().equalsIgnoreCase(
                     getResources().getString(R.string.present_loaction_text))
                     && updateIndex == 22) {
-                personalInfoChildItemList.set(4,
+                personalInfoChildItemList.set(i++,
                         new UserProfileChild(
                                 getResources().getString(R.string.present_loaction_text),
                                 userProfile.getProfile().getAddress().getPresentAddress()
                                         .getCountry()
                         ));
             } else if (updateIndex == -1) {
-                personalInfoChildItemList.add(4,
+                personalInfoChildItemList.add(i++,
                         new UserProfileChild(
                                 getResources().getString(R.string.present_loaction_text),
                                 userProfile.getProfile().getAddress().getPresentAddress()
@@ -896,15 +915,15 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (!(checkNullField(userProfile.getProfile().getProfileLivingIn().getLocation())).equals(
                 "")) {
-            if (personalInfoChildItemList.size() > 5 && personalInfoChildItemList.get(
-                    5).getTitle().equalsIgnoreCase(getResources().getString(R.string.home_town))
+            if (personalInfoChildItemList.size() > i && personalInfoChildItemList.get(
+                    i).getTitle().equalsIgnoreCase(getResources().getString(R.string.home_town))
                     && updateIndex == 22) {
-                personalInfoChildItemList.set(5,
+                personalInfoChildItemList.set(i++,
                         new UserProfileChild(getResources().getString(R.string.home_town),
                                 userProfile.getProfile().getProfileLivingIn().getLocation()
                         ));
             } else if (updateIndex == -1) {
-                personalInfoChildItemList.add(5,
+                personalInfoChildItemList.add(i++,
                         new UserProfileChild(getResources().getString(R.string.home_town),
                                 userProfile.getProfile().getProfileLivingIn().getLocation()
                         ));
@@ -914,16 +933,16 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (!(checkNullField(
                 userProfile.getProfile().getPersonalInformation().getSkinColor())).equals("")) {
-            if (personalInfoChildItemList.size() > 6 && personalInfoChildItemList.get(
-                    6).getTitle().equalsIgnoreCase(getResources().getString(R.string.skin_color))
+            if (personalInfoChildItemList.size() > i && personalInfoChildItemList.get(
+                    i).getTitle().equalsIgnoreCase(getResources().getString(R.string.skin_color))
                     && updateIndex == 6) {
 
-                personalInfoChildItemList.set(6,
+                personalInfoChildItemList.set(i++,
                         new UserProfileChild(getResources().getString(R.string.skin_color),
                                 userProfile.getProfile().getPersonalInformation().getSkinColor()
                         ));
             } else if (updateIndex == -1) {
-                personalInfoChildItemList.add(6,
+                personalInfoChildItemList.add(i++,
                         new UserProfileChild(getResources().getString(R.string.skin_color),
                                 userProfile.getProfile().getPersonalInformation().getSkinColor()
                         ));
@@ -933,15 +952,15 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getWeight())).equals(
                 "")) {
-            if (personalInfoChildItemList.size() > 7 && personalInfoChildItemList.get(
-                    7).getTitle().equalsIgnoreCase(getResources().getString(R.string.body))
-                    && updateIndex == 7) {
-                personalInfoChildItemList.set(7,
+            if (personalInfoChildItemList.size() > i && personalInfoChildItemList.get(
+                    i).getTitle().equalsIgnoreCase(getResources().getString(R.string.body))
+                    && updateIndex == i) {
+                personalInfoChildItemList.set(i++,
                         new UserProfileChild(getResources().getString(R.string.body),
                                 userProfile.getProfile().getPersonalInformation().getWeight()
                         ));
             } else if (updateIndex == -1) {
-                personalInfoChildItemList.add(7,
+                personalInfoChildItemList.add(i++,
                         new UserProfileChild(getResources().getString(R.string.body),
                                 userProfile.getProfile().getPersonalInformation().getWeight()
                         ));
@@ -952,15 +971,15 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getMaritalStatus()))
                 .equals("")) {
-            if (personalInfoChildItemList.size() > 8 && personalInfoChildItemList.get(
-                    8).getTitle().equalsIgnoreCase(
+            if (personalInfoChildItemList.size() > i && personalInfoChildItemList.get(
+                    i).getTitle().equalsIgnoreCase(
                     getResources().getString(R.string.marital_status)) && updateIndex == 8) {
-                personalInfoChildItemList.set(8,
+                personalInfoChildItemList.set(i++,
                         new UserProfileChild(getResources().getString(R.string.marital_status),
                                 userProfile.getProfile().getPersonalInformation().getMaritalStatus()
                         ));
             } else if (updateIndex == -1) {
-                personalInfoChildItemList.add(8,
+                personalInfoChildItemList.add(i++,
                         new UserProfileChild(getResources().getString(R.string.marital_status),
                                 userProfile.getProfile().getPersonalInformation().getMaritalStatus()
                         ));
@@ -971,15 +990,15 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getBloodGroup()))
                 .equals("")) {
-            if (personalInfoChildItemList.size() > 9 && personalInfoChildItemList.get(
-                    9).getTitle().equalsIgnoreCase(
+            if (personalInfoChildItemList.size() > i && personalInfoChildItemList.get(
+                    i).getTitle().equalsIgnoreCase(
                     getResources().getString(R.string.blood_group_text)) && updateIndex == 9) {
-                personalInfoChildItemList.set(9,
+                personalInfoChildItemList.set(i++,
                         new UserProfileChild(getResources().getString(R.string.blood_group_text),
                                 userProfile.getProfile().getPersonalInformation().getBloodGroup()
                         ));
             } else if (updateIndex == -1) {
-                personalInfoChildItemList.add(9,
+                personalInfoChildItemList.add(i++,
                         new UserProfileChild(getResources().getString(R.string.blood_group_text),
                                 userProfile.getProfile().getPersonalInformation().getBloodGroup()
                         ));
@@ -990,11 +1009,11 @@ public class OwnUserProfileActivity extends AppCompatActivity {
         if (!(checkNullField(userProfile.getProfile().getPersonalInformation().getDisabilities()))
                 .equals("")) {
 
-            if (personalInfoChildItemList.size() > 10 && personalInfoChildItemList.get(
-                    10).getTitle().equalsIgnoreCase(
+            if (personalInfoChildItemList.size() > i && personalInfoChildItemList.get(
+                    i).getTitle().equalsIgnoreCase(
                     getResources().getString(R.string.disabilities_text)) && updateIndex == 10) {
 
-                personalInfoChildItemList.set(10,
+                personalInfoChildItemList.set(i++,
                         new UserProfileChild(getResources().getString(R.string.disabilities_text),
 
                                 userProfile.getProfile().getPersonalInformation().getDisabilities()
@@ -1004,7 +1023,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                                         .getDisabilitiesDescription())
                         ));
             } else if (updateIndex == -1) {
-                personalInfoChildItemList.add(10,
+                personalInfoChildItemList.add(i++,
                         new UserProfileChild(getResources().getString(R.string.disabilities_text),
 
                                 userProfile.getProfile().getPersonalInformation().getDisabilities()
@@ -1022,14 +1041,14 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 (!(checkNullField(userProfile.getProfile().getPersonalInformation().getSmoking()))
                         .equals(""))
                 ) {
-            if (personalInfoChildItemList.size() > 11 && personalInfoChildItemList.get(
-                    11).getTitle().equalsIgnoreCase(
+            if (personalInfoChildItemList.size() > i && personalInfoChildItemList.get(
+                   i).getTitle().equalsIgnoreCase(
                     getResources().getString(R.string.smoking_text)) && updateIndex == 11) {
-                personalInfoChildItemList.set(11,
+                personalInfoChildItemList.set(i++,
                         new UserProfileChild(getResources().getString(R.string.smoking_text),
                                 userProfile.getProfile().getPersonalInformation().getSmoking()));
             } else if (updateIndex == -1) {
-                personalInfoChildItemList.add(11,
+                personalInfoChildItemList.add(i++,
                         new UserProfileChild(getResources().getString(R.string.smoking_text),
                                 userProfile.getProfile().getPersonalInformation().getSmoking()));
             }
