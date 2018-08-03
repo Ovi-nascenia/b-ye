@@ -38,7 +38,7 @@ public class ImageCrop extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        String imageUrl = intent.getStringExtra("image_url");
+        final String imageUrl = intent.getStringExtra("image_url");
         setContentView(R.layout.activity_image_crop);
         final ImageView view = (ImageView) findViewById(R.id.imageView1);
         File imgFile = new File(imageUrl);
@@ -136,7 +136,7 @@ public class ImageCrop extends Activity {
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
                 encoded = Base64.encodeToString(byteArray, Base64.NO_WRAP);
                 cropImage = 1;
-                setBitmapdata(bitmap);
+                setBitmapdata(bitmap, imageUrl);
 
                 Log.i("bitmap", "change: " + encoded);
                 finish();
@@ -155,26 +155,27 @@ public class ImageCrop extends Activity {
         mAttacher = new PhotoViewAttacher(view);
     }
 
-    private void setBitmapdata(Bitmap bitmap) {
+    private void setBitmapdata(Bitmap bitmap, String img_url) {
 
+        String[] strFileName = img_url.split("/");
         if (ImageUpload.beforeProPicUploadValue == 1) {
             ImageUpload.afterProPicUploadValue = 1;
             ImageUpload.proPicBitmap = bitmap;
             ImageUpload.beforeProPicUploadValue = 0;
-
             ImageUpload.proPicBase64 = "data:image/jpeg;base64," + encoded;
+            ImageUpload.proPicFileName = strFileName[strFileName.length-1];
         } else if (ImageUpload.beforeBodyPicUploadValue == 1) {
             ImageUpload.afterBodyPicUploadValue = 1;
             ImageUpload.bodyPicBitmap = bitmap;
             ImageUpload.beforeBodyPicUploadValue = 0;
-
             ImageUpload.bodyPicBase64 = "data:image/jpeg;base64," + encoded;
+            ImageUpload.bodyPicFileName = strFileName[strFileName.length-1];
         } else if (ImageUpload.beforeOtherPicUploadValue == 1) {
             ImageUpload.afterOtherPicUploadValue = 1;
             ImageUpload.otherPicBitmap = bitmap;
             ImageUpload.beforeOtherPicUploadValue = 0;
-
             ImageUpload.otherPicBase64 = "data:image/jpeg;base64," + encoded;
+            ImageUpload.otherPicFileName = strFileName[strFileName.length-1];
         }
 
     }

@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.ImageUpload;
+import com.nascenia.biyeta.activity.OwnUserProfileActivity;
 import com.nascenia.biyeta.utils.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -89,7 +90,7 @@ public class ViewPagerAdapter extends PagerAdapter {
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ImageUpload.class);
                     intent.putStringArrayListExtra("images_list", image);
-                    context.startActivity(intent);
+                    ((OwnUserProfileActivity)context).startActivityForResult(intent, Utils.UPDATE_IMAGE_REQ);
                 }
             });
         }

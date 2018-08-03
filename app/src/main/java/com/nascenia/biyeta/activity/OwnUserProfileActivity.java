@@ -393,6 +393,16 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
                                 } else {
                                     userProfileImage.setVisibility(View.VISIBLE);
+                                    userProfileImage.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intent = new Intent(OwnUserProfileActivity.this, ImageUpload.class);
+                                            intent.putStringArrayListExtra("images_list", userProfile.getProfile().getPersonalInformation()
+                                                    .getImage()
+                                                    .getOther());
+                                            startActivity(intent);
+                                        }
+                                    });
                                 }
                             }
                         });
@@ -3370,8 +3380,8 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         setDataOnCommunicationRecylerView(userProfile, ((requestCode == 23 || requestCode == 24)?true:false));
                     }
                 }
-
-//                setDataOnFamilyMemberRecylerView(userProfile);
+            }else if(resultCode == Utils.UPDATE_IMAGE_REQ){
+                fetchUserProfileInfo();
             }
         }
     }

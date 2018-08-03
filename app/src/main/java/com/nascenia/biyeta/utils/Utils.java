@@ -67,8 +67,8 @@ public class Utils{
 
     public static final String MALE_GENDER = "male";
     public static final String FEMALE_GENDER = "female";
-    public static final String Base_URL = "http://test.biyeta.com";
-//    public static final String Base_URL = "http://192.168.1.95:3000";
+//    public static final String Base_URL = "http://test.biyeta.com";
+    public static final String Base_URL = "http://192.168.1.95:3000";
 //    public static final String Base_URL = "https://www.biyeta.com";
     public static final String FACEBOOK_SUBURL = "/api/v1/facebook_authorization/authorize";
     public static final String FACEBOOK_LOGIN_URL = Base_URL + FACEBOOK_SUBURL;
@@ -173,6 +173,7 @@ public class Utils{
     public static final int HOME_TOWN_REQUEST_CODE = 26;
     public static final int JOB_AFTER_MARRIAGE_TOWN_REQUEST_CODE = 32;
     public static final int HIJAB_REQUEST_CODE = 33;
+    public static int UPDATE_IMAGE_REQ = 34;
 
 
     public static final int BIODATA_REQUEST_FRAGEMNT_CLASS = 000;
@@ -216,6 +217,8 @@ public class Utils{
     public static String SAME_ADDRESS = "same_address";
     public static String JOB_PERMISSION = "job_permission";
     public static String HIJAB = "hijab";
+    public static String IS_PUBLIC_PHOTO = "photo_is_public";
+
 
 
     public static void ShowAlert(Context context, String bodyMessage) {
