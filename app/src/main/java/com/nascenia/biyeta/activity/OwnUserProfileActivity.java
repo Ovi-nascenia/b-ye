@@ -69,6 +69,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import static com.nascenia.biyeta.view.SendRequestFragmentView.checkNullField;
 
@@ -413,14 +414,10 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 //                    application.trackEception(e, "fetchUserProfileInfo",
 // "OwnUserProfileActivity", e.getMessage().toString(), mTracker);
                 }
-
-
             }
 
 
         }).start();
-
-
     }
 
 
@@ -447,13 +444,10 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                 }
                             });
                         }
-
                         @Override
                         public void onError() {
                         }
                     });
-
-
         } else {
 
             if (!sharePref.get_data("profile_picture").equals("key")) {
@@ -476,12 +470,9 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 }
             }
         }
-
-
     }
 
     private void setDataOnOtherInfoRecylerView(UserProfile userProfile, boolean expand) {
-
         /*..................................other inormation block
         start.........................................*/
 
@@ -3380,10 +3371,39 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         setDataOnCommunicationRecylerView(userProfile, ((requestCode == 23 || requestCode == 24)?true:false));
                     }
                 }
-            }else if(resultCode == Utils.UPDATE_IMAGE_REQ){
-                fetchUserProfileInfo();
+            }else if(requestCode == Utils.UPDATE_IMAGE_REQ){
+                if(data != null) {
+                    HashMap<Integer, String> updatedImageList = (HashMap<Integer, String>) data.getSerializableExtra("image_list");
+                    if(!updatedImageList.isEmpty()){
+//                        fetchUserProfileInfo();
+                        updateProfileImage(updatedImageList);
+                    }
+                }
             }
         }
+    }
+
+    private void updateProfileImage(HashMap<Integer, String> updatedImageList) {
+        ArrayList<String> imageList = userProfile.getProfile().getPersonalInformation().getImage().getOther();
+        for(int i = 1; i <= updatedImageList.size(); i++){
+            if(updatedImageList.containsKey(i)){
+                imageList.set(i-1, updatedImageList.get(i));
+                if(i == 1){
+                    userProfile.getProfile().getPersonalInformation().getImage().setProfilePicture(updatedImageList.get(i));
+                }
+            }
+        }
+//        userProfile.getProfile().getPersonalInformation().getImage().setOther(imageList);
+        ((ViewPagerAdapter) adapter).setImage(imageList);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setUserOwnImage(userProfile);
+                viewPager.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                viewPager.invalidate();
+            }
+        });
     }
 
     private int getKakaIndex(int id) {

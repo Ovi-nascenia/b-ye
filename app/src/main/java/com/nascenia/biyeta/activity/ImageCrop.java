@@ -33,6 +33,7 @@ public class ImageCrop extends Activity {
     PhotoViewAttacher mAttacher;
 
     private ExifInterface exifObject;
+    private  int picTypeSelected = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class ImageCrop extends Activity {
         Intent intent = getIntent();
         final String imageUrl = intent.getStringExtra("image_url");
         setContentView(R.layout.activity_image_crop);
+        picTypeSelected = getIntent().getIntExtra("pic_type", -1);
         final ImageView view = (ImageView) findViewById(R.id.imageView1);
         File imgFile = new File(imageUrl);
         try {
@@ -139,6 +141,12 @@ public class ImageCrop extends Activity {
                 setBitmapdata(bitmap, imageUrl);
 
                 Log.i("bitmap", "change: " + encoded);
+                Intent intent = getIntent();
+                intent.putExtra("pic_changed", true);
+                if (picTypeSelected != -1){
+                    intent.putExtra("pic_type", picTypeSelected);
+                }
+                setResult(RESULT_OK, intent);
                 finish();
                 //view.setImageBitmap(viewCapture);
                 //view.setBackgroundColor(Color.BLUE);

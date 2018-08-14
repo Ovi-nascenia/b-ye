@@ -105,4 +105,8 @@ public class ViewPagerAdapter extends PagerAdapter {
         ((ViewPager) container).removeView((RelativeLayout) object);
 
     }
+
+    public void setImage(ArrayList<String> imageList){
+        this.image = imageList;
+    }
 }

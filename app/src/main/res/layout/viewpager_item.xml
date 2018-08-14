@@ -12,6 +12,8 @@
         android:id="@+id/flag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:minWidth="80dp"
+        android:minHeight="100dp"
         android:layout_alignParentRight="true"
         android:background="@color/accountrecharge_backGround_color"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

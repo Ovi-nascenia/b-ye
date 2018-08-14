@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -76,13 +77,15 @@ public class ImageUpload extends AppCompatActivity {
     private SharePref sharePref;
 
     private static final int CAMERA_REQUEST = 1888;
-    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+    private int REQUEST_CAMERA = 0, SELECT_FILE = 1, picTypeSelected = -1;
+    private boolean profilePicChanged = false, bodyPicChanged = false, otherPicChanged = false;
     private Uri fileUri;
     private boolean isSignUp = false;
     ArrayList<String> images_list;
     String encoded;
     Bitmap bitmap;
     String SERVER_URL = "";
+    private HashMap<Integer, String> updatedImageList = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +149,6 @@ public class ImageUpload extends AppCompatActivity {
                 beforeProPicUploadValue = 1;
                 //  startActivity(new Intent(ImageUpload.this, ImageChoose.class));
                 selectImage();
-
                 //ImagePicker.pickImage(ImageUpload.this);
             }
         });
@@ -177,6 +179,9 @@ public class ImageUpload extends AppCompatActivity {
             public void onClick(View v) {
                 beforeProPicUploadValue = 1;
                 //startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                if(images_list != null && images_list.size() > 0) {
+                    picTypeSelected = 1;
+                }
                selectImage();
                // ImagePicker.pickImage(ImageUpload.this);
             }
@@ -187,6 +192,9 @@ public class ImageUpload extends AppCompatActivity {
             public void onClick(View v) {
                 beforeBodyPicUploadValue = 1;
                 //startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                if(images_list != null && images_list.size() > 0) {
+                    picTypeSelected = 2;
+                }
                 selectImage();
 
             }
@@ -198,6 +206,9 @@ public class ImageUpload extends AppCompatActivity {
             public void onClick(View v) {
                 beforeOtherPicUploadValue = 1;
                 //startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                if(images_list != null && images_list.size() > 0) {
+                    picTypeSelected = 3;
+                }
                 selectImage();
             }
         });
@@ -272,7 +283,7 @@ public class ImageUpload extends AppCompatActivity {
 
 
                 if (afterProPicUploadValue == 1) {
-                    if(images_list != null){
+                    if(images_list != null && profilePicChanged){
                         JSONObject jsonProObject = new JSONObject();
                         JSONObject jsonProfileObject = new JSONObject();
                         JSONObject jsonPhotoNoObject = new JSONObject();
@@ -285,17 +296,19 @@ public class ImageUpload extends AppCompatActivity {
                             jsonProfileObject.put("photos_attributes", jsonPhotoNoObject);
                             jsonProfileObject.put(Utils.IS_PUBLIC_PHOTO, "1");
                             jsonProObject.put(Utils.PROFILE, jsonProfileObject);
+                            numberOfImageAdded++;
                             new ImageUpload.SendPicture().execute(jsonProObject.toString().replace("\\", ""), proPicFileName, SERVER_URL);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                    }else {
+                    }else if(images_list == null){
+                        numberOfImageAdded++;
                         new ImageUpload.SendPicture().execute(proPic, proPicFileName, SERVER_URL);
                     }
-                    numberOfImageAdded++;
+
                     if(bodyPicBase64!=null) {
-                        if(images_list != null){
+                        if(images_list != null && bodyPicChanged){
                             JSONObject jsonProObject = new JSONObject();
                             JSONObject jsonProfileObject = new JSONObject();
                             JSONObject jsonPhotoAttrObject = new JSONObject();
@@ -307,20 +320,23 @@ public class ImageUpload extends AppCompatActivity {
                                 jsonPhotoObject.put("photo_type", 2);
                                 jsonPhotoNoObject.put("1", jsonPhotoObject);
                                 jsonProfileObject.put("photos_attributes", jsonPhotoNoObject);
+                                jsonProfileObject.put(Utils.IS_PUBLIC_PHOTO, "1");
                                 jsonProObject.put(Utils.PROFILE, jsonProfileObject);
+                                numberOfImageAdded++;
                                 new ImageUpload.SendPicture().execute(jsonProObject.toString().replace("\\", ""), bodyPicFileName, SERVER_URL);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
-                        }else {
+                        }else if(images_list == null){
+                            numberOfImageAdded++;
                             new ImageUpload.SendPicture().execute(bodyPic, bodyPicFileName,
                                     SERVER_URL);
                         }
-                        numberOfImageAdded++;
+
                     }
                     if(otherPicBase64!=null){
-                        if(images_list != null){
+                        if(images_list != null && otherPicChanged){
                             JSONObject jsonProObject = new JSONObject();
                             JSONObject jsonProfileObject = new JSONObject();
                             JSONObject jsonPhotoNoObject = new JSONObject();
@@ -331,18 +347,24 @@ public class ImageUpload extends AppCompatActivity {
                                 jsonPhotoObject.put("photo_type", 3);
                                 jsonPhotoNoObject.put("2", jsonPhotoObject);
                                 jsonProfileObject.put("photos_attributes", jsonPhotoNoObject);
+                                jsonProfileObject.put(Utils.IS_PUBLIC_PHOTO, "1");
                                 jsonProObject.put(Utils.PROFILE, jsonProfileObject);
+                                numberOfImageAdded++;
                                 new ImageUpload.SendPicture().execute(jsonProObject.toString().replace("\\", ""), otherPicFileName, SERVER_URL);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
-                        }else {
+                        }else if(images_list == null){
+                            numberOfImageAdded++;
                             new ImageUpload.SendPicture().execute(otherPic, otherPicFileName,
                                     SERVER_URL);
                         }
-                        numberOfImageAdded++;
+
                      }
+                    if(images_list != null && numberOfImageAdded == 0){
+                        finish();
+                    }
                 } else {
                     Toast.makeText(getBaseContext(), getString(R.string.select_image_message), Toast.LENGTH_SHORT).show();
                 }
@@ -425,7 +447,7 @@ public class ImageUpload extends AppCompatActivity {
                         .append("}").toString();
 
                 if (afterProPicUploadValue == 1) {
-                    if(images_list != null){
+                    if(images_list != null && profilePicChanged){
                         JSONObject jsonProObject = new JSONObject();
                         JSONObject jsonProfileObject = new JSONObject();
                         JSONObject jsonPhotoNoObject = new JSONObject();
@@ -436,19 +458,21 @@ public class ImageUpload extends AppCompatActivity {
                             jsonPhotoObject.put("photo_type", 1);
                             jsonPhotoNoObject.put("0", jsonPhotoObject);
                             jsonProfileObject.put("photos_attributes", jsonPhotoNoObject);
-                            jsonProfileObject.put(Utils.IS_PUBLIC_PHOTO, "1");
+                            jsonProfileObject.put(Utils.IS_PUBLIC_PHOTO, "0");
                             jsonProObject.put(Utils.PROFILE, jsonProfileObject);
+                            numberOfImageAdded++;
                             new ImageUpload.SendPicture().execute(jsonProObject.toString().replace("\\", ""), proPicFileName, SERVER_URL);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                    }else {
+                    }else if(images_list == null){
+                        numberOfImageAdded++;
                         new ImageUpload.SendPicture().execute(proPic, proPicFileName, SERVER_URL);
                     }
-                    numberOfImageAdded++;
+
                     if(bodyPicBase64!=null) {
-                        if(images_list != null){
+                        if(images_list != null && bodyPicChanged){
                             JSONObject jsonProObject = new JSONObject();
                             JSONObject jsonProfileObject = new JSONObject();
                             JSONObject jsonPhotoNoObject = new JSONObject();
@@ -459,20 +483,23 @@ public class ImageUpload extends AppCompatActivity {
                                 jsonPhotoObject.put("photo_type", 2);
                                 jsonPhotoNoObject.put("1", jsonPhotoObject);
                                 jsonProfileObject.put("photos_attributes", jsonPhotoNoObject);
+                                jsonProfileObject.put(Utils.IS_PUBLIC_PHOTO, "0");
                                 jsonProObject.put(Utils.PROFILE, jsonProfileObject);
+                                numberOfImageAdded++;
                                 new ImageUpload.SendPicture().execute(jsonProObject.toString().replace("\\", ""), bodyPicFileName, SERVER_URL);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
-                        }else {
+                        }else if(images_list == null){
+                            numberOfImageAdded++;
                             new ImageUpload.SendPicture().execute(bodyPic, bodyPicFileName,
                                     SERVER_URL);
                         }
-                        numberOfImageAdded++;
+
                     }
                     if(otherPicBase64!=null) {
-                        if(images_list != null){
+                        if(images_list != null && otherPicChanged){
                             JSONObject jsonProObject = new JSONObject();
                             JSONObject jsonProfileObject = new JSONObject();
                             JSONObject jsonPhotoNoObject = new JSONObject();
@@ -483,17 +510,23 @@ public class ImageUpload extends AppCompatActivity {
                                 jsonPhotoObject.put("photo_type", 3);
                                 jsonPhotoNoObject.put("2", jsonPhotoObject);
                                 jsonProfileObject.put("photos_attributes", jsonPhotoNoObject);
+                                jsonProfileObject.put(Utils.IS_PUBLIC_PHOTO, "0");
                                 jsonProObject.put(Utils.PROFILE, jsonProfileObject);
+                                numberOfImageAdded++;
                                 new ImageUpload.SendPicture().execute(jsonProObject.toString().replace("\\", ""), otherPicFileName, SERVER_URL);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
-                        }else {
+                        }else if(images_list == null){
+                            numberOfImageAdded++;
                             new ImageUpload.SendPicture().execute(otherPic, otherPicFileName,
                                     SERVER_URL);
                         }
-                        numberOfImageAdded++;
+
+                    }
+                    if(images_list != null && numberOfImageAdded == 0){
+                        finish();
                     }
                 } else {
                     Toast.makeText(getBaseContext(), getString(R.string.select_image_message), Toast.LENGTH_SHORT).show();
@@ -536,8 +569,6 @@ public class ImageUpload extends AppCompatActivity {
                                 afterProPicUpload.setVisibility(View.VISIBLE);
                                 Utils.scaleImage(ImageUpload.this, 2f, proPic);
                                 generateEncodedImages(bitmap, 1, images_list.get(0));
-
-
                             }
                         });
                     }
@@ -559,6 +590,38 @@ public class ImageUpload extends AppCompatActivity {
         afterBodyPicUpload.setVisibility(View.GONE);
         beforeBodyPicUpload.setVisibility(View.VISIBLE);
         otherImages.setVisibility(View.VISIBLE);
+
+        if(images_list.get(2) != null){
+            Picasso.with(ImageUpload.this)
+                    .load(Utils.Base_URL + images_list.get(2))
+                    .into(new Target() {
+                        @Override
+                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                            otherPic.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    System.out.println(3);
+                                    otherPic.setImageBitmap(bitmap);
+                                    beforeOtherPicUpload.setVisibility(View.GONE);
+                                    afterOtherPicUpload.setVisibility(View.VISIBLE);
+                                    Utils.scaleImage(ImageUpload.this, 2f, otherPic);
+                                    generateEncodedImages(bitmap, 3, images_list.get(2));
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onBitmapFailed(Drawable errorDrawable) {
+
+                        }
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                        }
+                    });
+        }
 
         if(images_list.get(1) != null){
             Picasso.with(ImageUpload.this)
@@ -593,37 +656,37 @@ public class ImageUpload extends AppCompatActivity {
                     });
         }
 
-        if(images_list.get(2) != null){
-            Picasso.with(ImageUpload.this)
-                    .load(Utils.Base_URL + images_list.get(2))
-                    .into(new Target() {
-                        @Override
-                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                            otherPic.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    System.out.println(3);
-                                    otherPic.setImageBitmap(bitmap);
-                                    beforeOtherPicUpload.setVisibility(View.GONE);
-                                    afterOtherPicUpload.setVisibility(View.VISIBLE);
-                                    Utils.scaleImage(ImageUpload.this, 2f, otherPic);
-                                    generateEncodedImages(bitmap, 3, images_list.get(2));
-                                }
-                            });
-
-                        }
-
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
-
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                        }
-                    });
-        }
+//        if(images_list.get(2) != null){
+//            Picasso.with(ImageUpload.this)
+//                    .load(Utils.Base_URL + images_list.get(2))
+//                    .into(new Target() {
+//                        @Override
+//                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+//                            otherPic.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    System.out.println(3);
+//                                    otherPic.setImageBitmap(bitmap);
+//                                    beforeOtherPicUpload.setVisibility(View.GONE);
+//                                    afterOtherPicUpload.setVisibility(View.VISIBLE);
+//                                    Utils.scaleImage(ImageUpload.this, 2f, otherPic);
+//                                    generateEncodedImages(bitmap, 3, images_list.get(2));
+//                                }
+//                            });
+//
+//                        }
+//
+//                        @Override
+//                        public void onBitmapFailed(Drawable errorDrawable) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                        }
+//                    });
+//        }
 
 
     }
@@ -787,13 +850,23 @@ public class ImageUpload extends AppCompatActivity {
                                 jsonObject.getJSONObject("errors").getString("detail"), Toast.LENGTH_LONG).show();
                     } else {
                         numberOfImage++;
+                        if (jsonObject.has("success")) {
+                            if(jsonObject.has("photo_information")){
+                                JSONObject jsonPhotoInfo = jsonObject.getJSONObject("photo_information");
+                                if(updatedImageList.containsKey(jsonPhotoInfo.getInt("photo_type")))
+                                    updatedImageList.remove(jsonPhotoInfo.getInt("photo_type"));
+                                updatedImageList.put(jsonPhotoInfo.getInt("photo_type"), jsonPhotoInfo.getString("image_url"));
+                            }
+                        }
                         if (numberOfImage == numberOfImageAdded) {
                             if(images_list != null) {
-//                                Intent intent = getIntent();
-//                                setResult(RESULT_OK, );
+                                Intent intent = getIntent();
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("image_list", updatedImageList);
+                                intent.putExtras(bundle);
+                                setResult(RESULT_OK, intent);
                                 finish();
-                            }
-                            else {
+                            } else {
                                 new ImageUpload.FetchConstant().execute();
                                 beforeProPicUploadValue = 0;
                                 beforeBodyPicUploadValue = 0;
@@ -1121,7 +1194,8 @@ public class ImageUpload extends AppCompatActivity {
                     Log.i("imageurl", fileUri.getPath().toString());
                     Intent i = new Intent(ImageUpload.this, ImageCrop.class);
                     i.putExtra("image_url", fileUri.getPath());
-                    startActivity(i);
+                    i.putExtra("pic_type", picTypeSelected);
+                    startActivityForResult(i, Utils.PIC_CHANGE_REQ);
 
                 } else if (requestCode == SELECT_FILE) {
                     Log.i("imageurl", "SELECT_FILE");
@@ -1142,8 +1216,17 @@ public class ImageUpload extends AppCompatActivity {
 
                     Intent i = new Intent(ImageUpload.this, ImageCrop.class);
                     i.putExtra("image_url", picturePath);
-                    startActivity(i);
-
+                    i.putExtra("pic_type", picTypeSelected);
+                    startActivityForResult(i, Utils.PIC_CHANGE_REQ);
+                }else if(requestCode == Utils.PIC_CHANGE_REQ){
+//                    boolean isPicChanged = data.getBooleanExtra("pic_changed", false);
+                    int pic_type = data.getIntExtra("pic_type", -1);
+                    if(pic_type == 1)
+                        profilePicChanged = true;
+                    else if(pic_type == 2)
+                        bodyPicChanged = true;
+                    else if(pic_type == 3)
+                        otherPicChanged = true;
                 }
                 otherImages.setVisibility(View.VISIBLE);
 
