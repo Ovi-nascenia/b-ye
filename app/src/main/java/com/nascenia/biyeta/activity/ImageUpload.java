@@ -44,13 +44,18 @@ import com.squareup.picasso.Target;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -554,107 +559,108 @@ public class ImageUpload extends AppCompatActivity {
     }
 
     private void setDataOnView() {
-//        new LoadProfileImages(proPic, images_list.get(0), 1).execute();
-        Picasso.with(ImageUpload.this)
-                .load(Utils.Base_URL + images_list.get(0))
-                .into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                        proPic.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                System.out.println(1);
-                                proPic.setImageBitmap(bitmap);
-                                beforeProPicUpload.setVisibility(View.GONE);
-                                afterProPicUpload.setVisibility(View.VISIBLE);
-                                Utils.scaleImage(ImageUpload.this, 2f, proPic);
-                                generateEncodedImages(bitmap, 1, images_list.get(0));
-                            }
-                        });
-                    }
+        new ImagesDownloadTask().execute(images_list);
 
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
 
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                });
-
-        afterProPicUpload.setVisibility(View.VISIBLE);
-        afterOtherPicUpload.setVisibility(View.GONE);
-        beforeOtherPicUpload.setVisibility(View.VISIBLE);
-        afterBodyPicUpload.setVisibility(View.GONE);
-        beforeBodyPicUpload.setVisibility(View.VISIBLE);
-        otherImages.setVisibility(View.VISIBLE);
-
-        if(images_list.get(2) != null){
-            Picasso.with(ImageUpload.this)
-                    .load(Utils.Base_URL + images_list.get(2))
-                    .into(new Target() {
-                        @Override
-                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                            otherPic.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    System.out.println(3);
-                                    otherPic.setImageBitmap(bitmap);
-                                    beforeOtherPicUpload.setVisibility(View.GONE);
-                                    afterOtherPicUpload.setVisibility(View.VISIBLE);
-                                    Utils.scaleImage(ImageUpload.this, 2f, otherPic);
-                                    generateEncodedImages(bitmap, 3, images_list.get(2));
-                                }
-                            });
-
-                        }
-
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
-
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                        }
-                    });
-        }
-
-        if(images_list.get(1) != null){
-            Picasso.with(ImageUpload.this)
-                    .load(Utils.Base_URL + images_list.get(1))
-                    .into(new Target() {
-                        @Override
-                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                            bodyPic.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    System.out.println(2);
-                                    bodyPic.setImageBitmap(bitmap);
-                                    beforeBodyPicUpload.setVisibility(View.GONE);
-                                    afterBodyPicUpload.setVisibility(View.VISIBLE);
-                                    Utils.scaleImage(ImageUpload.this, 2f, bodyPic);
-                                    generateEncodedImages(bitmap, 2, images_list.get(1));
-
-                                }
-                            });
-
-                        }
-
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
-
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                        }
-                    });
-        }
+//        Picasso.with(ImageUpload.this)
+//                .load(Utils.Base_URL + images_list.get(0))
+//                .into(new Target() {
+//                    @Override
+//                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+//                        proPic.post(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                System.out.println(1);
+//                                proPic.setImageBitmap(bitmap);
+//                                beforeProPicUpload.setVisibility(View.GONE);
+//                                afterProPicUpload.setVisibility(View.VISIBLE);
+//                                Utils.scaleImage(ImageUpload.this, 2f, proPic);
+//                                generateEncodedImages(bitmap, 1, images_list.get(0));
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onBitmapFailed(Drawable errorDrawable) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                    }
+//                });
+//
+//        afterProPicUpload.setVisibility(View.VISIBLE);
+//        afterOtherPicUpload.setVisibility(View.GONE);
+//        beforeOtherPicUpload.setVisibility(View.VISIBLE);
+//        afterBodyPicUpload.setVisibility(View.GONE);
+//        beforeBodyPicUpload.setVisibility(View.VISIBLE);
+//        otherImages.setVisibility(View.VISIBLE);
+//
+//        if(images_list.get(2) != null){
+//            Picasso.with(ImageUpload.this)
+//                    .load(Utils.Base_URL + images_list.get(2))
+//                    .into(new Target() {
+//                        @Override
+//                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+//                            otherPic.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    System.out.println(3);
+//                                    otherPic.setImageBitmap(bitmap);
+//                                    beforeOtherPicUpload.setVisibility(View.GONE);
+//                                    afterOtherPicUpload.setVisibility(View.VISIBLE);
+//                                    Utils.scaleImage(ImageUpload.this, 2f, otherPic);
+//                                    generateEncodedImages(bitmap, 3, images_list.get(2));
+//                                }
+//                            });
+//                        }
+//
+//                        @Override
+//                        public void onBitmapFailed(Drawable errorDrawable) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                        }
+//                    });
+//        }
+//
+//        if(images_list.get(1) != null){
+//            Picasso.with(ImageUpload.this)
+//                    .load(Utils.Base_URL + images_list.get(1))
+//                    .into(new Target() {
+//                        @Override
+//                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+//                            bodyPic.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    System.out.println(2);
+//                                    bodyPic.setImageBitmap(bitmap);
+//                                    beforeBodyPicUpload.setVisibility(View.GONE);
+//                                    afterBodyPicUpload.setVisibility(View.VISIBLE);
+//                                    Utils.scaleImage(ImageUpload.this, 2f, bodyPic);
+//                                    generateEncodedImages(bitmap, 2, images_list.get(1));
+//
+//                                }
+//                            });
+//
+//                        }
+//
+//                        @Override
+//                        public void onBitmapFailed(Drawable errorDrawable) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                        }
+//                    });
+//        }
 
 //        if(images_list.get(2) != null){
 //            Picasso.with(ImageUpload.this)
@@ -1283,4 +1289,81 @@ public class ImageUpload extends AppCompatActivity {
         }
     }*/
 
+    private class ImagesDownloadTask extends AsyncTask<List<String>,Integer,List<Bitmap>>{
+
+        @Override
+        protected List<Bitmap> doInBackground(List<String>... lists) {
+            int count = lists[0].size();
+            //URL url = urls[0];
+            HttpURLConnection connection = null;
+            List<Bitmap> bitmaps = new ArrayList<>();
+
+            // Loop through the urls
+            for(int i=0;i<count;i++){
+                String url = Utils.Base_URL + lists[0].get(i);
+
+                // So download the image from this url
+                try{
+                    URL currentURL = new URL(url);
+                    // Initialize a new http url connection
+                    connection = (HttpURLConnection) currentURL.openConnection();
+
+                    // Connect the http url connection
+                    connection.connect();
+
+                    // Get the input stream from http url connection
+                    InputStream inputStream = connection.getInputStream();
+
+                    // Initialize a new BufferedInputStream from InputStream
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+
+                    // Convert BufferedInputStream to Bitmap object
+                    Bitmap bmp = BitmapFactory.decodeStream(bufferedInputStream);
+
+                    // Add the bitmap to list
+                    bitmaps.add(bmp);
+
+                }catch(IOException e){
+                    e.printStackTrace();
+                }finally{
+                    // Disconnect the http url connection
+                    connection.disconnect();
+                }
+            }
+            // Return bitmap list
+            return bitmaps;
+        }
+
+        protected void onPostExecute(List<Bitmap> result){
+
+            for(int i=0;i<result.size();i++){
+                Bitmap bitmap = result.get(i);
+                if(i == 0) {
+                    beforeProPicUpload.setVisibility(View.GONE);
+                    afterProPicUpload.setVisibility(View.VISIBLE);
+                    Utils.scaleImage(ImageUpload.this, 2f, proPic);
+                    generateEncodedImages(bitmap, 1, images_list.get(0));
+                    proPic.setImageBitmap(bitmap);
+                    afterProPicUpload.setVisibility(View.VISIBLE);
+                    afterOtherPicUpload.setVisibility(View.GONE);
+                    beforeOtherPicUpload.setVisibility(View.VISIBLE);
+                    afterBodyPicUpload.setVisibility(View.GONE);
+                    beforeBodyPicUpload.setVisibility(View.VISIBLE);
+                    otherImages.setVisibility(View.VISIBLE);
+                } else if(i == 1) {
+                    beforeBodyPicUpload.setVisibility(View.GONE);
+                    afterBodyPicUpload.setVisibility(View.VISIBLE);
+                    Utils.scaleImage(ImageUpload.this, 2f, bodyPic);
+                    generateEncodedImages(bitmap, 2, images_list.get(1));
+                    bodyPic.setImageBitmap(bitmap);
+                } else {
+                    beforeOtherPicUpload.setVisibility(View.GONE);
+                    afterOtherPicUpload.setVisibility(View.VISIBLE);
+                    Utils.scaleImage(ImageUpload.this, 2f, otherPic);
+                    generateEncodedImages(bitmap, 3, images_list.get(2));
+                    otherPic.setImageBitmap(bitmap);
+                }
+            }
+        }
+    }
 }

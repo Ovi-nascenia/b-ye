@@ -3385,14 +3385,26 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 
     private void updateProfileImage(HashMap<Integer, String> updatedImageList) {
         ArrayList<String> imageList = userProfile.getProfile().getPersonalInformation().getImage().getOther();
-        for(int i = 1; i <= updatedImageList.size(); i++){
-            if(updatedImageList.containsKey(i)){
-                imageList.set(i-1, updatedImageList.get(i));
-                if(i == 1){
-                    userProfile.getProfile().getPersonalInformation().getImage().setProfilePicture(updatedImageList.get(i));
-                }
+        for (Integer key : updatedImageList.keySet()) {
+            if(imageList.size() >= key){
+                imageList.set(key-1, updatedImageList.get(key));
+            }else{
+                imageList.add(key-1, updatedImageList.get(key));
+            }
+            if(key == 1){
+                userProfile.getProfile().getPersonalInformation().getImage().setProfilePicture(updatedImageList.get(key));
             }
         }
+//        for(int i = 0; i < updatedImageList.size(); i++){
+//            if(imageList.size() >= i && updatedImageList.containsKey(i+1)){
+//                imageList.set(i, updatedImageList.get(i+1));
+//            }else{
+//                imageList.add(i, updatedImageList.get(i+1));
+//            }
+//            if(updatedImageList.containsKey(1)){
+//                userProfile.getProfile().getPersonalInformation().getImage().setProfilePicture(updatedImageList.get(1));
+//            }
+//        }
 //        userProfile.getProfile().getPersonalInformation().getImage().setOther(imageList);
         ((ViewPagerAdapter) adapter).setImage(imageList);
         runOnUiThread(new Runnable() {
