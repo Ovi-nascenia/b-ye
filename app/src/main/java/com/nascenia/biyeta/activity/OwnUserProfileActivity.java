@@ -401,7 +401,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                                             intent.putStringArrayListExtra("images_list", userProfile.getProfile().getPersonalInformation()
                                                     .getImage()
                                                     .getOther());
-                                            startActivity(intent);
+                                            startActivityForResult(intent, Utils.UPDATE_IMAGE_REQ);
                                         }
                                     });
                                 }
@@ -468,6 +468,18 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 } else {
 //                    Log.i("image", "nothing found");
                 }
+                userProfileImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(OwnUserProfileActivity.this, ImageUpload.class);
+                        intent.putStringArrayListExtra("images_list", new ArrayList<String>() {{
+                            add(null);
+                            add(null);
+                            add(null);
+                        }});
+                        startActivityForResult(intent, Utils.UPDATE_IMAGE_REQ);
+                    }
+                });
             }
         }
     }
@@ -2452,11 +2464,38 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     userProfile.getProfile().getProfileReligion().setReligion(
                             data.getStringExtra("religion"));
                 }
+
                 if (otherCast.length() > 0) {
                     userProfile.getProfile().getProfileReligion().setCast(otherCast);
                 } else {
                     userProfile.getProfile().getProfileReligion().setCast(
                             data.getStringExtra("cast"));
+                }
+
+                if(religionValue.equalsIgnoreCase("1")){
+                    if(userProfile.getProfile().getOtherInformation().getPrayer() == null){
+                        System.out.println("Prayer");
+                    }
+
+                    if(userProfile.getProfile().getOtherInformation().getFasting() == null){
+                        System.out.println("Fasting");
+                    }
+
+                    if (userProfile.getProfile().getPersonalInformation().getGender().equals(
+                            Utils.FEMALE_GENDER)) {
+
+                        if (userProfile.getProfile().getOtherInformation().getHijab() == null) {
+                            System.out.println("Hijab");
+                        }
+
+                        if (userProfile.getProfile().getOtherInformation().getJobAfterMarriage() == null) {
+                            System.out.println("Job after marriage");
+                        }
+                    }else{
+                        if (userProfile.getProfile().getOtherInformation().getOwnHouse() == null) {
+                            System.out.println("Own house");
+                        }
+                    }
                 }
 
                 JSONObject jobjPro = new JSONObject();
@@ -2471,7 +2510,6 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 updateDetails(jobjPro);
-
                 setDataOnPersonalInfoRecylerView(userProfile, 2);
             } else if (requestCode == 5) {
                 userProfile.getProfile().getPersonalInformation().setSkinColor(
@@ -3384,7 +3422,12 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     }
 
     private void updateProfileImage(HashMap<Integer, String> updatedImageList) {
-        ArrayList<String> imageList = userProfile.getProfile().getPersonalInformation().getImage().getOther();
+        ArrayList<String> imageList = null;
+        if(userProfile.getProfile().getPersonalInformation().getImage() != null) {
+            imageList = userProfile.getProfile().getPersonalInformation().getImage().getOther();
+        }else{
+            imageList = new ArrayList<String>(updatedImageList.size());
+        }
         for (Integer key : updatedImageList.keySet()) {
             if(imageList.size() >= key){
                 imageList.set(key-1, updatedImageList.get(key));

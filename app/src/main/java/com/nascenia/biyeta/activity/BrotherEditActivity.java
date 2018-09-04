@@ -495,9 +495,9 @@ public class BrotherEditActivity extends AppCompatActivity {
     }
 
     private String getMaritalStatusValue(String maritalStatus){
-        int index = -1;
+       int index = -1;
        for(int i = 0; i < marriageArray.size(); i++){
-            if(marriageArray.get(i).equalsIgnoreCase(maritalStatus)) {
+            if(maritalStatus.contains(marriageArray.get(i))) {
                 index = i;
                 break;
             }

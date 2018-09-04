@@ -153,6 +153,9 @@ public class ImageUpload extends AppCompatActivity {
             public void onClick(View v) {
                 beforeProPicUploadValue = 1;
                 //  startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                if(images_list != null && images_list.size() > 0) {
+                    picTypeSelected = 1;
+                }
                 selectImage();
                 //ImagePicker.pickImage(ImageUpload.this);
             }
@@ -163,6 +166,9 @@ public class ImageUpload extends AppCompatActivity {
             public void onClick(View v) {
                 beforeBodyPicUploadValue = 1;
                 //startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                if(images_list != null && images_list.size() > 0) {
+                    picTypeSelected = 2;
+                }
                 selectImage();
             }
         });
@@ -172,6 +178,9 @@ public class ImageUpload extends AppCompatActivity {
             public void onClick(View v) {
                 beforeOtherPicUploadValue = 1;
                 //startActivity(new Intent(ImageUpload.this, ImageChoose.class));
+                if(images_list != null && images_list.size() > 0) {
+                    picTypeSelected = 3;
+                }
                 selectImage();
             }
         });

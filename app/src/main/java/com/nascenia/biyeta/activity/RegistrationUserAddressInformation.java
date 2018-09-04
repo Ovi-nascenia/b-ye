@@ -470,6 +470,15 @@ public class RegistrationUserAddressInformation extends AppCompatActivity implem
         disLinkedHashMap.put(62, "মৌলভীবাজার");
         disLinkedHashMap.put(63, "সুনামগঞ্জ");
         disLinkedHashMap.put(64, "সিলেট");
+
+        disLinkedHashMap.put(47, "দিনাজপুর");
+        disLinkedHashMap.put(48, "গাইবান্ধা");
+        disLinkedHashMap.put(50, "কুড়িগ্রাম");
+        disLinkedHashMap.put(51, "লালমনিরহাট");
+        disLinkedHashMap.put(53, "পঞ্চগড়");
+        disLinkedHashMap.put(56, "নীলফামারী");
+        disLinkedHashMap.put(58, "রংপুর");
+        disLinkedHashMap.put(60, "ঠাকুরগাঁও");
     }
 
     private void initView() {
