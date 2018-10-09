@@ -45,7 +45,6 @@ import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.nascenia.biyeta.IntigrationGoogleAnalytics.AnalyticsApplication;
-import com.nascenia.biyeta.Manifest;
 import com.nascenia.biyeta.fcm.MyFirebaseInstanceIDService;
 import com.nascenia.biyeta.model.InboxAllThreads.Example;
 import com.nascenia.biyeta.model.loginInfromation.LoginInformation;

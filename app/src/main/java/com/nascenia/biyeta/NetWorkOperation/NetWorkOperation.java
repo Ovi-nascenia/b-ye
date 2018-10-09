@@ -192,7 +192,7 @@ public class NetWorkOperation {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.has("message")) {
                         Match.pause_is_called = 2;
-                        Toast.makeText(context, jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"), Toast.LENGTH_LONG).show();
                         NewUserProfileActivity.message = jsonObject.getJSONArray("message").getJSONObject(0).getString("detail");
                         this.finalResultButton.setText(jsonObject.getJSONArray("message").getJSONObject(0).getString("detail"));
                         this.finalResultButton.setEnabled(false);

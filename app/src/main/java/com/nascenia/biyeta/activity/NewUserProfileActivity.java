@@ -487,8 +487,7 @@ public class NewUserProfileActivity extends AppCompatActivity implements View.On
                                     != null) {
 
                                 //favoriteImageView.setEnabled(false);
-                                if (userProfile.getProfile().getPersonalInformation().getRealName()
-                                        == null) {
+                                if (!userProfile.getProfile().getRequestStatus().isAccepted() && userProfile.getProfile().getRequestStatus().getCommunicationRequestId() == null) {
 
                                     userNameTextView.setText(
                                             userProfile.getProfile().getPersonalInformation()

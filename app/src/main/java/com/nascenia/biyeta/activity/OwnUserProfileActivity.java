@@ -46,6 +46,7 @@ import com.nascenia.biyeta.model.newuserprofile.Dada;
 import com.nascenia.biyeta.model.newuserprofile.EducationInformation;
 import com.nascenia.biyeta.model.newuserprofile.Father;
 import com.nascenia.biyeta.model.newuserprofile.Fufa;
+import com.nascenia.biyeta.model.newuserprofile.Image;
 import com.nascenia.biyeta.model.newuserprofile.Kaka;
 import com.nascenia.biyeta.model.newuserprofile.Khalu;
 import com.nascenia.biyeta.model.newuserprofile.Mama;
@@ -421,7 +422,7 @@ public class OwnUserProfileActivity extends AppCompatActivity {
     }
 
 
-    private void setUserOwnImage(UserProfile userProfile) {
+    private void setUserOwnImage(final UserProfile userProfile) {
         //Log.i("ownprofileimage", userProfile.getProfile().getPersonalInformation().getImage()
         // .getProfilePicture().toString());
 
@@ -448,6 +449,19 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                         public void onError() {
                         }
                     });
+
+            final ArrayList<String> image_list = userProfile.getProfile().getPersonalInformation()
+                    .getImage()
+                    .getOther();
+
+            userProfileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(OwnUserProfileActivity.this, ImageUpload.class);
+                    intent.putStringArrayListExtra("images_list", image_list);
+                    startActivityForResult(intent, Utils.UPDATE_IMAGE_REQ);
+                }
+            });
         } else {
 
             if (!sharePref.get_data("profile_picture").equals("key")) {
@@ -3435,7 +3449,18 @@ public class OwnUserProfileActivity extends AppCompatActivity {
                 imageList.add(key-1, updatedImageList.get(key));
             }
             if(key == 1){
-                userProfile.getProfile().getPersonalInformation().getImage().setProfilePicture(updatedImageList.get(key));
+                sharePref.set_data("profile_picture", updatedImageList.get(key));
+                if(userProfile.getProfile().getPersonalInformation().getImage() == null){
+                    Image image = new Image();
+                    ArrayList<String> other = new ArrayList<String>(3);
+                    other.add(updatedImageList.get(key));
+                    image.setProfilePicture(updatedImageList.get(key));
+                    image.setOther(other);
+                    userProfile.getProfile().getPersonalInformation().setImage(image);
+                }else {
+                    userProfile.getProfile().getPersonalInformation().getImage().setProfilePicture(
+                            updatedImageList.get(key));
+                }
             }
         }
 //        for(int i = 0; i < updatedImageList.size(); i++){
@@ -3449,16 +3474,117 @@ public class OwnUserProfileActivity extends AppCompatActivity {
 //            }
 //        }
 //        userProfile.getProfile().getPersonalInformation().getImage().setOther(imageList);
-        ((ViewPagerAdapter) adapter).setImage(imageList);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                setUserOwnImage(userProfile);
+
+        if (userProfile.getProfile().getPersonalInformation().getImage()
+                .getOther().size()
+                > 1) {
+            userProfileImage.setVisibility(View.INVISIBLE);
+            coordnatelayout.setVisibility(View.VISIBLE);
+
+            if (adapter == null) {
+                adapter = new ViewPagerAdapter(OwnUserProfileActivity.this,
+                        userProfile.getProfile().getPersonalInformation()
+                                .getImage()
+                                .getOther(), true);
                 viewPager.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                viewPager.invalidate();
+            }else{
+                ((ViewPagerAdapter) adapter).setImage(imageList);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        viewPager.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                        viewPager.invalidate();
+                    }
+                });
             }
-        });
+            if(sliderDotsPanel != null){
+                sliderDotsPanel.removeAllViews();
+            }
+            dotscount = userProfile.getProfile().getPersonalInformation()
+                            .getImage().getOther().size();
+            dots = new ImageView[dotscount];
+
+            for (int i = 0; i < dotscount; i++) {
+                dots[i] = new ImageView(getApplicationContext());
+                if (i == 0) {
+                    dots[i].setImageDrawable(ContextCompat.getDrawable(
+                            getApplicationContext(),
+                            R.drawable.selected_dot));
+                } else {
+                    dots[i].setImageDrawable(ContextCompat.getDrawable(
+                            getApplicationContext(),
+                            R.drawable.default_dot));
+                }
+                LinearLayout.LayoutParams params =
+                        new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(6, 4, 6, 4);
+                sliderDotsPanel.addView(dots[i], params);
+                dots[i].getLayoutParams().height = 16;
+                dots[i].getLayoutParams().width = 16;
+            }
+
+            if (viewPager != null) {
+                viewPager.clearOnPageChangeListeners();
+                viewPager.addOnPageChangeListener(
+                        new ViewPager.OnPageChangeListener() {
+                            private int fromPosition = 0,
+                                    previousState = 0;
+
+                            @Override
+                            public void onPageScrolled(int position,
+                                    float positionOffset,
+                                    int positionOffsetPixels) {
+                                fromPosition = position;
+                            }
+
+                            @Override
+                            public void onPageSelected(int position) {
+                                for (int i = 0; i < dotscount; i++) {
+                                    dots[i].setImageDrawable(
+                                            ContextCompat.getDrawable(
+                                                    getApplicationContext(),
+                                                    R.drawable
+                                                            .default_dot));
+                                }
+                                dots[position].setImageDrawable(
+                                        ContextCompat.getDrawable(
+                                                getApplicationContext(),
+                                                R.drawable
+                                                        .selected_dot));
+
+                            }
+
+                            @Override
+                            public void onPageScrollStateChanged(
+                                    int state) {
+
+                                if (state == 0 && previousState != 2
+                                        && fromPosition
+                                        == dotscount - 1) {
+                                    viewPager.setCurrentItem(0, true);
+                                    return;
+                                } else if (state == 0
+                                        && previousState != 2
+                                        && fromPosition == 0) {
+                                    viewPager.setCurrentItem(
+                                            dotscount - 1, true);
+                                    return;
+                                }
+
+                                previousState = state;
+
+                            }
+
+                        }
+                );
+            }
+        }else{
+            setUserOwnImage(userProfile);
+        }
+
     }
 
     private int getKakaIndex(int id) {

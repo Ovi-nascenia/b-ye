@@ -215,9 +215,9 @@ public class ExpiredConnection extends CustomActionBarActivity {
                     JSONObject errorObj = jsonObject.getJSONArray("error").getJSONObject(0);
                     if (errorObj.has("show_pricing_plan")) {
                         if (errorObj.getBoolean("show_pricing_plan")) {
-                            Toast.makeText(ExpiredConnection.this, jsonObject.getJSONArray(
-                                    "error").getJSONObject(0).getString("detail"),
-                                    Toast.LENGTH_LONG).show();
+//                            Toast.makeText(ExpiredConnection.this, jsonObject.getJSONArray(
+//                                    "error").getJSONObject(0).getString("detail"),
+//                                    Toast.LENGTH_LONG).show();
 
                             final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(
                                     ExpiredConnection.this);

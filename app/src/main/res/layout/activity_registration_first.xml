@@ -166,6 +166,7 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/lblFromName"
                 android:inputType="text"
+                android:maxLength="20"
                 android:paddingLeft="10sp"
                 android:privateImeOptions="nm"
                 android:singleLine="true" />

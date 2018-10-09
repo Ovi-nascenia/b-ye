@@ -491,9 +491,9 @@ public class Match extends Fragment implements View.OnClickListener {
                         String msg = "Error";
                         if (errorObj.has("show_pricing_plan")) {
                             if (errorObj.getBoolean("show_pricing_plan")) {
-                                Toast.makeText(getActivity(), jsonObject.getJSONArray(
-                                        "error").getJSONObject(0).getString("detail"),
-                                        Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getActivity(), jsonObject.getJSONArray(
+//                                        "error").getJSONObject(0).getString("detail"),
+//                                        Toast.LENGTH_LONG).show();
                                 final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
                                 alertBuilder.setCancelable(true);
 //                                alertBuilder.setTitle(R.string.account_recharge_title);

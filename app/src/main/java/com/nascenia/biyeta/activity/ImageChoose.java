@@ -32,9 +32,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.nascenia.biyeta.Manifest;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.utils.Utils;
 

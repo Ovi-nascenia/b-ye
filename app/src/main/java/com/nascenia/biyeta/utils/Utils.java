@@ -19,40 +19,27 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.facebook.login.LoginManager;
 import com.nascenia.biyeta.R;
 import com.nascenia.biyeta.activity.FavoriteActivity;
 import com.nascenia.biyeta.activity.HomeScreen;
-import com.nascenia.biyeta.activity.Login;
 import com.nascenia.biyeta.activity.NewUserProfileActivity;
 import com.nascenia.biyeta.activity.RegistrationFirstActivity;
 import com.nascenia.biyeta.activity.WebViewPayment;
-import com.nascenia.biyeta.fragment.Search;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-import java.util.regex.Pattern;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -313,7 +300,6 @@ public class Utils{
 
     public static String convertEnglishYearDigittoBangla(int itemvalue){
 
-
         String number = String.valueOf(itemvalue);
         String result = "";
         for (int i = 0; i < number.length(); i++){
@@ -553,13 +539,16 @@ public class Utils{
     }
 
     public static String getTime(String utcTime){
+        System.out.println("utcTime: " + utcTime);
         Calendar calendar = Calendar.getInstance(), systemCal = Calendar.getInstance();
-        DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        SimpleDateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        System.out.println("utcFormat: " + utcTime.toString());
 
         Date date = null;
         try {
             date = utcFormat.parse(utcTime);
+            System.out.println(date.toString());
         } catch (ParseException e){
             e.printStackTrace();
         }
@@ -579,7 +568,7 @@ public class Utils{
         long diffYears = diffDays / 365;
 
         String strTime = "";
-        DateFormat dateFormat;
+        SimpleDateFormat dateFormat;
         if (diffDays < 1){
             dateFormat = new SimpleDateFormat("hh:mm a");
             strTime = dateFormat.format(calendar.getTimeInMillis());
@@ -645,7 +634,7 @@ public class Utils{
                 break;
 
             case "designation":
-                value = "পদবি";
+                value = "পদমর্যাদা";
                 break;
 
             case "institute":

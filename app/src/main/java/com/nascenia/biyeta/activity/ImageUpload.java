@@ -316,9 +316,9 @@ public class ImageUpload extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                    }else if(images_list == null){
+                    }else if(images_list == null && proPicBase64.length() > 0){
                         numberOfImageAdded++;
-                        new ImageUpload.SendPicture().execute(proPic, proPicFileName, SERVER_URL);
+                        new ImageUpload.SendPicture().execute(proPic, null, SERVER_URL);
                     }
 
                     if(bodyPicBase64!=null) {
@@ -342,9 +342,9 @@ public class ImageUpload extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                        }else if(images_list == null){
+                        }else if(images_list == null && bodyPicBase64.length() > 0){
                             numberOfImageAdded++;
-                            new ImageUpload.SendPicture().execute(bodyPic, bodyPicFileName,
+                            new ImageUpload.SendPicture().execute(bodyPic, null,
                                     SERVER_URL);
                         }
 
@@ -369,9 +369,9 @@ public class ImageUpload extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                        }else if(images_list == null){
+                        }else if(images_list == null && otherPicBase64.length() > 0){
                             numberOfImageAdded++;
-                            new ImageUpload.SendPicture().execute(otherPic, otherPicFileName,
+                            new ImageUpload.SendPicture().execute(otherPic, null,
                                     SERVER_URL);
                         }
 
@@ -480,9 +480,9 @@ public class ImageUpload extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                    }else if(images_list == null){
+                    }else if(images_list == null && proPicBase64.length() > 0){
                         numberOfImageAdded++;
-                        new ImageUpload.SendPicture().execute(proPic, proPicFileName, SERVER_URL);
+                        new ImageUpload.SendPicture().execute(proPic, null, SERVER_URL);
                     }
 
                     if(bodyPicBase64!=null) {
@@ -505,9 +505,9 @@ public class ImageUpload extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                        }else if(images_list == null){
+                        }else if(images_list == null && bodyPicBase64.length() > 0){
                             numberOfImageAdded++;
-                            new ImageUpload.SendPicture().execute(bodyPic, bodyPicFileName,
+                            new ImageUpload.SendPicture().execute(bodyPic, null,
                                     SERVER_URL);
                         }
 
@@ -532,9 +532,9 @@ public class ImageUpload extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                        }else if(images_list == null){
+                        }else if(images_list == null && otherPicBase64.length() > 0){
                             numberOfImageAdded++;
-                            new ImageUpload.SendPicture().execute(otherPic, otherPicFileName,
+                            new ImageUpload.SendPicture().execute(otherPic, null,
                                     SERVER_URL);
                         }
 
@@ -919,7 +919,8 @@ public class ImageUpload extends AppCompatActivity {
             RequestBody body = RequestBody.create(JSON, strings[0]);
             Request request = null;
 
-            if(images_list != null) {
+//            if(images_list != null) {
+            if(strings[1] == null) {
                 request = new Request.Builder()
                         .url(strings[2])
                         .addHeader("Authorization", "Token token=" + token)

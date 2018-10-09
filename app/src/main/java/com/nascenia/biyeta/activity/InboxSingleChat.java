@@ -308,8 +308,9 @@ public class InboxSingleChat extends CustomActionBarActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 //            Toast.makeText(InboxSingleChat.this, s, Toast.LENGTH_SHORT).show();
-
-
+            if(recyclerView.getVisibility() == View.GONE) {
+                new LoadMessageThread().execute();
+            }
         }
 
         @Override

@@ -453,9 +453,9 @@ public class RequestSentFromMe extends CustomActionBarActivity {
                     String msg = "Error";
                     if (errorObj.has("show_pricing_plan")) {
                         if (errorObj.getBoolean("show_pricing_plan")) {
-                            Toast.makeText(RequestSentFromMe.this, jsonObject.getJSONArray(
-                                    "error").getJSONObject(0).getString("detail"),
-                                    Toast.LENGTH_LONG).show();
+//                            Toast.makeText(RequestSentFromMe.this, jsonObject.getJSONArray(
+//                                    "error").getJSONObject(0).getString("detail"),
+//                                    Toast.LENGTH_LONG).show();
 
                             final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(RequestSentFromMe.this);
                             alertBuilder.setCancelable(true);

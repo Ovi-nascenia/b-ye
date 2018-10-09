@@ -516,7 +516,7 @@
             android:id="@+id/designation_text"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="পদবী"
+            android:hint="পদমর্যাদা"
             android:padding="10dp"
             android:layout_marginLeft="15dp"
             android:background="@color/white"

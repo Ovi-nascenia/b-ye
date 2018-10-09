@@ -404,6 +404,20 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     drawerLayout.closeDrawer(Gravity.RIGHT);
                 } else {
                     drawerLayout.openDrawer(Gravity.RIGHT);
+                    if (!sharePref.get_data("profile_picture").equals("key")) {
+                        Picasso.with(this)
+                                .load(Utils.Base_URL + sharePref.get_data("profile_picture"))
+                                .into(menuProfileImgView, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                    }
+                                });
+                    }
                     try {
                         new LoadAccoutBalance().execute("");
                     }catch (Exception ex){
