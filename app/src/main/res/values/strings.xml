@@ -291,14 +291,16 @@
     <string name="faq_ans9">আপনি যেকোন সময় নিজের বায়োডাটা doc অথবা pdf ফরম্যাটে ডাউনলোড করতে পারেন। </string>
     <string name="faq_foot">অন্য যেকোন জিজ্ঞাসার জন্য ইমেইল করুন support@biyeta.com </string>
 
-    <string name="contact_title">যোগাযোগ </string>
+    <string name="contact_title">গ্রাহক সেবা</string>
     <string name="contact_name">আপনার নাম </string>
     <string name="contact_phone_number">আপনার মোবাইল নম্বর (শুধুমাত্র বাংলাদেশী অপারেটর)</string>
     <string name="contact_email">আপনার ইমেইল </string>
     <string name="contact_message">মেসেজ </string>
     <string name="contact_button">পাঠিয়ে দিন </string>
     <string name="contact_for_help">সাহায্যের জন্য </string>
-    <string name="contact_for_helpNumber">০৯৬৬৬৭৭৮৭৭৯ </string>
+    <string name="contact_for_help1">ভেরিফিকেশন কোড পেতে সমস্যা হচ্ছে? সাহায্যের জন্য যোগাযোগ করুন: </string>
+    <string name="contact_for_helpNumber1">০৯৬৬৬৭৭৮৭৭৯ </string>
+    <string name="contact_for_helpNumber2">০১৭৫৫৬৯০০০০</string>
     <string name="contact_for_helpTime">রবি-শুক্র, সকাল ১০টা -সন্ধ্যা ৬টা</string>
 
 

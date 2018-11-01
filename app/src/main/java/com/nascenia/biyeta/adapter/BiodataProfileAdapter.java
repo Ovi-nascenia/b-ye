@@ -201,7 +201,10 @@ public abstract class BiodataProfileAdapter extends RecyclerView.Adapter<Biodata
 
     @Override
     public int getItemCount() {
-        return biodataProfile.size();
+        if(biodataProfile != null)
+            return biodataProfile.size();
+        else
+            return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

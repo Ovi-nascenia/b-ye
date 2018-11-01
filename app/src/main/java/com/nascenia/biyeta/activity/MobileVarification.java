@@ -1,11 +1,17 @@
 package com.nascenia.biyeta.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -42,6 +48,7 @@ public class MobileVarification extends AppCompatActivity {
     TextView resendCode, login;
     EditText verificationCode;
     LinearLayout beforeSendingVerificationCode, afterSendingVerificationCode;
+    TextView help1, help2;
 
     private ProgressDialog progressDialog;
 
@@ -145,10 +152,38 @@ public class MobileVarification extends AppCompatActivity {
         resendCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //activate the editext
-
-                new VerificationCodeResend().
+                 new VerificationCodeResend().
                         execute(sharePref.get_data("mobile_number"), sharePref.get_data("verification_id"));
+            }
+        });
+
+        help1 = findViewById(R.id.help_number1);
+        underLineText(help1, "০৯৬৬৬৭৭৮৭৭৯");
+        help1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_CALL,
+                        Uri.parse("tel:" + "+8809666778779"));
+                if (ActivityCompat.checkSelfPermission(MobileVarification.this, Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                startActivity(intent);
+            }
+        });
+
+        help2 = findViewById(R.id.help_number2);
+        underLineText(help2, "০১৭৫৫৬৯০০০০");
+        help2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_CALL,
+                        Uri.parse("tel:" + "+8801755690000"));
+                if (ActivityCompat.checkSelfPermission(MobileVarification.this, Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                startActivity(intent);
             }
         });
 
@@ -157,6 +192,11 @@ public class MobileVarification extends AppCompatActivity {
 
     }
 
+    private void underLineText(TextView tv, String text) {
+        SpannableString content = new SpannableString(text);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        tv.setText(content);
+    }
 
     public class VerificationCodeSend extends AsyncTask<String, String, String> {
         @Override

@@ -268,18 +268,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         //                            application.trackEception(ex, "setNavigationItemSelectedListener/logOut", "HomeScreen", ex.getMessage().toString(), mTracker);
                                 }
 
-
                                 if (!Utils.isOnline(HomeScreen.this)) {
                                     Utils.ShowAlert(HomeScreen.this, getString(R.string.no_internet_connection));
                                 } else
                                 {
                                     new HomeScreen.LogoutRequest().execute();
                                 }
-
-
-
-
-
                                 break;
 
                             default:

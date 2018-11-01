@@ -127,20 +127,16 @@
                     android:id="@+id/text1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/medium_textsize"
+                    android:textSize="@dimen/item_textsize"
                     android:text="@string/verification_message1"
-                    android:layout_marginTop="98dp"
-                    android:gravity="center"
-                    android:layout_below="@+id/toolbar"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"/>
 
                 <TextView
                     android:id="@+id/text2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/medium_textsize"
-                    android:layout_below="@id/text1"
+                    android:textSize="@dimen/item_textsize"
                     android:text="@string/verification_message2"
                     android:gravity="center"/>
                 <EditText
@@ -149,27 +145,79 @@
                     android:layout_height="50dp"
                     android:hint="ভেরিফিকেশন কোড"
                     android:background="@color/white"
-                    android:layout_centerVertical="true"
-                    android:layout_alignLeft="@+id/next"
-                    android:layout_alignStart="@+id/next"
                     android:layout_margin="10dp"
                     android:imeOptions="actionDone"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/lblFromName"/>
+
                 <Button
                     android:id="@+id/verify"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@id/verification_code"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="25dp"
                     android:textSize="20sp"
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:textColor="@color/white"
                     android:text="পরবর্তী ধাপ"
                     android:background="@color/colorPrimary"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/for_help"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/contact_for_help1"
+                        android:textSize="14sp"
+                        android:gravity="center"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <TextView
+                            android:id="@+id/help_number1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/contact_for_helpNumber1"
+                            android:textSize="16sp"
+                            android:autoLink="web"/>
+                        <TextView
+                            android:id="@+id/comma"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=", "
+                            android:textSize="18dp"/>
+                        <TextView
+                            android:id="@+id/help_number2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/contact_for_helpNumber2"
+                            android:textSize="16sp"
+                            android:autoLink="web"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/time_schedule"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:text="@string/contact_for_helpTime" />
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/text3"
@@ -196,15 +244,7 @@
                     android:textAlignment="center"
                     android:layout_height="50dp"
                     android:layout_alignParentBottom="true"/>
-
-
             </LinearLayout>
-
-
         </LinearLayout>
-
-
-
     </ScrollView>
-
 </RelativeLayout>
